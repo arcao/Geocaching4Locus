@@ -9,4 +9,10 @@
     <string name="error_location">Acquring the location using Wireless network is not allowed! Please enable it in Android settings.</string>
     <string name="acquiring_gps_location">Acquiring location from GPS...</string>
     <string name="acquiring_network_location">Acquiring location from Wireless network...</string>
+    <string name="coordinate_sources_title">Coordinate source</string><string-array name="coordinate_sources_value">
+        <item>from GPS</item><item>manual enter</item>
+        
+    </string-array>
+    
+    <string name="filter_title">Filter</string>
 </resources>

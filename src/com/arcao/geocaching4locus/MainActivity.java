@@ -18,11 +18,14 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -33,15 +36,22 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.geocaching.CacheType;
 import com.arcao.geocaching4locus.geocaching.SimpleGeocache;
+import com.arcao.geocaching4locus.util.Account;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
-	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search_locus?lat=%f&lon=%f";
+	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s";
 	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search_locus?lat=%f&lon=%f";
 	
 	private Resources res;
@@ -54,6 +64,11 @@ public class MainActivity extends Activity implements LocationListener {
 	private ProgressDialog pd;
 	
 	private static Handler handler;
+	private static SharedPreferences prefs;
+	private static Account account = null;
+	
+	private Button coordinateSourceButton;
+	private Button filterButton;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -72,6 +87,13 @@ public class MainActivity extends Activity implements LocationListener {
 			return;
 		}
 		
+		handler = new Handler();
+		
+		setContentView(R.layout.main_activity);
+		
+		coordinateSourceButton = (Button) findViewById(R.id.coordinates);
+		filterButton = (Button) findViewById(R.id.filter);
+		
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
@@ -79,12 +101,106 @@ public class MainActivity extends Activity implements LocationListener {
 			double acc = getIntent().getDoubleExtra("accuracy", 0.0);
 			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude + "; alt=" + alt + "; acc=" + acc);
 			
+			// fill button text
+			coordinateSourceButton.setText(formatCoordinates(latitude, longitude));
+			
 			hasCoordinates = true;
 		}
+	}
+	
+	private String formatCoordinates(double latitude, double longitude) {
+		char latFlag = (latitude > 0) ? 'N' : 'S';
+		char lonFlag = (longitude > 0) ? 'E' : 'W';
+		
+		int latDeg = (int) Math.abs(latitude);
+		int lonDeg = (int) Math.abs(longitude);
+		
+		float latMin = (float) ((latitude - latDeg) * 60F);
+		float lonMin = (float) ((longitude - lonDeg) * 60F);
+		
+		return String.format("%c %d\u00b0 %#.3f\u2032 | %c %d\u00b0 %#.3f\u2032", latFlag, latDeg, latMin, lonFlag, lonDeg, lonMin);
+	}
 
-		handler = new Handler();
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		String userName = prefs.getString("username", "");
+		String password = prefs.getString("password", "");
+		String session = prefs.getString("session", null);
+		
+		if (account == null) {
+			account = new Account(userName, password, session);
+		}
+		
+		if (!userName.equals(account.getUserName()) || !password.equals(account.getPassword())) {
+			account = new Account(userName, password);
+		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_activity_option_menu, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		 switch (item.getItemId()) {
+		    case R.id.main_activity_option_menu_preferences:
+		        startActivity(new Intent(this, PreferenceActivity.class));
+		        return true;
+		    default:
+		    	return super.onOptionsItemSelected(item);
+		 }
+	}
+	
+	public void onClickCoordinates(View view) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.coordinate_sources_title);
+		builder.setItems(R.array.coordinate_sources_value, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        switch (item) {
+		        case 0:
+		        	coordinateSourceButton.setText(getResources().getStringArray(R.array.coordinate_sources_value)[item]);
+		        	break;
+		        case 1:
+		        	// show coordinate dialog
+		        	break;
+		        }
+		    }
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void onClickFilter(View view) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.filter_title);
+		
+		String[] filterValues = new String[CacheType.values().length];
+		for (int i=0; i < filterValues.length; i++) {
+			filterValues[i] = CacheType.values()[i].toString();
+		}
+		
+		final boolean[] checkedState = new boolean[filterValues.length];
+		
+		builder.setMultiChoiceItems(filterValues, checkedState, new DialogInterface.OnMultiChoiceClickListener() {
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				checkedState[which] = isChecked;				
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		Log.i(TAG, "Filter: " + checkedState);
+	}
+	
+	public void onClickSearch(View view) {
 		search();
 	}
+	
 
 	protected void search() {
 		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
@@ -287,12 +403,15 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	protected SimpleGeocache[] downloadCaches(double latitude, double longitude) throws IOException {
-		URL url = new URL(String.format((Locale)null, SERVICE_URL, latitude, longitude));
+		
+		URL url = new URL(String.format((Locale)null, SERVICE_URL, latitude, longitude, account.encrypt(), ""));
 		Log.i(TAG, "downloading " + url);
 		
 		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
-    	//uc.setRequestProperty("Accept", "text/plain, multipart/x-datastream, gzip, */*; q=0.01");
-		//uc.setRequestProperty("Accept-Encoding", "gzip");
+		if (prefs.getBoolean("compression", false)) {
+			uc.setRequestProperty("Accept", "text/plain, multipart/x-datastream, gzip, */*; q=0.01");
+			uc.setRequestProperty("Accept-Encoding", "gzip");
+		}
 		
 		final String encoding = uc.getContentEncoding();
 		InputStream is;
@@ -310,8 +429,22 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		Log.i(TAG, "parsing caches...");
 		DataInputStream dis = new DataInputStream(is);
+		
+		// protocol version
+		if (dis.readInt() != 1)
+			throw new IOException("Wrong protocol version.");
+		
+		// result: 0 = OK
 		if (dis.readInt() != 0)
 			throw new IOException("Response error code is not 0.");
+		
+		// get account data
+		account = Account.decrypt(dis.readUTF());
+		if (account.getSession() != null && account.getSession().length() > 0) {
+			Editor edit = prefs.edit();
+			edit.putString("session", account.getSession());
+			edit.commit();
+		}
 		
 		// num of caches
 		int cacheCount = dis.readInt();

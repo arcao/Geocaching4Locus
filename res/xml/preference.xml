@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Geocaching.com creditials">
+        <EditTextPreference android:title="Username" android:key="username"></EditTextPreference>
+        <EditTextPreference android:title="Password" android:key="password" android:password="true"></EditTextPreference>    
+    </PreferenceCategory>
+	<PreferenceCategory android:title="Filter">
+		<PreferenceScreen android:title="Filter">
+			<CheckBoxPreference android:key="filter_0" android:title="Earthcache"/>
+			<CheckBoxPreference android:key="filter_1" android:title="Event Cache"/>
+			<CheckBoxPreference android:key="filter_2" android:title="GPS Adventures Exhibit"/>
+			<CheckBoxPreference android:key="filter_3" android:title="Letterbox Hybrid"/>
+			<CheckBoxPreference android:key="filter_4" android:title="Locationless (Reverse) Cache"/>
+			<CheckBoxPreference android:key="filter_5" android:title="Multi-cache"/>
+			<CheckBoxPreference android:key="filter_6" android:title="Project APE Cache"/>
+			<CheckBoxPreference android:key="filter_7" android:title="Traditional Cache"/>
+			<CheckBoxPreference android:key="filter_8" android:title="Unknown Cache"/>
+			<CheckBoxPreference android:key="filter_9" android:title="Virtual Cache"/>
+			<CheckBoxPreference android:key="filter_10" android:title="Webcam Cache"/>
+			<CheckBoxPreference android:key="filter_11" android:title="Wherigo Cache"/>
+		</PreferenceScreen>
+		<CheckBoxPreference android:summary="Skip found caches" android:title="Skip found" android:key="filter_skip_found"></CheckBoxPreference>
+		<EditTextPreference android:title="Distance" android:summary="Distance in km" android:key="filter_distance" android:dialogTitle="Distance" android:dialogMessage="Distance in km"></EditTextPreference>
+		<com.hlidskialf.android.preference.SeekBarPreference android:key="filter_cache_count" android:text=" caches" android:dialogMessage="Count of caches to download" android:summary="Count of caches to download" android:max="100" android:defaultValue="50" android:title="Count of cache"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Advanced">
+		<CheckBoxPreference android:key="compression" android:summary="Use HTTP compression (experimental)" android:title="Use compression"></CheckBoxPreference>
+	</PreferenceCategory>
+</PreferenceScreen>

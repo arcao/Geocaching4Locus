@@ -22,7 +22,7 @@
 		</PreferenceScreen>
 		<CheckBoxPreference android:summary="Skip found caches" android:title="Skip found" android:key="filter_skip_found"></CheckBoxPreference>
 		<EditTextPreference android:title="Distance" android:summary="Distance in km" android:key="filter_distance" android:dialogTitle="Distance" android:dialogMessage="Distance in km"></EditTextPreference>
-		<com.hlidskialf.android.preference.SeekBarPreference android:key="filter_cache_count" android:text=" caches" android:dialogMessage="Count of caches to download" android:summary="Count of caches to download" android:max="100" android:defaultValue="50" android:title="Count of cache"/>
+		<com.hlidskialf.android.preference.SeekBarPreference android:max="100" android:title="Count of cache" android:key="filter_cache_count" android:text=" caches" android:dialogMessage="Count of caches to download" android:defaultValue="50" android:summary="Count of caches to download"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Advanced">
 		<CheckBoxPreference android:key="compression" android:summary="Use HTTP compression (experimental)" android:title="Use compression"></CheckBoxPreference>

@@ -63,12 +63,11 @@ public class MainActivity extends Activity implements LocationListener {
 	private boolean hasCoordinates = false;
 	private ProgressDialog pd;
 	
-	private static Handler handler;
-	private static SharedPreferences prefs;
-	private static Account account = null;
+	private Handler handler;
+	private SharedPreferences prefs;
+	private Account account = null;
 	
 	private Button coordinateSourceButton;
-	private Button filterButton;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -92,7 +91,6 @@ public class MainActivity extends Activity implements LocationListener {
 		setContentView(R.layout.main_activity);
 		
 		coordinateSourceButton = (Button) findViewById(R.id.coordinates);
-		filterButton = (Button) findViewById(R.id.filter);
 		
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
@@ -130,13 +128,7 @@ public class MainActivity extends Activity implements LocationListener {
 		String password = prefs.getString("password", "");
 		String session = prefs.getString("session", null);
 		
-		if (account == null) {
-			account = new Account(userName, password, session);
-		}
-		
-		if (!userName.equals(account.getUserName()) || !password.equals(account.getPassword())) {
-			account = new Account(userName, password);
-		}
+		account = new Account(userName, password, session);
 	}
 	
 	@Override

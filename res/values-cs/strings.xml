@@ -10,6 +10,7 @@
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS...</string>
     <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
     
+    <string name="preferences">Nastavení</string>
     <string name="wrong_coordinates">Špatný formát souřadnic!</string>
     <string name="search_and_import_button">Hledat a naimportovat do Locusu</string>
     <string name="coordinates">Souřadnice</string>

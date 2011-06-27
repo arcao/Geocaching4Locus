@@ -10,6 +10,7 @@
     <string name="acquiring_gps_location">Acquiring location from GPS...</string>
     <string name="acquiring_network_location">Acquiring location from Wireless network...</string>
     
+    <string name="preferences">Preferences</string>
     <string name="wrong_coordinates">Wrong coordinates format!</string>
     <string name="search_and_import_button">Search &amp; Import to Locus</string>
     <string name="coordinates">Coordinates</string>

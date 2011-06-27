@@ -5,8 +5,11 @@
  */
 package com.hlidskialf.android.preference;
 
+import com.arcao.geocaching4locus.R;
+
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -17,24 +20,26 @@ import android.widget.LinearLayout;
 
 public class SeekBarPreference extends DialogPreference implements
 		SeekBar.OnSeekBarChangeListener {
-	private static final String androidns = "http://schemas.android.com/apk/res/android";
-
+	
 	private SeekBar mSeekBar;
 	private TextView mSplashText, mValueText;
 	private Context mContext;
 
-	private String mDialogMessage, mSuffix;
+	private CharSequence mDialogMessage, mSuffix;
 	private int mDefault, mMax, mValue = 0;
 
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
+		
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SeekBarPreference);
 
-		mDialogMessage = attrs.getAttributeValue(androidns, "dialogMessage");
-		mSuffix = attrs.getAttributeValue(androidns, "text");
-		mDefault = attrs.getAttributeIntValue(androidns, "defaultValue", 0);
-		mMax = attrs.getAttributeIntValue(androidns, "max", 100);
+		mDialogMessage = a.getText(R.styleable.SeekBarPreference_android_dialogMessage);
+		mSuffix = a.getText(R.styleable.SeekBarPreference_android_text);
+		mDefault = a.getInt(R.styleable.SeekBarPreference_android_defaultValue, 0);
+		mMax = a.getInt(R.styleable.SeekBarPreference_android_max, 100);
 
+		a.recycle();
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class SeekBarPreference extends DialogPreference implements
 
 	public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
 		String t = String.valueOf(value);
-		mValueText.setText(mSuffix == null ? t : t.concat(mSuffix));
+		mValueText.setText(mSuffix == null ? t : t.concat(" ").concat(mSuffix.toString()));
 	}
 
 	@Override

@@ -7,7 +7,7 @@
 <uses-sdk android:minSdkVersion="4"></uses-sdk>
 
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:theme="@android:style/Theme.Dialog">
         <activity android:name="MainActivity"
                   android:configChanges="keyboardHidden|orientation" android:icon="@drawable/ic_launcher" android:label="@string/app_name">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">

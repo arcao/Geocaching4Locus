@@ -7,24 +7,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -37,22 +38,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.geocaching.CacheType;
 import com.arcao.geocaching4locus.geocaching.SimpleGeocache;
 import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.util.Coordinates;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
-	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s";
-	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search_locus?lat=%f&lon=%f";
+	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
+	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
 	
 	private Resources res;
 	private Thread searchThread;
@@ -67,7 +70,8 @@ public class MainActivity extends Activity implements LocationListener {
 	private SharedPreferences prefs;
 	private Account account = null;
 	
-	private Button coordinateSourceButton;
+	private EditText latitudeEditText;
+	private EditText longitudeEditText;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -89,34 +93,52 @@ public class MainActivity extends Activity implements LocationListener {
 		handler = new Handler();
 		
 		setContentView(R.layout.main_activity);
-		
-		coordinateSourceButton = (Button) findViewById(R.id.coordinates);
-		
+
+		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
+		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
+			
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
 			double alt = getIntent().getDoubleExtra("altitude", 0.0);
 			double acc = getIntent().getDoubleExtra("accuracy", 0.0);
 			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude + "; alt=" + alt + "; acc=" + acc);
-			
-			// fill button text
-			coordinateSourceButton.setText(formatCoordinates(latitude, longitude));
+		
+			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 			
 			hasCoordinates = true;
 		}
-	}
-	
-	private String formatCoordinates(double latitude, double longitude) {
-		char latFlag = (latitude > 0) ? 'N' : 'S';
-		char lonFlag = (longitude > 0) ? 'E' : 'W';
 		
-		int latDeg = (int) Math.abs(latitude);
-		int lonDeg = (int) Math.abs(longitude);
+		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					double deg = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
+					if (Double.isNaN(deg)) {
+						latitudeEditText.setText("N/A");
+					} else {
+						latitudeEditText.setText(Coordinates.convertDoubleToDeg(deg, false));
+					}
+				}
+			}
+		});
 		
-		float latMin = (float) ((latitude - latDeg) * 60F);
-		float lonMin = (float) ((longitude - lonDeg) * 60F);
+		longitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (!hasFocus) {
+					double deg = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
+					if (Double.isNaN(deg)) {
+						longitudeEditText.setText("N/A");
+					} else {
+						longitudeEditText.setText(Coordinates.convertDoubleToDeg(deg,true));
+					}
+				}
+			}
+		});
 		
-		return String.format("%c %d\u00b0 %#.3f\u2032 | %c %d\u00b0 %#.3f\u2032", latFlag, latDeg, latMin, lonFlag, lonDeg, lonMin);
+		if (!hasCoordinates) {
+			acquireCoordinates();
+		}
 	}
 
 	@Override
@@ -149,70 +171,36 @@ public class MainActivity extends Activity implements LocationListener {
 		 }
 	}
 	
-	public void onClickCoordinates(View view) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.coordinate_sources_title);
-		builder.setItems(R.array.coordinate_sources_value, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		        switch (item) {
-		        case 0:
-		        	coordinateSourceButton.setText(getResources().getStringArray(R.array.coordinate_sources_value)[item]);
-		        	break;
-		        case 1:
-		        	// show coordinate dialog
-		        	break;
-		        }
-		    }
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
+	public void onClickSearch(View view) {
+		download();
 	}
 	
-	public void onClickFilter(View view) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.filter_title);
+	public void onClickGps(View view) {
+		acquireCoordinates();
+	}
+	
+	protected void download() {
+		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
+		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
 		
-		String[] filterValues = new String[CacheType.values().length];
-		for (int i=0; i < filterValues.length; i++) {
-			filterValues[i] = CacheType.values()[i].toString();
+		if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
+			handler.post(new Runnable() {
+				public void run() {
+					Toast.makeText(MainActivity.this, R.string.wrong_coordinates, Toast.LENGTH_LONG);
+				}
+			});
 		}
 		
-		final boolean[] checkedState = new boolean[filterValues.length];
-		
-		builder.setMultiChoiceItems(filterValues, checkedState, new DialogInterface.OnMultiChoiceClickListener() {
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-				checkedState[which] = isChecked;				
-			}
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
-		Log.i(TAG, "Filter: " + checkedState);
-	}
-	
-	public void onClickSearch(View view) {
-		search();
-	}
-	
-
-	protected void search() {
-		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {
-				MainActivity.this.finish();
-			}
+		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
+			public void onCancel(DialogInterface dialog) {}
 		});
 		
 		searchThread = new Thread() {
 			@Override
 			public void run() {
 				try {
-					handler.post(new Runnable() {
-						public void run() {
-							pd.setMessage(res.getString(R.string.downloading));
-						}
-					});
 					// download caches
-					final SimpleGeocache[] caches = downloadCaches(latitude, longitude);
-					
+					final SimpleGeocache[] caches = downloadCaches(latitude, longitude);				
 					
 					handler.post(new Runnable() {
 						public void run() {
@@ -234,11 +222,14 @@ public class MainActivity extends Activity implements LocationListener {
 				}
 			}
 		};
-		
-		if (hasCoordinates) {
-			searchThread.start();
-			return;
-		}
+		searchThread.start();
+	}
+	
+
+	protected void acquireCoordinates() {
+		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
+			public void onCancel(DialogInterface dialog) {}
+		});
 		
 		// search location
 		// Acquire a reference to the system Location Manager
@@ -394,9 +385,27 @@ public class MainActivity extends Activity implements LocationListener {
 		return result;
 	}
 	
+	protected String getFilterUrlParam() {
+		Vector<String> filter = new Vector<String>();
+		
+		for (int i = 0; i < 12; i++) {
+			if (prefs.getBoolean("filter_" + i, true)) {
+				filter.add(CacheType.values()[i].toString());
+			}
+		}
+		
+		return URLEncoder.encode(TextUtils.join(",", filter));
+	}
+	
 	protected SimpleGeocache[] downloadCaches(double latitude, double longitude) throws IOException {
 		
-		URL url = new URL(String.format((Locale)null, SERVICE_URL, latitude, longitude, account.encrypt(), ""));
+		double distance = prefs.getFloat("distance", 160.9344F);
+		if (!prefs.getBoolean("imperial_units", false)) {
+			distance = distance * 1.609344;
+		}
+			
+		
+		URL url = new URL(String.format((Locale)null, SERVICE_URL, latitude, longitude, account.encrypt(), getFilterUrlParam(), distance));
 		Log.i(TAG, "downloading " + url);
 		
 		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
@@ -441,13 +450,18 @@ public class MainActivity extends Activity implements LocationListener {
 		// num of caches
 		int cacheCount = dis.readInt();
 		Log.i(TAG, "found caches: " + cacheCount);
-		SimpleGeocache[] caches = new SimpleGeocache[cacheCount];
+		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
+		
+		Vector<SimpleGeocache> caches = new Vector<SimpleGeocache>(); 
 		for (int i = 0; i < cacheCount; i++) {
-			caches[i] = SimpleGeocache.load(dis);
+			SimpleGeocache cache = SimpleGeocache.load(dis);
+			if (!skipFound || !cache.isFound())
+				caches.add(cache);
 		}
 		
+		Log.i(TAG, "skipped caches: " + (cacheCount - caches.size()));
 		Log.i(TAG, "caches parsed!");
-		return caches;
+		return caches.toArray(new SimpleGeocache[0]);
 	}
 	
 	public static boolean isLocusAvailable(Activity activity) {
@@ -478,11 +492,24 @@ public class MainActivity extends Activity implements LocationListener {
 			return;
 		}
 		
+		if (!pd.isShowing())
+			return;
+		
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		
-		if (searchThread != null && !searchThread.isAlive())
-			searchThread.start();		
+		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+		
+		
+		handler.post(new Runnable() {
+			public void run() {
+				pd.dismiss();
+			}
+		});
+		
+		//if (searchThread != null && !searchThread.isAlive())
+		//	searchThread.start();		
 	}
 
 	public void onProviderDisabled(String provider) {

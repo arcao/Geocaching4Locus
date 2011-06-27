@@ -54,22 +54,23 @@ import com.arcao.geocaching4locus.util.Coordinates;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
-	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
-	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
-	
+	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f&limit=%d";
+	// private static final String SERVICE_URL =
+	// "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
+
 	private Resources res;
 	private Thread searchThread;
 	private LocationManager locationManager;
-	
+
 	private double latitude;
 	private double longitude;
 	private boolean hasCoordinates = false;
 	private ProgressDialog pd;
-	
+
 	private Handler handler;
 	private SharedPreferences prefs;
 	private Account account = null;
-	
+
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
 
@@ -78,38 +79,38 @@ public class MainActivity extends Activity implements LocationListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		res = getResources();
-		
+
 		if (!isLocusAvailable(this)) {
 			Log.e(TAG, "locus not found");
 			Toast.makeText(MainActivity.this, res.getString(R.string.locus_not_found), Toast.LENGTH_LONG).show();
-			
+
 			Uri localUri = Uri.parse("market://details?id=menion.android.locus");
 			Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
 			startActivity(localIntent);
 			finish();
 			return;
 		}
-		
+
 		handler = new Handler();
-		
+
 		setContentView(R.layout.main_activity);
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
-			
+
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
 			double alt = getIntent().getDoubleExtra("altitude", 0.0);
 			double acc = getIntent().getDoubleExtra("accuracy", 0.0);
 			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude + "; alt=" + alt + "; acc=" + acc);
-		
+
 			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
-			
+
 			hasCoordinates = true;
 		}
-		
+
 		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
@@ -122,7 +123,7 @@ public class MainActivity extends Activity implements LocationListener {
 				}
 			}
 		});
-		
+
 		longitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
@@ -130,12 +131,12 @@ public class MainActivity extends Activity implements LocationListener {
 					if (Double.isNaN(deg)) {
 						longitudeEditText.setText("N/A");
 					} else {
-						longitudeEditText.setText(Coordinates.convertDoubleToDeg(deg,true));
+						longitudeEditText.setText(Coordinates.convertDoubleToDeg(deg, true));
 					}
 				}
 			}
 		});
-		
+
 		if (!hasCoordinates) {
 			acquireCoordinates();
 		}
@@ -144,45 +145,45 @@ public class MainActivity extends Activity implements LocationListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String userName = prefs.getString("username", "");
 		String password = prefs.getString("password", "");
 		String session = prefs.getString("session", null);
-		
+
 		account = new Account(userName, password, session);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.main_activity_option_menu, menu);
-	    return true;
+		inflater.inflate(R.menu.main_activity_option_menu, menu);
+		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		 switch (item.getItemId()) {
-		    case R.id.main_activity_option_menu_preferences:
-		        startActivity(new Intent(this, PreferenceActivity.class));
-		        return true;
-		    default:
-		    	return super.onOptionsItemSelected(item);
-		 }
+		switch (item.getItemId()) {
+			case R.id.main_activity_option_menu_preferences:
+				startActivity(new Intent(this, PreferenceActivity.class));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
-	
+
 	public void onClickSearch(View view) {
 		download();
 	}
-	
+
 	public void onClickGps(View view) {
 		acquireCoordinates();
 	}
-	
+
 	protected void download() {
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
-		
+
 		if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
 			handler.post(new Runnable() {
 				public void run() {
@@ -190,18 +191,19 @@ public class MainActivity extends Activity implements LocationListener {
 				}
 			});
 		}
-		
+
 		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {}
+			public void onCancel(DialogInterface dialog) {
+			}
 		});
-		
+
 		searchThread = new Thread() {
 			@Override
 			public void run() {
 				try {
 					// download caches
-					final SimpleGeocache[] caches = downloadCaches(latitude, longitude);				
-					
+					final SimpleGeocache[] caches = downloadCaches(latitude, longitude);
+
 					handler.post(new Runnable() {
 						public void run() {
 							// call intent
@@ -224,22 +226,23 @@ public class MainActivity extends Activity implements LocationListener {
 		};
 		searchThread.start();
 	}
-	
 
 	protected void acquireCoordinates() {
 		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {}
+			public void onCancel(DialogInterface dialog) {
+			}
 		});
-		
+
 		// search location
 		// Acquire a reference to the system Location Manager
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
-		// Register the listener with the Location Manager to receive location updates
+
+		// Register the listener with the Location Manager to receive location
+		// updates
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 	}
 
-	private void callLocus(Map<CacheType, List<SimpleGeocache>> caches) {
+	private void callLocus(Map<String, List<SimpleGeocache>> caches) {
 		ByteArrayOutputStream baos = null;
 		DataOutputStream dos = null;
 		try {
@@ -255,11 +258,11 @@ public class MainActivity extends Activity implements LocationListener {
 			// write category count - here I write three categories. Categories
 			// are defined as
 			// array of points that share same map icon!
-			Set<CacheType> categories = caches.keySet();
+			Set<String> categories = caches.keySet();
 			dos.writeInt(categories.size());
 
 			// write categories
-			for (CacheType category : categories) {
+			for (String category : categories) {
 				writeCategory(dos, category, caches.get(category));
 			}
 
@@ -295,10 +298,10 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 	}
 
-	private void writeCategory(DataOutputStream dos, CacheType category, List<SimpleGeocache> caches) {
+	private void writeCategory(DataOutputStream dos, String category, List<SimpleGeocache> caches) {
 		try {
 			// convert resource to byte array
-			Bitmap bitmap = BitmapFactory.decodeResource(res, getBitmapForCategory(category));
+			Bitmap bitmap = BitmapFactory.decodeResource(res, getBitmapForCache(caches.get(0)));
 			ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos2);
 			byte[] image = baos2.toByteArray();
@@ -329,37 +332,93 @@ public class MainActivity extends Activity implements LocationListener {
 			Log.e(TAG, "writeCategory()", e);
 		}
 	}
-	
-	protected int getBitmapForCategory(CacheType category) {
-		switch (category) {
-		case EarthCache:
-			return R.drawable.type_earth;
-		case EventCache:
-			return R.drawable.type_event;
-		case GpsAdventuresExhibit:
-			return R.drawable.type_mystery;
-		case LetterboxHybrid:
-			return R.drawable.type_letterbox;
-		case LocationlessCache:
-			return R.drawable.type_locationless;
-		case MultiCache:
-			return R.drawable.type_multi;
-		case ProjectApeCache:
-			return R.drawable.type_ape;
-		case TraditionalCache:
-			return R.drawable.type_traditional;
-		case UnknownCache:
-			return R.drawable.type_mystery;
-		case VirtualCache:
-			return R.drawable.type_virtual;
-		case WebcamCache:
-			return R.drawable.type_webcam;
-		case WherigoCache:
-			return R.drawable.type_wherigo;
+
+	protected int getBitmapForCache(SimpleGeocache cache) {
+		if (cache.isFound()) {
+			switch (cache.getCacheType()) {
+				case EarthCache:
+					return R.drawable.marker_cache_earth_found;
+				case EventCache:
+					return R.drawable.marker_cache_event_found;
+				case GpsAdventuresExhibit:
+					return R.drawable.marker_cache_mystery_found;
+				case LetterboxHybrid:
+					return R.drawable.marker_cache_letterbox_found;
+				case LocationlessCache:
+					return R.drawable.marker_cache_locationless_found;
+				case MultiCache:
+					return R.drawable.marker_cache_multi_found;
+				case ProjectApeCache:
+					return R.drawable.marker_cache_ape_found;
+				case TraditionalCache:
+					return R.drawable.marker_cache_traditional_found;
+				case UnknownCache:
+					return R.drawable.marker_cache_mystery_found;
+				case VirtualCache:
+					return R.drawable.marker_cache_virtual_found;
+				case WebcamCache:
+					return R.drawable.marker_cache_traditional_found;
+				case WherigoCache:
+					return R.drawable.marker_cache_wherigo_found;
+			}
+		} else if (!cache.isAvailable()) {
+			switch (cache.getCacheType()) {
+				case EarthCache:
+					return R.drawable.marker_cache_earth_disabled;
+				case EventCache:
+					return R.drawable.marker_cache_event_disabled;
+				case GpsAdventuresExhibit:
+					return R.drawable.marker_cache_mystery_disabled;
+				case LetterboxHybrid:
+					return R.drawable.marker_cache_letterbox_disabled;
+				case LocationlessCache:
+					return R.drawable.marker_cache_locationless_disabled;
+				case MultiCache:
+					return R.drawable.marker_cache_multi_disabled;
+				case ProjectApeCache:
+					return R.drawable.marker_cache_ape_disabled;
+				case TraditionalCache:
+					return R.drawable.marker_cache_traditional_disabled;
+				case UnknownCache:
+					return R.drawable.marker_cache_mystery_disabled;
+				case VirtualCache:
+					return R.drawable.marker_cache_virtual_disabled;
+				case WebcamCache:
+					return R.drawable.marker_cache_traditional_disabled;
+				case WherigoCache:
+					return R.drawable.marker_cache_wherigo_disabled;
+			}
+		} else {
+			switch (cache.getCacheType()) {
+				case EarthCache:
+					return R.drawable.marker_cache_earth;
+				case EventCache:
+					return R.drawable.marker_cache_event;
+				case GpsAdventuresExhibit:
+					return R.drawable.marker_cache_mystery;
+				case LetterboxHybrid:
+					return R.drawable.marker_cache_letterbox;
+				case LocationlessCache:
+					return R.drawable.marker_cache_locationless;
+				case MultiCache:
+					return R.drawable.marker_cache_multi;
+				case ProjectApeCache:
+					return R.drawable.marker_cache_ape;
+				case TraditionalCache:
+					return R.drawable.marker_cache_traditional;
+				case UnknownCache:
+					return R.drawable.marker_cache_mystery;
+				case VirtualCache:
+					return R.drawable.marker_cache_virtual;
+				case WebcamCache:
+					return R.drawable.marker_cache_traditional;
+				case WherigoCache:
+					return R.drawable.marker_cache_wherigo;
+			}
 		}
 		return 0;
 	}
-	
+
 	protected String getDescription(SimpleGeocache cache) {
 		return res.getString(
 				R.string.description,
@@ -369,51 +428,53 @@ public class MainActivity extends Activity implements LocationListener {
 				cache.getContainerType().toString(),
 				cache.getDifficultyRating(),
 				cache.getTerrainRating()
-		);
+				);
 	}
-	
-	protected Map<CacheType, List<SimpleGeocache>> cachesToCategories(SimpleGeocache[] caches) {
-		Map<CacheType, List<SimpleGeocache>> result = new HashMap<CacheType, List<SimpleGeocache>>();
-		
+
+	protected Map<String, List<SimpleGeocache>> cachesToCategories(SimpleGeocache[] caches) {
+		Map<String, List<SimpleGeocache>> result = new HashMap<String, List<SimpleGeocache>>();
+
 		for (SimpleGeocache cache : caches) {
-			if (!result.containsKey(cache.getCacheType())) {
-				result.put(cache.getCacheType(), new ArrayList<SimpleGeocache>());
+			String key = cache.getCacheType() + "|" + cache.isFound() + "|" + !cache.isAvailable();
+			if (!result.containsKey(key)) {
+				result.put(key, new ArrayList<SimpleGeocache>());
 			}
-			
-			result.get(cache.getCacheType()).add(cache);
+
+			result.get(key).add(cache);
 		}
 		return result;
 	}
-	
+
 	protected String getFilterUrlParam() {
 		Vector<String> filter = new Vector<String>();
-		
+
 		for (int i = 0; i < 12; i++) {
 			if (prefs.getBoolean("filter_" + i, true)) {
 				filter.add(CacheType.values()[i].toString());
 			}
 		}
-		
+
 		return URLEncoder.encode(TextUtils.join(",", filter));
 	}
-	
+
 	protected SimpleGeocache[] downloadCaches(double latitude, double longitude) throws IOException {
-		
+
 		double distance = prefs.getFloat("distance", 160.9344F);
 		if (!prefs.getBoolean("imperial_units", false)) {
 			distance = distance * 1.609344;
 		}
-			
-		
-		URL url = new URL(String.format((Locale)null, SERVICE_URL, latitude, longitude, account.encrypt(), getFilterUrlParam(), distance));
+
+		int limit = prefs.getInt("filter_count_of_caches", 50) - 1;
+
+		URL url = new URL(String.format((Locale) null, SERVICE_URL, latitude, longitude, account.encrypt(), getFilterUrlParam(), distance, limit));
 		Log.i(TAG, "downloading " + url);
-		
+
 		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
 		if (prefs.getBoolean("compression", false)) {
 			uc.setRequestProperty("Accept", "text/plain, multipart/x-datastream, gzip, */*; q=0.01");
 			uc.setRequestProperty("Accept-Encoding", "gzip");
 		}
-		
+
 		final String encoding = uc.getContentEncoding();
 		InputStream is;
 
@@ -427,18 +488,18 @@ public class MainActivity extends Activity implements LocationListener {
 			Log.i(TAG, "downloadCaches(): WITHOUT ENCODING");
 			is = uc.getInputStream();
 		}
-		
+
 		Log.i(TAG, "parsing caches...");
 		DataInputStream dis = new DataInputStream(is);
-		
+
 		// protocol version
 		if (dis.readInt() != 1)
 			throw new IOException("Wrong protocol version.");
-		
+
 		// result: 0 = OK
 		if (dis.readInt() != 0)
 			throw new IOException("Response error code is not 0.");
-		
+
 		// get account data
 		account = Account.decrypt(dis.readUTF());
 		if (account.getSession() != null && account.getSession().length() > 0) {
@@ -446,36 +507,36 @@ public class MainActivity extends Activity implements LocationListener {
 			edit.putString("session", account.getSession());
 			edit.commit();
 		}
-		
+
 		// num of caches
 		int cacheCount = dis.readInt();
 		Log.i(TAG, "found caches: " + cacheCount);
 		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
-		
-		Vector<SimpleGeocache> caches = new Vector<SimpleGeocache>(); 
+
+		Vector<SimpleGeocache> caches = new Vector<SimpleGeocache>();
 		for (int i = 0; i < cacheCount; i++) {
 			SimpleGeocache cache = SimpleGeocache.load(dis);
 			if (!skipFound || !cache.isFound())
 				caches.add(cache);
 		}
-		
+
 		Log.i(TAG, "skipped caches: " + (cacheCount - caches.size()));
 		Log.i(TAG, "caches parsed!");
 		return caches.toArray(new SimpleGeocache[0]);
 	}
-	
+
 	public static boolean isLocusAvailable(Activity activity) {
-	    try {
-	        // set intent
-	        final PackageManager packageManager = activity.getPackageManager();
-	        final Intent intent = new Intent(Intent.ACTION_VIEW);
-	        intent.setData(Uri.parse("menion.points:x"));
-	         
-	        // return true or false
-	        return packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
-	    } catch (Exception e) {
-	        return false;
-	    }
+		try {
+			// set intent
+			final PackageManager packageManager = activity.getPackageManager();
+			final Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse("menion.points:x"));
+
+			// return true or false
+			return packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public void onLocationChanged(Location location) {
@@ -491,44 +552,45 @@ public class MainActivity extends Activity implements LocationListener {
 			});
 			return;
 		}
-		
+
 		if (!pd.isShowing())
 			return;
-		
+
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
-		
+
 		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
-		
-		
+
 		handler.post(new Runnable() {
 			public void run() {
 				pd.dismiss();
 			}
 		});
-		
-		//if (searchThread != null && !searchThread.isAlive())
-		//	searchThread.start();		
+
+		// if (searchThread != null && !searchThread.isAlive())
+		// searchThread.start();
 	}
 
 	public void onProviderDisabled(String provider) {
 		if (LocationManager.GPS_PROVIDER.equals(provider)) {
 			locationManager.removeUpdates(this);
-			
+
 			handler.post(new Runnable() {
 				public void run() {
 					pd.setMessage(res.getString(R.string.acquiring_network_location));
 				}
 			});
-			
+
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		} else {
 			onLocationChanged(locationManager.getLastKnownLocation(provider));
 		}
 	}
 
-	public void onProviderEnabled(String provider) {}
+	public void onProviderEnabled(String provider) {
+	}
 
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
 }

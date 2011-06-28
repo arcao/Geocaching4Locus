@@ -2,4 +2,6 @@
 <resources>
     <color name="section_background">#FFF</color>
     <color name="section_text">#000</color>
+    <color name="title_separator">#40ffffff</color>
+    <color name="btn_disabled">#80aaaaaa</color>
 </resources>

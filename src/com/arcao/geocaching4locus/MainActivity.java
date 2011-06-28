@@ -179,6 +179,14 @@ public class MainActivity extends Activity implements LocationListener {
 	public void onClickGps(View view) {
 		acquireCoordinates();
 	}
+	
+	public void onClickClose(View view) {
+		finish();
+	}
+	
+	public void onClickSettings(View view) {
+		startActivity(new Intent(this, PreferenceActivity.class));
+	}
 
 	protected void download() {
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
@@ -228,14 +236,29 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	protected void acquireCoordinates() {
-		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {
-			}
-		});
-
 		// search location
 		// Acquire a reference to the system Location Manager
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
+			public void onCancel(DialogInterface dialog) {
+				Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				if (location == null)
+					location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				
+				if (location == null) {
+					latitude = prefs.getFloat("latitude", 0F);
+					longitude = prefs.getFloat("longitude", 0F);
+				} else {
+					latitude = location.getLatitude();
+					longitude = location.getLongitude();
+				}
+				
+				latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+				longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+			}
+		});
+
 
 		// Register the listener with the Location Manager to receive location
 		// updates
@@ -561,6 +584,11 @@ public class MainActivity extends Activity implements LocationListener {
 
 		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+		
+		Editor editor = prefs.edit();
+		editor.putFloat("latitude", (float) latitude);
+		editor.putFloat("longitude", (float) longitude);
+		editor.commit();
 
 		handler.post(new Runnable() {
 			public void run() {

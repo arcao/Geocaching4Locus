@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:gc="http://schemas.android.com/apk/res/com.arcao.geocaching4locus">
+  xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_title_geocaching_credentials">
         <EditTextPreference android:title="@string/pref_username" android:key="username"></EditTextPreference>
         <EditTextPreference android:title="@string/pref_password" android:key="password" android:password="true"></EditTextPreference>    
@@ -22,7 +21,7 @@
 			<CheckBoxPreference android:key="filter_11" android:title="Wherigo Cache" android:defaultValue="true"/>
 		</PreferenceScreen>
 		<CheckBoxPreference android:summary="@string/pref_skip_found_summary" android:title="@string/pref_skip_found" android:key="filter_skip_found"/>
-		<EditTextPreference android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:key="filter_distance" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km"/>
+		<EditTextPreference android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:key="filter_distance" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
 		<com.hlidskialf.android.preference.SeekBarPreference android:max="100" android:title="@string/pref_count_of_caches" android:key="filter_cache_count" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="50" android:summary="@string/pref_count_of_caches_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">

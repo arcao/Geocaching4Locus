@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -23,6 +24,11 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		filterDistanceEditText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		// remove old session login
+		Editor edit = prefs.edit();
+		edit.remove("session");
+		edit.commit();
 		
 		if (prefs.getBoolean("imperial_units", false)) {
 			filterDistancePreference.setSummary(R.string.pref_distance_summary_miles);

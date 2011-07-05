@@ -48,10 +48,18 @@ public class Account {
 			
 			String[] parts = new String(data, "UTF-8").split("\n");
 			
-			
-			return new Account(parts[0], parts[1], parts[2]);
+			switch (parts.length) {
+				case 1:
+					return new Account(parts[0], "");
+				case 2:
+					return new Account(parts[0], parts[1]);
+				case 3:
+					return new Account(parts[0], parts[1], parts[2]);
+				default:
+					return new Account("", "");
+			}
 		} catch(Exception e) {
-			return null;
+			return new Account("", "");
 		}
 	}
 	

@@ -138,7 +138,7 @@ public class SimpleGeocache {
 		StringBuilder sb = new StringBuilder();
 		
 		for (Method m : getClass().getMethods()) {
-			if (!m.getName().startsWith("get") ||
+			if ((!m.getName().startsWith("get") && !m.getName().startsWith("is")) ||
 			    m.getParameterTypes().length != 0 ||  
 			    void.class.equals(m.getReturnType()))
 			    continue;
@@ -148,7 +148,7 @@ public class SimpleGeocache {
 			try {
 				sb.append(m.invoke(this, new Object[0]));
 			} catch (Exception e) {}
-			sb.append("\n");
+			sb.append(", ");
 		}
 		return sb.toString();
 	}

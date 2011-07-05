@@ -55,8 +55,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f&limit=%d";
-	// private static final String SERVICE_URL =
-	// "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f";
+	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f&limit=%d";
 
 	private Resources res;
 	private Thread searchThread;
@@ -357,89 +356,34 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	protected int getBitmapForCache(SimpleGeocache cache) {
-		if (cache.isFound()) {
-			switch (cache.getCacheType()) {
-				case EarthCache:
-					return R.drawable.marker_cache_earth_found;
-				case EventCache:
-					return R.drawable.marker_cache_event_found;
-				case GpsAdventuresExhibit:
-					return R.drawable.marker_cache_mystery_found;
-				case LetterboxHybrid:
-					return R.drawable.marker_cache_letterbox_found;
-				case LocationlessCache:
-					return R.drawable.marker_cache_locationless_found;
-				case MultiCache:
-					return R.drawable.marker_cache_multi_found;
-				case ProjectApeCache:
-					return R.drawable.marker_cache_ape_found;
-				case TraditionalCache:
-					return R.drawable.marker_cache_traditional_found;
-				case UnknownCache:
-					return R.drawable.marker_cache_mystery_found;
-				case VirtualCache:
-					return R.drawable.marker_cache_virtual_found;
-				case WebcamCache:
-					return R.drawable.marker_cache_traditional_found;
-				case WherigoCache:
-					return R.drawable.marker_cache_wherigo_found;
-			}
-		} else if (!cache.isAvailable()) {
-			switch (cache.getCacheType()) {
-				case EarthCache:
-					return R.drawable.marker_cache_earth_disabled;
-				case EventCache:
-					return R.drawable.marker_cache_event_disabled;
-				case GpsAdventuresExhibit:
-					return R.drawable.marker_cache_mystery_disabled;
-				case LetterboxHybrid:
-					return R.drawable.marker_cache_letterbox_disabled;
-				case LocationlessCache:
-					return R.drawable.marker_cache_locationless_disabled;
-				case MultiCache:
-					return R.drawable.marker_cache_multi_disabled;
-				case ProjectApeCache:
-					return R.drawable.marker_cache_ape_disabled;
-				case TraditionalCache:
-					return R.drawable.marker_cache_traditional_disabled;
-				case UnknownCache:
-					return R.drawable.marker_cache_mystery_disabled;
-				case VirtualCache:
-					return R.drawable.marker_cache_virtual_disabled;
-				case WebcamCache:
-					return R.drawable.marker_cache_traditional_disabled;
-				case WherigoCache:
-					return R.drawable.marker_cache_wherigo_disabled;
-			}
-		} else {
-			switch (cache.getCacheType()) {
-				case EarthCache:
-					return R.drawable.marker_cache_earth;
-				case EventCache:
-					return R.drawable.marker_cache_event;
-				case GpsAdventuresExhibit:
-					return R.drawable.marker_cache_mystery;
-				case LetterboxHybrid:
-					return R.drawable.marker_cache_letterbox;
-				case LocationlessCache:
-					return R.drawable.marker_cache_locationless;
-				case MultiCache:
-					return R.drawable.marker_cache_multi;
-				case ProjectApeCache:
-					return R.drawable.marker_cache_ape;
-				case TraditionalCache:
-					return R.drawable.marker_cache_traditional;
-				case UnknownCache:
-					return R.drawable.marker_cache_mystery;
-				case VirtualCache:
-					return R.drawable.marker_cache_virtual;
-				case WebcamCache:
-					return R.drawable.marker_cache_traditional;
-				case WherigoCache:
-					return R.drawable.marker_cache_wherigo;
-			}
+		switch (cache.getCacheType()) {
+			case EarthCache:
+				return R.drawable.marker_cache_earth;
+			case EventCache:
+				return R.drawable.marker_cache_event;
+			case GpsAdventuresExhibit:
+				return R.drawable.marker_cache_mystery;
+			case LetterboxHybrid:
+				return R.drawable.marker_cache_letterbox;
+			case LocationlessCache:
+				return R.drawable.marker_cache_locationless;
+			case MultiCache:
+				return R.drawable.marker_cache_multi;
+			case ProjectApeCache:
+				return R.drawable.marker_cache_ape;
+			case TraditionalCache:
+				return R.drawable.marker_cache_traditional;
+			case UnknownCache:
+				return R.drawable.marker_cache_mystery;
+			case VirtualCache:
+				return R.drawable.marker_cache_virtual;
+			case WebcamCache:
+				return R.drawable.marker_cache_traditional;
+			case WherigoCache:
+				return R.drawable.marker_cache_wherigo;
+			default:
+				return R.drawable.marker_cache_traditional;
 		}
-		return 0;
 	}
 
 	protected String getDescription(SimpleGeocache cache) {
@@ -481,16 +425,22 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	protected SimpleGeocache[] downloadCaches(double latitude, double longitude) throws IOException {
+		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
 
 		double distance = prefs.getFloat("distance", 160.9344F);
 		if (!prefs.getBoolean("imperial_units", false)) {
 			distance = distance * 1.609344;
 		}
 
-		int limit = prefs.getInt("filter_count_of_caches", 50) - 1;
+		int limit = prefs.getInt("filter_count_of_caches", 50);
+		
+		String accountData = Account.encrypt("", "", "");
+		if (skipFound)
+			accountData = account.encrypt();
 
-		URL url = new URL(String.format((Locale) null, SERVICE_URL, latitude, longitude, account.encrypt(), getFilterUrlParam(), distance, limit));
+		URL url = new URL(String.format((Locale) null, SERVICE_URL, latitude, longitude, accountData, getFilterUrlParam(), distance, limit));
 		Log.i(TAG, "downloading " + url);
+		//Log.i(TAG, account.toString());
 
 		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
 		if (prefs.getBoolean("compression", false)) {
@@ -524,28 +474,28 @@ public class MainActivity extends Activity implements LocationListener {
 			throw new IOException("Response error code is not 0.");
 
 		// get account data
-		account = Account.decrypt(dis.readUTF());
-		if (account.getSession() != null && account.getSession().length() > 0) {
-			Editor edit = prefs.edit();
-			edit.putString("session", account.getSession());
-			edit.commit();
+		accountData = dis.readUTF();
+		if (skipFound) {
+			account = Account.decrypt(accountData);
+			if (account.getSession() != null && account.getSession().length() > 0) {
+				Editor edit = prefs.edit();
+				edit.putString("session", account.getSession());
+				edit.commit();
+			}
 		}
 
 		// num of caches
 		int cacheCount = dis.readInt();
 		Log.i(TAG, "found caches: " + cacheCount);
-		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
-
-		Vector<SimpleGeocache> caches = new Vector<SimpleGeocache>();
+		
+		SimpleGeocache[] caches = new SimpleGeocache[cacheCount];
 		for (int i = 0; i < cacheCount; i++) {
-			SimpleGeocache cache = SimpleGeocache.load(dis);
-			if (!skipFound || !cache.isFound())
-				caches.add(cache);
+			caches[i] = SimpleGeocache.load(dis);
+			//Log.i(TAG, caches[i].toString());
 		}
 
-		Log.i(TAG, "skipped caches: " + (cacheCount - caches.size()));
 		Log.i(TAG, "caches parsed!");
-		return caches.toArray(new SimpleGeocache[0]);
+		return caches;
 	}
 
 	public static boolean isLocusAvailable(Activity activity) {

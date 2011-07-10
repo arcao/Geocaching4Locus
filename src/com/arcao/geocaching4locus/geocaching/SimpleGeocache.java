@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
+import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
+import android.location.Location;
+
 public class SimpleGeocache {
 	private final String geoCode;
 	private final String name;
@@ -198,4 +202,82 @@ public class SimpleGeocache {
 		dos.writeInt(getTrackableCount());
 		dos.writeBoolean(isFound());
 	}
+	
+	public Point toPoint() {
+		Location loc = new Location(getClass().getName());
+		loc.setLatitude(latitude);
+		loc.setLongitude(longitude);
+		
+		Point p = new Point(name, loc);
+		
+		PointGeocachingData d = new PointGeocachingData();
+		d.cacheID = geoCode;
+		d.name = name;
+		d.type = convertCacheTypeToPointCacheType(cacheType);
+		d.difficulty = difficultyRating;
+		d.terrain = terrainRating;
+		d.owner = authorName;
+		d.available = available;
+		d.archived = archived;
+		d.premiumOnly = premiumListing;
+		d.country = countryName;
+		d.state = stateName;
+		d.hidden = created.toLocaleString();
+		d.container = convertContainerTypeToPointContainerType(containerType);
+		
+		p.setGeocachingData(d);
+		return p;
+	}
+
+	private int convertContainerTypeToPointContainerType(ContainerType containerType) {
+		switch (containerType) {
+		case Micro:
+			return PointGeocachingData.CACHE_SIZE_MICRO;
+		case Small:
+			return PointGeocachingData.CACHE_SIZE_SMALL;
+		case Regular:
+			return PointGeocachingData.CACHE_SIZE_REGULAR;
+		case Large:
+			return PointGeocachingData.CACHE_SIZE_LARGE;
+		case NotChosen:
+			return PointGeocachingData.CACHE_SIZE_NOT_CHOSEN;
+		case Other:
+		case Virtual:
+		default:
+			return PointGeocachingData.CACHE_SIZE_OTHER;
+		}
+	}
+
+	private int convertCacheTypeToPointCacheType(CacheType cacheType) {
+		switch (cacheType) {
+		case EarthCache:
+			return PointGeocachingData.CACHE_TYPE_EARTH;
+		case EventCache:
+			return PointGeocachingData.CACHE_TYPE_EVENT;
+		case GpsAdventuresExhibit:
+			return PointGeocachingData.CACHE_TYPE_GPS_ADVENTURE;
+		case LetterboxHybrid:
+			return PointGeocachingData.CACHE_TYPE_LETTERBOX;
+		case LocationlessCache:
+			return PointGeocachingData.CACHE_TYPE_LOCATIONLESS;
+		case MultiCache:
+			return PointGeocachingData.CACHE_TYPE_MULTI;
+		case ProjectApeCache:
+			return PointGeocachingData.CACHE_TYPE_PROJECT_APE;
+		case TraditionalCache:
+			return PointGeocachingData.CACHE_TYPE_TRADITIONAL;
+		case UnknownCache:
+			return PointGeocachingData.CACHE_TYPE_MYSTERY;
+		case VirtualCache:
+			return PointGeocachingData.CACHE_TYPE_VIRTUAL;
+		case WebcamCache:
+			return PointGeocachingData.CACHE_TYPE_WEBCAM;
+		case WherigoCache:
+			return PointGeocachingData.CACHE_TYPE_WHERIGO;
+		default:
+			return PointGeocachingData.CACHE_TYPE_TRADITIONAL;
+		}
+	}
+	
+	
 }

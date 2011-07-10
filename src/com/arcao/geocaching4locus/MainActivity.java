@@ -1,24 +1,19 @@
 package com.arcao.geocaching4locus;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
+import menion.android.locus.addon.publiclib.ToolsPublicLib;
+import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,10 +22,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -79,7 +71,7 @@ public class MainActivity extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		res = getResources();
 
-		if (!isLocusAvailable(this)) {
+		if (!ToolsPublicLib.isLocusAvailable(this)) {
 			Log.e(TAG, "locus not found");
 			Toast.makeText(MainActivity.this, res.getString(R.string.locus_not_found), Toast.LENGTH_LONG).show();
 
@@ -214,7 +206,7 @@ public class MainActivity extends Activity implements LocationListener {
 					handler.post(new Runnable() {
 						public void run() {
 							// call intent
-							callLocus(cachesToCategories(caches));
+							callLocus(caches);
 							pd.dismiss();
 							MainActivity.this.finish();
 						}
@@ -264,152 +256,19 @@ public class MainActivity extends Activity implements LocationListener {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 	}
 
-	private void callLocus(Map<String, List<SimpleGeocache>> caches) {
-		ByteArrayOutputStream baos = null;
-		DataOutputStream dos = null;
+	private void callLocus(SimpleGeocache[] caches) {
 		try {
-			baos = new ByteArrayOutputStream();
-			dos = new DataOutputStream(baos);
-
-			// version
-			dos.writeInt(2);
-
-			// write objects names
-			dos.writeUTF("Geocaches");
-
-			// write category count - here I write three categories. Categories
-			// are defined as
-			// array of points that share same map icon!
-			Set<String> categories = caches.keySet();
-			dos.writeInt(categories.size());
-
-			// write categories
-			for (String category : categories) {
-				writeCategory(dos, category, caches.get(category));
+			// convert SimpleGeocache to Point
+			PointsData points = new PointsData("Geocaching");
+			for (SimpleGeocache cache : caches) {
+				points.addPoint(cache.toPoint());
 			}
-
-			// flush data to output stream
-			dos.flush();
-
-			// create intent with right calling method
-			Intent intent = new Intent();
-			intent.setAction(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse("menion.points:extraDataSomeName"));
-
-			// here put data into intent
-			intent.putExtra("extraDataSomeName", baos.toByteArray());
-
-			// finally start activity
-			startActivity(intent);
+			
+			ToolsPublicLib.sendData(this, points);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 			throw new IllegalArgumentException(e);
-		} finally {
-			try {
-				if (baos != null) {
-					baos.close();
-					baos = null;
-				}
-				if (dos != null) {
-					dos.close();
-					dos = null;
-				}
-			} catch (Exception e) {
-				Log.e(TAG, "callLocus()", e);
-			}
 		}
-	}
-
-	private void writeCategory(DataOutputStream dos, String category, List<SimpleGeocache> caches) {
-		try {
-			// convert resource to byte array
-			Bitmap bitmap = BitmapFactory.decodeResource(res, getBitmapForCache(caches.get(0)));
-			ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos2);
-			byte[] image = baos2.toByteArray();
-			baos2.close();
-
-			// write image data or size '0' and no data if use default image of
-			// Locus (currently just red dot) - so if you want write image use
-			// this
-			dos.writeInt(image.length); // image size
-			dos.write(image); // image data - and if you don't want use only
-								// this dos.writeInt(0);
-
-			// write all points now
-			dos.writeInt(caches.size());
-			for (SimpleGeocache cache : caches) {
-				// write item name
-				dos.writeUTF(cache.getGeoCode() + ": " + cache.getName());
-				// write item description
-				dos.writeUTF(getDescription(cache));
-				// extra values (describe below - optional)
-				dos.writeUTF("");
-				// write latitude
-				dos.writeDouble(cache.getLatitude());
-				// write longitude
-				dos.writeDouble(cache.getLongitude());
-			}
-		} catch (Exception e) {
-			Log.e(TAG, "writeCategory()", e);
-		}
-	}
-
-	protected int getBitmapForCache(SimpleGeocache cache) {
-		switch (cache.getCacheType()) {
-			case EarthCache:
-				return R.drawable.marker_cache_earth;
-			case EventCache:
-				return R.drawable.marker_cache_event;
-			case GpsAdventuresExhibit:
-				return R.drawable.marker_cache_mystery;
-			case LetterboxHybrid:
-				return R.drawable.marker_cache_letterbox;
-			case LocationlessCache:
-				return R.drawable.marker_cache_locationless;
-			case MultiCache:
-				return R.drawable.marker_cache_multi;
-			case ProjectApeCache:
-				return R.drawable.marker_cache_ape;
-			case TraditionalCache:
-				return R.drawable.marker_cache_traditional;
-			case UnknownCache:
-				return R.drawable.marker_cache_mystery;
-			case VirtualCache:
-				return R.drawable.marker_cache_virtual;
-			case WebcamCache:
-				return R.drawable.marker_cache_traditional;
-			case WherigoCache:
-				return R.drawable.marker_cache_wherigo;
-			default:
-				return R.drawable.marker_cache_traditional;
-		}
-	}
-
-	protected String getDescription(SimpleGeocache cache) {
-		return res.getString(
-				R.string.description,
-				cache.getGeoCode(),
-				cache.getAuthorName(),
-				cache.getCacheType().toString(),
-				cache.getContainerType().toString(),
-				cache.getDifficultyRating(),
-				cache.getTerrainRating()
-				);
-	}
-
-	protected Map<String, List<SimpleGeocache>> cachesToCategories(SimpleGeocache[] caches) {
-		Map<String, List<SimpleGeocache>> result = new HashMap<String, List<SimpleGeocache>>();
-
-		for (SimpleGeocache cache : caches) {
-			String key = cache.getCacheType() + "|" + cache.isFound() + "|" + !cache.isAvailable();
-			if (!result.containsKey(key)) {
-				result.put(key, new ArrayList<SimpleGeocache>());
-			}
-
-			result.get(key).add(cache);
-		}
-		return result;
 	}
 
 	protected String getFilterUrlParam() {
@@ -440,7 +299,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 		URL url = new URL(String.format((Locale) null, SERVICE_URL, latitude, longitude, accountData, getFilterUrlParam(), distance, limit));
 		Log.i(TAG, "downloading " + url);
-		//Log.i(TAG, account.toString());
 
 		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
 		if (prefs.getBoolean("compression", false)) {
@@ -491,25 +349,10 @@ public class MainActivity extends Activity implements LocationListener {
 		SimpleGeocache[] caches = new SimpleGeocache[cacheCount];
 		for (int i = 0; i < cacheCount; i++) {
 			caches[i] = SimpleGeocache.load(dis);
-			//Log.i(TAG, caches[i].toString());
 		}
 
 		Log.i(TAG, "caches parsed!");
 		return caches;
-	}
-
-	public static boolean isLocusAvailable(Activity activity) {
-		try {
-			// set intent
-			final PackageManager packageManager = activity.getPackageManager();
-			final Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse("menion.points:x"));
-
-			// return true or false
-			return packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	public void onLocationChanged(Location location) {

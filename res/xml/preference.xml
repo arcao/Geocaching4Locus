@@ -7,25 +7,27 @@
     </PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_filter">
 		<PreferenceScreen android:title="@string/pref_title_filter">
-			<CheckBoxPreference android:key="filter_0" android:title="Earthcache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_1" android:title="Event Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_2" android:title="GPS Adventures Exhibit" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_3" android:title="Letterbox Hybrid" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_4" android:title="Locationless (Reverse) Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_5" android:title="Multi-cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_6" android:title="Project APE Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_7" android:title="Traditional Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_8" android:title="Unknown Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_9" android:title="Virtual Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_10" android:title="Webcam Cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_11" android:title="Wherigo Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_0" android:title="Traditional Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_1" android:title="Multi-cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_2" android:title="Unknown Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_3" android:title="Virtual Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_4" android:title="Project APE Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_5" android:title="Earthcache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_6" android:title="Letterbox Hybrid" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_7" android:title="Wherigo Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_8" android:title="Event Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_9" android:title="Mega-Event Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_10" android:title="Cache In Trash Out Event" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_11" android:title="GPS Adventures Exhibit" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_12" android:title="Webcam Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_13" android:title="Locationless (Reverse) Cache" android:defaultValue="true"/>
 		</PreferenceScreen>
 		<CheckBoxPreference android:summary="@string/pref_skip_found_summary" android:title="@string/pref_skip_found" android:key="filter_skip_found" android:defaultValue="true"/>
 		<EditTextPreference android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:key="filter_distance" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
 		<com.hlidskialf.android.preference.SeekBarPreference android:max="200" android:title="@string/pref_count_of_caches" android:key="filter_count_of_caches" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="50" android:summary="@string/pref_count_of_caches_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">
-		<CheckBoxPreference android:key="compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression"/>
+		<CheckBoxPreference android:key="compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>
 		<CheckBoxPreference android:key="imperial_units" android:summary="@string/pref_imperial_units_summary" android:title="@string/pref_imperial_units"/>
 	</PreferenceCategory>
 </PreferenceScreen>

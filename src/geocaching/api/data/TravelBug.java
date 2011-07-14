@@ -17,6 +17,8 @@ public class TravelBug {
 	private final String trackingNumber;
 	private final String lookupCode;
 	
+	private static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s"; 
+	
 	public TravelBug(String guid, String name, String goal, String description,
 			String travelBugTypeName, String travelBugTypeImage,
 			String ownerUserName, String currentCacheCode,
@@ -120,7 +122,7 @@ public class TravelBug {
 		// p.origin
 		p.owner = ownerUserName;
 		// p.released
-		// p.srcDetails
+		p.srcDetails = String.format(TRACKABLE_URL, trackingNumber);
 		
 		return p;
 	}

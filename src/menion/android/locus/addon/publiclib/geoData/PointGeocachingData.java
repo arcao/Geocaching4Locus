@@ -189,6 +189,7 @@ public class PointGeocachingData implements Parcelable {
     	}
     }
 
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		dest.writeInt(id);
@@ -219,6 +220,7 @@ public class PointGeocachingData implements Parcelable {
 		dest.writeInt(computed ? 1 : 0);
 	}
 	
+	@Override
 	public int describeContents() {
 		return 0;
 	}

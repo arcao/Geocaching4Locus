@@ -66,6 +66,7 @@ public class PointGeocachingDataTravelBug implements Parcelable {
     	}
     }
     
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		dest.writeString(name);
@@ -78,6 +79,7 @@ public class PointGeocachingDataTravelBug implements Parcelable {
 		dest.writeString(details);
 	}
 	
+	@Override
 	public int describeContents() {
 		return 0;
 	}

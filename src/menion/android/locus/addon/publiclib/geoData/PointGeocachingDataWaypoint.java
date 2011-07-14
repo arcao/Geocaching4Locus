@@ -56,6 +56,7 @@ public class PointGeocachingDataWaypoint implements Parcelable {
     	}
     }
     
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		dest.writeString(name);
@@ -66,6 +67,7 @@ public class PointGeocachingDataWaypoint implements Parcelable {
 		dest.writeDouble(lon);
 	}
 	
+	@Override
 	public int describeContents() {
 		return 0;
 	}

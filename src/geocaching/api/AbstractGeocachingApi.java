@@ -17,11 +17,11 @@ public abstract class AbstractGeocachingApi {
 		return session;
 	}
 	
-	public void openSession(String session) {
+	public void openSession(String session) throws SessionInvalidException {
 		this.session = session;
 	}
 	
-	public abstract void openSession(String userName, String password);	
+	public abstract void openSession(String userName, String password) throws SessionInvalidException;	
 	public abstract void closeSession();
 	public abstract boolean isSessionValid();
 	public abstract List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles, CacheType[] cacheTypes) throws SessionInvalidException;

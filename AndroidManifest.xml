@@ -20,5 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name="PreferenceActivity" android:label="@string/preferences" android:theme="@android:style/Theme.Black"></activity>
+        <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
     </application>
 </manifest>

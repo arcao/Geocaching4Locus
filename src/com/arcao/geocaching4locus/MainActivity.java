@@ -21,6 +21,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
+import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.ToolsPublicLib;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
@@ -48,6 +49,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.Coordinates;
 
@@ -271,7 +273,7 @@ public class MainActivity extends Activity implements LocationListener {
 				points.addPoint(cache.toPoint());
 			}
 			
-			ToolsPublicLib.sendData(this, points);
+			DisplayData.sendDataCursor(this, points, "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), false);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 			throw new IllegalArgumentException(e);
@@ -313,14 +315,20 @@ public class MainActivity extends Activity implements LocationListener {
 		int limit = prefs.getInt("filter_count_of_caches", 50);
 		
 		AbstractGeocachingApi api = new IPhoneGeocachingApi();
-		if (skipFound) {
-			if (account.getSession() == null || account.getSession().length() == 0) {
-				api.openSession(account.getUserName(), account.getPassword());
+		try {
+			if (skipFound) {
+				if (account.getSession() == null || account.getSession().length() == 0) {
+					api.openSession(account.getUserName(), account.getPassword());
+				} else {
+					api.openSession(account.getSession());
+				}
 			} else {
-				api.openSession(account.getSession());
+				api.openSession(null);
 			}
-		} else {
-			api.openSession(null);
+		} catch (SessionInvalidException e) {
+			Log.e(TAG, "Creditials not valid.", e);
+			// TODO show error and open setting dialog
+			return new ArrayList<SimpleGeocache>();
 		}
 		
 		try {
@@ -337,8 +345,14 @@ public class MainActivity extends Activity implements LocationListener {
 			
 			return caches;
 		} catch (SessionInvalidException e) {
-			api.openSession(account.getUserName(), account.getPassword());
-			
+			try {
+				api.openSession(account.getUserName(), account.getPassword());
+			} catch (SessionInvalidException ex) {
+				Log.e(TAG, "Creditials not valid.", ex);
+				// TODO show error and open setting dialog
+				return new ArrayList<SimpleGeocache>();
+			}
+						
 			try {
 				List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
 				int count = caches.size();
@@ -352,6 +366,7 @@ public class MainActivity extends Activity implements LocationListener {
 				
 				return caches;
 			} catch (SessionInvalidException ex) {
+				Log.e(TAG, "Creditials not valid.", ex);
 				// TODO show error and open setting dialog
 				return new ArrayList<SimpleGeocache>();
 			}

@@ -47,6 +47,7 @@ public class PointGeocachingDataLog  implements Parcelable {
     	}
     }
     
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		dest.writeInt(type);
@@ -56,6 +57,7 @@ public class PointGeocachingDataLog  implements Parcelable {
 		dest.writeString(logText);
 	}
 	
+	@Override
 	public int describeContents() {
 		return 0;
 	}

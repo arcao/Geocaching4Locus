@@ -1,6 +1,6 @@
 package geocaching.api.data;
 
-import geocaching.api.data.type.CacheType;
+import geocaching.api.data.type.WayPointType;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -8,17 +8,59 @@ import java.util.Date;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
 
 public class WayPoint {
-	private String codeName;
-	private Date time;
-	private String waypointGeoCode;
-	private String cacheGeoCode;
-	private CacheType cacheType;
-	private String name;
-	private String iconName;
-	private double latitude;
-	private double longitude;
-	private String note;
+	private final double latitude;
+	private final double longitude;
+	private final Date time;
+	private final String waypointGeoCode;
+	private final String name;
+	private final String note;
+	private final WayPointType wayPointType;
+	private final String iconName;
+		
 	
+	public WayPoint(double longitude, double latitude, Date time, String waypointGeoCode, String name, String note, WayPointType wayPointType) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.time = time;
+		this.waypointGeoCode = waypointGeoCode;
+		this.name = name;
+		this.note = note;
+		this.wayPointType = wayPointType;
+		this.iconName = wayPointType.getIconName();
+	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
+	public Date getTime() {
+		return time;
+	}
+	
+	public String getWaypointGeoCode() {
+		return waypointGeoCode;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getNote() {
+		return note;
+	}
+	
+	public WayPointType getWayPointType() {
+		return wayPointType;
+	}
+	
+	public String getIconName() {
+		return iconName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -41,12 +83,12 @@ public class WayPoint {
 
 	public PointGeocachingDataWaypoint toPointGeocachingDataWaypoint() {
 		PointGeocachingDataWaypoint w = new PointGeocachingDataWaypoint();
-		//w.lat = latitude;
-		//w.lon = longitude;
-		//w.description = note;
-		//w.name = name;
-		//w.typeImagePath = iconName;
-		//w.type = "";
+		w.lat = latitude;
+		w.lon = longitude;
+		w.description = note;
+		w.name = name;
+		w.typeImagePath = iconName;
+		w.type = wayPointType.getId();
 		
 		return w;
 	}

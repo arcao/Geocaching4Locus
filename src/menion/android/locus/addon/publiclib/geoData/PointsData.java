@@ -12,8 +12,11 @@ public class PointsData implements Parcelable {
 
 	private static final int VERSION = 0;
 	
+	// Unique name. PointsData send to Locus with same name will be overwrited in Locus
 	private String mName;
+	// icon applied to whole PointsData
 	private Bitmap mBitmap;
+	// ArrayList of all points stored in this object
 	private ArrayList<Point> mPoints;
 	
 	public PointsData(String uniqueName) {
@@ -56,6 +59,7 @@ public class PointsData implements Parcelable {
         }
     };
     
+	@Override
 	public int describeContents() {
 		return 0;
 	}
@@ -79,6 +83,7 @@ public class PointsData implements Parcelable {
     	}
     }
     
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		dest.writeString(mName);

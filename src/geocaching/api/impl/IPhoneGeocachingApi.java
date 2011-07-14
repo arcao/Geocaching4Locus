@@ -9,6 +9,7 @@ import geocaching.api.data.WayPoint;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 import geocaching.api.data.type.LogType;
+import geocaching.api.data.type.WayPointType;
 import geocaching.api.exception.SessionInvalidException;
 import geocaching.api.util.StringUtils;
 
@@ -66,7 +67,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		builder = new SAXBuilder();	
 	}
 
-	public void openSession(String userName, String password) {
+	public void openSession(String userName, String password) throws SessionInvalidException {
 		try {
 			Element root = callGet(
 					"OpenSessionEx?licenseKey=" + APP_KEY +
@@ -76,6 +77,8 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 					"&language=en&version=4.0&checksum=&deviceType=iPhone&schemaName=SessionDataSet2.xsd"
 			);
 		    
+			checkSessionError(root);
+			
 		    Element session2 = root.getChild("Session2", NS_SESSION_DATA_SET);
 		    Element sessionGuid = session2.getChild("SessionGuid", NS_SESSION_DATA_SET);
 		    session = sessionGuid.getTextTrim();
@@ -86,7 +89,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		}
 	}
 	
-	public void openSession(String session) {
+	public void openSession(String session) throws SessionInvalidException {
 		if (session != null) {
 			super.openSession(session);
 			return;
@@ -217,7 +220,15 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 				continue;
 			}
 			
-			waypoints.add(new WayPoint());
+			waypoints.add(new WayPoint(
+					Double.parseDouble(waypointEl.getAttributeValue("lon", "0")), // longitude
+					Double.parseDouble(waypointEl.getAttributeValue("lat", "0")), //latitude
+					parseGPXDate(waypointEl.getChildTextTrim("time", NS_GPX)), // time
+					waypointEl.getChildTextTrim("name", NS_GPX), // waypoint geo code
+					waypointEl.getChildTextTrim("desc", NS_GPX), // name
+					waypointEl.getChildTextTrim("cmt", NS_GPX), // cmt
+					WayPointType.parseWayPointType(waypointEl.getChildTextTrim("sym", NS_GPX))
+			));
 			i++;
 		}
 		
@@ -225,29 +236,36 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		Element extCache = cache.getChild("extensions", NS_GPX).getChild("cache", NS_GS);
 				
 		// parse logs
-		@SuppressWarnings("unchecked")
-		List<Element> logsEl = extCache.getChild("logs", NS_GS).getChildren("log", NS_GS);
 		List<CacheLog> logs = new ArrayList<CacheLog>();
-
-		for(Element logEl : logsEl) {
-			logs.add(new CacheLog(
-				parseGPXDate(logEl.getChildTextTrim("date", NS_GS)), // date
-				LogType.parseLogType(logEl.getChildTextTrim("type", NS_GS)), // logType
-				logEl.getChildTextTrim("finder", NS_GS), // author
-				logEl.getChildTextTrim("text", NS_GS) //text
-			));
+		Element logsContainer = extCache.getChild("logs", NS_GS);
+		if (logsContainer != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> logsEl = logsContainer.getChildren("log", NS_GS);
+	
+			for(Element logEl : logsEl) {
+				logs.add(new CacheLog(
+					parseGPXDate(logEl.getChildTextTrim("date", NS_GS)), // date
+					LogType.parseLogType(logEl.getChildTextTrim("type", NS_GS)), // logType
+					logEl.getChildTextTrim("finder", NS_GS), // author
+					logEl.getChildTextTrim("text", NS_GS) //text
+				));
+			}
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Element> trackablesEl = extCache.getChild("travelbugs", NS_GS).getChildren("travelbugs", NS_GS);
+		// parse travel bugs
 		List<TravelBug> travelBugs = new ArrayList<TravelBug>();
-		
-		for(Element trackableEl : trackablesEl) {
-			travelBugs.add(new TravelBug(
-				trackableEl.getAttributeValue("ref"),
-				trackableEl.getChildTextTrim("name", NS_GS),
-				cache.getChildTextTrim("name", NS_GS)
-			));
+		Element trackableContainer = extCache.getChild("travelbugs", NS_GS);
+		if (trackableContainer != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> trackablesEl = trackableContainer.getChildren("travelbug", NS_GS);
+						
+			for(Element trackableEl : trackablesEl) {
+				travelBugs.add(new TravelBug(
+					trackableEl.getAttributeValue("ref"),
+					trackableEl.getChildTextTrim("name", NS_GS),
+					cache.getChildTextTrim("name", NS_GS)
+				));
+			}
 		}
 				
 		// parse cache

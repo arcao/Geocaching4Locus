@@ -47,7 +47,19 @@ public class Point implements Parcelable {
 		return mExtraData;
 	}
 	
-	public void setExtra(String btnName, String packageName, String className,
+	/**
+	 * Simply allow set callback value on point
+	 * @param btnName Name displayed on button
+	 * @param packageName this value is used for creating intent that
+	 *  will be called in callback (for example com.super.application)
+	 * @param className the name of the class inside of com.super.application
+	 *  that implements the component (for example com.super.application.Main)
+	 * @param returnDataName String uder which data will be stored. Can be
+	 *  retrieved by String data = getIntent.getStringExtra("returnData");
+	 * @param returnDataValue String uder which data will be stored. Can be
+	 *  retrieved by String data = getIntent.getStringExtra("returnData");
+	 */
+	public void setCallback(String btnName, String packageName, String className,
 			String returnDataName, String returnDataValue) {
 		StringBuffer buff = new StringBuffer();
 		buff.append("intent").append(";");
@@ -105,10 +117,12 @@ public class Point implements Parcelable {
     	}
     }
     
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
+	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
 		// write name

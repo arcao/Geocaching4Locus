@@ -201,8 +201,7 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {
-			}
+			public void onCancel(DialogInterface dialog) {}
 		});
 
 		searchThread = new Thread() {
@@ -242,6 +241,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
 			public void onCancel(DialogInterface dialog) {
+				locationManager.removeUpdates(MainActivity.this);
+				
 				Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 				if (location == null)
 					location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -334,9 +335,9 @@ public class MainActivity extends Activity implements LocationListener {
 		try {
 			List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
 			int count = caches.size();
+			prepareDownloadStatus(count);
 			
 			Log.i(TAG, "found caches: " + count);
-			
 			for(int i = 0; i < count; i++) {
 				SimpleGeocache cache = caches.get(i);
 				updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
@@ -356,6 +357,7 @@ public class MainActivity extends Activity implements LocationListener {
 			try {
 				List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
 				int count = caches.size();
+				prepareDownloadStatus(count);
 				
 				Log.i(TAG, "found caches: " + count);
 				for(int i = 0; i < count; i++) {
@@ -382,13 +384,29 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 	}
 	
+	private void prepareDownloadStatus(final int count) {
+		handler.post(new Runnable() {
+			public void run() {
+				if (pd != null && pd.isShowing())
+					pd.dismiss();
+				
+				pd = new ProgressDialog(MainActivity.this);
+				pd.setCancelable(true);
+				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				pd.setProgress(0);
+				pd.setMax(count);
+				pd.setMessage("");
+				pd.show();
+			}
+		});
+	}
+	
 	private void updateDownloadStatus(final int current, final int count, final String geoCode, final String name) {
 		Log.i(TAG, String.format("downloading (%d/%d): %s - %s", current, count, geoCode, name));
 		handler.post(new Runnable() {
 			public void run() {
-				pd.setProgress(current);
-				pd.setMax(count);
 				pd.setMessage(res.getString(R.string.downloading_cache, geoCode, name, current, count));
+				pd.setProgress(current);
 			}
 		});
 	}

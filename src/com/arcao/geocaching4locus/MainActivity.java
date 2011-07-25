@@ -1,28 +1,17 @@
 package com.arcao.geocaching4locus;
 
 import geocaching.api.AbstractGeocachingApi;
-import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.SessionInvalidException;
 import geocaching.api.impl.IPhoneGeocachingApi;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Vector;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
 
 import menion.android.locus.addon.publiclib.DisplayData;
-import menion.android.locus.addon.publiclib.ToolsPublicLib;
+import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -40,12 +29,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,8 +45,6 @@ import com.arcao.geocaching4locus.util.Coordinates;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
-	private static final String SERVICE_URL = "http://hg-service.appspot.com/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f&limit=%d";
-	//private static final String SERVICE_URL = "http://10.20.20.10:8888/hgservice/search?lat=%f&lon=%f&account=%s&filter=%s&distance=%f&limit=%d";
 
 	private Resources res;
 	private Thread searchThread;
@@ -74,13 +62,17 @@ public class MainActivity extends Activity implements LocationListener {
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
 
+	private CheckBox simpleCacheDataCheckBox;
+
+	private CheckBox importCachesCheckBox;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		res = getResources();
 
-		if (!ToolsPublicLib.isLocusAvailable(this)) {
+		if (!LocusUtils.isLocusAvailable(this)) {
 			Log.e(TAG, "locus not found");
 			Toast.makeText(MainActivity.this, res.getString(R.string.locus_not_found), Toast.LENGTH_LONG).show();
 
@@ -97,6 +89,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
+		simpleCacheDataCheckBox = (CheckBox) findViewById(R.id.simpleCacheDataCheckBox);
+		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
 
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
@@ -136,6 +130,24 @@ public class MainActivity extends Activity implements LocationListener {
 				}
 			}
 		});
+		
+		simpleCacheDataCheckBox.setChecked(prefs.getBoolean("simple_cache_data", false));
+		simpleCacheDataCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				Editor edit = prefs.edit();
+				edit.putBoolean("simple_cache_data", isChecked);
+				edit.commit();
+			}
+		});
+		
+		importCachesCheckBox.setChecked(prefs.getBoolean("import_caches", false));
+		importCachesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				Editor edit = prefs.edit();
+				edit.putBoolean("import_caches", isChecked);
+				edit.commit();
+			}
+		});
 
 		if (!hasCoordinates) {
 			acquireCoordinates();
@@ -152,6 +164,12 @@ public class MainActivity extends Activity implements LocationListener {
 		String session = prefs.getString("session", null);
 
 		account = new Account(userName, password, session);
+	}
+	
+	@Override
+	protected void onStop() {
+		locationManager.removeUpdates(this);
+		super.onStop();
 	}
 
 	@Override
@@ -267,6 +285,8 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	private void callLocus(List<SimpleGeocache> caches) {
+		boolean importCaches = prefs.getBoolean("import_caches", false);
+		
 		try {
 			// convert SimpleGeocache to Point
 			PointsData points = new PointsData("Geocaching");
@@ -274,23 +294,11 @@ public class MainActivity extends Activity implements LocationListener {
 				points.addPoint(cache.toPoint());
 			}
 			
-			DisplayData.sendDataCursor(this, points, "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), false);
+			DisplayData.sendDataCursor(this, points, "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), importCaches);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 			throw new IllegalArgumentException(e);
 		}
-	}
-
-	private String getFilterUrlParam() {
-		Vector<String> filter = new Vector<String>();
-
-		for (int i = 0; i < CacheType.values().length; i++) {
-			if (prefs.getBoolean("filter_" + i, true)) {
-				filter.add(CacheType.values()[i].toString());
-			}
-		}
-
-		return URLEncoder.encode(TextUtils.join(",", filter));
 	}
 	
 	private CacheType[] getCacheTypeFilterResult() {
@@ -307,6 +315,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) {
 		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
+		
+		boolean simpleCacheData = prefs.getBoolean("simple_cache_data", false);
 		
 		double distance = prefs.getFloat("distance", 160.9344F);
 		if (!prefs.getBoolean("imperial_units", false)) {
@@ -338,10 +348,12 @@ public class MainActivity extends Activity implements LocationListener {
 			prepareDownloadStatus(count);
 			
 			Log.i(TAG, "found caches: " + count);
-			for(int i = 0; i < count; i++) {
-				SimpleGeocache cache = caches.get(i);
-				updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
-				caches.set(i, api.getCache(cache.getGeoCode()));
+			if (!simpleCacheData) {				
+				for(int i = 0; i < count; i++) {
+					SimpleGeocache cache = caches.get(i);
+					updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
+					caches.set(i, api.getCache(cache.getGeoCode()));
+				}
 			}
 			
 			return caches;
@@ -360,12 +372,13 @@ public class MainActivity extends Activity implements LocationListener {
 				prepareDownloadStatus(count);
 				
 				Log.i(TAG, "found caches: " + count);
-				for(int i = 0; i < count; i++) {
-					SimpleGeocache cache = caches.get(i);
-					updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
-					caches.set(i, api.getCache(cache.getGeoCode()));
+				if (!simpleCacheData) {				
+					for(int i = 0; i < count; i++) {
+						SimpleGeocache cache = caches.get(i);
+						updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
+						caches.set(i, api.getCache(cache.getGeoCode()));
+					}
 				}
-				
 				return caches;
 			} catch (SessionInvalidException ex) {
 				Log.e(TAG, "Creditials not valid.", ex);
@@ -411,78 +424,6 @@ public class MainActivity extends Activity implements LocationListener {
 		});
 	}
 		
-//	protected SimpleGeocache[] downloadCaches(double latitude, double longitude) throws IOException {
-//		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
-//
-//		double distance = prefs.getFloat("distance", 160.9344F);
-//		if (!prefs.getBoolean("imperial_units", false)) {
-//			distance = distance * 1.609344;
-//		}
-//
-//		int limit = prefs.getInt("filter_count_of_caches", 50);
-//		
-//		String accountData = Account.encrypt("", "", "");
-//		if (skipFound)
-//			accountData = account.encrypt();
-//
-//		URL url = new URL(String.format((Locale) null, SERVICE_URL, latitude, longitude, accountData, getFilterUrlParam(), distance, limit));
-//		Log.i(TAG, "downloading " + url);
-//
-//		HttpURLConnection uc = (HttpURLConnection) url.openConnection();
-//		if (prefs.getBoolean("compression", false)) {
-//			uc.setRequestProperty("Accept", "text/plain, multipart/x-datastream, gzip, */*; q=0.01");
-//			uc.setRequestProperty("Accept-Encoding", "gzip");
-//		}
-//
-//		final String encoding = uc.getContentEncoding();
-//		InputStream is;
-//
-//		if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
-//			Log.i(TAG, "downloadCaches(): GZIP OK");
-//			is = new GZIPInputStream(uc.getInputStream());
-//		} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
-//			Log.i(TAG, "downloadCaches(): DEFLATE OK");
-//			is = new InflaterInputStream(uc.getInputStream(), new Inflater(true));
-//		} else {
-//			Log.i(TAG, "downloadCaches(): WITHOUT ENCODING");
-//			is = uc.getInputStream();
-//		}
-//
-//		Log.i(TAG, "parsing caches...");
-//		DataInputStream dis = new DataInputStream(is);
-//
-//		// protocol version
-//		if (dis.readInt() != 1)
-//			throw new IOException("Wrong protocol version.");
-//
-//		// result: 0 = OK
-//		if (dis.readInt() != 0)
-//			throw new IOException("Response error code is not 0.");
-//
-//		// get account data
-//		accountData = dis.readUTF();
-//		if (skipFound) {
-//			account = Account.decrypt(accountData);
-//			if (account.getSession() != null && account.getSession().length() > 0) {
-//				Editor edit = prefs.edit();
-//				edit.putString("session", account.getSession());
-//				edit.commit();
-//			}
-//		}
-//
-//		// num of caches
-//		int cacheCount = dis.readInt();
-//		Log.i(TAG, "found caches: " + cacheCount);
-//		
-//		SimpleGeocache[] caches = new SimpleGeocache[cacheCount];
-//		for (int i = 0; i < cacheCount; i++) {
-//			caches[i] = SimpleGeocache.load(dis);
-//		}
-//
-//		Log.i(TAG, "caches parsed!");
-//		return caches;
-//	}
-
 	public void onLocationChanged(Location location) {
 		locationManager.removeUpdates(this);
 		if (location == null) {
@@ -516,9 +457,6 @@ public class MainActivity extends Activity implements LocationListener {
 				pd.dismiss();
 			}
 		});
-
-		// if (searchThread != null && !searchThread.isAlive())
-		// searchThread.start();
 	}
 
 	public void onProviderDisabled(String provider) {

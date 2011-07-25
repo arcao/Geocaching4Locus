@@ -26,6 +26,8 @@
 					</TableRow>
 				</TableLayout>
 			</LinearLayout>
+			<CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/simpleCacheDataCheckBox" android:text="@string/download_simple_cache_data" />
+			<CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/importCachesCheckBox" android:text="@string/import_caches" />
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="20dip">
 				<Button android:onClick="onClickSearch" android:layout_height="wrap_content" android:id="@+id/search" android:text="@string/search_and_import_button" android:layout_width="wrap_content" android:layout_gravity="center"></Button>
 			</LinearLayout>

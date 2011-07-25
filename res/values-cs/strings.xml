@@ -34,4 +34,7 @@
     <string name="pref_use_compression_summary">Použít HTTP kompresi (experimentální)</string>
     <string name="pref_imperial_units">Imperiální jednotky</string>
     <string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
+    
+    <string name="download_simple_cache_data">Pouze základní data o keši</string>
+    <string name="import_caches">Importovat keše</string>
 </resources>

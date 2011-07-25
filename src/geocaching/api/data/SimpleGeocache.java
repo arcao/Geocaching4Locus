@@ -228,8 +228,8 @@ public class SimpleGeocache {
 		d.premiumOnly = premiumListing;
 		d.country = countryName;
 		d.state = stateName;
-		d.hidden = XSD_TIME_FMT.format(created);
-		d.exported = XSD_TIME_FMT.format(new Date());
+		d.hidden = Long.toString(created.getTime());
+		d.exported = Long.toString(new Date().getTime());
 		d.container = containerType.getId();
 		
 		p.setGeocachingData(d);

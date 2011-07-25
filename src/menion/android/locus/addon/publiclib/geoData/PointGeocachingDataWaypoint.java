@@ -5,8 +5,10 @@ import android.os.Parcelable;
 
 public class PointGeocachingDataWaypoint implements Parcelable {
 	
-	private static final int VERSION = 0;
+	private static final int VERSION = 1;
 	
+	/* code of wpt */
+	public String code;
 	/* name of waypoint */
 	public String name;
 	/* description (may be HTML code) */
@@ -21,6 +23,7 @@ public class PointGeocachingDataWaypoint implements Parcelable {
 	public double lon;
 	
 	public PointGeocachingDataWaypoint() {
+		code = "";
 		name = "";
 		description = "";
 		type = "";
@@ -45,6 +48,8 @@ public class PointGeocachingDataWaypoint implements Parcelable {
     
     public PointGeocachingDataWaypoint(Parcel in) {
     	switch (in.readInt()) {
+    	case 1:
+    		code = in.readString();
     	case 0:
     		name = in.readString();
     		description = in.readString();
@@ -59,6 +64,7 @@ public class PointGeocachingDataWaypoint implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(VERSION);
+		dest.writeString(code);
 		dest.writeString(name);
 		dest.writeString(description);
 		dest.writeString(type);

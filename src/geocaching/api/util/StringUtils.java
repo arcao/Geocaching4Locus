@@ -209,7 +209,8 @@ public class StringUtils {
      * @return the joined String, <code>null</code> if null iterator input
      * @since 2.0
      */
-    public static String join(Iterator iterator, char separator) {
+    @SuppressWarnings("rawtypes")
+	public static String join(Iterator iterator, char separator) {
         if (iterator == null) {
             return null;
         }
@@ -239,7 +240,8 @@ public class StringUtils {
      * @param separator  the separator character to use, null treated as ""
      * @return the joined String, <code>null</code> if null iterator input
      */
-    public static String join(Iterator iterator, String separator) {
+    @SuppressWarnings("rawtypes")
+	public static String join(Iterator iterator, String separator) {
         if (iterator == null) {
             return null;
         }

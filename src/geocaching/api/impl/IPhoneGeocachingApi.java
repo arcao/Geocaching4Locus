@@ -10,7 +10,10 @@ import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 import geocaching.api.data.type.LogType;
 import geocaching.api.data.type.WayPointType;
-import geocaching.api.exception.SessionInvalidException;
+import geocaching.api.exception.GeocachingApiException;
+import geocaching.api.exception.InvalidSessionException;
+import geocaching.api.exception.InvalidCredentialsException;
+import geocaching.api.impl.iphone_geocaching_api.StatusCode;
 import geocaching.api.util.StringUtils;
 
 import java.io.InputStream;
@@ -55,6 +58,8 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 	// Date formats
 	private static final DateFormat[] GPX_TIME_FMT = {
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS"),
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"),
+		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ"),
 		new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 	};
 	private static final DateFormat XSD_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -67,8 +72,8 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		builder = new SAXBuilder();	
 	}
 
-	public void openSession(String userName, String password) throws SessionInvalidException {
-		try {
+	public void openSession(String userName, String password) throws GeocachingApiException {
+		try {		
 			Element root = callGet(
 					"OpenSessionEx?licenseKey=" + APP_KEY +
 					"&userName=" + URLEncoder.encode(userName, "UTF-8") + 
@@ -77,7 +82,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 					"&language=en&version=4.0&checksum=&deviceType=iPhone&schemaName=SessionDataSet2.xsd"
 			);
 		    
-			checkSessionError(root);
+			checkError(root);
 			
 		    Element session2 = root.getChild("Session2", NS_SESSION_DATA_SET);
 		    Element sessionGuid = session2.getChild("SessionGuid", NS_SESSION_DATA_SET);
@@ -89,7 +94,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		}
 	}
 	
-	public void openSession(String session) throws SessionInvalidException {
+	public void openSession(String session) throws GeocachingApiException {
 		if (session != null) {
 			super.openSession(session);
 			return;
@@ -106,7 +111,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 	}
 
 	public List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles, CacheType[] cacheTypes)
-			throws SessionInvalidException {
+			throws GeocachingApiException {
 		Element root;
 		try {
 			root = callGet(
@@ -125,7 +130,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 			return null;
 		}
 		
-		checkSessionError(root);
+		checkError(root);
 		
 		@SuppressWarnings("unchecked")
 		List<Element> list = root.getChildren("Cache", NS_CACHE_SIMPLE_DATA_SET);
@@ -160,14 +165,14 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		return caches;
 	}
 
-	public SimpleGeocache getCacheSimple(String cacheCode) throws SessionInvalidException {
+	public SimpleGeocache getCacheSimple(String cacheCode) throws GeocachingApiException {
 		Element root = callGet(
 			"GetCachesByCacheCode?sessionToken=" + session +
 			"&schemaName=CacheSimpleDataSet.xsd" + 
 			"&cacheCode=" + cacheCode
 		);
 		
-		checkSessionError(root);
+		checkError(root);
 	
 		Element child = root.getChild("Cache", NS_CACHE_SIMPLE_DATA_SET);
 		if (child == null || child.getChild("CacheCode", NS_CACHE_SIMPLE_DATA_SET) == null)
@@ -196,7 +201,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		);
 	}
 
-	public Geocache getCache(String cacheCode) throws SessionInvalidException {
+	public Geocache getCache(String cacheCode) throws GeocachingApiException {
 		int i;
 		
 		Element root = callGet(
@@ -205,7 +210,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 				"&cacheCode=" + cacheCode
 		);
 			
-		checkSessionError(root);
+		checkError(root);
 		
 		@SuppressWarnings("unchecked")
 		List <Element> waypointsEl = root.getChildren("wpt", NS_GPX);
@@ -300,20 +305,20 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		return g;
 	}
 
-	public List<WayPoint> getWayPointsByCache(String cacheCode) throws SessionInvalidException {
-		return null;
+	public List<WayPoint> getWayPointsByCache(String cacheCode) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
 	}
 
-	public TravelBug getTravelBug(String travelBugCode) throws SessionInvalidException {
-		return null;
+	public TravelBug getTravelBug(String travelBugCode) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
 	}
 
-	public List<TravelBug> getTravelBugsByCache(String cacheCode) throws SessionInvalidException {
-		return null;
+	public List<TravelBug> getTravelBugsByCache(String cacheCode) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
 	}
 
-	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws SessionInvalidException {
-		return null;
+	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
 	}
 	
 // ----------------------- Helper methods
@@ -350,19 +355,36 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		return null;
 	}
 	
-	private void checkSessionError(Element root) throws SessionInvalidException {
+	private void checkError(Element root) throws GeocachingApiException {
 		if (root.getChild("Status", NS_STATUS_DATA_SET) != null) {
-			throw new SessionInvalidException(root
-				.getChild("Status", NS_STATUS_DATA_SET)
-				.getChildTextTrim("StatusCode", NS_STATUS_DATA_SET)
-			);
+			Element statusElement = root.getChild("Status", NS_STATUS_DATA_SET);
+			String status = statusElement.getChildTextTrim("StatusCode", NS_STATUS_DATA_SET);
+			
+			StatusCode statusCode = StatusCode.parse(status);
+			String statusMessage = statusCode.getErrorMessage();
+			Log.i(TAG, "checkError: " + statusMessage);
+			
+			switch (statusCode) {
+				case Ok:
+				case NoResults:
+					return;
+				case UserNotAuthorized:
+				case APISessionNotFound:
+				case APISessionIsClosed:
+					throw new InvalidSessionException(statusMessage);
+				case UserLoginFailed:
+				case UserNotFound:
+					throw new InvalidCredentialsException(statusMessage);
+				default:
+					throw new GeocachingApiException(statusMessage);
+			}
 		}
 	}
 	
 	private Element callGet(String function) {
 		InputStream in = null;
 		
-		Log.i(TAG, "Getting " + function);
+		//Log.i(TAG, "Getting " + function);
 		
 		try {
 			URL url = new URL(BASE_URL + function);

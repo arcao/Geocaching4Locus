@@ -15,7 +15,7 @@ public class CacheLog {
 	private final String author;
 	private final String text;
 	
-	private static final DateFormat XSD_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public CacheLog(Date date, LogType logType, String author, String text) {
 		this.date = date;
@@ -63,7 +63,7 @@ public class CacheLog {
 	public PointGeocachingDataLog toPointGeocachingDataLog() {
 		PointGeocachingDataLog p = new PointGeocachingDataLog();
 		
-		p.date = XSD_TIME_FMT.format(date);
+		p.date = GPX_TIME_FMT.format(date);
 		p.finder = author;
 		// p.finderFound
 		p.logText = text;

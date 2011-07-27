@@ -46,7 +46,7 @@ public class DataStorageProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		return null;
+		return "vnd.android.cursor.dir/vnd.locus.pointsdata";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class DataStorageProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		return false;
+		return true;
 	}
 
 	@Override

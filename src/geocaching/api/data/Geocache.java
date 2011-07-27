@@ -4,13 +4,11 @@ import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
-import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataLog;
 
 public class Geocache extends SimpleGeocache {
 	private final String shortDescription;

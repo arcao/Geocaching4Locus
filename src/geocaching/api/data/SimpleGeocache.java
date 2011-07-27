@@ -36,7 +36,7 @@ public class SimpleGeocache {
 	private final int trackableCount;
 	private final boolean found;
 	
-	private static final DateFormat XSD_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public SimpleGeocache(String geoCode, String name, double longitude,
 			double latitude, CacheType cacheType, float difficultyRating,
@@ -228,8 +228,8 @@ public class SimpleGeocache {
 		d.premiumOnly = premiumListing;
 		d.country = countryName;
 		d.state = stateName;
-		d.hidden = Long.toString(created.getTime());
-		d.exported = Long.toString(new Date().getTime());
+		d.hidden = GPX_TIME_FMT.format(created);
+		d.exported = GPX_TIME_FMT.format(new Date());
 		d.container = containerType.getId();
 		
 		p.setGeocachingData(d);

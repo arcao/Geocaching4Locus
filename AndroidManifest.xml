@@ -14,7 +14,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/search_activity_name">
+            <intent-filter android:label="@string/search_activity_name" android:icon="@drawable/ic_launcher">
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

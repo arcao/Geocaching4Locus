@@ -16,18 +16,18 @@
 				<TextView style="?android:attr/listSeparatorTextViewStyle" android:text="@string/coordinates" android:layout_height="wrap_content" android:layout_width="fill_parent"></TextView>
 				<TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:stretchColumns="0">
 					<TableRow android:layout_height="wrap_content" android:layout_width="wrap_content">
-						<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/latitudeEditText"></EditText>
+						<EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/latitudeEditText" style="@style/SimpleEditText"></EditText>
 						<Button android:layout_height="wrap_content" android:text="GPS" android:paddingLeft="10dip" android:paddingRight="10dip" android:id="@+id/buttonGps" android:onClick="onClickGps"></Button>
 					</TableRow>
 					<TableRow android:layout_height="wrap_content" android:layout_width="wrap_content">
-						<EditText android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/logitudeEditText">
-							<requestFocus></requestFocus>
-						</EditText>
+						<EditText android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/logitudeEditText" style="@style/SimpleEditText"></EditText>
 					</TableRow>
 				</TableLayout>
 			</LinearLayout>
-			<CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/simpleCacheDataCheckBox" android:text="@string/download_simple_cache_data" />
-			<CheckBox android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/importCachesCheckBox" android:text="@string/import_caches" />
+			<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+				<CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/simpleCacheDataCheckBox" android:text="@string/download_simple_cache_data" style="@style/SimpleCheckbox" />
+				<CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/importCachesCheckBox" android:text="@string/import_caches" style="@style/SimpleCheckbox" />
+			</LinearLayout>
 			<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical" android:layout_marginTop="20dip">
 				<Button android:onClick="onClickSearch" android:layout_height="wrap_content" android:id="@+id/search" android:text="@string/search_and_import_button" android:layout_width="wrap_content" android:layout_gravity="center"></Button>
 			</LinearLayout>

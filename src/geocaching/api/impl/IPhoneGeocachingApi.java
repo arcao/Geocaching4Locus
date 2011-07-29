@@ -381,7 +381,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		}
 	}
 	
-	private Element callGet(String function) {
+	private Element callGet(String function) throws GeocachingApiException {
 		InputStream in = null;
 		
 		//Log.i(TAG, "Getting " + function);
@@ -418,7 +418,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 	        return doc.getRootElement();
 		} catch(Exception e) {
 			Log.e(TAG, e.toString(), e);
-			return null;
+			throw new GeocachingApiException("Error while downloading data (" + e.getClass().getSimpleName() + ")");
 		} finally {
 			try { if (in != null) in.close(); } catch (Exception e) {}
 		}

@@ -4,11 +4,10 @@ import geocaching.api.AbstractGeocachingApi;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
-import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.exception.InvalidCredentialsException;
+import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.impl.IPhoneGeocachingApi;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -32,6 +31,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,6 +68,8 @@ public class MainActivity extends Activity implements LocationListener {
 	private CheckBox simpleCacheDataCheckBox;
 
 	private CheckBox importCachesCheckBox;
+	
+	private boolean cancelDownload = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -212,6 +214,8 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	protected void download() {
+		cancelDownload = false;
+		
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
 
@@ -224,7 +228,9 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
-			public void onCancel(DialogInterface dialog) {}
+			public void onCancel(DialogInterface dialog) {
+				cancelDownload = true;
+			}
 		});
 
 		searchThread = new Thread() {
@@ -233,6 +239,8 @@ public class MainActivity extends Activity implements LocationListener {
 				try {
 					// download caches
 					final List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
+					if (cancelDownload)
+						return;
 
 					handler.post(new Runnable() {
 						public void run() {
@@ -250,7 +258,10 @@ public class MainActivity extends Activity implements LocationListener {
 							if (e instanceof InvalidCredentialsException) {
 								showError(R.string.error_credentials, null);
 							} else {
-								showError(R.string.error, e.getMessage());
+								String message = e.getMessage();
+								if (message == null)
+									message = "";
+								showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File:%s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
 							}
 						}
 					});
@@ -262,8 +273,11 @@ public class MainActivity extends Activity implements LocationListener {
 	
 	protected void showError(int errorResId, String additionalMessage) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(res.getString(errorResId, additionalMessage));
+		String message = String.format(res.getString(errorResId), additionalMessage);
+		
+		builder.setMessage(Html.fromHtml(message));
 		builder.setTitle(R.string.error_title);
+		builder.setPositiveButton(R.string.ok_button, null);
 		builder.show();
 	}
 
@@ -359,17 +373,27 @@ public class MainActivity extends Activity implements LocationListener {
 			throw e;
 		}
 		
+		if (cancelDownload)
+			return null;
+		
 		try {
 			List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
 			int count = caches.size();
-			prepareDownloadStatus(count);
 			
+			if (cancelDownload)
+				return caches;
+					
 			Log.i(TAG, "found caches: " + count);
-			if (!simpleCacheData) {				
+			if (!simpleCacheData) {
+				prepareDownloadStatus(count);
+
 				for(int i = 0; i < count; i++) {
 					SimpleGeocache cache = caches.get(i);
 					updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
 					caches.set(i, api.getCache(cache.getGeoCode()));
+					
+					if (cancelDownload)
+						return caches;
 				}
 			}
 			
@@ -385,20 +409,25 @@ public class MainActivity extends Activity implements LocationListener {
 			try {
 				List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
 				int count = caches.size();
-				prepareDownloadStatus(count);
-				
+
+				if (cancelDownload)
+					return caches;
+						
 				Log.i(TAG, "found caches: " + count);
-				if (!simpleCacheData) {				
+				if (!simpleCacheData) {
+					prepareDownloadStatus(count);
 					for(int i = 0; i < count; i++) {
 						SimpleGeocache cache = caches.get(i);
 						updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
 						caches.set(i, api.getCache(cache.getGeoCode()));
+
+						if (cancelDownload)
+							return caches;
 					}
 				}
 				return caches;
 			} catch (InvalidSessionException ex) {
 				Log.e(TAG, "Creditials not valid.", ex);
-				// TODO show error and open setting dialog
 				throw ex;
 			}
 		} finally {
@@ -421,6 +450,11 @@ public class MainActivity extends Activity implements LocationListener {
 				
 				pd = new ProgressDialog(MainActivity.this);
 				pd.setCancelable(true);
+				pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					public void onCancel(DialogInterface dialog) {
+						cancelDownload = true;
+					}
+				});
 				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				pd.setProgress(0);
 				pd.setMax(count);

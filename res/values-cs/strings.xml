@@ -39,4 +39,6 @@
     
     <string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej tvé uživatelské údaje v nastavení nebo odškrtni Přeskočit nalezené v nastavení.</string>
     <string name="error_title">Nastala chyba!</string>
+    
+    <string name="ok_button">Ok</string>
 </resources>

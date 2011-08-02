@@ -4,7 +4,7 @@
     <string name="error">Při stahování keší došlo k chybě.&lt;br/&gt;Popis: %1$s</string>
     <string name="downloading">Stahuji keše...</string>
     <string name="downloading_cache">Stahuji keš (%3$d/%4$d): %1$s - %2$s</string>
-    <string name="locus_not_found">Prosím nainstalujte Locus!</string>
+    <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="search_activity_name">Nejbližší keše</string>
     <string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS...</string>
@@ -41,4 +41,6 @@
     <string name="error_title">Nastala chyba!</string>
     
     <string name="ok_button">Ok</string>
+    
+    <string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost minimálně verzi %s.</string>
 </resources>

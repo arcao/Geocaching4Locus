@@ -13,7 +13,8 @@ import android.os.Parcel;
 
 public class DataStorageProvider extends ContentProvider {
 
-//	private final static String TAG = "DataStorageProvider";
+	//private final static String TAG = "DataStorageProvider";
+	public final static String URI = "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase();
 	
 	@Override
 	public Cursor query(Uri aUri, String[] aProjection, String aSelection,

@@ -4,7 +4,7 @@
     <string name="error">Error occurs while downloading caches...</string>
     <string name="downloading">Downloading caches...</string>
     <string name="downloading_cache">Downloading cache (%3$d/%4$d): %1$s - %2$s</string>
-    <string name="locus_not_found">Please install Locus!</string>
+    <string name="error_locus_not_found">Please install Locus!</string>
     <string name="search_activity_name">Nearest caches</string>
     <string name="error_location">Acquring the location using Wireless network is not allowed! Please enable it in Android settings.</string>
     <string name="acquiring_gps_location">Acquiring location from GPS...</string>
@@ -39,4 +39,8 @@
     
     <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences or uncheck Skip found checkbox in preferences.</string>
     <string name="error_title">Error occurs!</string>
+    
+    <string name="ok_button">Ok</string>
+    
+    <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus need version %s to work properly.</string>
 </resources>

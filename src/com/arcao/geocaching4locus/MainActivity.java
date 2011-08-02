@@ -8,6 +8,7 @@ import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.impl.IPhoneGeocachingApi;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,6 +49,9 @@ import com.arcao.geocaching4locus.util.Coordinates;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
+	
+	private static final int LOCUS_MIN_VERSION_CODE = 99;
+	private static final String LOCUS_MIN_VERSION_NAME = "1.9.5.1";
 
 	private Resources res;
 	private Thread searchThread;
@@ -77,15 +81,33 @@ public class MainActivity extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		res = getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		if (!LocusUtils.isLocusAvailable(this)) {
+		
+		Log.i(TAG, "Locus version: " + LocusUtils.getLocusVersion(this));
+		
+		int locusVersionCode = LocusUtils.getLocusVersionCode(this);
+		
+		if (locusVersionCode == -1) {
 			Log.e(TAG, "locus not found");
-			Toast.makeText(MainActivity.this, res.getString(R.string.locus_not_found), Toast.LENGTH_LONG).show();
-
-			Uri localUri = Uri.parse("market://details?id=menion.android.locus");
-			Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
-			startActivity(localIntent);
-			finish();
+			showError(R.string.error_locus_not_found, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
+					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
+					startActivity(localIntent);
+					finish();
+				}
+			});
+			return;
+		}
+		
+		if (locusVersionCode < LOCUS_MIN_VERSION_CODE) {
+			showError(R.string.error_locus_old, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
+					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
+					startActivity(localIntent);
+					finish();
+				}
+			});
 			return;
 		}
 
@@ -261,7 +283,7 @@ public class MainActivity extends Activity implements LocationListener {
 								String message = e.getMessage();
 								if (message == null)
 									message = "";
-								showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File:%s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
+								showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
 							}
 						}
 					});
@@ -278,6 +300,16 @@ public class MainActivity extends Activity implements LocationListener {
 		builder.setMessage(Html.fromHtml(message));
 		builder.setTitle(R.string.error_title);
 		builder.setPositiveButton(R.string.ok_button, null);
+		builder.show();
+	}
+	
+	protected void showError(int errorResId, String additionalMessage, DialogInterface.OnClickListener onClickListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		String message = String.format(res.getString(errorResId), additionalMessage);
+		
+		builder.setMessage(Html.fromHtml(message));
+		builder.setTitle(R.string.error_title);
+		builder.setPositiveButton(R.string.ok_button, onClickListener);
 		builder.show();
 	}
 
@@ -317,13 +349,25 @@ public class MainActivity extends Activity implements LocationListener {
 		boolean importCaches = prefs.getBoolean("import_caches", false);
 		
 		try {
-			// convert SimpleGeocache to Point
+			ArrayList<PointsData> pointDataCollection = new ArrayList<PointsData>();
+			
+			// beware there is row limit in DataStorageProvider (1MB per row - serialized PointsData is one row)
+			// so we split points into several PointsData object with same uniqueName - Locus merge it automatically
+			// since version 1.9.5
 			PointsData points = new PointsData("Geocaching");
 			for (SimpleGeocache cache : caches) {
+				if (points.getPoints().size() >= 10) {
+					pointDataCollection.add(points);
+					points = new PointsData("Geocaching");
+				}
+				// convert SimpleGeocache to Point
 				points.addPoint(cache.toPoint());
 			}
 			
-			DisplayData.sendDataCursor(this, points, "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(), importCaches);
+			if (!points.getPoints().isEmpty())
+				pointDataCollection.add(points);
+			
+			DisplayData.sendDataCursor(this, pointDataCollection, DataStorageProvider.URI, importCaches);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 			throw new IllegalArgumentException(e);

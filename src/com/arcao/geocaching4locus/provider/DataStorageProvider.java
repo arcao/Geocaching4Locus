@@ -10,10 +10,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
+import android.util.Log;
 
 public class DataStorageProvider extends ContentProvider {
 
-	//private final static String TAG = "DataStorageProvider";
+	private final static String TAG = "DataStorageProvider";
 	public final static String URI = "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase();
 	
 	@Override
@@ -31,6 +32,9 @@ public class DataStorageProvider extends ContentProvider {
 			Parcel par = Parcel.obtain();
 			data.get(i).writeToParcel(par, 0);
 			byte[] byteData = par.marshall();
+			
+			Log.i(TAG, "Adding row " + i + ", Row size: " + byteData.length);
+			
 			// add to row
 			cursor.addRow(new Object[] {byteData});
 		}

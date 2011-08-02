@@ -1,13 +1,18 @@
 package menion.android.locus.addon.publiclib.geoData;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class PointGeocachingData implements Parcelable {
 	
-	private static final int VERSION = 0;
+	private static final int VERSION = 1;
 	
 	public static final int CACHE_NUMBER_OF_TYPES = 14;
 	
@@ -186,6 +191,58 @@ public class PointGeocachingData implements Parcelable {
     		 notes = in.readString();
     		 computed = in.readInt() == 1;
     		break;
+    	case 1:
+    		id = in.readInt();
+   		 	cacheID = in.readString();
+   		 	available = in.readInt() == 1;
+   		 	archived = in.readInt() == 1;
+   		 	premiumOnly = in.readInt() == 1;
+   		 	name = in.readString();
+   		 	lastUpdated = in.readString();
+   		 	exported = in.readString();
+   		 	placedBy = in.readString();
+   		 	owner = in.readString();
+   		 	hidden = in.readString();
+   		 	type = in.readInt();
+   		 	container = in.readInt();
+   		 	difficulty = in.readFloat();
+   		 	terrain = in.readFloat();
+   		 	country = in.readString();
+   		 	state = in.readString();
+   		 	try {
+   		 		int size = in.readInt();
+   		 		int lengthSD = in.readInt();
+   		 		
+   		 		byte[] data = new byte[size];
+   		 		in.readByteArray(data);
+
+   		 		GZIPInputStream zis = new GZIPInputStream(new ByteArrayInputStream(data), 32);
+   		 		StringBuffer buffer = new StringBuffer();
+   	   		    byte[] dataD = new byte[32];
+   	   		    int bytesRead;
+   	   		    while ((bytesRead = zis.read(dataD)) != -1) {
+   	   		        buffer.append(new String(dataD, 0, bytesRead, "utf-8"));
+   	   		    }
+   		 		String result = buffer.toString();
+   		 		zis.close();
+   		 		
+   		 		// read short description
+   		 		if (lengthSD > 0)
+   		 			shortDescription = result.substring(0, lengthSD);
+   		 		
+   		 		// read long description
+		 		longDescription = result.substring(lengthSD);
+   		 	} catch (Exception e) {
+   		 		Log.e("PointGeocachingData", "Problem in ZIP compression - read", e);
+   		 	}
+   		 	encodedHints = in.readString();
+   		 	attributes = in.readArrayList(PointGeocachingAttributes.class.getClassLoader());
+   		 	logs = in.readArrayList(PointGeocachingDataLog.class.getClassLoader());
+   		 	travelBugs = in.readArrayList(PointGeocachingDataTravelBug.class.getClassLoader());
+   		 	waypoints = in.readArrayList(PointGeocachingDataWaypoint.class.getClassLoader());
+   		 	notes = in.readString();
+   		 	computed = in.readInt() == 1;
+   		 	break;
     	}
     }
 
@@ -209,8 +266,24 @@ public class PointGeocachingData implements Parcelable {
 		dest.writeFloat(terrain);
 		dest.writeString(country);
 		dest.writeString(state);
-		dest.writeString(shortDescription);
-		dest.writeString(longDescription);
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			GZIPOutputStream zos = new GZIPOutputStream(baos);
+			
+			zos.write(shortDescription.getBytes("utf-8"));
+			zos.write(longDescription.getBytes("utf-8"));
+			zos.close();
+			
+			byte[] data = baos.toByteArray();
+			baos.close();
+			
+			dest.writeInt(data.length);
+			dest.writeInt(shortDescription.length());
+			dest.writeByteArray(data);
+		} catch (Exception e) {
+			Log.e("PointGeocachingData", "Problem in ZIP compression - write", e);
+		}
+
 		dest.writeString(encodedHints);
 		dest.writeList(attributes);
 		dest.writeList(logs);

@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
 	private static final int LOCUS_MIN_VERSION_CODE = 99;
-	private static final String LOCUS_MIN_VERSION_NAME = "1.9.5.1";
+	private static final String LOCUS_MIN_VERSION_NAME = "1.9.5.2";
 
 	private Resources res;
 	private Thread searchThread;
@@ -86,9 +86,8 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		int locusVersionCode = LocusUtils.getLocusVersionCode(this);
 		
-		if (locusVersionCode == -1) {
-			Log.e(TAG, "locus not found");
-			showError(R.string.error_locus_not_found, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
+		if (locusVersionCode < LOCUS_MIN_VERSION_CODE) {
+			showError(locusVersionCode == -1 ? R.string.error_locus_not_found : R.string.error_locus_old, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
 					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
@@ -99,18 +98,6 @@ public class MainActivity extends Activity implements LocationListener {
 			return;
 		}
 		
-		if (locusVersionCode < LOCUS_MIN_VERSION_CODE) {
-			showError(R.string.error_locus_old, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
-					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
-					startActivity(localIntent);
-					finish();
-				}
-			});
-			return;
-		}
-
 		handler = new Handler();
 
 		setContentView(R.layout.main_activity);
@@ -356,7 +343,7 @@ public class MainActivity extends Activity implements LocationListener {
 			// since version 1.9.5
 			PointsData points = new PointsData("Geocaching");
 			for (SimpleGeocache cache : caches) {
-				if (points.getPoints().size() >= 10) {
+				if (points.getPoints().size() >= 50) {
 					pointDataCollection.add(points);
 					points = new PointsData("Geocaching");
 				}

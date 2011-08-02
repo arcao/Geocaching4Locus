@@ -12,15 +12,14 @@ import android.content.pm.PackageManager;
  * 
  */
 public class LocusUtils {
+
 	/** Locus Free package name */
 	public static final String LOCUS_FREE_PACKAGE_NAME = "menion.android.locus";
 	/** Locus Pro package name */
 	public static final String LOCUS_PRO_PACKAGE_NAME = "menion.android.locus.pro";
 	/** All Locus package names */
 	public static final String[] LOCUS_PACKAGE_NAMES = new String[] {
-			LOCUS_PRO_PACKAGE_NAME,
-			LOCUS_FREE_PACKAGE_NAME
-	};
+			LOCUS_PRO_PACKAGE_NAME, LOCUS_FREE_PACKAGE_NAME };
 
 	/**
 	 * Returns <code>true</code> if Locus Pro or Locus Free is installed.
@@ -97,7 +96,8 @@ public class LocusUtils {
 	 */
 	public static boolean isLocusProInstalled(Context context) {
 		try {
-			context.getPackageManager().getPackageInfo(LOCUS_PRO_PACKAGE_NAME, 0);
+			context.getPackageManager().getPackageInfo(LOCUS_PRO_PACKAGE_NAME,
+					0);
 			return true;
 		} catch (PackageManager.NameNotFoundException e) {
 			return false;

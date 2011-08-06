@@ -16,6 +16,8 @@ import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
 import android.location.Location;
 
 public class SimpleGeocache {
+	private static final int VERSION = 1;
+	
 	private final String geoCode;
 	private final String name;
 	private final double longitude;
@@ -163,6 +165,9 @@ public class SimpleGeocache {
 	}
 	
 	public static SimpleGeocache load(DataInputStream dis) throws IOException {
+		if (dis.readInt() != VERSION)
+			throw new IOException("Wrong item version.");
+		
 		return new SimpleGeocache(
 				dis.readUTF(),
 				dis.readUTF(),
@@ -187,6 +192,8 @@ public class SimpleGeocache {
 	}
 	
 	public void store(DataOutputStream dos) throws IOException {
+		dos.writeInt(VERSION);
+		
 		dos.writeUTF(getGeoCode());
 		dos.writeUTF(getName());
 		dos.writeDouble(getLongitude());

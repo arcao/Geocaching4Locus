@@ -2,6 +2,9 @@ package geocaching.api.data;
 
 import geocaching.api.data.type.LogType;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,6 +13,8 @@ import java.util.Date;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataLog;
 
 public class CacheLog {
+	private static final int VERSION = 1;
+	
 	private final Date date;
 	private final LogType logType; 
 	private final String author;
@@ -70,5 +75,26 @@ public class CacheLog {
 		p.type = logType.getId();
 		
 		return p;
+	}
+
+	public static CacheLog load(DataInputStream dis) throws IOException {
+		if (dis.readInt() != VERSION)
+			throw new IOException("Wrong cache log version.");
+		
+		return new CacheLog(
+				new Date(dis.readLong()),
+				LogType.parseLogType(dis.readUTF()),
+				dis.readUTF(),
+				dis.readUTF()
+		);
+	}
+
+	public void store(DataOutputStream dos) throws IOException {
+		dos.writeInt(VERSION);
+		
+		dos.writeLong(date.getTime());
+		dos.writeUTF(logType.toString());
+		dos.writeUTF(author);
+		dos.writeUTF(text);
 	}
 }

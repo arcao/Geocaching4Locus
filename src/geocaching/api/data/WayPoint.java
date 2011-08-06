@@ -2,12 +2,17 @@ package geocaching.api.data;
 
 import geocaching.api.data.type.WayPointType;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Date;
 
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
 
 public class WayPoint {
+	private static final int VERSION = 1;
+	
 	private final double latitude;
 	private final double longitude;
 	private final Date time;
@@ -91,5 +96,32 @@ public class WayPoint {
 		w.type = wayPointType.getId();
 		
 		return w;
+	}
+
+	public static WayPoint load(DataInputStream dis) throws IOException {
+		if (dis.readInt() != VERSION)
+			throw new IOException("Wrong waypoint version.");
+		
+		return new WayPoint(
+				dis.readDouble(),
+				dis.readDouble(),
+				new Date(dis.readLong()),
+				dis.readUTF(), 
+				dis.readUTF(), 
+				dis.readUTF(),
+				WayPointType.parseWayPointType(dis.readUTF())
+		);
+	}
+
+	public void store(DataOutputStream dos) throws IOException {
+		dos.writeInt(VERSION);
+		
+		dos.writeDouble(longitude);
+		dos.writeDouble(latitude);
+		dos.writeLong(time.getTime());
+		dos.writeUTF(waypointGeoCode);
+		dos.writeUTF(name);
+		dos.writeUTF(note);
+		dos.writeUTF(wayPointType.toString());
 	}
 }

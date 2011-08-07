@@ -15,6 +15,9 @@ import java.util.Vector;
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+
+import org.osgi.framework.Version;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -50,8 +53,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
-	private static final int LOCUS_MIN_VERSION_CODE = 99;
-	private static final String LOCUS_MIN_VERSION_NAME = "1.9.5.2";
+	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.9.5.2");
 
 	private Resources res;
 	private Thread searchThread;
@@ -81,13 +83,13 @@ public class MainActivity extends Activity implements LocationListener {
 		super.onCreate(savedInstanceState);
 		res = getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			
+		Version locusVersion = Version.parseVersion(LocusUtils.getLocusVersion(this));
+		Log.i(TAG, "Locus version: " + locusVersion);
 		
-		Log.i(TAG, "Locus version: " + LocusUtils.getLocusVersion(this));
-		
-		int locusVersionCode = LocusUtils.getLocusVersionCode(this);
-		
-		if (locusVersionCode < LOCUS_MIN_VERSION_CODE) {
-			showError(locusVersionCode == -1 ? R.string.error_locus_not_found : R.string.error_locus_old, LOCUS_MIN_VERSION_NAME, new DialogInterface.OnClickListener() {
+		if (locusVersion.compareTo(LOCUS_MIN_VERSION) < 0) {
+			showError(locusVersion == Version.emptyVersion ? R.string.error_locus_not_found : R.string.error_locus_old, LOCUS_MIN_VERSION.toString(), new DialogInterface.OnClickListener() {
+				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
 					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
@@ -121,6 +123,7 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
@@ -134,6 +137,7 @@ public class MainActivity extends Activity implements LocationListener {
 		});
 
 		longitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
@@ -148,6 +152,7 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		simpleCacheDataCheckBox.setChecked(prefs.getBoolean("simple_cache_data", false));
 		simpleCacheDataCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				Editor edit = prefs.edit();
 				edit.putBoolean("simple_cache_data", isChecked);
@@ -157,6 +162,7 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		importCachesCheckBox.setChecked(prefs.getBoolean("import_caches", false));
 		importCachesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				Editor edit = prefs.edit();
 				edit.putBoolean("import_caches", isChecked);
@@ -230,6 +236,7 @@ public class MainActivity extends Activity implements LocationListener {
 
 		if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 					Toast.makeText(MainActivity.this, R.string.wrong_coordinates, Toast.LENGTH_LONG);
 				}
@@ -237,6 +244,7 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 
 		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
+			@Override
 			public void onCancel(DialogInterface dialog) {
 				cancelDownload = true;
 			}
@@ -252,6 +260,7 @@ public class MainActivity extends Activity implements LocationListener {
 						return;
 
 					handler.post(new Runnable() {
+						@Override
 						public void run() {
 							// call intent
 							callLocus(caches);
@@ -261,6 +270,7 @@ public class MainActivity extends Activity implements LocationListener {
 					});
 				} catch (final Exception e) {
 					handler.post(new Runnable() {
+						@Override
 						public void run() {
 							pd.dismiss();
 							Log.e(TAG, "search()", e);
@@ -306,6 +316,7 @@ public class MainActivity extends Activity implements LocationListener {
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
 		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
+			@Override
 			public void onCancel(DialogInterface dialog) {
 				locationManager.removeUpdates(MainActivity.this);
 				
@@ -475,6 +486,7 @@ public class MainActivity extends Activity implements LocationListener {
 	
 	private void prepareDownloadStatus(final int count) {
 		handler.post(new Runnable() {
+			@Override
 			public void run() {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();
@@ -482,6 +494,7 @@ public class MainActivity extends Activity implements LocationListener {
 				pd = new ProgressDialog(MainActivity.this);
 				pd.setCancelable(true);
 				pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
 					public void onCancel(DialogInterface dialog) {
 						cancelDownload = true;
 					}
@@ -498,6 +511,7 @@ public class MainActivity extends Activity implements LocationListener {
 	private void updateDownloadStatus(final int current, final int count, final String geoCode, final String name) {
 		Log.i(TAG, String.format("downloading (%d/%d): %s - %s", current, count, geoCode, name));
 		handler.post(new Runnable() {
+			@Override
 			public void run() {
 				pd.setMessage(res.getString(R.string.downloading_cache, geoCode, name, current, count));
 				pd.setProgress(current);
@@ -505,10 +519,12 @@ public class MainActivity extends Activity implements LocationListener {
 		});
 	}
 		
+	@Override
 	public void onLocationChanged(Location location) {
 		locationManager.removeUpdates(this);
 		if (location == null) {
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 					pd.dismiss();
 					Log.e(TAG, "onLocationChanged() location is not avaible.");
@@ -534,17 +550,20 @@ public class MainActivity extends Activity implements LocationListener {
 		editor.commit();
 
 		handler.post(new Runnable() {
+			@Override
 			public void run() {
 				pd.dismiss();
 			}
 		});
 	}
 
+	@Override
 	public void onProviderDisabled(String provider) {
 		if (LocationManager.GPS_PROVIDER.equals(provider)) {
 			locationManager.removeUpdates(this);
 
 			handler.post(new Runnable() {
+				@Override
 				public void run() {
 					pd.setMessage(res.getString(R.string.acquiring_network_location));
 				}
@@ -556,9 +575,11 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 	}
 
+	@Override
 	public void onProviderEnabled(String provider) {
 	}
 
+	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 }

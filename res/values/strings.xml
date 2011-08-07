@@ -42,5 +42,5 @@
     
     <string name="ok_button">Ok</string>
     
-    <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus need version %s to work properly.</string>
+    <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus require version %s or greater to work properly.</string>
 </resources>

@@ -8,34 +8,34 @@ public enum ContainerType {
 	Large("Large", 4),
 	Huge("Huge", 5),
 	Other("Other", 6);
-	
+
 	private String friendlyName;
 	private int id;
-	
+
 	private ContainerType(String friendlyName, int id) {
 		this.friendlyName = friendlyName;
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
 		return friendlyName;
 	}
-	
+
 	public String getFriendlyName() {
 		return friendlyName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
 
 	public static ContainerType parseContainerType(String container) {
-		for(ContainerType type : values()) {
+		for (ContainerType type : values()) {
 			if (type.toString().equals(container))
 				return type;
 		}
-		
+
 		return Other;
 	}
 }

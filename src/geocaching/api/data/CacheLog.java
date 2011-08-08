@@ -11,12 +11,12 @@ import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataLog;
 
 public class CacheLog {
 	private final Date date;
-	private final LogType logType; 
+	private final LogType logType;
 	private final String author;
 	private final String text;
-	
+
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	
+
 	public CacheLog(Date date, LogType logType, String author, String text) {
 		this.date = date;
 		this.logType = logType;
@@ -39,22 +39,23 @@ public class CacheLog {
 	public String getText() {
 		return text;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Method m : getClass().getMethods()) {
 			if (!m.getName().startsWith("get") ||
-			    m.getParameterTypes().length != 0 ||  
-			    void.class.equals(m.getReturnType()))
-			    continue;
-			
+					m.getParameterTypes().length != 0 ||
+					void.class.equals(m.getReturnType()))
+				continue;
+
 			sb.append(m.getName());
 			sb.append(':');
 			try {
 				sb.append(m.invoke(this, new Object[0]));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			sb.append("\n");
 		}
 		return sb.toString();
@@ -62,13 +63,13 @@ public class CacheLog {
 
 	public PointGeocachingDataLog toPointGeocachingDataLog() {
 		PointGeocachingDataLog p = new PointGeocachingDataLog();
-		
+
 		p.date = GPX_TIME_FMT.format(date);
 		p.finder = author;
 		// p.finderFound
 		p.logText = text;
 		p.type = logType.getId();
-		
+
 		return p;
 	}
 }

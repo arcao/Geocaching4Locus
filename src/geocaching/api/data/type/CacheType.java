@@ -15,34 +15,34 @@ public enum CacheType {
 	GpsAdventuresExhibit("GPS Adventures Exhibit", 11),
 	WebcamCache("Webcam Cache", 12),
 	LocationlessCache("Locationless (Reverse) Cache", 13);
-	
+
 	private String friendlyName;
 	private int id;
-	
+
 	private CacheType(String friendlyName, int id) {
 		this.friendlyName = friendlyName;
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
 		return friendlyName;
 	}
-	
+
 	public String getFriendlyName() {
 		return friendlyName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public static CacheType parseCacheType(String cache) {
-		for(CacheType type : values()) {
+		for (CacheType type : values()) {
 			if (type.toString().equals(cache))
 				return type;
 		}
-		
+
 		return UnknownCache;
 	}
 }

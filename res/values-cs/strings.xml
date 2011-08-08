@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Při stahování keší došlo k chybě.&lt;br/&gt;Popis: %1$s</string>
-    <string name="downloading">Stahuji keše...</string>
-    <string name="downloading_cache">Stahuji keš (%3$d/%4$d): %1$s - %2$s</string>
-    <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
-    <string name="search_activity_name">Nejbližší keše</string>
-    <string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
-    <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS...</string>
-    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
-    
-    <string name="preferences">Nastavení</string>
-    <string name="wrong_coordinates">Špatný formát souřadnic!</string>
-    <string name="search_and_import_button">Hledat a zobrazit v Locusu</string>
-    <string name="coordinates">Souřadnice</string>
-    
-    <string name="pref_title_geocaching_credentials">Přihlašovací údaje pro Geocaching.com</string>
-    <string name="pref_username">Uživatel</string>
-    <string name="pref_password">Heslo</string>
-    
-    <string name="pref_title_filter">Filtr</string>
-    <string name="pref_skip_found">Přeskočit nalezené</string>
-    <string name="pref_skip_found_summary">Přeskočit nalezené keše</string>
-    <string name="pref_distance">Vzdálenost</string>
-    <string name="pref_distance_summary_km">Vzdálenost v km</string>
-    <string name="pref_distance_summary_miles">Vzdálenost v mílích</string>
-    <string name="pref_count_of_caches">Počet keší</string>
-    <string name="pref_count_of_caches_text">keší</string>
-    <string name="pref_count_of_caches_summary">Počet keší ke stáhnutí</string>
-    <string name="pref_title_advanced">Rozšířené</string>
-    <string name="pref_use_compression">Použít kompresi</string>
-    <string name="pref_use_compression_summary">Použít HTTP kompresi (experimentální)</string>
-    <string name="pref_imperial_units">Imperiální jednotky</string>
-    <string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
-    
-    <string name="download_simple_cache_data">Pouze základní data o keši</string>
-    <string name="import_caches">Importovat keše</string>
-    
-    <string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej tvé uživatelské údaje v nastavení nebo odškrtni Přeskočit nalezené v nastavení.</string>
-    <string name="error_title">Nastala chyba!</string>
-    
-    <string name="ok_button">Ok</string>
-    
-    <string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Při stahování keší došlo k chybě.&lt;br&gt;Popis: %1$s</string>
+	<string name="downloading">Stahuji keše...</string>
+	<string name="downloading_cache">Stahuji keš (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
+	<string name="search_activity_name">Nejbližší keše</string>
+	<string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
+	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS...</string>
+	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
+	<string name="preferences">Nastavení</string>
+	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
+	<string name="search_and_import_button">Hledat a zobrazit v Locusu</string>
+	<string name="coordinates">Souřadnice</string>
+	<string name="pref_title_geocaching_credentials">Přihlašovací údaje pro Geocaching.com</string>
+	<string name="pref_username">Uživatelské jméno</string>
+	<string name="pref_password">Heslo</string>
+	<string name="pref_title_filter">Filtr</string>
+	<string name="pref_skip_found">Přeskočit nalezené</string>
+	<string name="pref_skip_found_summary">Přeskočit nalezené keše</string>
+	<string name="pref_distance">Vzdálenost</string>
+	<string name="pref_distance_summary_km">Vzdálenost v km</string>
+	<string name="pref_distance_summary_miles">Vzdálenost v mílích</string>
+	<string name="pref_count_of_caches">Počet keší</string>
+	<string name="pref_count_of_caches_text">keší</string>
+	<string name="pref_count_of_caches_summary">Počet keší ke stáhnutí</string>
+	<string name="pref_title_advanced">Pokročilé</string>
+	<string name="pref_use_compression">Použít kompresi</string>
+	<string name="pref_use_compression_summary">Použít HTTP kompresi (experimentální)</string>
+	<string name="pref_imperial_units">Imperiální jednotky</string>
+	<string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
+	<string name="download_simple_cache_data">Pouze základní data o keši</string>
+	<string name="import_caches">Importovat keše</string>
+	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej tvé uživatelské údaje v nastavení nebo odškrtni Přeskočit nalezené v nastavení.</string>
+	<string name="error_title">Nastala chyba!</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
 </resources>

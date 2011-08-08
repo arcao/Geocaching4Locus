@@ -16,9 +16,9 @@ public class TravelBug {
 	private final String currentHolderUserName;
 	private final String trackingNumber;
 	private final String lookupCode;
-	
-	private static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s"; 
-	
+
+	private static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
+
 	public TravelBug(String guid, String name, String goal, String description,
 			String travelBugTypeName, String travelBugTypeImage,
 			String ownerUserName, String currentCacheCode,
@@ -33,7 +33,7 @@ public class TravelBug {
 		this.currentCacheCode = currentCacheCode;
 		this.currentHolderUserName = currentHolderUserName;
 		this.trackingNumber = trackingNumber;
-		
+
 		lookupCode = "";
 	}
 
@@ -43,7 +43,7 @@ public class TravelBug {
 		this.name = name;
 		this.trackingNumber = trackingNumber;
 		this.ownerUserName = ownerUserName;
-		
+
 		guid = "";
 		goal = "";
 		description = "";
@@ -57,7 +57,7 @@ public class TravelBug {
 		this.trackingNumber = trackingNumber;
 		this.name = name;
 		this.currentCacheCode = currentCacheCode;
-		
+
 		guid = "";
 		goal = "";
 		description = "";
@@ -111,10 +111,10 @@ public class TravelBug {
 	public String getLookupCode() {
 		return lookupCode;
 	}
-	
+
 	public PointGeocachingDataTravelBug toPointGeocachingDataTravelBug() {
 		PointGeocachingDataTravelBug p = new PointGeocachingDataTravelBug();
-		
+
 		p.details = description;
 		p.goal = goal;
 		p.imgUrl = travelBugTypeImage;
@@ -123,25 +123,26 @@ public class TravelBug {
 		p.owner = ownerUserName;
 		// p.released
 		p.srcDetails = String.format(TRACKABLE_URL, trackingNumber);
-		
+
 		return p;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Method m : getClass().getMethods()) {
 			if (!m.getName().startsWith("get") ||
-			    m.getParameterTypes().length != 0 ||  
-			    void.class.equals(m.getReturnType()))
-			    continue;
-			
+					m.getParameterTypes().length != 0 ||
+					void.class.equals(m.getReturnType()))
+				continue;
+
 			sb.append(m.getName());
 			sb.append(':');
 			try {
 				sb.append(m.invoke(this, new Object[0]));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			sb.append("; ");
 		}
 		return sb.toString();

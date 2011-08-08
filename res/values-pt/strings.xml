@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Ocorreu um erro a descarregar caches.&lt;br/&gt;Descrição: %1$s</string>
+	<string name="downloading">A descarregar caches...</string>
+	<string name="downloading_cache">A descarregar a cache (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Por favor instale o Locus!</string>
+	<string name="search_activity_name">Caches mais próximas</string>
+	<string name="error_location">Não é permitida a aquisição de coordenadas através da rede Wireless. Por favor active a opção nas configurações do Android.</string>
+	<string name="acquiring_gps_location">Adquirindo coordenadas através do GPS....</string>
+	<string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles....</string>
+	<string name="preferences">Configuração</string>
+	<string name="wrong_coordinates">Formato de coordenadas errado!</string>
+	<string name="search_and_import_button">Procurar e mostrar no Locus</string>
+	<string name="coordinates">Coordenadas</string>
+	<string name="pref_title_geocaching_credentials">Credenciais geocaching.com</string>
+	<string name="pref_username">Nome de Utilizador</string>
+	<string name="pref_password">Senha</string>
+	<string name="pref_title_filter">Filtro</string>
+	<string name="pref_skip_found">Ignorar encontradas</string>
+	<string name="pref_skip_found_summary">Ignorar caches encontradas</string>
+	<string name="pref_distance">Distância</string>
+	<string name="pref_distance_summary_km">Distância em km</string>
+	<string name="pref_distance_summary_miles">Distância em milhas</string>
+	<string name="pref_count_of_caches">Contagem de Caches</string>
+	<string name="pref_count_of_caches_text">caches</string>
+	<string name="pref_count_of_caches_summary">Número de caches a descarregar</string>
+	<string name="pref_title_advanced">Avançado</string>
+	<string name="pref_use_compression">Usar compressão</string>
+	<string name="pref_use_compression_summary">Usar compressão HTTP (Experimental)</string>
+	<string name="pref_imperial_units">Unidades Imperiais</string>
+	<string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
+	<string name="download_simple_cache_data">Apenas informação simplificada das caches</string>
+	<string name="import_caches">Importar caches</string>
+	<string name="error_credentials">Nome de utilizador ou palavra passe inválidos. Por favor preencha a informação nas configurações ou retire a selecção na caixa \"ignorar caches encontradas\".</string>
+	<string name="error_title">Ocorrência de erros!</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
+</resources>

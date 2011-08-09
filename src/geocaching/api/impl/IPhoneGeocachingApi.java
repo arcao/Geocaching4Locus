@@ -353,8 +353,14 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 	}
 
 	private Date parseXSDDate(String date) {
-		date = date.substring(0, 22) + date.substring(23);
-		return XSD_TIME_FMT.parse(date, new ParsePosition(0));
+		Date d = XSD_TIME_FMT.parse(date, new ParsePosition(0));
+		if (d == null) {
+			Log.e(TAG, "parseXSDDate: unparsable " + date);
+			d = parseGPXDate(date);
+			if (d == null)
+				return new Date(0);
+		}
+		return d;
 	}
 
 	private Date parseGPXDate(String date) {
@@ -363,7 +369,9 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 			if (d != null)
 				return d;
 		}
-		return null;
+		
+		Log.e(TAG, "parseGPXDate: unparsable " + date);
+		return new Date(0);
 	}
 
 	private void checkError(Element root) throws GeocachingApiException {
@@ -393,7 +401,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 	}
 
 	private Element callGet(String function) throws GeocachingApiException {
-		InputStream in = null;
+		InputStream is = null;
 		InputStreamReader isr = null;
 
 		Log.i(TAG, "Getting " + maskPassword(function));
@@ -413,7 +421,6 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 			con.setRequestProperty("Accept-Encoding", "gzip, deflate");
 
 			final String encoding = con.getContentEncoding();
-			InputStream is;
 
 			if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
 				Log.i(TAG, "callGet(): GZIP OK");
@@ -434,7 +441,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 			throw new GeocachingApiException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
 		} finally {
 			try { if (isr != null) isr.close(); } catch (Exception e) {}
-			try { if (in != null) in.close(); } catch (Exception e) {}
+			try { if (is != null) is.close(); } catch (Exception e) {}
 		}
 	}
 

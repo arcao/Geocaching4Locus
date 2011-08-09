@@ -6,7 +6,7 @@ import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.IPhoneGeocachingApi;
+import geocaching.api.impl.LiveGeocachingApi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -291,6 +291,9 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	protected void showError(int errorResId, String additionalMessage) {
+		if (isFinishing())
+			return;
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		String message = String.format(res.getString(errorResId), additionalMessage);
 		
@@ -301,6 +304,9 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	protected void showError(int errorResId, String additionalMessage, DialogInterface.OnClickListener onClickListener) {
+		if (isFinishing())
+			return;
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		String message = String.format(res.getString(errorResId), additionalMessage);
 		
@@ -396,7 +402,7 @@ public class MainActivity extends Activity implements LocationListener {
 
 		int limit = prefs.getInt("filter_count_of_caches", 50);
 		
-		AbstractGeocachingApi api = new IPhoneGeocachingApi();
+		AbstractGeocachingApi api = new LiveGeocachingApi();
 		try {
 			if (skipFound) {
 				if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
@@ -485,6 +491,9 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	private void prepareDownloadStatus(final int count) {
+		if (isFinishing())
+			return;
+		
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -569,10 +578,14 @@ public class MainActivity extends Activity implements LocationListener {
 				}
 			});
 
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-		} else {
-			onLocationChanged(locationManager.getLastKnownLocation(provider));
+			try {
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+				return;
+			} catch(IllegalArgumentException e) {
+				Log.e(TAG, e.getMessage(), e);
+			}
 		}
+		onLocationChanged(locationManager.getLastKnownLocation(provider));
 	}
 
 	@Override

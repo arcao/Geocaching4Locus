@@ -1,10 +1,8 @@
 package geocaching.api.impl.live_geocaching_api.filter;
 
-import java.util.Arrays;
+import google.gson.stream.JsonWriter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.IOException;
 
 public class NotFoundByUsersFilter implements CacheFilter {
 	private static final String NAME = "NotFoundByUsers";
@@ -18,10 +16,33 @@ public class NotFoundByUsersFilter implements CacheFilter {
 	public String[] getUserNames() {
 		return userNames;
 	}
+	
+	@Override
+	public boolean isValid() {
+		if (userNames == null || userNames.length == 0)
+			return false;
+		
+		boolean valid = false;
+		for (String userName : userNames) {
+			if (userName != null && userName.length() > 0)
+				valid = true;
+		}
+		
+		return valid;
+	}
 
 	@Override
-	public JSONObject toJson() throws JSONException {
-		return new JSONObject().put("UserNames", new JSONArray(Arrays.asList(userNames))); 
+	public void writeJson(JsonWriter w) throws IOException {
+		w.name(NAME);
+		w.beginObject();
+		w.name("UserNames");
+		w.beginArray();
+		for (String userName : userNames) {
+			if (userName != null && userName.length() > 0)
+				w.value(userName);
+		}
+		w.endArray();
+		w.endObject(); 
 	}
 
 	@Override

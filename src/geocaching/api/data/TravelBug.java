@@ -119,9 +119,9 @@ public class TravelBug {
 		p.goal = goal;
 		p.imgUrl = travelBugTypeImage;
 		p.name = name;
-		// p.origin
+		//p.origin = 
 		p.owner = ownerUserName;
-		// p.released
+		//p.released = 
 		p.srcDetails = String.format(TRACKABLE_URL, trackingNumber);
 
 		return p;

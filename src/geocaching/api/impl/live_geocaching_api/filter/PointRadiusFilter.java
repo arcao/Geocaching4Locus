@@ -1,10 +1,10 @@
 package geocaching.api.impl.live_geocaching_api.filter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import google.gson.stream.JsonWriter;
+
+import java.io.IOException;
 
 public class PointRadiusFilter implements CacheFilter {
-	private static final String FORMAT = "{\"DistanceInMeters\":%d,\"Point\":{\"Latitude\":%f,\"Longitude\":%f}}";
 	private static final String NAME = "PointRadius"; 
 	
 	protected long distanceInMeters;
@@ -30,8 +30,24 @@ public class PointRadiusFilter implements CacheFilter {
 	}
 
 	@Override
-	public JSONObject toJson() throws JSONException {
-		return new JSONObject(String.format(FORMAT, distanceInMeters, latitude, longitude));
+	public boolean isValid() {
+		return true;
+	}
+	
+	@Override
+	public void writeJson(JsonWriter w) throws IOException {
+		w.name(NAME);
+		w.beginObject();
+		
+		w.name("DistanceInMeters").value(distanceInMeters);
+		
+		w.name("Point");
+		w.beginObject();
+		w.name("Latitude").value(latitude);
+		w.name("Longitude").value(longitude);
+		w.endObject();
+		
+		w.endObject();
 	}
 
 	@Override

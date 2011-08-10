@@ -1,10 +1,9 @@
 package geocaching.api.impl.live_geocaching_api.filter;
 
 import geocaching.api.data.type.CacheType;
+import google.gson.stream.JsonWriter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.IOException;
 
 public class GeocacheTypeFilter implements CacheFilter {
 	private static final String NAME = "GeocacheType";
@@ -16,17 +15,31 @@ public class GeocacheTypeFilter implements CacheFilter {
 	}
 	
 	@Override
-	public JSONObject toJson() throws JSONException {
-		if (cacheTypes.length == 0)
-			return null;
+	public boolean isValid() {
+		if (cacheTypes == null || cacheTypes.length == 0)
+			return false;
 		
-		// convert to groundspeak cache type ids
-		JSONArray jsonArray = new JSONArray();
+		boolean valid = false;
 		for (CacheType cacheType : cacheTypes) {
-			jsonArray.put(cacheType.getGroundSpeakId());
+			if (cacheType != null)
+				valid = true;
 		}
-			
-		return new JSONObject().put("GeocacheTypeIds", jsonArray);
+		
+		return valid;
+	}
+	
+	@Override
+	public void writeJson(JsonWriter w) throws IOException {
+		w.name(NAME);
+		w.beginObject();
+		w.name("GeocacheTypeIds");
+		w.beginArray();
+		for (CacheType cacheType : cacheTypes) {
+			if (cacheType != null)
+				w.value(cacheType.getGroundSpeakId());
+		}
+		w.endArray();
+		w.endObject();
 	}
 
 	@Override

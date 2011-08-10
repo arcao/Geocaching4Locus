@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Error occurs while downloading caches...</string>
+    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Downloading caches...</string>
     <string name="downloading_cache">Downloading cache (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Please install Locus!</string>

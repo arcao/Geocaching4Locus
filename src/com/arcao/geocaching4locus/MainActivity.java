@@ -1,12 +1,17 @@
 package com.arcao.geocaching4locus;
 
-import geocaching.api.AbstractGeocachingApi;
+import geocaching.api.AbstractGeocachingApiV2;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.impl.LiveGeocachingApi;
+import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
+import geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -391,8 +396,10 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
-		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
+		final int maxPerPage = 10;
+		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
 		
+		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
 		boolean simpleCacheData = prefs.getBoolean("simple_cache_data", false);
 		
 		double distance = prefs.getFloat("distance", 160.9344F);
@@ -402,19 +409,15 @@ public class MainActivity extends Activity implements LocationListener {
 
 		int limit = prefs.getInt("filter_count_of_caches", 50);
 		
-		AbstractGeocachingApi api = new LiveGeocachingApi();
-		try {
-			if (skipFound) {
-				if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-					throw new InvalidCredentialsException("Username or password is empty.");
+		if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
+			throw new InvalidCredentialsException("Username or password is empty.");
 				
-				if (account.getSession() == null || account.getSession().length() == 0) {
-					api.openSession(account.getUserName(), account.getPassword());
-				} else {
-					api.openSession(account.getSession());
-				}
+		AbstractGeocachingApiV2 api = new LiveGeocachingApi();
+		try {
+			if (account.getSession() == null || account.getSession().length() == 0) {
+				api.openSession(account.getUserName(), account.getPassword());
 			} else {
-				api.openSession(null);
+				api.openSession(account.getSession());
 			}
 		} catch (InvalidCredentialsException e) {
 			Log.e(TAG, "Creditials not valid.", e);
@@ -422,70 +425,50 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 		
 		if (cancelDownload)
-			return null;
+			return caches;
 		
 		try {
-			List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
+			prepareDownloadStatus(limit);
+			int start = 0;
+			while (start < limit) {
+				int perPage = (limit - start < maxPerPage) ? limit - start : maxPerPage;
+				
+				List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, start, perPage, -1, -1, new CacheFilter[] {
+						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
+						new GeocacheTypeFilter(getCacheTypeFilterResult()),
+						new GeocacheExclusionsFilter(false, true, null),
+						new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
+				});
+				
+				if (cachesToAdd.size() == 0)
+					break;
+				
+				caches.addAll(cachesToAdd);
+				
+				start = start + perPage;
+				updateDownloadStatus(start, limit);
+			}
 			int count = caches.size();
 			
 			if (cancelDownload)
 				return caches;
-					
 			Log.i(TAG, "found caches: " + count);
-			if (!simpleCacheData) {
-				prepareDownloadStatus(count);
 
-				for(int i = 0; i < count; i++) {
-					SimpleGeocache cache = caches.get(i);
-					updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
-					caches.set(i, api.getCache(cache.getGeoCode()));
-					
-					if (cancelDownload)
-						return caches;
-				}
-			}
-			
 			return caches;
 		} catch (InvalidSessionException e) {
-			try {
-				api.openSession(account.getUserName(), account.getPassword());
-			} catch (InvalidCredentialsException ex) {
-				Log.e(TAG, "Creditials not valid.", ex);
-				throw e;
-			}
-						
-			try {
-				List<SimpleGeocache> caches = api.getCachesByCoordinates(latitude, longitude, 0, limit - 1, (float) distance, getCacheTypeFilterResult());
-				int count = caches.size();
-
-				if (cancelDownload)
-					return caches;
-						
-				Log.i(TAG, "found caches: " + count);
-				if (!simpleCacheData) {
-					prepareDownloadStatus(count);
-					for(int i = 0; i < count; i++) {
-						SimpleGeocache cache = caches.get(i);
-						updateDownloadStatus(i + 1, count, cache.getGeoCode(), cache.getName());
-						caches.set(i, api.getCache(cache.getGeoCode()));
-
-						if (cancelDownload)
-							return caches;
-					}
-				}
-				return caches;
-			} catch (InvalidSessionException ex) {
-				Log.e(TAG, "Creditials not valid.", ex);
-				throw ex;
-			}
+			account.setSession(null);
+			
+			Editor edit = prefs.edit();
+			edit.remove("session");
+			edit.commit();
+			
+			return downloadCaches(latitude, longitude);
 		} finally {
-			if (skipFound) {
-				account.setSession(api.getSession());
-				if (account.getSession() != null && account.getSession().length() > 0) {
-					Editor edit = prefs.edit();
-					edit.putString("session", account.getSession());
-					edit.commit();
-				}
+			account.setSession(api.getSession());
+			if (account.getSession() != null && account.getSession().length() > 0) {
+				Editor edit = prefs.edit();
+				edit.putString("session", account.getSession());
+				edit.commit();
 			}
 		}
 	}
@@ -511,18 +494,17 @@ public class MainActivity extends Activity implements LocationListener {
 				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				pd.setProgress(0);
 				pd.setMax(count);
-				pd.setMessage("");
+				pd.setMessage(res.getText(R.string.downloading));
 				pd.show();
 			}
 		});
 	}
 	
-	private void updateDownloadStatus(final int current, final int count, final String geoCode, final String name) {
-		Log.i(TAG, String.format("downloading (%d/%d): %s - %s", current, count, geoCode, name));
+	private void updateDownloadStatus(final int current, final int count) {
+		Log.i(TAG, String.format("downloading: %d/%d", current, count));
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				pd.setMessage(res.getString(R.string.downloading_cache, geoCode, name, current, count));
 				pd.setProgress(current);
 			}
 		});

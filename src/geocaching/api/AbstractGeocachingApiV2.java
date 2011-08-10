@@ -17,7 +17,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	@Deprecated
 	public List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles,
 			CacheType[] cacheTypes) throws GeocachingApiException {
-		return searchForGeocachesJSON(true, startPosition, endPosition - startPosition, 5, -1, new CacheFilter[] { 
+		return searchForGeocachesJSON(true, startPosition, endPosition - startPosition + 1, 5, -1, new CacheFilter[] { 
 				new PointRadiusFilter(latitude, longitude, (long) (radiusMiles * 1609L)),
 				new GeocacheTypeFilter(cacheTypes)
 		});
@@ -33,7 +33,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 
 	@Override
 	public Geocache getCache(String cacheCode) throws GeocachingApiException {
-		List<SimpleGeocache> caches = getCaches(new String[] {cacheCode}, false, 0, 1, Integer.MAX_VALUE, Integer.MAX_VALUE);
+		List<SimpleGeocache> caches = getCaches(new String[] {cacheCode}, false, 0, 1, 5, -1);
 		if (caches.size() == 0)
 			return null;
 		return (Geocache) caches.get(0);

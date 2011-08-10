@@ -1,8 +1,8 @@
 package geocaching.api.impl.live_geocaching_api.filter;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import google.gson.stream.JsonWriter;
+
+import java.io.IOException;
 
 public class CacheCodeFilter implements CacheFilter {
 	private static final String NAME = "CacheCode";
@@ -18,14 +18,31 @@ public class CacheCodeFilter implements CacheFilter {
 	}
 	
 	@Override
-	public JSONObject toJson() throws JSONException {
-		JSONArray jsonArray = new JSONArray();
+	public boolean isValid() {
+		if (caches == null || caches.length == 0)
+			return false;
 		
-		for(String cache : caches) {
-			jsonArray.put(cache);
+		boolean valid = false;
+		for (String cache : caches) {
+			if (cache != null && cache.length() > 0)
+				valid = true;
 		}
 		
-		return new JSONObject().put("CacheCodes", jsonArray);
+		return valid;
+	}
+	
+	@Override
+	public void writeJson(JsonWriter w) throws IOException {
+		w.name(NAME);
+		w.beginObject();
+		w.name("CacheCodes");
+		w.beginArray();
+		for(String cache : caches) {
+			if (cache != null && cache.length() > 0)
+			w.value(cache);
+		}
+		w.endArray();
+		w.endObject();
 	}
 
 	@Override

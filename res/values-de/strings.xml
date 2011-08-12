@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Während des Downloads von Caches ist ein Fehler aufgetreten. &lt;br/&gt;Fehlermeldung: %1$s</string>
+	<string name="error">Während des Downloads von Caches ist ein Fehler aufgetreten.&lt;br&gt;Fehlermeldung: %1$s</string>
 	<string name="downloading">Lade caches...</string>
 	<string name="downloading_cache">Lade Cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Bitte Locus installieren!</string>
@@ -36,4 +36,5 @@
 	<string name="error_title">Ein Fehler ist aufgetreten!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Die installierte Version von Locus ist zu alt. Geocaching4Locus benötigt mindestens Version %s.</string>
+	<string name="cancel_button">Abbrechen</string>
 </resources>

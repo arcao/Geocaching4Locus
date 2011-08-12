@@ -36,4 +36,5 @@
 	<string name="error_title">Nastala chyba!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
+	<string name="cancel_button">Storno</string>
 </resources>

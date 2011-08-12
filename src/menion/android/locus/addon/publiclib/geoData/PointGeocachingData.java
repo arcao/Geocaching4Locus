@@ -2,6 +2,7 @@ package menion.android.locus.addon.publiclib.geoData;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -151,11 +152,13 @@ public class PointGeocachingData implements Parcelable {
 	/****************************/
 	
     public static final Parcelable.Creator<PointGeocachingData> CREATOR = new Parcelable.Creator<PointGeocachingData>() {
-        public PointGeocachingData createFromParcel(Parcel in) {
+        @Override
+				public PointGeocachingData createFromParcel(Parcel in) {
             return new PointGeocachingData(in);
         }
 
-        public PointGeocachingData[] newArray(int size) {
+        @Override
+				public PointGeocachingData[] newArray(int size) {
             return new PointGeocachingData[size];
         }
     };
@@ -217,14 +220,16 @@ public class PointGeocachingData implements Parcelable {
    		 		in.readByteArray(data);
 
    		 		GZIPInputStream zis = new GZIPInputStream(new ByteArrayInputStream(data), 32);
+   		 		InputStreamReader isr = new InputStreamReader(zis, "UTF-8");
+   		 		
    		 		StringBuffer buffer = new StringBuffer();
-   	   		    byte[] dataD = new byte[32];
-   	   		    int bytesRead;
-   	   		    while ((bytesRead = zis.read(dataD)) != -1) {
-   	   		        buffer.append(new String(dataD, 0, bytesRead, "utf-8"));
+   	   		    char[] dataD = new char[1024];
+   	   		    int charsRead;
+   	   		    while ((charsRead = isr.read(dataD)) != -1) {
+   	   		        buffer.append(dataD, 0, charsRead);
    	   		    }
    		 		String result = buffer.toString();
-   		 		zis.close();
+   		 		isr.close();
    		 		
    		 		// read short description
    		 		if (lengthSD > 0)

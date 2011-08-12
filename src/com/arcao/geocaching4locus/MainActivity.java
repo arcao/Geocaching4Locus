@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus;
 
 import geocaching.api.AbstractGeocachingApiV2;
+import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
@@ -49,11 +50,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.Coordinates;
+import com.arcao.geocaching4locus.util.UserTask;
+import com.arcao.geocaching4locus.util.UserTask.Status;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
@@ -61,7 +63,6 @@ public class MainActivity extends Activity implements LocationListener {
 	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.9.5.2");
 
 	private Resources res;
-	private Thread searchThread;
 	private LocationManager locationManager;
 
 	private double latitude;
@@ -75,12 +76,11 @@ public class MainActivity extends Activity implements LocationListener {
 
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
-
 	private CheckBox simpleCacheDataCheckBox;
-
 	private CheckBox importCachesCheckBox;
 	
-	private boolean cancelDownload = false;
+	private SearchTask searchTask;
+	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -117,9 +117,7 @@ public class MainActivity extends Activity implements LocationListener {
 		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
-			double alt = getIntent().getDoubleExtra("altitude", 0.0);
-			double acc = getIntent().getDoubleExtra("accuracy", 0.0);
-			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude + "; alt=" + alt + "; acc=" + acc);
+			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
 
 			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
@@ -232,67 +230,25 @@ public class MainActivity extends Activity implements LocationListener {
 	public void onClickSettings(View view) {
 		startActivity(new Intent(this, PreferenceActivity.class));
 	}
+	
+	@Override
+	protected void onDestroy() {
+		if (searchTask != null && searchTask.getStatus() == Status.RUNNING)
+			searchTask.cancel(true);
 
-	protected void download() {
-		cancelDownload = false;
-		
+		super.onDestroy();
+	}
+
+	protected void download() {	
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
 
 		if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(MainActivity.this, R.string.wrong_coordinates, Toast.LENGTH_LONG);
-				}
-			});
+			showError(R.string.wrong_coordinates, null);
 		}
-
-		pd = ProgressDialog.show(this, null, res.getString(R.string.downloading), false, true, new OnCancelListener() {
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				cancelDownload = true;
-			}
-		});
-
-		searchThread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					// download caches
-					final List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
-					if (cancelDownload)
-						return;
-
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							// call intent
-							callLocus(caches);
-							pd.dismiss();
-							MainActivity.this.finish();
-						}
-					});
-				} catch (final Exception e) {
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							pd.dismiss();
-							Log.e(TAG, "search()", e);
-							if (e instanceof InvalidCredentialsException) {
-								showError(R.string.error_credentials, null);
-							} else {
-								String message = e.getMessage();
-								if (message == null)
-									message = "";
-								showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
-							}
-						}
-					});
-				}
-			}
-		};
-		searchThread.start();
+		
+		searchTask = new SearchTask(latitude, longitude);
+		searchTask.execute();
 	}
 	
 	protected void showError(int errorResId, String additionalMessage) {
@@ -326,33 +282,50 @@ public class MainActivity extends Activity implements LocationListener {
 		// Acquire a reference to the system Location Manager
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
-		pd = ProgressDialog.show(this, null, res.getString(R.string.acquiring_gps_location), false, true, new OnCancelListener() {
+		pd = new ProgressDialog(this);
+		pd.setMessage(res.getText(R.string.acquiring_gps_location));
+		pd.setCancelable(true);
+		pd.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				locationManager.removeUpdates(MainActivity.this);
-				
-				Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-				if (location == null)
-					location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-				
-				if (location == null) {
-					latitude = prefs.getFloat("latitude", 0F);
-					longitude = prefs.getFloat("longitude", 0F);
-				} else {
-					latitude = location.getLatitude();
-					longitude = location.getLongitude();
-				}
-				
-				latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
-				longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+				cancelAcquiring();
 			}
 		});
-
+		pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				cancelAcquiring();
+			}
+		});
+		pd.show();
 
 		// Register the listener with the Location Manager to receive location
 		// updates
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 	}
+	
+	protected void cancelAcquiring() {
+		if (pd != null && pd.isShowing())
+			pd.dismiss();
+		
+		locationManager.removeUpdates(MainActivity.this);
+		
+		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		if (location == null)
+			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		
+		if (location == null) {
+			latitude = prefs.getFloat("latitude", 0F);
+			longitude = prefs.getFloat("longitude", 0F);
+		} else {
+			latitude = location.getLatitude();
+			longitude = location.getLongitude();
+		}
+		
+		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+	}
+
 
 	private void callLocus(List<SimpleGeocache> caches) {
 		boolean importCaches = prefs.getBoolean("import_caches", false);
@@ -365,6 +338,11 @@ public class MainActivity extends Activity implements LocationListener {
 			// since version 1.9.5
 			PointsData points = new PointsData("Geocaching");
 			for (SimpleGeocache cache : caches) {
+				if (cache instanceof Geocache) {
+					Geocache geocache = (Geocache) cache;
+					Log.i(TAG, geocache.getGeoCode() + ": " + geocache.getLongDescription());
+				}
+				
 				if (points.getPoints().size() >= 50) {
 					pointDataCollection.add(points);
 					points = new PointsData("Geocaching");
@@ -379,7 +357,6 @@ public class MainActivity extends Activity implements LocationListener {
 			DisplayData.sendDataCursor(this, pointDataCollection, DataStorageProvider.URI, importCaches);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
-			throw new IllegalArgumentException(e);
 		}
 	}
 	
@@ -394,122 +371,7 @@ public class MainActivity extends Activity implements LocationListener {
 
 		return filter.toArray(new CacheType[0]);
 	}
-
-	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
-		final int maxPerPage = 10;
-		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
-		
-		boolean skipFound = prefs.getBoolean("filter_skip_found", false);
-		boolean simpleCacheData = prefs.getBoolean("simple_cache_data", false);
-		
-		double distance = prefs.getFloat("distance", 160.9344F);
-		if (!prefs.getBoolean("imperial_units", false)) {
-			distance = distance * 1.609344;
-		}
-
-		int limit = prefs.getInt("filter_count_of_caches", 50);
-		
-		if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-			throw new InvalidCredentialsException("Username or password is empty.");
-				
-		AbstractGeocachingApiV2 api = new LiveGeocachingApi();
-		try {
-			if (account.getSession() == null || account.getSession().length() == 0) {
-				api.openSession(account.getUserName(), account.getPassword());
-			} else {
-				api.openSession(account.getSession());
-			}
-		} catch (InvalidCredentialsException e) {
-			Log.e(TAG, "Creditials not valid.", e);
-			throw e;
-		}
-		
-		if (cancelDownload)
-			return caches;
-		
-		try {
-			prepareDownloadStatus(limit);
-			int start = 0;
-			while (start < limit) {
-				int perPage = (limit - start < maxPerPage) ? limit - start : maxPerPage;
-				
-				List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, start, perPage, -1, -1, new CacheFilter[] {
-						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
-						new GeocacheTypeFilter(getCacheTypeFilterResult()),
-						new GeocacheExclusionsFilter(false, true, null),
-						new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
-				});
-				
-				if (cachesToAdd.size() == 0)
-					break;
-				
-				caches.addAll(cachesToAdd);
-				
-				start = start + perPage;
-				updateDownloadStatus(start, limit);
-			}
-			int count = caches.size();
-			
-			if (cancelDownload)
-				return caches;
-			Log.i(TAG, "found caches: " + count);
-
-			return caches;
-		} catch (InvalidSessionException e) {
-			account.setSession(null);
-			
-			Editor edit = prefs.edit();
-			edit.remove("session");
-			edit.commit();
-			
-			return downloadCaches(latitude, longitude);
-		} finally {
-			account.setSession(api.getSession());
-			if (account.getSession() != null && account.getSession().length() > 0) {
-				Editor edit = prefs.edit();
-				edit.putString("session", account.getSession());
-				edit.commit();
-			}
-		}
-	}
 	
-	private void prepareDownloadStatus(final int count) {
-		if (isFinishing())
-			return;
-		
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				if (pd != null && pd.isShowing())
-					pd.dismiss();
-				
-				pd = new ProgressDialog(MainActivity.this);
-				pd.setCancelable(true);
-				pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						cancelDownload = true;
-					}
-				});
-				pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-				pd.setProgress(0);
-				pd.setMax(count);
-				pd.setMessage(res.getText(R.string.downloading));
-				pd.show();
-			}
-		});
-	}
-	
-	private void updateDownloadStatus(final int current, final int count) {
-		Log.i(TAG, String.format("downloading: %d/%d", current, count));
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				pd.setProgress(current);
-			}
-		});
-	}
-		
 	@Override
 	public void onLocationChanged(Location location) {
 		locationManager.removeUpdates(this);
@@ -519,8 +381,7 @@ public class MainActivity extends Activity implements LocationListener {
 				public void run() {
 					pd.dismiss();
 					Log.e(TAG, "onLocationChanged() location is not avaible.");
-					Toast.makeText(MainActivity.this, res.getString(R.string.error_location), Toast.LENGTH_LONG).show();
-					MainActivity.this.finish();
+					showError(R.string.error_location, null);
 				}
 			});
 			return;
@@ -576,5 +437,166 @@ public class MainActivity extends Activity implements LocationListener {
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+	
+	private class SearchTask extends UserTask<Void, Integer, List<SimpleGeocache>> {
+		private final ProgressDialog pd = new ProgressDialog(MainActivity.this);
+		private final static int MAX_PER_PAGE = 10;
+		
+		private final boolean skipFound;
+		private final boolean simpleCacheData;
+		private double distance;
+		private final int limit;
+		
+		private final double latitude;
+		private final double longitude;
+		
+		public SearchTask(double latitude, double longitude) {
+			this.latitude = latitude;
+			this.longitude = longitude;
+			
+			skipFound = prefs.getBoolean("filter_skip_found", false);
+			simpleCacheData = prefs.getBoolean("simple_cache_data", false);
+			
+			distance = prefs.getFloat("distance", 160.9344F);
+			if (!prefs.getBoolean("imperial_units", false)) {
+				distance = distance * 1.609344;
+			}
+
+			limit = prefs.getInt("filter_count_of_caches", 50);
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			pd.setCancelable(true);
+			pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					cancel(true);
+				}
+			});
+			pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					cancel(true);
+				}
+			});
+			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			pd.setProgress(0);
+			pd.setMax(limit);
+			pd.setMessage(res.getText(R.string.downloading));
+			pd.show();
+		}
+
+		@Override
+		protected List<SimpleGeocache> doInBackground(Void... params) throws Exception {
+			return downloadCaches(latitude, longitude);
+		}
+		
+		@Override
+		protected void onPostExecute(List<SimpleGeocache> result) {
+			callLocus(result);
+			MainActivity.this.finish();
+		}
+				
+		@Override
+		protected void onException(Throwable e) {
+			if (pd.isShowing())
+				pd.dismiss();
+			
+			Log.e(TAG, "search()", e);
+			if (e instanceof InvalidCredentialsException) {
+				showError(R.string.error_credentials, null);
+			} else {
+				String message = e.getMessage();
+				if (message == null)
+					message = "";
+				showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
+			}
+		}
+		
+		@Override
+		protected void onFinally() {
+			if (pd.isShowing())
+				pd.dismiss();
+		}
+		
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			if (pd.isShowing())
+				pd.setProgress(values[0]);
+		}
+		
+		protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
+			final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
+						
+			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
+				throw new InvalidCredentialsException("Username or password is empty.");
+					
+			AbstractGeocachingApiV2 api = new LiveGeocachingApi();
+			login(api, account);
+			
+			if (isCancelled())
+				return null;
+			
+			try {
+				int start = 0;
+				while (start < limit) {
+					int perPage = (limit - start < MAX_PER_PAGE) ? limit - start : MAX_PER_PAGE;
+					
+					List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, start, perPage, -1, -1, new CacheFilter[] {
+							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
+							new GeocacheTypeFilter(getCacheTypeFilterResult()),
+							new GeocacheExclusionsFilter(false, true, null),
+							new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
+					});
+					
+					if (cachesToAdd.size() == 0)
+						break;
+					
+					if (isCancelled())
+						return null;
+					
+					caches.addAll(cachesToAdd);
+					
+					start = start + perPage;
+					
+					publishProgress(start);
+				}
+				int count = caches.size();
+				
+				Log.i(TAG, "found caches: " + count);
+
+				return caches;
+			} catch (InvalidSessionException e) {
+				account.setSession(null);
+				
+				Editor edit = prefs.edit();
+				edit.remove("session");
+				edit.commit();
+				
+				return downloadCaches(latitude, longitude);
+			} finally {
+				account.setSession(api.getSession());
+				if (account.getSession() != null && account.getSession().length() > 0) {
+					Editor edit = prefs.edit();
+					edit.putString("session", account.getSession());
+					edit.commit();
+				}
+			}
+		}
+
+		private void login(AbstractGeocachingApiV2 api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+			try {
+				if (account.getSession() == null || account.getSession().length() == 0) {
+					api.openSession(account.getUserName(), account.getPassword());
+				} else {
+					api.openSession(account.getSession());
+				}
+			} catch (InvalidCredentialsException e) {
+				Log.e(TAG, "Creditials not valid.", e);
+				throw e;
+			}
+		}
 	}
 }

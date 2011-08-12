@@ -37,4 +37,5 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="error_title">Er is een fout opgetreden!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
+	<string name="cancel_button">Cancel</string>
 </resources>

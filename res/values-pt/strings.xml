@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Ocorreu um erro a descarregar caches.&lt;br/&gt;Descrição: %1$s</string>
+	<string name="error">Ocorreu um erro a descarregar caches.&lt;br&gt;Descrição: %1$s</string>
 	<string name="downloading">A descarregar caches...</string>
 	<string name="downloading_cache">A descarregar a cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Por favor instale o Locus!</string>
@@ -36,4 +36,5 @@
 	<string name="error_title">Ocorrência de erros!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
+	<string name="cancel_button">Cancel</string>
 </resources>

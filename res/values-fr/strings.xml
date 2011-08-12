@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Des erreurs sont survenues en téléchargeant les caches.&lt;br/&gt;Description: %1$s</string>
+	<string name="error">Des erreurs sont survenues en téléchargeant les caches.&lt;br&gt;Description: %1$s</string>
 	<string name="downloading">Téléchargement des caches...</string>
 	<string name="downloading_cache">Téléchargement de la cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Merci d\'installer Locus</string>
@@ -13,7 +13,7 @@
 	<string name="wrong_coordinates">Mauvais format de coordonnées</string>
 	<string name="search_and_import_button">Chercher et afficher dans Locus</string>
 	<string name="coordinates">Coordonnées</string>
-	<string name="pref_title_geocaching_credentials">Crédits à Geocaching.com</string>
+	<string name="pref_title_geocaching_credentials">Connexion à Geocaching.com</string>
 	<string name="pref_username">Identifiant</string>
 	<string name="pref_password">Mot de passe</string>
 	<string name="pref_title_filter">Filtrer</string>
@@ -36,4 +36,5 @@
 	<string name="error_title">Une erreur est survenue !</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>
+	<string name="cancel_button">Annuler</string>
 </resources>

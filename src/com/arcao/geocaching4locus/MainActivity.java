@@ -1,36 +1,18 @@
 package com.arcao.geocaching4locus;
 
-import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.data.Geocache;
-import geocaching.api.data.SimpleGeocache;
-import geocaching.api.data.type.CacheType;
-import geocaching.api.exception.GeocachingApiException;
-import geocaching.api.exception.InvalidCredentialsException;
-import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.LiveGeocachingApi;
-import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
-import geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusUtils;
-import menion.android.locus.addon.publiclib.geoData.PointsData;
 
 import org.osgi.framework.Version;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -51,11 +33,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-import com.arcao.geocaching4locus.provider.DataStorageProvider;
-import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.util.Coordinates;
-import com.arcao.geocaching4locus.util.UserTask;
-import com.arcao.geocaching4locus.util.UserTask.Status;
 
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
@@ -72,23 +51,19 @@ public class MainActivity extends Activity implements LocationListener {
 
 	private Handler handler;
 	private SharedPreferences prefs;
-	private Account account = null;
 
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
 	private CheckBox simpleCacheDataCheckBox;
 	private CheckBox importCachesCheckBox;
-	
-	private SearchTask searchTask;
-	
-
+		
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		res = getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-			
+				
 		Version locusVersion = Version.parseVersion(LocusUtils.getLocusVersion(this));
 		Log.i(TAG, "Locus version: " + locusVersion);
 		
@@ -172,22 +147,41 @@ public class MainActivity extends Activity implements LocationListener {
 				edit.commit();
 			}
 		});
+		
+		if (SearchGeocacheService.getInstance() != null) {
+			return;
+		}
 
 		if (!hasCoordinates) {
 			acquireCoordinates();
 		}
 	}
-
+	
 	@Override
-	protected void onResume() {
+	protected void onResume() {	
+		
+		IntentFilter filter = new IntentFilter(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
+		
+		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
+		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
+		filter.addAction(SearchGeocacheService.ACTION_ERROR);
+		
+		registerReceiver(searchGeocacheReceiver, filter);
+		
+		Log.i(TAG, "Receiver registred.");
+		
+		if (SearchGeocacheService.getInstance() != null) {
+			SearchGeocacheService.getInstance().sendProgressUpdate();
+			return;
+		}
 		super.onResume();
-
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String userName = prefs.getString("username", "");
-		String password = prefs.getString("password", "");
-		String session = prefs.getString("session", null);
-
-		account = new Account(userName, password, session);
+	}
+	
+	@Override
+	protected void onPause() {	
+		unregisterReceiver(searchGeocacheReceiver);
+		Log.i(TAG, "Receiver unregistred.");
+		super.onPause();
 	}
 	
 	@Override
@@ -231,14 +225,6 @@ public class MainActivity extends Activity implements LocationListener {
 		startActivity(new Intent(this, PreferenceActivity.class));
 	}
 	
-	@Override
-	protected void onDestroy() {
-		if (searchTask != null && searchTask.getStatus() == Status.RUNNING)
-			searchTask.cancel(true);
-
-		super.onDestroy();
-	}
-
 	protected void download() {	
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
@@ -247,8 +233,11 @@ public class MainActivity extends Activity implements LocationListener {
 			showError(R.string.wrong_coordinates, null);
 		}
 		
-		searchTask = new SearchTask(latitude, longitude);
-		searchTask.execute();
+		
+		Intent intent = new Intent(this, SearchGeocacheService.class);
+		intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, latitude);
+		intent.putExtra(SearchGeocacheService.PARAM_LONGITUDE, longitude);
+		startService(intent);
 	}
 	
 	protected void showError(int errorResId, String additionalMessage) {
@@ -325,52 +314,6 @@ public class MainActivity extends Activity implements LocationListener {
 		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
-
-
-	private void callLocus(List<SimpleGeocache> caches) {
-		boolean importCaches = prefs.getBoolean("import_caches", false);
-		
-		try {
-			ArrayList<PointsData> pointDataCollection = new ArrayList<PointsData>();
-			
-			// beware there is row limit in DataStorageProvider (1MB per row - serialized PointsData is one row)
-			// so we split points into several PointsData object with same uniqueName - Locus merge it automatically
-			// since version 1.9.5
-			PointsData points = new PointsData("Geocaching");
-			for (SimpleGeocache cache : caches) {
-				if (cache instanceof Geocache) {
-					Geocache geocache = (Geocache) cache;
-					Log.i(TAG, geocache.getGeoCode() + ": " + geocache.getLongDescription());
-				}
-				
-				if (points.getPoints().size() >= 50) {
-					pointDataCollection.add(points);
-					points = new PointsData("Geocaching");
-				}
-				// convert SimpleGeocache to Point
-				points.addPoint(cache.toPoint());
-			}
-			
-			if (!points.getPoints().isEmpty())
-				pointDataCollection.add(points);
-			
-			DisplayData.sendDataCursor(this, pointDataCollection, DataStorageProvider.URI, importCaches);
-		} catch (Exception e) {
-			Log.e(TAG, "callLocus()", e);
-		}
-	}
-	
-	private CacheType[] getCacheTypeFilterResult() {
-		Vector<CacheType> filter = new Vector<CacheType>();
-
-		for (int i = 0; i < CacheType.values().length; i++) {
-			if (prefs.getBoolean("filter_" + i, true)) {
-				filter.add(CacheType.values()[i]);
-			}
-		}
-
-		return filter.toArray(new CacheType[0]);
-	}
 	
 	@Override
 	public void onLocationChanged(Location location) {
@@ -439,164 +382,49 @@ public class MainActivity extends Activity implements LocationListener {
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 	
-	private class SearchTask extends UserTask<Void, Integer, List<SimpleGeocache>> {
-		private final ProgressDialog pd = new ProgressDialog(MainActivity.this);
-		private final static int MAX_PER_PAGE = 10;
+	protected void requestProgressUpdate() {
 		
-		private final boolean skipFound;
-		private final boolean simpleCacheData;
-		private double distance;
-		private final int limit;
-		
-		private final double latitude;
-		private final double longitude;
-		
-		public SearchTask(double latitude, double longitude) {
-			this.latitude = latitude;
-			this.longitude = longitude;
-			
-			skipFound = prefs.getBoolean("filter_skip_found", false);
-			simpleCacheData = prefs.getBoolean("simple_cache_data", false);
-			
-			distance = prefs.getFloat("distance", 160.9344F);
-			if (!prefs.getBoolean("imperial_units", false)) {
-				distance = distance * 1.609344;
-			}
-
-			limit = prefs.getInt("filter_count_of_caches", 50);
-		}
-		
-		@Override
-		protected void onPreExecute() {
-			pd.setCancelable(true);
-			pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					cancel(true);
-				}
-			});
-			pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					cancel(true);
-				}
-			});
-			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			pd.setProgress(0);
-			pd.setMax(limit);
-			pd.setMessage(res.getText(R.string.downloading));
-			pd.show();
-		}
-
-		@Override
-		protected List<SimpleGeocache> doInBackground(Void... params) throws Exception {
-			return downloadCaches(latitude, longitude);
-		}
-		
-		@Override
-		protected void onPostExecute(List<SimpleGeocache> result) {
-			callLocus(result);
-			MainActivity.this.finish();
-		}
-				
-		@Override
-		protected void onException(Throwable e) {
-			if (pd.isShowing())
-				pd.dismiss();
-			
-			Log.e(TAG, "search()", e);
-			if (e instanceof InvalidCredentialsException) {
-				showError(R.string.error_credentials, null);
-			} else {
-				String message = e.getMessage();
-				if (message == null)
-					message = "";
-				showError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
-			}
-		}
-		
-		@Override
-		protected void onFinally() {
-			if (pd.isShowing())
-				pd.dismiss();
-		}
-		
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			if (pd.isShowing())
-				pd.setProgress(values[0]);
-		}
-		
-		protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
-			final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
-						
-			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-				throw new InvalidCredentialsException("Username or password is empty.");
-					
-			AbstractGeocachingApiV2 api = new LiveGeocachingApi();
-			login(api, account);
-			
-			if (isCancelled())
-				return null;
-			
-			try {
-				int start = 0;
-				while (start < limit) {
-					int perPage = (limit - start < MAX_PER_PAGE) ? limit - start : MAX_PER_PAGE;
-					
-					List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, start, perPage, -1, -1, new CacheFilter[] {
-							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
-							new GeocacheTypeFilter(getCacheTypeFilterResult()),
-							new GeocacheExclusionsFilter(false, true, null),
-							new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
-					});
-					
-					if (cachesToAdd.size() == 0)
-						break;
-					
-					if (isCancelled())
-						return null;
-					
-					caches.addAll(cachesToAdd);
-					
-					start = start + perPage;
-					
-					publishProgress(start);
-				}
-				int count = caches.size();
-				
-				Log.i(TAG, "found caches: " + count);
-
-				return caches;
-			} catch (InvalidSessionException e) {
-				account.setSession(null);
-				
-				Editor edit = prefs.edit();
-				edit.remove("session");
-				edit.commit();
-				
-				return downloadCaches(latitude, longitude);
-			} finally {
-				account.setSession(api.getSession());
-				if (account.getSession() != null && account.getSession().length() > 0) {
-					Editor edit = prefs.edit();
-					edit.putString("session", account.getSession());
-					edit.commit();
-				}
-			}
-		}
-
-		private void login(AbstractGeocachingApiV2 api, Account account) throws GeocachingApiException, InvalidCredentialsException {
-			try {
-				if (account.getSession() == null || account.getSession().length() == 0) {
-					api.openSession(account.getUserName(), account.getPassword());
-				} else {
-					api.openSession(account.getSession());
-				}
-			} catch (InvalidCredentialsException e) {
-				Log.e(TAG, "Creditials not valid.", e);
-				throw e;
-			}
-		}
 	}
+	
+	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {
+		private ProgressDialog pd;
+		@Override
+		public void onReceive(Context context, final Intent intent) {
+			if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
+				if (pd == null || !pd.isShowing()) {
+					pd = new ProgressDialog(MainActivity.this);
+					pd.setCancelable(true);
+					pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							stopService(new Intent(MainActivity.this, SearchGeocacheService.class));
+						}
+					});
+					pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							stopService(new Intent(MainActivity.this, SearchGeocacheService.class));
+						}
+					});
+					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
+					pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1));
+					pd.setMessage(res.getText(R.string.downloading));
+					pd.show();
+				}
+				
+				pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
+			} else if (SearchGeocacheService.ACTION_PROGRESS_COMPLETE.equals(intent.getAction())) {
+				if (pd != null && pd.isShowing())
+					pd.dismiss();
+			} else if (SearchGeocacheService.ACTION_ERROR.equals(intent.getAction())) {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						showError(intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0), intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
+					}
+				});
+			}
+		}
+	};
 }

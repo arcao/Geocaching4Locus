@@ -19,14 +19,21 @@ import java.util.List;
 import java.util.Vector;
 
 import menion.android.locus.addon.publiclib.DisplayData;
+import menion.android.locus.addon.publiclib.LocusConst;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+import menion.android.locus.addon.publiclib.utils.DataStorage;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
@@ -55,9 +62,13 @@ public class SearchGeocacheService extends IntentService {
 	private int current = 0;
 	private Account account;
 	
+	private boolean canceled;
+	
 	protected SharedPreferences prefs;
 	
 	private static SearchGeocacheService instance = null;
+	
+	NotificationManager notificationManager;
 	
 	public SearchGeocacheService() {
 		super(TAG);		
@@ -73,6 +84,23 @@ public class SearchGeocacheService extends IntentService {
 		
 		instance = this;
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		canceled = false;
+		
+		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		
+		Notification notification = new Notification();
+		notification.icon = R.drawable.ic_launcher;
+		notification.tickerText = getResources().getText(R.string.downloading);
+		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
+		
+		notification.setLatestEventInfo(this, notification.tickerText, notification.tickerText, pendingIntent);
+		
+		notificationManager.notify(0, notification);
 	}
 
 	@Override
@@ -85,6 +113,7 @@ public class SearchGeocacheService extends IntentService {
 		
 		try {
 			List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
+			sendProgressComplete();
 			if (caches != null)
 				callLocus(caches);
 		} catch (InvalidCredentialsException e) {
@@ -101,9 +130,10 @@ public class SearchGeocacheService extends IntentService {
 	
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
-		sendProgressComplete();
+		canceled = true;
 		instance = null;
+		notificationManager.cancel(0);
+		super.onDestroy();
 	}
 
 	protected void loadConfiguration() {
@@ -115,6 +145,7 @@ public class SearchGeocacheService extends IntentService {
 			distance = distance * 1.609344;
 		}
 
+		current = 0;
 		count = prefs.getInt("filter_count_of_caches", 50);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -152,7 +183,12 @@ public class SearchGeocacheService extends IntentService {
 			if (!points.getPoints().isEmpty())
 				pointDataCollection.add(points);
 			
-			DisplayData.sendDataCursor(this, pointDataCollection, DataStorageProvider.URI, importCaches);
+			// set data
+			DataStorage.setData(pointDataCollection);
+			Intent intent = new Intent();
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.putExtra(LocusConst.EXTRA_POINTS_CURSOR_URI, DataStorageProvider.URI);
+			DisplayData.sendData(getApplication(), intent, importCaches);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 		}
@@ -175,10 +211,14 @@ public class SearchGeocacheService extends IntentService {
 					
 		if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
 			throw new InvalidCredentialsException("Username or password is empty.");
-				
+
+		if (canceled)
+			return null;
+		
 		AbstractGeocachingApiV2 api = new LiveGeocachingApi();
 		login(api, account);
-				
+		
+		sendProgressUpdate();
 		try {
 			current = 0;
 			while (current < count) {
@@ -190,6 +230,9 @@ public class SearchGeocacheService extends IntentService {
 						new GeocacheExclusionsFilter(false, true, null),
 						new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
 				});
+				
+				if (canceled)
+					return null;
 				
 				if (cachesToAdd.size() == 0)
 					break;

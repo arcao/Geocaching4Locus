@@ -167,13 +167,10 @@ public class MainActivity extends Activity implements LocationListener {
 		filter.addAction(SearchGeocacheService.ACTION_ERROR);
 		
 		registerReceiver(searchGeocacheReceiver, filter);
+		requestProgressUpdate();
 		
 		Log.i(TAG, "Receiver registred.");
 		
-		if (SearchGeocacheService.getInstance() != null) {
-			SearchGeocacheService.getInstance().sendProgressUpdate();
-			return;
-		}
 		super.onResume();
 	}
 	
@@ -383,7 +380,8 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	protected void requestProgressUpdate() {
-		
+		if (SearchGeocacheService.getInstance() != null)
+			SearchGeocacheService.getInstance().sendProgressUpdate();		
 	}
 	
 	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {
@@ -407,8 +405,8 @@ public class MainActivity extends Activity implements LocationListener {
 						}
 					});
 					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+					pd.setMax(intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1));
 					pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-					pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1));
 					pd.setMessage(res.getText(R.string.downloading));
 					pd.show();
 				}
@@ -418,12 +416,10 @@ public class MainActivity extends Activity implements LocationListener {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();
 			} else if (SearchGeocacheService.ACTION_ERROR.equals(intent.getAction())) {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						showError(intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0), intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
-					}
-				});
+				if (pd != null && pd.isShowing())
+					pd.dismiss();
+
+				showError(intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0), intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
 			}
 		}
 	};

@@ -1,5 +1,6 @@
 package geocaching.api.impl.live_geocaching_api.parser;
 
+import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
@@ -11,15 +12,23 @@ import java.util.Date;
 import java.util.List;
 
 public class SimpleGeocacheJsonParser extends JsonParser {
-	public static List<SimpleGeocache> parseList(JsonReader r) throws IOException {	
+	public static List<SimpleGeocache> parseList(JsonReader r) throws IOException {
+		return parseList(r, null);
+	}
+	
+	public static List<SimpleGeocache> parseList(JsonReader r, GeocachingApiProgressListener listener) throws IOException {	
 		if (r.peek() != JsonToken.BEGIN_ARRAY) {
 			r.skipValue();
 		}
 		
 		List<SimpleGeocache> list = new ArrayList<SimpleGeocache>();
 		r.beginArray();
+		int i = 0;
+		
 		while(r.hasNext()) {
 			list.add(parse(r));
+			if (listener != null)
+			listener.onProgressUpdate(++i);
 		}
 		r.endArray();
 		return list;

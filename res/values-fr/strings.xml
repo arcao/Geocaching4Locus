@@ -32,7 +32,7 @@
 	<string name="pref_imperial_units_summary">Utiliser les miles au lieu des kilomètres</string>
 	<string name="download_simple_cache_data">Uniquement les données principales de la cache </string>
 	<string name="import_caches">Importer les caches</string>
-	<string name="error_credentials">Mot de passe ou Identifiant incorrect. Merci d\'entrer à nouveau vos éléments d\'identification ou de décochez la case\"Ne pas afficher les caches trouvées\" dans les Paramètres</string>
+	<string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
 	<string name="error_title">Une erreur est survenue !</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>

@@ -1,6 +1,7 @@
 package geocaching.api.impl;
 
 import geocaching.api.AbstractGeocachingApiV2;
+import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.CacheLog;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
@@ -32,7 +33,7 @@ import java.util.zip.InflaterInputStream;
 
 import android.util.Log;
 
-public class LiveGeocachingApi extends AbstractGeocachingApiV2 {
+public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements GeocachingApiProgressListener {
 	private static final String TAG = "Geocaching4Locus|LiveGeocachingApi";
 	
 	private static final String GHOST_USERNAME = "";
@@ -133,9 +134,9 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 {
 				String name = r.nextName();
 				if ("Geocaches".equals(name)) {
 					if (isLite) {
-						list = SimpleGeocacheJsonParser.parseList(r);
+						list = SimpleGeocacheJsonParser.parseList(r, this);
 					} else {
-						list = GeocacheJsonParser.parseList(r);
+						list = GeocacheJsonParser.parseList(r, this);
 					}
 				} else {
 					r.skipValue();
@@ -295,4 +296,8 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 {
 		return input.substring(0, start + 10) + "******" + input.substring(input.indexOf('&', start + 10));
 	}
 
+	@Override
+	public void onProgressUpdate(int progress) {
+		fireProgressListener(progress);
+	}
 }

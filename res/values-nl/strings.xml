@@ -33,7 +33,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
 	<string name="download_simple_cache_data">Alleen simpele cache data</string>
 	<string name="import_caches">Importeer caches</string>
-	<string name="error_credentials">Ongeldige gebruikersnaam of wachtwoord. Gelieve je gebruikersgegevens opnieuw in te geven in voorkeuren of de Sla gevonden over checkbox af te vinken in voorkeuren.</string>
+	<string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
 	<string name="error_title">Er is een fout opgetreden!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>

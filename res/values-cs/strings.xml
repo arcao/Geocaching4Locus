@@ -32,7 +32,7 @@
 	<string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
 	<string name="download_simple_cache_data">Pouze základní data o keši</string>
 	<string name="import_caches">Importovat keše</string>
-	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej tvé uživatelské údaje v nastavení nebo odškrtni Přeskočit nalezené v nastavení.</string>
+	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej své uživatelské údaje v nastavení.</string>
 	<string name="error_title">Nastala chyba!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>

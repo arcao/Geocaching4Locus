@@ -32,7 +32,7 @@
 	<string name="pref_imperial_units_summary">Zeige Meilen statt Kilometer</string>
 	<string name="download_simple_cache_data">Nur Kurzbeschreibung laden</string>
 	<string name="import_caches">Caches importieren</string>
-	<string name="error_credentials">Ungültiger Benutzername/Kennwort. Bitte überprüfen Sie die Angaben in den Voreinstellungen oder deaktivieren Sie die Einstellung \"Überspringe gefundene Caches\" </string>
+	<string name="error_credentials">Ungültiger Benutzername/Kennwort. Bitte überprüfen Sie die Angaben in den Voreinstellungen.</string>
 	<string name="error_title">Ein Fehler ist aufgetreten!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Die installierte Version von Locus ist zu alt. Geocaching4Locus benötigt mindestens Version %s.</string>

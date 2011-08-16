@@ -37,7 +37,7 @@
     <string name="download_simple_cache_data">Simple cache data only</string>
     <string name="import_caches">Import caches</string>
     
-    <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences or uncheck Skip found checkbox in preferences.</string>
+    <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
     <string name="error_title">Error occurs!</string>
     
     <string name="ok_button">Ok</string>

@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.service;
 
 import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.data.Geocache;
+import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
@@ -15,6 +15,7 @@ import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -31,14 +32,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
+import android.widget.RemoteViews;
 
+import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 
-public class SearchGeocacheService extends IntentService {
+public class SearchGeocacheService extends IntentService implements GeocachingApiProgressListener {
 	private static final String TAG = "SearchGeocacheService";
 	
 	public static final String ACTION_PROGRESS_UPDATE = "com.arcao.geocaching4locus.intent.action.PROGRESS_UPDATE";
@@ -68,7 +72,9 @@ public class SearchGeocacheService extends IntentService {
 	
 	private static SearchGeocacheService instance = null;
 	
-	NotificationManager notificationManager;
+	protected NotificationManager notificationManager;
+	protected RemoteViews contentViews;
+	protected Notification progressNotification;
 	
 	public SearchGeocacheService() {
 		super(TAG);		
@@ -88,19 +94,38 @@ public class SearchGeocacheService extends IntentService {
 		
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		Notification notification = new Notification();
-		notification.icon = R.drawable.ic_launcher;
-		notification.tickerText = getResources().getText(R.string.downloading);
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		progressNotification = createProgressNotification(); 
 		
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		notificationManager.notify(R.layout.notification_download, progressNotification);
+	}
+
+	protected Notification createProgressNotification() {
+		Notification n = new Notification();
 		
-		PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
+		n.icon = R.drawable.ic_launcher;
+		n.tickerText = null;
+		n.flags |= Notification.FLAG_ONGOING_EVENT;				
+		n.contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
+		n.contentIntent = PendingIntent.getActivity(getBaseContext(), 0, new Intent(this, MainActivity.class), 0);
 		
-		notification.setLatestEventInfo(this, notification.tickerText, notification.tickerText, pendingIntent);
+		return n;
+	}
+	
+	protected Notification createErrorNotification(int resErrorId, String errorText) {
+		Notification n = new Notification();
 		
-		notificationManager.notify(0, notification);
+		n.icon = R.drawable.ic_launcher;
+		n.tickerText = getText(R.string.error_title);
+		n.when = new Date().getTime(); 
+		
+		Intent intent = new Intent(this, ErrorActivity.class);
+		intent.setAction(ACTION_ERROR);
+		intent.putExtra(PARAM_RESOURCE_ID, resErrorId);
+		intent.putExtra(PARAM_ADDITIONAL_MESSAGE, errorText);
+		
+		n.setLatestEventInfo(this, getText(R.string.error_title), Html.fromHtml(getString(resErrorId, errorText)), PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
+		
+		return n;
 	}
 
 	@Override
@@ -132,7 +157,7 @@ public class SearchGeocacheService extends IntentService {
 	public void onDestroy() {
 		canceled = true;
 		instance = null;
-		notificationManager.cancel(0);
+		notificationManager.cancel(R.layout.notification_download);
 		super.onDestroy();
 	}
 
@@ -146,7 +171,7 @@ public class SearchGeocacheService extends IntentService {
 		}
 
 		current = 0;
-		count = prefs.getInt("filter_count_of_caches", 50);
+		count = prefs.getInt("filter_count_of_caches", 20);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String userName = prefs.getString("username", "");
@@ -166,12 +191,7 @@ public class SearchGeocacheService extends IntentService {
 			// so we split points into several PointsData object with same uniqueName - Locus merge it automatically
 			// since version 1.9.5
 			PointsData points = new PointsData("Geocaching");
-			for (SimpleGeocache cache : caches) {
-				if (cache instanceof Geocache) {
-					Geocache geocache = (Geocache) cache;
-					Log.i(TAG, geocache.getGeoCode() + ": " + geocache.getLongDescription());
-				}
-				
+			for (SimpleGeocache cache : caches) {				
 				if (points.getPoints().size() >= 50) {
 					pointDataCollection.add(points);
 					points = new PointsData("Geocaching");
@@ -219,6 +239,7 @@ public class SearchGeocacheService extends IntentService {
 		login(api, account);
 		
 		sendProgressUpdate();
+		api.addProgressListener(this);
 		try {
 			current = 0;
 			while (current < count) {
@@ -257,6 +278,7 @@ public class SearchGeocacheService extends IntentService {
 			
 			return downloadCaches(latitude, longitude);
 		} finally {
+			api.removeProgressListener(this);
 			account.setSession(api.getSession());
 			if (account.getSession() != null && account.getSession().length() > 0) {
 				Editor edit = prefs.edit();
@@ -279,27 +301,52 @@ public class SearchGeocacheService extends IntentService {
 		}
 	}
 	
+	@Override
+	public void onProgressUpdate(int progress) {
+		if (canceled)
+			return;
+		
+		Intent broadcastIntent = new Intent();
+		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
+		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
+		broadcastIntent.putExtra(PARAM_COUNT, count + progress);
+		broadcastIntent.putExtra(PARAM_CURRENT, current);
+		sendBroadcast(broadcastIntent);
+	}
+	
 	public void sendProgressUpdate() {
+		if (canceled)
+			return;
+		
+		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
+		progressNotification.contentView.setTextViewText(R.id.progress_text, ((current * 100) / count) + "%");
+		notificationManager.notify(R.layout.notification_download, progressNotification);
+		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
 		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
 		broadcastIntent.putExtra(PARAM_COUNT, count);
 		broadcastIntent.putExtra(PARAM_CURRENT, current);
 		sendBroadcast(broadcastIntent);
-		Log.i(TAG, "Progress update sent.");
 	}
 	
 	protected void sendProgressComplete() {
+		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
+		progressNotification.contentView.setTextViewText(R.id.progress_text, "100%");
+		notificationManager.notify(R.layout.notification_download, progressNotification);
+		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_COMPLETE);
 		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
 		broadcastIntent.putExtra(PARAM_COUNT, count);
 		broadcastIntent.putExtra(PARAM_CURRENT, count);
 		sendBroadcast(broadcastIntent);
-		Log.i(TAG, "Progress complete sent.");
 	}
 	
 	protected void sendError(int error, String additionalMessage) {
+		// error notification
+		notificationManager.notify(error, createErrorNotification(error, additionalMessage));
+		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_ERROR);
 		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
@@ -307,9 +354,5 @@ public class SearchGeocacheService extends IntentService {
 		if (additionalMessage != null)
 			broadcastIntent.putExtra(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
 		sendBroadcast(broadcastIntent);
-		
-		Log.i(TAG, "Error message sent.");
 	}
-
-
 }

@@ -10,9 +10,13 @@ import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
+	protected Set<GeocachingApiProgressListener> listeners = new HashSet<GeocachingApiProgressListener>();
+	
 	@Override
 	@Deprecated
 	public List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles,
@@ -49,4 +53,24 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	}
 	
 	public abstract List<SimpleGeocache> searchForGeocachesJSON(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
+	
+	protected void fireProgressListener(int progress) {
+		synchronized(listeners) {
+			for (GeocachingApiProgressListener listener : listeners) {
+				listener.onProgressUpdate(progress);
+			}
+		}
+	}
+	
+	public void addProgressListener(GeocachingApiProgressListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+	
+	public void removeProgressListener(GeocachingApiProgressListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
+	}
 }

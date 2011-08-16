@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Błąd podczas pobierania skrzynek.&lt;br&gt;Opis: %1$s</string>
+	<string name="downloading">Pobieram skrzynki</string>
+	<string name="downloading_cache">Pobieram skrzynki (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Zainstaluj Locusa! </string>
+	<string name="search_activity_name">Najbliższe skrzynki</string>
+	<string name="error_location">Określanie lokalizacji za pomocą sieci bezprzewodowych jest wyłączone. Włącz je w ustawieniach lokalizacji. </string>
+	<string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS</string>
+	<string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych</string>
+	<string name="preferences">Ustawienia</string>
+	<string name="wrong_coordinates">Niepoprawny format współrzędnych</string>
+	<string name="search_and_import_button">Szukaj i pokaż w Locusie</string>
+	<string name="coordinates">Współrzędne</string>
+	<string name="pref_title_geocaching_credentials">Dane logowania do Geocaching.com</string>
+	<string name="pref_username">Login</string>
+	<string name="pref_password">Hasło</string>
+	<string name="pref_title_filter">Filtr</string>
+	<string name="pref_skip_found">Pomiń znalezione</string>
+	<string name="pref_skip_found_summary">Pomiń znalezione skrzynki</string>
+	<string name="pref_distance">Odległość</string>
+	<string name="pref_distance_summary_km">Odległość w km</string>
+	<string name="pref_distance_summary_miles">Odległość w milach</string>
+	<string name="pref_count_of_caches">Liczba skrzynek</string>
+	<string name="pref_count_of_caches_text">skrzynek</string>
+	<string name="pref_count_of_caches_summary">Liczba skrzynek do pobrania</string>
+	<string name="pref_title_advanced">Zaawansowane</string>
+	<string name="pref_use_compression">Używaj kompresji</string>
+	<string name="pref_use_compression_summary">Używaj kompresji HTTP (funkcja eksperymentalna)</string>
+	<string name="pref_imperial_units">Jednostki imperialne</string>
+	<string name="pref_imperial_units_summary">Używaj mil zamiast kilometrów</string>
+	<string name="download_simple_cache_data">Tylko ogólne dane o skrzynkach</string>
+	<string name="import_caches">Importuj skrzynki</string>
+	<string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
+	<string name="error_title">Wystąpiły błędy</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">Zainstalowana wersja Locusa jest nieaktualna. Geocaching4Locus wymaga wersji %s albo nowszej do poprawnego działania. </string>
+	<string name="cancel_button">Anuluj</string>
+</resources>

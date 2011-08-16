@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements LocationListener {
 		simpleCacheDataCheckBox = (CheckBox) findViewById(R.id.simpleCacheDataCheckBox);
 		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
 
-		if (getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
+		if (getIntent().getAction() != null && getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
 			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
@@ -152,9 +152,9 @@ public class MainActivity extends Activity implements LocationListener {
 			return;
 		}
 
-		if (!hasCoordinates) {
+		/*if (!hasCoordinates) {
 			acquireCoordinates();
-		}
+		}*/
 	}
 	
 	@Override
@@ -167,7 +167,15 @@ public class MainActivity extends Activity implements LocationListener {
 		filter.addAction(SearchGeocacheService.ACTION_ERROR);
 		
 		registerReceiver(searchGeocacheReceiver, filter);
-		requestProgressUpdate();
+		
+		if (!hasCoordinates) {
+			acquireCoordinates();
+		} else {
+			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+			
+			requestProgressUpdate();
+		}
 		
 		Log.i(TAG, "Receiver registred.");
 		
@@ -175,7 +183,10 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	@Override
-	protected void onPause() {	
+	protected void onPause() {
+		if (pd != null && pd.isShowing())
+			pd.dismiss();
+		
 		unregisterReceiver(searchGeocacheReceiver);
 		Log.i(TAG, "Receiver unregistred.");
 		super.onPause();
@@ -308,6 +319,8 @@ public class MainActivity extends Activity implements LocationListener {
 			longitude = location.getLongitude();
 		}
 		
+		hasCoordinates = true;
+		
 		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
@@ -335,6 +348,8 @@ public class MainActivity extends Activity implements LocationListener {
 
 		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
 		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+		
+		hasCoordinates = true;
 		
 		Editor editor = prefs.edit();
 		editor.putFloat("latitude", (float) latitude);
@@ -371,21 +386,12 @@ public class MainActivity extends Activity implements LocationListener {
 		onLocationChanged(locationManager.getLastKnownLocation(provider));
 	}
 
-	@Override
-	public void onProviderEnabled(String provider) {
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
-	
 	protected void requestProgressUpdate() {
 		if (SearchGeocacheService.getInstance() != null)
 			SearchGeocacheService.getInstance().sendProgressUpdate();		
 	}
 	
-	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {
-		private ProgressDialog pd;
+	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {	
 		@Override
 		public void onReceive(Context context, final Intent intent) {
 			if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
@@ -419,8 +425,20 @@ public class MainActivity extends Activity implements LocationListener {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();
 
-				showError(intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0), intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
+				Intent errorIntent = new Intent(MainActivity.this, ErrorActivity.class);
+				errorIntent.setAction(SearchGeocacheService.ACTION_ERROR);
+				errorIntent.putExtra(SearchGeocacheService.PARAM_RESOURCE_ID, intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0));
+				errorIntent.putExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
+				MainActivity.this.startActivity(errorIntent);
 			}
-		}
+		}		
 	};
+
+	@Override
+	public void onProviderEnabled(String provider) {
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
 }

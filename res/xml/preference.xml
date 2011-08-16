@@ -24,7 +24,7 @@
 		</PreferenceScreen>
 		<CheckBoxPreference android:summary="@string/pref_skip_found_summary" android:title="@string/pref_skip_found" android:key="filter_skip_found" android:defaultValue="false"/>
 		<EditTextPreference android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:key="filter_distance" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
-		<com.hlidskialf.android.preference.SeekBarPreference android:max="200" android:title="@string/pref_count_of_caches" android:key="filter_count_of_caches" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="50" android:summary="@string/pref_count_of_caches_summary"/>
+		<com.hlidskialf.android.preference.SeekBarPreference android:max="200" android:title="@string/pref_count_of_caches" android:key="filter_count_of_caches" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="20" android:summary="@string/pref_count_of_caches_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">
 		<CheckBoxPreference android:key="compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>

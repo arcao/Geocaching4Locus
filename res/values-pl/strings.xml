@@ -32,7 +32,7 @@
 	<string name="pref_imperial_units_summary">Używaj mil zamiast kilometrów</string>
 	<string name="download_simple_cache_data">Tylko ogólne dane o skrzynkach</string>
 	<string name="import_caches">Importuj skrzynki</string>
-	<string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
+	<string name="error_credentials">Nieprawidłowa nazwa użytkownika lub hasło. Wpisz poprawne dane w ustawieniach. </string>
 	<string name="error_title">Wystąpiły błędy</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Zainstalowana wersja Locusa jest nieaktualna. Geocaching4Locus wymaga wersji %s albo nowszej do poprawnego działania. </string>

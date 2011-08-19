@@ -12,8 +12,11 @@ import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +62,8 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	
 	private final static int MAX_PER_PAGE = 10;
 	
-	private boolean skipFound;
+	private boolean showFound;
+	private boolean showOwn;
 	private boolean simpleCacheData;
 	private double distance;
 	private int count = 0;
@@ -75,6 +79,10 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	protected NotificationManager notificationManager;
 	protected RemoteViews contentViews;
 	protected Notification progressNotification;
+
+	private Method startForegroundMethod;
+	private Method setForegroundMethod;
+	private Method stopForegroundMethod;
 	
 	public SearchGeocacheService() {
 		super(TAG);		
@@ -90,13 +98,14 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		
 		instance = this;
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		canceled = false;
-		
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		progressNotification = createProgressNotification(); 
+		prepareCompatMethods();
 		
-		notificationManager.notify(R.layout.notification_download, progressNotification);
+		canceled = false;
+
+		progressNotification = createProgressNotification(); 
+		startForegroundCompat(R.layout.notification_download, progressNotification);
 	}
 
 	protected Notification createProgressNotification() {
@@ -106,7 +115,9 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		n.tickerText = null;
 		n.flags |= Notification.FLAG_ONGOING_EVENT;				
 		n.contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
-		n.contentIntent = PendingIntent.getActivity(getBaseContext(), 0, new Intent(this, MainActivity.class), 0);
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		n.contentIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
 		
 		return n;
 	}
@@ -157,12 +168,13 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	public void onDestroy() {
 		canceled = true;
 		instance = null;
-		notificationManager.cancel(R.layout.notification_download);
+		stopForegroundCompat(R.layout.notification_download);
 		super.onDestroy();
 	}
 
 	protected void loadConfiguration() {
-		skipFound = prefs.getBoolean("filter_skip_found", false);
+		showFound = prefs.getBoolean("filter_show_found", false);
+		showOwn = prefs.getBoolean("filter_show_own", false);
 		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
 		
 		distance = prefs.getFloat("distance", 160.9344F);
@@ -249,7 +261,8 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 						new GeocacheTypeFilter(getCacheTypeFilterResult()),
 						new GeocacheExclusionsFilter(false, true, null),
-						new NotFoundByUsersFilter(skipFound ? account.getUserName() : null)
+						new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
+						new NotHiddenByUsersFilter(showOwn ? null : account.getUserName())
 				});
 				
 				if (canceled)
@@ -331,9 +344,11 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	}
 	
 	protected void sendProgressComplete() {
-		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
-		progressNotification.contentView.setTextViewText(R.id.progress_text, "100%");
-		notificationManager.notify(R.layout.notification_download, progressNotification);
+		if (!canceled) {
+			progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
+			progressNotification.contentView.setTextViewText(R.id.progress_text, "100%");
+			notificationManager.notify(R.layout.notification_download, progressNotification);
+		}
 		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_COMPLETE);
@@ -354,5 +369,68 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		if (additionalMessage != null)
 			broadcastIntent.putExtra(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
 		sendBroadcast(broadcastIntent);
+	}
+
+	// ----------------  Compatible methods for start / stop foreground service --------------------
+	
+	protected void prepareCompatMethods() {
+		try {
+			startForegroundMethod = getClass().getMethod("startForeground", new Class[] {int.class, Notification.class});
+			stopForegroundMethod = getClass().getMethod("stopForeground", new Class[] {boolean.class});
+			return;
+		} catch (NoSuchMethodException e) {
+			// Running on an older platform.
+			startForegroundMethod = stopForegroundMethod = null;
+		}
+		try {
+			setForegroundMethod = getClass().getMethod("setForeground", new Class[] {boolean.class});
+		} catch (NoSuchMethodException e) {
+			throw new IllegalStateException("OS doesn't have Service.startForeground OR Service.setForeground!");
+		}
+	}
+
+	/**
+	 * This is a wrapper around the new startForeground method, using the older
+	 * APIs if it is not available.
+	 */
+	protected void startForegroundCompat(int id, Notification notification) {
+	    // If we have the new startForeground API, then use it.
+	    if (startForegroundMethod != null) {
+	        invokeMethod(startForegroundMethod, new Object[] { id, notification});
+	        return;
+	    }
+
+	    // Fall back on the old API.
+	    invokeMethod(setForegroundMethod, new Object[] {true});
+	    notificationManager.notify(id, notification);
+	}
+
+	/**
+	 * This is a wrapper around the new stopForeground method, using the older
+	 * APIs if it is not available.
+	 */
+	protected void stopForegroundCompat(int id) {
+	    // If we have the new stopForeground API, then use it.
+	    if (stopForegroundMethod != null) {
+	        invokeMethod(stopForegroundMethod, new Object[] { true });
+	        return;
+	    }
+
+	    // Fall back on the old API.  Note to cancel BEFORE changing the
+	    // foreground state, since we could be killed at that point.
+	    notificationManager.cancel(id);
+	    invokeMethod(setForegroundMethod, new Object[] { false });
+	}
+	
+	protected void invokeMethod(Method method, Object[] args) {
+    try {
+        method.invoke(this, args);
+    } catch (InvocationTargetException e) {
+        // Should not happen.
+        Log.w(TAG, "Unable to invoke method", e);
+    } catch (IllegalAccessException e) {
+        // Should not happen.
+        Log.w(TAG, "Unable to invoke method", e);
+    }
 	}
 }

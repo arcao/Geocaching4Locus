@@ -79,27 +79,38 @@ public class MainActivity extends Activity implements LocationListener {
 			});
 			return;
 		}
-		
-		handler = new Handler();
 
 		setContentView(R.layout.main_activity);
 
-		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
-		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
-		simpleCacheDataCheckBox = (CheckBox) findViewById(R.id.simpleCacheDataCheckBox);
-		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
 
 		if (getIntent().getAction() != null && getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
 			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
 
-			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
-			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
-
 			hasCoordinates = true;
-		}
+		}		
+	}
+	
+	@Override
+	protected void onResume() {	
+		super.onResume();
+		
+		IntentFilter filter = new IntentFilter(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
+		
+		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
+		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
+		filter.addAction(SearchGeocacheService.ACTION_ERROR);
+		
+		registerReceiver(searchGeocacheReceiver, filter);
+		
+		handler = new Handler();
 
+		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
+		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
+		simpleCacheDataCheckBox = (CheckBox) findViewById(R.id.simpleCacheDataCheckBox);
+		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
+		
 		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
@@ -148,26 +159,6 @@ public class MainActivity extends Activity implements LocationListener {
 			}
 		});
 		
-		if (SearchGeocacheService.getInstance() != null) {
-			return;
-		}
-
-		/*if (!hasCoordinates) {
-			acquireCoordinates();
-		}*/
-	}
-	
-	@Override
-	protected void onResume() {	
-		
-		IntentFilter filter = new IntentFilter(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
-		
-		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
-		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
-		filter.addAction(SearchGeocacheService.ACTION_ERROR);
-		
-		registerReceiver(searchGeocacheReceiver, filter);
-		
 		if (!hasCoordinates) {
 			acquireCoordinates();
 		} else {
@@ -178,25 +169,23 @@ public class MainActivity extends Activity implements LocationListener {
 		}
 		
 		Log.i(TAG, "Receiver registred.");
-		
-		super.onResume();
 	}
 	
 	@Override
 	protected void onPause() {
+		super.onPause();
 		if (pd != null && pd.isShowing())
 			pd.dismiss();
 		
 		unregisterReceiver(searchGeocacheReceiver);
 		Log.i(TAG, "Receiver unregistred.");
-		super.onPause();
 	}
 	
 	@Override
 	protected void onStop() {
+		super.onStop();
 		if (locationManager != null)
 			locationManager.removeUpdates(this);
-		super.onStop();
 	}
 
 	@Override

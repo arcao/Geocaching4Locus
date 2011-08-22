@@ -82,7 +82,6 @@ public class MainActivity extends Activity implements LocationListener {
 
 		setContentView(R.layout.main_activity);
 
-
 		if (getIntent().getAction() != null && getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
 			latitude = getIntent().getDoubleExtra("latitude", 0.0);
 			longitude = getIntent().getDoubleExtra("longitude", 0.0);
@@ -117,9 +116,9 @@ public class MainActivity extends Activity implements LocationListener {
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						latitudeEditText.setText("N/A");
+						((EditText)v).setText("N/A");
 					} else {
-						latitudeEditText.setText(Coordinates.convertDoubleToDeg(deg, false));
+						((EditText)v).setText(Coordinates.convertDoubleToDeg(deg, false));
 					}
 				}
 			}
@@ -131,9 +130,9 @@ public class MainActivity extends Activity implements LocationListener {
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						longitudeEditText.setText("N/A");
+						((EditText)v).setText("N/A");
 					} else {
-						longitudeEditText.setText(Coordinates.convertDoubleToDeg(deg, true));
+						((EditText)v).setText(Coordinates.convertDoubleToDeg(deg, true));
 					}
 				}
 			}
@@ -162,9 +161,7 @@ public class MainActivity extends Activity implements LocationListener {
 		if (!hasCoordinates) {
 			acquireCoordinates();
 		} else {
-			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
-			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
-			
+			updateCoordinateTextView();
 			requestProgressUpdate();
 		}
 		
@@ -310,8 +307,14 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		hasCoordinates = true;
 		
-		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
-		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+		updateCoordinateTextView();
+	}
+
+	private void updateCoordinateTextView() {
+		if (latitudeEditText != null)
+			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+		if (longitudeEditText != null)
+			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
 	
 	@Override
@@ -334,12 +337,10 @@ public class MainActivity extends Activity implements LocationListener {
 
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
-
-		latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
-		longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
-		
 		hasCoordinates = true;
 		
+		updateCoordinateTextView();
+				
 		Editor editor = prefs.edit();
 		editor.putFloat("latitude", (float) latitude);
 		editor.putFloat("longitude", (float) longitude);

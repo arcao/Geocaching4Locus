@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class PointGeocachingData implements Parcelable {
 	
-	private static final int VERSION = 1;
+	private static final int VERSION = 2;
 	
 	public static final int CACHE_NUMBER_OF_TYPES = 14;
 	
@@ -117,6 +117,8 @@ public class PointGeocachingData implements Parcelable {
 	public String notes;
 	/* if cache is already computed - have final waypoint and is placed on it's location */
 	public boolean computed;
+	/* if cache is already found */
+	public boolean found;
 	
 	public PointGeocachingData() {
 		id = 0;
@@ -145,6 +147,7 @@ public class PointGeocachingData implements Parcelable {
 		waypoints = new ArrayList<PointGeocachingDataWaypoint>();
 		notes = "";
 		computed = false;
+		found = false;
 	}
 	
 	/****************************/
@@ -152,21 +155,19 @@ public class PointGeocachingData implements Parcelable {
 	/****************************/
 	
     public static final Parcelable.Creator<PointGeocachingData> CREATOR = new Parcelable.Creator<PointGeocachingData>() {
-        @Override
-				public PointGeocachingData createFromParcel(Parcel in) {
+        public PointGeocachingData createFromParcel(Parcel in) {
             return new PointGeocachingData(in);
         }
 
-        @Override
-				public PointGeocachingData[] newArray(int size) {
+        public PointGeocachingData[] newArray(int size) {
             return new PointGeocachingData[size];
         }
     };
     
     @SuppressWarnings("unchecked")
 	public PointGeocachingData(Parcel in) {
-    	switch (in.readInt()) {
-    	case 0:
+    	int version = in.readInt();
+    	if (version == 0) {
     		 id = in.readInt();
     		 cacheID = in.readString();
     		 available = in.readInt() == 1;
@@ -193,8 +194,7 @@ public class PointGeocachingData implements Parcelable {
     		 waypoints = in.readArrayList(PointGeocachingDataWaypoint.class.getClassLoader());
     		 notes = in.readString();
     		 computed = in.readInt() == 1;
-    		break;
-    	case 1:
+    	} else if (version > 0) {
     		id = in.readInt();
    		 	cacheID = in.readString();
    		 	available = in.readInt() == 1;
@@ -219,15 +219,23 @@ public class PointGeocachingData implements Parcelable {
    		 		byte[] data = new byte[size];
    		 		in.readByteArray(data);
 
-   		 		GZIPInputStream zis = new GZIPInputStream(new ByteArrayInputStream(data), 32);
-   		 		InputStreamReader isr = new InputStreamReader(zis, "UTF-8");
-   		 		
+   		 		GZIPInputStream zis = new GZIPInputStream(new ByteArrayInputStream(data), 10240);
    		 		StringBuffer buffer = new StringBuffer();
-   	   		    char[] dataD = new char[1024];
-   	   		    int charsRead;
-   	   		    while ((charsRead = isr.read(dataD)) != -1) {
-   	   		        buffer.append(dataD, 0, charsRead);
-   	   		    }
+   		 		
+//   	   		    byte[] dataD = new byte[10240];
+//   	   		    int bytesRead;
+//   	   		    while ((bytesRead = zis.read(dataD)) != -1) {
+//   	   		        buffer.append(new String(dataD, 0, bytesRead, "utf-8"));
+//   	   		    }
+//   		 		String result = buffer.toString();
+//   		 		zis.close();
+   		 		
+   		 		InputStreamReader isr = new InputStreamReader(zis, "UTF-8");
+   		 		char[] dataD = new char[1024];
+   		 		int charsRead;
+   		 		while ((charsRead = isr.read(dataD)) != -1) {
+   		 			buffer.append(dataD, 0, charsRead);
+   		 		}
    		 		String result = buffer.toString();
    		 		isr.close();
    		 		
@@ -247,7 +255,9 @@ public class PointGeocachingData implements Parcelable {
    		 	waypoints = in.readArrayList(PointGeocachingDataWaypoint.class.getClassLoader());
    		 	notes = in.readString();
    		 	computed = in.readInt() == 1;
-   		 	break;
+   		 	if (version == 2) {
+   		 		found = in.readInt() == 1;
+   		 	}
     	}
     }
 
@@ -296,6 +306,7 @@ public class PointGeocachingData implements Parcelable {
 		dest.writeList(waypoints);
 		dest.writeString(notes);
 		dest.writeInt(computed ? 1 : 0);
+		dest.writeInt(found ? 1 : 0);
 	}
 	
 	@Override

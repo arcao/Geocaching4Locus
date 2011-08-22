@@ -78,7 +78,7 @@ public class GeocacheJsonParser extends JsonParser {
 				latitude = r.nextDouble();
 			} else if ("CacheType".equals(name)) {
 				cacheType = parseCacheType(r);
-			} else if ("Difficulity".equals(name)) {
+			} else if ("Difficulty".equals(name)) {
 				difficultyRating = (float) r.nextDouble();
 			} else if ("Terrain".equals(name)) {
 				terrainRating = (float) r.nextDouble();

@@ -231,6 +231,7 @@ public class SimpleGeocache {
 		d.hidden = GPX_TIME_FMT.format(created);
 		d.exported = GPX_TIME_FMT.format(new Date());
 		d.container = containerType.getId();
+		d.found = found;
 
 		p.setGeocachingData(d);
 		return p;

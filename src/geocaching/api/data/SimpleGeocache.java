@@ -37,9 +37,9 @@ public class SimpleGeocache {
 	private final ContainerType containerType;
 	private final int trackableCount;
 	private final boolean found;
-	
+
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-	
+
 	public SimpleGeocache(String geoCode, String name, double longitude,
 			double latitude, CacheType cacheType, float difficultyRating,
 			float terrainRating, String authorGuid, String authorName,
@@ -143,27 +143,28 @@ public class SimpleGeocache {
 	public boolean isFound() {
 		return found;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Method m : getClass().getMethods()) {
 			if ((!m.getName().startsWith("get") && !m.getName().startsWith("is")) ||
-			    m.getParameterTypes().length != 0 ||  
-			    void.class.equals(m.getReturnType()))
-			    continue;
-			
+					m.getParameterTypes().length != 0 ||
+					void.class.equals(m.getReturnType()))
+				continue;
+
 			sb.append(m.getName());
 			sb.append(':');
 			try {
 				sb.append(m.invoke(this, new Object[0]));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			sb.append(", ");
 		}
 		return sb.toString();
 	}
-	
+
 	public static SimpleGeocache load(DataInputStream dis) throws IOException {
 		if (dis.readInt() != VERSION)
 			throw new IOException("Wrong item version.");
@@ -187,10 +188,9 @@ public class SimpleGeocache {
 				dis.readUTF(),
 				ContainerType.parseContainerType(dis.readUTF()),
 				dis.readInt(),
-				dis.readBoolean()
-		);
+				dis.readBoolean());
 	}
-	
+
 	public void store(DataOutputStream dos) throws IOException {
 		dos.writeInt(VERSION);
 		
@@ -214,14 +214,14 @@ public class SimpleGeocache {
 		dos.writeInt(getTrackableCount());
 		dos.writeBoolean(isFound());
 	}
-	
+
 	public Point toPoint() {
 		Location loc = new Location(getClass().getName());
 		loc.setLatitude(latitude);
 		loc.setLongitude(longitude);
-		
+
 		Point p = new Point(name, loc);
-		
+
 		PointGeocachingData d = new PointGeocachingData();
 		d.cacheID = geoCode;
 		d.name = name;
@@ -238,7 +238,8 @@ public class SimpleGeocache {
 		d.hidden = GPX_TIME_FMT.format(created);
 		d.exported = GPX_TIME_FMT.format(new Date());
 		d.container = containerType.getId();
-		
+		d.found = found;
+
 		p.setGeocachingData(d);
 		return p;
 	}

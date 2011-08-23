@@ -15,7 +15,7 @@ public class PointGeocachingDataWaypoint implements Parcelable {
 	public String description;
 	/* type of waypoint (defined in PointGeocachingData) */
 	public String type;
-	/* image URL to this wpt */
+	/* image URL to this wpt (not needed) */
 	public String typeImagePath;
 	/* latitude of waypoint */
 	public double lat;

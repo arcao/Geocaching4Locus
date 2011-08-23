@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.DataStorage;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -83,7 +82,7 @@ public class DisplayData {
 	}
 
 	// private final call to Locus
-	private static boolean sendData(Context context, Intent intent, boolean callImport) {
+	public static boolean sendData(Context context, Intent intent, boolean callImport) {
 		// really exist locus?
 		if (!LocusUtils.isLocusAvailable(context)) {
 			Log.w(TAG, "Locus is not installed");

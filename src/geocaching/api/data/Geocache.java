@@ -30,8 +30,8 @@ public class Geocache extends SimpleGeocache {
 			boolean available, boolean archived, boolean premiumListing,
 			String countryName, String stateName, Date created,
 			String contactName, ContainerType containerType,
-			int trackableCount, boolean found, String shortDescription, 
-			String longDescrition, String hint, List<CacheLog> cacheLogs, 
+			int trackableCount, boolean found, String shortDescription,
+			String longDescrition, String hint, List<CacheLog> cacheLogs,
 			List<TravelBug> travelBugs, List<WayPoint> wayPoints) {
 		super(geoCode, name, longitude, latitude, cacheType, difficultyRating,
 				terrainRating, authorGuid, authorName, available, archived,
@@ -174,12 +174,12 @@ public class Geocache extends SimpleGeocache {
 		for(int i = 0; i < wayPoints.size(); i++)
 			wayPoints.get(i).store(dos);
 	}
-	
+
 	@Override
 	public Point toPoint() {
 		Point p = super.toPoint();
 		PointGeocachingData d = p.getGeocachingData();
-		
+
 		d.shortDescription = shortDescription;
 		d.longDescription = longDescription;
 		d.encodedHints = hint;
@@ -187,33 +187,34 @@ public class Geocache extends SimpleGeocache {
 		for (CacheLog log : cacheLogs) {
 			d.logs.add(log.toPointGeocachingDataLog());
 		}
-		
+
 		for (TravelBug bug : travelBugs) {
 			d.travelBugs.add(bug.toPointGeocachingDataTravelBug());
 		}
-		
+
 		for (WayPoint wayPoint : wayPoints) {
 			d.waypoints.add(wayPoint.toPointGeocachingDataWaypoint());
 		}
-		
+
 		return p;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Method m : getClass().getMethods()) {
 			if (!m.getName().startsWith("get") ||
-			    m.getParameterTypes().length != 0 ||  
-			    void.class.equals(m.getReturnType()))
-			    continue;
-			
+					m.getParameterTypes().length != 0 ||
+					void.class.equals(m.getReturnType()))
+				continue;
+
 			sb.append(m.getName());
 			sb.append(':');
 			try {
 				sb.append(m.invoke(this, new Object[0]));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			sb.append("; ");
 		}
 		return sb.toString();

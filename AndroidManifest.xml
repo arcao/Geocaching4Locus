@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.3" android:versionCode="7">
+      android:versionName="1.3.6" android:versionCode="10">
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 <uses-sdk android:minSdkVersion="4"></uses-sdk>
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="PreferenceActivity" android:label="@string/preferences" android:theme="@android:style/Theme.Black"></activity>
+        <activity android:label="@string/preferences" android:theme="@android:style/Theme.Black" android:name="PreferenceActivity"></activity><activity android:theme="@style/InvisibleTheme" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation"></activity>
         <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
         <activity android:name="MainTabActivity">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="Geocaching 4 Locus (test)">
@@ -28,5 +28,6 @@
         </activity>
         <activity android:name=".activity.CacheListActivity"></activity>
         <activity android:name=".activity.SearchActivity"></activity>
+        <service android:name=".service.SearchGeocacheService"></service>
     </application>
 </manifest>

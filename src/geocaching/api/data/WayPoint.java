@@ -21,8 +21,7 @@ public class WayPoint {
 	private final String note;
 	private final WayPointType wayPointType;
 	private final String iconName;
-		
-	
+
 	public WayPoint(double longitude, double latitude, Date time, String waypointGeoCode, String name, String note, WayPointType wayPointType) {
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -33,35 +32,35 @@ public class WayPoint {
 		this.wayPointType = wayPointType;
 		this.iconName = wayPointType.getIconName();
 	}
-	
+
 	public double getLatitude() {
 		return latitude;
 	}
-	
+
 	public double getLongitude() {
 		return longitude;
 	}
-	
+
 	public Date getTime() {
 		return time;
 	}
-	
+
 	public String getWaypointGeoCode() {
 		return waypointGeoCode;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getNote() {
 		return note;
 	}
-	
+
 	public WayPointType getWayPointType() {
 		return wayPointType;
 	}
-	
+
 	public String getIconName() {
 		return iconName;
 	}
@@ -69,18 +68,19 @@ public class WayPoint {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (Method m : getClass().getMethods()) {
 			if (!m.getName().startsWith("get") ||
-			    m.getParameterTypes().length != 0 ||  
-			    void.class.equals(m.getReturnType()))
-			    continue;
-			
+					m.getParameterTypes().length != 0 ||
+					void.class.equals(m.getReturnType()))
+				continue;
+
 			sb.append(m.getName());
 			sb.append(':');
 			try {
 				sb.append(m.invoke(this, new Object[0]));
-			} catch (Exception e) {}
+			} catch (Exception e) {
+			}
 			sb.append("; ");
 		}
 		return sb.toString();
@@ -88,6 +88,7 @@ public class WayPoint {
 
 	public PointGeocachingDataWaypoint toPointGeocachingDataWaypoint() {
 		PointGeocachingDataWaypoint w = new PointGeocachingDataWaypoint();
+		w.code = waypointGeoCode;
 		w.lat = latitude;
 		w.lon = longitude;
 		w.description = note;

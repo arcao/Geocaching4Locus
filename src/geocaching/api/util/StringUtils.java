@@ -44,13 +44,13 @@ import java.util.Iterator;
  */
 
 public class StringUtils {
-	/**
+    /**
      * The empty String <code>""</code>.
      * @since 2.0
      */
     public static final String EMPTY = "";
 	
-	// Joining
+    // Joining
     //-----------------------------------------------------------------------
     /**
      * <p>Concatenates elements of an array into a single String.
@@ -71,7 +71,7 @@ public class StringUtils {
      *             Method will be removed in Commons Lang 3.0.
      */
     @Deprecated
-	public static String concatenate(Object[] array) {
+    public static String concatenate(Object[] array) {
         return join(array, null);
     }
 
@@ -210,7 +210,7 @@ public class StringUtils {
      * @since 2.0
      */
     @SuppressWarnings("rawtypes")
-	public static String join(Iterator iterator, char separator) {
+    public static String join(Iterator iterator, char separator) {
         if (iterator == null) {
             return null;
         }
@@ -241,7 +241,7 @@ public class StringUtils {
      * @return the joined String, <code>null</code> if null iterator input
      */
     @SuppressWarnings("rawtypes")
-	public static String join(Iterator iterator, String separator) {
+    public static String join(Iterator iterator, String separator) {
         if (iterator == null) {
             return null;
         }

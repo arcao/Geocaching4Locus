@@ -46,34 +46,34 @@ public enum StatusCode {
 	WptCodeNotValid(42, "The waypoint code provided is not valid."),
 	DistanceInvalid(43, "The distance provided is not valid."),
 	MaxNotificationsExceeded(44, "You have exceeded the maximum number of notifications for this function.");
-	
+
 	private int errorCode;
 	private String errorMessage;
-	
+
 	StatusCode(int errorCode, String errorMessage) {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 	}
-	
+
 	public int getErrorCode() {
 		return errorCode;
 	}
-	
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-	
+
 	public static StatusCode parse(String input) {
 		for (StatusCode statusCode : values()) {
 			if (statusCode.name().equals(input))
 				return statusCode;
 		}
-		
+
 		return Unknown;
 	}
-	
+
 	@Override
-	public String toString() {	
+	public String toString() {
 		return errorMessage;
 	}
 }

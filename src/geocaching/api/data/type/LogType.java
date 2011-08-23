@@ -18,34 +18,34 @@ public enum LogType {
 	NeedsArchived("Needs Archived", 13),
 	WebcamPhotoTaken("Webcam Photo Taken", 14),
 	RetractListing("Retract Listing", 15);
-		
+
 	private String friendlyName;
 	private int id;
-	
+
 	private LogType(String friendlyName, int id) {
 		this.friendlyName = friendlyName;
 		this.id = id;
 	}
-	
+
 	@Override
 	public String toString() {
 		return friendlyName;
 	}
-	
+
 	public String getFriendlyName() {
 		return friendlyName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public static LogType parseLogType(String log) {
-		for(LogType type : values()) {
+		for (LogType type : values()) {
 			if (type.toString().equals(log))
 				return type;
 		}
-		
+
 		return WriteNote;
 	}
 }

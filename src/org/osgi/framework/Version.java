@@ -40,6 +40,7 @@ import java.util.StringTokenizer;
  * @version $Revision: 6860 $
  */
 
+@SuppressWarnings("rawtypes")
 public class Version implements Comparable {
 	private final int			major;
 	private final int			minor;
@@ -264,6 +265,7 @@ public class Version implements Comparable {
 	 * 
 	 * @return The string representation of this version identifier.
 	 */
+	@Override
 	public String toString() {
 		int q = qualifier.length();
 		StringBuffer result = new StringBuffer(20 + q);
@@ -284,6 +286,7 @@ public class Version implements Comparable {
 	 * 
 	 * @return An integer which is a hash code value for this object.
 	 */
+	@Override
 	public int hashCode() {
 		return (major << 24) + (minor << 16) + (micro << 8)
 				+ qualifier.hashCode();
@@ -302,6 +305,7 @@ public class Version implements Comparable {
 	 *         <code>Version</code> and is equal to this object;
 	 *         <code>false</code> otherwise.
 	 */
+	@Override
 	public boolean equals(Object object) {
 		if (object == this) { // quicktest
 			return true;
@@ -341,6 +345,7 @@ public class Version implements Comparable {
 	 * @throws ClassCastException If the specified object is not a
 	 *         <code>Version</code>.
 	 */
+	@Override
 	public int compareTo(Object object) {
 		if (object == this) { // quicktest
 			return 0;

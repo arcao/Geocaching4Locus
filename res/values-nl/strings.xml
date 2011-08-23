@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Er is een fout opgetreden bij het downloaden van de caches.&lt;br&gt;Omschrijving: %1$s</string>
+	<string name="downloading">Bezig met downloaden van caches...</string>
+	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Gelieve Locus te installeren!</string>
+	<string name="search_activity_name">Caches dichtbij</string>
+	<string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
+Gelieve het in te schakelen in Android instellingen.</string>
+	<string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS...</string>
+	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk...</string>
+	<string name="preferences">Voorkeuren</string>
+	<string name="wrong_coordinates">Foutief coördinaten formaat!</string>
+	<string name="search_and_import_button">Zoek en toon in Locus</string>
+	<string name="coordinates">Coördinaten</string>
+	<string name="pref_title_geocaching_credentials">Geocaching.com logingegevens</string>
+	<string name="pref_username">Gebruikersnaam</string>
+	<string name="pref_password">Wachtwoord</string>
+	<string name="pref_title_filter">Filter</string>
+	<string name="pref_distance">Afstand</string>
+	<string name="pref_distance_summary_km">Afstand in km</string>
+	<string name="pref_distance_summary_miles">Afstand in miles</string>
+	<string name="pref_count_of_caches">Aantal caches</string>
+	<string name="pref_count_of_caches_text">caches</string>
+	<string name="pref_count_of_caches_summary">Aantal caches om te downloaden</string>
+	<string name="pref_title_advanced">Geavanceerd</string>
+	<string name="pref_use_compression">Gebruik compressie</string>
+	<string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
+	<string name="pref_imperial_units">Imperiale eenheden</string>
+	<string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
+	<string name="download_simple_cache_data">Alleen simpele cache data</string>
+	<string name="import_caches">Importeer caches</string>
+	<string name="error_credentials">Ongeldige gebruikersnaam of wachtwoord. Gelieve je gebruikersinformatie opnieuw in te geven in voorkeuren.</string>
+	<string name="error_title">Er is een fout opgetreden!</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
+	<string name="cancel_button">Annuleren</string>
+	<string name="pref_show_found">Toon gevonden</string>
+	<string name="pref_show_found_summary">Toon gevonden caches</string>
+	<string name="pref_show_own">Toon eigen verborgen</string>
+	<string name="pref_show_own_summary">Toon eigen caches (verborgen door jou)</string>
+	<string name="pref_menu_select_all">Alles selecteren</string>
+	<string name="pref_menu_deselect_all">Niets selecteren</string>
+</resources>

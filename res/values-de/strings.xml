@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Während des Downloads von Caches ist ein Fehler aufgetreten.&lt;br&gt;Fehlermeldung: %1$s</string>
+	<string name="downloading">Lade caches...</string>
+	<string name="downloading_cache">Lade Cache (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Bitte Locus installieren!</string>
+	<string name="search_activity_name">Caches in der Nähe</string>
+	<string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
+	<string name="acquiring_gps_location">Positionsbestimmung via GPS...</string>
+	<string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
+	<string name="preferences">Einstellungen</string>
+	<string name="wrong_coordinates">Falsches Koordinatenformat!</string>
+	<string name="search_and_import_button">Suche &amp; zeige in Locus</string>
+	<string name="coordinates">Koordinaten</string>
+	<string name="pref_title_geocaching_credentials">Geocaching.com Benutzerdaten</string>
+	<string name="pref_username">Benutzername</string>
+	<string name="pref_password">Passwort</string>
+	<string name="pref_title_filter">Filter</string>
+	<string name="pref_distance">Distanz</string>
+	<string name="pref_distance_summary_km">Distanz in km</string>
+	<string name="pref_distance_summary_miles">Distanz in Meilen</string>
+	<string name="pref_count_of_caches">Anzahl Caches</string>
+	<string name="pref_count_of_caches_text">Caches</string>
+	<string name="pref_count_of_caches_summary">Anzahl der zu ladenden Caches</string>
+	<string name="pref_title_advanced">Erweitert</string>
+	<string name="pref_use_compression">Komprimierung benutzen</string>
+	<string name="pref_use_compression_summary">HTTP Komprimierung benutzen (experimentell)</string>
+	<string name="pref_imperial_units">Englisches System</string>
+	<string name="pref_imperial_units_summary">Zeige Meilen statt Kilometer</string>
+	<string name="download_simple_cache_data">Nur Kurzbeschreibung laden</string>
+	<string name="import_caches">Caches importieren</string>
+	<string name="error_credentials">Ungültiger Benutzername/Kennwort. Bitte überprüfen Sie die Angaben in den Voreinstellungen.</string>
+	<string name="error_title">Ein Fehler ist aufgetreten!</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">Die installierte Version von Locus ist zu alt. Geocaching4Locus benötigt mindestens Version %s.</string>
+	<string name="cancel_button">Abbrechen</string>
+	<string name="pref_show_found">Funde zeigen</string>
+	<string name="pref_show_found_summary">Zeige gefundene Caches</string>
+	<string name="pref_show_own">Zeige versteckte</string>
+	<string name="pref_show_own_summary">Zeige eigene Caches (selbst versteckt)</string>
+	<string name="pref_menu_select_all">Alle wählen</string>
+	<string name="pref_menu_deselect_all">Alle abwählen</string>
+</resources>

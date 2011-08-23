@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Error occurs while downloading caches.&lt;br/&gt;Description: %1$s</string>
+    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Downloading caches...</string>
     <string name="downloading_cache">Downloading cache (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Please install Locus!</string>
@@ -20,8 +20,6 @@
     <string name="pref_password">Password</string>
     
     <string name="pref_title_filter">Filter</string>
-    <string name="pref_skip_found">Skip found</string>
-    <string name="pref_skip_found_summary">Skip found caches</string>
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance in km</string>
     <string name="pref_distance_summary_miles">Distance in miles</string>
@@ -37,10 +35,19 @@
     <string name="download_simple_cache_data">Simple cache data only</string>
     <string name="import_caches">Import caches</string>
     
-    <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences or uncheck Skip found checkbox in preferences.</string>
+    <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
     <string name="error_title">Error occurs!</string>
     
     <string name="ok_button">Ok</string>
     
     <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus require version %s or greater to work properly.</string>
+    
+    <string name="cancel_button">Cancel</string>
+    
+    <string name="pref_show_found">Show found</string>
+    <string name="pref_show_found_summary">Show found caches</string>
+    <string name="pref_show_own">Show own hidden</string>
+    <string name="pref_show_own_summary">Show own caches (hidden by you)</string>
+    <string name="pref_menu_select_all">Select all</string>
+    <string name="pref_menu_deselect_all">Deselect all</string>
 </resources>

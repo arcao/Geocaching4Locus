@@ -39,7 +39,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 public class MainActivity extends Activity implements LocationListener {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
-	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.9.5.2");
+	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.10.1");
 
 	private Resources res;
 	private LocationManager locationManager;
@@ -175,6 +175,10 @@ public class MainActivity extends Activity implements LocationListener {
 			pd.dismiss();
 		
 		unregisterReceiver(searchGeocacheReceiver);
+		
+		if (locationManager != null)
+			locationManager.removeUpdates(this);
+		
 		Log.i(TAG, "Receiver unregistred.");
 	}
 	

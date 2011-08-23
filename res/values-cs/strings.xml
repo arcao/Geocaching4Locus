@@ -17,8 +17,6 @@
 	<string name="pref_username">Uživatelské jméno</string>
 	<string name="pref_password">Heslo</string>
 	<string name="pref_title_filter">Filtr</string>
-	<string name="pref_skip_found">Přeskočit nalezené</string>
-	<string name="pref_skip_found_summary">Přeskočit nalezené keše</string>
 	<string name="pref_distance">Vzdálenost</string>
 	<string name="pref_distance_summary_km">Vzdálenost v km</string>
 	<string name="pref_distance_summary_miles">Vzdálenost v mílích</string>
@@ -37,4 +35,10 @@
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
 	<string name="cancel_button">Storno</string>
+	<string name="pref_show_found">Zobrazit nalezené</string>
+	<string name="pref_show_found_summary">Zobrazit nalezené keše</string>
+	<string name="pref_show_own">Zobrazit vlastní</string>
+	<string name="pref_show_own_summary">Zobrazit vlastní keše</string>
+	<string name="pref_menu_select_all">Označit vše</string>
+	<string name="pref_menu_deselect_all">Odznačit vše</string>
 </resources>

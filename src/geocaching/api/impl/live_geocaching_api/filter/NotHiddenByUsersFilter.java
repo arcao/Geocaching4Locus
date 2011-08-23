@@ -5,7 +5,7 @@ import google.gson.stream.JsonWriter;
 import java.io.IOException;
 
 public class NotHiddenByUsersFilter implements CacheFilter {
-	private static final String NAME = "NotHiddenByUsersFilter";
+	private static final String NAME = "NotHiddenByUsers";
 	
 	protected String[] userNames;
 	

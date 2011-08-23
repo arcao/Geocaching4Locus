@@ -17,8 +17,6 @@
 	<string name="pref_username">Nome de Utilizador</string>
 	<string name="pref_password">Senha</string>
 	<string name="pref_title_filter">Filtro</string>
-	<string name="pref_skip_found">Ignorar encontradas</string>
-	<string name="pref_skip_found_summary">Ignorar caches encontradas</string>
 	<string name="pref_distance">Distância</string>
 	<string name="pref_distance_summary_km">Distância em km</string>
 	<string name="pref_distance_summary_miles">Distância em milhas</string>
@@ -37,4 +35,10 @@
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
 	<string name="cancel_button">Cancel</string>
+	<string name="pref_show_found">Mostrar encontradas</string>
+	<string name="pref_show_found_summary">Mostrar caches encontradas</string>
+	<string name="pref_show_own">Mostrar escondidas pelo próprio</string>
+	<string name="pref_show_own_summary">Mostrar caches próprias (escondidas por si)</string>
+	<string name="pref_menu_select_all">Selecionar tudo</string>
+	<string name="pref_menu_deselect_all">Retirar seleção</string>
 </resources>

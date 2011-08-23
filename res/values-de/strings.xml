@@ -17,8 +17,6 @@
 	<string name="pref_username">Benutzername</string>
 	<string name="pref_password">Passwort</string>
 	<string name="pref_title_filter">Filter</string>
-	<string name="pref_skip_found">Gefundene überspringen</string>
-	<string name="pref_skip_found_summary">Gefundene Caches überspringen</string>
 	<string name="pref_distance">Distanz</string>
 	<string name="pref_distance_summary_km">Distanz in km</string>
 	<string name="pref_distance_summary_miles">Distanz in Meilen</string>
@@ -37,4 +35,10 @@
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Die installierte Version von Locus ist zu alt. Geocaching4Locus benötigt mindestens Version %s.</string>
 	<string name="cancel_button">Abbrechen</string>
+	<string name="pref_show_found">Funde zeigen</string>
+	<string name="pref_show_found_summary">Zeige gefundene Caches</string>
+	<string name="pref_show_own">Zeige versteckte</string>
+	<string name="pref_show_own_summary">Zeige eigene Caches (selbst versteckt)</string>
+	<string name="pref_menu_select_all">Alle wählen</string>
+	<string name="pref_menu_deselect_all">Alle abwählen</string>
 </resources>

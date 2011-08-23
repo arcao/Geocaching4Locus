@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
-import android.util.Log;
 
 public class WayPoint {
 	private final double latitude;
@@ -92,13 +91,6 @@ public class WayPoint {
 		w.typeImagePath = iconName;
 		w.type = wayPointType.getId();
 		
-		Log.i("Waypoint",  "-----");
-		Log.i("Waypoint",  "Code: " + w.code);
-		Log.i("Waypoint",  "Desc: " + w.description);
-		Log.i("Waypoint",  "Name: " + w.name);
-		Log.i("Waypoint",  "Type: " + w.type);
-		
-
 		return w;
 	}
 }

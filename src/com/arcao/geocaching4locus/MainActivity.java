@@ -103,6 +103,8 @@ public class MainActivity extends Activity implements LocationListener {
 		
 		registerReceiver(searchGeocacheReceiver, filter);
 		
+		setContentView(R.layout.main_activity);
+		
 		handler = new Handler();
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);

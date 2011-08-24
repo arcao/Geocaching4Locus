@@ -17,6 +17,7 @@ import geocaching.api.impl.live_geocaching_api.parser.GeocacheJsonParser;
 import geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import geocaching.api.impl.live_geocaching_api.parser.SimpleGeocacheJsonParser;
 import geocaching.api.impl.live_geocaching_api.parser.StatusJsonParser;
+import geocaching.api.impl.live_geocaching_api.parser.TravelBugJsonParser;
 import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
@@ -157,18 +158,117 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 	}
 
 	@Override
-	public TravelBug getTravelBug(String travelBugCode) throws GeocachingApiException {
-		throw new GeocachingApiException("Not implemented.");
+	public TravelBug getTravelBug(String travelBugCode, int trackableLogCount) throws GeocachingApiException {
+		
+		List<TravelBug> list = null;
+		
+		try {
+			JsonReader r;
+			
+			if (travelBugCode.toLowerCase().startsWith("tb")) {
+				r = callGet(
+						"GetTrackablesByTBCode?AccessToken=" + session +
+						"&TBCode=" + travelBugCode + 
+						"&TrackableLogCount=" + trackableLogCount +
+						"&format=json"
+				);
+			} else {
+				r = callGet(
+						"GetTrackablesByTrackingNumber?AccessToken=" + session +
+						"&TrackingNumber=" + travelBugCode + 
+						"&TrackableLogCount=" + trackableLogCount +
+						"&format=json"
+				);
+			}
+			
+			r.beginObject();
+			checkError(r);
+			while(r.hasNext()) {
+				String name = r.nextName();
+				if ("Trackables".equals(name)) {
+					list = TravelBugJsonParser.parseList(r);
+				} else {
+					r.skipValue();
+				}
+			}
+			r.endObject();
+			r.close();
+			
+			if (list == null || list.size() == 0)
+				return null;
+			
+			return list.get(0);
+		} catch (IOException e) {
+			Log.e(TAG, e.toString(), e);
+			throw new GeocachingApiException("Response is not valid JSON string: " + e.getMessage());
+		}
 	}
 
 	@Override
-	public List<TravelBug> getTravelBugsByCache(String cacheCode) throws GeocachingApiException {
-		throw new GeocachingApiException("Not implemented.");
+	public List<TravelBug> getTravelBugsInCache(String cacheCode, int startIndex, int maxPerPage,  int trackableLogCount) throws GeocachingApiException {
+		List<TravelBug> list = null;
+		
+		try {
+			JsonReader r = callGet(
+						"GetTrackablesInCache?AccessToken=" + session +
+						"&CacheCode=" + cacheCode +
+						"&StartIndex=" + startIndex + 
+						"&MaxPerPage=" + maxPerPage + 
+						"&TrackableLogCount=" + trackableLogCount +
+						"&format=json"
+			);
+			
+			r.beginObject();
+			checkError(r);
+			while(r.hasNext()) {
+				String name = r.nextName();
+				if ("Trackables".equals(name)) {
+					list = TravelBugJsonParser.parseList(r);
+				} else {
+					r.skipValue();
+				}
+			}
+			r.endObject();
+			r.close();
+			
+			return list;
+		} catch (IOException e) {
+			Log.e(TAG, e.toString(), e);
+			throw new GeocachingApiException("Response is not valid JSON string: " + e.getMessage());
+		}
 	}
 
 	@Override
-	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws GeocachingApiException {
-		throw new GeocachingApiException("Not implemented.");
+	public List<CacheLog> getCacheLogsByCacheCode(String cacheCode, int startIndex, int maxPerPage) throws GeocachingApiException {
+		List<CacheLog> list = null;
+		
+		try {
+			JsonReader r = callGet(
+						"GetGeocacheLogsByCacheCode?AccessToken=" + session +
+						"&CacheCode=" + cacheCode +
+						"&StartIndex=" + startIndex + 
+						"&MaxPerPage=" + maxPerPage + 
+						"&format=json"
+			);
+			
+			r.beginObject();
+			checkError(r);
+			while(r.hasNext()) {
+				String name = r.nextName();
+				if ("Logs".equals(name)) {
+					list = CacheLogJsonParser.parseList(r);
+				} else {
+					r.skipValue();
+				}
+			}
+			r.endObject();
+			r.close();
+			
+			return list;
+		} catch (IOException e) {
+			Log.e(TAG, e.toString(), e);
+			throw new GeocachingApiException("Response is not valid JSON string: " + e.getMessage());
+		}
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import geocaching.api.data.CacheLog;
 import geocaching.api.data.Geocache;
 import geocaching.api.data.ImageData;
 import geocaching.api.data.SimpleGeocache;
+import geocaching.api.data.TravelBug;
 import geocaching.api.data.WayPoint;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.LogType;
@@ -56,8 +57,33 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 		return null;
 	}
 	
+	@Deprecated
+	@Override
+	public TravelBug getTravelBug(String travelBugCode) throws GeocachingApiException {
+		return getTravelBug(travelBugCode, 0);
+	}
+	
+	@Deprecated
+	@Override
+	public List<TravelBug> getTravelBugsByCache(String cacheCode) throws GeocachingApiException {
+		// TODO test max per page API limit!!!
+		return getTravelBugsInCache(cacheCode, 0, 50, 0);
+	}
+	
+	@Deprecated
+	@Override
+	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws GeocachingApiException {
+		return getCacheLogsByCacheCode(cacheCode, startPosition, endPosition - startPosition + 1);
+	}
+	
 	public abstract List<SimpleGeocache> searchForGeocachesJSON(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
 	
+	public abstract TravelBug getTravelBug(String travelBugCode, int trackableLogCount) throws GeocachingApiException;
+	
+	public abstract List<TravelBug> getTravelBugsInCache(String cacheCode, int startIndex, int maxPerPage, int trackableLogCount) throws GeocachingApiException;
+	
+	public abstract List<CacheLog> getCacheLogsByCacheCode(String cacheCode, int startIndex, int maxPerPage) throws GeocachingApiException;
+		
 	public abstract CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date date, String note, boolean promoteToLog, ImageData imageData, boolean favoriteThisCache) throws GeocachingApiException;
 	
 	protected void fireProgressListener(int progress) {

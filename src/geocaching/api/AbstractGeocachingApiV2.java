@@ -1,15 +1,19 @@
 package geocaching.api;
 
+import geocaching.api.data.CacheLog;
 import geocaching.api.data.Geocache;
+import geocaching.api.data.ImageData;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.WayPoint;
 import geocaching.api.data.type.CacheType;
+import geocaching.api.data.type.LogType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +57,8 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	}
 	
 	public abstract List<SimpleGeocache> searchForGeocachesJSON(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
+	
+	public abstract CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date date, String note, boolean promoteToLog, ImageData imageData, boolean favoriteThisCache) throws GeocachingApiException;
 	
 	protected void fireProgressListener(int progress) {
 		synchronized(listeners) {

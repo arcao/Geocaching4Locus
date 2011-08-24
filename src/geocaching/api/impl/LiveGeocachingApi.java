@@ -3,12 +3,16 @@ package geocaching.api.impl;
 import geocaching.api.AbstractGeocachingApiV2;
 import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.CacheLog;
+import geocaching.api.data.ImageData;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
+import geocaching.api.data.type.LogType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
+import geocaching.api.impl.live_geocaching_api.builder.JsonBuilder;
 import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
+import geocaching.api.impl.live_geocaching_api.parser.CacheLogJsonParser;
 import geocaching.api.impl.live_geocaching_api.parser.GeocacheJsonParser;
 import geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import geocaching.api.impl.live_geocaching_api.parser.SimpleGeocacheJsonParser;
@@ -26,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
@@ -164,6 +169,51 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 	@Override
 	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws GeocachingApiException {
 		throw new GeocachingApiException("Not implemented.");
+	}
+	
+	@Override
+	public CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date date, String note, boolean promoteToLog, ImageData imageData,
+			boolean favoriteThisCache) throws GeocachingApiException {
+		
+		CacheLog log = null;
+		
+		try {
+			StringWriter sw = new StringWriter();
+			JsonWriter w = new JsonWriter(sw);
+			w.beginObject();
+			w.name("AccessToken").value(session);
+			w.name("CacheCode").value(cacheCode);
+			w.name("WptLogTypeId").value(logType.getGroundSpeakId());
+			w.name("UTCDateLogged").value(JsonBuilder.dateToJsonString(date));
+			w.name("PromoteToLog").value(promoteToLog);
+			if (imageData != null) {
+				w.name("ImageData");
+				imageData.writeJson(w);
+			}
+			w.name("FavoriteThisCache").value(favoriteThisCache);
+			
+			w.endObject();
+			w.close();
+			
+			JsonReader r = callPost("CreateFieldNoteAndPublish?format=json", sw.toString());
+			r.beginObject();
+			checkError(r);
+			
+			while(r.hasNext()) {
+				String name = r.nextName();
+				if ("Log".equals(name)) {
+					log = CacheLogJsonParser.parse(r);
+				} else {
+					r.skipValue();
+				}
+			}
+			r.endObject();
+			r.close();
+			return log;
+		} catch (IOException e) {
+			Log.e(TAG, e.toString(), e);
+			throw new GeocachingApiException("Response is not valid JSON string: " + e.getMessage());
+		}
 	}
 	
 	// -------------------- Helper methods ----------------------------------------

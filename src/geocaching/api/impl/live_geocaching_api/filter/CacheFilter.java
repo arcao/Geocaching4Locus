@@ -1,11 +1,8 @@
 package geocaching.api.impl.live_geocaching_api.filter;
 
-import google.gson.stream.JsonWriter;
+import geocaching.api.impl.live_geocaching_api.builder.JsonSerializable;
 
-import java.io.IOException;
-
-public interface CacheFilter {
-	public abstract void writeJson(JsonWriter w) throws IOException;
+public interface CacheFilter extends JsonSerializable {
 	public abstract String getName();
 	public abstract boolean isValid();
 }

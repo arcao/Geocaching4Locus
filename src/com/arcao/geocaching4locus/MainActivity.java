@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements LocationListener {
 	private EditText longitudeEditText;
 	private CheckBox simpleCacheDataCheckBox;
 	private CheckBox importCachesCheckBox;
+	private boolean locusInstalled = true;
 		
 	/** Called when the activity is first created. */
 	@Override
@@ -68,6 +69,7 @@ public class MainActivity extends Activity implements LocationListener {
 		Log.i(TAG, "Locus version: " + locusVersion);
 		
 		if (locusVersion.compareTo(LOCUS_MIN_VERSION) < 0) {
+			locusInstalled = false;
 			showError(locusVersion == Version.emptyVersion ? R.string.error_locus_not_found : R.string.error_locus_old, LOCUS_MIN_VERSION.toString(), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -161,7 +163,8 @@ public class MainActivity extends Activity implements LocationListener {
 		});
 		
 		if (!hasCoordinates) {
-			acquireCoordinates();
+			if (locusInstalled)
+				acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
 			requestProgressUpdate();

@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -234,8 +233,9 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 
 		Log.i(TAG, "Posting " + maskPassword(function));
 		
-
 		try {
+			byte[] data = postBody.getBytes("UTF-8");
+			
 			URL url = new URL(BASE_URL + function);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
@@ -247,19 +247,18 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Content-Length", Integer.toString(postBody.length()));
+			con.setRequestProperty("Content-Length", Integer.toString(data.length));
 			//con.setRequestProperty("User-Agent", "Geocaching/4.0 CFNetwork/459 Darwin/10.0.0d3");
 			con.setRequestProperty("Accept", "application/json");
 			con.setRequestProperty("Accept-Language", "en-US");
 			con.setRequestProperty("Accept-Encoding", "gzip, deflate");
 
 			OutputStream os = con.getOutputStream();
-			OutputStreamWriter osr = new OutputStreamWriter(os, "UTF-8");
-			
+						
 			Log.i(TAG, "Body: " + postBody);
-			osr.write(postBody);
-			osr.flush();
-			osr.close();
+			os.write(data);
+			os.flush();
+			os.close();
 			
 			if (con.getResponseCode() < 400) {
 		    is = con.getInputStream();
@@ -284,7 +283,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 			return new JsonReader(isr);			
 		} catch (Exception e) {
 			Log.e(TAG, e.toString(), e);
-			throw new GeocachingApiException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
+			throw new GeocachingApiException("Error while downloading data (" + e.getClass().getSimpleName() + "): " + e.getMessage(), e);
 		}
 	}
 	

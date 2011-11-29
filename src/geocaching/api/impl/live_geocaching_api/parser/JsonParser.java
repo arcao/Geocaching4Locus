@@ -19,17 +19,16 @@ public class JsonParser {
 	
 	public static Date parseJsonDate(String date) {
 		Pattern DATE_PATTERN = Pattern.compile("/Date\\((.*)([-+].{4})\\)/");
-		
+
 		Matcher m = DATE_PATTERN.matcher(date);
-    if (m.matches())
-    {
-      long time = Long.parseLong(m.group(1));
-      long zone = Integer.parseInt(m.group(2)) / 100 * 1000 * 60 * 60;
-      return new Date(time + zone);
-    }
-    
-    Log.e(TAG, "parseJsonDate failed: " + date);
-    return new Date(0);
+		if (m.matches()) {
+			long time = Long.parseLong(m.group(1));
+			long zone = Integer.parseInt(m.group(2)) / 100 * 1000 * 60 * 60;
+			return new Date(time + zone);
+		}
+
+		Log.e(TAG, "parseJsonDate failed: " + date);
+		return new Date(0);
 	}
 	
 	protected static CacheType parseCacheType(JsonReader r) throws IOException {
@@ -86,9 +85,9 @@ public class JsonParser {
 		r.beginObject();
 		while(r.hasNext()) {
 			String name = r.nextName();
-			if ("ID".equals(name)) {
+			if ("AttributeTypeID".equals(name)) {
 				id = r.nextInt();
-			} else if ("PublicGuid".equals(name)) {
+			} else if ("IsOn".equals(name)) {
 				on = r.nextBoolean();
 			} else {
 				r.skipValue();

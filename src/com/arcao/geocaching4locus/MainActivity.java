@@ -1,6 +1,8 @@
 package com.arcao.geocaching4locus;
 
+import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.LocusUtils;
+import menion.android.locus.addon.publiclib.geoData.Point;
 
 import org.osgi.framework.Version;
 
@@ -32,6 +34,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.util.Coordinates;
@@ -84,13 +87,18 @@ public class MainActivity extends Activity implements LocationListener {
 
 		setContentView(R.layout.main_activity);
 
-		if (getIntent().getAction() != null && getIntent().getAction().equals("menion.android.locus.ON_POINT_ACTION")) {
-			latitude = getIntent().getDoubleExtra("latitude", 0.0);
-			longitude = getIntent().getDoubleExtra("longitude", 0.0);
-			Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
+		if (LocusIntents.isIntentOnPointAction(getIntent())) {
+			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
+			if (p == null) {
+				Toast.makeText(this, "Wrong INTENT - no point!", Toast.LENGTH_SHORT).show();
+			} else {
+				latitude = p.getLocation().getLatitude();
+				longitude = p.getLocation().getLongitude();
+				Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
 
-			hasCoordinates = true;
-		}		
+				hasCoordinates = true;
+			}
+		}
 	}
 	
 	@Override

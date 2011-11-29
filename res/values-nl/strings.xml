@@ -6,8 +6,7 @@
 	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Gelieve Locus te installeren!</string>
 	<string name="search_activity_name">Caches dichtbij</string>
-	<string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
-Gelieve het in te schakelen in Android instellingen.</string>
+	<string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan! Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS...</string>
 	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk...</string>
 	<string name="preferences">Voorkeuren</string>

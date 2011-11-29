@@ -35,10 +35,10 @@
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Zainstalowana wersja Locusa jest nieaktualna. Geocaching4Locus wymaga wersji %s albo nowszej do poprawnego działania. </string>
 	<string name="cancel_button">Anuluj</string>
-	<string name="pref_show_found">Show found</string>
-	<string name="pref_show_found_summary">Show found caches</string>
-	<string name="pref_show_own">Show own hidden</string>
-	<string name="pref_show_own_summary">Show own caches (hidden by you)</string>
+	<string name="pref_show_found">Pokaż znalezione</string>
+	<string name="pref_show_found_summary">Pokaż znalezione skrzynki</string>
+	<string name="pref_show_own">Pokaż własne ukryte</string>
+	<string name="pref_show_own_summary">Pokazuje własne skrzynki (ukryte przez ciebie)</string>
 	<string name="pref_menu_select_all">Zaznacz wszystko</string>
 	<string name="pref_menu_deselect_all">Odznacz wszystko</string>
 </resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Virhe ladattaessa kätköjä.&lt;br&gt;Kuvaus: %1$s</string>
+	<string name="downloading">Lataan kätköjä...</string>
+	<string name="downloading_cache">Lataan kätköä (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Asenna Locus-ohjelma ensin!</string>
+	<string name="search_activity_name">Lähimmät kätköt</string>
+	<string name="error_location">Ei oikeuksia verkkopohjaisiin sijaintitietoihin. Salli toiminto Androidin asetuksista.</string>
+	<string name="acquiring_gps_location">Haetaan GPS-sijaintia...</string>
+	<string name="acquiring_network_location">Haetaan verkkopohjaista sijaintia...</string>
+	<string name="preferences">Asetukset</string>
+	<string name="wrong_coordinates">Väärä koordinaattiformaatti!</string>
+	<string name="search_and_import_button">Etsi ja näytä Locuksessa</string>
+	<string name="coordinates">Koordinaatit</string>
+	<string name="pref_title_geocaching_credentials">Geocaching.com-tunnukset</string>
+	<string name="pref_username">Käyttäjätunnus</string>
+	<string name="pref_password">Salasana</string>
+	<string name="pref_title_filter">Suodatin</string>
+	<string name="pref_distance">Etäisyys</string>
+	<string name="pref_distance_summary_km">Etäisyys kilometreissä</string>
+	<string name="pref_distance_summary_miles">Etäisyys maileissa</string>
+	<string name="pref_count_of_caches">Lukumäärä</string>
+	<string name="pref_count_of_caches_text">Kätköt</string>
+	<string name="pref_count_of_caches_summary">Ladattavien kätköjen lukumäärä</string>
+	<string name="pref_title_advanced">Lisäasetukset</string>
+	<string name="pref_use_compression">Käytä pakkausta</string>
+	<string name="pref_use_compression_summary">Käytä HTTP-pakkausta (kokeellinen)</string>
+	<string name="pref_imperial_units">Brittiläinen yksikköjärjestelmä</string>
+	<string name="pref_imperial_units_summary">Käytä maileja kilometrien sijaan</string>
+	<string name="download_simple_cache_data">Vain kätkön perustiedot</string>
+	<string name="import_caches">Tuo kätköjä</string>
+	<string name="error_credentials">Käyttäjänimi tai salasana ei kelpaa. Syötä tiedot uudelleen asetuksista.</string>
+	<string name="error_title">Virhe!</string>
+	<string name="ok_button">OK</string>
+	<string name="error_locus_old">Locus-versiosi on liian vanha. Geocaching4Locus vaatii vähintään version %s toimiakseen.</string>
+	<string name="cancel_button">Peruuta</string>
+	<string name="pref_show_found">Näytä löydetyt</string>
+	<string name="pref_show_found_summary">Näytä löydetyt kätköt</string>
+	<string name="pref_show_own">Näytä omat piilotetut</string>
+	<string name="pref_show_own_summary">Näytä omat kätköt</string>
+	<string name="pref_menu_select_all">Valitse kaikki</string>
+	<string name="pref_menu_deselect_all">Poista valinnat</string>
+</resources>

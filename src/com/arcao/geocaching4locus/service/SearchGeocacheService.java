@@ -22,10 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import menion.android.locus.addon.publiclib.DisplayData;
-import menion.android.locus.addon.publiclib.LocusConst;
+import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
-import menion.android.locus.addon.publiclib.utils.DataStorage;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -216,11 +214,11 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 				pointDataCollection.add(points);
 			
 			// set data
-			DataStorage.setData(pointDataCollection);
-			Intent intent = new Intent();
+			Intent intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
+
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.putExtra(LocusConst.EXTRA_POINTS_CURSOR_URI, DataStorageProvider.URI);
-			DisplayData.sendData(getApplication(), intent, importCaches);
+			
+			DisplayDataExtended.sendData(getApplication(), intent, importCaches);
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 		}
@@ -331,8 +329,12 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		if (canceled)
 			return;
 		
+		int percent = 100;
+		if (count > 0)
+			percent = ((current * 100) / count);
+		
 		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
-		progressNotification.contentView.setTextViewText(R.id.progress_text, ((current * 100) / count) + "%");
+		progressNotification.contentView.setTextViewText(R.id.progress_text, percent + "%");
 		notificationManager.notify(R.layout.notification_download, progressNotification);
 		
 		Intent broadcastIntent = new Intent();

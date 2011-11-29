@@ -1,5 +1,6 @@
 package geocaching.api.data;
 
+import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.geoData.PointGeocachingAttributes;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
 
 public class Geocache extends SimpleGeocache {
@@ -17,6 +19,7 @@ public class Geocache extends SimpleGeocache {
 	private final List<CacheLog> cacheLogs;
 	private final List<TravelBug> travelBugs;
 	private final List<WayPoint> wayPoints;
+	private final List<AttributeType> attributes;
 
 	public Geocache(String geoCode, String name, double longitude,
 			double latitude, CacheType cacheType, float difficultyRating,
@@ -26,7 +29,7 @@ public class Geocache extends SimpleGeocache {
 			String contactName, ContainerType containerType,
 			int trackableCount, boolean found, String shortDescription,
 			String longDescrition, String hint, List<CacheLog> cacheLogs,
-			List<TravelBug> travelBugs, List<WayPoint> wayPoints) {
+			List<TravelBug> travelBugs, List<WayPoint> wayPoints, List<AttributeType> attributes) {
 		super(geoCode, name, longitude, latitude, cacheType, difficultyRating,
 				terrainRating, authorGuid, authorName, available, archived,
 				premiumListing, countryName, stateName, created, contactName,
@@ -37,6 +40,7 @@ public class Geocache extends SimpleGeocache {
 		this.cacheLogs = cacheLogs;
 		this.travelBugs = travelBugs;
 		this.wayPoints = wayPoints;
+		this.attributes = attributes;
 	}
 
 	public String getShortDescription() {
@@ -62,6 +66,10 @@ public class Geocache extends SimpleGeocache {
 	public List<WayPoint> getWayPoints() {
 		return wayPoints;
 	}
+	
+	public List<AttributeType> getAttributes() {
+		return attributes;
+	}
 
 	@Override
 	public Point toPoint() {
@@ -82,6 +90,10 @@ public class Geocache extends SimpleGeocache {
 
 		for (WayPoint wayPoint : wayPoints) {
 			d.waypoints.add(wayPoint.toPointGeocachingDataWaypoint());
+		}
+		
+		for (AttributeType attribute : attributes) {
+			d.attributes.add(new PointGeocachingAttributes(attribute.getId(), attribute.isOn()));
 		}
 
 		return p;

@@ -1,10 +1,14 @@
 package geocaching.api.impl.live_geocaching_api.parser;
 
+import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
+import google.gson.stream.JsonToken;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,6 +77,40 @@ public class JsonParser {
 		}
 		r.endObject();
 		return u;
+	}
+	
+	protected static AttributeType parseAttributte(JsonReader r) throws IOException {
+		int id = 1;
+		boolean on = false;
+		
+		r.beginObject();
+		while(r.hasNext()) {
+			String name = r.nextName();
+			if ("ID".equals(name)) {
+				id = r.nextInt();
+			} else if ("PublicGuid".equals(name)) {
+				on = r.nextBoolean();
+			} else {
+				r.skipValue();
+			}
+		}
+		r.endObject();
+		
+		return AttributeType.parseAttributeTypeByGroundSpeakId(id, on);
+	}
+	
+	protected static List<AttributeType> parseAttributteList(JsonReader r) throws IOException {
+		if (r.peek() != JsonToken.BEGIN_ARRAY) {
+			r.skipValue();
+		}
+		
+		List<AttributeType> list = new ArrayList<AttributeType>();
+		r.beginArray();
+		while(r.hasNext()) {
+			list.add(parseAttributte(r));
+		}
+		r.endArray();
+		return list;
 	}
 	
 	protected static class User {

@@ -6,6 +6,7 @@ import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
 import geocaching.api.data.WayPoint;
+import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 import geocaching.api.data.type.LogType;
@@ -307,7 +308,8 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 				extCache.getChildTextTrim("encoded_hints", NS_GS), // hint
 				logs, // cacheLogs
 				travelBugs, // travelBugs
-				waypoints // wayPoints
+				waypoints, // wayPoints
+				new ArrayList<AttributeType>()
 		);
 
 		return g;

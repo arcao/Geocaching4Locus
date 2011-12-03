@@ -184,13 +184,12 @@ public class MainActivity extends Activity implements LocationListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		removeLocationUpdates();
+		
 		if (pd != null && pd.isShowing())
 			pd.dismiss();
 		
 		unregisterReceiver(searchGeocacheReceiver);
-		
-		if (locationManager != null)
-			locationManager.removeUpdates(this);
 		
 		Log.i(TAG, "Receiver unregistred.");
 	}
@@ -198,8 +197,13 @@ public class MainActivity extends Activity implements LocationListener {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if (locationManager != null)
-			locationManager.removeUpdates(this);
+		removeLocationUpdates();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		removeLocationUpdates();
 	}
 
 	@Override
@@ -305,10 +309,10 @@ public class MainActivity extends Activity implements LocationListener {
 	}
 	
 	protected void cancelAcquiring() {
+		removeLocationUpdates();
+
 		if (pd != null && pd.isShowing())
-			pd.dismiss();
-		
-		locationManager.removeUpdates(MainActivity.this);
+			pd.dismiss();	
 		
 		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (location == null)
@@ -334,9 +338,15 @@ public class MainActivity extends Activity implements LocationListener {
 			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
 	
+	protected void removeLocationUpdates() {
+		if (locationManager != null)
+			locationManager.removeUpdates(this);
+	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
-		locationManager.removeUpdates(this);
+		removeLocationUpdates();
+		
 		if (location == null) {
 			handler.post(new Runnable() {
 				@Override
@@ -373,9 +383,9 @@ public class MainActivity extends Activity implements LocationListener {
 
 	@Override
 	public void onProviderDisabled(String provider) {
+		removeLocationUpdates();
+		
 		if (LocationManager.GPS_PROVIDER.equals(provider)) {
-			locationManager.removeUpdates(this);
-
 			handler.post(new Runnable() {
 				@Override
 				public void run() {

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-public class DisplayDataExtended {
+public class DisplayDataExtended extends DisplayData {
 	private static final String TAG = "DisplayDataExtended";
 	
 	/**

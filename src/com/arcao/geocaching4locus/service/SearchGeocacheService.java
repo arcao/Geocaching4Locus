@@ -54,6 +54,7 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	public static final String PARAM_CURRENT = "CURRENT";
 	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
+	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
 	
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
@@ -120,7 +121,7 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		return n;
 	}
 	
-	protected Notification createErrorNotification(int resErrorId, String errorText) {
+	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference) {
 		Notification n = new Notification();
 		
 		n.icon = R.drawable.ic_launcher;
@@ -131,6 +132,7 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		intent.setAction(ACTION_ERROR);
 		intent.putExtra(PARAM_RESOURCE_ID, resErrorId);
 		intent.putExtra(PARAM_ADDITIONAL_MESSAGE, errorText);
+		intent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
 		
 		n.setLatestEventInfo(this, getText(R.string.error_title), Html.fromHtml(getString(resErrorId, errorText)), PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
 		
@@ -151,7 +153,7 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 			if (caches != null)
 				callLocus(caches);
 		} catch (InvalidCredentialsException e) {
-			sendError(R.string.error_credentials, null);
+			sendError(R.string.error_credentials, null, true);
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (message == null)
@@ -176,8 +178,8 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
 		
 		distance = prefs.getFloat("distance", 160.9344F);
-		if (!prefs.getBoolean("imperial_units", false)) {
-			distance = distance * 1.609344;
+		if (prefs.getBoolean("imperial_units", false)) {
+			distance = distance / 1.609344;
 		}
 
 		current = 0;
@@ -361,8 +363,12 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	}
 	
 	protected void sendError(int error, String additionalMessage) {
+		sendError(error, additionalMessage, false);
+	}
+	
+	protected void sendError(int error, String additionalMessage, boolean openPreference) {
 		// error notification
-		notificationManager.notify(error, createErrorNotification(error, additionalMessage));
+		notificationManager.notify(error, createErrorNotification(error, additionalMessage, openPreference));
 		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_ERROR);
@@ -370,6 +376,8 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		broadcastIntent.putExtra(PARAM_RESOURCE_ID, error);
 		if (additionalMessage != null)
 			broadcastIntent.putExtra(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
+		
+		broadcastIntent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
 		sendBroadcast(broadcastIntent);
 	}
 

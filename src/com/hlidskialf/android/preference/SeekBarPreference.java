@@ -5,28 +5,29 @@
  */
 package com.hlidskialf.android.preference;
 
-import com.arcao.geocaching4locus.R;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.preference.DialogPreference;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.LinearLayout;
+
+import com.arcao.geocaching4locus.R;
 
 public class SeekBarPreference extends DialogPreference implements
 		SeekBar.OnSeekBarChangeListener {
 	
 	private SeekBar mSeekBar;
 	private TextView mSplashText, mValueText;
-	private Context mContext;
+	private final Context mContext;
 
-	private CharSequence mDialogMessage, mSuffix;
-	private int mDefault, mMax, mValue = 0;
+	private final CharSequence mDialogMessage, mSuffix;
+	private final int mDefault;
+	private int mMax, mValue = 0;
 
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -38,6 +39,8 @@ public class SeekBarPreference extends DialogPreference implements
 		mSuffix = a.getText(R.styleable.SeekBarPreference_android_text);
 		mDefault = a.getInt(R.styleable.SeekBarPreference_android_defaultValue, 0);
 		mMax = a.getInt(R.styleable.SeekBarPreference_android_max, 100);
+		
+		mValue = getPersistedInt(mDefault);
 
 		a.recycle();
 	}
@@ -92,6 +95,7 @@ public class SeekBarPreference extends DialogPreference implements
 			mValue = (Integer) defaultValue;
 	}
 
+	@Override
 	public void onProgressChanged(SeekBar seek, int value, boolean fromTouch) {
 		String t = String.valueOf(value);
 		mValueText.setText(mSuffix == null ? t : t.concat(" ").concat(mSuffix.toString()));
@@ -109,9 +113,11 @@ public class SeekBarPreference extends DialogPreference implements
 		super.onClick(dialog, which);
 	}
 
+	@Override
 	public void onStartTrackingTouch(SeekBar seek) {
 	}
 
+	@Override
 	public void onStopTrackingTouch(SeekBar seek) {
 	}
 

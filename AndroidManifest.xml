@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.3.6.3" android:versionCode="13">
+      android:versionName="1.3.6.4" android:versionCode="14">
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"></uses-sdk>
@@ -20,8 +20,13 @@
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter android:label="@string/search_activity_name" android:icon="@drawable/ic_launcher">
+                <action android:name="menion.android.locus.MAIN_FUNCTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <activity android:label="@string/preferences" android:theme="@android:style/Theme.Black" android:name="PreferenceActivity"></activity><activity android:theme="@style/InvisibleTheme" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:label="@string/preferences" android:theme="@android:style/Theme.Black" android:name="PreferenceActivity"></activity>
+        <activity android:theme="@style/InvisibleTheme" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation"></activity>
         <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
         <service android:name=".service.SearchGeocacheService"></service>
         

@@ -11,13 +11,20 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.method.DigitsKeyListener;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-public class PreferenceActivity extends android.preference.PreferenceActivity {
+import com.hlidskialf.android.preference.SeekBarPreference;
+
+public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+	protected static final String UNIT_KM = "km";
+	protected static final String UNIT_MILES = "mi";
+	
 	private SharedPreferences prefs;
 	private PreferenceScreen cacheTypeFilterScreen;
 	
@@ -25,6 +32,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preference);
+		
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		
 		cacheTypeFilterScreen = (PreferenceScreen) findPreference("cache_type_filter_screen");
 		if (cacheTypeFilterScreen != null) {
@@ -37,9 +46,28 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 			setPreferenceScreen(cacheTypeFilterScreen);
 			return;
 		}
-
 		
-		final EditTextPreference filterDistancePreference = (EditTextPreference) findPreference("filter_distance");
+		preparePreferences();
+	}
+	
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+		boolean imperialUnits = prefs.getBoolean("imperial_units", false);
+		
+		if ("filter_distance".equals(key) && !imperialUnits) {
+			final EditTextPreference p = findPreference(key, EditTextPreference.class);
+			p.setSummary(preparePreferenceSummary(p.getText() + UNIT_KM, R.string.pref_distance_summary_km));
+		} else if ("filter_distance".equals(key) && imperialUnits) {
+			final EditTextPreference p = findPreference(key, EditTextPreference.class);  
+			p.setSummary(preparePreferenceSummary(p.getText() + UNIT_MILES, R.string.pref_distance_summary_miles));
+		} else if ("filter_count_of_caches".equals(key)) {
+			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
+			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_caches_summary));
+		}
+	}
+	
+	protected void preparePreferences() {
+		final EditTextPreference filterDistancePreference = findPreference("filter_distance", EditTextPreference.class);
 		final EditText filterDistanceEditText = filterDistancePreference.getEditText(); 
 		filterDistanceEditText.setKeyListener(DigitsKeyListener.getInstance(false,true));
 		
@@ -50,28 +78,36 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		edit.remove("session");
 		edit.commit();
 		
-		if (prefs.getBoolean("imperial_units", false)) {
-			filterDistancePreference.setSummary(R.string.pref_distance_summary_miles);
-			filterDistancePreference.setDialogMessage(R.string.pref_distance_summary_miles);
-		}
-		
-		final CheckBoxPreference imperialUnitsPreference = (CheckBoxPreference) findPreference("imperial_units");
+		boolean imperialUnits = prefs.getBoolean("imperial_units", false);
+				
+		final CheckBoxPreference imperialUnitsPreference = findPreference("imperial_units", CheckBoxPreference.class);
 		imperialUnitsPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				float distance = Float.parseFloat(filterDistancePreference.getText());
 				if (((Boolean) newValue)) {
 					filterDistancePreference.setText(Float.toString(distance / 1.609344F));
-					filterDistancePreference.setSummary(R.string.pref_distance_summary_miles);
+					filterDistancePreference.setSummary(preparePreferenceSummary(Float.toString(distance / 1.609344F) + UNIT_MILES, R.string.pref_distance_summary_miles));
 					filterDistancePreference.setDialogMessage(R.string.pref_distance_summary_miles);
 				} else {
 					filterDistancePreference.setText(Float.toString(distance * 1.609344F));
-					filterDistancePreference.setSummary(R.string.pref_distance_summary_km);
+					filterDistancePreference.setSummary(preparePreferenceSummary(Float.toString(distance * 1.609344F) + UNIT_KM, R.string.pref_distance_summary_km));
 					filterDistancePreference.setDialogMessage(R.string.pref_distance_summary_km);
 				}
 				return true;
 			}
 		});
+		
+		// set summary text
+		if (!imperialUnits) {
+			filterDistancePreference.setSummary(preparePreferenceSummary(filterDistancePreference.getText() + UNIT_KM, R.string.pref_distance_summary_km));
+		} else {
+			filterDistancePreference.setDialogMessage(R.string.pref_distance_summary_miles);
+			filterDistancePreference.setSummary(preparePreferenceSummary(filterDistancePreference.getText() + UNIT_MILES, R.string.pref_distance_summary_miles));
+		}
+		
+		SeekBarPreference filterCountOfCachesPreference = findPreference("filter_count_of_caches", SeekBarPreference.class);
+		filterCountOfCachesPreference.setSummary(preparePreferenceSummary(String.valueOf(filterCountOfCachesPreference.getProgress()), R.string.pref_count_of_caches_summary));		
 	}
 	
 	@Override
@@ -89,14 +125,25 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 		switch (item.getItemId()) {
 			case R.id.selectAll:
 				for (int i = 0; i < CacheType.values().length; i++)
-					((CheckBoxPreference)findPreference("filter_" + i)).setChecked(true);
+					findPreference("filter_" + i, CheckBoxPreference.class).setChecked(true);
 				return true;
 			case R.id.deselectAll:
 				for (int i = 0; i < CacheType.values().length; i++)
-					((CheckBoxPreference)findPreference("filter_" + i)).setChecked(false);
+					findPreference("filter_" + i, CheckBoxPreference.class).setChecked(false);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	protected Spanned preparePreferenceSummary(String value, int resId) {
+    if (value != null && value.length() > 0) 
+    	return Html.fromHtml("<font color=\"#FF8000\"><b>(" + value + ")</b></font> " + getText(resId).toString());
+    return Html.fromHtml(getText(resId).toString());
+  }
+	
+	@SuppressWarnings("unchecked")
+	protected <T extends Preference> T findPreference(String key, Class<T> clazz) {
+		return (T) getPreferenceScreen().findPreference(key);
 	}
 }

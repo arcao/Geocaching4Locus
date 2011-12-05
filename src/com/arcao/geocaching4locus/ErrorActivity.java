@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 
@@ -18,10 +19,13 @@ public class ErrorActivity extends Activity {
 		if (SearchGeocacheService.ACTION_ERROR.equals(getIntent().getAction())) {
 			int resId = getIntent().getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0);
 			String additionalMessage = getIntent().getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE);
+			final boolean openPreference = getIntent().getBooleanExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, false);
 			
 			showError(resId, additionalMessage, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
+					if (openPreference)
+						startActivity(new Intent(ErrorActivity.this, PreferenceActivity.class));
 					ErrorActivity.this.finish();
 				}
 			});

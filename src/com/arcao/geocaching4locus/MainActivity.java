@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus;
 
 import menion.android.locus.addon.publiclib.LocusIntents;
+import menion.android.locus.addon.publiclib.LocusIntents.OnIntentMainFunction;
 import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.Point;
 
@@ -39,7 +40,7 @@ import android.widget.Toast;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.util.Coordinates;
 
-public class MainActivity extends Activity implements LocationListener {
+public class MainActivity extends Activity implements LocationListener, OnIntentMainFunction {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
 	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.10.1");
@@ -99,7 +100,24 @@ public class MainActivity extends Activity implements LocationListener {
 				hasCoordinates = true;
 			}
 		}
+		if (LocusIntents.isIntentMainFunction(getIntent())) {
+			LocusIntents.handleIntentMainFunction(getIntent(), this);
+		}
 	}
+	
+	@Override
+	public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter) {
+		Location l = gpsEnabled ? locGps : locMapCenter;
+		latitude = l.getLatitude();
+		longitude = l.getLongitude();
+
+		Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
+		
+		hasCoordinates = true;
+	}
+	
+	@Override
+	public void onFailed() {}
 	
 	@Override
 	protected void onResume() {	
@@ -446,6 +464,7 @@ public class MainActivity extends Activity implements LocationListener {
 				errorIntent.setAction(SearchGeocacheService.ACTION_ERROR);
 				errorIntent.putExtra(SearchGeocacheService.PARAM_RESOURCE_ID, intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0));
 				errorIntent.putExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
+				errorIntent.putExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, false));
 				MainActivity.this.startActivity(errorIntent);
 			}
 		}		

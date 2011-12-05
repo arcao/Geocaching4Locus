@@ -2,8 +2,8 @@
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_title_geocaching_credentials">
-        <EditTextPreference android:title="@string/pref_username" android:key="username"></EditTextPreference>
-        <EditTextPreference android:title="@string/pref_password" android:key="password" android:password="true"></EditTextPreference>    
+        <EditTextPreference android:title="@string/pref_username" android:key="username" android:singleLine="true" android:imeOptions="actionDone"></EditTextPreference>
+        <EditTextPreference android:title="@string/pref_password" android:key="password" android:password="true" android:singleLine="true" android:imeOptions="actionDone"></EditTextPreference>    
     </PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_filter">
 		<PreferenceScreen android:title="@string/pref_title_filter" android:key="cache_type_filter_screen">

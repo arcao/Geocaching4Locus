@@ -323,13 +323,13 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 
 		// Register the listener with the Location Manager to receive location
 		// updates
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-                } else {
-                    cancelAcquiring();
-                }
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+		} else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+		} else {
+			cancelAcquiring();
+		}
 	}
 	
 	protected void cancelAcquiring() {

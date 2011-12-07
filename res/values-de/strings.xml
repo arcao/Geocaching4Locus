@@ -6,7 +6,8 @@
 	<string name="downloading_cache">Lade Cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Bitte Locus installieren!</string>
 	<string name="search_activity_name">Caches in der Nähe</string>
-	<string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
+	<string name="error_location">Positionsbestimmung mittels WIFI ist nicht erlaubt!
+Bitte in den Android Einstellungen aktivieren.</string>
 	<string name="acquiring_gps_location">Positionsbestimmung via GPS...</string>
 	<string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
 	<string name="preferences">Einstellungen</string>

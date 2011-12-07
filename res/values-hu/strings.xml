@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Geocaching4Locus</string>
+	<string name="error">Hiba történt a geoládák letöltése során. &lt;br&gt;Leírás: %1$s</string>
+	<string name="downloading">Geoládák letöltése</string>
+	<string name="downloading_cache">Geoláda letöltése (%3$d/%4$d): %1$s - %2$s</string>
+	<string name="error_locus_not_found">Kérem, telepítse a Locus-t!</string>
+	<string name="search_activity_name">Közeli ládák</string>
+	<string name="error_location">A hálózat alapú helyzetmeghatározás nem engedélyezett! Kérem engedélyezze az Android beállításainál.</string>
+	<string name="acquiring_gps_location">Pozició meghatározása GPS-ről</string>
+	<string name="acquiring_network_location">Pozíció meghatározása hálózatról</string>
+	<string name="preferences">Beállítások</string>
+	<string name="wrong_coordinates">Hibás koordináta formátum</string>
+	<string name="search_and_import_button">Keresés és megjelenítés a Locusban</string>
+	<string name="coordinates">Koordináták</string>
+	<string name="pref_title_geocaching_credentials">Geocaching.com bejelentkezési adatok</string>
+	<string name="pref_username">Felhasználónév</string>
+	<string name="pref_password">Jelszó</string>
+	<string name="pref_title_filter">Szűrő</string>
+	<string name="pref_distance">Távolság</string>
+	<string name="pref_distance_summary_km">Távolság km-ben</string>
+	<string name="pref_distance_summary_miles">Távolság mérföldben</string>
+	<string name="pref_count_of_caches">Geoládák száma</string>
+	<string name="pref_count_of_caches_text">geoládák</string>
+	<string name="pref_count_of_caches_summary">Letöltendő geoládák száma</string>
+	<string name="pref_title_advanced">Haladó</string>
+	<string name="pref_use_compression">Tömörítés használata</string>
+	<string name="pref_use_compression_summary">HTTP tömörítés használata (haladó)</string>
+	<string name="pref_imperial_units">Imperial units</string>
+	<string name="pref_imperial_units_summary">Mérföld használata km helyett</string>
+	<string name="download_simple_cache_data">Csak alap geoláda adatok</string>
+	<string name="import_caches">Geoládák importálása</string>
+	<string name="error_credentials">Érvénytelen felhasználónév vagy jelszó. Kérem adja meg ismét a felhasználói adatokat a beállításoknál.</string>
+	<string name="error_title">Hiba történt!</string>
+	<string name="ok_button">Ok</string>
+	<string name="error_locus_old">A telepített Locus verzió túl régi. A Geocaching4Locus %s vagy újabb verziót igényel a megfelelő működéshez.</string>
+	<string name="cancel_button">Mégse</string>
+	<string name="pref_show_found">Megtaláltak mutatása.</string>
+	<string name="pref_show_found_summary">A megtalált ládák mutatása.</string>
+	<string name="pref_show_own">A saját ládák mutatása.</string>
+	<string name="pref_show_own_summary">A saját ládák mutatása. (Saját rejtés)</string>
+	<string name="pref_menu_select_all">Minden kijelölése.</string>
+	<string name="pref_menu_deselect_all">A kijelölések törlése.</string>
+</resources>

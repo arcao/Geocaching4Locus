@@ -1,7 +1,6 @@
 package com.arcao.geocaching4locus.service;
 
 import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.exception.GeocachingApiException;
@@ -15,76 +14,47 @@ import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.util.Log;
-import android.widget.RemoteViews;
 
-import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 
-public class SearchGeocacheService extends IntentService implements GeocachingApiProgressListener {
+public class SearchGeocacheService extends AbstractService {
 	private static final String TAG = "SearchGeocacheService";
-	
-	public static final String ACTION_PROGRESS_UPDATE = "com.arcao.geocaching4locus.intent.action.PROGRESS_UPDATE";
-	public static final String ACTION_PROGRESS_COMPLETE = "com.arcao.geocaching4locus.intent.action.PROGRESS_COMPLETE";
-	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
-
-	public static final String PARAM_COUNT = "COUNT";
-	public static final String PARAM_CURRENT = "CURRENT";
-	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
-	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
-	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
-	
+		
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
 	
 	private final static int MAX_PER_PAGE = 10;
-	
+		
+	private static SearchGeocacheService instance = null;
+
+	private int current;
+	private int count;
+
+	private Account account;
 	private boolean showFound;
 	private boolean showOwn;
 	private boolean simpleCacheData;
 	private double distance;
-	private int count = 0;
-	private int current = 0;
-	private Account account;
-	
-	private boolean canceled;
-	
-	protected SharedPreferences prefs;
-	
-	private static SearchGeocacheService instance = null;
-	
-	protected NotificationManager notificationManager;
-	protected RemoteViews contentViews;
-	protected Notification progressNotification;
 
-	private Method startForegroundMethod;
-	private Method setForegroundMethod;
-	private Method stopForegroundMethod;
-	
+	private boolean importCaches;
+
+	private CacheType[] cacheTypes;
+		
 	public SearchGeocacheService() {
-		super(TAG);		
+		super(TAG, R.string.downloading, R.string.downloading);		
 	}
 	
 	public static SearchGeocacheService getInstance() {
@@ -92,87 +62,37 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 	}
 	
 	@Override
-	public void onCreate() {
-		super.onCreate();
-		
+	protected void setInstance() {
 		instance = this;
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		
-		prepareCompatMethods();
-		
-		canceled = false;
-
-		progressNotification = createProgressNotification(); 
-		startForegroundCompat(R.layout.notification_download, progressNotification);
-	}
-
-	protected Notification createProgressNotification() {
-		Notification n = new Notification();
-		
-		n.icon = R.drawable.ic_launcher;
-		n.tickerText = null;
-		n.flags |= Notification.FLAG_ONGOING_EVENT;				
-		n.contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		n.contentIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
-		
-		return n;
 	}
 	
-	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference) {
-		Notification n = new Notification();
-		
-		n.icon = R.drawable.ic_launcher;
-		n.tickerText = getText(R.string.error_title);
-		n.when = new Date().getTime(); 
-		
-		Intent intent = new Intent(this, ErrorActivity.class);
-		intent.setAction(ACTION_ERROR);
-		intent.putExtra(PARAM_RESOURCE_ID, resErrorId);
-		intent.putExtra(PARAM_ADDITIONAL_MESSAGE, errorText);
-		intent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
-		
-		n.setLatestEventInfo(this, getText(R.string.error_title), Html.fromHtml(getString(resErrorId, errorText)), PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
-		
-		return n;
-	}
-
 	@Override
-	protected void onHandleIntent(Intent intent) {
-		loadConfiguration();
-		sendProgressUpdate();
-			
+	protected void removeInstance() {
+		instance = null;		
+	}
+	
+	@Override
+	protected Intent createOngoingEventIntent() {
+		return new Intent(this, MainActivity.class);
+	}
+	
+	public void sendProgressUpdate() {
+		sendProgressUpdate(current, count);
+	}
+	
+	@Override
+	protected void run(Intent intent) throws Exception {		
 		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 		
-		try {
-			List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
-			sendProgressComplete();
-			if (caches != null)
-				callLocus(caches);
-		} catch (InvalidCredentialsException e) {
-			sendError(R.string.error_credentials, null, true);
-		} catch (Exception e) {
-			String message = e.getMessage();
-			if (message == null)
-				message = "";
-			
-			sendError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
-		}
-
+		List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
+		sendProgressComplete(count);
+		if (caches != null)
+			callLocus(caches);
 	}
 	
 	@Override
-	public void onDestroy() {
-		canceled = true;
-		instance = null;
-		stopForegroundCompat(R.layout.notification_download);
-		super.onDestroy();
-	}
-
-	protected void loadConfiguration() {
+	protected void loadConfiguration(SharedPreferences prefs) {
 		showFound = prefs.getBoolean("filter_show_found", false);
 		showOwn = prefs.getBoolean("filter_show_own", false);
 		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
@@ -189,13 +109,14 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		String userName = prefs.getString("username", "");
 		String password = prefs.getString("password", "");
 		String session = prefs.getString("session", null);
+		
+		importCaches = prefs.getBoolean("import_caches", false);
+		cacheTypes = getCacheTypeFilterResult(prefs);
 
 		account = new Account(userName, password, session);
 	}
 
 	private void callLocus(List<SimpleGeocache> caches) {
-		boolean importCaches = prefs.getBoolean("import_caches", false);
-		
 		try {
 			ArrayList<PointsData> pointDataCollection = new ArrayList<PointsData>();
 			
@@ -226,7 +147,7 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		}
 	}
 	
-	protected CacheType[] getCacheTypeFilterResult() {
+	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
 		Vector<CacheType> filter = new Vector<CacheType>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
@@ -244,14 +165,13 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 		if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
 			throw new InvalidCredentialsException("Username or password is empty.");
 
-		if (canceled)
+		if (isCanceled())
 			return null;
 		
 		AbstractGeocachingApiV2 api = new LiveGeocachingApi();
 		login(api, account);
 		
 		sendProgressUpdate();
-		api.addProgressListener(this);
 		try {
 			current = 0;
 			while (current < count) {
@@ -259,13 +179,13 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 				
 				List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, current, perPage, -1, -1, new CacheFilter[] {
 						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
-						new GeocacheTypeFilter(getCacheTypeFilterResult()),
+						new GeocacheTypeFilter(cacheTypes),
 						new GeocacheExclusionsFilter(false, true, null),
 						new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
 						new NotHiddenByUsersFilter(showOwn ? null : account.getUserName())
 				});
 				
-				if (canceled)
+				if (isCanceled())
 					return null;
 				
 				if (cachesToAdd.size() == 0)
@@ -284,19 +204,13 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 			return caches;
 		} catch (InvalidSessionException e) {
 			account.setSession(null);
-			
-			Editor edit = prefs.edit();
-			edit.remove("session");
-			edit.commit();
+			removeSession();
 			
 			return downloadCaches(latitude, longitude);
 		} finally {
-			api.removeProgressListener(this);
 			account.setSession(api.getSession());
 			if (account.getSession() != null && account.getSession().length() > 0) {
-				Editor edit = prefs.edit();
-				edit.putString("session", account.getSession());
-				edit.commit();
+				storeSession(account.getSession());
 			}
 		}
 	}
@@ -312,135 +226,5 @@ public class SearchGeocacheService extends IntentService implements GeocachingAp
 			Log.e(TAG, "Creditials not valid.", e);
 			throw e;
 		}
-	}
-	
-	@Override
-	public void onProgressUpdate(int progress) {
-		if (canceled)
-			return;
-		
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(PARAM_COUNT, count + progress);
-		broadcastIntent.putExtra(PARAM_CURRENT, current);
-		sendBroadcast(broadcastIntent);
-	}
-	
-	public void sendProgressUpdate() {
-		if (canceled)
-			return;
-		
-		int percent = 100;
-		if (count > 0)
-			percent = ((current * 100) / count);
-		
-		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
-		progressNotification.contentView.setTextViewText(R.id.progress_text, percent + "%");
-		notificationManager.notify(R.layout.notification_download, progressNotification);
-		
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(PARAM_COUNT, count);
-		broadcastIntent.putExtra(PARAM_CURRENT, current);
-		sendBroadcast(broadcastIntent);
-	}
-	
-	protected void sendProgressComplete() {
-		if (!canceled) {
-			progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
-			progressNotification.contentView.setTextViewText(R.id.progress_text, "100%");
-			notificationManager.notify(R.layout.notification_download, progressNotification);
-		}
-		
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ACTION_PROGRESS_COMPLETE);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(PARAM_COUNT, count);
-		broadcastIntent.putExtra(PARAM_CURRENT, count);
-		sendBroadcast(broadcastIntent);
-	}
-	
-	protected void sendError(int error, String additionalMessage) {
-		sendError(error, additionalMessage, false);
-	}
-	
-	protected void sendError(int error, String additionalMessage, boolean openPreference) {
-		// error notification
-		notificationManager.notify(error, createErrorNotification(error, additionalMessage, openPreference));
-		
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ACTION_ERROR);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(PARAM_RESOURCE_ID, error);
-		if (additionalMessage != null)
-			broadcastIntent.putExtra(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
-		
-		broadcastIntent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
-		sendBroadcast(broadcastIntent);
-	}
-
-	// ----------------  Compatible methods for start / stop foreground service --------------------
-	
-	protected void prepareCompatMethods() {
-		try {
-			startForegroundMethod = getClass().getMethod("startForeground", new Class[] {int.class, Notification.class});
-			stopForegroundMethod = getClass().getMethod("stopForeground", new Class[] {boolean.class});
-			return;
-		} catch (NoSuchMethodException e) {
-			// Running on an older platform.
-			startForegroundMethod = stopForegroundMethod = null;
-		}
-		try {
-			setForegroundMethod = getClass().getMethod("setForeground", new Class[] {boolean.class});
-		} catch (NoSuchMethodException e) {
-			throw new IllegalStateException("OS doesn't have Service.startForeground OR Service.setForeground!");
-		}
-	}
-
-	/**
-	 * This is a wrapper around the new startForeground method, using the older
-	 * APIs if it is not available.
-	 */
-	protected void startForegroundCompat(int id, Notification notification) {
-	    // If we have the new startForeground API, then use it.
-	    if (startForegroundMethod != null) {
-	        invokeMethod(startForegroundMethod, new Object[] { id, notification});
-	        return;
-	    }
-
-	    // Fall back on the old API.
-	    invokeMethod(setForegroundMethod, new Object[] {true});
-	    notificationManager.notify(id, notification);
-	}
-
-	/**
-	 * This is a wrapper around the new stopForeground method, using the older
-	 * APIs if it is not available.
-	 */
-	protected void stopForegroundCompat(int id) {
-	    // If we have the new stopForeground API, then use it.
-	    if (stopForegroundMethod != null) {
-	        invokeMethod(stopForegroundMethod, new Object[] { true });
-	        return;
-	    }
-
-	    // Fall back on the old API.  Note to cancel BEFORE changing the
-	    // foreground state, since we could be killed at that point.
-	    notificationManager.cancel(id);
-	    invokeMethod(setForegroundMethod, new Object[] { false });
-	}
-	
-	protected void invokeMethod(Method method, Object[] args) {
-    try {
-        method.invoke(this, args);
-    } catch (InvocationTargetException e) {
-        // Should not happen.
-        Log.w(TAG, "Unable to invoke method", e);
-    } catch (IllegalAccessException e) {
-        // Should not happen.
-        Log.w(TAG, "Unable to invoke method", e);
-    }
 	}
 }

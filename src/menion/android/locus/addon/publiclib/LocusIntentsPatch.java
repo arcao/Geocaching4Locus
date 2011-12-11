@@ -1,14 +1,8 @@
 package menion.android.locus.addon.publiclib;
 
-import menion.android.locus.addon.publiclib.geoData.Point;
-import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 
-public class LocusIntents {
-
-	private static final String TAG = "LocusIntents";
-	
+public class LocusIntentsPatch {	
 	/*
 	   Add POI from your application
  	  -------------------------------
@@ -29,28 +23,8 @@ public class LocusIntents {
    			// get some data here and finally return value back, more below
 		}
 	 */
-	
 	public static boolean isIntentGetLocation(Intent intent) {
 		return intent != null && LocusConst.INTENT_GET_LOCATION.equals(intent.getAction());
-	}
-	
-	public static boolean sendGetLocationData(Activity activity, 
-			String name, double lat, double lon, double alt, double acc) {
-		if (lat == 0.0 && lon == 0.0) {
-			return false;
-		} else {
-			Intent intent = new Intent();
-			// string value name
-			intent.putExtra("name", name); // optional
-			// rest are all DOUBLE values (to avoid problems even when for acc and alt isn't double needed)
-			intent.putExtra("latitude", lat); // required, not 0.0
-			intent.putExtra("longitude", lon); // required, not 0.0
-			intent.putExtra("altitude", alt); // optional
-			intent.putExtra("accuracy", acc); // optional
-			activity.setResult(Activity.RESULT_OK, intent);
-			activity.finish();
-			return true;
-		}
 	}
 	
 	/*
@@ -77,35 +51,8 @@ public class LocusIntents {
    			// do what you want with this ...
 		}
 	 */
-	
 	public static boolean isIntentOnPointAction(Intent intent) {
 		return intent != null && LocusConst.INTENT_ON_POINT_ACTION.equals(intent.getAction());
-	}
-	
-	public static Point handleIntentOnPointAction(Intent intent) 
-			throws NullPointerException {
-		// check source data
-		if (intent == null)
-			throw new NullPointerException("Intent cannot be null");
-		// check intent itself
-		if (!isIntentOnPointAction(intent)) {
-			return null;
-		}
-		
-		String name = intent.getStringExtra("name");
-		Location loc;
-		// in new version is already whole location as parcelable
-		if (intent.getParcelableExtra("loc") != null) {
-			loc = intent.getParcelableExtra("loc");
-		} else {
-			loc = new Location(TAG);
-			loc.setLatitude(intent.getDoubleExtra("latitude", 0.0));
-			loc.setLongitude(intent.getDoubleExtra("longitude", 0.0));
-			loc.setAltitude(intent.getDoubleExtra("altitude", 0.0));
-			loc.setAccuracy((float) intent.getDoubleExtra("accuracy", 0.0));
-		}
-
-		return new Point(name, loc);
 	}
 	
 	/*
@@ -126,33 +73,8 @@ public class LocusIntents {
 		if (getIntent().getAction().equals(LocusConst.INTENT_MAIN_FUNCTION)) {
    			// more below ...
 		}
-	 */
-	
+	 */	
 	public static boolean isIntentMainFunction(Intent intent) {
 		return intent != null && LocusConst.INTENT_MAIN_FUNCTION.equals(intent.getAction());
-	}
-	
-	public interface OnIntentMainFunction {
-		public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter);
-		public void onFailed();
-	}
-	
-	public static void handleIntentMainFunction(Intent intent, OnIntentMainFunction handler) 
-			throws NullPointerException {
-		// check source data
-		if (intent == null)
-			throw new NullPointerException("Intent cannot be null");
-		if (handler == null)
-			throw new NullPointerException("Handler cannot be null");
-		// check intent itself
-		if (!isIntentMainFunction(intent)) {
-			handler.onFailed();
-			return;
-		}
-		
-		boolean gpsEnabled = intent.getBooleanExtra("gpsEnabled", false);
-		handler.onLocationReceived(gpsEnabled,
-				gpsEnabled ? (Location)intent.getParcelableExtra("locGps") : null,
-				(Location) intent.getParcelableExtra("locCenter"));
 	}
 }

@@ -118,8 +118,10 @@ public abstract class AbstractService extends IntentService {
 		try {
 			run(intent);
 		} catch (InvalidCredentialsException e) {
+			Log.e(TAG, e.getMessage(), e);
 			sendError(R.string.error_credentials, null, true);
 		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
 			String message = e.getMessage();
 			if (message == null)
 				message = "";

@@ -43,7 +43,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 public class MainActivity extends Activity implements LocationListener, OnIntentMainFunction {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
-	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.10.1");
+	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.14.6.6");
 
 	private Resources res;
 	private LocationManager locationManager;

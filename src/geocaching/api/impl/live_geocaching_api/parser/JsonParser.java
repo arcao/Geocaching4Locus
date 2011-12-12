@@ -115,14 +115,14 @@ public class JsonParser {
 				findCount = r.nextInt();
 			} else if ("HideCount".equals(name)) {
 				hideCount = r.nextInt();
-			} else if ("HomeCoordinates".equals(name)) {
-				homeCoordinates = parseHomeCoordinates(r);
+			//} else if ("HomeCoordinates".equals(name)) {
+			//	homeCoordinates = parseHomeCoordinates(r);
 			} else if ("Id".equals(name)) {
 				id = r.nextLong();
 			} else if ("IsAdmin".equals(name)) {
 				admin = r.nextBoolean();
-			} else if ("MemberType".equals(name)) {
-				memberType = parseMemberType(r);
+			//} else if ("MemberType".equals(name)) {
+			//	memberType = parseMemberType(r);
 			} else if ("PublicGuid".equals(name)) {
 				publicGuid = r.nextString();
 			} else if ("UserName".equals(name)) {

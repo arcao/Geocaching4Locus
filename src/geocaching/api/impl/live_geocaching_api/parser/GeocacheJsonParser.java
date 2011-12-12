@@ -5,6 +5,7 @@ import geocaching.api.data.CacheLog;
 import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
+import geocaching.api.data.User;
 import geocaching.api.data.WayPoint;
 import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
@@ -86,8 +87,8 @@ public class GeocacheJsonParser extends JsonParser {
 				terrainRating = (float) r.nextDouble();
 			} else if ("Owner".equals(name)) {
 				User u = parseUser(r);
-				authorGuid = u.name;
-				authorName = u.guid;
+				authorGuid = u.getPublicGuid();
+				authorName = u.getUserName();
 			} else if ("Available".equals(name)) {
 				available = r.nextBoolean();
 			} else if ("Archived".equals(name)) {

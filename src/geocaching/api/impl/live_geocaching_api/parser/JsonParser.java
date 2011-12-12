@@ -1,8 +1,10 @@
 package geocaching.api.impl.live_geocaching_api.parser;
 
+import geocaching.api.data.User;
 import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
+import geocaching.api.data.type.MemberType;
 import google.gson.stream.JsonToken;
 
 import java.io.IOException;
@@ -61,21 +63,77 @@ public class JsonParser {
 		return containerType;
 	}
 	
-	protected static User parseUser(JsonReader r) throws IOException {
-		User u = new User();
+	protected static MemberType parseMemberType(JsonReader r) throws IOException {
+		MemberType memberType = MemberType.Basic;
 		r.beginObject();
 		while(r.hasNext()) {
 			String name = r.nextName();
-			if ("UserName".equals(name)) {
-				u.name = r.nextString();
-			} else if ("PublicGuid".equals(name)) {
-				u.guid = r.nextString();
+			if ("MemberTypeId".equals(name)) {
+				memberType = MemberType.parseMemeberTypeByGroundSpeakId(r.nextInt());
 			} else {
 				r.skipValue();
 			}
 		}
 		r.endObject();
-		return u;
+		return memberType;
+	}
+	
+	protected static float[] parseHomeCoordinates(JsonReader r) throws IOException {
+		float[] coordinates = new float[2];
+		r.beginObject();
+		while(r.hasNext()) {
+			String name = r.nextName();
+			if ("Latitude".equals(name)) {
+				coordinates[0] = (float) r.nextDouble();
+			} else if ("Longitude".equals(name)) {
+				coordinates[1] = (float) r.nextDouble();
+			} else {
+				r.skipValue();
+			}
+		}
+		r.endObject();
+		return coordinates;
+	}
+	
+	protected static User parseUser(JsonReader r) throws IOException {
+		String avatarUrl = "";
+		int findCount = 0;
+		int hideCount = 0;
+		float[] homeCoordinates = new float[] { Float.NaN, Float.NaN};
+		long id = 0;
+		boolean admin = false;
+		MemberType memberType = null;
+		String publicGuid = "";
+		String userName = "";
+		
+		r.beginObject();
+		while(r.hasNext()) {
+			String name = r.nextName();
+			if ("AvatarURL".equals(name)) {
+				avatarUrl = r.nextString();
+			} else if ("FindCount".equals(name)) {
+				findCount = r.nextInt();
+			} else if ("HideCount".equals(name)) {
+				hideCount = r.nextInt();
+			} else if ("HomeCoordinates".equals(name)) {
+				homeCoordinates = parseHomeCoordinates(r);
+			} else if ("Id".equals(name)) {
+				id = r.nextLong();
+			} else if ("IsAdmin".equals(name)) {
+				admin = r.nextBoolean();
+			} else if ("MemberType".equals(name)) {
+				memberType = parseMemberType(r);
+			} else if ("PublicGuid".equals(name)) {
+				publicGuid = r.nextString();
+			} else if ("UserName".equals(name)) {
+				userName = r.nextString();
+			} else {
+				r.skipValue();
+			}
+		}
+		r.endObject();
+		
+		return new User(avatarUrl, findCount, hideCount, homeCoordinates, id, admin, memberType, publicGuid, userName);
 	}
 	
 	protected static AttributeType parseAttributte(JsonReader r) throws IOException {
@@ -110,10 +168,5 @@ public class JsonParser {
 		}
 		r.endArray();
 		return list;
-	}
-	
-	protected static class User {
-		String name;
-		String guid;
-	}
+	}	
 }

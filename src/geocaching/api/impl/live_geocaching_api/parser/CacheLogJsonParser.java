@@ -38,7 +38,7 @@ public class CacheLogJsonParser extends JsonParser {
 			} else if ("LogType".equals(name)) {
 				logType = parseLogType(r);
 			} else if ("Finder".equals(name)) {
-				author = parseUser(r).name;
+				author = parseUser(r).getUserName();
 			} else if ("LogText".equals(name)) {
 				text = r.nextString();
 			} else {

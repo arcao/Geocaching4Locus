@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
@@ -37,6 +38,9 @@ public class SimpleGeocache {
 	private final boolean found;
 
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	static {
+		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
+	}
 
 	public SimpleGeocache(String geoCode, String name, double longitude,
 			double latitude, CacheType cacheType, float difficultyRating,

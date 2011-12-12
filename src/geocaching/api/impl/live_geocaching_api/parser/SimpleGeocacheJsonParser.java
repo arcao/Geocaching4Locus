@@ -2,6 +2,7 @@ package geocaching.api.impl.live_geocaching_api.parser;
 
 import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.SimpleGeocache;
+import geocaching.api.data.User;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
 import google.gson.stream.JsonToken;
@@ -74,8 +75,8 @@ public class SimpleGeocacheJsonParser extends JsonParser {
 				terrainRating = (float) r.nextDouble();
 			} else if ("Owner".equals(name)) {
 				User u = parseUser(r);
-				authorGuid = u.name;
-				authorName = u.guid;
+				authorGuid = u.getPublicGuid();
+				authorName = u.getUserName();
 			} else if ("Available".equals(name)) {
 				available = r.nextBoolean();
 			} else if ("Archived".equals(name)) {

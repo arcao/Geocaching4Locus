@@ -50,11 +50,11 @@ public class TravelBugJsonParser extends JsonParser {
 			} else if ("IconUrl".equals(name)) {
 				travelBugTypeImage = r.nextString();
 			} else if ("OriginalOwner".equals(name)) {
-				ownerUserName = parseUser(r).name;
+				ownerUserName = parseUser(r).getUserName();
 			} else if ("CurrentGeocacheCode".equals(name)) {
 				currentCacheCode = r.nextString();
 			} else if ("CurrentOwner".equals(name)) {
-				currentHolderUserName = parseUser(r).name;
+				currentHolderUserName = parseUser(r).getUserName();
 			} else if ("Code".equals(name)) {
 				trackingNumber = r.nextString();
 			} else {

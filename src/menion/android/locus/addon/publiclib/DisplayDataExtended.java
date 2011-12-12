@@ -44,17 +44,17 @@ public class DisplayDataExtended extends DisplayData {
 			Log.w(TAG, "Locus is not installed");
 			return false;
 		}
-
+		
 		// check intent firstly
-		if (intent == null || (intent.getParcelableArrayListExtra(LocusConst.EXTRA_POINTS_DATA_ARRAY) == null &&
+		if (intent == null || (intent.getParcelableArrayListExtra(LocusConst.EXTRA_POINTS_DATA_ARRAY) == null && 
 				intent.getParcelableExtra(LocusConst.EXTRA_POINTS_DATA) == null &&
 				intent.getStringExtra(LocusConst.EXTRA_POINTS_CURSOR_URI) == null)) {
 			Log.w(TAG, "Intent 'null' or not contain any data");
 			return false;
 		}
-
+		
 		intent.putExtra(LocusConst.EXTRA_CALL_IMPORT, callImport);
-
+		
 		// create intent with right calling method
 		intent.setAction(LocusConst.INTENT_DISPLAY_DATA);
 		// finally start activity

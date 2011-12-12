@@ -3,8 +3,11 @@ package geocaching.api.impl;
 import geocaching.api.AbstractGeocachingApiV2;
 import geocaching.api.GeocachingApiProgressListener;
 import geocaching.api.data.CacheLog;
+import geocaching.api.data.ImageData;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
+import geocaching.api.data.UserProfile;
+import geocaching.api.data.type.LogType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
@@ -25,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
@@ -162,6 +166,17 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 
 	@Override
 	public List<CacheLog> getCacheLogs(String cacheCode, int startPosition, int endPosition) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
+	}
+	
+	@Override
+	public CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date dateLogged, String note, boolean publish, ImageData imageData,
+			boolean favoriteThisCache) throws GeocachingApiException {
+		throw new GeocachingApiException("Not implemented.");
+	}
+	
+	@Override
+	public UserProfile getYourUserProfile(boolean favoritePointData, boolean geocacheData, boolean publicProfileData, boolean souvenirData, boolean trackableData) throws GeocachingApiException {
 		throw new GeocachingApiException("Not implemented.");
 	}
 	

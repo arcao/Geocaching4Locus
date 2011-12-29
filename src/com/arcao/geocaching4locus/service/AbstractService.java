@@ -16,8 +16,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
@@ -27,13 +32,13 @@ public abstract class AbstractService extends IntentService {
 	
 	public static final String ACTION_PROGRESS_UPDATE = "com.arcao.geocaching4locus.intent.action.PROGRESS_UPDATE";
 	public static final String ACTION_PROGRESS_COMPLETE = "com.arcao.geocaching4locus.intent.action.PROGRESS_COMPLETE";
-	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
+	public static final String ACTION_ERROR = ErrorActivity.ACTION_ERROR;
 	
 	public static final String PARAM_COUNT = "COUNT";
 	public static final String PARAM_CURRENT = "CURRENT";
-	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
-	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
-	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
+	public static final String PARAM_RESOURCE_ID = ErrorActivity.PARAM_RESOURCE_ID;
+	public static final String PARAM_ADDITIONAL_MESSAGE = ErrorActivity.PARAM_ADDITIONAL_MESSAGE;
+	public static final String PARAM_OPEN_PREFERENCE = ErrorActivity.PARAM_OPEN_PREFERENCE;
 
 	private boolean canceled;
 	
@@ -77,6 +82,9 @@ public abstract class AbstractService extends IntentService {
 	}
 
 	protected Notification createProgressNotification() {
+		// extract colors and text sizes for notification
+		extractColors();
+		
 		Notification n = new Notification();
 		
 		n.icon = R.drawable.ic_launcher;
@@ -84,6 +92,12 @@ public abstract class AbstractService extends IntentService {
 		n.flags |= Notification.FLAG_ONGOING_EVENT;				
 		n.contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
 		n.contentView.setTextViewText(R.id.progress_title, getText(actionTextId));
+		
+		// correct size and color
+		n.contentView.setTextColor(R.id.progress_title, notification_title_color);
+		n.contentView.setFloat(R.id.progress_title, "setTextSize", notification_title_size);
+		
+		n.contentView.setTextColor(R.id.progress_text, notification_text_color);
 		
 		Intent intent = createOngoingEventIntent();
 		if (intent != null)
@@ -272,4 +286,72 @@ public abstract class AbstractService extends IntentService {
         Log.w(TAG, "Unable to invoke method", e);
     }
 	}
+	
+	// --------------------- Methods to get right color and text size for title and text for notification ------------------
+	protected Integer notification_title_color = null;
+	protected float notification_title_size = 11;
+	protected Integer notification_text_color = null;
+	protected float notification_text_size = 11;
+	private final String COLOR_SEARCH_RECURSE_TITLE_TIP = "SOME_SAMPLE_TITLE";
+	private final String COLOR_SEARCH_RECURSE_TEXT_TIP = "SOME_SAMPLE_TEXT";
+
+	protected boolean recurseGroup(ViewGroup gp) {
+		final int count = gp.getChildCount();
+
+		for (int i = 0; i < count; ++i) {
+			if (gp.getChildAt(i) instanceof TextView) {
+				final TextView text = (TextView) gp.getChildAt(i);
+				final String szText = text.getText().toString();
+
+				if (COLOR_SEARCH_RECURSE_TITLE_TIP.equals(szText)) {
+					notification_title_color = text.getTextColors().getDefaultColor();
+					notification_title_size = text.getTextSize();
+					DisplayMetrics metrics = new DisplayMetrics();
+					WindowManager systemWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+					systemWM.getDefaultDisplay().getMetrics(metrics);
+					notification_title_size /= metrics.scaledDensity;
+
+					if (notification_title_color != null && notification_text_color != null)
+						return true;
+
+				} else if (COLOR_SEARCH_RECURSE_TEXT_TIP.equals(szText)) {
+					notification_text_color = text.getTextColors().getDefaultColor();
+					notification_text_size = text.getTextSize();
+					DisplayMetrics metrics = new DisplayMetrics();
+					WindowManager systemWM = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+					systemWM.getDefaultDisplay().getMetrics(metrics);
+					notification_text_size /= metrics.scaledDensity;
+
+					if (notification_title_color != null && notification_text_color != null)
+						return true;
+				}
+			} else if (gp.getChildAt(i) instanceof ViewGroup) {
+				if (recurseGroup((ViewGroup) gp.getChildAt(i)))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	protected void extractColors() {
+		if (notification_title_color != null && notification_text_color != null)
+			return;
+
+		try {
+			Notification ntf = new Notification();
+			ntf.setLatestEventInfo(this, COLOR_SEARCH_RECURSE_TITLE_TIP, COLOR_SEARCH_RECURSE_TEXT_TIP, null);
+			LinearLayout group = new LinearLayout(this);
+			ViewGroup event = (ViewGroup) ntf.contentView.apply(this, group);
+			recurseGroup(event);
+			group.removeAllViews();
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
+		
+		if (notification_title_color == null)
+			notification_title_color = android.R.color.black;
+		if (notification_text_color == null)
+			notification_text_color = android.R.color.black;
+	}
+
 }

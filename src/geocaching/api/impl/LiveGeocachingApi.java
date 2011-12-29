@@ -45,8 +45,8 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 	private static final String CONSUMER_KEY = "90C7F340-7998-477D-B4D3-AC48A9A0F560";
 	private static final String LICENCE_KEY = "40940392-0C8E-487B-BC40-EA250D6D9AE0";
 	
-	//private static final String BASE_URL = "https://api.groundspeak.com/LiveV2/geocaching.svc/";
-	private static final String BASE_URL = "https://staging.api.groundspeak.com/GreenesGang/Geocaching.svc/";
+	private static final String BASE_URL = "https://api.groundspeak.com/LiveV5/geocaching.svc/";
+	//private static final String BASE_URL = "https://staging.api.groundspeak.com/GreenesGang/Geocaching.svc/";
 
 	@Override
 	public void openSession(String userName, String password) throws GeocachingApiException {
@@ -102,7 +102,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 	}
 	
 	@Override
-	public List<SimpleGeocache> searchForGeocachesJSON(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount,
+	public List<SimpleGeocache> searchForGeocaches(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount,
 			CacheFilter[] filters) throws GeocachingApiException {
 		
 		List<SimpleGeocache> list = new ArrayList<SimpleGeocache>();
@@ -129,7 +129,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 			w.endObject();
 			w.close();
 			
-			JsonReader r = callPost("SearchForGeocachesJSON?format=json", sw.toString());
+			JsonReader r = callPost("SearchForGeocaches?format=json", sw.toString());
 			r.beginObject();
 			checkError(r);
 			

@@ -50,4 +50,19 @@
     <string name="pref_show_own_summary">Show own caches (hidden by you)</string>
     <string name="pref_menu_select_all">Select all</string>
     <string name="pref_menu_deselect_all">Deselect all</string>
+    
+    <string name="locus_update_cache">Update cache</string>
+    <string name="update_cache_progress">Updating cache...</string>
+    
+    <string name="pref_title_downloading">Downloading</string>
+    <string name="pref_count_of_logs">Count of logs</string>
+    <string name="pref_count_of_logs_text">logs</string>
+    <string name="pref_count_of_logs_summary">Count of logs to download with cache</string>
+    <string name="pref_count_of_trackables">Count of trackables</string>
+    <string name="pref_count_of_trackables_text">trackables</string>
+    <string name="pref_count_of_trackables_summary">Count of trackables to download with cache</string>
+    <string name="pref_download_all_cache_data_on_displaying">Download all cache data on displaying</string>
+    <string name="pref_download_all_cache_data_on_displaying_summary">If cache has simple data only the full cache data will be loaded when user open a cache dialog</string>   
+    <string name="pref_not_filled">not filled</string>
+    <string name="gps">GPS</string>
 </resources>

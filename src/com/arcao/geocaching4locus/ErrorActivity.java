@@ -9,23 +9,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 
-import com.arcao.geocaching4locus.service.SearchGeocacheService;
-
 public class ErrorActivity extends Activity {
+	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
+	
+	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
+	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
+	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		
-		if (SearchGeocacheService.ACTION_ERROR.equals(getIntent().getAction())) {
-			int resId = getIntent().getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0);
-			String additionalMessage = getIntent().getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE);
-			final boolean openPreference = getIntent().getBooleanExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, false);
+		if (ACTION_ERROR.equals(getIntent().getAction())) {
+			int resId = getIntent().getIntExtra(PARAM_RESOURCE_ID, 0);
+			String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
+			final boolean openPreference = getIntent().getBooleanExtra(PARAM_OPEN_PREFERENCE, false);
 			
 			showError(resId, additionalMessage, new DialogInterface.OnClickListener() {
 				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					if (openPreference)
-						startActivity(new Intent(ErrorActivity.this, PreferenceActivity.class));
+				public void onClick(DialogInterface dialog, int which) {			
+					dialog.dismiss();
+					
+					if (openPreference) {
+						Intent intent = new Intent(ErrorActivity.this, PreferenceActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+						startActivity(intent);
+					}
 					ErrorActivity.this.finish();
 				}
 			});

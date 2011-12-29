@@ -20,12 +20,14 @@ public class JsonParser {
 	private static final String TAG = "Geocaching4Locus|ParserUtil";
 	
 	public static Date parseJsonDate(String date) {
-		Pattern DATE_PATTERN = Pattern.compile("/Date\\((.*)([-+].{4})\\)/");
+		Pattern DATE_PATTERN = Pattern.compile("/Date\\((\\d+)([-+]\\d{4})?\\)/");
 
 		Matcher m = DATE_PATTERN.matcher(date);
 		if (m.matches()) {
 			long time = Long.parseLong(m.group(1));
-			long zone = Integer.parseInt(m.group(2)) / 100 * 1000 * 60 * 60;
+			long zone = 0;
+			if (m.group(2) != null && m.group(2).length() > 0)
+				zone = Integer.parseInt(m.group(2)) / 100 * 1000 * 60 * 60;
 			return new Date(time + zone);
 		}
 
@@ -65,6 +67,11 @@ public class JsonParser {
 	
 	protected static MemberType parseMemberType(JsonReader r) throws IOException {
 		MemberType memberType = MemberType.Basic;
+		if (r.peek() == JsonToken.NULL) {
+			r.nextNull();
+			return memberType;
+		}
+		
 		r.beginObject();
 		while(r.hasNext()) {
 			String name = r.nextName();
@@ -80,6 +87,11 @@ public class JsonParser {
 	
 	protected static float[] parseHomeCoordinates(JsonReader r) throws IOException {
 		float[] coordinates = new float[2];
+		if (r.peek() == JsonToken.NULL) {
+			r.nextNull();
+			return new float[] { Float.NaN, Float.NaN};
+		}
+		
 		r.beginObject();
 		while(r.hasNext()) {
 			String name = r.nextName();
@@ -115,14 +127,14 @@ public class JsonParser {
 				findCount = r.nextInt();
 			} else if ("HideCount".equals(name)) {
 				hideCount = r.nextInt();
-			//} else if ("HomeCoordinates".equals(name)) {
-			//	homeCoordinates = parseHomeCoordinates(r);
+			} else if ("HomeCoordinates".equals(name)) {
+				homeCoordinates = parseHomeCoordinates(r);
 			} else if ("Id".equals(name)) {
 				id = r.nextLong();
 			} else if ("IsAdmin".equals(name)) {
 				admin = r.nextBoolean();
-			//} else if ("MemberType".equals(name)) {
-			//	memberType = parseMemberType(r);
+			} else if ("MemberType".equals(name)) {
+				memberType = parseMemberType(r);
 			} else if ("PublicGuid".equals(name)) {
 				publicGuid = r.nextString();
 			} else if ("UserName".equals(name)) {

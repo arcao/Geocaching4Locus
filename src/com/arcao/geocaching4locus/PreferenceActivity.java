@@ -54,7 +54,13 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		boolean imperialUnits = prefs.getBoolean("imperial_units", false);
 		
-		if ("filter_distance".equals(key) && !imperialUnits) {
+		if ("username".equals(key)) {
+			final EditTextPreference p = findPreference(key, EditTextPreference.class);  
+			p.setSummary(prepareRequiredPreferenceSummary(p.getText(), 0, true));
+		} else if ("password".equals(key)) {
+			final EditTextPreference p = findPreference(key, EditTextPreference.class);  
+			p.setSummary(prepareRequiredPreferenceSummary(p.getText(), 0, false));
+		} else if ("filter_distance".equals(key) && !imperialUnits) {
 			final EditTextPreference p = findPreference(key, EditTextPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getText() + UNIT_KM, R.string.pref_distance_summary_km));
 		} else if ("filter_distance".equals(key) && imperialUnits) {
@@ -63,6 +69,12 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		} else if ("filter_count_of_caches".equals(key)) {
 			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
 			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_caches_summary));
+		} else if ("downloading_count_of_logs".equals(key)) {
+			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
+			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_logs_summary));
+		} else if ("downloading_count_of_trackables".equals(key)) {
+			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
+			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_trackables_summary));
 		}
 	}
 	
@@ -108,6 +120,18 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		
 		SeekBarPreference filterCountOfCachesPreference = findPreference("filter_count_of_caches", SeekBarPreference.class);
 		filterCountOfCachesPreference.setSummary(preparePreferenceSummary(String.valueOf(filterCountOfCachesPreference.getProgress()), R.string.pref_count_of_caches_summary));		
+		
+		SeekBarPreference downloadingCountOfLogsPreference = findPreference("downloading_count_of_logs", SeekBarPreference.class);
+		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()), R.string.pref_count_of_logs_summary));
+		
+		SeekBarPreference downloadingCountOfTrackablesPreference = findPreference("downloading_count_of_trackables", SeekBarPreference.class);
+		downloadingCountOfTrackablesPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfTrackablesPreference.getProgress()), R.string.pref_count_of_trackables_summary));
+		
+		EditTextPreference usernamePreference = findPreference("username", EditTextPreference.class);
+		usernamePreference.setSummary(prepareRequiredPreferenceSummary(usernamePreference.getText(), 0, true));
+		
+		EditTextPreference passwordPreference = findPreference("password", EditTextPreference.class);
+		passwordPreference.setSummary(prepareRequiredPreferenceSummary(passwordPreference.getText(), 0, false));
 	}
 	
 	@Override
@@ -137,9 +161,25 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	}
 	
 	protected Spanned preparePreferenceSummary(String value, int resId) {
+		String summary = "";
+		if (resId != 0)
+			summary = getText(resId).toString();
+		
     if (value != null && value.length() > 0) 
-    	return Html.fromHtml("<font color=\"#FF8000\"><b>(" + value + ")</b></font> " + getText(resId).toString());
-    return Html.fromHtml(getText(resId).toString());
+    	return Html.fromHtml("<font color=\"#FF8000\"><b>(" + value + ")</b></font> " + summary);
+    return Html.fromHtml(summary);
+  }
+	
+	protected Spanned prepareRequiredPreferenceSummary(String value, int resId, boolean addValue) {
+		String summary = "";
+		if (resId != 0)
+			summary = getText(resId).toString();
+
+		if (value == null || value.length() == 0)
+			return Html.fromHtml("<font color=\"#FF0000\"><b>(" + getText(R.string.pref_not_filled) + ")</b></font> " + summary);
+		if (addValue)
+			return preparePreferenceSummary(value, resId);
+		return Html.fromHtml(summary);
   }
 	
 	@SuppressWarnings("unchecked")

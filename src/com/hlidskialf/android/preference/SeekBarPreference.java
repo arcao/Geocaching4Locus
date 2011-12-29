@@ -104,11 +104,11 @@ public class SeekBarPreference extends DialogPreference implements
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
-			int value = mSeekBar.getProgress();
+			mValue = mSeekBar.getProgress();
 
 			if (shouldPersist())
-				persistInt(value);
-			callChangeListener(new Integer(value));
+				persistInt(mValue);
+			callChangeListener(new Integer(mValue));
 		}
 		super.onClick(dialog, which);
 	}

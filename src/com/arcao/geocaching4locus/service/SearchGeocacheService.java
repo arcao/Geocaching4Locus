@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Vector;
 
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
+import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +28,7 @@ import android.util.Log;
 
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 
@@ -47,12 +49,13 @@ public class SearchGeocacheService extends AbstractService {
 	private boolean showFound;
 	private boolean showOwn;
 	private boolean simpleCacheData;
+	private boolean downloadAllCacheDataOnDisplaying;
 	private double distance;
-
 	private boolean importCaches;
-
+	private int logCount;
+	private int trackableCount;
 	private CacheType[] cacheTypes;
-		
+
 	public SearchGeocacheService() {
 		super(TAG, R.string.downloading, R.string.downloading);		
 	}
@@ -85,6 +88,7 @@ public class SearchGeocacheService extends AbstractService {
 		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 		
+		sendProgressUpdate();
 		List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
 		sendProgressComplete(count);
 		if (caches != null)
@@ -96,6 +100,7 @@ public class SearchGeocacheService extends AbstractService {
 		showFound = prefs.getBoolean("filter_show_found", false);
 		showOwn = prefs.getBoolean("filter_show_own", false);
 		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
+		downloadAllCacheDataOnDisplaying = prefs.getBoolean("download_all_cache_data_on_displaying", false);
 		
 		distance = prefs.getFloat("distance", 160.9344F);
 		if (prefs.getBoolean("imperial_units", false)) {
@@ -104,6 +109,9 @@ public class SearchGeocacheService extends AbstractService {
 
 		current = 0;
 		count = prefs.getInt("filter_count_of_caches", 20);
+		
+		logCount = prefs.getInt("downloading_count_of_logs", 5);
+		trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String userName = prefs.getString("username", "");
@@ -130,7 +138,14 @@ public class SearchGeocacheService extends AbstractService {
 					points = new PointsData("Geocaching");
 				}
 				// convert SimpleGeocache to Point
-				points.addPoint(cache.toPoint());
+				Point p = cache.toPoint();
+				p.setExtraCallback(getResources().getString(R.string.locus_update_cache), "com.arcao.geocaching4locus", UpdateActivity.class.getName(), "cacheId", cache.getGeoCode());
+
+				if (simpleCacheData) {
+					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getGeoCode());
+				}
+				
+				points.addPoint(p);
 			}
 			
 			if (!points.getPoints().isEmpty())
@@ -177,7 +192,7 @@ public class SearchGeocacheService extends AbstractService {
 			while (current < count) {
 				int perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
 				
-				List<SimpleGeocache> cachesToAdd = api.searchForGeocachesJSON(simpleCacheData, current, perPage, -1, -1, new CacheFilter[] {
+				List<SimpleGeocache> cachesToAdd = api.searchForGeocaches(simpleCacheData, current, perPage, logCount, trackableCount, new CacheFilter[] {
 						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 						new GeocacheTypeFilter(cacheTypes),
 						new GeocacheExclusionsFilter(false, true, null),

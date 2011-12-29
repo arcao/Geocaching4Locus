@@ -68,6 +68,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		super.onCreate(savedInstanceState);
 		res = getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		hasCoordinates = false;
+		locusInstalled = true;
 				
 		Version locusVersion = Version.parseVersion(LocusUtils.getLocusVersion(this));
 		Log.i(TAG, "Locus version: " + locusVersion);
@@ -107,7 +109,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	
 	@Override
 	public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter) {
-		Location l = gpsEnabled ? locGps : locMapCenter;
+		Location l = locMapCenter;
 		latitude = l.getLatitude();
 		longitude = l.getLongitude();
 
@@ -471,6 +473,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 				errorIntent.putExtra(SearchGeocacheService.PARAM_RESOURCE_ID, intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0));
 				errorIntent.putExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
 				errorIntent.putExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, false));
+				errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 				MainActivity.this.startActivity(errorIntent);
 			}
 		}		

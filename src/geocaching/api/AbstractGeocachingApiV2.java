@@ -27,7 +27,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	@Deprecated
 	public List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles,
 			CacheType[] cacheTypes) throws GeocachingApiException {
-		return searchForGeocachesJSON(true, startPosition, endPosition - startPosition + 1, 5, -1, new CacheFilter[] { 
+		return searchForGeocaches(true, startPosition, endPosition - startPosition + 1, 5, -1, new CacheFilter[] { 
 				new PointRadiusFilter(latitude, longitude, (long) (radiusMiles * 1609L)),
 				new GeocacheTypeFilter(cacheTypes)
 		});
@@ -50,7 +50,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	}
 	
 	public List<SimpleGeocache> getCaches(String[] cacheCodes, boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount) throws GeocachingApiException {
-		return searchForGeocachesJSON(isLite, startIndex, maxPerPage, geocacheLogCount, trackableLogCount, new CacheFilter[] {new CacheCodeFilter(cacheCodes)});
+		return searchForGeocaches(isLite, startIndex, maxPerPage, geocacheLogCount, trackableLogCount, new CacheFilter[] {new CacheCodeFilter(cacheCodes)});
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 		return null;
 	}
 	
-	public abstract List<SimpleGeocache> searchForGeocachesJSON(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
+	public abstract List<SimpleGeocache> searchForGeocaches(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
 	
 	public abstract UserProfile getYourUserProfile(boolean favoritePointData, boolean geocacheData, boolean publicProfileData, boolean souvenirData, boolean trackableData) throws GeocachingApiException;
 	public abstract CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date dateLogged, String note, boolean publish, ImageData imageData, boolean favoriteThisCache) throws GeocachingApiException;

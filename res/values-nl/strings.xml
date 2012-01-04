@@ -55,7 +55,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_download_all_cache_data_on_displaying_summary">Als cache eenvoudige data heeft wordt de volledige cache data enkel geladen als de gebruiker een cache venster opent</string>
 	<string name="pref_not_filled">niet gevuld</string>
 	<string name="gps">GPS</string>
-	<string name="close">Close</string>
-	<string name="pref_show_disabled">Show disabled</string>
-	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
+	<string name="close">Sluit</string>
+	<string name="pref_show_disabled">Toon uitgeschakelde</string>
+	<string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
 </resources>

@@ -48,8 +48,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	private Resources res;
 	private LocationManager locationManager;
 
-	private double latitude;
-	private double longitude;
+	private double latitude = Double.NaN;
+	private double longitude = Double.NaN;
 	private boolean hasCoordinates = false;
 	private ProgressDialog pd;
 
@@ -261,6 +261,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	}
 	
 	protected void download() {	
+		Log.i(TAG, "Lat: " + latitudeEditText.getText().toString() + "; Lon: " + longitudeEditText.getText().toString());
+		
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
 		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
 

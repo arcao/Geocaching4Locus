@@ -26,7 +26,7 @@
 	<string name="pref_title_advanced">Haladó</string>
 	<string name="pref_use_compression">Tömörítés használata</string>
 	<string name="pref_use_compression_summary">HTTP tömörítés használata (haladó)</string>
-	<string name="pref_imperial_units">Imperial units</string>
+	<string name="pref_imperial_units">Angolszász mértékegység</string>
 	<string name="pref_imperial_units_summary">Mérföld használata km helyett</string>
 	<string name="download_simple_cache_data">Csak alap geoláda adatok</string>
 	<string name="import_caches">Geoládák importálása</string>
@@ -41,4 +41,20 @@
 	<string name="pref_show_own_summary">A saját ládák mutatása. (Saját rejtés)</string>
 	<string name="pref_menu_select_all">Minden kijelölése.</string>
 	<string name="pref_menu_deselect_all">A kijelölések törlése.</string>
+	<string name="locus_update_cache">Cache frissítése</string>
+	<string name="update_cache_progress">Cache frissítése...</string>
+	<string name="pref_title_downloading">Letöltés</string>
+	<string name="pref_count_of_logs">Logok száma</string>
+	<string name="pref_count_of_logs_text">logok</string>
+	<string name="pref_count_of_logs_summary">A ládával együtt letöltendő logok száma.</string>
+	<string name="pref_count_of_trackables">TravelBug-ok száma</string>
+	<string name="pref_count_of_trackables_text">TravelBug-ok</string>
+	<string name="pref_count_of_trackables_summary">A ládával együtt letöltendő TravelBug-ok száma</string>
+	<string name="pref_download_all_cache_data_on_displaying">Megjelenítéskor az összes ládaadat letöltése</string>
+	<string name="pref_download_all_cache_data_on_displaying_summary">Ha csak az alap ládaadatok vannak tárolva, a láda-ablak megnyitásakor betöltődik az összes adat.</string>
+	<string name="pref_not_filled">nincs kitöltve</string>
+	<string name="gps">GPS</string>
+	<string name="close">Close</string>
+	<string name="pref_show_disabled">Show disabled</string>
+	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
 </resources>

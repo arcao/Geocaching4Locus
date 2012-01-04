@@ -16,11 +16,6 @@
         <!-- <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item> -->
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
-    <style name="SeparatorVertical">
-        <item name="android:background">@color/title_separator</item>
-        <item name="android:layout_width">1.0px</item>
-        <item name="android:layout_height">fill_parent</item>
-    </style>
     <style name="SimpleEditText" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -73,5 +68,27 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
+    </style>
+    <style name="TitleBarButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/selector_button</item>
+        <item name="android:layout_width">@dimen/title_height</item>
+        <item name="android:layout_height">@dimen/title_height</item>
+    </style>
+    <style name="TitleBarTitle">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">5.0dip</item>
+        <item name="android:paddingRight">5.0dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+    <style name="TitleBarSeparator">
+        <item name="android:background">@color/title_separator</item>
+        <item name="android:layout_width">1.0px</item>
+        <item name="android:layout_height">fill_parent</item>
     </style>
 </resources>

@@ -41,4 +41,20 @@
 	<string name="pref_show_own_summary">Zobrazit vlastní keše</string>
 	<string name="pref_menu_select_all">Označit vše</string>
 	<string name="pref_menu_deselect_all">Odznačit vše</string>
+	<string name="locus_update_cache">Aktualizovat keš</string>
+	<string name="update_cache_progress">Aktualizuji keš...</string>
+	<string name="pref_title_downloading">Stahování</string>
+	<string name="pref_count_of_logs">Počet logů</string>
+	<string name="pref_count_of_logs_text">logů</string>
+	<string name="pref_count_of_logs_summary">Počet logů, které se mají stáhnout s keší</string>
+	<string name="pref_count_of_trackables">Počet trasovatelných předmětů</string>
+	<string name="pref_count_of_trackables_text">trasovatelných předmětů</string>
+	<string name="pref_count_of_trackables_summary">Počet trasovatelných předmětů, které se mají stáhnout s keší</string>
+	<string name="pref_download_all_cache_data_on_displaying">Stáhnout všechny informace o keši při zobrazení</string>
+	<string name="pref_download_all_cache_data_on_displaying_summary">Pokud keš obsahuje pouze základní informace, zbylé informace budou staženy před zobrazením dialogu o keši</string>
+	<string name="pref_not_filled">nevyplněno</string>
+	<string name="gps">GPS</string>
+	<string name="close">Zavřít</string>
+	<string name="pref_show_disabled">Zobrazit nedostupné</string>
+	<string name="pref_show_disabled_summary">Zobrazit dočasně nedostupné (disablované) keše</string>
 </resources>

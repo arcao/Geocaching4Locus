@@ -36,7 +36,7 @@ public class UpdateActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean downloadAllCacheDataOnDisplaying = prefs.getBoolean("download_all_cache_data_on_displaying", true);
+		boolean downloadAllCacheDataOnDisplaying = prefs.getBoolean("download_all_cache_data_on_displaying", false);
 		String cacheId = null;
 		
 		if (getIntent().hasExtra("cacheId")) {
@@ -156,6 +156,9 @@ public class UpdateActivity extends Activity {
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			
+			if (isCancelled())
+				return;
+			
 			Log.e(TAG, e.getMessage(), e);
 			
 			Intent intent;
@@ -210,7 +213,7 @@ public class UpdateActivity extends Activity {
 			edit.putString("session", session);
 			edit.commit();
 		}
-		
+
 		protected void removeSession() {
 			Editor edit = prefs.edit();
 			edit.remove("session");

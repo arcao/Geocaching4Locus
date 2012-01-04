@@ -42,4 +42,20 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_show_own_summary">Toon eigen caches (verborgen door jou)</string>
 	<string name="pref_menu_select_all">Alles selecteren</string>
 	<string name="pref_menu_deselect_all">Niets selecteren</string>
+	<string name="locus_update_cache">Update cache</string>
+	<string name="update_cache_progress">Bezig met updaten van cache...</string>
+	<string name="pref_title_downloading">Bezig met downloaden</string>
+	<string name="pref_count_of_logs">Aantal logs</string>
+	<string name="pref_count_of_logs_text">logs</string>
+	<string name="pref_count_of_logs_summary">Aantal logs om te downloaden met cache</string>
+	<string name="pref_count_of_trackables">Aantal trackables</string>
+	<string name="pref_count_of_trackables_text">trackables</string>
+	<string name="pref_count_of_trackables_summary">Aantal trackables om te downloaden met cache</string>
+	<string name="pref_download_all_cache_data_on_displaying">Download alle cache data bij weergeven</string>
+	<string name="pref_download_all_cache_data_on_displaying_summary">Als cache eenvoudige data heeft wordt de volledige cache data enkel geladen als de gebruiker een cache venster opent</string>
+	<string name="pref_not_filled">niet gevuld</string>
+	<string name="gps">GPS</string>
+	<string name="close">Close</string>
+	<string name="pref_show_disabled">Show disabled</string>
+	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
 </resources>

@@ -2,12 +2,12 @@
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Při stahování keší došlo k chybě.&lt;br&gt;Popis: %1$s</string>
-	<string name="downloading">Stahuji keše...</string>
+	<string name="downloading">Stahuji keše…</string>
 	<string name="downloading_cache">Stahuji keš (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
 	<string name="search_activity_name">Nejbližší keše</string>
 	<string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
-	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS...</string>
+	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
 	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
 	<string name="preferences">Nastavení</string>
 	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
@@ -42,7 +42,7 @@
 	<string name="pref_menu_select_all">Označit vše</string>
 	<string name="pref_menu_deselect_all">Odznačit vše</string>
 	<string name="locus_update_cache">Aktualizovat keš</string>
-	<string name="update_cache_progress">Aktualizuji keš...</string>
+	<string name="update_cache_progress">Aktualizuji keš…</string>
 	<string name="pref_title_downloading">Stahování</string>
 	<string name="pref_count_of_logs">Počet logů</string>
 	<string name="pref_count_of_logs_text">logů</string>
@@ -57,4 +57,6 @@
 	<string name="close">Zavřít</string>
 	<string name="pref_show_disabled">Zobrazit nedostupné</string>
 	<string name="pref_show_disabled_summary">Zobrazit dočasně nedostupné (disablované) keše</string>
+	<string name="locus_import_cache">Importovat do Locusu</string>
+	<string name="import_cache_progress">Stahuji keš…</string>
 </resources>

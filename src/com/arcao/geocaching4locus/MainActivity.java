@@ -2,11 +2,7 @@ package com.arcao.geocaching4locus;
 
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.LocusIntents.OnIntentMainFunction;
-import menion.android.locus.addon.publiclib.LocusUtils;
 import menion.android.locus.addon.publiclib.geoData.Point;
-
-import org.osgi.framework.Version;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -22,7 +18,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -39,12 +34,11 @@ import android.widget.Toast;
 
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.util.Coordinates;
+import com.arcao.geocaching4locus.util.LocusTesting;
 
 public class MainActivity extends Activity implements LocationListener, OnIntentMainFunction {
 	private static final String TAG = "Geocaching4Locus|MainActivity";
 	
-	private static final Version LOCUS_MIN_VERSION = Version.parseVersion("1.14.6.6");
-
 	private Resources res;
 	private LocationManager locationManager;
 
@@ -69,22 +63,12 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		res = getResources();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		hasCoordinates = false;
+
 		locusInstalled = true;
-				
-		Version locusVersion = Version.parseVersion(LocusUtils.getLocusVersion(this));
-		Log.i(TAG, "Locus version: " + locusVersion);
 		
-		if (locusVersion.compareTo(LOCUS_MIN_VERSION) < 0) {
+		if (!LocusTesting.isLocusInstalled(this)) {
 			locusInstalled = false;
-			showError(locusVersion == Version.emptyVersion ? R.string.error_locus_not_found : R.string.error_locus_old, LOCUS_MIN_VERSION.toString(), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Uri localUri = Uri.parse("https://market.android.com/details?id=" + LocusUtils.getLocusDefaultPackageName(MainActivity.this));
-					Intent localIntent = new Intent("android.intent.action.VIEW", localUri);
-					startActivity(localIntent);
-					finish();
-				}
-			});
+			LocusTesting.showLocusMissingError(this);
 			return;
 		}
 

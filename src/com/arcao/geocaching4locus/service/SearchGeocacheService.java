@@ -141,9 +141,7 @@ public class SearchGeocacheService extends AbstractService {
 				}
 				// convert SimpleGeocache to Point
 				Point p = cache.toPoint();
-				p.setExtraCallback(getResources().getString(R.string.locus_update_cache), "com.arcao.geocaching4locus", UpdateActivity.class.getName(), "cacheId",
-						cache.getGeoCode());
-
+				
 				if (simpleCacheData) {
 					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getGeoCode());
 				}

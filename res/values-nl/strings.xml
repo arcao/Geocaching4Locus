@@ -2,14 +2,14 @@
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Er is een fout opgetreden bij het downloaden van de caches.&lt;br&gt;Omschrijving: %1$s</string>
-	<string name="downloading">Bezig met downloaden van caches...</string>
+	<string name="downloading">Bezig met downloaden van caches…</string>
 	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Gelieve Locus te installeren!</string>
 	<string name="search_activity_name">Caches dichtbij</string>
 	<string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
 Gelieve het in te schakelen in Android instellingen.</string>
-	<string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS...</string>
-	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk...</string>
+	<string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
+	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
 	<string name="preferences">Voorkeuren</string>
 	<string name="wrong_coordinates">Foutief coördinaten formaat!</string>
 	<string name="search_and_import_button">Zoek en toon in Locus</string>
@@ -43,7 +43,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_menu_select_all">Alles selecteren</string>
 	<string name="pref_menu_deselect_all">Niets selecteren</string>
 	<string name="locus_update_cache">Update cache</string>
-	<string name="update_cache_progress">Bezig met updaten van cache...</string>
+	<string name="update_cache_progress">Bezig met updaten van cache…</string>
 	<string name="pref_title_downloading">Bezig met downloaden</string>
 	<string name="pref_count_of_logs">Aantal logs</string>
 	<string name="pref_count_of_logs_text">logs</string>
@@ -58,4 +58,6 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="close">Sluit</string>
 	<string name="pref_show_disabled">Toon uitgeschakelde</string>
 	<string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
+	<string name="locus_import_cache">Importeren naar Locus</string>
+	<string name="import_cache_progress">Bezig met downloaden van cache…</string>
 </resources>

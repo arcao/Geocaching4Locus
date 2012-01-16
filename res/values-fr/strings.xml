@@ -42,7 +42,7 @@
 	<string name="pref_menu_select_all">Tous les sélectionner</string>
 	<string name="pref_menu_deselect_all">Tout désélectionner</string>
 	<string name="locus_update_cache">Update cache</string>
-	<string name="update_cache_progress">Updating cache...</string>
+	<string name="update_cache_progress">Updating cache…</string>
 	<string name="pref_title_downloading">Downloading</string>
 	<string name="pref_count_of_logs">Count of logs</string>
 	<string name="pref_count_of_logs_text">logs</string>
@@ -57,4 +57,6 @@
 	<string name="close">Close</string>
 	<string name="pref_show_disabled">Show disabled</string>
 	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
+	<string name="locus_import_cache">Import to Locus</string>
+	<string name="import_cache_progress">Téléchargement des caches...</string>
 </resources>

@@ -2,13 +2,13 @@
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Hiba történt a geoládák letöltése során. &lt;br&gt;Leírás: %1$s</string>
-	<string name="downloading">Geoládák letöltése</string>
+	<string name="downloading">Geoládák letöltése…</string>
 	<string name="downloading_cache">Geoláda letöltése (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Kérem, telepítse a Locus-t!</string>
 	<string name="search_activity_name">Közeli ládák</string>
 	<string name="error_location">A hálózat alapú helyzetmeghatározás nem engedélyezett! Kérem engedélyezze az Android beállításainál.</string>
-	<string name="acquiring_gps_location">Pozició meghatározása GPS-ről</string>
-	<string name="acquiring_network_location">Pozíció meghatározása hálózatról</string>
+	<string name="acquiring_gps_location">Pozició meghatározása GPS-ről…</string>
+	<string name="acquiring_network_location">Pozíció meghatározása hálózatról…</string>
 	<string name="preferences">Beállítások</string>
 	<string name="wrong_coordinates">Hibás koordináta formátum</string>
 	<string name="search_and_import_button">Keresés és megjelenítés a Locusban</string>
@@ -42,7 +42,7 @@
 	<string name="pref_menu_select_all">Minden kijelölése.</string>
 	<string name="pref_menu_deselect_all">A kijelölések törlése.</string>
 	<string name="locus_update_cache">Cache frissítése</string>
-	<string name="update_cache_progress">Cache frissítése...</string>
+	<string name="update_cache_progress">Cache frissítése…</string>
 	<string name="pref_title_downloading">Letöltés</string>
 	<string name="pref_count_of_logs">Logok száma</string>
 	<string name="pref_count_of_logs_text">logok</string>
@@ -54,7 +54,9 @@
 	<string name="pref_download_all_cache_data_on_displaying_summary">Ha csak az alap ládaadatok vannak tárolva, a láda-ablak megnyitásakor betöltődik az összes adat.</string>
 	<string name="pref_not_filled">nincs kitöltve</string>
 	<string name="gps">GPS</string>
-	<string name="close">Close</string>
-	<string name="pref_show_disabled">Show disabled</string>
-	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
+	<string name="close">Bezárás</string>
+	<string name="pref_show_disabled">Letiltottak mutatása</string>
+	<string name="pref_show_disabled_summary">Átmenetileg letiltott ládák mutatása</string>
+	<string name="locus_import_cache">Import a Locus</string>
+	<string name="import_cache_progress">Geoláda letöltése…</string>
 </resources>

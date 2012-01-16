@@ -10,9 +10,11 @@ import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.impl.LiveGeocachingApi;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import menion.android.locus.addon.publiclib.LocusConst;
-import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.DisplayData;
+import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -25,43 +27,45 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
 
-public class UpdateActivity extends Activity {
-	private final static String TAG = "Geocaching4Locus|UpdateActivity";
-	private UpdateTask task = null;
+public class ImportActivity extends Activity {
+	private final static String TAG = "Geocaching4Locus|ImportActivity";
+	protected final static Pattern CACHE_CODE = Pattern.compile("(GC[A-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
+	protected ImpotTask task = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean downloadAllCacheDataOnDisplaying = prefs.getBoolean("download_all_cache_data_on_displaying", false);
-		String cacheId = null;
+		if (!LocusTesting.isLocusInstalled(this)) {
+			LocusTesting.showLocusMissingError(this);
+			return;
+		}
 		
-		if (getIntent().hasExtra("cacheId")) {
-			cacheId = getIntent().getStringExtra("cacheId");
-		} else if (getIntent().hasExtra("simpleCacheId")) {
-			if (!downloadAllCacheDataOnDisplaying) {
-				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
-				setResult(RESULT_CANCELED);
-				finish();
-				return;
-			}
-			cacheId = getIntent().getStringExtra("simpleCacheId");
-		} else {
-			Log.e(TAG, "cacheId/simpleCacheId not found");
-			setResult(RESULT_CANCELED);
+		if (getIntent().getData() == null) {
+			Log.e(TAG, "Data uri is null!!!");
 			finish();
 			return;
 		}
 		
-		Log.i(TAG, "Starting update task for " + cacheId);
-		task = new UpdateTask();
+		String url = getIntent().getData().toString();
+		
+		Matcher m = CACHE_CODE.matcher(url);
+		if (!m.find()) {
+			Log.e(TAG, "Cache code not found in url: " + url);
+			finish();
+		}
+		
+		String cacheId = m.group(1);
+		
+		Log.i(TAG, "Starting import task for " + cacheId);
+		task = new ImpotTask();
 		task.execute(cacheId);
 	}
 	
-	class UpdateTask extends UserTask<String, Void, Geocache> implements OnClickListener {
+	class ImpotTask extends UserTask<String, Void, Geocache> implements OnClickListener {
 		private ProgressDialog dialog;
 		private SharedPreferences prefs;
 		private Account account;
@@ -72,7 +76,7 @@ public class UpdateActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			
-			prefs = PreferenceManager.getDefaultSharedPreferences(UpdateActivity.this);
+			prefs = PreferenceManager.getDefaultSharedPreferences(ImportActivity.this);
 			
 			String userName = prefs.getString("username", "");
 			String password = prefs.getString("password", "");
@@ -83,9 +87,9 @@ public class UpdateActivity extends Activity {
 						
 			account = new Account(userName, password, session);
 			
-			dialog = new ProgressDialog(UpdateActivity.this);
+			dialog = new ProgressDialog(ImportActivity.this);
 			dialog.setIndeterminate(true);
-			dialog.setMessage(getResources().getText(R.string.update_cache_progress));
+			dialog.setMessage(getResources().getText(R.string.import_cache_progress));
 			dialog.setButton(getResources().getText(R.string.cancel_button), this);
 			dialog.show();
 		}	
@@ -97,11 +101,13 @@ public class UpdateActivity extends Activity {
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			
-			Point p = result.toPoint();
+			if (result != null) {			
+				PointsData pointsData = new PointsData("Geocaching");
+				pointsData.addPoint(result.toPoint());
+				
+				DisplayData.sendData(ImportActivity.this, pointsData, true);
+			}
 			
-			Intent intent = new Intent();
-			intent.putExtra(LocusConst.EXTRA_POINT, p);
-			setResult(RESULT_OK, intent);
 			finish();
 		}
 
@@ -180,7 +186,7 @@ public class UpdateActivity extends Activity {
 		}
 		
 		private Intent createErrorIntent(int resErrorId, String errorText, boolean openPreference) {
-			Intent intent = new Intent(UpdateActivity.this, ErrorActivity.class);
+			Intent intent = new Intent(ImportActivity.this, ErrorActivity.class);
 			intent.setAction(ErrorActivity.ACTION_ERROR);
 			intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
 			intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);

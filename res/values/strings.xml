@@ -2,13 +2,13 @@
 <resources>
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
-    <string name="downloading">Downloading caches...</string>
+    <string name="downloading">Downloading caches…</string>
     <string name="downloading_cache">Downloading cache (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Please install Locus!</string>
     <string name="search_activity_name">Nearest caches</string>
     <string name="error_location">Acquring the location using Wireless network is not allowed! Please enable it in Android settings.</string>
-    <string name="acquiring_gps_location">Acquiring location from GPS...</string>
-    <string name="acquiring_network_location">Acquiring location from Wireless network...</string>
+    <string name="acquiring_gps_location">Acquiring location from GPS…</string>
+    <string name="acquiring_network_location">Acquiring location from Wireless network…</string>
     
     <string name="preferences">Preferences</string>
     <string name="wrong_coordinates">Wrong coordinates format!</string>
@@ -52,7 +52,7 @@
     <string name="pref_menu_deselect_all">Deselect all</string>
     
     <string name="locus_update_cache">Update cache</string>
-    <string name="update_cache_progress">Updating cache...</string>
+    <string name="update_cache_progress">Updating cache…</string>
     
     <string name="pref_title_downloading">Downloading</string>
     <string name="pref_count_of_logs">Count of logs</string>
@@ -68,5 +68,8 @@
     <string name="close">Close</string>
     <string name="pref_show_disabled">Show disabled</string>
     <string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
+    
+    <string name="locus_import_cache">Import to Locus</string>
+    <string name="import_cache_progress">Downloading cache…</string>
 </resources>
 

@@ -2,13 +2,13 @@
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Ocorreu um erro a descarregar caches.&lt;br&gt;Descrição: %1$s</string>
-	<string name="downloading">A descarregar caches...</string>
+	<string name="downloading">A descarregar caches…</string>
 	<string name="downloading_cache">A descarregar a cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Por favor instale o Locus!</string>
 	<string name="search_activity_name">Caches mais próximas</string>
 	<string name="error_location">Não é permitida a aquisição de coordenadas através da rede Wireless. Por favor active a opção nas configurações do Android.</string>
-	<string name="acquiring_gps_location">Adquirindo coordenadas através do GPS....</string>
-	<string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles....</string>
+	<string name="acquiring_gps_location">Adquirindo coordenadas através do GPS…</string>
+	<string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles…</string>
 	<string name="preferences">Configuração</string>
 	<string name="wrong_coordinates">Formato de coordenadas errado!</string>
 	<string name="search_and_import_button">Procurar e mostrar no Locus</string>
@@ -42,7 +42,7 @@
 	<string name="pref_menu_select_all">Selecionar tudo</string>
 	<string name="pref_menu_deselect_all">Retirar seleção</string>
 	<string name="locus_update_cache">Atualizar cache</string>
-	<string name="update_cache_progress">A atualizar cache...</string>
+	<string name="update_cache_progress">A atualizar cache…</string>
 	<string name="pref_title_downloading">A descarregar</string>
 	<string name="pref_count_of_logs">Número de registos</string>
 	<string name="pref_count_of_logs_text">registos</string>
@@ -57,4 +57,6 @@
 	<string name="close">Fechar</string>
 	<string name="pref_show_disabled">Mostrar inativos</string>
 	<string name="pref_show_disabled_summary">Mostrar caches temporariamente inativas</string>
+	<string name="locus_import_cache">Importar para Locus</string>
+	<string name="import_cache_progress">A descarregar cache…</string>
 </resources>

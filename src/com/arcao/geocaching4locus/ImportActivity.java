@@ -25,6 +25,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.LocusTesting;
@@ -55,7 +56,9 @@ public class ImportActivity extends Activity {
 		Matcher m = CACHE_CODE.matcher(url);
 		if (!m.find()) {
 			Log.e(TAG, "Cache code not found in url: " + url);
+			Toast.makeText(this, "GUID isn't supported yet. Sorry.", Toast.LENGTH_LONG).show();
 			finish();
+			return;
 		}
 		
 		String cacheId = m.group(1);

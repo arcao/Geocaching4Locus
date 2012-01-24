@@ -11,7 +11,7 @@ import geocaching.api.impl.LiveGeocachingApi;
 
 import java.util.List;
 
-import menion.android.locus.addon.publiclib.LocusConst;
+import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -41,6 +41,12 @@ public class UpdateActivity extends Activity {
 		
 		if (getIntent().hasExtra("cacheId")) {
 			cacheId = getIntent().getStringExtra("cacheId");
+		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
+			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
+			
+			if (p.getGeocachingData() != null) {
+				cacheId = p.getGeocachingData().cacheID;
+			}
 		} else if (getIntent().hasExtra("simpleCacheId")) {
 			if (!downloadAllCacheDataOnDisplaying) {
 				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
@@ -49,7 +55,9 @@ public class UpdateActivity extends Activity {
 				return;
 			}
 			cacheId = getIntent().getStringExtra("simpleCacheId");
-		} else {
+		}
+		
+		if (cacheId == null) {
 			Log.e(TAG, "cacheId/simpleCacheId not found");
 			setResult(RESULT_CANCELED);
 			finish();
@@ -99,9 +107,7 @@ public class UpdateActivity extends Activity {
 			
 			Point p = result.toPoint();
 			
-			Intent intent = new Intent();
-			intent.putExtra(LocusConst.EXTRA_POINT, p);
-			setResult(RESULT_OK, intent);
+			setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, true));
 			finish();
 		}
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="InvisibleTheme" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+		<item name="android:windowBackground">@null</item>
+		<item name="android:windowNoTitle">true</item>
+	</style>
+    <style name="ThemeLight" parent="@android:style/Theme.Holo.Light">
+        <item name="android:windowTitleSize">20.0dip</item>
+    </style>
+    <style name="Dialog" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowBackground">@drawable/var_dialog_bg</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
+    </style>
+    <style name="ThemeSettings" parent="@android:style/Theme.Holo" />
+</resources>

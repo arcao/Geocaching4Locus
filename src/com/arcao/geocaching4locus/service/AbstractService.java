@@ -2,8 +2,6 @@ package com.arcao.geocaching4locus.service;
 
 import geocaching.api.exception.InvalidCredentialsException;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Date;
 
 import android.app.IntentService;
@@ -46,10 +44,6 @@ public abstract class AbstractService extends IntentService {
 	protected RemoteViews contentViews;
 	protected Notification progressNotification;
 
-	private Method startForegroundMethod;
-	private Method setForegroundMethod;
-	private Method stopForegroundMethod;
-	
 	protected int notificationId;
 	protected int actionTextId;
 	
@@ -72,13 +66,11 @@ public abstract class AbstractService extends IntentService {
 		
 		setInstance();
 		notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		
-		prepareCompatMethods();
-		
+			
 		canceled = false;
 
 		progressNotification = createProgressNotification(); 
-		startForegroundCompat(notificationId, progressNotification);
+		startForeground(notificationId, progressNotification);
 	}
 
 	protected Notification createProgressNotification() {
@@ -160,7 +152,7 @@ public abstract class AbstractService extends IntentService {
 	public void onDestroy() {
 		canceled = true;
 		removeInstance();
-		stopForegroundCompat(notificationId);
+		stopForeground(true);
 		super.onDestroy();
 	}
 	
@@ -224,69 +216,6 @@ public abstract class AbstractService extends IntentService {
 		sendBroadcast(broadcastIntent);
 	}
 
-	// ----------------  Compatible methods for start / stop foreground service --------------------
-	
-	protected void prepareCompatMethods() {
-		try {
-			startForegroundMethod = getClass().getMethod("startForeground", new Class[] {int.class, Notification.class});
-			stopForegroundMethod = getClass().getMethod("stopForeground", new Class[] {boolean.class});
-			return;
-		} catch (NoSuchMethodException e) {
-			// Running on an older platform.
-			startForegroundMethod = stopForegroundMethod = null;
-		}
-		try {
-			setForegroundMethod = getClass().getMethod("setForeground", new Class[] {boolean.class});
-		} catch (NoSuchMethodException e) {
-			throw new IllegalStateException("OS doesn't have Service.startForeground OR Service.setForeground!");
-		}
-	}
-
-	/**
-	 * This is a wrapper around the new startForeground method, using the older
-	 * APIs if it is not available.
-	 */
-	protected void startForegroundCompat(int id, Notification notification) {
-	    // If we have the new startForeground API, then use it.
-	    if (startForegroundMethod != null) {
-	        invokeMethod(startForegroundMethod, new Object[] { id, notification});
-	        return;
-	    }
-
-	    // Fall back on the old API.
-	    invokeMethod(setForegroundMethod, new Object[] {true});
-	    notificationManager.notify(id, notification);
-	}
-
-	/**
-	 * This is a wrapper around the new stopForeground method, using the older
-	 * APIs if it is not available.
-	 */
-	protected void stopForegroundCompat(int id) {
-	    // If we have the new stopForeground API, then use it.
-	    if (stopForegroundMethod != null) {
-	        invokeMethod(stopForegroundMethod, new Object[] { true });
-	        return;
-	    }
-
-	    // Fall back on the old API.  Note to cancel BEFORE changing the
-	    // foreground state, since we could be killed at that point.
-	    notificationManager.cancel(id);
-	    invokeMethod(setForegroundMethod, new Object[] { false });
-	}
-	
-	protected void invokeMethod(Method method, Object[] args) {
-    try {
-        method.invoke(this, args);
-    } catch (InvocationTargetException e) {
-        // Should not happen.
-        Log.w(TAG, "Unable to invoke method", e);
-    } catch (IllegalAccessException e) {
-        // Should not happen.
-        Log.w(TAG, "Unable to invoke method", e);
-    }
-	}
-	
 	// --------------------- Methods to get right color and text size for title and text for notification ------------------
 	protected Integer notification_title_color = null;
 	protected float notification_title_size = 11;

@@ -33,8 +33,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preference);
 		
-		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-		
 		cacheTypeFilterScreen = (PreferenceScreen) findPreference("cache_type_filter_screen");
 		if (cacheTypeFilterScreen != null) {
 			Intent intent = new Intent(this, PreferenceActivity.class);
@@ -48,6 +46,18 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		}
 		
 		preparePreferences();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
 	@Override
@@ -147,6 +157,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+			case android.R.id.home:
+        // app icon in action bar clicked; go home
+        finish();
+        return true;
 			case R.id.selectAll:
 				for (int i = 0; i < CacheType.values().length; i++)
 					findPreference("filter_" + i, CheckBoxPreference.class).setChecked(true);

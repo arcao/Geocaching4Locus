@@ -50,6 +50,7 @@ public class LocusTesting {
 		builder.setMessage(Html.fromHtml(message));
 		builder.setTitle(R.string.error_title);
 		builder.setPositiveButton(R.string.ok_button, onClickListener);
+		builder.setCancelable(false);
 		builder.show();
 	}
 }

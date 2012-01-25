@@ -152,8 +152,15 @@ public class SearchGeocacheService extends AbstractService {
 			if (!points.getPoints().isEmpty())
 				pointDataCollection.add(points);
 
-			// set data
-			Intent intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
+			Intent intent = null;
+			
+			// send data via file if is possible
+			String fileName = DisplayDataExtended.getCacheFileName(this);
+			if (fileName != null) {
+				intent = DisplayDataExtended.prepareDataFile(pointDataCollection, fileName);
+			} else {
+				intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
+			}
 
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

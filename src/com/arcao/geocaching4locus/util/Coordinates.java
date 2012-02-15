@@ -16,11 +16,16 @@ public class Coordinates {
 		sb.append(' ');
 
 		int deg = (int) source;
+
+		// FIX for rounding errors
+		double min = roundDouble(((source - deg) * 60D), precision);
+		if (min == 60D) {
+			deg++;
+			min = 0D;
+		}
+		
 		sb.append(deg);
 		sb.append("\u00B0 ");
-
-		double min = (source - deg) * 60D;
-
 		sb.append(round(min, precision));
 
 		return sb.toString();
@@ -85,6 +90,12 @@ public class Coordinates {
 		}
 		return source.length();
 	}
+	
+	public static double roundDouble(double source, int decimalPlaces) {
+	    double multipicationFactor = Math.pow(10, decimalPlaces);
+	    double sourceMultipled = source * multipicationFactor;
+	    return Math.round(sourceMultipled) / multipicationFactor;
+	}
 
 	public static String round(double source, int decimals) {
 		if (decimals < 0)
@@ -94,11 +105,7 @@ public class Coordinates {
 			return Long.toString((long) source);
 		}
 
-		int decimalLimiter = 1;
-		for (byte i = 0; i < decimals; i++)
-			decimalLimiter *= 10;
-
-		double rounded = ((double) Math.round(source * decimalLimiter)) / decimalLimiter;
+		double rounded = roundDouble(source, decimals);
 
 		String val = Double.toString(rounded);
 		int dot = val.indexOf('.');

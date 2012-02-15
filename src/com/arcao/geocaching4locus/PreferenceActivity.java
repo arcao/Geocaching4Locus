@@ -191,11 +191,12 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		difficultyMinPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat(difficultyMinPreference.getValue()); 
+				float min = Float.parseFloat((String)newValue); 
 				float max = Float.parseFloat(difficultyMaxPreference.getValue());
 				
 				if (min > max) {
-					difficultyMaxPreference.setValue(difficultyMinPreference.getValue());
+					difficultyMaxPreference.setValue((String)newValue);
+					difficultyMaxPreference.setSummary(prepareRatingSummary((String)newValue));
 				}
 				return true;
 			}
@@ -206,10 +207,11 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				float min = Float.parseFloat(difficultyMinPreference.getValue()); 
-				float max = Float.parseFloat(difficultyMaxPreference.getValue());
+				float max = Float.parseFloat((String)newValue);
 				
 				if (min > max) {
-					difficultyMinPreference.setValue(difficultyMaxPreference.getValue());
+					difficultyMinPreference.setValue((String)newValue);
+					difficultyMinPreference.setSummary(prepareRatingSummary((String)newValue));
 				}				
 				return true;
 			}
@@ -222,11 +224,12 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		terrainMinPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat(terrainMinPreference.getValue()); 
+				float min = Float.parseFloat((String)newValue); 
 				float max = Float.parseFloat(terrainMaxPreference.getValue());
 				
 				if (min > max) {
-					terrainMaxPreference.setValue(terrainMinPreference.getValue());
+					terrainMaxPreference.setValue((String)newValue);
+					terrainMaxPreference.setSummary(prepareRatingSummary((String)newValue));
 				}
 				return true;
 			}
@@ -237,10 +240,11 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				float min = Float.parseFloat(terrainMinPreference.getValue()); 
-				float max = Float.parseFloat(terrainMaxPreference.getValue());
+				float max = Float.parseFloat((String)newValue);
 				
 				if (min > max) {
-					terrainMinPreference.setValue(terrainMaxPreference.getValue());
+					terrainMinPreference.setValue((String)newValue);
+					terrainMinPreference.setSummary(prepareRatingSummary((String)newValue));
 				}
 				return true;
 			}

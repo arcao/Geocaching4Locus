@@ -30,7 +30,7 @@ public class DifficultyFilter implements Filter {
 
 	@Override
 	public boolean isValid() {
-		return min != 1 && max != 5;
+		return min != 1 || max != 5;
 	}
 	
 	@Override

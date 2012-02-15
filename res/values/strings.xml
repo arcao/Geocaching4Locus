@@ -12,7 +12,6 @@
     
     <string name="preferences">Preferences</string>
     <string name="wrong_coordinates">Wrong coordinates format!</string>
-    <string name="search_and_import_button">Search &amp; show in Locus</string>
     <string name="coordinates">Coordinates</string>
     
     <string name="pref_title_geocaching_credentials">Geocaching.com credentials</string>
@@ -32,7 +31,6 @@
     <string name="pref_imperial_units">Imperial units</string>
     <string name="pref_imperial_units_summary">Use miles instead of kilemeters</string>
     
-    <string name="download_simple_cache_data">Simple cache data only</string>
     <string name="import_caches">Import caches</string>
     
     <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
@@ -52,6 +50,7 @@
     <string name="pref_menu_deselect_all">Deselect all</string>
     
     <string name="locus_update_cache">Update cache</string>
+    <string name="locus_import_cache">Import cache</string>
     <string name="update_cache_progress">Updating cache…</string>
     
     <string name="pref_title_downloading">Downloading</string>
@@ -61,15 +60,40 @@
     <string name="pref_count_of_trackables">Count of trackables</string>
     <string name="pref_count_of_trackables_text">trackables</string>
     <string name="pref_count_of_trackables_summary">Count of trackables to download with cache</string>
-    <string name="pref_download_all_cache_data_on_displaying">Download all cache data on displaying</string>
-    <string name="pref_download_all_cache_data_on_displaying_summary">If cache has simple data only the full cache data will be loaded when user open a cache dialog</string>   
     <string name="pref_not_filled">not filled</string>
     <string name="gps">GPS</string>
     <string name="close">Close</string>
     <string name="pref_show_disabled">Show disabled</string>
     <string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
     
-    <string name="locus_import_cache">Import to Locus</string>
     <string name="import_cache_progress">Downloading cache…</string>
+    
+    <string name="pref_title_about">About</string>
+    <string name="pref_version">Version</string>
+    <string name="pref_author">Author</string>
+    <string name="pref_website">Website, forum, etc.</string>
+    <string name="pref_donate_paypal">Donate via Paypal</string>
+    <string name="pref_donate_paypal_summary">Support the future development…</string>
+    <string name="pref_donate_paypal_choose_currency">Choose your currency</string>
+    
+    <string name="pref_title_cache_type_filter">Cache types</string>
+    <string name="pref_title_difficulty_filter">Difficulty</string>
+    <string name="pref_title_terrain_filter">Terrain</string>
+    <string name="pref_difficulty_min">Min. difficulty</string>
+    <string name="pref_difficulty_max">Max. difficulty</string>
+    <string name="pref_terrain_min">Min. terrain</string>
+    <string name="pref_terrain_max">Max. terrain</string>
+    
+    <string name="download_button">Download to Locus</string>
+    
+    <string name="pref_download_basic">Basic info only</string>
+    <string name="pref_download_basic_summary">Download only basic information about cache</string>
+    <string name="pref_download_on_show">Download rest info on show</string>
+    <string name="pref_download_on_show_summary">Download rest information about cache when the cache content is shown in Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>once</item>
+        <item>every</item>
+        <item>never</item>
+    </string-array>
 </resources>
 

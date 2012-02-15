@@ -1,10 +1,16 @@
 package menion.android.locus.addon.publiclib;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.DataStorage;
 import android.content.Context;
@@ -44,19 +50,16 @@ public class DisplayDataExtended extends DisplayData {
 	 * error on Locus side if data are too big
 	 *   
 	 * @param data
-	 * @param filepath
+	 * @param file
 	 * @return
 	 */
-	public static Intent prepareDataFile(ArrayList<PointsData> data, String filepath) {
+	public static Intent prepareDataFile(ArrayList<PointsData> data, File file) {
 		if (data == null || data.size() == 0)
 			return null;
 		
 		FileOutputStream os = null;
 		DataOutputStream dos = null;
 		try {
-			File file = new File(filepath);
-			file.getParentFile().mkdirs();
-
 			if (file.exists())
 				file.delete();
 			if (!file.exists()) {
@@ -83,7 +86,7 @@ public class DisplayDataExtended extends DisplayData {
 				
 			os.flush();
 		} catch (Exception e) {
-			Log.e(TAG, "saveBytesInstant(" + filepath + ", " + data + ")", e);
+			Log.e(TAG, "saveBytesInstant(" + file + ", " + data + ")", e);
 			return null;
 		} finally {
 			try {
@@ -91,13 +94,13 @@ public class DisplayDataExtended extends DisplayData {
 					dos.close();
 				}
 			} catch (Exception e) {
-				Log.e(TAG, "saveBytesInstant(" + filepath + ", " + data + ")", e);
+				Log.e(TAG, "saveBytesInstant(" + file + ", " + data + ")", e);
 			}
 		}
 		
 		// store data to file
 		Intent intent = new Intent();
-		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, filepath);
+		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
 		return intent;
 	}
 	
@@ -152,17 +155,129 @@ public class DisplayDataExtended extends DisplayData {
 	/**
 	 * Get a path including file name to save data for Locus
 	 * @param context	Context
-	 * @return	path to file to save data for Locus 
+	 * @return	path to file 
 	 */
-	public static String getCacheFileName(Context context) {
+	public static File getCacheFileName(Context context) {
 		if (!isExternalStorageWritable())
-			return null;
+			return context.getCacheDir();
 		
 		File storageDirectory = Environment.getExternalStorageDirectory();
 		File cacheFile = new File(storageDirectory, String.format("/Android/data/%s/cache/data.locus", context.getPackageName()));
 		cacheFile.getParentFile().mkdirs();
 		
-		return cacheFile.getAbsolutePath();
+		return cacheFile;
+	}
+	
+	/**
+	 * Get a path including file name to save geocache for later use
+	 * @param context	Context
+	 * @return	path to file 
+	 */
+	public static File getGeocacheCacheFileName(Context context, String cacheCode) {
+		if (!isExternalStorageWritable())
+			return new File(context.getCacheDir(), cacheCode + ".locus");
+		
+		File storageDirectory = Environment.getExternalStorageDirectory();
+		File cacheFile = new File(storageDirectory, String.format("/Android/data/%s/cache/%s.locus", context.getPackageName(), cacheCode));
+		cacheFile.getParentFile().mkdirs();
+		
+		return cacheFile;
+	}	
+	
+	public static void storeGeocacheToCache(Context context, Point point) {
+		File f = getGeocacheCacheFileName(context, point.getGeocachingData().cacheID);
+		if (f == null) {
+			Log.e(TAG, "SD card isn't writeable!");
+			return;
+		}
+		
+		if (f.exists()) {
+			if (!f.delete()) {
+				Log.e(TAG, "Geocache cache can't be deleted!");
+				return;
+			}
+		}
+		
+		Parcel p = Parcel.obtain();
+		DataOutputStream dos = null;
+		
+		try {
+			dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
+
+			p.writeParcelable(point, 0);
+			
+			byte[] byteData = p.marshall();
+			
+			// write current version
+			dos.writeInt(FILE_VERSION);
+			
+			dos.writeInt(byteData.length);
+			dos.write(byteData);
+			
+			dos.flush();
+			dos.close();
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+		} finally {
+			if (dos != null) {
+				try {
+					dos.close();
+				} catch (IOException e) {}
+			}
+			p.recycle();
+		}
+	}
+	
+	public static Point loadGeocacheFromCache(Context context, String cacheCode) {
+		File f = getGeocacheCacheFileName(context, cacheCode);
+		
+		if (f == null) {
+			Log.e(TAG, "SD card isn't writeable!");
+			return null;
+		}
+		
+		if (!f.exists()) {
+			Log.w(TAG, "Cache file not found: " + f);
+			return null;
+		}
+		
+		Parcel p = Parcel.obtain();
+		DataInputStream dis = null;
+		
+		try {
+			dis = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
+			
+			// check version
+			if (FILE_VERSION != dis.readInt()) {
+				return null;
+			}
+			
+			int size = dis.readInt();
+			byte[] byteData = new byte[size];
+			dis.read(byteData);
+			
+			p.unmarshall(byteData, 0, size);
+			p.setDataPosition(0);
+			
+			Point point = p.readParcelable(Point.class.getClassLoader());
+			
+			// fix null pointer exception
+			if (point != null && point.getGeocachingData() != null && point.getGeocachingData().shortDescription == null) {
+				point.getGeocachingData().shortDescription = "";
+			}
+			
+			return point;
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+			return null;
+		} finally {
+			if (dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {}
+			}
+			p.recycle();
+		}
 	}
 	
 	private static boolean hasData(Intent intent) {

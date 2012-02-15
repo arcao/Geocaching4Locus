@@ -11,7 +11,7 @@ import geocaching.api.data.type.LogType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
+import geocaching.api.impl.live_geocaching_api.filter.Filter;
 import geocaching.api.impl.live_geocaching_api.parser.GeocacheJsonParser;
 import geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import geocaching.api.impl.live_geocaching_api.parser.SimpleGeocacheJsonParser;
@@ -103,7 +103,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 	
 	@Override
 	public List<SimpleGeocache> searchForGeocaches(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount,
-			CacheFilter[] filters) throws GeocachingApiException {
+			Filter[] filters) throws GeocachingApiException {
 		
 		List<SimpleGeocache> list = new ArrayList<SimpleGeocache>();
 		
@@ -122,7 +122,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 			if (trackableLogCount >= 0)
 				w.name("TrackableLogCount").value(trackableLogCount);
 			
-			for (CacheFilter filter : filters) {
+			for (Filter filter : filters) {
 				if (filter.isValid())
 					filter.writeJson(w);
 			}

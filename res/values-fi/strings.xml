@@ -11,7 +11,6 @@
 	<string name="acquiring_network_location">Haetaan verkkopohjaista sijaintia...</string>
 	<string name="preferences">Asetukset</string>
 	<string name="wrong_coordinates">Väärä koordinaattiformaatti!</string>
-	<string name="search_and_import_button">Etsi ja näytä Locuksessa</string>
 	<string name="coordinates">Koordinaatit</string>
 	<string name="pref_title_geocaching_credentials">Geocaching.com-tunnukset</string>
 	<string name="pref_username">Käyttäjätunnus</string>
@@ -28,7 +27,6 @@
 	<string name="pref_use_compression_summary">Käytä HTTP-pakkausta (kokeellinen)</string>
 	<string name="pref_imperial_units">Brittiläinen yksikköjärjestelmä</string>
 	<string name="pref_imperial_units_summary">Käytä maileja kilometrien sijaan</string>
-	<string name="download_simple_cache_data">Vain kätkön perustiedot</string>
 	<string name="import_caches">Tuo kätköjä</string>
 	<string name="error_credentials">Käyttäjänimi tai salasana ei kelpaa. Syötä tiedot uudelleen asetuksista.</string>
 	<string name="error_title">Virhe!</string>
@@ -41,22 +39,44 @@
 	<string name="pref_show_own_summary">Näytä omat kätköt</string>
 	<string name="pref_menu_select_all">Valitse kaikki</string>
 	<string name="pref_menu_deselect_all">Poista valinnat</string>
-	<string name="locus_update_cache">Update cache</string>
-	<string name="update_cache_progress">Updating cache…</string>
-	<string name="pref_title_downloading">Downloading</string>
-	<string name="pref_count_of_logs">Count of logs</string>
-	<string name="pref_count_of_logs_text">logs</string>
-	<string name="pref_count_of_logs_summary">Count of logs to download with cache</string>
-	<string name="pref_count_of_trackables">Count of trackables</string>
-	<string name="pref_count_of_trackables_text">trackables</string>
-	<string name="pref_count_of_trackables_summary">Count of trackables to download with cache</string>
-	<string name="pref_download_all_cache_data_on_displaying">Download all cache data on displaying</string>
-	<string name="pref_download_all_cache_data_on_displaying_summary">If cache has simple data only the full cache data will be loaded when user open a cache dialog</string>
-	<string name="pref_not_filled">not filled</string>
+	<string name="locus_update_cache">Päivitä kätkö</string>
+	<string name="locus_import_cache">Tuo kätkö</string>
+	<string name="update_cache_progress">Päivitetään kätköä...</string>
+	<string name="pref_title_downloading">Lataan</string>
+	<string name="pref_count_of_logs">Loggauksien määrä</string>
+	<string name="pref_count_of_logs_text">Logit</string>
+	<string name="pref_count_of_logs_summary">Kätkön kanssa ladattavien loggausten määrä</string>
+	<string name="pref_count_of_trackables">Kulkijoiden määrä</string>
+	<string name="pref_count_of_trackables_text">Kulkijat</string>
+	<string name="pref_count_of_trackables_summary">Kätkön kanssa ladattavien kulkijoiden määrä</string>
+	<string name="pref_not_filled">ei täytetty</string>
 	<string name="gps">GPS</string>
-	<string name="close">Close</string>
-	<string name="pref_show_disabled">Show disabled</string>
-	<string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
-	<string name="locus_import_cache">Import to Locus</string>
+	<string name="close">Sulje</string>
+	<string name="pref_show_disabled">Näytä hyllytetyt</string>
+	<string name="pref_show_disabled_summary">Näytä tilapäisesti hyllytetyt kätköt</string>
 	<string name="import_cache_progress">Lataan kätköjä...</string>
+	<string name="pref_title_about">Tietoja</string>
+	<string name="pref_version">Versio</string>
+	<string name="pref_author">Tekijä</string>
+	<string name="pref_website">Verkkosivu, foorumi, tms.</string>
+	<string name="pref_donate_paypal">Lahjoita PayPalilla</string>
+	<string name="pref_donate_paypal_summary">Tue kehitystä...</string>
+	<string name="pref_donate_paypal_choose_currency">Valitse valuutta</string>
+	<string name="pref_title_cache_type_filter">Kätkötyypit</string>
+	<string name="pref_title_difficulty_filter">Vaikeus</string>
+	<string name="pref_title_terrain_filter">Maasto</string>
+	<string name="pref_difficulty_min">Vaikeus vähintään</string>
+	<string name="pref_difficulty_max">Vaikeus enintään</string>
+	<string name="pref_terrain_min">Maasto vähintään</string>
+	<string name="pref_terrain_max">Maasto enintään</string>
+	<string name="download_button">Lataa Locukseen</string>
+	<string name="pref_download_basic">Vain perustiedot</string>
+	<string name="pref_download_basic_summary">Lataa vain kätkön perustiedot</string>
+	<string name="pref_download_on_show">Lataa muut tiedot tarvittaessa</string>
+	<string name="pref_download_on_show_summary">Lataa kätkön muut tiedot kun kätköä tarkastellaan Locuksessa</string>
+	<string-array name="pref_download_on_show_entries">
+		<item>kerran</item>
+		<item>joka n:s kerta</item>
+		<item>ei koskaan</item>
+	</string-array>
 </resources>

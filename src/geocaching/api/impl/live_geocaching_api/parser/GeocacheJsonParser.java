@@ -6,7 +6,8 @@ import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
 import geocaching.api.data.User;
-import geocaching.api.data.WayPoint;
+import geocaching.api.data.UserWaypoint;
+import geocaching.api.data.Waypoint;
 import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
@@ -65,8 +66,9 @@ public class GeocacheJsonParser extends JsonParser {
 		String encodedHints = "";
 		List<CacheLog> cacheLogs = new ArrayList<CacheLog>();
 		List<TravelBug> travelBugs = new ArrayList<TravelBug>();
-		List<WayPoint> wayPoints = new ArrayList<WayPoint>();
+		List<Waypoint> waypoints = new ArrayList<Waypoint>();
 		List<AttributeType> attributes = new ArrayList<AttributeType>();
+		List<UserWaypoint> userWaypoints = new ArrayList<UserWaypoint>();
 		
 		r.beginObject();
 		while(r.hasNext()) {
@@ -120,15 +122,17 @@ public class GeocacheJsonParser extends JsonParser {
 			} else if ("Trackables".equals(name)) {
 				travelBugs = TravelBugJsonParser.parseList(r);
 			} else if ("AdditionalWaypoints".equals(name)) {
-				wayPoints = WayPointJsonParser.parseList(r);
+				waypoints = WaypointJsonParser.parseList(r);
 			} else if ("Attributes".equals(name)) {
 				attributes = parseAttributteList(r);
+			} else if ("UserWaypoints".equals(name)) {
+				userWaypoints = UserWaypointsJsonParser.parseList(r);
 			} else {
 				r.skipValue();
 			}
 		}
 		r.endObject();
 		
-		return new Geocache(geoCode, cacheName, longitude, latitude, cacheType, difficultyRating, terrainRating, authorGuid, authorName, available, archived, premiumListing, countryName, stateName, created, contactName, containerType, trackableCount, found, shortDescription, longDescription, encodedHints, cacheLogs, travelBugs, wayPoints, attributes);
+		return new Geocache(geoCode, cacheName, longitude, latitude, cacheType, difficultyRating, terrainRating, authorGuid, authorName, available, archived, premiumListing, countryName, stateName, created, contactName, containerType, trackableCount, found, shortDescription, longDescription, encodedHints, cacheLogs, travelBugs, waypoints, attributes, userWaypoints);
 	}
 }

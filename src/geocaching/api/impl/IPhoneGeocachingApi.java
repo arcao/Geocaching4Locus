@@ -5,7 +5,8 @@ import geocaching.api.data.CacheLog;
 import geocaching.api.data.Geocache;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.TravelBug;
-import geocaching.api.data.WayPoint;
+import geocaching.api.data.UserWaypoint;
+import geocaching.api.data.Waypoint;
 import geocaching.api.data.type.AttributeType;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.ContainerType;
@@ -226,7 +227,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 		if (waypointsEl.size() == 0)
 			return null;
 
-		List<WayPoint> waypoints = new ArrayList<WayPoint>();
+		List<Waypoint> waypoints = new ArrayList<Waypoint>();
 		i = -1;
 		for (Element waypointEl : waypointsEl) {
 			if (i == -1) {
@@ -234,7 +235,7 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 				continue;
 			}
 
-			waypoints.add(new WayPoint(
+			waypoints.add(new Waypoint(
 					Double.parseDouble(waypointEl.getAttributeValue("lon", "0")), // longitude
 					Double.parseDouble(waypointEl.getAttributeValue("lat", "0")), // latitude
 					parseGPXDate(waypointEl.getChildTextTrim("time", NS_GPX)), // time
@@ -309,14 +310,15 @@ public class IPhoneGeocachingApi extends AbstractGeocachingApi {
 				logs, // cacheLogs
 				travelBugs, // travelBugs
 				waypoints, // wayPoints
-				new ArrayList<AttributeType>()
+				new ArrayList<AttributeType>(),
+				new ArrayList<UserWaypoint>()
 		);
 
 		return g;
 	}
 
 	@Override
-	public List<WayPoint> getWayPointsByCache(String cacheCode) throws GeocachingApiException {
+	public List<Waypoint> getWayPointsByCache(String cacheCode) throws GeocachingApiException {
 		throw new GeocachingApiException("Not implemented.");
 	}
 

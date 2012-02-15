@@ -1,6 +1,6 @@
 package geocaching.api.impl.live_geocaching_api.parser;
 
-import geocaching.api.data.WayPoint;
+import geocaching.api.data.Waypoint;
 import geocaching.api.data.type.WayPointType;
 import google.gson.stream.JsonToken;
 
@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WayPointJsonParser extends JsonParser {
-	public static List<WayPoint> parseList(JsonReader r) throws IOException {
+public class WaypointJsonParser extends JsonParser {
+	public static List<Waypoint> parseList(JsonReader r) throws IOException {
 		if (r.peek() != JsonToken.BEGIN_ARRAY) {
 			r.skipValue();
 		}
 		
-		List<WayPoint> list = new ArrayList<WayPoint>();
+		List<Waypoint> list = new ArrayList<Waypoint>();
 		r.beginArray();
 		while(r.hasNext()) {
 			list.add(parse(r));
@@ -24,7 +24,7 @@ public class WayPointJsonParser extends JsonParser {
 		return list;
 	}
 	
-	public static WayPoint parse(JsonReader r) throws IOException {
+	public static Waypoint parse(JsonReader r) throws IOException {
 		double longitude = Double.NaN;
 		double latitude = Double.NaN;
 		Date time = new Date(0);
@@ -56,6 +56,6 @@ public class WayPointJsonParser extends JsonParser {
 		}
 		r.endObject();
 		
-		return new WayPoint(longitude, latitude, time, waypointGeoCode, waypointName, note, wayPointType);
+		return new Waypoint(longitude, latitude, time, waypointGeoCode, waypointName, note, wayPointType);
 	}
 }

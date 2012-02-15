@@ -12,7 +12,6 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
 	<string name="preferences">Voorkeuren</string>
 	<string name="wrong_coordinates">Foutief coördinaten formaat!</string>
-	<string name="search_and_import_button">Zoek en toon in Locus</string>
 	<string name="coordinates">Coördinaten</string>
 	<string name="pref_title_geocaching_credentials">Geocaching.com logingegevens</string>
 	<string name="pref_username">Gebruikersnaam</string>
@@ -29,7 +28,6 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
 	<string name="pref_imperial_units">Imperiale eenheden</string>
 	<string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
-	<string name="download_simple_cache_data">Alleen simpele cache data</string>
 	<string name="import_caches">Importeer caches</string>
 	<string name="error_credentials">Ongeldige gebruikersnaam of wachtwoord. Gelieve je gebruikersinformatie opnieuw in te geven in voorkeuren.</string>
 	<string name="error_title">Er is een fout opgetreden!</string>
@@ -43,6 +41,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_menu_select_all">Alles selecteren</string>
 	<string name="pref_menu_deselect_all">Niets selecteren</string>
 	<string name="locus_update_cache">Update cache</string>
+	<string name="locus_import_cache">Importeren naar Locus</string>
 	<string name="update_cache_progress">Bezig met updaten van cache…</string>
 	<string name="pref_title_downloading">Bezig met downloaden</string>
 	<string name="pref_count_of_logs">Aantal logs</string>
@@ -51,13 +50,34 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_count_of_trackables">Aantal trackables</string>
 	<string name="pref_count_of_trackables_text">trackables</string>
 	<string name="pref_count_of_trackables_summary">Aantal trackables om te downloaden met cache</string>
-	<string name="pref_download_all_cache_data_on_displaying">Download alle cache data bij weergeven</string>
-	<string name="pref_download_all_cache_data_on_displaying_summary">Als cache eenvoudige data heeft wordt de volledige cache data enkel geladen als de gebruiker een cache venster opent</string>
 	<string name="pref_not_filled">niet gevuld</string>
 	<string name="gps">GPS</string>
 	<string name="close">Sluit</string>
 	<string name="pref_show_disabled">Toon uitgeschakelde</string>
 	<string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
-	<string name="locus_import_cache">Importeren naar Locus</string>
 	<string name="import_cache_progress">Bezig met downloaden van cache…</string>
+	<string name="pref_title_about">Over</string>
+	<string name="pref_version">Versie</string>
+	<string name="pref_author">Auteur</string>
+	<string name="pref_website">Website, forum, enz.</string>
+	<string name="pref_donate_paypal">Doneer via Paypal</string>
+	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
+	<string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
+	<string name="pref_title_cache_type_filter">Soort Cache</string>
+	<string name="pref_title_difficulty_filter">Moeilijkheid</string>
+	<string name="pref_title_terrain_filter">Terrein</string>
+	<string name="pref_difficulty_min">Minimum moeilijkheid</string>
+	<string name="pref_difficulty_max">Maximum moeilijkheid</string>
+	<string name="pref_terrain_min">Minimum terrein</string>
+	<string name="pref_terrain_max">Maximum terrein</string>
+	<string name="download_button">Downloaden naar Locus</string>
+	<string name="pref_download_basic">Alleen basis informatie</string>
+	<string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
+	<string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
+	<string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
+	<string-array name="pref_download_on_show_entries">
+		<item>eenmalig</item>
+		<item>Iedere</item>
+		<item>nooit</item>
+	</string-array>
 </resources>

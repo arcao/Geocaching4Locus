@@ -4,7 +4,7 @@ import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class NotFoundByUsersFilter implements CacheFilter {
+public class NotFoundByUsersFilter implements Filter {
 	private static final String NAME = "NotFoundByUsers";
 	
 	protected String[] userNames;

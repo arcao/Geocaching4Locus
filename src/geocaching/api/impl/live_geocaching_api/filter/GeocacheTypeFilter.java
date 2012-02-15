@@ -5,7 +5,7 @@ import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class GeocacheTypeFilter implements CacheFilter {
+public class GeocacheTypeFilter implements Filter {
 	private static final String NAME = "GeocacheType";
 
 	protected CacheType[] cacheTypes;

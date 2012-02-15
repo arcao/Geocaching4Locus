@@ -52,7 +52,6 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
-	private CheckBox simpleCacheDataCheckBox;
 	private CheckBox importCachesCheckBox;
 	private boolean locusInstalled = true;
 		
@@ -123,7 +122,6 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
-		simpleCacheDataCheckBox = (CheckBox) findViewById(R.id.simpleCacheDataCheckBox);
 		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
 		
 		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -153,17 +151,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 				}
 			}
 		});
-		
-		simpleCacheDataCheckBox.setChecked(prefs.getBoolean("simple_cache_data", false));
-		simpleCacheDataCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				Editor edit = prefs.edit();
-				edit.putBoolean("simple_cache_data", isChecked);
-				edit.commit();
-			}
-		});
-		
+				
 		importCachesCheckBox.setChecked(prefs.getBoolean("import_caches", false));
 		importCachesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -418,7 +406,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 
 	protected void requestProgressUpdate() {
 		if (SearchGeocacheService.getInstance() != null)
-			SearchGeocacheService.getInstance().sendProgressUpdate();		
+			SearchGeocacheService.getInstance().sendProgressUpdate();
 	}
 	
 	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {	
@@ -451,6 +439,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			} else if (SearchGeocacheService.ACTION_PROGRESS_COMPLETE.equals(intent.getAction())) {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();
+				
+				if (intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 0) != 0 && !MainActivity.this.isFinishing()) {
+					MainActivity.this.finish();
+				}
 			} else if (SearchGeocacheService.ACTION_ERROR.equals(intent.getAction())) {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();

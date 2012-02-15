@@ -6,12 +6,12 @@ import geocaching.api.data.Geocache;
 import geocaching.api.data.ImageData;
 import geocaching.api.data.SimpleGeocache;
 import geocaching.api.data.UserProfile;
-import geocaching.api.data.WayPoint;
+import geocaching.api.data.Waypoint;
 import geocaching.api.data.type.CacheType;
 import geocaching.api.data.type.LogType;
 import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
-import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
+import geocaching.api.impl.live_geocaching_api.filter.Filter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 
@@ -27,7 +27,7 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	@Deprecated
 	public List<SimpleGeocache> getCachesByCoordinates(double latitude, double longitude, int startPosition, int endPosition, float radiusMiles,
 			CacheType[] cacheTypes) throws GeocachingApiException {
-		return searchForGeocaches(true, startPosition, endPosition - startPosition + 1, 5, -1, new CacheFilter[] { 
+		return searchForGeocaches(true, startPosition, endPosition - startPosition + 1, 5, -1, new Filter[] { 
 				new PointRadiusFilter(latitude, longitude, (long) (radiusMiles * 1609L)),
 				new GeocacheTypeFilter(cacheTypes)
 		});
@@ -50,15 +50,15 @@ public abstract class AbstractGeocachingApiV2 extends AbstractGeocachingApi {
 	}
 	
 	public List<SimpleGeocache> getCaches(String[] cacheCodes, boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount) throws GeocachingApiException {
-		return searchForGeocaches(isLite, startIndex, maxPerPage, geocacheLogCount, trackableLogCount, new CacheFilter[] {new CacheCodeFilter(cacheCodes)});
+		return searchForGeocaches(isLite, startIndex, maxPerPage, geocacheLogCount, trackableLogCount, new Filter[] {new CacheCodeFilter(cacheCodes)});
 	}
 
 	@Override
-	public List<WayPoint> getWayPointsByCache(String cacheCode) throws GeocachingApiException {
+	public List<Waypoint> getWayPointsByCache(String cacheCode) throws GeocachingApiException {
 		return null;
 	}
 	
-	public abstract List<SimpleGeocache> searchForGeocaches(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, CacheFilter[] filters) throws GeocachingApiException;
+	public abstract List<SimpleGeocache> searchForGeocaches(boolean isLite, int startIndex, int maxPerPage, int geocacheLogCount, int trackableLogCount, Filter[] filters) throws GeocachingApiException;
 	
 	public abstract UserProfile getYourUserProfile(boolean favoritePointData, boolean geocacheData, boolean publicProfileData, boolean souvenirData, boolean trackableData) throws GeocachingApiException;
 	public abstract CacheLog createFieldNoteAndPublish(String cacheCode, LogType logType, Date dateLogged, String note, boolean publish, ImageData imageData, boolean favoriteThisCache) throws GeocachingApiException;

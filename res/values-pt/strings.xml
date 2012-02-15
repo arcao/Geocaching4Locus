@@ -11,7 +11,6 @@
 	<string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles…</string>
 	<string name="preferences">Configuração</string>
 	<string name="wrong_coordinates">Formato de coordenadas errado!</string>
-	<string name="search_and_import_button">Procurar e mostrar no Locus</string>
 	<string name="coordinates">Coordenadas</string>
 	<string name="pref_title_geocaching_credentials">Credenciais geocaching.com</string>
 	<string name="pref_username">Nome de Utilizador</string>
@@ -28,7 +27,6 @@
 	<string name="pref_use_compression_summary">Usar compressão HTTP (Experimental)</string>
 	<string name="pref_imperial_units">Unidades Imperiais</string>
 	<string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
-	<string name="download_simple_cache_data">Apenas informação simplificada das caches</string>
 	<string name="import_caches">Importar caches</string>
 	<string name="error_credentials">Nome de utilizador ou palavra passe inválidos. Por favor preencha a informação nas configurações.</string>
 	<string name="error_title">Ocorrência de erros!</string>
@@ -42,6 +40,7 @@
 	<string name="pref_menu_select_all">Selecionar tudo</string>
 	<string name="pref_menu_deselect_all">Retirar seleção</string>
 	<string name="locus_update_cache">Atualizar cache</string>
+	<string name="locus_import_cache">Importar cache</string>
 	<string name="update_cache_progress">A atualizar cache…</string>
 	<string name="pref_title_downloading">A descarregar</string>
 	<string name="pref_count_of_logs">Número de registos</string>
@@ -50,13 +49,34 @@
 	<string name="pref_count_of_trackables">Número de trackables</string>
 	<string name="pref_count_of_trackables_text">trackables</string>
 	<string name="pref_count_of_trackables_summary">Número de trackables a descarregar com a cache</string>
-	<string name="pref_download_all_cache_data_on_displaying">Descarrgar toda a informação da cache quando é apresentada</string>
-	<string name="pref_download_all_cache_data_on_displaying_summary">Se uma cache tem informação simples, apenas será descarregada a informação completa quando se abre a apresentação da cache</string>
 	<string name="pref_not_filled">Não preenchido</string>
 	<string name="gps">GPS</string>
 	<string name="close">Fechar</string>
 	<string name="pref_show_disabled">Mostrar inativos</string>
 	<string name="pref_show_disabled_summary">Mostrar caches temporariamente inativas</string>
-	<string name="locus_import_cache">Importar para Locus</string>
 	<string name="import_cache_progress">A descarregar cache…</string>
+	<string name="pref_title_about">Sobre</string>
+	<string name="pref_version">Versão</string>
+	<string name="pref_author">Autor</string>
+	<string name="pref_website">Website, forum, etc.</string>
+	<string name="pref_donate_paypal">Doar por Paypal</string>
+	<string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros...</string>
+	<string name="pref_donate_paypal_choose_currency">Escolha a moeda</string>
+	<string name="pref_title_cache_type_filter">Tipos de caches</string>
+	<string name="pref_title_difficulty_filter">Dificuldade</string>
+	<string name="pref_title_terrain_filter">Terreno</string>
+	<string name="pref_difficulty_min">Dificuldade Mín.</string>
+	<string name="pref_difficulty_max">Dificuldade Máx.</string>
+	<string name="pref_terrain_min">Terreno Mín.</string>
+	<string name="pref_terrain_max">Terreno Máx.</string>
+	<string name="download_button">Download para o Locus</string>
+	<string name="pref_download_basic">Basic info only</string>
+	<string name="pref_download_basic_summary">Download only basic information about cache</string>
+	<string name="pref_download_on_show">Download rest info on show</string>
+	<string name="pref_download_on_show_summary">Download rest information about cache when the cache content is shown in Locus</string>
+	<string-array name="pref_download_on_show_entries">
+		<item>once</item>
+		<item>every</item>
+		<item>never</item>
+	</string-array>
 </resources>

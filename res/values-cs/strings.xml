@@ -11,7 +11,6 @@
 	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
 	<string name="preferences">Nastavení</string>
 	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
-	<string name="search_and_import_button">Hledat a zobrazit v Locusu</string>
 	<string name="coordinates">Souřadnice</string>
 	<string name="pref_title_geocaching_credentials">Přihlašovací údaje pro Geocaching.com</string>
 	<string name="pref_username">Uživatelské jméno</string>
@@ -28,7 +27,6 @@
 	<string name="pref_use_compression_summary">Použít HTTP kompresi (experimentální)</string>
 	<string name="pref_imperial_units">Imperiální jednotky</string>
 	<string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
-	<string name="download_simple_cache_data">Pouze základní data o keši</string>
 	<string name="import_caches">Importovat keše</string>
 	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej své uživatelské údaje v nastavení.</string>
 	<string name="error_title">Nastala chyba!</string>
@@ -42,6 +40,7 @@
 	<string name="pref_menu_select_all">Označit vše</string>
 	<string name="pref_menu_deselect_all">Odznačit vše</string>
 	<string name="locus_update_cache">Aktualizovat keš</string>
+	<string name="locus_import_cache">Importovat keš</string>
 	<string name="update_cache_progress">Aktualizuji keš…</string>
 	<string name="pref_title_downloading">Stahování</string>
 	<string name="pref_count_of_logs">Počet logů</string>
@@ -50,13 +49,34 @@
 	<string name="pref_count_of_trackables">Počet trasovatelných předmětů</string>
 	<string name="pref_count_of_trackables_text">trasovatelných předmětů</string>
 	<string name="pref_count_of_trackables_summary">Počet trasovatelných předmětů, které se mají stáhnout s keší</string>
-	<string name="pref_download_all_cache_data_on_displaying">Stáhnout všechny informace o keši při zobrazení</string>
-	<string name="pref_download_all_cache_data_on_displaying_summary">Pokud keš obsahuje pouze základní informace, zbylé informace budou staženy před zobrazením dialogu o keši</string>
 	<string name="pref_not_filled">nevyplněno</string>
 	<string name="gps">GPS</string>
 	<string name="close">Zavřít</string>
 	<string name="pref_show_disabled">Zobrazit nedostupné</string>
 	<string name="pref_show_disabled_summary">Zobrazit dočasně nedostupné (disablované) keše</string>
-	<string name="locus_import_cache">Importovat do Locusu</string>
 	<string name="import_cache_progress">Stahuji keš…</string>
+	<string name="pref_title_about">O aplikaci</string>
+	<string name="pref_version">Verze</string>
+	<string name="pref_author">Tvůrce</string>
+	<string name="pref_website">Stránky, fórum, atd.</string>
+	<string name="pref_donate_paypal">Přispět pomocí Paypalu</string>
+	<string name="pref_donate_paypal_summary">Podpora dalšího vývoje…</string>
+	<string name="pref_donate_paypal_choose_currency">Vyberte vaši měnu</string>
+	<string name="pref_title_cache_type_filter">Typy keší</string>
+	<string name="pref_title_difficulty_filter">Obtížnost</string>
+	<string name="pref_title_terrain_filter">Terén</string>
+	<string name="pref_difficulty_min">Min. obtížnost</string>
+	<string name="pref_difficulty_max">Max. obtížnost</string>
+	<string name="pref_terrain_min">Min. terén</string>
+	<string name="pref_terrain_max">Max. terén</string>
+	<string name="download_button">Stáhnout do Locusu</string>
+	<string name="pref_download_basic">Pouze základní info</string>
+	<string name="pref_download_basic_summary">Stáhnout pouze základní informace o keši</string>
+	<string name="pref_download_on_show">Stáhnout zbývající info při zobrazení</string>
+	<string name="pref_download_on_show_summary">Stáhnout zbývající informace o keši, až když Locus zobrazí obsah keše</string>
+	<string-array name="pref_download_on_show_entries">
+		<item>jednou</item>
+		<item>pokaždé</item>
+		<item>nikdy</item>
+	</string-array>
 </resources>

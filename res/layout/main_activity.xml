@@ -90,11 +90,6 @@
             </TableLayout>
 
             <CheckBox
-                android:id="@+id/simpleCacheDataCheckBox"
-                style="@style/SimpleCheckbox"
-                android:text="@string/download_simple_cache_data" />
-
-            <CheckBox
                 android:id="@+id/importCachesCheckBox"
                 style="@style/SimpleCheckbox"
                 android:text="@string/import_caches" />
@@ -106,7 +101,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dip"
                 android:onClick="onClickSearch"
-                android:text="@string/search_and_import_button" >
+                android:text="@string/download_button" >
             </Button>
         </LinearLayout>
     </ScrollView>

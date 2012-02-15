@@ -4,7 +4,7 @@ import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class CacheCodeFilter implements CacheFilter {
+public class CacheCodeFilter implements Filter {
 	private static final String NAME = "CacheCode";
 	
 	protected String[] caches;

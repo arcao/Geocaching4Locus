@@ -4,7 +4,7 @@ import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class GeocacheExclusionsFilter implements CacheFilter {
+public class GeocacheExclusionsFilter implements Filter {
 	private static final String NAME = "GeocacheExclusions";
 	
 	private final Boolean archived;

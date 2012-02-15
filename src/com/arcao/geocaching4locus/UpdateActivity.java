@@ -11,6 +11,7 @@ import geocaching.api.impl.LiveGeocachingApi;
 
 import java.util.List;
 
+import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import android.app.Activity;
@@ -30,13 +31,16 @@ import com.arcao.geocaching4locus.util.UserTask;
 public class UpdateActivity extends Activity {
 	private final static String TAG = "Geocaching4Locus|UpdateActivity";
 	private UpdateTask task = null;
+	
+	protected static final String UPDATE_ONCE = "0";
+	protected static final String UPDATE_EVERY = "1";
+	protected static final String UPDATE_NEVER = "2";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		boolean downloadAllCacheDataOnDisplaying = prefs.getBoolean("download_all_cache_data_on_displaying", false);
 		String cacheId = null;
 		
 		if (getIntent().hasExtra("cacheId")) {
@@ -48,13 +52,23 @@ public class UpdateActivity extends Activity {
 				cacheId = p.getGeocachingData().cacheID;
 			}
 		} else if (getIntent().hasExtra("simpleCacheId")) {
-			if (!downloadAllCacheDataOnDisplaying) {
+			cacheId = getIntent().getStringExtra("simpleCacheId");
+			
+			if (UPDATE_NEVER.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE))) {
 				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
 				setResult(RESULT_CANCELED);
 				finish();
 				return;
 			}
-			cacheId = getIntent().getStringExtra("simpleCacheId");
+			if (UPDATE_ONCE.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE))) {
+				Point p = DisplayDataExtended.loadGeocacheFromCache(this, cacheId);
+				if (p != null) {
+					Log.i(TAG, "Found cache file for: " + cacheId);
+					setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, false));
+					finish();
+					return;
+				}
+			}
 		}
 		
 		if (cacheId == null) {
@@ -73,6 +87,7 @@ public class UpdateActivity extends Activity {
 		private ProgressDialog dialog;
 		private SharedPreferences prefs;
 		private Account account;
+		private boolean replaceCache;
 		private int logCount;
 		private int trackableCount;
 		
@@ -88,6 +103,7 @@ public class UpdateActivity extends Activity {
 			
 			logCount = prefs.getInt("downloading_count_of_logs", 5);
 			trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
+			replaceCache = UPDATE_ONCE.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE));
 						
 			account = new Account(userName, password, session);
 			
@@ -105,9 +121,19 @@ public class UpdateActivity extends Activity {
 			if (dialog != null && dialog.isShowing())
 				dialog.dismiss();
 			
+			if (result == null) {
+				setResult(RESULT_CANCELED);
+				finish();
+				return;
+			}
+			
 			Point p = result.toPoint();
 			
-			setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, true));
+			if (replaceCache) {
+				DisplayDataExtended.storeGeocacheToCache(UpdateActivity.this, p);
+			}
+			
+			setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, replaceCache));
 			finish();
 		}
 

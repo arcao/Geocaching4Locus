@@ -30,10 +30,13 @@ import android.widget.Toast;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
+import com.arcao.wherigoservice.api.WherigoService;
+import com.arcao.wherigoservice.api.WherigoServiceImpl;
 
 public class ImportActivity extends Activity {
 	private final static String TAG = "Geocaching4Locus|ImportActivity";
-	protected final static Pattern CACHE_CODE = Pattern.compile("(GC[A-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
+	protected final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
+	protected final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 	protected ImpotTask task = null;
 
 	@Override
@@ -51,14 +54,17 @@ public class ImportActivity extends Activity {
 			return;
 		}
 		
-		String url = getIntent().getData().toString();
+		String url = getIntent().getDataString();
 		
-		Matcher m = CACHE_CODE.matcher(url);
+		Matcher m = CACHE_CODE_PATTERN.matcher(url);
 		if (!m.find()) {
-			Log.e(TAG, "Cache code not found in url: " + url);
-			Toast.makeText(this, "GUID isn't supported yet. Sorry.", Toast.LENGTH_LONG).show();
-			finish();
-			return;
+			m = GUID_PATTERN.matcher(url);
+			if (!m.find()) {
+				Log.e(TAG, "Cache code / guid not found in url: " + url);
+				Toast.makeText(this, "Cache code or GUID isn't found in URL: " + url, Toast.LENGTH_LONG).show();
+				finish();
+				return;
+			}
 		}
 		
 		String cacheId = m.group(1);
@@ -118,6 +124,14 @@ public class ImportActivity extends Activity {
 		protected Geocache doInBackground(String... params) throws Exception {
 			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
 				throw new InvalidCredentialsException("Username or password is empty.");
+			
+			// if it's guid we need to convert to cache code
+			for (int i = 0; i < params.length; i++) {
+				if (!params[i].toLowerCase().startsWith("gc")) {
+					WherigoService wherigoService = new WherigoServiceImpl();
+					params[i] = wherigoService.getCacheCodeFromGuid(params[i]);
+				}
+			}
 			
 			AbstractGeocachingApiV2 api = new LiveGeocachingApi();
 			

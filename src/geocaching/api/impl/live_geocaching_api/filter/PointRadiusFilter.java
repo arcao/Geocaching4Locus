@@ -4,7 +4,7 @@ import google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 
-public class PointRadiusFilter implements CacheFilter {
+public class PointRadiusFilter implements Filter {
 	private static final String NAME = "PointRadius"; 
 	
 	protected long distanceInMeters;

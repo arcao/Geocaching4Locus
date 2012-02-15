@@ -11,7 +11,6 @@
 	<string name="acquiring_network_location">Pozíció meghatározása hálózatról…</string>
 	<string name="preferences">Beállítások</string>
 	<string name="wrong_coordinates">Hibás koordináta formátum</string>
-	<string name="search_and_import_button">Keresés és megjelenítés a Locusban</string>
 	<string name="coordinates">Koordináták</string>
 	<string name="pref_title_geocaching_credentials">Geocaching.com bejelentkezési adatok</string>
 	<string name="pref_username">Felhasználónév</string>
@@ -28,7 +27,6 @@
 	<string name="pref_use_compression_summary">HTTP tömörítés használata (haladó)</string>
 	<string name="pref_imperial_units">Angolszász mértékegység</string>
 	<string name="pref_imperial_units_summary">Mérföld használata km helyett</string>
-	<string name="download_simple_cache_data">Csak alap geoláda adatok</string>
 	<string name="import_caches">Geoládák importálása</string>
 	<string name="error_credentials">Érvénytelen felhasználónév vagy jelszó. Kérem adja meg ismét a felhasználói adatokat a beállításoknál.</string>
 	<string name="error_title">Hiba történt!</string>
@@ -42,6 +40,7 @@
 	<string name="pref_menu_select_all">Minden kijelölése.</string>
 	<string name="pref_menu_deselect_all">A kijelölések törlése.</string>
 	<string name="locus_update_cache">Cache frissítése</string>
+	<string name="locus_import_cache">Import a Locus</string>
 	<string name="update_cache_progress">Cache frissítése…</string>
 	<string name="pref_title_downloading">Letöltés</string>
 	<string name="pref_count_of_logs">Logok száma</string>
@@ -50,13 +49,34 @@
 	<string name="pref_count_of_trackables">TravelBug-ok száma</string>
 	<string name="pref_count_of_trackables_text">TravelBug-ok</string>
 	<string name="pref_count_of_trackables_summary">A ládával együtt letöltendő TravelBug-ok száma</string>
-	<string name="pref_download_all_cache_data_on_displaying">Megjelenítéskor az összes ládaadat letöltése</string>
-	<string name="pref_download_all_cache_data_on_displaying_summary">Ha csak az alap ládaadatok vannak tárolva, a láda-ablak megnyitásakor betöltődik az összes adat.</string>
 	<string name="pref_not_filled">nincs kitöltve</string>
 	<string name="gps">GPS</string>
 	<string name="close">Bezárás</string>
 	<string name="pref_show_disabled">Letiltottak mutatása</string>
 	<string name="pref_show_disabled_summary">Átmenetileg letiltott ládák mutatása</string>
-	<string name="locus_import_cache">Import a Locus</string>
 	<string name="import_cache_progress">Geoláda letöltése…</string>
+	<string name="pref_title_about">Névjegy</string>
+	<string name="pref_version">Verzió</string>
+	<string name="pref_author">Szerző</string>
+	<string name="pref_website">Weblap, fórum, stb.</string>
+	<string name="pref_donate_paypal">Támogatás Paypal-lal.</string>
+	<string name="pref_donate_paypal_summary">Támogasd a további fejlesztést...</string>
+	<string name="pref_donate_paypal_choose_currency">Válaszd ki a valutanemet.</string>
+	<string name="pref_title_cache_type_filter">Láda típus</string>
+	<string name="pref_title_difficulty_filter">Nehézség</string>
+	<string name="pref_title_terrain_filter">Terep</string>
+	<string name="pref_difficulty_min">Min. nehézség</string>
+	<string name="pref_difficulty_max">Max. nehézség</string>
+	<string name="pref_terrain_min">Min. terep</string>
+	<string name="pref_terrain_max">Max. terep</string>
+	<string name="download_button">Letöltés Locus-ba</string>
+	<string name="pref_download_basic">Csak az alap információk</string>
+	<string name="pref_download_basic_summary">Csak a láda alap információk letöltése.</string>
+	<string name="pref_download_on_show">A maradék info letöltése megnyitáskor</string>
+	<string name="pref_download_on_show_summary">A láda maradék adatainak letöltése, amikor a láda megnyitásra kerül a Locusban.</string>
+	<string-array name="pref_download_on_show_entries">
+		<item>egyszer</item>
+		<item>mindig</item>
+		<item>soha</item>
+	</string-array>
 </resources>

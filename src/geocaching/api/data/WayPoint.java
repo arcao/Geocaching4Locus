@@ -7,7 +7,7 @@ import java.util.Date;
 
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
 
-public class WayPoint {
+public class Waypoint {
 	private final double latitude;
 	private final double longitude;
 	private final Date time;
@@ -17,7 +17,7 @@ public class WayPoint {
 	private final WayPointType wayPointType;
 	private final String iconName;
 
-	public WayPoint(double longitude, double latitude, Date time, String waypointGeoCode, String name, String note, WayPointType wayPointType) {
+	public Waypoint(double longitude, double latitude, Date time, String waypointGeoCode, String name, String note, WayPointType wayPointType) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = time;

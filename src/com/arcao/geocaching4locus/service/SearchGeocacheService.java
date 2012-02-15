@@ -7,13 +7,16 @@ import geocaching.api.exception.GeocachingApiException;
 import geocaching.api.exception.InvalidCredentialsException;
 import geocaching.api.exception.InvalidSessionException;
 import geocaching.api.impl.LiveGeocachingApi;
-import geocaching.api.impl.live_geocaching_api.filter.CacheFilter;
+import geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import geocaching.api.impl.live_geocaching_api.filter.Filter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
 import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
 import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -49,6 +52,10 @@ public class SearchGeocacheService extends AbstractService {
 	private boolean showFound;
 	private boolean showOwn;
 	private boolean showDisabled;
+	private float difficultyMin;
+	private float difficultyMax;
+	private float terrainMin;
+	private float terrainMax;
 	private boolean simpleCacheData;
 	private double distance;
 	private boolean importCaches;
@@ -91,7 +98,7 @@ public class SearchGeocacheService extends AbstractService {
 		sendProgressUpdate();
 		List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
 		sendProgressComplete(count);
-		if (caches != null)
+		if (caches != null && caches.size() > 0)
 			callLocus(caches);
 	}
 
@@ -102,9 +109,29 @@ public class SearchGeocacheService extends AbstractService {
 		showDisabled = prefs.getBoolean("filter_show_disabled", false);
 		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
 
-		distance = prefs.getFloat("distance", 160.9344F);
+		difficultyMin = Float.parseFloat(prefs.getString("difficulty_filter_min", "1"));
+		difficultyMax = Float.parseFloat(prefs.getString("difficulty_filter_max", "5"));
+		
+		terrainMin = Float.parseFloat(prefs.getString("terrain_filter_min", "1"));
+		terrainMax = Float.parseFloat(prefs.getString("terrain_filter_max", "5"));
+		
+		String distanceString;
 		if (prefs.getBoolean("imperial_units", false)) {
-			distance = distance / 1.609344;
+			distanceString = prefs.getString("filter_distance", "100");
+		} else {
+			distanceString = prefs.getString("filter_distance", "160.9344");
+		}
+		
+		try {
+			distance = Float.parseFloat(distanceString);
+		} catch (NumberFormatException e) {
+			Log.e(TAG, e.getMessage(), e);
+			distance = 100;
+		}
+		
+		if (prefs.getBoolean("imperial_units", false)) {
+			// get kilometers from miles
+			distance = distance * 1.609344F;
 		}
 
 		current = 0;
@@ -155,9 +182,9 @@ public class SearchGeocacheService extends AbstractService {
 			Intent intent = null;
 			
 			// send data via file if is possible
-			String fileName = DisplayDataExtended.getCacheFileName(this);
-			if (fileName != null) {
-				intent = DisplayDataExtended.prepareDataFile(pointDataCollection, fileName);
+			File file = DisplayDataExtended.getCacheFileName(this);
+			if (file != null) {
+				intent = DisplayDataExtended.prepareDataFile(pointDataCollection, file);
 			} else {
 				intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
 			}
@@ -200,12 +227,14 @@ public class SearchGeocacheService extends AbstractService {
 			while (current < count) {
 				int perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
 
-				List<SimpleGeocache> cachesToAdd = api.searchForGeocaches(simpleCacheData, current, perPage, logCount, trackableCount, new CacheFilter[] {
+				List<SimpleGeocache> cachesToAdd = api.searchForGeocaches(simpleCacheData, current, perPage, logCount, trackableCount, new Filter[] {
 						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 						new GeocacheTypeFilter(cacheTypes),
 						new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
 						new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
-						new NotHiddenByUsersFilter(showOwn ? null : account.getUserName())
+						new NotHiddenByUsersFilter(showOwn ? null : account.getUserName()),
+						new DifficultyFilter(difficultyMin, difficultyMax),
+						new TerrainFilter(terrainMin, terrainMax)
 				});
 
 				if (isCanceled())
@@ -213,7 +242,15 @@ public class SearchGeocacheService extends AbstractService {
 
 				if (cachesToAdd.size() == 0)
 					break;
-
+				
+				// FIX for not working distance filter
+				if (computeDistance(latitude, longitude, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
+					removeCachesOverDistance(cachesToAdd, latitude, longitude, distance);
+					
+					if (cachesToAdd.size() == 0)
+						break;
+				}
+				
 				caches.addAll(cachesToAdd);
 
 				current = current + perPage;
@@ -237,6 +274,32 @@ public class SearchGeocacheService extends AbstractService {
 			}
 		}
 	}
+	
+	protected void removeCachesOverDistance(List<SimpleGeocache> caches, double latitude, double longitude, double maxDistance) {
+		while (caches.size() > 0) {
+			SimpleGeocache cache = caches.get(caches.size() - 1);
+			double distance = computeDistance(latitude, longitude, cache); 
+			
+			if (distance > maxDistance) {
+				Log.i(TAG, "Cache " + cache.getGeoCode() + " is over distance.");
+				caches.remove(cache);
+			} else {
+				return;
+			}
+		}
+	}
+
+	protected double computeDistance(double latitude, double longitude, SimpleGeocache cache) {
+    final double r = 6366.707;
+
+    // convert to radians
+    double latitudeFrom = Math.toRadians(latitude);
+    double longitudeFrom = Math.toRadians(longitude);
+    double latitudeTo = Math.toRadians(cache.getLatitude());
+    double longitudeTo = Math.toRadians(cache.getLongitude());
+
+    return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
+  } 
 
 	private void login(AbstractGeocachingApiV2 api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 		try {

@@ -57,7 +57,7 @@ public class LocusTesting {
 		});
 	}
 	
-	public static boolean isAndroidMarketInstalled(Context context) {
+	protected static boolean isAndroidMarketInstalled(Context context) {
     Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=dummy"));
     PackageManager manager = context.getPackageManager();
     List<ResolveInfo> list = manager.queryIntentActivities(market, 0);

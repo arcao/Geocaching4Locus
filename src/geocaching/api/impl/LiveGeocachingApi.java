@@ -189,6 +189,7 @@ public class LiveGeocachingApi extends AbstractGeocachingApiV2 implements Geocac
 			switch (status.getStatusCode()) {
 				case OK:
 					return;
+				case NotAuthorized:
 				case UserAccountProblem:
 				case UserDidNotAuthorize:
 				case UserTokenNotValid:

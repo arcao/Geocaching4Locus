@@ -1,17 +1,7 @@
 package com.arcao.geocaching4locus;
 
-import geocaching.api.AbstractGeocachingApi;
-import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.data.Geocache;
-import geocaching.api.data.SimpleGeocache;
-import geocaching.api.exception.GeocachingApiException;
-import geocaching.api.exception.InvalidCredentialsException;
-import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.LiveGeocachingApi;
-
-import java.util.List;
-
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
+import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import android.app.Activity;
@@ -25,6 +15,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.exception.GeocachingApiException;
+import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.InvalidSessionException;
+import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.UserTask;
 
@@ -127,7 +123,7 @@ public class UpdateActivity extends Activity {
 				return;
 			}
 			
-			Point p = result.toPoint();
+			Point p = LocusDataMapper.toLocusPoint(result);
 			
 			if (replaceCache) {
 				DisplayDataExtended.storeGeocacheToCache(UpdateActivity.this, p);
@@ -142,20 +138,19 @@ public class UpdateActivity extends Activity {
 			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
 				throw new InvalidCredentialsException("Username or password is empty.");
 			
-			AbstractGeocachingApiV2 api = new LiveGeocachingApi();
-			
-			login(api, account);
+			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 			
 			Geocache cache = null;
 			try {
-				List<SimpleGeocache> caches = api.getCaches(params, false, 0, 1, logCount, trackableCount);
-				if (caches != null && caches.size() == 1)
-					cache = (Geocache) caches.get(0);
+				login(api, account);
+				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
 				account.setSession(null);
 				removeSession();
 				
-				cache = doInBackground(params);
+				// try againg
+				login(api, account);
+				cache = api.getCache(params[0], logCount, trackableCount);
 			} finally {
 				account.setSession(api.getSession());
 				if (account.getSession() != null && account.getSession().length() > 0) {
@@ -226,7 +221,7 @@ public class UpdateActivity extends Activity {
 			cancel(true);
 		}
 		
-		private void login(AbstractGeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+		private void login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 			try {
 				if (account.getSession() == null || account.getSession().length() == 0) {
 					api.openSession(account.getUserName(), account.getPassword());

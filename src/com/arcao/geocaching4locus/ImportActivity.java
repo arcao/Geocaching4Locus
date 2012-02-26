@@ -1,19 +1,10 @@
 package com.arcao.geocaching4locus;
 
-import geocaching.api.AbstractGeocachingApi;
-import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.data.Geocache;
-import geocaching.api.data.SimpleGeocache;
-import geocaching.api.exception.GeocachingApiException;
-import geocaching.api.exception.InvalidCredentialsException;
-import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.LiveGeocachingApi;
-
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import menion.android.locus.addon.publiclib.DisplayData;
+import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -27,6 +18,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.exception.GeocachingApiException;
+import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.InvalidSessionException;
+import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -112,7 +109,7 @@ public class ImportActivity extends Activity {
 			
 			if (result != null) {			
 				PointsData pointsData = new PointsData("Geocaching");
-				pointsData.addPoint(result.toPoint());
+				pointsData.addPoint(LocusDataMapper.toLocusPoint(result));
 				
 				DisplayData.sendData(ImportActivity.this, pointsData, true);
 			}
@@ -133,20 +130,19 @@ public class ImportActivity extends Activity {
 				}
 			}
 			
-			AbstractGeocachingApiV2 api = new LiveGeocachingApi();
-			
-			login(api, account);
+			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 			
 			Geocache cache = null;
 			try {
-				List<SimpleGeocache> caches = api.getCaches(params, false, 0, 1, logCount, trackableCount);
-				if (caches != null && caches.size() == 1)
-					cache = (Geocache) caches.get(0);
+				login(api, account);
+				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
 				account.setSession(null);
 				removeSession();
 				
-				cache = doInBackground(params);
+				// try againg
+				login(api, account);
+				cache = api.getCache(params[0], logCount, trackableCount);
 			} finally {
 				account.setSession(api.getSession());
 				if (account.getSession() != null && account.getSession().length() > 0) {
@@ -217,7 +213,7 @@ public class ImportActivity extends Activity {
 			cancel(true);
 		}
 		
-		private void login(AbstractGeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+		private void login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 			try {
 				if (account.getSession() == null || account.getSession().length() == 0) {
 					api.openSession(account.getUserName(), account.getPassword());

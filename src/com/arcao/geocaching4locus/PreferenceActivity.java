@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import geocaching.api.data.type.CacheType;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.preference.ListPreference;
 import com.hlidskialf.android.preference.SeekBarPreference;
 

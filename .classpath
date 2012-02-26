@@ -3,8 +3,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="lib/locusaddonpubliclib.jar" sourcepath="lib/locusaddonpubliclib_src.jar"/>
+	<classpathentry kind="lib" path="libs/android-logging-log4j-1.0.2.jar"/>
+	<classpathentry kind="lib" path="libs/geocaching-api-1.2.jar"/>
+	<classpathentry kind="lib" path="libs/locus-addon-publiclib-1.1.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

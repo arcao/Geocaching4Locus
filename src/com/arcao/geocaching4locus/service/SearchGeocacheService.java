@@ -1,27 +1,12 @@
 package com.arcao.geocaching4locus.service;
 
-import geocaching.api.AbstractGeocachingApiV2;
-import geocaching.api.data.SimpleGeocache;
-import geocaching.api.data.type.CacheType;
-import geocaching.api.exception.GeocachingApiException;
-import geocaching.api.exception.InvalidCredentialsException;
-import geocaching.api.exception.InvalidSessionException;
-import geocaching.api.impl.LiveGeocachingApi;
-import geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import geocaching.api.impl.live_geocaching_api.filter.Filter;
-import geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
+import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.content.Intent;
@@ -29,6 +14,22 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.data.SimpleGeocache;
+import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching.api.exception.GeocachingApiException;
+import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.InvalidSessionException;
+import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching4locus.AppConstants;
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
@@ -167,10 +168,10 @@ public class SearchGeocacheService extends AbstractService {
 					points = new PointsData("Geocaching");
 				}
 				// convert SimpleGeocache to Point
-				Point p = cache.toPoint();
+				Point p = LocusDataMapper.toLocusPoint(cache);
 				
 				if (simpleCacheData) {
-					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getGeoCode());
+					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getCacheCode());
 				}
 
 				points.addPoint(p);
@@ -218,24 +219,32 @@ public class SearchGeocacheService extends AbstractService {
 		if (isCanceled())
 			return null;
 
-		AbstractGeocachingApiV2 api = new LiveGeocachingApi();
+		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 		login(api, account);
 
 		sendProgressUpdate();
 		try {
 			current = 0;
+			int perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
+			
 			while (current < count) {
-				int perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
+				perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
 
-				List<SimpleGeocache> cachesToAdd = api.searchForGeocaches(simpleCacheData, current, perPage, logCount, trackableCount, new Filter[] {
-						new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
-						new GeocacheTypeFilter(cacheTypes),
-						new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
-						new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
-						new NotHiddenByUsersFilter(showOwn ? null : account.getUserName()),
-						new DifficultyFilter(difficultyMin, difficultyMax),
-						new TerrainFilter(terrainMin, terrainMax)
-				});
+				List<SimpleGeocache> cachesToAdd;
+				
+				if (current == 0) {
+					cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, trackableCount, new Filter[] {
+							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
+							new GeocacheTypeFilter(cacheTypes),
+							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
+							new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
+							new NotHiddenByUsersFilter(showOwn ? null : account.getUserName()),
+							new DifficultyFilter(difficultyMin, difficultyMax),
+							new TerrainFilter(terrainMin, terrainMax)
+					});
+				} else {
+					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, trackableCount);
+				}
 
 				if (isCanceled())
 					return null;
@@ -281,7 +290,7 @@ public class SearchGeocacheService extends AbstractService {
 			double distance = computeDistance(latitude, longitude, cache); 
 			
 			if (distance > maxDistance) {
-				Log.i(TAG, "Cache " + cache.getGeoCode() + " is over distance.");
+				Log.i(TAG, "Cache " + cache.getCacheCode() + " is over distance.");
 				caches.remove(cache);
 			} else {
 				return;
@@ -301,7 +310,7 @@ public class SearchGeocacheService extends AbstractService {
     return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
   } 
 
-	private void login(AbstractGeocachingApiV2 api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+	private void login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 		try {
 			if (account.getSession() == null || account.getSession().length() == 0) {
 				api.openSession(account.getUserName(), account.getPassword());

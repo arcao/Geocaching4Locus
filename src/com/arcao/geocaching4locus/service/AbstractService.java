@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import geocaching.api.exception.InvalidCredentialsException;
-
 import java.util.Date;
 
 import android.app.IntentService;
@@ -22,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 

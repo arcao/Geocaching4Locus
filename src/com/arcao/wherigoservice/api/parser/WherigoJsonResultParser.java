@@ -1,8 +1,9 @@
 package com.arcao.wherigoservice.api.parser;
 
-import geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 
 import java.io.IOException;
+
+import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 
 public class WherigoJsonResultParser {
 	public static Result parse(JsonReader r) throws IOException {

@@ -1,7 +1,5 @@
 package com.arcao.wherigoservice.api;
 
-import geocaching.api.impl.live_geocaching_api.parser.JsonReader;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,6 +11,7 @@ import java.util.zip.InflaterInputStream;
 
 import android.util.Log;
 
+import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 

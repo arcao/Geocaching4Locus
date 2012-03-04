@@ -22,6 +22,7 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 
 public class UpdateActivity extends Activity {
@@ -196,7 +197,7 @@ public class UpdateActivity extends Activity {
 				if (message == null)
 					message = "";
 				
-				intent = createErrorIntent(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()), false);
+				intent = createErrorIntent(R.string.error, String.format("%s<br>Exception: %s<br>Stack trace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)), false);
 			}
 			
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);

@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -26,6 +27,7 @@ import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
@@ -111,7 +113,11 @@ public class ImportActivity extends Activity {
 				PointsData pointsData = new PointsData("Geocaching");
 				pointsData.addPoint(LocusDataMapper.toLocusPoint(result));
 				
-				DisplayData.sendData(ImportActivity.this, pointsData, true);
+				try {
+					DisplayData.sendData(ImportActivity.this, pointsData, true);
+				} catch (RequiredVersionMissingException e) {
+					Log.e(TAG, e.getMessage(), e);
+				}
 			}
 			
 			finish();
@@ -187,8 +193,8 @@ public class ImportActivity extends Activity {
 				String message = e.getMessage();
 				if (message == null)
 					message = "";
-				
-				intent = createErrorIntent(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()), false);
+
+				intent = createErrorIntent(R.string.error, String.format("%s<br>Exception: %s<br>Stack trace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)), false);
 			}
 			
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);

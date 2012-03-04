@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.util.Throwables;
 
 public abstract class AbstractService extends IntentService {
 	protected String TAG;
@@ -131,7 +132,7 @@ public abstract class AbstractService extends IntentService {
 			if (message == null)
 				message = "";
 			
-			sendError(R.string.error, String.format("<br>%s<br> <br>Exception: %s<br>File: %s<br>Line: %d", message, e.getClass().getSimpleName(), e.getStackTrace()[0].getFileName(), e.getStackTrace()[0].getLineNumber()));
+			sendError(R.string.error, String.format("%s<br>Exception: %s<br>Stacktrace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)));
 		}
 	}
 	

@@ -13,7 +13,9 @@ public class Geocaching4LocusApplication extends Application {
     logConfigurator.setUseFileAppender(false);
     logConfigurator.setUseLogCatAppender(true);
     logConfigurator.setRootLevel(Level.INFO);
-    logConfigurator.setLevel("com.arcao", Level.DEBUG);
     logConfigurator.configure();
+    
+    // set level
+    logConfigurator.setLevel("com.arcao", Level.DEBUG);
 	}
 }

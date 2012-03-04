@@ -17,6 +17,7 @@ import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.Trackable;
+import com.arcao.geocaching.api.data.User;
 import com.arcao.geocaching.api.data.UserWaypoint;
 import com.arcao.geocaching.api.data.Waypoint;
 import com.arcao.geocaching.api.data.type.AttributeType;
@@ -46,7 +47,9 @@ public class LocusDataMapper {
 		d.type = toLocusCacheType(cache.getCacheType());
 		d.difficulty = cache.getDifficultyRating();
 		d.terrain = cache.getTerrainRating();
-		d.owner = cache.getAuthorName();
+		if (cache.getAuthor() != null) {
+			d.owner = cache.getAuthor().getUserName();
+		}
 		d.placedBy = cache.getContactName();
 		d.available = cache.isAvailable();
 		d.archived = cache.isArchived();
@@ -86,7 +89,7 @@ public class LocusDataMapper {
 			for (UserWaypoint userWaypoint : gc.getUserWaypoints()) {
 				PointGeocachingDataWaypoint w = new PointGeocachingDataWaypoint();
 
-				w.type = WaypointType.FinalLocation.getId();
+				w.type = toLocusWaypointType(WaypointType.FinalLocation);
 				w.typeImagePath = WaypointType.FinalLocation.getIconName();
 				w.lat = userWaypoint.getLatitude();
 				w.lon = userWaypoint.getLongitude();
@@ -125,7 +128,9 @@ public class LocusDataMapper {
 		t.imgUrl = trackable.getTrackableTypeImage();
 		t.name = trackable.getName();
 		//p.origin = 
-		t.owner = trackable.getOwnerUserName();
+		if (trackable.getOwner() != null) {
+			t.owner = trackable.getOwner().getUserName();
+		}
 		//p.released = 
 		t.srcDetails = String.format(TRACKABLE_URL, trackable.getTrackingNumber());
 		return t;
@@ -135,8 +140,11 @@ public class LocusDataMapper {
 		PointGeocachingDataLog l = new PointGeocachingDataLog();
 		
 		l.date = GPX_TIME_FMT.format(log.getDate());
-		l.finder = log.getAuthor();
-		// p.finderFound
+		User author = log.getAuthor();
+		if (author != null) {
+			l.finder = author.getUserName();
+			l.finderFound = author.getFindCount();
+		}
 		l.logText = log.getText();
 		l.type = toLocusLogType(log.getLogType());
 		return l;

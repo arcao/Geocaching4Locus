@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="libs/android-logging-log4j-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libs/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="libs/geocaching-api-1.3.jar" sourcepath="libs/geocaching-api-1.3-sources.jar"/>
-	<classpathentry kind="lib" path="libs/locus-addon-publiclib-1.3.jar" sourcepath="libs/locus-addon-publiclib-1.3-sources.jar"/>
+	<classpathentry kind="lib" path="libs/locus-addon-publiclib-1.4.jar" sourcepath="libs/locus-addon-publiclib-1.4-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

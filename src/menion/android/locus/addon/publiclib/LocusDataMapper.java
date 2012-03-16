@@ -2,7 +2,9 @@ package menion.android.locus.addon.publiclib;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
@@ -68,6 +70,7 @@ public class LocusDataMapper {
 			d.shortDescription = gc.getShortDescription();
 			d.longDescription = gc.getLongDescription();
 			d.encodedHints = gc.getHint();
+			d.notes = gc.getPersonalNote();
 
 			for (CacheLog log : gc.getCacheLogs()) {
 				d.logs.add(toLocusCacheLog(log));
@@ -100,11 +103,28 @@ public class LocusDataMapper {
 
 				index++;
 			}
+			
+			for (Waypoint waypoint : parsePersonalNoteWaypoints(gc.getPersonalNote())) {
+				d.waypoints.add(toLocusWaypoint(waypoint));
+			}
+			
 		}
 		
 		p.setGeocachingData(d);
 
 		return p;
+	}
+
+	protected static List<Waypoint> parsePersonalNoteWaypoints(String personalNote) {
+		List<Waypoint> waypoints = new ArrayList<Waypoint>();
+		
+		if (personalNote == null || personalNote.length() == 0)
+			return waypoints;
+		
+		// TODO
+		
+		
+		return waypoints;
 	}
 
 	protected static PointGeocachingDataWaypoint toLocusWaypoint(Waypoint waypoint) {

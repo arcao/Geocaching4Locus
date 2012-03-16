@@ -80,4 +80,11 @@ Gelieve het in te schakelen in Android instellingen.</string>
 		<item>Iedere</item>
 		<item>nooit</item>
 	</string-array>
+	<string name="menu_live_map">Live kaart</string>
+	<string name="menu_nearest">Nearest</string>
+	<string name="menu_manual">Handmatig</string>
+	<string name="menu_preferences">Voorkeuren</string>
+	<string name="pref_livemap">Live kaart</string>
+	<string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
+	<string name="user_waypoint_name">User waypoint %1$d</string>
 </resources>

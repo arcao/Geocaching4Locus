@@ -38,6 +38,7 @@ public class WherigoServiceImpl implements WherigoService {
 				if ("CacheResult".equals(name)) {
 					r.beginObject();
 					while (r.hasNext()) {
+						name = r.nextName();
 						if ("CacheCode".equals(name)) {
 							cacheCode = r.nextString();
 						} else {

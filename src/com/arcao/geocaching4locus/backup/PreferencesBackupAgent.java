@@ -1,10 +1,14 @@
 package com.arcao.geocaching4locus.backup;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.backup.BackupAgentHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.util.Log;
 
+@SuppressLint("NewApi")
+@TargetApi(8)
 public class PreferencesBackupAgent extends BackupAgentHelper {
 	private static final String TAG = "Geocaching4Locus|PreferencesBackupAgent";
 	

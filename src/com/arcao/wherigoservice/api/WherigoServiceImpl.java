@@ -73,6 +73,8 @@ public class WherigoServiceImpl implements WherigoService {
 				default:
 					throw new WherigoServiceException(status.getStatusCode(), status.getStatusMessage());
 			}
+		} else {
+			throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Missing Status in a response.");
 		}
 	}
 	

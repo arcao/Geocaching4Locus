@@ -108,7 +108,7 @@ public class SeekBarPreference extends DialogPreference implements
 
 			if (shouldPersist())
 				persistInt(mValue);
-			callChangeListener(new Integer(mValue));
+			callChangeListener(Integer.valueOf(mValue));
 		}
 		super.onClick(dialog, which);
 	}

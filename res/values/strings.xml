@@ -36,7 +36,7 @@
     <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
     <string name="error_title">Error occurs!</string>
     
-    <string name="ok_button">Ok</string>
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus require version %s or greater to work properly.</string>
     

@@ -3,10 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang3-3.1.jar" sourcepath="lib/commons-lang3-3.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/geocaching-api-1.5.jar" sourcepath="lib/geocaching-api-1.5-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/locus-addon-publiclib-1.4.jar" sourcepath="lib/locus-addon-publiclib-1.4-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-over-slf4j-1.6.4.jar" sourcepath="lib/log4j-over-slf4j-1.6.4-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-android-1.6.1-RC1.jar" sourcepath="lib/slf4j-android-1.6.1-RC1-sources.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry kind="lib" path="libs/locus-addon-publiclib-1.4.jar" sourcepath="libs/locus-addon-publiclib-1.4-sources.jar"/>
-	<classpathentry kind="lib" path="libs/geocaching-api-1.4.3.jar" sourcepath="libs/geocaching-api-1.4.3-sources.jar"/>
-	<classpathentry kind="lib" path="libs/slf4j-android-1.6.1-RC1.jar" sourcepath="libs/slf4j-android-1.6.1-RC1-sources.jar"/>
-	<classpathentry kind="lib" path="libs/log4j-over-slf4j-1.6.4.jar" sourcepath="libs/log4j-over-slf4j-1.6.4-sources.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

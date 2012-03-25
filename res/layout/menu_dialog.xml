@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:orientation="vertical" style="@style/ScreenContainer"
   xmlns:android="http://schemas.android.com/apk/res/android">
+  	<include layout="@layout/header"/>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Button android:id="@+id/btn_menu_live_map" android:text="@string/menu_live_map" android:drawableTop="@drawable/ic_menu_live_map" style="@style/MainMenuButton" />
+        <Button android:onClick="onClickLiveMap" android:id="@+id/btn_menu_live_map" android:text="@string/menu_live_map" android:drawableTop="@drawable/ic_menu_live_map" style="@style/MainMenuButton" />
         <ImageView style="@style/SeparatorVertical.Dark" />
-        <Button android:id="@+id/btn_menu_nearest" android:text="@string/menu_nearest" android:drawableTop="@drawable/ic_launcher" style="@style/MainMenuButton" />
-    </LinearLayout>
-    <ImageView style="@style/SeparatorHorizontal.Dark" />
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Button android:id="@+id/btn_menu_manual" android:text="@string/menu_manual" android:drawableTop="@drawable/ic_menu_manual" style="@style/MainMenuButton" />
+        <Button android:onClick="onClickManual" android:text="@string/menu_manual" android:drawableTop="@drawable/ic_menu_manual" style="@style/MainMenuButton" />
         <ImageView style="@style/SeparatorVertical.Dark" />
-        <Button android:id="@+id/btn_menu_preferences" android:text="@string/menu_preferences" android:drawableTop="@drawable/ic_menu_settings" style="@style/MainMenuButton" />
+        <Button android:onClick="onClickNearest" android:text="@string/menu_nearest" android:drawableTop="@drawable/ic_launcher" style="@style/MainMenuButton" />
     </LinearLayout>
     <LinearLayout android:id="@+id/linear_layout_main_menu_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" />
 </LinearLayout>

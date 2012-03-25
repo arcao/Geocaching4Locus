@@ -39,10 +39,6 @@
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <intent-filter android:label="@string/search_activity_name" android:icon="@drawable/ic_launcher">
-                <action android:name="menion.android.locus.MAIN_FUNCTION" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity android:label="@string/preferences" android:theme="@style/ThemeSettings" android:name="PreferenceActivity"></activity>
         <activity android:theme="@style/InvisibleTheme" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation" android:noHistory="true"></activity>

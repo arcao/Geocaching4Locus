@@ -23,7 +23,7 @@ public class MenuActivity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		Button liveMapButton = (Button) findViewById(R.id.btn_menu_live_map);
-		liveMapButton.setActivated(prefs.getBoolean("live_map", false));
+		liveMapButton.setPressed(prefs.getBoolean("live_map", false));
 	}
 	
 	public void onClickClose(View view) {
@@ -36,9 +36,9 @@ public class MenuActivity extends Activity {
 	
 	public void onClickLiveMap(View view) {
 		boolean activated = !prefs.getBoolean("live_map", false);
-		prefs.edit().putBoolean("live_map", activated);
+		prefs.edit().putBoolean("live_map", activated).commit();
 		
-		((Button)view).setActivated(activated);
+		((Button)view).setPressed(activated);
 	}
 	
 	public void onClickManual(View view) {

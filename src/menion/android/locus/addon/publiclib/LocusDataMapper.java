@@ -1,11 +1,14 @@
 package menion.android.locus.addon.publiclib;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingAttributes;
@@ -13,7 +16,12 @@ import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataLog;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataTravelBug;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
+
+import org.apache.commons.lang3.StringUtils;
+
+import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
@@ -22,13 +30,19 @@ import com.arcao.geocaching.api.data.Trackable;
 import com.arcao.geocaching.api.data.User;
 import com.arcao.geocaching.api.data.UserWaypoint;
 import com.arcao.geocaching.api.data.Waypoint;
+import com.arcao.geocaching.api.data.coordinates.Coordinates;
+import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
 import com.arcao.geocaching.api.data.type.AttributeType;
 import com.arcao.geocaching.api.data.type.CacheLogType;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.WaypointType;
+import com.arcao.geocaching.api.util.GeocachingUtils;
+import com.arcao.geocaching4locus.R;
 
 public class LocusDataMapper {
+	private static final String TAG = "LocusDataMapper";
+	
 	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
 
@@ -36,7 +50,7 @@ public class LocusDataMapper {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
 	
-	public static Point toLocusPoint(SimpleGeocache cache) {
+	public static Point toLocusPoint(Context context, SimpleGeocache cache) {
 		Location loc = new Location(cache.getClass().getName());
 		loc.setLatitude(cache.getLatitude());
 		loc.setLongitude(cache.getLongitude());
@@ -88,23 +102,11 @@ public class LocusDataMapper {
 				d.attributes.add(new PointGeocachingAttributes(attribute.getId(), attribute.isOn()));
 			}
 
-			int index = 0;
-			for (UserWaypoint userWaypoint : gc.getUserWaypoints()) {
-				PointGeocachingDataWaypoint w = new PointGeocachingDataWaypoint();
-
-				w.type = toLocusWaypointType(WaypointType.FinalLocation);
-				w.typeImagePath = WaypointType.FinalLocation.getIconName();
-				w.lat = userWaypoint.getLatitude();
-				w.lon = userWaypoint.getLongitude();
-				w.name = String.format("%s %d", WaypointType.FinalLocation.getFriendlyName(), index + 1);
-				w.description = userWaypoint.getDescription();
-				w.code = userWaypoint.getUserWaypointCode(index);
-				d.waypoints.add(w);
-
-				index++;
+			for (Waypoint waypoint : getWaypointsFromUserWaypoints(context, gc.getUserWaypoints(), gc.getCacheCode())) {
+				d.waypoints.add(toLocusWaypoint(waypoint));
 			}
 			
-			for (Waypoint waypoint : parsePersonalNoteWaypoints(gc.getPersonalNote())) {
+			for (Waypoint waypoint : getWaypointsFromNote(context, gc.getPersonalNote(), gc.getCacheCode())) {
 				d.waypoints.add(toLocusWaypoint(waypoint));
 			}
 			
@@ -113,18 +115,6 @@ public class LocusDataMapper {
 		p.setGeocachingData(d);
 
 		return p;
-	}
-
-	protected static List<Waypoint> parsePersonalNoteWaypoints(String personalNote) {
-		List<Waypoint> waypoints = new ArrayList<Waypoint>();
-		
-		if (personalNote == null || personalNote.length() == 0)
-			return waypoints;
-		
-		// TODO
-		
-		
-		return waypoints;
 	}
 
 	protected static PointGeocachingDataWaypoint toLocusWaypoint(Waypoint waypoint) {
@@ -285,4 +275,67 @@ public class LocusDataMapper {
 				return PointGeocachingData.CACHE_LOG_TYPE_UNKNOWN;
 		}
 	}
+	
+    public static List<Waypoint> getWaypointsFromNote(Context context, String note, String cacheCode) {
+    	List<Waypoint> res = new ArrayList<Waypoint>();
+    	
+    	if (StringUtils.isBlank(note)) {
+            return res;
+        }
+        
+        final Pattern coordPattern = Pattern.compile("\\b[nNsS]{1}\\s*\\d"); // begin of coordinates
+        final Pattern namePattern = Pattern.compile("^(.+):\\s*\\z");
+        final int waypointBaseId = (int) GeocachingUtils.base31Decode("N0");
+
+        int count = 0;
+        int nameCount = 0;
+        
+        Matcher matcher = coordPattern.matcher(note);
+        while (matcher.find()) {
+            try {
+                final Coordinates point = CoordinatesParser.parse(note.substring(matcher.start()));               
+                count++;
+                
+                Matcher nameMatcher = namePattern.matcher(note.substring(0, matcher.start()));
+                
+                String name = "";
+                if (nameMatcher.find() && nameMatcher.group(1).trim().length() > 0) {
+                	name = nameMatcher.group(1).trim();
+                } else {
+                	nameCount++;
+                	name = context.getString(R.string.user_waypoint_name, nameCount);
+                }
+                
+                final String code = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
+                
+                res.add(new Waypoint(point, new Date(), code, name, "", WaypointType.ReferencePoint));
+            } catch (ParseException e) {
+                Log.w(TAG, e.getMessage());
+            }
+
+            note = note.substring(matcher.start() + 1);
+            matcher = coordPattern.matcher(note);
+        }
+        return res;
+    }
+    
+    public static List<Waypoint> getWaypointsFromUserWaypoints(Context context, List<UserWaypoint> userWaypoints, String cacheCode) {
+    	List<Waypoint> res = new ArrayList<Waypoint>();
+    	
+    	if (userWaypoints.size() == 0)
+    		return res;
+
+    	final int waypointBaseId = (int) GeocachingUtils.base31Decode("N0");
+    	
+    	int count = 1;
+    	for (UserWaypoint uw : userWaypoints) {
+			final String name = context.getString(R.string.user_waypoint_name, count);
+			final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
+    		
+			res.add(new Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));
+			count++;
+    	}
+    	
+    	return res;
+    }
 }

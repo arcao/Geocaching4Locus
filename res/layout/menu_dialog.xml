@@ -3,7 +3,15 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
   	<include layout="@layout/header"/>
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <Button android:onClick="onClickLiveMap" android:id="@+id/btn_menu_live_map" android:text="@string/menu_live_map" android:drawableTop="@drawable/ic_menu_live_map" style="@style/MainMenuButton" />
+
+        <ToggleButton
+            android:id="@+id/btn_menu_live_map"
+            style="@style/MainMenuButton"
+            android:drawableTop="@drawable/ic_menu_live_map"
+            android:onClick="onClickLiveMap"
+            android:textOff="@string/menu_live_map"
+            android:textOn="@string/menu_live_map" />
+
         <ImageView style="@style/SeparatorVertical.Dark" />
         <Button android:onClick="onClickManual" android:text="@string/menu_manual" android:drawableTop="@drawable/ic_menu_manual" style="@style/MainMenuButton" />
         <ImageView style="@style/SeparatorVertical.Dark" />

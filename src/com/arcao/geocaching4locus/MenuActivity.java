@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ToggleButton;
 
 public class MenuActivity extends Activity {
 	private static final Uri MANUAL_URI = Uri.parse("http://g4l.arcao.com/manual/");
@@ -22,8 +22,8 @@ public class MenuActivity extends Activity {
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
-		Button liveMapButton = (Button) findViewById(R.id.btn_menu_live_map);
-		liveMapButton.setPressed(prefs.getBoolean("live_map", false));
+		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
+		liveMapButton.setChecked(prefs.getBoolean("live_map", false));
 	}
 	
 	public void onClickClose(View view) {
@@ -38,7 +38,7 @@ public class MenuActivity extends Activity {
 		boolean activated = !prefs.getBoolean("live_map", false);
 		prefs.edit().putBoolean("live_map", activated).commit();
 		
-		((Button)view).setPressed(activated);
+		((ToggleButton)view).setChecked(activated);
 	}
 	
 	public void onClickManual(View view) {

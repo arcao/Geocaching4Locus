@@ -168,7 +168,7 @@ public class SearchGeocacheService extends AbstractService {
 					points = new PointsData("Geocaching");
 				}
 				// convert SimpleGeocache to Point
-				Point p = LocusDataMapper.toLocusPoint(cache);
+				Point p = LocusDataMapper.toLocusPoint(this, cache);
 				
 				if (simpleCacheData) {
 					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getCacheCode());

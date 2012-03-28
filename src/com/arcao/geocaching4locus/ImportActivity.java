@@ -111,7 +111,7 @@ public class ImportActivity extends Activity {
 			
 			if (result != null) {			
 				PointsData pointsData = new PointsData("Geocaching");
-				pointsData.addPoint(LocusDataMapper.toLocusPoint(result));
+				pointsData.addPoint(LocusDataMapper.toLocusPoint(ImportActivity.this, result));
 				
 				try {
 					DisplayData.sendData(ImportActivity.this, pointsData, true);

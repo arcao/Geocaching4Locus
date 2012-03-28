@@ -124,7 +124,7 @@ public class UpdateActivity extends Activity {
 				return;
 			}
 			
-			Point p = LocusDataMapper.toLocusPoint(result);
+			Point p = LocusDataMapper.toLocusPoint(UpdateActivity.this, result);
 			
 			if (replaceCache) {
 				DisplayDataExtended.storeGeocacheToCache(UpdateActivity.this, p);

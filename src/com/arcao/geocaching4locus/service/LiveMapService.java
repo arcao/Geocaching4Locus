@@ -97,7 +97,7 @@ public class LiveMapService extends IntentService {
 			
 			PointsData pd = new PointsData(TAG);
 			for (SimpleGeocache cache : caches) {
-				Point p = LocusDataMapper.toLocusPoint(cache);
+				Point p = LocusDataMapper.toLocusPoint(this, cache);
 				p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getCacheCode());
 				pd.addPoint(p);
 			}

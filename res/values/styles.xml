@@ -76,7 +76,7 @@
     </style>
     <style name="TitleBarTitle">
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:ellipsize">end</item>
+        <item name="android:ellipsize">marquee</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">5.0dip</item>
         <item name="android:paddingRight">5.0dip</item>
@@ -85,6 +85,10 @@
         <item name="android:layout_width">0.0dip</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1.0</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
     </style>
     <style name="TitleBarSeparator">
         <item name="android:background">@color/title_separator</item>

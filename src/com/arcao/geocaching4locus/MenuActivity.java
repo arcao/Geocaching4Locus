@@ -21,6 +21,11 @@ public class MenuActivity extends Activity {
 		setContentView(R.layout.menu_dialog);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
 		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 		liveMapButton.setChecked(prefs.getBoolean("live_map", false));

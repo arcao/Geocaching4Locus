@@ -290,15 +290,23 @@ public class LocusDataMapper {
         int count = 0;
         int nameCount = 0;
         
+        String namePrefix = "";
+        
         Matcher matcher = coordPattern.matcher(note);
         while (matcher.find()) {
             try {
                 final Coordinates point = CoordinatesParser.parse(note.substring(matcher.start()));               
                 count++;
                 
-                Matcher nameMatcher = namePattern.matcher(note.substring(0, matcher.start()));
+                String name = namePrefix + note.substring(0, matcher.start());
                 
-                String name = "";
+                // TODO fix it better
+                int lastLineEnd = name.lastIndexOf('\n');
+                if (lastLineEnd != -1);
+                	name = name.substring(lastLineEnd +1);
+                
+                Matcher nameMatcher = namePattern.matcher(name);
+                
                 if (nameMatcher.find() && nameMatcher.group(1).trim().length() > 0) {
                 	name = nameMatcher.group(1).trim();
                 } else {
@@ -309,8 +317,13 @@ public class LocusDataMapper {
                 final String code = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
                 
                 res.add(new Waypoint(point, new Date(), code, name, "", WaypointType.ReferencePoint));
+                
+                namePrefix = "";
             } catch (ParseException e) {
                 Log.w(TAG, e.getMessage());
+                
+                // fix for "S1: N 49 ..."
+                namePrefix = namePrefix + note.substring(0, matcher.start() + 1);
             }
 
             note = note.substring(matcher.start() + 1);

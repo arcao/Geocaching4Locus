@@ -70,20 +70,20 @@
 	<string name="pref_terrain_min">Terreno Mín.</string>
 	<string name="pref_terrain_max">Terreno Máx.</string>
 	<string name="download_button">Download para o Locus</string>
-	<string name="pref_download_basic">Basic info only</string>
-	<string name="pref_download_basic_summary">Download only basic information about cache</string>
-	<string name="pref_download_on_show">Download rest info on show</string>
-	<string name="pref_download_on_show_summary">Download rest information about cache when the cache content is shown in Locus</string>
+	<string name="pref_download_basic">Apenas informação básica</string>
+	<string name="pref_download_basic_summary">Descarregar apenas a informação básica da cache</string>
+	<string name="pref_download_on_show">Descarregar o restante da informação apenas na visualização</string>
+	<string name="pref_download_on_show_summary">Descarregar o restante da informação apenas quando o conteudo for visualizado no Locus</string>
 	<string-array name="pref_download_on_show_entries">
-		<item>once</item>
-		<item>every</item>
-		<item>never</item>
+		<item>uma vez</item>
+		<item>sempre</item>
+		<item>nunca</item>
 	</string-array>
-	<string name="menu_live_map">Live map</string>
-	<string name="menu_nearest">Nearest</string>
+	<string name="menu_live_map">Mapa ao vivo</string>
+	<string name="menu_nearest">Mais perto</string>
 	<string name="menu_manual">Manual</string>
-	<string name="menu_preferences">Preferences</string>
-	<string name="pref_livemap">Live map</string>
-	<string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Other → Enable periodic updates)</string>
-	<string name="user_waypoint_name">User waypoint %1$d</string>
+	<string name="menu_preferences">Definições</string>
+	<string name="pref_livemap">Mapa ao vivo</string>
+	<string name="pref_livemap_summary">Carregar caches no mapa ao vivo (Activar no Locus: Definições → Outras → Ativar atualizações periódicas)</string>
+	<string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
 </resources>

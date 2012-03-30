@@ -15,5 +15,5 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
-    <style name="ThemeSettings" parent="@android:style/Theme.Holo" />
+    <style name="ThemeSettings" parent="@android:style/Theme.Holo.Light" />
 </resources>

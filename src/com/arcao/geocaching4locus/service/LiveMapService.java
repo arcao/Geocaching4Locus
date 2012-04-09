@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
@@ -11,7 +11,6 @@ import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,7 +53,7 @@ public class LiveMapService extends IntentService {
 	private static final int MAX_PER_PAGE = 50;
 	private static final int MAX_COUNT = 50;
 	
-	private final AtomicBoolean isRunning = new AtomicBoolean(false);
+	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 	
 	private Account account;
 	private boolean showFound;
@@ -72,16 +71,21 @@ public class LiveMapService extends IntentService {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		if (isRunning.getAndSet(true)) {
-			stopSelf(startId);
-			return Service.START_NOT_STICKY;
-		}
+		// increase count of jobs
+		countOfJobs.incrementAndGet();
+		Log.d(TAG, "New job, count=" + countOfJobs.get());
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		Log.d(TAG, "Handling job, count=" + countOfJobs.get());
+		
+		// we skip all jobs before last one
+		if (countOfJobs.getAndDecrement() != 1)
+			return;
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		loadConfiguration(prefs);
 		
@@ -114,9 +118,9 @@ public class LiveMapService extends IntentService {
 		} catch (GeocachingApiException e) {
 			Log.e(TAG, e.getMessage(), e);
 			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+		} finally {
+			Log.d(TAG, "Job finished.");
 		}
-		
-		isRunning.set(false);
 	}
 	
 	protected void loadConfiguration(SharedPreferences prefs) {

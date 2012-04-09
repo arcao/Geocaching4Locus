@@ -342,7 +342,7 @@ public class LocusDataMapper {
     	
     	int count = 1;
     	for (UserWaypoint uw : userWaypoints) {
-			final String name = context.getString(R.string.user_waypoint_name, count);
+			final String name = context.getString(R.string.final_location_name, count);
 			final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
     		
 			res.add(new Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));

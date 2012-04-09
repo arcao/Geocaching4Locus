@@ -105,5 +105,6 @@
     <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Other → Enable periodic updates)</string>
     
     <string name="user_waypoint_name">User waypoint %1$d</string>
+    <string name="final_location_name">Final location %1$d</string>
 </resources>
 

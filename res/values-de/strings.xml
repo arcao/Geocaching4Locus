@@ -5,9 +5,8 @@
 	<string name="downloading">Lade caches...</string>
 	<string name="downloading_cache">Lade Cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Bitte Locus installieren!</string>
-	<string name="search_activity_name">Caches in der Nähe</string>
-	<string name="error_location">Positionsbestimmung mittels WIFI ist nicht erlaubt!
-Bitte in den Android Einstellungen aktivieren.</string>
+	<string name="search_activity_name">Caches in der Umgebung</string>
+	<string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
 	<string name="acquiring_gps_location">Positionsbestimmung via GPS...</string>
 	<string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
 	<string name="preferences">Einstellungen</string>
@@ -87,4 +86,5 @@ Bitte in den Android Einstellungen aktivieren.</string>
 	<string name="pref_livemap">Live Karte</string>
 	<string name="pref_livemap_summary">Direktes laden der Caches auf die Karte (aktiviere in Locus: Einstellungen → Verschiedenes → Aktiviere periodische Updates)</string>
 	<string name="user_waypoint_name">Benutzerwegpunkte %1$d</string>
+	<string name="final_location_name">Final bei %1$d</string>
 </resources>

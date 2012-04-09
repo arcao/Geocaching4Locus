@@ -30,7 +30,7 @@
 	<string name="import_caches">Importovat keše</string>
 	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej své uživatelské údaje v nastavení.</string>
 	<string name="error_title">Nastala chyba!</string>
-	<string name="ok_button">Ok</string>
+	<string name="ok_button">OK</string>
 	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
 	<string name="cancel_button">Storno</string>
 	<string name="pref_show_found">Zobrazit nalezené</string>
@@ -86,4 +86,5 @@
 	<string name="pref_livemap">Live mapa</string>
 	<string name="pref_livemap_summary">Živé načítání keší do mapy (povolte v Locusu: Nastavení → Různé → Povolit periodické aktualizace)</string>
 	<string name="user_waypoint_name">Uživatelský waypoint %1$d</string>
+	<string name="final_location_name">Konečné umístění %1$d</string>
 </resources>

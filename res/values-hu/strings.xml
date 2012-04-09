@@ -86,4 +86,5 @@
 	<string name="pref_livemap">Élő térkép</string>
 	<string name="pref_livemap_summary">Élőben töltődjenek a ládák a térképre (engedélyezd a Locus-ban: Beállítások -&gt; Egyéb -&gt; Frissítések engedélyezése)</string>
 	<string name="user_waypoint_name">Felhasználó útpont %1$d</string>
+	<string name="final_location_name">Final location %1$d</string>
 </resources>

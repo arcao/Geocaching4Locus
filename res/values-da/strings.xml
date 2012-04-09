@@ -86,4 +86,5 @@
 	<string name="pref_livemap">Live kort</string>
 	<string name="pref_livemap_summary">Live henter cacher til kortet (aktiver i Locus: Indstillinger → Andet → Aktiver periodiske opdateringer)</string>
 	<string name="user_waypoint_name">Bruger waypoint (koordinatpunkter) %1$d</string>
+	<string name="final_location_name">Sidste lokation %1$d</string>
 </resources>

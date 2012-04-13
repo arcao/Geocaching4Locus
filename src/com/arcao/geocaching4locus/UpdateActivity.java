@@ -32,6 +32,8 @@ public class UpdateActivity extends Activity {
 	protected static final String UPDATE_ONCE = "0";
 	protected static final String UPDATE_EVERY = "1";
 	protected static final String UPDATE_NEVER = "2";
+	
+	protected Point oldPoint = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +42,15 @@ public class UpdateActivity extends Activity {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		String cacheId = null;
 		
+		oldPoint = null;
+		
 		if (getIntent().hasExtra("cacheId")) {
 			cacheId = getIntent().getStringExtra("cacheId");
 		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
-			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
+			oldPoint = LocusIntents.handleIntentOnPointAction(getIntent());
 			
-			if (p.getGeocachingData() != null) {
-				cacheId = p.getGeocachingData().cacheID;
+			if (oldPoint.getGeocachingData() != null) {
+				cacheId = oldPoint.getGeocachingData().cacheID;
 			}
 		} else if (getIntent().hasExtra("simpleCacheId")) {
 			cacheId = getIntent().getStringExtra("simpleCacheId");
@@ -125,6 +129,7 @@ public class UpdateActivity extends Activity {
 			}
 			
 			Point p = LocusDataMapper.toLocusPoint(UpdateActivity.this, result);
+			p = LocusDataMapper.mergePoints(p, oldPoint);
 			
 			if (replaceCache) {
 				DisplayDataExtended.storeGeocacheToCache(UpdateActivity.this, p);

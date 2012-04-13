@@ -45,6 +45,7 @@ public class LocusDataMapper {
 	
 	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
+	protected static final String GSAK_USERNAME = "gsak";
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -350,5 +351,28 @@ public class LocusDataMapper {
     	}
     	
     	return res;
+    }
+    
+    public static Point mergePoints(Point toPoint, Point fromPoint) {
+    	if (fromPoint == null || fromPoint.getGeocachingData() == null)
+    		return toPoint;
+    	
+    	mergeCacheLogs(toPoint, fromPoint);
+    	
+    	return toPoint;
+    }
+    
+    public static Point mergeCacheLogs(Point toPoint, Point fromPoint) {
+    	if (fromPoint.getGeocachingData().logs.size() == 0) 
+    		return toPoint;
+    	
+    	for(PointGeocachingDataLog fromLog : fromPoint.getGeocachingData().logs) {
+    		if (GSAK_USERNAME.equalsIgnoreCase(fromLog.finder)) {
+    			fromLog.date = GPX_TIME_FMT.format(new Date());
+    			toPoint.getGeocachingData().logs.add(0, fromLog);
+    		}
+    	}
+    	
+    	return toPoint;
     }
 }

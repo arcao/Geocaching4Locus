@@ -357,12 +357,14 @@ public class LocusDataMapper {
     	if (fromPoint == null || fromPoint.getGeocachingData() == null)
     		return toPoint;
     	
+    	fixArchivedCacheLocation(toPoint, fromPoint);
     	mergeCacheLogs(toPoint, fromPoint);
     	
     	return toPoint;
     }
     
     public static Point mergeCacheLogs(Point toPoint, Point fromPoint) {
+    	// issue #14: Keep cache logs from GSAK when updating cache
     	if (fromPoint.getGeocachingData().logs.size() == 0) 
     		return toPoint;
     	
@@ -372,6 +374,18 @@ public class LocusDataMapper {
     			toPoint.getGeocachingData().logs.add(0, fromLog);
     		}
     	}
+    	
+    	return toPoint;
+    }
+    
+    public static Point fixArchivedCacheLocation(Point toPoint, Point fromPoint) {
+    	// issue #13: Use old coordinates when cache is archived after update
+    	if (!toPoint.getGeocachingData().archived || (fromPoint.getLocation().getLatitude() == 0 && fromPoint.getLocation().getLongitude() == 0) 
+    			|| Double.isNaN(fromPoint.getLocation().getLatitude()) || Double.isNaN(fromPoint.getLocation().getLongitude())) 
+    		return toPoint;
+    	
+    	toPoint.getLocation().setLatitude(fromPoint.getLocation().getLatitude());
+    	toPoint.getLocation().setLongitude(fromPoint.getLocation().getLongitude());
     	
     	return toPoint;
     }

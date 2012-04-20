@@ -39,6 +39,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.util.ReverseListIterator;
 
 public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
@@ -368,7 +369,7 @@ public class LocusDataMapper {
     	if (fromPoint.getGeocachingData().logs.size() == 0) 
     		return toPoint;
     	
-    	for(PointGeocachingDataLog fromLog : fromPoint.getGeocachingData().logs) {
+    	for(PointGeocachingDataLog fromLog : new ReverseListIterator<PointGeocachingDataLog>(fromPoint.getGeocachingData().logs)) {
     		if (GSAK_USERNAME.equalsIgnoreCase(fromLog.finder)) {
     			fromLog.date = GPX_TIME_FMT.format(new Date());
     			toPoint.getGeocachingData().logs.add(0, fromLog);

@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,6 +25,7 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.util.AccountPreference;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -86,14 +86,11 @@ public class ImportActivity extends Activity {
 			
 			prefs = PreferenceManager.getDefaultSharedPreferences(ImportActivity.this);
 			
-			String userName = prefs.getString("username", "");
-			String password = prefs.getString("password", "");
-			String session = prefs.getString("session", null);
-			
+		
 			logCount = prefs.getInt("downloading_count_of_logs", 5);
 			trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
 						
-			account = new Account(userName, password, session);
+			account = AccountPreference.get(ImportActivity.this);
 			
 			dialog = new ProgressDialog(ImportActivity.this);
 			dialog.setIndeterminate(true);
@@ -144,16 +141,14 @@ public class ImportActivity extends Activity {
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
 				account.setSession(null);
-				removeSession();
+				AccountPreference.updateSession(ImportActivity.this, account);
 				
 				// try againg
 				login(api, account);
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} finally {
 				account.setSession(api.getSession());
-				if (account.getSession() != null && account.getSession().length() > 0) {
-					storeSession(account.getSession());
-				}
+				AccountPreference.updateSession(ImportActivity.this, account);
 			}
 			
 			if (isCancelled())
@@ -219,29 +214,19 @@ public class ImportActivity extends Activity {
 			cancel(true);
 		}
 		
-		private void login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+		private boolean login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 			try {
 				if (account.getSession() == null || account.getSession().length() == 0) {
 					api.openSession(account.getUserName(), account.getPassword());
+					return true;
 				} else {
 					api.openSession(account.getSession());
+					return false;
 				}
 			} catch (InvalidCredentialsException e) {
 				Log.e(TAG, "Creditials not valid.", e);
 				throw e;
 			}
-		}
-		
-		private void storeSession(String session) {
-			Editor edit = prefs.edit();
-			edit.putString("session", session);
-			edit.commit();
-		}
-
-		protected void removeSession() {
-			Editor edit = prefs.edit();
-			edit.remove("session");
-			edit.commit();
-		}
+		}		
 	}
 }

@@ -9,7 +9,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.DisplayMetrics;
@@ -135,19 +134,7 @@ public abstract class AbstractService extends IntentService {
 			sendError(R.string.error, String.format("%s<br>Exception: %s<br>Stacktrace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)));
 		}
 	}
-	
-	protected void storeSession(String session) {
-		Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		edit.putString("session", session);
-		edit.commit();
-	}
-	
-	protected void removeSession() {
-		Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		edit.remove("session");
-		edit.commit();
-	}
-	
+		
 	@Override
 	public void onDestroy() {
 		canceled = true;

@@ -47,7 +47,7 @@
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" />
-                <data android:path="menion.android.locus/point_geocache" />
+                <data android:pathPrefix="menion.android.locus/point_geocache" />
             </intent-filter>
         </activity>
         <activity android:name=".ImportActivity" android:theme="@style/InvisibleTheme" android:configChanges="keyboardHidden|orientation" android:label="@string/locus_import_cache" android:noHistory="true" android:exported="true">

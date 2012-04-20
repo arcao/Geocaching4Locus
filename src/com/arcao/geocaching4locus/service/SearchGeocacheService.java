@@ -11,7 +11,6 @@ import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
@@ -35,6 +34,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
+import com.arcao.geocaching4locus.util.AccountPreference;
 
 public class SearchGeocacheService extends AbstractService {
 	private static final String TAG = "SearchGeocacheService";
@@ -141,15 +141,10 @@ public class SearchGeocacheService extends AbstractService {
 		logCount = prefs.getInt("downloading_count_of_logs", 5);
 		trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
 
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String userName = prefs.getString("username", "");
-		String password = prefs.getString("password", "");
-		String session = prefs.getString("session", null);
-
 		importCaches = prefs.getBoolean("import_caches", false);
 		cacheTypes = getCacheTypeFilterResult(prefs);
 
-		account = new Account(userName, password, session);
+		account = AccountPreference.get(this);
 	}
 
 	private void callLocus(List<SimpleGeocache> caches) {
@@ -220,7 +215,7 @@ public class SearchGeocacheService extends AbstractService {
 			return null;
 
 		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
-		login(api, account);
+		boolean realLogin = login(api, account);
 
 		sendProgressUpdate();
 		try {
@@ -273,14 +268,15 @@ public class SearchGeocacheService extends AbstractService {
 			return caches;
 		} catch (InvalidSessionException e) {
 			account.setSession(null);
-			removeSession();
+			AccountPreference.updateSession(this, account);
 
+			if (realLogin)
+				throw e;
+			
 			return downloadCaches(latitude, longitude);
 		} finally {
 			account.setSession(api.getSession());
-			if (account.getSession() != null && account.getSession().length() > 0) {
-				storeSession(account.getSession());
-			}
+			AccountPreference.updateSession(this, account);
 		}
 	}
 	
@@ -310,12 +306,14 @@ public class SearchGeocacheService extends AbstractService {
     return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
   } 
 
-	private void login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+	private boolean login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
 		try {
 			if (account.getSession() == null || account.getSession().length() == 0) {
 				api.openSession(account.getUserName(), account.getPassword());
+				return true;
 			} else {
 				api.openSession(account.getSession());
+				return false;
 			}
 		} catch (InvalidCredentialsException e) {
 			Log.e(TAG, "Creditials not valid.", e);

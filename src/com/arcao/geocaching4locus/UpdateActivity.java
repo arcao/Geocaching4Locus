@@ -4,6 +4,9 @@ import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
+
+import org.acra.ErrorReporter;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -20,19 +23,20 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.AccountPreference;
 import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 
 public class UpdateActivity extends Activity {
-	private final static String TAG = "Geocaching4Locus|UpdateActivity";
-	private UpdateTask task = null;
+	private final static String TAG = "G4L|UpdateActivity";
 	
-	protected static final String UPDATE_ONCE = "0";
-	protected static final String UPDATE_EVERY = "1";
-	protected static final String UPDATE_NEVER = "2";
+	public static String PARAM_CACHE_ID = "cacheId";
+	public static String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 	
+	private UpdateTask task = null;	
 	protected Point oldPoint = null;
 
 	@Override
@@ -44,24 +48,24 @@ public class UpdateActivity extends Activity {
 		
 		oldPoint = null;
 		
-		if (getIntent().hasExtra("cacheId")) {
-			cacheId = getIntent().getStringExtra("cacheId");
+		if (getIntent().hasExtra(PARAM_CACHE_ID)) {
+			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
 		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
 			oldPoint = LocusIntents.handleIntentOnPointAction(getIntent());
 			
 			if (oldPoint.getGeocachingData() != null) {
 				cacheId = oldPoint.getGeocachingData().cacheID;
 			}
-		} else if (getIntent().hasExtra("simpleCacheId")) {
-			cacheId = getIntent().getStringExtra("simpleCacheId");
+		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
+			cacheId = getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID);
+			String repeatUpdate = prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
 			
-			if (UPDATE_NEVER.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE))) {
+			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
 				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
 				setResult(RESULT_CANCELED);
 				finish();
 				return;
-			}
-			if (UPDATE_ONCE.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE))) {
+			} else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(repeatUpdate)) {
 				Point p = DisplayDataExtended.loadGeocacheFromCache(this, cacheId);
 				if (p != null) {
 					Log.i(TAG, "Found cache file for: " + cacheId);
@@ -98,9 +102,9 @@ public class UpdateActivity extends Activity {
 			
 			prefs = PreferenceManager.getDefaultSharedPreferences(UpdateActivity.this);
 			
-			logCount = prefs.getInt("downloading_count_of_logs", 5);
-			trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
-			replaceCache = UPDATE_ONCE.equals(prefs.getString("full_cache_data_on_show", UPDATE_ONCE));
+			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
+			replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
 						
 			account = AccountPreference.get(UpdateActivity.this);
 			
@@ -192,6 +196,8 @@ public class UpdateActivity extends Activity {
 			if (e instanceof InvalidCredentialsException) {
 				intent = createErrorIntent(R.string.error_credentials, null, true);
 			} else {
+				ErrorReporter.getInstance().handleSilentException(e);
+				
 				String message = e.getMessage();
 				if (message == null)
 					message = "";

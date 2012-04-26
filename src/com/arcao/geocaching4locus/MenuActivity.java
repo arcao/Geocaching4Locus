@@ -3,15 +3,15 @@ package com.arcao.geocaching4locus;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ToggleButton;
 
+import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
+
 public class MenuActivity extends Activity {
-	private static final Uri MANUAL_URI = Uri.parse("http://g4l.arcao.com/manual/");
-	
 	private SharedPreferences prefs;
 	
 	@Override
@@ -28,7 +28,7 @@ public class MenuActivity extends Activity {
 		super.onResume();
 		
 		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
-		liveMapButton.setChecked(prefs.getBoolean("live_map", false));
+		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
 	}
 	
 	public void onClickClose(View view) {
@@ -40,14 +40,14 @@ public class MenuActivity extends Activity {
 	}
 	
 	public void onClickLiveMap(View view) {
-		boolean activated = !prefs.getBoolean("live_map", false);
-		prefs.edit().putBoolean("live_map", activated).commit();
+		boolean activated = !prefs.getBoolean(PrefConstants.LIVE_MAP, false);
+		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
 		
 		((ToggleButton)view).setChecked(activated);
 	}
 	
 	public void onClickManual(View view) {
-		startActivity(new Intent("android.intent.action.VIEW", MANUAL_URI));
+		startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.MANUAL_URI));
 		finish();
 	}
 	

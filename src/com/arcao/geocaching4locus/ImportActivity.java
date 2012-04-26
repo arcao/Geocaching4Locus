@@ -7,6 +7,9 @@ import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
+
+import org.acra.ErrorReporter;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -24,6 +27,8 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.AccountPreference;
 import com.arcao.geocaching4locus.util.LocusTesting;
@@ -33,8 +38,8 @@ import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
 
 public class ImportActivity extends Activity {
-	private final static String TAG = "Geocaching4Locus|ImportActivity";
-	protected final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
+	private final static String TAG = "G4L|ImportActivity";
+	protected final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
 	protected final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 	protected ImpotTask task = null;
 
@@ -87,8 +92,8 @@ public class ImportActivity extends Activity {
 			prefs = PreferenceManager.getDefaultSharedPreferences(ImportActivity.this);
 			
 		
-			logCount = prefs.getInt("downloading_count_of_logs", 5);
-			trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
+			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 						
 			account = AccountPreference.get(ImportActivity.this);
 			
@@ -107,7 +112,7 @@ public class ImportActivity extends Activity {
 				dialog.dismiss();
 			
 			if (result != null) {			
-				PointsData pointsData = new PointsData("Geocaching");
+				PointsData pointsData = new PointsData(TAG);
 				pointsData.addPoint(LocusDataMapper.toLocusPoint(ImportActivity.this, result));
 				
 				try {
@@ -127,7 +132,7 @@ public class ImportActivity extends Activity {
 			
 			// if it's guid we need to convert to cache code
 			for (int i = 0; i < params.length; i++) {
-				if (!params[i].toLowerCase().startsWith("gc")) {
+				if (!CACHE_CODE_PATTERN.matcher(params[i]).find()) {
 					WherigoService wherigoService = new WherigoServiceImpl();
 					params[i] = wherigoService.getCacheCodeFromGuid(params[i]);
 				}
@@ -185,6 +190,8 @@ public class ImportActivity extends Activity {
 			if (e instanceof InvalidCredentialsException) {
 				intent = createErrorIntent(R.string.error_credentials, null, true);
 			} else {
+				ErrorReporter.getInstance().handleSilentException(e);
+				
 				String message = e.getMessage();
 				if (message == null)
 					message = "";

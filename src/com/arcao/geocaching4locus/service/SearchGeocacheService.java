@@ -28,21 +28,20 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersF
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-import com.arcao.geocaching4locus.AppConstants;
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.AccountPreference;
 
 public class SearchGeocacheService extends AbstractService {
-	private static final String TAG = "SearchGeocacheService";
+	private static final String TAG = "G4L|SearchGeocacheService";
 
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
-
-	private final static int MAX_PER_PAGE = 10;
 
 	private static SearchGeocacheService instance = null;
 
@@ -105,22 +104,22 @@ public class SearchGeocacheService extends AbstractService {
 
 	@Override
 	protected void loadConfiguration(SharedPreferences prefs) {
-		showFound = prefs.getBoolean("filter_show_found", false);
-		showOwn = prefs.getBoolean("filter_show_own", false);
-		showDisabled = prefs.getBoolean("filter_show_disabled", false);
-		simpleCacheData = prefs.getBoolean("simple_cache_data", false);
+		showFound = prefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
+		showOwn = prefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
+		showDisabled = prefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
+		simpleCacheData = prefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
 
-		difficultyMin = Float.parseFloat(prefs.getString("difficulty_filter_min", "1"));
-		difficultyMax = Float.parseFloat(prefs.getString("difficulty_filter_max", "5"));
+		difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
+		difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
 		
-		terrainMin = Float.parseFloat(prefs.getString("terrain_filter_min", "1"));
-		terrainMax = Float.parseFloat(prefs.getString("terrain_filter_max", "5"));
+		terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
+		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 		
 		String distanceString;
-		if (prefs.getBoolean("imperial_units", false)) {
-			distanceString = prefs.getString("filter_distance", "100");
+		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
+			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "100");
 		} else {
-			distanceString = prefs.getString("filter_distance", "160.9344");
+			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "160.9344");
 		}
 		
 		try {
@@ -130,18 +129,18 @@ public class SearchGeocacheService extends AbstractService {
 			distance = 100;
 		}
 		
-		if (prefs.getBoolean("imperial_units", false)) {
+		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			// get kilometers from miles
 			distance = distance * 1.609344F;
 		}
 
 		current = 0;
-		count = prefs.getInt("filter_count_of_caches", 20);
+		count = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);
 
-		logCount = prefs.getInt("downloading_count_of_logs", 5);
-		trackableCount = prefs.getInt("downloading_count_of_trackabless", 10);
+		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+		trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 
-		importCaches = prefs.getBoolean("import_caches", false);
+		importCaches = prefs.getBoolean(PrefConstants.IMPORT_CACHES, false);
 		cacheTypes = getCacheTypeFilterResult(prefs);
 
 		account = AccountPreference.get(this);
@@ -156,17 +155,17 @@ public class SearchGeocacheService extends AbstractService {
 			// so we split points into several PointsData object with same uniqueName
 			// - Locus merge it automatically
 			// since version 1.9.5
-			PointsData points = new PointsData("Geocaching");
+			PointsData points = new PointsData("G4L");
 			for (SimpleGeocache cache : caches) {
 				if (points.getPoints().size() >= 50) {
 					pointDataCollection.add(points);
-					points = new PointsData("Geocaching");
+					points = new PointsData("G4L");
 				}
 				// convert SimpleGeocache to Point
 				Point p = LocusDataMapper.toLocusPoint(this, cache);
 				
 				if (simpleCacheData) {
-					p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getCacheCode());
+					p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
 				}
 
 				points.addPoint(p);
@@ -197,7 +196,7 @@ public class SearchGeocacheService extends AbstractService {
 		Vector<CacheType> filter = new Vector<CacheType>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
-			if (prefs.getBoolean("filter_" + i, true)) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				filter.add(CacheType.values()[i]);
 			}
 		}
@@ -216,14 +215,17 @@ public class SearchGeocacheService extends AbstractService {
 
 		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 		boolean realLogin = login(api, account);
+		
+		if (latitude == 0 && longitude == 0)
+			throw new GeocachingApiException("test");
 
 		sendProgressUpdate();
 		try {
 			current = 0;
-			int perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
+			int perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
 			
 			while (current < count) {
-				perPage = (count - current < MAX_PER_PAGE) ? count - current : MAX_PER_PAGE;
+				perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
 
 				List<SimpleGeocache> cachesToAdd;
 				

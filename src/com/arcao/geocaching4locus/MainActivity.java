@@ -32,12 +32,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
 public class MainActivity extends Activity implements LocationListener, OnIntentMainFunction {
-	private static final String TAG = "Geocaching4Locus|MainActivity";
+	private static final String TAG = "G4L|MainActivity";
 	
 	private Resources res;
 	private LocationManager locationManager;
@@ -115,9 +116,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		filter.addAction(SearchGeocacheService.ACTION_ERROR);
 		
 		registerReceiver(searchGeocacheReceiver, filter);
-		
-		setContentView(R.layout.main_activity);
-		
+				
 		handler = new Handler();
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
@@ -152,12 +151,12 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			}
 		});
 				
-		importCachesCheckBox.setChecked(prefs.getBoolean("import_caches", false));
+		importCachesCheckBox.setChecked(prefs.getBoolean(PrefConstants.IMPORT_CACHES, false));
 		importCachesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				Editor edit = prefs.edit();
-				edit.putBoolean("import_caches", isChecked);
+				edit.putBoolean(PrefConstants.IMPORT_CACHES, isChecked);
 				edit.commit();
 			}
 		});
@@ -186,18 +185,6 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		Log.i(TAG, "Receiver unregistred.");
 	}
 	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		removeLocationUpdates();
-	}
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		removeLocationUpdates();
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -320,8 +307,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		
 		if (location == null) {
-			latitude = prefs.getFloat("latitude", 0F);
-			longitude = prefs.getFloat("longitude", 0F);
+			latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0F);
+			longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0F);
 		} else {
 			latitude = location.getLatitude();
 			longitude = location.getLongitude();
@@ -370,8 +357,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		updateCoordinateTextView();
 				
 		Editor editor = prefs.edit();
-		editor.putFloat("latitude", (float) latitude);
-		editor.putFloat("longitude", (float) longitude);
+		editor.putFloat(PrefConstants.LAST_LATITUDE, (float) latitude);
+		editor.putFloat(PrefConstants.LAST_LONGITUDE, (float) longitude);
 		editor.commit();
 
 		handler.post(new Runnable() {

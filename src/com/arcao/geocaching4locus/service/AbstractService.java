@@ -2,6 +2,8 @@ package com.arcao.geocaching4locus.service;
 
 import java.util.Date;
 
+import org.acra.ErrorReporter;
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -127,6 +129,8 @@ public abstract class AbstractService extends IntentService {
 			sendError(R.string.error_credentials, null, true);
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
+			ErrorReporter.getInstance().handleSilentException(e);
+			
 			String message = e.getMessage();
 			if (message == null)
 				message = "";

@@ -10,6 +10,9 @@ import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
+
+import org.acra.ErrorReporter;
+
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -34,14 +37,15 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsers
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
-import com.arcao.geocaching4locus.AppConstants;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.Account;
 import com.arcao.geocaching4locus.util.AccountPreference;
 
 public class LiveMapService extends IntentService {
-	private static final String TAG = LiveMapService.class.getName();
+	private static final String TAG = "G4L|LiveMapService";
 	
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
@@ -50,8 +54,8 @@ public class LiveMapService extends IntentService {
 	public static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
 	public static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
 	
-	private static final int MAX_PER_PAGE = 50;
-	private static final int MAX_COUNT = 50;
+	private static final int CACHES_PER_REQUEST = 50;
+	private static final int CACHES_COUNT = CACHES_PER_REQUEST;
 	
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 	
@@ -102,7 +106,7 @@ public class LiveMapService extends IntentService {
 			PointsData pd = new PointsData(TAG);
 			for (SimpleGeocache cache : caches) {
 				Point p = LocusDataMapper.toLocusPoint(this, cache);
-				p.setExtraOnDisplay("com.arcao.geocaching4locus", UpdateActivity.class.getName(), "simpleCacheId", cache.getCacheCode());
+				p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
 				pd.addPoint(p);
 			}
 
@@ -114,9 +118,10 @@ public class LiveMapService extends IntentService {
 			Toast.makeText(this, getString(R.string.error_credentials), Toast.LENGTH_LONG).show();
 
 			// disable live map
-			prefs.edit().putBoolean("allow_live_map", false).commit();
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (GeocachingApiException e) {
 			Log.e(TAG, e.getMessage(), e);
+			ErrorReporter.getInstance().handleSilentException(e);
 			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 		} finally {
 			Log.d(TAG, "Job finished.");
@@ -124,15 +129,15 @@ public class LiveMapService extends IntentService {
 	}
 	
 	protected void loadConfiguration(SharedPreferences prefs) {
-		showFound = prefs.getBoolean("filter_show_found", false);
-		showOwn = prefs.getBoolean("filter_show_own", false);
-		showDisabled = prefs.getBoolean("filter_show_disabled", false);
+		showFound = prefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
+		showOwn = prefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
+		showDisabled = prefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
 
-		difficultyMin = Float.parseFloat(prefs.getString("difficulty_filter_min", "1"));
-		difficultyMax = Float.parseFloat(prefs.getString("difficulty_filter_max", "5"));
+		difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
+		difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
 		
-		terrainMin = Float.parseFloat(prefs.getString("terrain_filter_min", "1"));
-		terrainMax = Float.parseFloat(prefs.getString("terrain_filter_max", "5"));
+		terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
+		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 		
 		cacheTypes = getCacheTypeFilterResult(prefs);
 
@@ -143,7 +148,7 @@ public class LiveMapService extends IntentService {
 		Vector<CacheType> filter = new Vector<CacheType>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
-			if (prefs.getBoolean("filter_" + i, true)) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				filter.add(CacheType.values()[i]);
 			}
 		}
@@ -162,10 +167,10 @@ public class LiveMapService extends IntentService {
 
 		try {
 			int current = 0;
-			int perPage = MAX_PER_PAGE;
+			int perPage = CACHES_PER_REQUEST;
 			
-			while (current < MAX_COUNT) {
-				perPage = (MAX_COUNT - current < MAX_PER_PAGE) ? MAX_COUNT - current : MAX_PER_PAGE;
+			while (current < CACHES_COUNT) {
+				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
 
 				List<SimpleGeocache> cachesToAdd;
 				

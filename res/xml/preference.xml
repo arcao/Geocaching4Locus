@@ -30,27 +30,27 @@
 		    <com.arcao.preference.ListPreference android:key="terrain_filter_min" android:title="@string/pref_terrain_min" android:entries="@array/rating" android:entryValues="@array/rating" android:defaultValue="1"/>
 		    <com.arcao.preference.ListPreference android:key="terrain_filter_max" android:title="@string/pref_terrain_max" android:entries="@array/rating" android:entryValues="@array/rating" android:defaultValue="5"/>
 		</PreferenceScreen>
-		<CheckBoxPreference android:summary="@string/pref_show_found_summary" android:title="@string/pref_show_found" android:key="filter_show_found" android:defaultValue="false"/>
-		<CheckBoxPreference android:summary="@string/pref_show_own_summary" android:title="@string/pref_show_own" android:key="filter_show_own" android:defaultValue="false"/>
-		<CheckBoxPreference android:summary="@string/pref_show_disabled_summary" android:title="@string/pref_show_disabled" android:key="filter_show_disabled" android:defaultValue="false"/>
-		<EditTextPreference android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:key="filter_distance" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
-		<com.hlidskialf.android.preference.SeekBarPreference android:max="200" android:title="@string/pref_count_of_caches" android:key="filter_count_of_caches" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="20" android:summary="@string/pref_count_of_caches_summary"/>
+		<CheckBoxPreference android:key="filter_show_found" android:summary="@string/pref_show_found_summary" android:title="@string/pref_show_found" android:defaultValue="false"/>
+		<CheckBoxPreference android:key="filter_show_own" android:summary="@string/pref_show_own_summary" android:title="@string/pref_show_own" android:defaultValue="false"/>
+		<CheckBoxPreference android:key="filter_show_disabled" android:summary="@string/pref_show_disabled_summary" android:title="@string/pref_show_disabled" android:defaultValue="false"/>
+		<EditTextPreference android:key="filter_distance" android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_downloading">
 	    <CheckBoxPreference android:key="live_map" android:title="@string/pref_livemap" android:summary="@string/pref_livemap_summary" android:defaultValue="false"/>
 	    <CheckBoxPreference android:key="simple_cache_data" android:title="@string/pref_download_basic" android:summary="@string/pref_download_basic_summary" android:defaultValue="true"/>
 	    <com.arcao.preference.ListPreference android:key="full_cache_data_on_show" android:title="@string/pref_download_on_show" android:summary="@string/pref_download_on_show_summary" android:entries="@array/pref_download_on_show_entries" android:entryValues="@array/pref_download_on_show_values" android:defaultValue="0"/>
-	    <com.hlidskialf.android.preference.SeekBarPreference android:max="30" android:title="@string/pref_count_of_logs" android:key="downloading_count_of_logs" android:text="@string/pref_count_of_logs_text" android:dialogMessage="@string/pref_count_of_logs_summary" android:defaultValue="5" android:summary="@string/pref_count_of_logs_summary"/>
-	    <com.hlidskialf.android.preference.SeekBarPreference android:max="50" android:title="@string/pref_count_of_trackables" android:key="downloading_count_of_trackables" android:text="@string/pref_count_of_trackables_text" android:dialogMessage="@string/pref_count_of_trackables_summary" android:defaultValue="10" android:summary="@string/pref_count_of_trackables_summary"/>
+		<com.hlidskialf.android.preference.SeekBarPreference android:key="filter_count_of_caches" android:max="200" android:title="@string/pref_count_of_caches" android:text="@string/pref_count_of_caches_text" android:dialogMessage="@string/pref_count_of_caches_summary" android:defaultValue="20" android:summary="@string/pref_count_of_caches_summary"/>
+	    <com.hlidskialf.android.preference.SeekBarPreference android:key="downloading_count_of_logs" android:max="30" android:title="@string/pref_count_of_logs" android:text="@string/pref_count_of_logs_text" android:dialogMessage="@string/pref_count_of_logs_summary" android:defaultValue="5" android:summary="@string/pref_count_of_logs_summary"/>
+	    <com.hlidskialf.android.preference.SeekBarPreference android:key="downloading_count_of_trackables" android:max="50" android:title="@string/pref_count_of_trackables" android:text="@string/pref_count_of_trackables_text" android:dialogMessage="@string/pref_count_of_trackables_summary" android:defaultValue="10" android:summary="@string/pref_count_of_trackables_summary"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">
 		<CheckBoxPreference android:key="compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>
 		<CheckBoxPreference android:key="imperial_units" android:summary="@string/pref_imperial_units_summary" android:title="@string/pref_imperial_units"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_about">
-	    <Preference android:title="@string/pref_version" android:key="version"/>
+	    <Preference android:title="@string/pref_version" android:key="about_version"/>
 	    <Preference android:title="@string/pref_author" android:summary="Arcao"/>
-	    <Preference android:title="@string/pref_website" android:summary="http://g4l.arcao.com/" android:key="website"/>
-	    <Preference android:title="@string/pref_donate_paypal" android:summary="@string/pref_donate_paypal_summary" android:key="donate_paypal"/>
+	    <Preference android:title="@string/pref_website" android:summary="http://g4l.arcao.com/" android:key="about_website"/>
+	    <Preference android:title="@string/pref_donate_paypal" android:summary="@string/pref_donate_paypal_summary" android:key="about_donate_paypal"/>
 	</PreferenceCategory>
 </PreferenceScreen>

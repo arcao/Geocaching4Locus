@@ -5,6 +5,7 @@ import org.acra.annotation.ReportsCrashes;
 
 import android.app.Application;
 
+import com.arcao.geocaching4locus.authenticatation.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
@@ -17,6 +18,7 @@ public class Geocaching4LocusApplication extends Application {
 	public void onCreate() {
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
+		AccountAuthenticator.convertFromOldStorage(this);
 		super.onCreate();
 	}
 }

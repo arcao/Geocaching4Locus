@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
+@Deprecated
 public class AccountPreference {
 	public static Account get(Context context) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);		

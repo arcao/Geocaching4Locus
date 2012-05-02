@@ -1,5 +1,7 @@
 package com.arcao.geocaching4locus;
 
+import java.io.IOException;
+
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.LocusIntents;
@@ -7,6 +9,8 @@ import menion.android.locus.addon.publiclib.geoData.Point;
 
 import org.acra.ErrorReporter;
 
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -23,10 +27,9 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching4locus.authenticatation.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.Account;
-import com.arcao.geocaching4locus.util.AccountPreference;
 import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 
@@ -91,7 +94,6 @@ public class UpdateActivity extends Activity {
 	class UpdateTask extends UserTask<String, Void, Geocache> implements OnClickListener {
 		private ProgressDialog dialog;
 		private SharedPreferences prefs;
-		private Account account;
 		private boolean replaceCache;
 		private int logCount;
 		private int trackableCount;
@@ -105,9 +107,7 @@ public class UpdateActivity extends Activity {
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 			replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
-						
-			account = AccountPreference.get(UpdateActivity.this);
-			
+								
 			dialog = new ProgressDialog(UpdateActivity.this);
 			dialog.setIndeterminate(true);
 			dialog.setMessage(getResources().getText(R.string.update_cache_progress));
@@ -141,25 +141,28 @@ public class UpdateActivity extends Activity {
 
 		@Override
 		protected Geocache doInBackground(String... params) throws Exception {
-			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-				throw new InvalidCredentialsException("Username or password is empty.");
+			if (!AccountAuthenticator.hasAccount(UpdateActivity.this))
+				throw new InvalidCredentialsException("Account not found.");
 			
 			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 			
 			Geocache cache = null;
 			try {
-				login(api, account);
+				login(api);
+				cache = api.getCache(params[0], logCount, trackableCount);
+			} catch (InvalidCredentialsException e) {
+				AccountAuthenticator.clearPassword(UpdateActivity.this);
+				
+				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
-				account.setSession(null);
-				AccountPreference.updateSession(UpdateActivity.this, account);
+				AccountAuthenticator.invalidateAuthToken(UpdateActivity.this);
 				
 				// try againg
-				login(api, account);
+				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
-			} finally {
-				account.setSession(api.getSession());
-				AccountPreference.updateSession(UpdateActivity.this, account);
+			} catch (OperationCanceledException e) {
+				cancel(false);
 			}
 			
 			if (isCancelled())
@@ -227,18 +230,13 @@ public class UpdateActivity extends Activity {
 			cancel(true);
 		}
 		
-		private boolean login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+		private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
 			try {
-				if (account.getSession() == null || account.getSession().length() == 0) {
-					api.openSession(account.getUserName(), account.getPassword());
-					return true;
-				} else {
-					api.openSession(account.getSession());
-					return false;
-				}
-			} catch (InvalidCredentialsException e) {
-				Log.e(TAG, "Creditials not valid.", e);
-				throw e;
+				api.openSession(AccountAuthenticator.getAuthToken(UpdateActivity.this));
+			} catch (AuthenticatorException e) {
+				throw new GeocachingApiException(e.getMessage(), e);
+			} catch (IOException e) {
+				throw new GeocachingApiException(e.getMessage(), e);
 			}
 		}
 	}

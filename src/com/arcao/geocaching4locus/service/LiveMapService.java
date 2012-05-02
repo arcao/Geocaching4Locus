@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,8 @@ import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingExceptio
 
 import org.acra.ErrorReporter;
 
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -39,10 +42,9 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
+import com.arcao.geocaching4locus.authenticatation.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.Account;
-import com.arcao.geocaching4locus.util.AccountPreference;
 
 public class LiveMapService extends IntentService {
 	private static final String TAG = "G4L|LiveMapService";
@@ -59,7 +61,6 @@ public class LiveMapService extends IntentService {
 	
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 	
-	private Account account;
 	private boolean showFound;
 	private boolean showOwn;
 	private boolean showDisabled;
@@ -140,8 +141,6 @@ public class LiveMapService extends IntentService {
 		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 		
 		cacheTypes = getCacheTypeFilterResult(prefs);
-
-		account = AccountPreference.get(this);
 	}
 	
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
@@ -159,74 +158,87 @@ public class LiveMapService extends IntentService {
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
 		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
 
-		if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-			throw new InvalidCredentialsException("Username or password is empty.");
+		if (!AccountAuthenticator.hasAccount(this))
+			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
-		boolean realLogin = login(api, account);
-
-		try {
-			int current = 0;
-			int perPage = CACHES_PER_REQUEST;
-			
-			while (current < CACHES_COUNT) {
-				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
-
-				List<SimpleGeocache> cachesToAdd;
+		
+		int attempt = 0;
+		
+		while (++attempt <= 2) {
+			try {
+				login(api);
 				
-				if (current == 0) {
-					cachesToAdd = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
-							new PointRadiusFilter(latitude, longitude, 60000),
-							new GeocacheTypeFilter(cacheTypes),
-							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
-							new NotFoundByUsersFilter(showFound ? null : account.getUserName()),
-							new NotHiddenByUsersFilter(showOwn ? null : account.getUserName()),
-							new DifficultyFilter(difficultyMin, difficultyMax),
-							new TerrainFilter(terrainMin, terrainMax),
-							new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude)
-					});
-				} else {
-					cachesToAdd = api.getMoreGeocaches(true, current, perPage, 0, 0);
+				String username = AccountAuthenticator.getAccount(this).name;
+		
+				int current = 0;
+				int perPage = CACHES_PER_REQUEST;
+				
+				while (current < CACHES_COUNT) {
+					perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
+	
+					List<SimpleGeocache> cachesToAdd;
+					
+					if (current == 0) {
+						cachesToAdd = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
+								new PointRadiusFilter(latitude, longitude, 60000),
+								new GeocacheTypeFilter(cacheTypes),
+								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
+								new NotFoundByUsersFilter(showFound ? null : username),
+								new NotHiddenByUsersFilter(showOwn ? null : username),
+								new DifficultyFilter(difficultyMin, difficultyMax),
+								new TerrainFilter(terrainMin, terrainMax),
+								new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude)
+						});
+					} else {
+						cachesToAdd = api.getMoreGeocaches(true, current, perPage, 0, 0);
+					}
+									
+					caches.addAll(cachesToAdd);
+					
+					if (cachesToAdd.size() != perPage)
+						break;
+	
+					current = current + perPage;
 				}
-								
-				caches.addAll(cachesToAdd);
+				int count = caches.size();
+	
+				Log.i(TAG, "found caches: " + count);
+	
+				return caches;
+			} catch (InvalidCredentialsException e) {
+				Log.e(TAG, e.getMessage(), e);
+				AccountAuthenticator.clearPassword(this);
 				
-				if (cachesToAdd.size() != perPage)
-					break;
-
-				current = current + perPage;
-			}
-			int count = caches.size();
-
-			Log.i(TAG, "found caches: " + count);
-
-			return caches;
-		} catch (InvalidSessionException e) {
-			account.setSession(null);
-			AccountPreference.updateSession(this, account);
-			
-			if (realLogin)
+				if (attempt == 1)
+					continue;
+				
 				throw e;
-
-			return downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
-		} finally {
-			account.setSession(api.getSession());
-			AccountPreference.updateSession(this, account);
+			} catch (InvalidSessionException e) {
+				Log.e(TAG, e.getMessage(), e);
+				AccountAuthenticator.invalidateAuthToken(this);
+				
+				if (attempt == 1)
+					continue;
+				
+				throw e;
+			} catch (OperationCanceledException e) {
+				Log.e(TAG, e.getMessage(), e);
+				
+				throw new InvalidCredentialsException("Log in operation cancelled");
+			}
 		}
+		
+		return caches; 
 	}
 	
-	protected boolean login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
 		try {
-			if (account.getSession() == null || account.getSession().length() == 0) {
-				api.openSession(account.getUserName(), account.getPassword());
-				return true;
-			} else {
-				api.openSession(account.getSession());
-				return false;
-			}
-		} catch (InvalidCredentialsException e) {
-			Log.e(TAG, "Creditials not valid.", e);
-			throw e;
+			api.openSession(AccountAuthenticator.getAuthToken(this));
+		} catch (AuthenticatorException e) {
+			throw new GeocachingApiException(e.getMessage(), e);
+		} catch (IOException e) {
+			throw new GeocachingApiException(e.getMessage(), e);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.util;
 
+@Deprecated
 public class Account {
 	private final String userName;
 	private final String password;

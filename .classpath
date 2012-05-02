@@ -8,7 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/locus-addon-publiclib-1.4.jar" sourcepath="lib/locus-addon-publiclib-1.4-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-over-slf4j-1.6.4.jar" sourcepath="lib/log4j-over-slf4j-1.6.4-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/slf4j-android-1.6.1-RC1.jar" sourcepath="lib/slf4j-android-1.6.1-RC1-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/acra-4.2.3.jar" sourcepath="lib/acra-4.2.3-sources.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

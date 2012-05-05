@@ -29,7 +29,7 @@
         <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
         <service android:name=".service.SearchGeocacheService"></service>
         <service android:name=".service.LiveMapService"></service>
-        <service android:name=".authenticatation.AuthenticatationService" android:process=":auth" android:exported="true">
+        <service android:name=".authentication.AuthenticationService" android:process=":auth" android:exported="true">
           <intent-filter>
             <action android:name="android.accounts.AccountAuthenticator" />
           </intent-filter>
@@ -88,6 +88,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authenticatation.AuthenticatorActivity" android:theme="@style/Dialog" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Dialog" android:configChanges="keyboardHidden|orientation"></activity>
     </application>
 </manifest>

@@ -1,10 +1,10 @@
-package com.arcao.geocaching4locus.authenticatation;
+package com.arcao.geocaching4locus.authentication;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-public class AuthenticatationService extends Service {
+public class AuthenticationService extends Service {
 	AccountAuthenticator accountAuthenticator = null;
 	
 	@Override

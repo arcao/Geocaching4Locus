@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.authenticatation;
+package com.arcao.geocaching4locus.authentication;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;

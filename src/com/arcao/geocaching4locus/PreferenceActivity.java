@@ -25,7 +25,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.arcao.geocaching.api.data.type.CacheType;
-import com.arcao.geocaching4locus.authenticatation.AccountAuthenticator;
+import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;

@@ -72,7 +72,7 @@ public class LocusDataMapper {
 		d.available = cache.isAvailable();
 		d.archived = cache.isArchived();
 		d.premiumOnly = cache.isPremiumListing();
-		d.hidden = GPX_TIME_FMT.format(cache.getCreated());
+		d.hidden = GPX_TIME_FMT.format(cache.getPlaced());
 		d.exported = GPX_TIME_FMT.format(new Date());
 		d.container = toLocusContainerType(cache.getContainerType());
 		d.found = cache.isFound();
@@ -151,7 +151,7 @@ public class LocusDataMapper {
 	protected static PointGeocachingDataLog toLocusCacheLog(CacheLog log) {
 		PointGeocachingDataLog l = new PointGeocachingDataLog();
 		
-		l.date = GPX_TIME_FMT.format(log.getDate());
+		l.date = GPX_TIME_FMT.format(log.getVisited());
 		User author = log.getAuthor();
 		if (author != null) {
 			l.finder = author.getUserName();

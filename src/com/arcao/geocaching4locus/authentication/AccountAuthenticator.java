@@ -15,7 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
@@ -155,21 +154,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 		}
 		
 		return am.blockingGetAuthToken(accounts[0], ACCOUNT_TYPE, true);
-	}
-	
-	public static void addAccount(Context ctx, String username, String password, Parcelable response) {
-		final AccountAuthenticatorResponse authResponse = (AccountAuthenticatorResponse)response;
-
-		Bundle result = null;
-		final Account account = new Account(username, ACCOUNT_TYPE);
-		
-		final AccountManager am = AccountManager.get(ctx);
-		if (am.addAccountExplicitly(account, password, null)) {
-			result = new Bundle();
-			result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-			result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-			authResponse.onResult(result);
-		}
 	}
 	
 	public static Account getAccount(Context ctx) {

@@ -1,24 +1,32 @@
 package com.arcao.geocaching4locus.authentication;
 
+import org.acra.ErrorReporter;
+
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.UserTask;
 
-public class AuthenticatorActivity extends AccountAuthenticatorActivity {
+public class AuthenticatorActivity extends AccountAuthenticatorActivity implements OnEditorActionListener {
 	private static final String TAG = "G4L|AuthenticatorActivity";
 	
   public static final String PARAM_USERNAME = "USERNAME"; 
@@ -40,22 +48,15 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		
-		Log.i(TAG, "onCreate(" + icicle + ")");
-		
 		mAccountManager = AccountManager.get(this);
 		
-    Log.i(TAG, "loading data from Intent");
     final Intent intent = getIntent();
     
     mUsername = intent.getStringExtra(PARAM_USERNAME);
     mAuthTokenType = intent.getStringExtra(PARAM_AUTHTOKEN_TYPE);
     
     mRequestNewAccount = mUsername == null;
-    
-    //mConfirmCredentials = intent.getBooleanExtra(PARAM_CONFIRMCREDENTIALS, false);
-
-    Log.i(TAG, "    request new: " + mRequestNewAccount);
-    
+        
     setContentView(R.layout.login_activity);
     
     // hide preferences button
@@ -84,7 +85,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     mUsername = mUsernameEdit.getText().toString();   
     mPassword = mPasswordEdit.getText().toString();
     
-    new AutheticateTask().execute(mUsername, mPassword);
+    new AuthenticatorTask().execute(mUsername, mPassword);
+	}
+	
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		switch (actionId) {
+			case EditorInfo.IME_ACTION_NEXT:
+				mPasswordEdit.requestFocus();
+				return true;
+			case EditorInfo.IME_ACTION_DONE:
+				finishLogin();
+				return true;
+			default:
+				return false;
+		}
 	}
 
 	
@@ -112,7 +127,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     finish();
 	}
 	
-	protected class AutheticateTask extends UserTask<String, Void, String> {
+	protected class AuthenticatorTask extends UserTask<String, Void, String> {
 		private ProgressDialog pd;
 		
 		@Override
@@ -124,7 +139,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 			pd.setOnCancelListener(new OnCancelListener() {
 				@Override
 				public void onCancel(DialogInterface dialog) {
-					AutheticateTask.this.cancel(true);
+					AuthenticatorTask.this.cancel(true);
 					pd.dismiss();
 				}
 			});
@@ -154,7 +169,19 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
 			if (pd.isShowing())
 				pd.dismiss();
 			
-			// TODO show error dialog
+			CharSequence message = e.getMessage();
+			
+			if (e instanceof InvalidCredentialsException) {
+				message = getText(R.string.login_error_credentials);
+			} else {
+				ErrorReporter.getInstance().handleSilentException(e);
+			}
+			
+			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AuthenticatorActivity.this);
+			dialogBuilder.setTitle(getText(R.string.login_error_title));
+			dialogBuilder.setMessage(message);
+			
+			dialogBuilder.show();
 		}
 	}
 }

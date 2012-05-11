@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="right"
     android:orientation="vertical" >
 
@@ -19,28 +19,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Username" />
-
+            
             <EditText
                 android:id="@+id/username"
                 style="@style/SimpleEditText"
-                android:inputType="textNoSuggestions" />
-
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Password:" />
+                android:inputType="textNoSuggestions"
+                android:layout_marginTop="5.0dip"
+                android:hint="@string/login_username"
+                android:imeOptions="actionNext" />
 
             <EditText
                 android:id="@+id/password"
                 style="@style/SimpleEditText"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:hint="@string/login_password"
+                android:imeOptions="actionDone" />
 
             <RelativeLayout android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
@@ -50,14 +43,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:onClick="onClickCancel"
-                    android:text="Cancel" />
+                    android:text="@string/login_button_cancel" />
 
                 <Button
+                    android:id="@+id/login_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:onClick="onClickContinue"
-                    android:text="Continue" />
+                    android:text="@string/login_button_login" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

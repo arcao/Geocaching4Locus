@@ -8,7 +8,7 @@
 	<string name="search_activity_name">Nejbližší keše</string>
 	<string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
 	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
+	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
 	<string name="preferences">Nastavení</string>
 	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
 	<string name="coordinates">Souřadnice</string>
@@ -28,7 +28,7 @@
 	<string name="pref_imperial_units">Imperiální jednotky</string>
 	<string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
 	<string name="import_caches">Importovat keše</string>
-	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zadej své uživatelské údaje v nastavení.</string>
+	<string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zkontrolujte stav přihlášení v nastavení.</string>
 	<string name="error_title">Nastala chyba!</string>
 	<string name="ok_button">OK</string>
 	<string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
@@ -87,4 +87,16 @@
 	<string name="pref_livemap_summary">Živé načítání keší do mapy (povolte v Locusu: Nastavení → Různé → Povolit periodické aktualizace)</string>
 	<string name="user_waypoint_name">Uživatelský waypoint %1$d</string>
 	<string name="final_location_name">Konečné umístění %1$d</string>
+	<string name="account_logging_in">Přihlašuji se…</string>
+	<string name="pref_account_login">Přihlásit se</string>
+	<string name="pref_account_login_summary">Přihlásit se k Geocaching.com účtu</string>
+	<string name="pref_account_logout">Odhlásit</string>
+	<string name="pref_account_logout_summary">Přihlášen jako %s</string>
+	<string name="login_username">Uživatelské jméno</string>
+	<string name="login_password">Heslo</string>
+	<string name="login_button_cancel">Zrušit</string>
+	<string name="login_button_login">Přihlásit se</string>
+	<string name="login_error_title">Přihlášení se nezdařilo</string>
+	<string name="login_error_credentials">Chybné uživatelské jméno nebo heslo.</string>
+	<string name="login_message">Prosím vyplňte vaše přihlašovací údaje na Geocaching.com.</string>
 </resources>

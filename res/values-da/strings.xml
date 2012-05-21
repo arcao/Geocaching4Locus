@@ -2,13 +2,13 @@
 <resources>
 	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Fejl opstået under hentning af cacher.&lt;br&gt;Description: %1$s</string>
-	<string name="downloading">Henter cacher ned...</string>
+	<string name="downloading">Henter cacher ned…</string>
 	<string name="downloading_cache">Henter cache (%3$d/%4$d): %1$s - %2$s</string>
 	<string name="error_locus_not_found">Installer venligst Locus! </string>
 	<string name="search_activity_name">Nærmeste cacher</string>
 	<string name="error_location">Forsøget på at finde din position via trådløst netværk mislykkedes! Tænd venligst for det trådløsnet.</string>
 	<string name="acquiring_gps_location">Finder din lokation via GPS</string>
-	<string name="acquiring_network_location">Finder din lokation via Trådløst net...</string>
+	<string name="acquiring_network_location">Finder din lokation via Trådløst net…</string>
 	<string name="preferences">Præferencer</string>
 	<string name="wrong_coordinates">Koordinat fejl, forkert format!</string>
 	<string name="coordinates">Koordinater </string>
@@ -28,7 +28,7 @@
 	<string name="pref_imperial_units">Engelske mål</string>
 	<string name="pref_imperial_units_summary">Brug miles i stedet for kilometer </string>
 	<string name="import_caches">Importer cacher</string>
-	<string name="error_credentials">Brugernavn eller kodeord forkert. udfyld venligst din bruger information under indstillinger igen</string>
+	<string name="error_credentials">Ugyldigt brugernavn og eller password. Check dine Log-in indstillinger</string>
 	<string name="error_title">Fejl opstået!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">Din version af Locus er for gammel. Geocaching4Locus skal bruge version %s eller højere for at virke ordentligt.</string>
@@ -41,7 +41,7 @@
 	<string name="pref_menu_deselect_all">Fravælg alle</string>
 	<string name="locus_update_cache">Opdater cache</string>
 	<string name="locus_import_cache">Importer cache</string>
-	<string name="update_cache_progress">Opdatere cache...</string>
+	<string name="update_cache_progress">Opdatere cache…</string>
 	<string name="pref_title_downloading">Henter ned</string>
 	<string name="pref_count_of_logs">Antal logs</string>
 	<string name="pref_count_of_logs_text">logs</string>
@@ -54,13 +54,13 @@
 	<string name="close">Luk</string>
 	<string name="pref_show_disabled">Vis deaktiveret</string>
 	<string name="pref_show_disabled_summary">Vis midlertidigt deaktiverede caches</string>
-	<string name="import_cache_progress">Henter cache ned...</string>
+	<string name="import_cache_progress">Henter cache ned…</string>
 	<string name="pref_title_about">Om programmet</string>
 	<string name="pref_version">Version</string>
 	<string name="pref_author">Forfatter</string>
 	<string name="pref_website">Hjemside, fora, osv.</string>
 	<string name="pref_donate_paypal">Doner via PayPal</string>
-	<string name="pref_donate_paypal_summary">Støt fremtidig udvikling...</string>
+	<string name="pref_donate_paypal_summary">Støt fremtidig udvikling…</string>
 	<string name="pref_donate_paypal_choose_currency">Vælg din møntfod</string>
 	<string name="pref_title_cache_type_filter">Cache typer</string>
 	<string name="pref_title_difficulty_filter">Sværhedsgrad</string>
@@ -87,4 +87,16 @@
 	<string name="pref_livemap_summary">Live henter cacher til kortet (aktiver i Locus: Indstillinger → Andet → Aktiver periodiske opdateringer)</string>
 	<string name="user_waypoint_name">Bruger waypoint (koordinatpunkter) %1$d</string>
 	<string name="final_location_name">Sidste lokation %1$d</string>
+	<string name="account_logging_in">Log\'er på…</string>
+	<string name="pref_account_login">Log-på</string>
+	<string name="pref_account_login_summary">Log-på til Geocaching.com konto</string>
+	<string name="pref_account_logout">Log-ud</string>
+	<string name="pref_account_logout_summary">Logget på som %s</string>
+	<string name="login_username">Brugernavn</string>
+	<string name="login_password">Kodeord</string>
+	<string name="login_button_cancel">Annuller</string>
+	<string name="login_button_login">Log-på</string>
+	<string name="login_error_title">Log-på fejlede</string>
+	<string name="login_error_credentials">Ugyldigt brugernavn og eller password</string>
+	<string name="login_message">Please fill-in your Geocaching.com credentials.</string>
 </resources>

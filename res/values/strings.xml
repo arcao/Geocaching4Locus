@@ -121,5 +121,6 @@
     
     <string name="login_error_title">Log-in failed</string>
     <string name="login_error_credentials">Invalid username or password.</string>
+    <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
 </resources>
 

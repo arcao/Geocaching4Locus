@@ -29,7 +29,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_imperial_units">Imperiale eenheden</string>
 	<string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
 	<string name="import_caches">Importeer caches</string>
-	<string name="error_credentials">Ongeldige gebruikersnaam of wachtwoord. Gelieve je gebruikersinformatie opnieuw in te geven in voorkeuren.</string>
+	<string name="error_credentials">Ongeldige gebruikersnaam of paswoord. Controleer AUB de inloggegevens in Voorkeuren</string>
 	<string name="error_title">Er is een fout opgetreden!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
@@ -61,7 +61,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_author">Auteur</string>
 	<string name="pref_website">Website, forum, enz.</string>
 	<string name="pref_donate_paypal">Doneer via Paypal</string>
-	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
+	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling…</string>
 	<string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
 	<string name="pref_title_cache_type_filter">Soort Cache</string>
 	<string name="pref_title_difficulty_filter">Moeilijkheid</string>
@@ -88,4 +88,16 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
 	<string name="user_waypoint_name">Gebruikers via punt %1$d</string>
 	<string name="final_location_name">Eindbestemming %1$d</string>
+	<string name="account_logging_in">Ingelogd…</string>
+	<string name="pref_account_login">Aanmelden</string>
+	<string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>
+	<string name="pref_account_logout">Afmelden</string>
+	<string name="pref_account_logout_summary">Aangemeld als %s</string>
+	<string name="login_username">Gebruikersnaam</string>
+	<string name="login_password">Paswoord</string>
+	<string name="login_button_cancel">Annuleren</string>
+	<string name="login_button_login">Aanmelden</string>
+	<string name="login_error_title">Aanmelden mislukt</string>
+	<string name="login_error_credentials">Ongeldige gebruikersnaam of paswoord</string>
+	<string name="login_message">Please fill-in your Geocaching.com credentials.</string>
 </resources>

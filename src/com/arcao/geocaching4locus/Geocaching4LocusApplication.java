@@ -7,11 +7,9 @@ import android.app.Application;
 
 import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.constants.PrefConstants;
 
 @ReportsCrashes(
-		formKey = AppConstants.ERROR_FORM_KEY,
-		omitSharedPrefs = { PrefConstants.PASSWORD })
+		formKey = AppConstants.ERROR_FORM_KEY)
 public class Geocaching4LocusApplication extends Application {
 
 	@Override

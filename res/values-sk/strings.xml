@@ -28,7 +28,7 @@
 	<string name="pref_imperial_units">Imperiálne jednotky</string>
 	<string name="pref_imperial_units_summary">Použitie míl namiesto kilometrov</string>
 	<string name="import_caches">Importovať kešky</string>
-	<string name="error_credentials">Neplatné užívateľské meno alebo heslo. Prosím, znova zadajte svoje užívateľské údaje v nastavení.</string>
+	<string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastavení.</string>
 	<string name="error_title">Došlo k chybe!</string>
 	<string name="ok_button">OK</string>
 	<string name="error_locus_old">Nainštalovaná verzia Locusu je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
@@ -87,4 +87,16 @@
 	<string name="pref_livemap_summary">Živé načítanie kešiek do mapy (povoľte v Locusu: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie)</string>
 	<string name="user_waypoint_name">Užívateľský bod trasy %1$d</string>
 	<string name="final_location_name">Konečné umiestnenie %1$d</string>
+	<string name="account_logging_in">Prihlasujem sa…</string>
+	<string name="pref_account_login">Prihlásiť</string>
+	<string name="pref_account_login_summary">Prihlásiť k Geocaching.com účtu</string>
+	<string name="pref_account_logout">Odhlásiť</string>
+	<string name="pref_account_logout_summary">Prihlásený ako %s</string>
+	<string name="login_username">Užívateľské meno</string>
+	<string name="login_password">Heslo</string>
+	<string name="login_button_cancel">Zrušiť</string>
+	<string name="login_button_login">Prihlásiť</string>
+	<string name="login_error_title">Nepodarilo sa prihlásiť</string>
+	<string name="login_error_credentials">Chybné užívateľské meno alebo heslo.</string>
+	<string name="login_message">Prosím vyplňte vaše prihlasovacie údaje na Geocaching.com.</string>
 </resources>

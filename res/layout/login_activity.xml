@@ -19,24 +19,32 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-            
+
+            <TextView
+                android:id="@+id/message"
+                style="@style/LoginMessageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_message" />
+
             <EditText
                 android:id="@+id/username"
                 style="@style/SimpleEditText"
-                android:inputType="textNoSuggestions"
                 android:layout_marginTop="5.0dip"
                 android:hint="@string/login_username"
-                android:imeOptions="actionNext" />
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions" />
 
             <EditText
                 android:id="@+id/password"
                 style="@style/SimpleEditText"
-                android:inputType="textPassword"
                 android:hint="@string/login_password"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                android:inputType="textPassword" />
 
-            <RelativeLayout android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
 
                 <Button
                     android:layout_width="wrap_content"

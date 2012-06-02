@@ -111,7 +111,7 @@ public class LiveMapService extends IntentService {
 				pd.addPoint(p);
 			}
 
-			DisplayData.sendDataSilent(this, pd, true);
+			DisplayData.sendDataSilent(this, pd);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, e.getMessage(), e);
 		} catch (InvalidCredentialsException e) {

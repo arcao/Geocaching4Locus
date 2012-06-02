@@ -1,5 +1,7 @@
 package com.arcao.geocaching4locus;
 
+import org.acra.ErrorReporter;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -15,6 +17,7 @@ public class ErrorActivity extends Activity {
 	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
 	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
+	public static final String PARAM_EXCEPTION = "EXCEPTION";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {	
@@ -24,6 +27,7 @@ public class ErrorActivity extends Activity {
 			int resId = getIntent().getIntExtra(PARAM_RESOURCE_ID, 0);
 			String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 			final boolean openPreference = getIntent().getBooleanExtra(PARAM_OPEN_PREFERENCE, false);
+			Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 			
 			showError(resId, additionalMessage, new DialogInterface.OnClickListener() {
 				@Override
@@ -37,7 +41,7 @@ public class ErrorActivity extends Activity {
 					}
 					ErrorActivity.this.finish();
 				}
-			});
+			}, t);
 			
 			NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.cancelAll();
@@ -46,7 +50,7 @@ public class ErrorActivity extends Activity {
 		}
 	}
 	
-	protected void showError(int errorResId, String additionalMessage, DialogInterface.OnClickListener onClickListener) {
+	protected void showError(int errorResId, String additionalMessage, DialogInterface.OnClickListener onClickListener, final Throwable t) {
 		if (isFinishing())
 			return;
 		
@@ -57,6 +61,17 @@ public class ErrorActivity extends Activity {
 		builder.setTitle(R.string.error_title);
 		builder.setPositiveButton(R.string.ok_button, onClickListener);
 		builder.setCancelable(false);
+		
+		if (t != null) {
+			builder.setNeutralButton(R.string.error_send_error_report, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					ErrorReporter.getInstance().handleException(t);
+					dialog.dismiss();
+				}
+			});
+		}
+		
 		builder.show();
 	}
 }

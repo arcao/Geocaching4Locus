@@ -278,18 +278,5 @@ public class DisplayDataExtended extends DisplayData {
 			}
 			p.recycle();
 		}
-	}
-	
-	private static boolean hasData(Intent intent) {
-		if (intent == null)
-			return false;
-		
-		return !(
-				intent.getParcelableArrayListExtra(LocusConst.EXTRA_POINTS_DATA_ARRAY) == null && 
-				intent.getParcelableExtra(LocusConst.EXTRA_POINTS_DATA) == null &&
-				intent.getStringExtra(LocusConst.EXTRA_POINTS_CURSOR_URI) == null && 
-				intent.getStringExtra(LocusConst.EXTRA_POINTS_FILE_PATH) == null &&
-				intent.getParcelableExtra(LocusConst.EXTRA_TRACKS_SINGLE) == null &&
-				intent.getParcelableArrayListExtra(LocusConst.EXTRA_TRACKS_MULTI) == null);
-	}
+	}	
 }

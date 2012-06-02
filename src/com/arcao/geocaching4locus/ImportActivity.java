@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,8 @@ import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingExceptio
 
 import org.acra.ErrorReporter;
 
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -27,10 +30,9 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.Account;
-import com.arcao.geocaching4locus.util.AccountPreference;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -81,7 +83,6 @@ public class ImportActivity extends Activity {
 	class ImpotTask extends UserTask<String, Void, Geocache> implements OnClickListener {
 		private ProgressDialog dialog;
 		private SharedPreferences prefs;
-		private Account account;
 		private int logCount;
 		private int trackableCount;
 		
@@ -95,8 +96,6 @@ public class ImportActivity extends Activity {
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 						
-			account = AccountPreference.get(ImportActivity.this);
-			
 			dialog = new ProgressDialog(ImportActivity.this);
 			dialog.setIndeterminate(true);
 			dialog.setMessage(getResources().getText(R.string.import_cache_progress));
@@ -127,8 +126,8 @@ public class ImportActivity extends Activity {
 
 		@Override
 		protected Geocache doInBackground(String... params) throws Exception {
-			if (account.getUserName() == null || account.getUserName().length() == 0 || account.getPassword() == null || account.getPassword().length() == 0)
-				throw new InvalidCredentialsException("Username or password is empty.");
+			if (!AccountAuthenticator.hasAccount(ImportActivity.this))
+				throw new InvalidCredentialsException("Account not found.");
 			
 			// if it's guid we need to convert to cache code
 			for (int i = 0; i < params.length; i++) {
@@ -142,18 +141,22 @@ public class ImportActivity extends Activity {
 			
 			Geocache cache = null;
 			try {
-				login(api, account);
+				login(api);
+				cache = api.getCache(params[0], logCount, trackableCount);
+			} catch (InvalidCredentialsException e) {
+				AccountAuthenticator.clearPassword(ImportActivity.this);
+				
+				// try again
+				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
-				account.setSession(null);
-				AccountPreference.updateSession(ImportActivity.this, account);
+				AccountAuthenticator.invalidateAuthToken(ImportActivity.this);
 				
-				// try againg
-				login(api, account);
+				// try again
+				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
-			} finally {
-				account.setSession(api.getSession());
-				AccountPreference.updateSession(ImportActivity.this, account);
+			} catch (OperationCanceledException e) {
+				cancel(false);
 			}
 			
 			if (isCancelled())
@@ -221,18 +224,13 @@ public class ImportActivity extends Activity {
 			cancel(true);
 		}
 		
-		private boolean login(GeocachingApi api, Account account) throws GeocachingApiException, InvalidCredentialsException {
+		private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
 			try {
-				if (account.getSession() == null || account.getSession().length() == 0) {
-					api.openSession(account.getUserName(), account.getPassword());
-					return true;
-				} else {
-					api.openSession(account.getSession());
-					return false;
-				}
-			} catch (InvalidCredentialsException e) {
-				Log.e(TAG, "Creditials not valid.", e);
-				throw e;
+				api.openSession(AccountAuthenticator.getAuthToken(ImportActivity.this));
+			} catch (AuthenticatorException e) {
+				throw new GeocachingApiException(e.getMessage(), e);
+			} catch (IOException e) {
+				throw new GeocachingApiException(e.getMessage(), e);
 			}
 		}		
 	}

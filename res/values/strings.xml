@@ -33,7 +33,7 @@
     
     <string name="import_caches">Import caches</string>
     
-    <string name="error_credentials">Invalid username or password. Please re-enter your user information in preferences.</string>
+    <string name="error_credentials">Invalid username or password. Please check your log-in state in preferences.</string>
     <string name="error_title">Error occurs!</string>
     
     <string name="ok_button">OK</string>
@@ -106,5 +106,21 @@
     
     <string name="user_waypoint_name">User waypoint %1$d</string>
     <string name="final_location_name">Final location %1$d</string>
+    
+    <string name="account_logging_in">Logging in…</string>
+    
+    <string name="pref_account_login">Log-in</string>
+    <string name="pref_account_login_summary">Log-in to Geocaching.com account</string>
+    <string name="pref_account_logout">Log-out</string>
+    <string name="pref_account_logout_summary">Logged as %s</string>
+    
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_button_cancel">Cancel</string>
+    <string name="login_button_login">Log-in</string>
+    
+    <string name="login_error_title">Log-in failed</string>
+    <string name="login_error_credentials">Invalid username or password.</string>
+    <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
 </resources>
 

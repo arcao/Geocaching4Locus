@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;
@@ -33,6 +34,8 @@ import com.hlidskialf.android.preference.SeekBarPreference;
 public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
 	private static final String TAG = "G4L|PreferenceActivity";
 
+	protected static final String ACCOUNT = "account";
+	
 	protected static final String UNIT_KM = "km";
 	protected static final String UNIT_MILES = "mi";
 
@@ -77,13 +80,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 		boolean imperialUnits = prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
 
-		if (USERNAME.equals(key)) {
-			final EditTextPreference p = findPreference(key, EditTextPreference.class);
-			p.setSummary(prepareRequiredPreferenceSummary(p.getText(), 0, true));
-		} else if (PASSWORD.equals(key)) {
-			final EditTextPreference p = findPreference(key, EditTextPreference.class);
-			p.setSummary(prepareRequiredPreferenceSummary(p.getText(), 0, false));
-		} else if (FILTER_DISTANCE.equals(key) && !imperialUnits) {
+		if (FILTER_DISTANCE.equals(key) && !imperialUnits) {
 			final EditTextPreference p = findPreference(key, EditTextPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getText() + UNIT_KM, R.string.pref_distance_summary_km));
 		} else if (FILTER_DISTANCE.equals(key) && imperialUnits) {
@@ -168,11 +165,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		downloadingCountOfTrackablesPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfTrackablesPreference.getProgress()),
 				R.string.pref_count_of_trackables_summary));
 
-		final EditTextPreference usernamePreference = findPreference(USERNAME, EditTextPreference.class);
-		usernamePreference.setSummary(prepareRequiredPreferenceSummary(usernamePreference.getText(), 0, true));
-
-		final EditTextPreference passwordPreference = findPreference(PASSWORD, EditTextPreference.class);
-		passwordPreference.setSummary(prepareRequiredPreferenceSummary(passwordPreference.getText(), 0, false));
+		prepareAccountPreference();
 
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
@@ -267,6 +260,38 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
 		versionPreference.setSummary(getVersion(this));
 	}
+	
+	protected void prepareAccountPreference() {
+		final Preference accountPreference = findPreference(ACCOUNT, EditTextPreference.class);
+		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				if (AccountAuthenticator.hasAccount(PreferenceActivity.this)) {
+					AccountAuthenticator.removeAccount(PreferenceActivity.this);
+					accountPreference.setTitle(R.string.pref_account_login);
+					accountPreference.setSummary(R.string.pref_account_login_summary);
+				} else {
+					try {
+						AccountAuthenticator.addAccount(PreferenceActivity.this);
+					} catch (Exception e) {
+						Log.e(TAG, e.getMessage(), e);
+					}
+					//accountPreference.setTitle(R.string.pref_account_logout);
+					//accountPreference.setSummary(prepareAcountSummary(AccountAuthenticator.getAccount(PreferenceActivity.this).name, R.string.pref_account_logout_summary));
+				}
+				
+				return true;
+			}
+		});
+		
+		if (AccountAuthenticator.hasAccount(this)) {
+			accountPreference.setTitle(R.string.pref_account_logout);
+			accountPreference.setSummary(prepareAcountSummary(AccountAuthenticator.getAccount(this).name, R.string.pref_account_logout_summary));
+		} else {
+			accountPreference.setTitle(R.string.pref_account_login);
+			accountPreference.setSummary(R.string.pref_account_login_summary);
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -318,6 +343,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		if (addValue)
 			return preparePreferenceSummary(value, resId);
 		return Html.fromHtml(summary);
+	}
+	
+	protected Spanned prepareAcountSummary(CharSequence value, int resId) {
+		String summary = "%s";
+		if (resId != 0)
+			summary = getText(resId).toString();
+
+		return Html.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
 	}
 
 	protected Spanned prepareRatingSummary(CharSequence min, CharSequence max) {

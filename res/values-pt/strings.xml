@@ -28,7 +28,7 @@
 	<string name="pref_imperial_units">Unidades Imperiais</string>
 	<string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
 	<string name="import_caches">Importar caches</string>
-	<string name="error_credentials">Nome de utilizador ou palavra passe inválidos. Por favor preencha a informação nas configurações.</string>
+	<string name="error_credentials">Nome de utilizador ou password inválidos. Por favor verifique as credenciais.</string>
 	<string name="error_title">Ocorrência de erros!</string>
 	<string name="ok_button">Ok</string>
 	<string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
@@ -60,7 +60,7 @@
 	<string name="pref_author">Autor</string>
 	<string name="pref_website">Website, forum, etc.</string>
 	<string name="pref_donate_paypal">Doar por Paypal</string>
-	<string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros...</string>
+	<string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros…</string>
 	<string name="pref_donate_paypal_choose_currency">Escolha a moeda</string>
 	<string name="pref_title_cache_type_filter">Tipos de caches</string>
 	<string name="pref_title_difficulty_filter">Dificuldade</string>
@@ -86,5 +86,17 @@
 	<string name="pref_livemap">Mapa ao vivo</string>
 	<string name="pref_livemap_summary">Carregar caches no mapa ao vivo (Activar no Locus: Definições → Outras → Ativar atualizações periódicas)</string>
 	<string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
-	<string name="final_location_name">Final location %1$d</string>
+	<string name="final_location_name">Local final %1$d</string>
+	<string name="account_logging_in">Registando…</string>
+	<string name="pref_account_login">Entrar</string>
+	<string name="pref_account_login_summary">Entrar na conta Geocaching.com</string>
+	<string name="pref_account_logout">Logout</string>
+	<string name="pref_account_logout_summary">Registado como %s</string>
+	<string name="login_username">Utilizador</string>
+	<string name="login_password">Password</string>
+	<string name="login_button_cancel">Cancelar</string>
+	<string name="login_button_login">Entrar</string>
+	<string name="login_error_title">Falha ao entrar</string>
+	<string name="login_error_credentials">Nome de utilizador ou password inválidos.</string>
+	<string name="login_message">Please fill-in your Geocaching.com credentials.</string>
 </resources>

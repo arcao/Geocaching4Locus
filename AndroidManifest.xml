@@ -7,7 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>   
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="10"/>
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" anyDensity="true" />
 
@@ -15,7 +20,7 @@
     <uses-feature android:name="android.hardware.location.network" android:required="false" />
     <uses-feature android:name="android.hardware.location.gps" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />   
+    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:theme="@style/ThemeLight" android:backupAgent=".backup.PreferencesBackupAgent" android:name="Geocaching4LocusApplication">
         <meta-data android:name="com.google.android.backup.api_key"
@@ -24,6 +29,13 @@
         <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
         <service android:name=".service.SearchGeocacheService"></service>
         <service android:name=".service.LiveMapService"></service>
+        <service android:name=".authentication.AuthenticationService" android:process=":auth" android:exported="true">
+          <intent-filter>
+            <action android:name="android.accounts.AccountAuthenticator" />
+          </intent-filter>
+          <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator" />
+        </service>
+        
         <receiver android:name=".receiver.LiveMapBroadcastReceiver" >
             <intent-filter>
                 <action android:name="menion.android.locus.PERIODIC_UPDATE" />
@@ -76,5 +88,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Dialog" android:configChanges="keyboardHidden|orientation"></activity>
     </application>
 </manifest>

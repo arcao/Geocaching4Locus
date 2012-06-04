@@ -22,7 +22,7 @@
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:theme="@style/ThemeLight" android:backupAgent=".backup.PreferencesBackupAgent" android:name="Geocaching4LocusApplication">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Light" android:backupAgent=".backup.PreferencesBackupAgent" android:name="Geocaching4LocusApplication">
         <meta-data android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
 
@@ -42,7 +42,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:configChanges="keyboardHidden|orientation" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/Dialog" android:name="MainActivity" android:exported="true">
+        <activity android:configChanges="keyboardHidden|orientation" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/Theme.Dialog.NoTitle" android:name="MainActivity" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -52,9 +52,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/preferences" android:theme="@style/ThemeSettings" android:name="PreferenceActivity"></activity>
-        <activity android:theme="@style/InvisibleTheme" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation" android:noHistory="true"></activity>
-        <activity android:name="UpdateActivity" android:configChanges="keyboardHidden|orientation" android:theme="@style/InvisibleTheme" android:noHistory="true" android:exported="true">
+        <activity android:label="@string/preferences" android:theme="@style/Theme.Settings" android:name="PreferenceActivity"></activity>
+        <activity android:theme="@style/Theme.Invisible" android:name="ErrorActivity" android:configChanges="keyboardHidden|orientation" android:noHistory="true"></activity>
+        <activity android:name="UpdateActivity" android:configChanges="keyboardHidden|orientation" android:theme="@style/Theme.Invisible" android:noHistory="true" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -62,7 +62,7 @@
                 <data android:pathPrefix="menion.android.locus/point_geocache" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportActivity" android:theme="@style/InvisibleTheme" android:configChanges="keyboardHidden|orientation" android:label="@string/locus_import_cache" android:noHistory="true" android:exported="true">
+        <activity android:name=".ImportActivity" android:theme="@style/Theme.Invisible" android:configChanges="keyboardHidden|orientation" android:label="@string/locus_import_cache" android:noHistory="true" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -82,12 +82,15 @@
                 <data android:scheme="http" android:host="www.geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
             </intent-filter>            
         </activity>
-        <activity android:name="MenuActivity" android:theme="@style/Dialog" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:configChanges="keyboardHidden|orientation" android:exported="true">
+        <activity android:name="MenuActivity" android:theme="@style/Theme.Dialog.NoTitle" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:configChanges="keyboardHidden|orientation" android:exported="true">
             <intent-filter android:label="@string/app_name" android:icon="@drawable/ic_launcher">
                 <action android:name="menion.android.locus.MAIN_FUNCTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Dialog" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Dialog.NoTitle" android:configChanges="keyboardHidden|orientation"></activity>
+        
+        <activity android:name="org.acra.CrashReportDialog" android:theme="@style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name="SendErrorActivity" android:theme="@style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
     </application>
 </manifest>

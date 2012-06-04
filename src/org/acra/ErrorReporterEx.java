@@ -28,6 +28,8 @@ public class ErrorReporterEx {
 		if (mCrashProperties == null) {
 			try {
 				Field field = ErrorReporter.class.getDeclaredField("mCrashProperties");
+				field.setAccessible(true);
+				
 				mCrashProperties = (CrashReportData) field.get(null);
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage(), e);
@@ -49,7 +51,20 @@ public class ErrorReporterEx {
 			data.setProperty(ReportField.USER_COMMENT, comment);
 		}
 	}
-
+	
+	/**
+	 * Store user e-mail to ErrorReporter crash properties.
+	 * 
+	 * @param userEmail
+	 *          user e-mail
+	 */
+	public static void storeUserEmail(String userEmail) {
+		CrashReportData data = getCrashProperties();
+		if (data != null) {
+			data.setProperty(ReportField.USER_EMAIL, userEmail);
+		}
+	}
+	
 	/**
 	 * Try to send a report, if an error occurs stores a report file for a later
 	 * attempt. You can set the {@link ReportingInteractionMode} for this specific

@@ -2,8 +2,6 @@ package com.arcao.geocaching4locus.service;
 
 import java.util.Date;
 
-import org.acra.ErrorReporter;
-
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -24,20 +22,15 @@ import android.widget.TextView;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.util.Throwables;
 
 public abstract class AbstractService extends IntentService {
 	protected String TAG;
 	
 	public static final String ACTION_PROGRESS_UPDATE = "com.arcao.geocaching4locus.intent.action.PROGRESS_UPDATE";
 	public static final String ACTION_PROGRESS_COMPLETE = "com.arcao.geocaching4locus.intent.action.PROGRESS_COMPLETE";
-	public static final String ACTION_ERROR = ErrorActivity.ACTION_ERROR;
 	
 	public static final String PARAM_COUNT = "COUNT";
 	public static final String PARAM_CURRENT = "CURRENT";
-	public static final String PARAM_RESOURCE_ID = ErrorActivity.PARAM_RESOURCE_ID;
-	public static final String PARAM_ADDITIONAL_MESSAGE = ErrorActivity.PARAM_ADDITIONAL_MESSAGE;
-	public static final String PARAM_OPEN_PREFERENCE = ErrorActivity.PARAM_OPEN_PREFERENCE;
 
 	private boolean canceled;
 	
@@ -100,7 +93,7 @@ public abstract class AbstractService extends IntentService {
 		return n;
 	}
 	
-	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference) {
+	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference, Throwable exception) {
 		Notification n = new Notification();
 		
 		n.icon = R.drawable.ic_launcher;
@@ -108,10 +101,13 @@ public abstract class AbstractService extends IntentService {
 		n.when = new Date().getTime(); 
 		
 		Intent intent = new Intent(this, ErrorActivity.class);
-		intent.setAction(ACTION_ERROR);
-		intent.putExtra(PARAM_RESOURCE_ID, resErrorId);
-		intent.putExtra(PARAM_ADDITIONAL_MESSAGE, errorText);
-		intent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
+		intent.setAction(ErrorActivity.ACTION_ERROR);
+		intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
+		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
+		intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
+
+		if (exception != null)
+			intent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
 		
 		n.setLatestEventInfo(this, getText(R.string.error_title), Html.fromHtml(getString(resErrorId, errorText)), PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
 		
@@ -126,16 +122,14 @@ public abstract class AbstractService extends IntentService {
 			run(intent);
 		} catch (InvalidCredentialsException e) {
 			Log.e(TAG, e.getMessage(), e);
-			sendError(R.string.error_credentials, null, true);
+			sendError(R.string.error_credentials, null, true, null);
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
-			ErrorReporter.getInstance().handleSilentException(e);
-			
 			String message = e.getMessage();
 			if (message == null)
 				message = "";
 			
-			sendError(R.string.error, String.format("%s<br>Exception: %s<br>Stacktrace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)));
+			sendError(R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
 		}
 	}
 		
@@ -188,22 +182,19 @@ public abstract class AbstractService extends IntentService {
 		sendBroadcast(broadcastIntent);
 	}
 	
-	protected void sendError(int error, String additionalMessage) {
-		sendError(error, additionalMessage, false);
-	}
-	
-	protected void sendError(int error, String additionalMessage, boolean openPreference) {
+	protected void sendError(int error, String additionalMessage, boolean openPreference, Throwable exception) {
 		// error notification
-		notificationManager.notify(error, createErrorNotification(error, additionalMessage, openPreference));
+		notificationManager.notify(error, createErrorNotification(error, additionalMessage, openPreference, exception));
 		
 		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ACTION_ERROR);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		broadcastIntent.putExtra(PARAM_RESOURCE_ID, error);
+		broadcastIntent.setAction(ErrorActivity.ACTION_ERROR);
+		broadcastIntent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, error);
 		if (additionalMessage != null)
-			broadcastIntent.putExtra(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
+			broadcastIntent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, additionalMessage);
 		
-		broadcastIntent.putExtra(PARAM_OPEN_PREFERENCE, openPreference);
+		broadcastIntent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
+		if (exception != null)
+			broadcastIntent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
 		sendBroadcast(broadcastIntent);
 	}
 

@@ -22,6 +22,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -169,19 +170,26 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 			if (pd.isShowing())
 				pd.dismiss();
 			
-			CharSequence message = e.getMessage();
+			if (isCancelled())
+				return;
 			
+			Log.e(TAG, e.getMessage(), e);
+						
 			if (e instanceof InvalidCredentialsException) {
-				message = getText(R.string.login_error_credentials);
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AuthenticatorActivity.this);
+				dialogBuilder.setTitle(getText(R.string.login_error_title));
+				dialogBuilder.setMessage(getText(R.string.login_error_credentials));
+				
+				dialogBuilder.show();
 			} else {
-				ErrorReporter.getInstance().handleSilentException(e);
+				ErrorReporter.getInstance().putCustomData("source", "login");
+				
+				String message = e.getMessage();
+				if (message == null)
+					message = "";
+				
+				startActivity(ErrorActivity.createErrorIntent(AuthenticatorActivity.this, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e));
 			}
-			
-			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AuthenticatorActivity.this);
-			dialogBuilder.setTitle(getText(R.string.login_error_title));
-			dialogBuilder.setMessage(message);
-			
-			dialogBuilder.show();
 		}
 	}
 }

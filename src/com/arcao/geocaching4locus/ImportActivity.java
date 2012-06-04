@@ -34,7 +34,6 @@ import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
@@ -44,7 +43,7 @@ public class ImportActivity extends Activity {
 	protected final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
 	protected final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 	protected ImpotTask task = null;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,6 +73,8 @@ public class ImportActivity extends Activity {
 		}
 		
 		String cacheId = m.group(1);
+		
+		ErrorReporter.getInstance().putCustomData("source", "import;" + cacheId);
 		
 		Log.i(TAG, "Starting import task for " + cacheId);
 		task = new ImpotTask();
@@ -191,15 +192,13 @@ public class ImportActivity extends Activity {
 			Intent intent;
 			
 			if (e instanceof InvalidCredentialsException) {
-				intent = createErrorIntent(R.string.error_credentials, null, true);
+				intent = ErrorActivity.createErrorIntent(ImportActivity.this, R.string.error_credentials, null, true, null);
 			} else {
-				ErrorReporter.getInstance().handleSilentException(e);
-				
 				String message = e.getMessage();
 				if (message == null)
 					message = "";
 
-				intent = createErrorIntent(R.string.error, String.format("%s<br>Exception: %s<br>Stack trace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)), false);
+				intent = ErrorActivity.createErrorIntent(ImportActivity.this, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
 			}
 			
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
@@ -209,16 +208,6 @@ public class ImportActivity extends Activity {
 			startActivity(intent);
 		}
 		
-		private Intent createErrorIntent(int resErrorId, String errorText, boolean openPreference) {
-			Intent intent = new Intent(ImportActivity.this, ErrorActivity.class);
-			intent.setAction(ErrorActivity.ACTION_ERROR);
-			intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
-			intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
-			intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
-			
-			return intent;
-		}
-
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			cancel(true);

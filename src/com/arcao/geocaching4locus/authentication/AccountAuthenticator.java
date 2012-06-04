@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
@@ -216,7 +217,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 	
 	@SuppressWarnings("deprecation")
 	public static void convertFromOldStorage(Context ctx) {
-		final SharedPreferences prefs = ctx.getSharedPreferences("default", Context.MODE_PRIVATE);
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
 		
 		try {
 			String username = prefs.getString(PrefConstants.USERNAME, null);

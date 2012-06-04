@@ -276,8 +276,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 					} catch (Exception e) {
 						Log.e(TAG, e.getMessage(), e);
 					}
-					//accountPreference.setTitle(R.string.pref_account_logout);
-					//accountPreference.setSummary(prepareAcountSummary(AccountAuthenticator.getAccount(PreferenceActivity.this).name, R.string.pref_account_logout_summary));
 				}
 				
 				return true;

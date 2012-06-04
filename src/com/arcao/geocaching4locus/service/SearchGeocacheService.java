@@ -10,6 +10,9 @@ import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+
+import org.acra.ErrorReporter;
+
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Intent;
@@ -211,6 +214,8 @@ public class SearchGeocacheService extends AbstractService {
 
 		if (isCanceled())
 			return null;
+		
+		ErrorReporter.getInstance().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 		

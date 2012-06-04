@@ -123,6 +123,15 @@
     <string name="login_error_credentials">Invalid username or password.</string>
     <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
     
-    <string name="error_send_error_report">Send error report</string>
+    <string name="error_report_error">Report error</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus has crashed…</string>
+    <string name="crash_notif_title">Geocaching4Locus has crashed…</string>
+    <string name="crash_notif_text">Please click here to help fix the issue.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus has crashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
+    <string name="crash_dialog_ok_toast">Thank you !</string>
 </resources>
 

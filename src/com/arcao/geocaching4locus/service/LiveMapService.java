@@ -11,9 +11,6 @@ import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
-
-import org.acra.ErrorReporter;
-
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.IntentService;
@@ -122,7 +119,6 @@ public class LiveMapService extends IntentService {
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (GeocachingApiException e) {
 			Log.e(TAG, e.getMessage(), e);
-			ErrorReporter.getInstance().handleSilentException(e);
 			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
 		} finally {
 			Log.d(TAG, "Job finished.");

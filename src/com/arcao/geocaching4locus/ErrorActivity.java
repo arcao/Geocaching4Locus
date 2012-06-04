@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import org.acra.ErrorReporter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -63,10 +61,14 @@ public class ErrorActivity extends Activity {
 		builder.setCancelable(false);
 		
 		if (t != null) {
-			builder.setNeutralButton(R.string.error_send_error_report, new DialogInterface.OnClickListener() {
+			builder.setNeutralButton(R.string.error_report_error, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					ErrorReporter.getInstance().handleException(t);
+					Intent intent = new Intent(ErrorActivity.this, SendErrorActivity.class);
+					intent.setAction(SendErrorActivity.ACTION_SEND_ERROR);
+					intent.putExtra(SendErrorActivity.PARAM_EXCEPTION, t);
+					startActivity(intent);
+					
 					dialog.dismiss();
 				}
 			});
@@ -74,4 +76,18 @@ public class ErrorActivity extends Activity {
 		
 		builder.show();
 	}
+	
+	public static Intent createErrorIntent(Context ctx, int resErrorId, String errorText, boolean openPreference, Throwable exception) {
+		Intent intent = new Intent(ctx, ErrorActivity.class);
+		intent.setAction(ErrorActivity.ACTION_ERROR);
+		intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
+		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
+		intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
+		
+		if (exception != null)
+			intent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
+		
+		return intent;
+	}
+
 }

@@ -113,7 +113,7 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
-		filter.addAction(SearchGeocacheService.ACTION_ERROR);
+		filter.addAction(ErrorActivity.ACTION_ERROR);
 		
 		registerReceiver(searchGeocacheReceiver, filter);
 				
@@ -249,20 +249,6 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		builder.show();
 	}
 	
-	protected void showError(int errorResId, String additionalMessage, DialogInterface.OnClickListener onClickListener) {
-		if (isFinishing())
-			return;
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String message = String.format(res.getString(errorResId), additionalMessage);
-		
-		builder.setMessage(Html.fromHtml(message));
-		builder.setTitle(R.string.error_title);
-		builder.setPositiveButton(R.string.ok_button, onClickListener);
-		builder.setCancelable(false);
-		builder.show();
-	}
-
 	protected void acquireCoordinates() {
 		// search location
 		// Acquire a reference to the system Location Manager
@@ -430,16 +416,18 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 				if (intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 0) != 0 && !MainActivity.this.isFinishing()) {
 					MainActivity.this.finish();
 				}
-			} else if (SearchGeocacheService.ACTION_ERROR.equals(intent.getAction())) {
+			} else if (ErrorActivity.ACTION_ERROR.equals(intent.getAction())) {
 				if (pd != null && pd.isShowing())
 					pd.dismiss();
 
 				Intent errorIntent = new Intent(MainActivity.this, ErrorActivity.class);
-				errorIntent.setAction(SearchGeocacheService.ACTION_ERROR);
-				errorIntent.putExtra(SearchGeocacheService.PARAM_RESOURCE_ID, intent.getIntExtra(SearchGeocacheService.PARAM_RESOURCE_ID, 0));
-				errorIntent.putExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(SearchGeocacheService.PARAM_ADDITIONAL_MESSAGE));
-				errorIntent.putExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(SearchGeocacheService.PARAM_OPEN_PREFERENCE, false));
+				errorIntent.setAction(ErrorActivity.ACTION_ERROR);
+				errorIntent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0));
+				errorIntent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE));
+				errorIntent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, false));
+				errorIntent.putExtra(ErrorActivity.PARAM_EXCEPTION, intent.getSerializableExtra(ErrorActivity.PARAM_EXCEPTION));
 				errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+				
 				MainActivity.this.startActivity(errorIntent);
 			}
 		}		

@@ -30,7 +30,6 @@ import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.Throwables;
 import com.arcao.geocaching4locus.util.UserTask;
 
 public class UpdateActivity extends Activity {
@@ -41,13 +40,13 @@ public class UpdateActivity extends Activity {
 	
 	private UpdateTask task = null;	
 	protected Point oldPoint = null;
+	protected String cacheId = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String cacheId = null;
 		
 		oldPoint = null;
 		
@@ -197,15 +196,15 @@ public class UpdateActivity extends Activity {
 			Intent intent;
 			
 			if (e instanceof InvalidCredentialsException) {
-				intent = createErrorIntent(R.string.error_credentials, null, true);
+				intent = ErrorActivity.createErrorIntent(UpdateActivity.this, R.string.error_credentials, null, true, null);
 			} else {
-				ErrorReporter.getInstance().handleSilentException(e);
+				ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
 				
 				String message = e.getMessage();
 				if (message == null)
 					message = "";
 				
-				intent = createErrorIntent(R.string.error, String.format("%s<br>Exception: %s<br>Stack trace:<br>%s", message, e.getClass().getSimpleName(), Throwables.getStackTrace(e)), false);
+				intent = ErrorActivity.createErrorIntent(UpdateActivity.this, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
 			}
 			
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
@@ -215,16 +214,6 @@ public class UpdateActivity extends Activity {
 			startActivity(intent);
 		}
 		
-		private Intent createErrorIntent(int resErrorId, String errorText, boolean openPreference) {
-			Intent intent = new Intent(UpdateActivity.this, ErrorActivity.class);
-			intent.setAction(ErrorActivity.ACTION_ERROR);
-			intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
-			intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
-			intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
-			
-			return intent;
-		}
-
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			cancel(true);

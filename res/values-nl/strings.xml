@@ -61,7 +61,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_author">Auteur</string>
 	<string name="pref_website">Website, forum, enz.</string>
 	<string name="pref_donate_paypal">Doneer via Paypal</string>
-	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling…</string>
+	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
 	<string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
 	<string name="pref_title_cache_type_filter">Soort Cache</string>
 	<string name="pref_title_difficulty_filter">Moeilijkheid</string>
@@ -88,7 +88,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
 	<string name="user_waypoint_name">Gebruikers via punt %1$d</string>
 	<string name="final_location_name">Eindbestemming %1$d</string>
-	<string name="account_logging_in">Ingelogd…</string>
+	<string name="account_logging_in">Ingelogd...</string>
 	<string name="pref_account_login">Aanmelden</string>
 	<string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>
 	<string name="pref_account_logout">Afmelden</string>
@@ -99,5 +99,13 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="login_button_login">Aanmelden</string>
 	<string name="login_error_title">Aanmelden mislukt</string>
 	<string name="login_error_credentials">Ongeldige gebruikersnaam of paswoord</string>
-	<string name="login_message">Please fill-in your Geocaching.com credentials.</string>
+	<string name="login_message">Gelieve uw Geocaching.com logingegevens in te vullen.</string>
+	<string name="error_report_error">Fout rapporteren</string>
+	<string name="crash_notif_ticker_text">Geocaching4Locus is gecrashed...</string>
+	<string name="crash_notif_title">Geocaching4Locus is gecrashed...</string>
+	<string name="crash_notif_text">Klik hier aub om het probleem te helpen oplossen</string>
+	<string name="crash_dialog_title">Geocaching4Locus is gecrashed</string>
+	<string name="crash_dialog_text">Een onbekende fout is opgetreden waardoor de toepassing werd gestopt. Help ons aub dit probleem op te lossen door ons de fout gegevens op te sturen, je moet enkel \'OK\' klikken...</string>
+	<string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
+	<string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
 </resources>

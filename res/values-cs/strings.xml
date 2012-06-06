@@ -8,7 +8,7 @@
 	<string name="search_activity_name">Nejbližší keše</string>
 	<string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
 	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
+	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
 	<string name="preferences">Nastavení</string>
 	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
 	<string name="coordinates">Souřadnice</string>
@@ -99,4 +99,12 @@
 	<string name="login_error_title">Přihlášení se nezdařilo</string>
 	<string name="login_error_credentials">Chybné uživatelské jméno nebo heslo.</string>
 	<string name="login_message">Prosím vyplňte vaše přihlašovací údaje na Geocaching.com.</string>
+	<string name="error_report_error">Nahlásit chybu</string>
+	<string name="crash_notif_ticker_text">Geocaching4Locus spadl…</string>
+	<string name="crash_notif_title">Geocaching4Locus spadl…</string>
+	<string name="crash_notif_text">Prosím, klikněte zde pro vyřešení problému.</string>
+	<string name="crash_dialog_title">Geocaching4Locus spadl</string>
+	<string name="crash_dialog_text">Neočekávaná chyba způsobila ukončení aplikace. Pomozte nám ji opravit zasláním dat o chybě. Vše, co musíte udělat, je kliknout na \"OK\".</string>
+	<string name="crash_dialog_comment_prompt">Níže můžete přidat svůj komentář o tomto problému:</string>
+	<string name="crash_dialog_ok_toast">Díky!</string>
 </resources>

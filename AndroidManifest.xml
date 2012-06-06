@@ -90,7 +90,7 @@
         </activity>
         <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Dialog.NoTitle" android:configChanges="keyboardHidden|orientation"></activity>
         
-        <activity android:name="org.acra.CrashReportDialog" android:theme="@style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name="SendErrorActivity" android:theme="@style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name="org.acra.CrashReportDialog" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name="SendErrorActivity" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:configChanges="keyboardHidden|orientation"/>
     </application>
 </manifest>

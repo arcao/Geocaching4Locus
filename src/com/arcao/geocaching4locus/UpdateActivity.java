@@ -40,7 +40,6 @@ public class UpdateActivity extends Activity {
 	
 	private UpdateTask task = null;	
 	protected Point oldPoint = null;
-	protected String cacheId = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class UpdateActivity extends Activity {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		oldPoint = null;
+		String cacheId = null;
 		
 		if (getIntent().hasExtra(PARAM_CACHE_ID)) {
 			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
@@ -84,6 +84,8 @@ public class UpdateActivity extends Activity {
 			finish();
 			return;
 		}
+		
+		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
 		
 		Log.i(TAG, "Starting update task for " + cacheId);
 		task = new UpdateTask();
@@ -198,8 +200,6 @@ public class UpdateActivity extends Activity {
 			if (e instanceof InvalidCredentialsException) {
 				intent = ErrorActivity.createErrorIntent(UpdateActivity.this, R.string.error_credentials, null, true, null);
 			} else {
-				ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
-				
 				String message = e.getMessage();
 				if (message == null)
 					message = "";

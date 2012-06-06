@@ -8,7 +8,7 @@
 	<string name="search_activity_name">Caches in der Umgebung</string>
 	<string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
 	<string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
-	<string name="acquiring_network_location">Positionsbestimmung via WIFI…</string>
+	<string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
 	<string name="preferences">Einstellungen</string>
 	<string name="wrong_coordinates">Falsches Koordinatenformat!</string>
 	<string name="coordinates">Koordinaten</string>
@@ -54,7 +54,7 @@
 	<string name="close">Schließen</string>
 	<string name="pref_show_disabled">Zeige deaktivierte</string>
 	<string name="pref_show_disabled_summary">Zeige vorübergehend deaktivierte Caches</string>
-	<string name="import_cache_progress">Lade caches…</string>
+	<string name="import_cache_progress">Lade caches...</string>
 	<string name="pref_title_about">Über</string>
 	<string name="pref_version">Version</string>
 	<string name="pref_author">Autor</string>
@@ -87,16 +87,24 @@
 	<string name="pref_livemap_summary">Direktes laden der Caches auf die Karte (aktiviere in Locus: Einstellungen → Verschiedenes → Aktiviere periodische Updates)</string>
 	<string name="user_waypoint_name">Benutzerwegpunkte %1$d</string>
 	<string name="final_location_name">Final bei %1$d</string>
-	<string name="account_logging_in">Logging in…</string>
+	<string name="account_logging_in">Ich melde mich…</string>
 	<string name="pref_account_login">Anmelden</string>
-	<string name="pref_account_login_summary">Log-in auf Geocaching.com Konto</string>
+	<string name="pref_account_login_summary">Anmelden Sie sich bei Geocaching.com Konto</string>
 	<string name="pref_account_logout">Abmelden</string>
 	<string name="pref_account_logout_summary">Angemeldet als %s</string>
 	<string name="login_username">Benutzername</string>
 	<string name="login_password">Kennwort</string>
 	<string name="login_button_cancel">Abbrechen</string>
 	<string name="login_button_login">Anmelden</string>
-	<string name="login_error_title">Fehler bei der Anmeldung</string>
+	<string name="login_error_title">Login fehlgeschlagen</string>
 	<string name="login_error_credentials">Ungültiger Benutzername oder Kennwort.</string>
 	<string name="login_message">Bitte füllen Sie Login-Daten auf Geocaching.com.</string>
+	<string name="error_report_error">Fehlermelden</string>
+	<string name="crash_notif_ticker_text">Geocaching4Locus ist abgestürzt…</string>
+	<string name="crash_notif_title">Geocaching4Locus ist abgestürzt…</string>
+	<string name="crash_notif_text">Bitte klicken Sie hier um uns bei der Fehlerbehebung zu helfen.</string>
+	<string name="crash_dialog_title">Geocaching4Locus ist abgestürzt</string>
+	<string name="crash_dialog_text">Ein unerwarteter Fehler ist aufgetreten zwingt die Anwendung zu beenden. Bitte helfen Sie uns dieses Problem beheben, indem Sie uns Fehler-Daten. Alles, was Sie tun müssen ist, klicken Sie auf \"OK\".</string>
+	<string name="crash_dialog_comment_prompt">Unten können Sie Ihren Kommentar zu diesem Problem:</string>
+	<string name="crash_dialog_ok_toast">Vielen Dank!</string>
 </resources>

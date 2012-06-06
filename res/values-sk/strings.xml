@@ -99,4 +99,12 @@
 	<string name="login_error_title">Nepodarilo sa prihlásiť</string>
 	<string name="login_error_credentials">Chybné užívateľské meno alebo heslo.</string>
 	<string name="login_message">Prosím vyplňte vaše prihlasovacie údaje na Geocaching.com.</string>
+	<string name="error_report_error">Nahlásiť chybu</string>
+	<string name="crash_notif_ticker_text">Geocaching4Locus spadol…</string>
+	<string name="crash_notif_title">Geocaching4Locus spadol…</string>
+	<string name="crash_notif_text">Prosím, kliknite tu pre vyriešenie problému.</string>
+	<string name="crash_dialog_title">Geocaching4Locus spadol</string>
+	<string name="crash_dialog_text">Neočakávaná chyba spôsobila ukončenie aplikácie. Pomôžte nám ju opraviť zaslaním dát o chybe. Všetko, čo musíte urobiť, je kliknúť na \"OK\".</string>
+	<string name="crash_dialog_comment_prompt">Nižšie môžete pridať svoj ​​komentár o tomto probléme:</string>
+	<string name="crash_dialog_ok_toast">Vďaka!</string>
 </resources>

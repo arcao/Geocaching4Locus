@@ -61,18 +61,17 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		res = getResources();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		hasCoordinates = false;
 
+		setContentView(R.layout.main_activity);
+
 		locusInstalled = true;
-		
 		if (!LocusTesting.isLocusInstalled(this)) {
 			locusInstalled = false;
 			LocusTesting.showLocusMissingError(this);
 			return;
 		}
 
-		setContentView(R.layout.main_activity);
 
 		if (LocusIntents.isIntentOnPointAction(getIntent())) {
 			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
@@ -109,6 +108,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	protected void onResume() {	
 		super.onResume();
 		
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		IntentFilter filter = new IntentFilter(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
 		
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
@@ -119,6 +120,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 				
 		handler = new Handler();
 
+		// temporary fix for bug
+		if (findViewById(R.id.latitudeEditText) == null)
+			setContentView(R.layout.main_activity);
+		
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
 		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);

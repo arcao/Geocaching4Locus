@@ -107,4 +107,5 @@
 	<string name="crash_dialog_text">Occorreu um erro inesperado que forçou a aplicação a fechar. Por favor ajude a corrigir enviando os dados do erro, tudo o que tem de fazer é carregar em \'OK\'.</string>
 	<string name="crash_dialog_comment_prompt">Pode adicionar comentários ao problema em baixo:</string>
 	<string name="crash_dialog_ok_toast">Obrigado!</string>
+	<string name="error_network">Network unavailable. Please check your connection.</string>
 </resources>

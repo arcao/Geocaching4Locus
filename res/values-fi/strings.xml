@@ -107,4 +107,5 @@
 	<string name="crash_dialog_text">Sovellus pysähtyi odottamattomaan virheeseen. Auta meitä lähettämällä meille virheen tiedot painamalla OK-näppäintä.</string>
 	<string name="crash_dialog_comment_prompt">Voit halutessasi kommentoida virhettä alle:</string>
 	<string name="crash_dialog_ok_toast">Kiitos!</string>
+	<string name="error_network">Network unavailable. Please check your connection.</string>
 </resources>

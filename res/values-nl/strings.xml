@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Geocaching4Locus</string>
+	<string name="app_name">Netwerk niet beschikbaar. Controleer jouw verbinding AUB.</string>
 	<string name="error">Er is een fout opgetreden bij het downloaden van de caches.&lt;br&gt;Omschrijving: %1$s</string>
 	<string name="downloading">Bezig met downloaden van caches…</string>
 	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
@@ -108,4 +108,5 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="crash_dialog_text">Een onbekende fout is opgetreden waardoor de toepassing werd gestopt. Help ons aub dit probleem op te lossen door ons de fout gegevens op te sturen, je moet enkel \'OK\' klikken...</string>
 	<string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
 	<string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
+	<string name="error_network">Netwerk onbeschikbaar. Controleer de verbinding AUB.</string>
 </resources>

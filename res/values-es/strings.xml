@@ -107,4 +107,5 @@
 	<string name="crash_dialog_text">Ha ocurrido un error inesperado que ha forzado el cierre de la aplicación. Por favor ayúdenos a solucionar esto enviándonos los datos del error, todo lo que tiene que hacer es pulsar \"OK\".</string>
 	<string name="crash_dialog_comment_prompt">A continuación puede añadir comentarios sobre el problema:</string>
 	<string name="crash_dialog_ok_toast">¡Gracias!</string>
+	<string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
 </resources>

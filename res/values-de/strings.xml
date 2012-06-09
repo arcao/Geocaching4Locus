@@ -107,4 +107,5 @@
 	<string name="crash_dialog_text">Ein unerwarteter Fehler ist aufgetreten zwingt die Anwendung zu beenden. Bitte helfen Sie uns dieses Problem beheben, indem Sie uns Fehler-Daten. Alles, was Sie tun müssen ist, klicken Sie auf \"OK\".</string>
 	<string name="crash_dialog_comment_prompt">Unten können Sie Ihren Kommentar zu diesem Problem:</string>
 	<string name="crash_dialog_ok_toast">Vielen Dank!</string>
+	<string name="error_network">Netzwerk nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.</string>
 </resources>

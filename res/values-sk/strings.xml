@@ -107,4 +107,5 @@
 	<string name="crash_dialog_text">Neočakávaná chyba spôsobila ukončenie aplikácie. Pomôžte nám ju opraviť zaslaním dát o chybe. Všetko, čo musíte urobiť, je kliknúť na \"OK\".</string>
 	<string name="crash_dialog_comment_prompt">Nižšie môžete pridať svoj ​​komentár o tomto probléme:</string>
 	<string name="crash_dialog_ok_toast">Vďaka!</string>
+	<string name="error_network">Sieť nie je k dispozícii. Skontrolujte pripojenie.</string>
 </resources>

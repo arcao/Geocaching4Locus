@@ -6,21 +6,25 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
@@ -34,6 +38,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	public static final String PARAM_PASSWORD = "PASSWORD";
 	public static final String PARAM_AUTHTOKEN_TYPE = "AUTHTOKEN_TYPE";
 	
+	public static final int DIALOG_PROGRESS_ID = 0;
+	public static final int DIALOG_ERROR_CREDENTIALS_ID = 1;
+	public static final int DIALOG_ERROR_NETWORK_ID = 2;
+	public static final int DIALOG_ERROR_WRONG_INPUT_ID = 3;
+	
 	protected String mUsername;
 	protected String mPassword;
 	protected String mAuthToken;
@@ -44,6 +53,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	
 	protected EditText mUsernameEdit;
 	protected EditText mPasswordEdit;
+	
+	protected AuthenticatorTask task;
 	
 	@Override
 	protected void onCreate(Bundle icicle) {
@@ -70,7 +81,81 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     if (!mRequestNewAccount) {
     	mUsernameEdit.setText(mUsername);
     	mUsernameEdit.setEnabled(false);
+    }    
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		
+    // attach activity instance to AuthenticatorTask if is necessary
+    if ((task = (AuthenticatorTask) getLastNonConfigurationInstance()) != null) {
+    	task.attach(this);
     }
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_PROGRESS_ID:
+				ProgressDialog dialog = new ProgressDialog(this);
+				dialog.setIndeterminate(true);
+				dialog.setMessage(getText(R.string.account_logging_in));
+				dialog.setButton(getText(R.string.cancel_button), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						task.cancel(true);
+					}
+				});
+				return dialog;
+				
+			case DIALOG_ERROR_CREDENTIALS_ID:
+				return new AlertDialog.Builder(this)
+					.setTitle(R.string.login_error_title)
+					.setMessage(R.string.login_error_credentials)
+					.setPositiveButton(R.string.ok_button, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.create();
+				
+			case DIALOG_ERROR_NETWORK_ID:
+				return new AlertDialog.Builder(this)
+					.setTitle(R.string.login_error_title)
+					.setMessage(R.string.error_network)
+					.setPositiveButton(R.string.ok_button, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.create();
+			
+			case DIALOG_ERROR_WRONG_INPUT_ID:
+				return new AlertDialog.Builder(this)
+					.setTitle(R.string.login_error_title)
+					.setMessage(R.string.login_message)
+					.setPositiveButton(R.string.ok_button, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					})
+					.create();
+				
+			default:
+				return super.onCreateDialog(id);
+		}
+	}
+	
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		if (task != null) {
+			task.detach();
+		}
+		return task;
 	}
 	
 	
@@ -86,26 +171,42 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     mUsername = mUsernameEdit.getText().toString();   
     mPassword = mPasswordEdit.getText().toString();
     
-    new AuthenticatorTask().execute(mUsername, mPassword);
+    if (mUsername.trim().length() == 0 || mPassword.trim().length() == 0) {
+			showDialog(DIALOG_ERROR_WRONG_INPUT_ID);
+			return;
+    }
+    
+    new AuthenticatorTask(this).execute(mUsername, mPassword);
 	}
 	
 	@Override
 	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		switch (actionId) {
-			case EditorInfo.IME_ACTION_NEXT:
+		if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+				actionId == EditorInfo.IME_ACTION_NEXT ||
+        actionId == EditorInfo.IME_ACTION_DONE ||
+        event.getAction() == KeyEvent.ACTION_DOWN &&
+        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+			
+			if (v.equals(mUsernameEdit)) {
 				mPasswordEdit.requestFocus();
 				return true;
-			case EditorInfo.IME_ACTION_DONE:
-				finishLogin();
-				return true;
-			default:
-				return false;
+			} else if (v.equals(mPasswordEdit)) {
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        
+				onClickContinue(v);
+				return true;				
+			}
 		}
+		
+		return false;
 	}
 
 	
-	protected void finishLogin() {
+	protected void finishLogin(String mAuthToken) {
     Log.i(TAG, "finishLogin()");
+    
+    task = null;
     
     final Account account = new Account(mUsername, AccountAuthenticator.ACCOUNT_TYPE);
 
@@ -128,25 +229,27 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     finish();
 	}
 	
-	protected class AuthenticatorTask extends UserTask<String, Void, String> {
-		private ProgressDialog pd;
+	static class AuthenticatorTask extends UserTask<String, Void, String> {
+		private AuthenticatorActivity activity;
 		
-		@Override
-		protected void onPreExecute() {
-			pd = new ProgressDialog(AuthenticatorActivity.this);
-			pd.setMessage(getText(R.string.account_logging_in));
-			pd.setCancelable(true);
-			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			pd.setOnCancelListener(new OnCancelListener() {
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					AuthenticatorTask.this.cancel(true);
-					pd.dismiss();
-				}
-			});
-			pd.show();
+		public AuthenticatorTask(AuthenticatorActivity activity) {
+			attach(activity);
 		}
 		
+		public void attach(AuthenticatorActivity activity) {
+			this.activity = activity;
+			
+			if (getStatus() == Status.FINISHED)
+				return;
+			
+			activity.showDialog(DIALOG_PROGRESS_ID);
+		}
+		
+		public void detach() {
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			activity = null;
+		}
+			
 		@Override
 		protected String doInBackground(String... params) throws Exception {
 			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
@@ -158,17 +261,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		
 		@Override
 		protected void onPostExecute(String result) {
-			if (pd.isShowing())
-				pd.dismiss();
-			
-			mAuthToken = result;
-			finishLogin();
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			activity.finishLogin(result);
 		}
 		
 		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+			
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
+		}
+
+		
+		@Override
 		protected void onException(Throwable e) {
-			if (pd.isShowing())
-				pd.dismiss();
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
 			
 			if (isCancelled())
 				return;
@@ -176,11 +283,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 			Log.e(TAG, e.getMessage(), e);
 						
 			if (e instanceof InvalidCredentialsException) {
-				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AuthenticatorActivity.this);
-				dialogBuilder.setTitle(getText(R.string.login_error_title));
-				dialogBuilder.setMessage(getText(R.string.login_error_credentials));
-				
-				dialogBuilder.show();
+				activity.showDialog(DIALOG_ERROR_CREDENTIALS_ID);
+			} else if (e instanceof NetworkException) {
+				activity.showDialog(DIALOG_ERROR_NETWORK_ID);
 			} else {
 				ErrorReporter.getInstance().putCustomData("source", "login");
 				
@@ -188,8 +293,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 				if (message == null)
 					message = "";
 				
-				startActivity(ErrorActivity.createErrorIntent(AuthenticatorActivity.this, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e));
+				activity.startActivity(ErrorActivity.createErrorIntent(activity, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e));
 			}
-		}
+		}		
 	}
 }

@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +35,8 @@ import com.hlidskialf.android.preference.SeekBarPreference;
 public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
 	private static final String TAG = "G4L|PreferenceActivity";
 
+	public static final int DIALOG_DONATE_ID = 0;
+	
 	protected static final String ACCOUNT = "account";
 	
 	protected static final String UNIT_KM = "km";
@@ -320,6 +323,30 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_DONATE_ID:
+				return new AlertDialog.Builder(this)
+					.setTitle(R.string.pref_donate_paypal_choose_currency)
+					.setSingleChoiceItems(R.array.currency, -1, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							startActivity(new Intent(
+									Intent.ACTION_VIEW,
+									Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which]))
+							));
+						}
+					})
+					.setCancelable(true)
+					.create();
+
+			default:
+				return super.onCreateDialog(id);
+		}
+	}
 
 	protected Spanned preparePreferenceSummary(CharSequence value, int resId) {
 		String summary = "";
@@ -360,20 +387,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	}
 
 	protected void donatePaypal() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.pref_donate_paypal_choose_currency);
-		builder.setSingleChoiceItems(R.array.currency, -1, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				startActivity(new Intent(
-						Intent.ACTION_VIEW,
-						Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which]))
-				));
-			}
-		});
-		builder.setCancelable(true);
-		builder.show();
+		showDialog(DIALOG_DONATE_ID);
 	}
 
 	protected String getVersion(Context context) {

@@ -6,6 +6,7 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -24,9 +25,12 @@ import com.arcao.geocaching4locus.constants.AppConstants;
     resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
 )
 public class Geocaching4LocusApplication extends Application {
+	private static Context context;
 
 	@Override
 	public void onCreate() {
+		context = getApplicationContext();
+		
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
 		AccountAuthenticator.convertFromOldStorage(this);
@@ -36,5 +40,9 @@ public class Geocaching4LocusApplication extends Application {
 		}
 		
 		super.onCreate();
+	}
+	
+	public static Context getAppContext() {
+		return context;
 	}
 }

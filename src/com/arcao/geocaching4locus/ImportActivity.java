@@ -14,6 +14,7 @@ import org.acra.ErrorReporter;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -29,6 +30,7 @@ import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -42,7 +44,11 @@ public class ImportActivity extends Activity {
 	private final static String TAG = "G4L|ImportActivity";
 	protected final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
 	protected final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
-	protected ImpotTask task = null;
+	
+	public static final int DIALOG_PROGRESS_ID = 0;
+	
+	protected ImportTask task = null;
+	protected String cacheId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,62 +78,113 @@ public class ImportActivity extends Activity {
 			}
 		}
 		
-		String cacheId = m.group(1);
+		cacheId = m.group(1);
 		
 		ErrorReporter.getInstance().putCustomData("source", "import;" + cacheId);
-		
-		Log.i(TAG, "Starting import task for " + cacheId);
-		task = new ImpotTask();
-		task.execute(cacheId);
 	}
 	
-	class ImpotTask extends UserTask<String, Void, Geocache> implements OnClickListener {
-		private ProgressDialog dialog;
-		private SharedPreferences prefs;
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		
+		if (cacheId == null)
+			return;
+		
+		if ((task = (ImportTask) getLastNonConfigurationInstance()) == null) {
+			Log.i(TAG, "Starting import task for " + cacheId);
+			task = new ImportTask(this);
+			task.execute(cacheId);
+		} else {
+			Log.i(TAG, "Restarting import task for " + cacheId);
+			task.attach(this);
+		}
+	}
+	
+	@Override
+	public Object onRetainNonConfigurationInstance() {
+		task.detach();
+		return task;
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DIALOG_PROGRESS_ID:
+				ProgressDialog dialog = new ProgressDialog(this);
+				dialog.setIndeterminate(true);
+				dialog.setMessage(getText(R.string.import_cache_progress));
+				dialog.setButton(getText(R.string.cancel_button), new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						task.cancel(true);
+					}
+				});
+				return dialog;
+
+			default:
+				return super.onCreateDialog(id);
+		}
+	}
+
+	
+	static class ImportTask extends UserTask<String, Void, Geocache> {
 		private int logCount;
 		private int trackableCount;
+		
+		private ImportActivity activity;
+		
+		public ImportTask(ImportActivity activity) {
+			attach(activity);
+		}
+		
+		public void attach(ImportActivity activity) {
+			this.activity = activity;
+			
+			if (getStatus() == Status.FINISHED)
+				return;
+			
+			activity.showDialog(DIALOG_PROGRESS_ID);
+		}
+		
+		public void detach() {
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			activity = null;
+		}
+
 		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			
-			prefs = PreferenceManager.getDefaultSharedPreferences(ImportActivity.this);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			
-		
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
-						
-			dialog = new ProgressDialog(ImportActivity.this);
-			dialog.setIndeterminate(true);
-			dialog.setMessage(getResources().getText(R.string.import_cache_progress));
-			dialog.setButton(getResources().getText(R.string.cancel_button), this);
-			dialog.show();
+			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);						
 		}	
 		
 		@Override
 		protected void onPostExecute(Geocache result) {
 			super.onPostExecute(result);
 			
-			if (dialog != null && dialog.isShowing())
-				dialog.dismiss();
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
 			
 			if (result != null) {			
 				PointsData pointsData = new PointsData(TAG);
-				pointsData.addPoint(LocusDataMapper.toLocusPoint(ImportActivity.this, result));
+				pointsData.addPoint(LocusDataMapper.toLocusPoint(activity, result));
 				
 				try {
-					DisplayData.sendData(ImportActivity.this, pointsData, true);
+					DisplayData.sendData(activity, pointsData, true);
 				} catch (RequiredVersionMissingException e) {
 					Log.e(TAG, e.getMessage(), e);
 				}
 			}
 			
-			finish();
+			activity.finish();
 		}
 
 		@Override
 		protected Geocache doInBackground(String... params) throws Exception {
-			if (!AccountAuthenticator.hasAccount(ImportActivity.this))
+			if (!AccountAuthenticator.hasAccount(Geocaching4LocusApplication.getAppContext()))
 				throw new InvalidCredentialsException("Account not found.");
 			
 			// if it's guid we need to convert to cache code
@@ -145,13 +202,13 @@ public class ImportActivity extends Activity {
 				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidCredentialsException e) {
-				AccountAuthenticator.clearPassword(ImportActivity.this);
+				AccountAuthenticator.clearPassword(Geocaching4LocusApplication.getAppContext());
 				
 				// try again
 				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
-				AccountAuthenticator.invalidateAuthToken(ImportActivity.this);
+				AccountAuthenticator.invalidateAuthToken(Geocaching4LocusApplication.getAppContext());
 				
 				// try again
 				login(api);
@@ -170,19 +227,16 @@ public class ImportActivity extends Activity {
 		protected void onCancelled() {
 			super.onCancelled();
 			
-			if (dialog != null && dialog.isShowing())
-				dialog.dismiss();
-			
-			setResult(RESULT_CANCELED);
-			finish();
+			activity.dismissDialog(DIALOG_PROGRESS_ID);			
+			activity.setResult(RESULT_CANCELED);
+			activity.finish();
 		}
 		
 		@Override
 		protected void onException(Throwable e) {
 			super.onException(e);
 
-			if (dialog != null && dialog.isShowing())
-				dialog.dismiss();
+			activity.dismissDialog(DIALOG_PROGRESS_ID);
 			
 			if (isCancelled())
 				return;
@@ -192,30 +246,28 @@ public class ImportActivity extends Activity {
 			Intent intent;
 			
 			if (e instanceof InvalidCredentialsException) {
-				intent = ErrorActivity.createErrorIntent(ImportActivity.this, R.string.error_credentials, null, true, null);
+				intent = ErrorActivity.createErrorIntent(activity, R.string.error_credentials, null, true, null);
+			} else if (e instanceof NetworkException) {
+				intent = ErrorActivity.createErrorIntent(activity, R.string.error_network, null, false, null);
 			} else {
 				String message = e.getMessage();
 				if (message == null)
 					message = "";
 
-				intent = ErrorActivity.createErrorIntent(ImportActivity.this, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
+				intent = ErrorActivity.createErrorIntent(activity, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
 			}
 			
 			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-			setResult(RESULT_CANCELED);
-			finish();
+
+			activity.setResult(RESULT_CANCELED);
+			activity.finish();
 			
-			startActivity(intent);
-		}
-		
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			cancel(true);
+			activity.startActivity(intent);
 		}
 		
 		private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
 			try {
-				api.openSession(AccountAuthenticator.getAuthToken(ImportActivity.this));
+				api.openSession(AccountAuthenticator.getAuthToken(Geocaching4LocusApplication.getAppContext()));
 			} catch (AuthenticatorException e) {
 				throw new GeocachingApiException(e.getMessage(), e);
 			} catch (IOException e) {

@@ -20,6 +20,7 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 
@@ -123,6 +124,9 @@ public abstract class AbstractService extends IntentService {
 		} catch (InvalidCredentialsException e) {
 			Log.e(TAG, e.getMessage(), e);
 			sendError(R.string.error_credentials, null, true, null);
+		} catch (NetworkException e) {
+			Log.e(TAG, e.getMessage(), e);
+			sendError(R.string.error_network, null, false, null);
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
 			String message = e.getMessage();

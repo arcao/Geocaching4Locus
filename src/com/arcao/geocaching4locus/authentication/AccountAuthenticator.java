@@ -21,6 +21,7 @@ import android.util.Log;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -96,6 +97,9 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 		} catch (InvalidCredentialsException e) {
 			result.putString(AccountManager.KEY_AUTH_FAILED_MESSAGE, mContext.getString(R.string.error_credentials));
 			Log.e(TAG, e.getMessage(), e);
+		} catch (NetworkException e) {
+			Log.e(TAG, e.getMessage(), e);
+			throw new NetworkErrorException(e);
 		} catch (GeocachingApiException e) {
 			Log.e(TAG, e.getMessage(), e);
 			result.putString(AccountManager.KEY_ERROR_MESSAGE, e.getMessage());

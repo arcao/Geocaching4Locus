@@ -107,5 +107,5 @@
 	<string name="crash_dialog_text">En uventet fejl er opstået og har fået App\'en til at stoppe. Hjælp os venligst ved at sende Fejl data\'erne, det kræver kun at Du klikker \'OK\' her. -tak.</string>
 	<string name="crash_dialog_comment_prompt">Du har mulighed for at tilføje en kommentar til problemet herunder:</string>
 	<string name="crash_dialog_ok_toast">Mange Tak !</string>
-	<string name="error_network">Network unavailable. Please check your connection.</string>
+	<string name="error_network">Netværk ikke tilgængeligt. Check venligst din forbindelse.</string>
 </resources>

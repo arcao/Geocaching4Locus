@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Netwerk niet beschikbaar. Controleer jouw verbinding AUB.</string>
+	<string name="app_name">Geocaching4Locus</string>
 	<string name="error">Er is een fout opgetreden bij het downloaden van de caches.&lt;br&gt;Omschrijving: %1$s</string>
 	<string name="downloading">Bezig met downloaden van caches…</string>
 	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>

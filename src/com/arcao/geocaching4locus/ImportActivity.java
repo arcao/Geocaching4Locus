@@ -117,7 +117,6 @@ public class ImportActivity extends Activity {
 	
 	static class ImportTask extends UserTask<String, Void, Geocache> {
 		private int logCount;
-		private int trackableCount;
 		
 		private ImportActivity activity;
 		
@@ -143,7 +142,6 @@ public class ImportActivity extends Activity {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);						
 		}	
 		
 		@Override
@@ -184,13 +182,13 @@ public class ImportActivity extends Activity {
 			Geocache cache = null;
 			try {
 				login(api);
-				cache = api.getCache(params[0], logCount, trackableCount);
+				cache = api.getCache(params[0], logCount, 0);
 			} catch (InvalidSessionException e) {
 				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
 				// try again
 				login(api);
-				cache = api.getCache(params[0], logCount, trackableCount);
+				cache = api.getCache(params[0], logCount, 0);
 			} catch (OperationCanceledException e) {
 				cancel(false);
 			}

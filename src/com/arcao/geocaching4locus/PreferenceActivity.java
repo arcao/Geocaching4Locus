@@ -94,9 +94,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		} else if (DOWNLOADING_COUNT_OF_LOGS.equals(key)) {
 			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
 			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_logs_summary));
-		} else if (DOWNLOADING_COUNT_OF_TRACKABLES.equals(key)) {
-			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
-			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_trackables_summary));
+//		} else if (DOWNLOADING_COUNT_OF_TRACKABLES.equals(key)) {
+//			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
+//			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_trackables_summary));
 		} else if (FILTER_DIFFICULTY_MIN.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), 0));
@@ -163,9 +163,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()),
 				R.string.pref_count_of_logs_summary));
 
-		final SeekBarPreference downloadingCountOfTrackablesPreference = findPreference(DOWNLOADING_COUNT_OF_TRACKABLES, SeekBarPreference.class);
-		downloadingCountOfTrackablesPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfTrackablesPreference.getProgress()),
-				R.string.pref_count_of_trackables_summary));
+//		final SeekBarPreference downloadingCountOfTrackablesPreference = findPreference(DOWNLOADING_COUNT_OF_TRACKABLES, SeekBarPreference.class);
+//		downloadingCountOfTrackablesPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfTrackablesPreference.getProgress()),
+//				R.string.pref_count_of_trackables_summary));
 
 		prepareAccountPreference();
 

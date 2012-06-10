@@ -57,9 +57,6 @@
     <string name="pref_count_of_logs">Count of logs</string>
     <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Count of logs to download with cache</string>
-    <string name="pref_count_of_trackables">Count of trackables</string>
-    <string name="pref_count_of_trackables_text">trackables</string>
-    <string name="pref_count_of_trackables_summary">Count of trackables to download with cache</string>
     <string name="pref_not_filled">not filled</string>
     <string name="gps">GPS</string>
     <string name="close">Close</string>

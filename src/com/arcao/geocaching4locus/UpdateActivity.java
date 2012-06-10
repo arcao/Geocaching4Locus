@@ -128,7 +128,6 @@ public class UpdateActivity extends Activity {
 	static class UpdateTask extends UserTask<String, Void, Geocache> {
 		private boolean replaceCache;
 		private int logCount;
-		private int trackableCount;
 		private UpdateActivity activity;
 		
 		public UpdateTask(UpdateActivity activity) {
@@ -152,7 +151,6 @@ public class UpdateActivity extends Activity {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-			trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 			replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));								
 		}	
 		
@@ -189,13 +187,13 @@ public class UpdateActivity extends Activity {
 			Geocache cache = null;
 			try {
 				login(api);
-				cache = api.getCache(params[0], logCount, trackableCount);
+				cache = api.getCache(params[0], logCount, 0);
 			} catch (InvalidSessionException e) {
 				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
 				// try againg
 				login(api);
-				cache = api.getCache(params[0], logCount, trackableCount);
+				cache = api.getCache(params[0], logCount, 0);
 			} catch (OperationCanceledException e) {
 				cancel(false);
 			}

@@ -62,7 +62,6 @@ public class SearchGeocacheService extends AbstractService {
 	private double distance;
 	private boolean importCaches;
 	private int logCount;
-	private int trackableCount;
 	private CacheType[] cacheTypes;
 
 	public SearchGeocacheService() {
@@ -140,7 +139,6 @@ public class SearchGeocacheService extends AbstractService {
 		count = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-		trackableCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_TRACKABLES, 10);
 
 		importCaches = prefs.getBoolean(PrefConstants.IMPORT_CACHES, false);
 		cacheTypes = getCacheTypeFilterResult(prefs);
@@ -236,7 +234,7 @@ public class SearchGeocacheService extends AbstractService {
 					List<SimpleGeocache> cachesToAdd;
 					
 					if (current == 0) {
-						cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, trackableCount, new Filter[] {
+						cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
 								new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 								new GeocacheTypeFilter(cacheTypes),
 								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
@@ -246,7 +244,7 @@ public class SearchGeocacheService extends AbstractService {
 								new TerrainFilter(terrainMin, terrainMax)
 						});
 					} else {
-						cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, trackableCount);
+						cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);
 					}
 	
 					if (isCanceled())

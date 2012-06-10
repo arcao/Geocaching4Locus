@@ -26,7 +26,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.arcao.geocaching.api.data.type.CacheType;
-import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;
@@ -269,13 +268,13 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				if (AccountAuthenticator.hasAccount(PreferenceActivity.this)) {
-					AccountAuthenticator.removeAccount(PreferenceActivity.this);
+				if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+					Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
 					accountPreference.setTitle(R.string.pref_account_login);
 					accountPreference.setSummary(R.string.pref_account_login_summary);
 				} else {
 					try {
-						AccountAuthenticator.addAccount(PreferenceActivity.this);
+						Geocaching4LocusApplication.getAuthenticatorHelper().addAccount(PreferenceActivity.this);
 					} catch (Exception e) {
 						Log.e(TAG, e.getMessage(), e);
 					}
@@ -285,9 +284,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 		
-		if (AccountAuthenticator.hasAccount(this)) {
+		if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
 			accountPreference.setTitle(R.string.pref_account_logout);
-			accountPreference.setSummary(prepareAcountSummary(AccountAuthenticator.getAccount(this).name, R.string.pref_account_logout_summary));
+			accountPreference.setSummary(prepareAcountSummary(Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name, R.string.pref_account_logout_summary));
 		} else {
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);

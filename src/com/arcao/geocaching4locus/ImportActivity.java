@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +10,6 @@ import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingExceptio
 
 import org.acra.ErrorReporter;
 
-import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.app.Dialog;
@@ -32,7 +30,6 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
-import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LocusTesting;
@@ -184,7 +181,7 @@ public class ImportActivity extends Activity {
 
 		@Override
 		protected Geocache doInBackground(String... params) throws Exception {
-			if (!AccountAuthenticator.hasAccount(Geocaching4LocusApplication.getAppContext()))
+			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
 			// if it's guid we need to convert to cache code
@@ -201,14 +198,8 @@ public class ImportActivity extends Activity {
 			try {
 				login(api);
 				cache = api.getCache(params[0], logCount, trackableCount);
-			} catch (InvalidCredentialsException e) {
-				AccountAuthenticator.clearPassword(Geocaching4LocusApplication.getAppContext());
-				
-				// try again
-				login(api);
-				cache = api.getCache(params[0], logCount, trackableCount);
 			} catch (InvalidSessionException e) {
-				AccountAuthenticator.invalidateAuthToken(Geocaching4LocusApplication.getAppContext());
+				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
 				// try again
 				login(api);
@@ -266,13 +257,13 @@ public class ImportActivity extends Activity {
 		}
 		
 		private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
-			try {
-				api.openSession(AccountAuthenticator.getAuthToken(Geocaching4LocusApplication.getAppContext()));
-			} catch (AuthenticatorException e) {
-				throw new GeocachingApiException(e.getMessage(), e);
-			} catch (IOException e) {
-				throw new GeocachingApiException(e.getMessage(), e);
+			String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
+			if (token == null) {
+				Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+				throw new InvalidCredentialsException("Account not found.");
 			}
+				
+			api.openSession(token);
 		}		
 	}
 }

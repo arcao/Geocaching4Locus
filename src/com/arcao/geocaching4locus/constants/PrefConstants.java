@@ -5,11 +5,8 @@ public interface PrefConstants {
 	static final String LAST_LATITUDE  = "latitude";
 	static final String LAST_LONGITUDE = "longitude";
 
-	@Deprecated
 	static final String USERNAME = "username";
-	@Deprecated
 	static final String PASSWORD = "password";
-	@Deprecated
 	static final String SESSION  = "session";
 
 	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";

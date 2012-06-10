@@ -27,6 +27,7 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.ErrorActivity;
+import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -49,8 +50,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	protected String mAuthTokenType;
 	protected boolean mRequestNewAccount;
 	
-	protected AccountManager mAccountManager;
-	
 	protected EditText mUsernameEdit;
 	protected EditText mPasswordEdit;
 	
@@ -59,8 +58,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	@Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		
-		mAccountManager = AccountManager.get(this);
 		
     final Intent intent = getIntent();
     
@@ -193,8 +190,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 			} else if (v.equals(mPasswordEdit)) {
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        
-				onClickContinue(v);
 				return true;				
 			}
 		}
@@ -211,9 +206,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     final Account account = new Account(mUsername, AccountAuthenticator.ACCOUNT_TYPE);
 
     if (mRequestNewAccount) {
-        mAccountManager.addAccountExplicitly(account, mPassword, null);
+    	Geocaching4LocusApplication.getAuthenticatorHelper().addAccountExplicitly(account, mPassword);
     } else {
-        mAccountManager.setPassword(account, mPassword);
+    	Geocaching4LocusApplication.getAuthenticatorHelper().setPassword(account, mPassword);
     }
     
     final Intent intent = new Intent();
@@ -221,7 +216,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
     intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountAuthenticator.ACCOUNT_TYPE);
     if (mAuthTokenType != null && mAuthTokenType.equals(AccountAuthenticator.ACCOUNT_TYPE)) {
-        intent.putExtra(AccountManager.KEY_AUTHTOKEN, mAuthToken);
+    	Geocaching4LocusApplication.getAuthenticatorHelper().setAuthToken(account, mAuthTokenType, mAuthToken);
+    	intent.putExtra(AccountManager.KEY_AUTHTOKEN, mAuthToken);
     }
     
     setAccountAuthenticatorResult(intent.getExtras());

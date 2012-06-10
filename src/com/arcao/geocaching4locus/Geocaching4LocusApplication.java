@@ -5,10 +5,14 @@ import org.acra.ErrorReporter;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
+import android.Manifest.permission;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 
-import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
+import com.arcao.geocaching4locus.authentication.helper.AccountAuthenticatorHelper;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
+import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 
 @ReportsCrashes(
@@ -26,6 +30,7 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 )
 public class Geocaching4LocusApplication extends Application {
 	private static Context context;
+	private static AuthenticatorHelper authenticatorHelper;
 
 	@Override
 	public void onCreate() {
@@ -33,10 +38,18 @@ public class Geocaching4LocusApplication extends Application {
 		
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
-		AccountAuthenticator.convertFromOldStorage(this);
 		
-		if (AccountAuthenticator.hasAccount(this)) {
-			ErrorReporter.getInstance().putCustomData("userName", AccountAuthenticator.getAccount(this).name);
+    PackageManager pm = getPackageManager();
+    if (pm != null && pm.checkPermission(permission.MANAGE_ACCOUNTS, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+    	authenticatorHelper = new AccountAuthenticatorHelper(this);
+    } else {
+    	authenticatorHelper = new PreferenceAuthenticatorHelper(this);
+    }
+
+		authenticatorHelper.convertFromOldStorage();
+		
+		if (authenticatorHelper.hasAccount()) {
+			ErrorReporter.getInstance().putCustomData("userName", authenticatorHelper.getAccount().name);
 		}
 		
 		super.onCreate();
@@ -44,5 +57,9 @@ public class Geocaching4LocusApplication extends Application {
 	
 	public static Context getAppContext() {
 		return context;
+	}
+	
+	public static AuthenticatorHelper getAuthenticatorHelper() {
+		return authenticatorHelper;
 	}
 }

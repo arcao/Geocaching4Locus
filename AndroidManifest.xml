@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.4.1.1" android:versionCode="23"
+      android:versionName="1.4.1.2" android:versionCode="24"
       android:installLocation="auto">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <!-- Uncomment this to allow using Android Accounts & Sync -->
+    <!-- <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>   
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/> -->
     
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="10"/>
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" anyDensity="true" />
@@ -29,12 +30,13 @@
         <provider android:name=".provider.DataStorageProvider" android:authorities="com.arcao.geocaching4locus.provider.datastorageprovider"></provider>
         <service android:name=".service.SearchGeocacheService"></service>
         <service android:name=".service.LiveMapService"></service>
-        <service android:name=".authentication.AuthenticationService" android:process=":auth" android:exported="true">
+        <!-- Uncomment this to allow using Android Accounts & Sync -->
+        <!-- <service android:name=".authentication.AuthenticationService" android:process=":auth" android:exported="true">
           <intent-filter>
             <action android:name="android.accounts.AccountAuthenticator" />
           </intent-filter>
           <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator" />
-        </service>
+        </service> -->
         
         <receiver android:name=".receiver.LiveMapBroadcastReceiver" >
             <intent-filter>

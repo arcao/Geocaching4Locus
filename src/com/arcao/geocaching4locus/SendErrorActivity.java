@@ -19,8 +19,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
-
 public class SendErrorActivity extends Activity {
 	public static final String ACTION_SEND_ERROR = "com.arcao.geocaching4locus.intent.action.SEND_ERROR";
 	public static final String PARAM_EXCEPTION = "EXCEPTION";
@@ -96,8 +94,8 @@ public class SendErrorActivity extends Activity {
 		yes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (AccountAuthenticator.hasAccount(SendErrorActivity.this)) {
-					ErrorReporter.getInstance().putCustomData("userName", AccountAuthenticator.getAccount(SendErrorActivity.this).name);
+				if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+					ErrorReporter.getInstance().putCustomData("userName", Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name);
 				}
 
 				// Retrieve user comment

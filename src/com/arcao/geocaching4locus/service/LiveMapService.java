@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -11,7 +10,6 @@ import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
-import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.IntentService;
 import android.content.Context;
@@ -37,9 +35,9 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsers
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
+import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
-import com.arcao.geocaching4locus.authentication.AccountAuthenticator;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
@@ -154,7 +152,7 @@ public class LiveMapService extends IntentService {
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
 		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
 
-		if (!AccountAuthenticator.hasAccount(this))
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
@@ -165,7 +163,7 @@ public class LiveMapService extends IntentService {
 			try {
 				login(api);
 				
-				String username = AccountAuthenticator.getAccount(this).name;
+				String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
 		
 				int current = 0;
 				int perPage = CACHES_PER_REQUEST;
@@ -202,17 +200,9 @@ public class LiveMapService extends IntentService {
 				Log.i(TAG, "found caches: " + count);
 	
 				return caches;
-			} catch (InvalidCredentialsException e) {
-				Log.e(TAG, e.getMessage(), e);
-				AccountAuthenticator.clearPassword(this);
-				
-				if (attempt == 1)
-					continue;
-				
-				throw e;
 			} catch (InvalidSessionException e) {
 				Log.e(TAG, e.getMessage(), e);
-				AccountAuthenticator.invalidateAuthToken(this);
+				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
 				if (attempt == 1)
 					continue;
@@ -229,14 +219,14 @@ public class LiveMapService extends IntentService {
 	}
 	
 	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
-		try {
-			api.openSession(AccountAuthenticator.getAuthToken(this));
-		} catch (AuthenticatorException e) {
-			throw new GeocachingApiException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new GeocachingApiException(e.getMessage(), e);
+		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
+		if (token == null) {
+			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+			throw new InvalidCredentialsException("Account not found.");
 		}
-	}
+			
+		api.openSession(token);
+  }
 
 	public static Intent createIntent(Context context, double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) {
 		Intent i = new Intent(context, LiveMapService.class);

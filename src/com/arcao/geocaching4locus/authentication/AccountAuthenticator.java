@@ -1,21 +1,15 @@
 package com.arcao.geocaching4locus.authentication;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
-import android.accounts.AuthenticatorException;
 import android.accounts.NetworkErrorException;
-import android.accounts.OperationCanceledException;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
@@ -24,13 +18,13 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
 	private static final String TAG = "G4L|AccountAuthenicator";
 	
-	public static final String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
+	public static final String ACCOUNT_TYPE = AuthenticatorHelper.ACCOUNT_TYPE;
 	
 	protected final Context mContext;
 
@@ -146,104 +140,5 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     final Bundle bundle = new Bundle();
     bundle.putParcelable(AccountManager.KEY_INTENT, intent);
     return bundle; 
-	}
-	
-	// -------------- Helper functions --------------------------
-	public static String getAuthToken(Context ctx) throws OperationCanceledException, AuthenticatorException, IOException {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		
-		if (accounts == null || accounts.length == 0) {
-			return null;
-		}
-		
-		return am.blockingGetAuthToken(accounts[0], ACCOUNT_TYPE, true);
-	}
-	
-	public static Account getAccount(Context ctx) {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		
-		if (accounts == null || accounts.length == 0) {
-			return null;
-		}
-		
-		return accounts[0];
-	}
-	
-	public static void addAccount(Activity activity) throws OperationCanceledException, AuthenticatorException, IOException {
-		final AccountManager am = AccountManager.get(activity);
-		
-		am.addAccount(ACCOUNT_TYPE, ACCOUNT_TYPE, null, null, activity, null, null);
-	}
-	
-	public static boolean hasAccount(Context ctx) {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		
-		return accounts != null && accounts.length > 0;
-	}
-
-	public static void removeAccount(Context ctx) {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		final Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		
-		for(Account account : accounts) {
-			am.removeAccount(account, null, null);
-		}
-	}
-	
-	public static void clearPassword(Context ctx) {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		final Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		
-		for(Account account : accounts) {
-			am.clearPassword(account);
-		}
-	}
-	
-	public static void invalidateAuthToken(Context ctx) {
-		final AccountManager am = AccountManager.get(ctx);
-		
-		final Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-		for(Account account : accounts) {
-			String token = am.peekAuthToken(account, ACCOUNT_TYPE);
-			if (token != null) {
-				am.invalidateAuthToken(ACCOUNT_TYPE, token);
-			}
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static void convertFromOldStorage(Context ctx) {
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-		
-		try {
-			String username = prefs.getString(PrefConstants.USERNAME, null);
-			String password = prefs.getString(PrefConstants.PASSWORD, null);
-			
-			if (username == null || username.length() == 0 || password == null || password.length() == 0)
-				return;
-
-			final AccountManager am = AccountManager.get(ctx);
-			
-			Account[] accounts = am.getAccountsByType(ACCOUNT_TYPE);
-			
-			// only one account allowed
-			if (accounts != null && accounts.length != 0)
-				return;
-			
-			// create account in account manager
-			final Account account = new Account(username, ACCOUNT_TYPE);
-			am.addAccountExplicitly(account, password, null);
-		} finally {
-			// remove username, password and session from old storage
-			prefs.edit().remove(PrefConstants.USERNAME).remove(PrefConstants.PASSWORD).remove(PrefConstants.SESSION).commit();
-		}
 	}
 }

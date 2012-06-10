@@ -40,7 +40,8 @@
                 style="@style/SimpleEditText"
                 android:hint="@string/login_password"
                 android:imeOptions="actionDone"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:nextFocusDown="@+id/login_button" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"

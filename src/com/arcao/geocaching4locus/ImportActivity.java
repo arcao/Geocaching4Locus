@@ -45,7 +45,6 @@ public class ImportActivity extends Activity {
 	public static final int DIALOG_PROGRESS_ID = 0;
 	
 	protected ImportTask task = null;
-	protected String cacheId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,17 +74,9 @@ public class ImportActivity extends Activity {
 			}
 		}
 		
-		cacheId = m.group(1);
+		String cacheId = m.group(1);
 		
 		ErrorReporter.getInstance().putCustomData("source", "import;" + cacheId);
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		
-		if (cacheId == null)
-			return;
 		
 		if ((task = (ImportTask) getLastNonConfigurationInstance()) == null) {
 			Log.i(TAG, "Starting import task for " + cacheId);
@@ -135,16 +126,10 @@ public class ImportActivity extends Activity {
 		}
 		
 		public void attach(ImportActivity activity) {
-			this.activity = activity;
-			
-			if (getStatus() == Status.FINISHED)
-				return;
-			
-			activity.showDialog(DIALOG_PROGRESS_ID);
+			this.activity = activity;			
 		}
 		
 		public void detach() {
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
 			activity = null;
 		}
 
@@ -152,6 +137,8 @@ public class ImportActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+
+			activity.showDialog(DIALOG_PROGRESS_ID);
 			
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			

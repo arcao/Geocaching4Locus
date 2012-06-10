@@ -79,11 +79,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     	mUsernameEdit.setText(mUsername);
     	mUsernameEdit.setEnabled(false);
     }    
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
 		
     // attach activity instance to AuthenticatorTask if is necessary
     if ((task = (AuthenticatorTask) getLastNonConfigurationInstance()) != null) {
@@ -235,15 +230,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		public void attach(AuthenticatorActivity activity) {
 			this.activity = activity;
 			
-			if (getStatus() == Status.FINISHED)
-				return;
-			
-			activity.showDialog(DIALOG_PROGRESS_ID);
 		}
 		
 		public void detach() {
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
 			activity = null;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			activity.showDialog(DIALOG_PROGRESS_ID);
 		}
 			
 		@Override

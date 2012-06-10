@@ -41,8 +41,6 @@ public class UpdateActivity extends Activity {
 	private UpdateTask task;
 	
 	protected Point oldPoint;
-	protected String cacheId;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +49,7 @@ public class UpdateActivity extends Activity {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		oldPoint = null;
+		String cacheId = null;
 		
 		if (getIntent().hasExtra(PARAM_CACHE_ID)) {
 			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
@@ -88,14 +87,6 @@ public class UpdateActivity extends Activity {
 		}
 		
 		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);		
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		
-		if (cacheId == null)
-			return;
 
 		if ((task = (UpdateTask) getLastNonConfigurationInstance()) == null) {
 			Log.i(TAG, "Starting update task for " + cacheId);
@@ -145,22 +136,18 @@ public class UpdateActivity extends Activity {
 		}
 		
 		public void attach(UpdateActivity activity) {
-			this.activity = activity;
-			
-			if (getStatus() == Status.FINISHED)
-				return;
-			
-			activity.showDialog(DIALOG_PROGRESS_ID);
+			this.activity = activity;			
 		}
 		
 		public void detach() {
-			activity.dismissDialog(DIALOG_PROGRESS_ID);			
 			activity = null;
 		}
 		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			
+			activity.showDialog(DIALOG_PROGRESS_ID);
 			
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			

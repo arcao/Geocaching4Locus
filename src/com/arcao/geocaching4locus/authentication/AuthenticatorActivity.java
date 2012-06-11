@@ -168,7 +168,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 			return;
     }
     
-    new AuthenticatorTask(this).execute(mUsername, mPassword);
+    task = new AuthenticatorTask(this);
+    task.execute(mUsername, mPassword);
 	}
 	
 	@Override

@@ -255,7 +255,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		
 		@Override
 		protected void onPostExecute(String result) {
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
 			activity.finishLogin(result);
 		}
 		
@@ -263,13 +265,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		protected void onCancelled() {
 			super.onCancelled();
 			
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
 		}
 
 		
 		@Override
 		protected void onException(Throwable e) {
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
 			
 			if (isCancelled())
 				return;

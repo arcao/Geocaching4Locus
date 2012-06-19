@@ -158,7 +158,9 @@ public class UpdateActivity extends Activity {
 		protected void onPostExecute(Geocache result) {
 			super.onPostExecute(result);
 			
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
 			
 			if (result == null) {
 				activity.setResult(RESULT_CANCELED);
@@ -208,7 +210,10 @@ public class UpdateActivity extends Activity {
 		protected void onCancelled() {
 			super.onCancelled();
 			
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
+
 			activity.setResult(RESULT_CANCELED);
 			activity.finish();
 		}
@@ -217,7 +222,9 @@ public class UpdateActivity extends Activity {
 		protected void onException(Throwable e) {
 			super.onException(e);
 
-			activity.dismissDialog(DIALOG_PROGRESS_ID);
+			try {
+				activity.dismissDialog(DIALOG_PROGRESS_ID);
+			} catch (IllegalArgumentException ex) {}
 			
 			if (isCancelled())
 				return;

@@ -44,10 +44,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	public static final int DIALOG_ERROR_NETWORK_ID = 2;
 	public static final int DIALOG_ERROR_WRONG_INPUT_ID = 3;
 	
-	protected String mUsername;
-	protected String mPassword;
-	protected String mAuthToken;
-	protected String mAuthTokenType;
 	protected boolean mRequestNewAccount;
 	
 	protected EditText mUsernameEdit;
@@ -61,8 +57,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		
     final Intent intent = getIntent();
     
-    mUsername = intent.getStringExtra(PARAM_USERNAME);
-    mAuthTokenType = intent.getStringExtra(PARAM_AUTHTOKEN_TYPE);
+    String mUsername = intent.getStringExtra(PARAM_USERNAME);
     
     mRequestNewAccount = mUsername == null;
         
@@ -84,6 +79,20 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     if ((task = (AuthenticatorTask) getLastNonConfigurationInstance()) != null) {
     	task.attach(this);
     }
+    
+    // restore last edit box value if activity was recreated
+    if (icicle != null) {
+    	mUsernameEdit.setText(icicle.getCharSequence(PARAM_USERNAME));
+    	mPasswordEdit.setText(icicle.getCharSequence(PARAM_PASSWORD));
+    }
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putCharSequence(PARAM_USERNAME, mUsernameEdit.getText());
+		outState.putCharSequence(PARAM_PASSWORD, mPasswordEdit.getText());
+		
+		super.onSaveInstanceState(outState);
 	}
 	
 	@Override
@@ -160,8 +169,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	}
 
 	public void onClickContinue(View view) {
-    mUsername = mUsernameEdit.getText().toString();   
-    mPassword = mPasswordEdit.getText().toString();
+    String mUsername = mUsernameEdit.getText().toString();   
+    String mPassword = mPasswordEdit.getText().toString();
     
     if (mUsername.trim().length() == 0 || mPassword.trim().length() == 0) {
 			showDialog(DIALOG_ERROR_WRONG_INPUT_ID);
@@ -194,7 +203,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 	}
 
 	
-	protected void finishLogin(String mAuthToken) {
+	protected void finishLogin(String mUsername, String mPassword, String mAuthToken) {
     Log.i(TAG, "finishLogin()");
     
     task = null;
@@ -211,17 +220,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 
     intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mUsername);
     intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountAuthenticator.ACCOUNT_TYPE);
-    if (mAuthTokenType != null && mAuthTokenType.equals(AccountAuthenticator.ACCOUNT_TYPE)) {
-    	Geocaching4LocusApplication.getAuthenticatorHelper().setAuthToken(account, mAuthTokenType, mAuthToken);
-    	intent.putExtra(AccountManager.KEY_AUTHTOKEN, mAuthToken);
-    }
+
+    Geocaching4LocusApplication.getAuthenticatorHelper().setAuthToken(account, AccountAuthenticator.ACCOUNT_TYPE, mAuthToken);
+    intent.putExtra(AccountManager.KEY_AUTHTOKEN, mAuthToken);
     
     setAccountAuthenticatorResult(intent.getExtras());
     setResult(RESULT_OK, intent);
     finish();
 	}
 	
-	static class AuthenticatorTask extends UserTask<String, Void, String> {
+	static class AuthenticatorTask extends UserTask<String, Void, String[]> {
 		private AuthenticatorActivity activity;
 		
 		public AuthenticatorTask(AuthenticatorActivity activity) {
@@ -245,20 +253,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
 		}
 			
 		@Override
-		protected String doInBackground(String... params) throws Exception {
+		protected String[] doInBackground(String... params) throws Exception {
 			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 			
 			api.openSession(params[0], params[1]);
 			
-			return api.getSession();
+			// username, password, session_id
+			return new String[] { params[0], params[1], api.getSession()};
 		}
 		
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(String[] result) {
 			try {
 				activity.dismissDialog(DIALOG_PROGRESS_ID);
 			} catch (IllegalArgumentException ex) {}
-			activity.finishLogin(result);
+			activity.finishLogin(result[0], result[1], result[2]);
 		}
 		
 		@Override

@@ -35,6 +35,7 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
+import com.arcao.wherigoservice.api.WherigoServiceException;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
 
 public class ImportActivity extends Activity {
@@ -230,7 +231,8 @@ public class ImportActivity extends Activity {
 			
 			if (e instanceof InvalidCredentialsException) {
 				intent = ErrorActivity.createErrorIntent(activity, R.string.error_credentials, null, true, null);
-			} else if (e instanceof NetworkException) {
+			} else if (e instanceof NetworkException || 
+					(e instanceof WherigoServiceException && ((WherigoServiceException) e).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 				intent = ErrorActivity.createErrorIntent(activity, R.string.error_network, null, false, null);
 			} else {
 				String message = e.getMessage();

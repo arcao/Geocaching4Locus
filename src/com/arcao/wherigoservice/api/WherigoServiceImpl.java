@@ -12,6 +12,7 @@ import java.util.zip.InflaterInputStream;
 import android.util.Log;
 
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.shade.gson.stream.MalformedJsonException;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 
@@ -55,6 +56,10 @@ public class WherigoServiceImpl implements WherigoService {
 			Log.i(TAG, "Cache code: " + cacheCode);
 		} catch (IOException e) {
 			Log.e(TAG, e.toString(), e);
+			if (!isGsonException(e)) {
+				throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
+			}
+
 			throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: " + e.getMessage(), e);
 		}
 		
@@ -115,7 +120,7 @@ public class WherigoServiceImpl implements WherigoService {
 			return new JsonReader(isr);
 		} catch (Exception e) {
 			Log.e(TAG, e.toString(), e);
-			throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
+			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getClass().getSimpleName(), e);
 		}
 	}
 	
@@ -125,5 +130,9 @@ public class WherigoServiceImpl implements WherigoService {
 			return input;
 
 		return input.substring(0, start + 10) + "******" + input.substring(input.indexOf('&', start + 10));
+	}
+	
+	protected boolean isGsonException(Throwable t) {
+		return IOException.class.equals(t.getClass()) || t instanceof MalformedJsonException || t instanceof IllegalStateException || t instanceof NumberFormatException;
 	}
 }

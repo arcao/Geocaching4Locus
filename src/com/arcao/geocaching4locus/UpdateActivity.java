@@ -94,43 +94,53 @@ public class UpdateActivity extends Activity {
       		}
       	}
       }
+
+      cacheId = new String[oldPoints.size()];
       
-     	for (int i = 0; i < oldPoints.size(); i++) {
-     		cacheId[i] = oldPoints.get(i).getGeocachingData().cacheID;
-     	}
-     	
+      for (int i = 0; i < oldPoints.size(); i++) {
+				cacheId[i] = oldPoints.get(i).getGeocachingData().cacheID;
+			}
+
 		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
-			cacheId = new String[] {
-					getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID)
-			};
-			String repeatUpdate = prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
-			
-			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
+			cacheId = new String[] { getIntent().getStringExtra(
+					PARAM_SIMPLE_CACHE_ID) };
+			String repeatUpdate = prefs
+					.getString(
+							PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
+							PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
+
+			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER
+					.equals(repeatUpdate)) {
 				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
 				setResult(RESULT_CANCELED);
 				finish();
 				return;
-			} else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(repeatUpdate)) {
-				Point p = DisplayDataExtended.loadGeocacheFromCache(this, cacheId[0]);
+			} else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE
+					.equals(repeatUpdate)) {
+				Point p = DisplayDataExtended.loadGeocacheFromCache(this,
+						cacheId[0]);
 				if (p != null) {
 					Log.i(TAG, "Found cache file for: " + cacheId);
-					setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, false));
+					setResult(RESULT_OK,
+							LocusIntents.prepareResultExtraOnDisplayIntent(p,
+									false));
 					finish();
 					return;
 				}
 			}
 		}
-		
+
 		count = cacheId.length;
-		
+
 		if (count == 0) {
 			Log.e(TAG, "cacheId/simpleCacheId not found");
 			setResult(RESULT_CANCELED);
 			finish();
 			return;
 		}
-		
-		ErrorReporter.getInstance().putCustomData("source", "update;" + Arrays.toString(cacheId));		
+
+		ErrorReporter.getInstance().putCustomData("source",
+				"update;" + Arrays.toString(cacheId));
 
 		if ((task = (UpdateTask) getLastNonConfigurationInstance()) == null) {
 			Log.i(TAG, "Starting update task for " + Arrays.toString(cacheId));
@@ -154,7 +164,13 @@ public class UpdateActivity extends Activity {
 			case DIALOG_PROGRESS_ID:
 				ProgressDialog dialog = new ProgressDialog(this);
 				dialog.setMax(count);
-				dialog.setMessage(getText(R.string.update_cache_progress));
+				if (count == 1) {
+				  dialog.setMessage(getText(R.string.update_cache_progress));
+				  dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				} else {
+				  dialog.setMessage(getText(R.string.update_caches_progress));
+				  dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				}
 				dialog.setButton(getText(R.string.cancel_button), new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

@@ -63,6 +63,10 @@
                 <data android:scheme="locus" />
                 <data android:pathPrefix="menion.android.locus/point_geocache" />
             </intent-filter>
+            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
+                <action android:name="menion.android.locus.POINTS_SCREEN_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".ImportActivity" android:theme="@style/Theme.Invisible" android:label="@string/locus_import_cache" android:noHistory="true" android:exported="true">
             <intent-filter>
@@ -90,7 +94,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Dialog.NoTitle" android:noHistory="true" android:exported="true"/>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Dialog.NoTitle" android:noHistory="true"/>
         <activity android:name="org.acra.CrashReportDialog" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="SendErrorActivity" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
     </application>

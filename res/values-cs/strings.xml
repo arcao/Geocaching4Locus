@@ -8,7 +8,7 @@
 	<string name="search_activity_name">Nejbližší keše</string>
 	<string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
 	<string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
+	<string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
 	<string name="preferences">Nastavení</string>
 	<string name="wrong_coordinates">Špatný formát souřadnic!</string>
 	<string name="coordinates">Souřadnice</string>

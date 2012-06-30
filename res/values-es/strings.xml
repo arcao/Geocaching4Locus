@@ -7,7 +7,7 @@
 	<string name="error_locus_not_found">¡Por favor instale Locus!</string>
 	<string name="search_activity_name">Cachés más cercanos</string>
 	<string name="error_location">¡No se permite adquirir la posición usando red! Por favor actívelo en ajustes de  Android.</string>
-	<string name="acquiring_gps_location">Adquiriendo posición desde GPS ...</string>
+	<string name="acquiring_gps_location">Adquiriendo posición desde GPS …</string>
 	<string name="acquiring_network_location">Adquiriendo posición desde red…</string>
 	<string name="preferences">Preferencias</string>
 	<string name="wrong_coordinates">¡Formato de coordenadas erróneo!</string>
@@ -60,7 +60,7 @@
 	<string name="pref_author">Autor</string>
 	<string name="pref_website">Sitio web, foro, etc.</string>
 	<string name="pref_donate_paypal">Donar vía Paypal</string>
-	<string name="pref_donate_paypal_summary">Apoyar desarrollo futuro ...</string>
+	<string name="pref_donate_paypal_summary">Apoyar desarrollo futuro …</string>
 	<string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
 	<string name="pref_title_cache_type_filter">Tipos de caché</string>
 	<string name="pref_title_difficulty_filter">Dificultad</string>

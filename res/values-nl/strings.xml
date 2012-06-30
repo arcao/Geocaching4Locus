@@ -61,7 +61,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
 	<string name="pref_author">Auteur</string>
 	<string name="pref_website">Website, forum, enz.</string>
 	<string name="pref_donate_paypal">Doneer via Paypal</string>
-	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
+	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling…</string>
 	<string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
 	<string name="pref_title_cache_type_filter">Soort Cache</string>
 	<string name="pref_title_difficulty_filter">Moeilijkheid</string>

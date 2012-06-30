@@ -1,9 +1,15 @@
 package com.arcao.geocaching4locus;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.geoData.PointsData;
 
 import org.acra.ErrorReporter;
 
@@ -26,8 +32,11 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.provider.DataStorageProvider;
 import com.arcao.geocaching4locus.util.UserTask;
 
 public class UpdateActivity extends Activity {
@@ -40,27 +49,60 @@ public class UpdateActivity extends Activity {
 	
 	private UpdateTask task;
 	
-	protected Point oldPoint;
+	protected List<Point> oldPoints;
+	protected boolean fromPointsScreen;
+	protected int count;
+	protected ProgressDialog pd;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		oldPoint = null;
-		String cacheId = null;
+	
+		oldPoints = new ArrayList<Point>();
+		String[] cacheId = new String[0];
+		fromPointsScreen = false;
 		
 		if (getIntent().hasExtra(PARAM_CACHE_ID)) {
-			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
-		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
-			oldPoint = LocusIntents.handleIntentOnPointAction(getIntent());
+			cacheId = new String[] { 
+					getIntent().getStringExtra(PARAM_CACHE_ID)
+			};
+			oldPoints.add(null);
 			
-			if (oldPoint.getGeocachingData() != null) {
-				cacheId = oldPoint.getGeocachingData().cacheID;
+		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
+			Point p = LocusIntents.handleIntentOnPointAction(getIntent()); 
+		
+			if (p != null && p.getGeocachingData() != null) {
+				cacheId = new String[] { 
+						p.getGeocachingData().cacheID 
+				};
+				oldPoints.add(p);
 			}
+			
+    } else if (LocusIntents.isIntentPointsScreenTools(getIntent())) {
+    	fromPointsScreen = true;
+    	
+      ArrayList<PointsData> pointsData = LocusIntents.handleIntentPointsScreenTools(getIntent());
+      
+      // remove points without geocaching data
+      if (pointsData != null && pointsData.size() > 0) {
+      	for(PointsData data : pointsData) {
+      		for (Point p : data.getPoints()) {
+      			oldPoints.add(p);
+      		}
+      	}
+      }
+      
+     	for (int i = 0; i < oldPoints.size(); i++) {
+     		cacheId[i] = oldPoints.get(i).getGeocachingData().cacheID;
+     	}
+     	
 		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
-			cacheId = getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID);
+			cacheId = new String[] {
+					getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID)
+			};
 			String repeatUpdate = prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
 			
 			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
@@ -69,7 +111,7 @@ public class UpdateActivity extends Activity {
 				finish();
 				return;
 			} else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(repeatUpdate)) {
-				Point p = DisplayDataExtended.loadGeocacheFromCache(this, cacheId);
+				Point p = DisplayDataExtended.loadGeocacheFromCache(this, cacheId[0]);
 				if (p != null) {
 					Log.i(TAG, "Found cache file for: " + cacheId);
 					setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, false));
@@ -79,21 +121,23 @@ public class UpdateActivity extends Activity {
 			}
 		}
 		
-		if (cacheId == null) {
+		count = cacheId.length;
+		
+		if (count == 0) {
 			Log.e(TAG, "cacheId/simpleCacheId not found");
 			setResult(RESULT_CANCELED);
 			finish();
 			return;
 		}
 		
-		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);		
+		ErrorReporter.getInstance().putCustomData("source", "update;" + Arrays.toString(cacheId));		
 
 		if ((task = (UpdateTask) getLastNonConfigurationInstance()) == null) {
-			Log.i(TAG, "Starting update task for " + cacheId);
+			Log.i(TAG, "Starting update task for " + Arrays.toString(cacheId));
 			task = new UpdateTask(this);
 			task.execute(cacheId);
 		} else {
-			Log.i(TAG, "Restarting update task for " + cacheId);
+			Log.i(TAG, "Restarting update task for " + Arrays.toString(cacheId));
 			task.attach(this);
 		}
 	}
@@ -109,7 +153,7 @@ public class UpdateActivity extends Activity {
 		switch (id) {
 			case DIALOG_PROGRESS_ID:
 				ProgressDialog dialog = new ProgressDialog(this);
-				dialog.setIndeterminate(true);
+				dialog.setMax(count);
 				dialog.setMessage(getText(R.string.update_cache_progress));
 				dialog.setButton(getText(R.string.cancel_button), new OnClickListener() {
 					@Override
@@ -123,9 +167,26 @@ public class UpdateActivity extends Activity {
 				return super.onCreateDialog(id);
 		}
 	}
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+			case DIALOG_PROGRESS_ID:
+				pd = (ProgressDialog) dialog;
+			default:
+					super.onPrepareDialog(id, dialog);
+		}
+	}
+	
+	protected void onUpdateProgress(int current) {
+		if (pd == null)
+			showDialog(DIALOG_PROGRESS_ID);
+			
+		pd.setProgress(current);
+	}
 
 	
-	static class UpdateTask extends UserTask<String, Void, Geocache> {
+	static class UpdateTask extends UserTask<String, Integer, List<Geocache>> {
 		private boolean replaceCache;
 		private int logCount;
 		private UpdateActivity activity;
@@ -155,7 +216,7 @@ public class UpdateActivity extends Activity {
 		}	
 		
 		@Override
-		protected void onPostExecute(Geocache result) {
+		protected void onPostExecute(List<Geocache> result) {
 			super.onPostExecute(result);
 			
 			try {
@@ -168,44 +229,130 @@ public class UpdateActivity extends Activity {
 				return;
 			}
 			
-			Point p = LocusDataMapper.toLocusPoint(activity, result);
-			p = LocusDataMapper.mergePoints(p, activity.oldPoint);
+			ArrayList<PointsData> pointDataCollection = new ArrayList<PointsData>();
+			PointsData points = new PointsData("G4L");
 			
-			if (replaceCache) {
-				DisplayDataExtended.storeGeocacheToCache(activity, p);
+			for (int i = 0; i < result.size(); i++) {
+				Point p = LocusDataMapper.toLocusPoint(activity, result.get(i));
+				
+				// if updated cache doesn't exist use old
+				if (p == null) {
+					p = activity.oldPoints.get(i);
+				}
+				
+				p = LocusDataMapper.mergePoints(p, activity.oldPoints.get(i));
+			
+				if (replaceCache) {
+					DisplayDataExtended.storeGeocacheToCache(activity, p);
+				}
+				
+				if (!activity.fromPointsScreen) {
+					activity.setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, replaceCache));
+					activity.finish();
+					return;
+				}
+				
+				if (points.getPoints().size() >= 50) {
+					pointDataCollection.add(points);
+					points = new PointsData("G4L");
+				}
+
+				points.addPoint(p);
 			}
 			
-			activity.setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, replaceCache));
+			if (!points.getPoints().isEmpty())
+				pointDataCollection.add(points);
+
+			Intent intent = null;
+			
+			// send data via file if is possible
+			File file = DisplayDataExtended.getCacheFileName(activity);
+			if (file != null) {
+				intent = DisplayDataExtended.prepareDataFile(pointDataCollection, file);
+			} else {
+				intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
+			}
+
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+			DisplayDataExtended.sendData(activity, intent, true);
 			activity.finish();
+			return;			
+		}
+		
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			activity.onUpdateProgress(values[0]);
 		}
 
 		@Override
-		protected Geocache doInBackground(String... params) throws Exception {
+		protected List<Geocache> doInBackground(String... params) throws Exception {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
 			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
 			
-			Geocache cache = null;
-			try {
-				login(api);
-				cache = api.getCache(params[0], logCount, 0);
-			} catch (InvalidSessionException e) {
-				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
-				
-				// try againg
-				login(api);
-				cache = api.getCache(params[0], logCount, 0);
-			} catch (OperationCanceledException e) {
-				cancel(false);
+			int attempt = 0;
+			int current = 0;
+			int count = params.length;
+			
+			while (++attempt <= 2) {
+				List<Geocache> result = new ArrayList<Geocache>();
+
+				try {
+					login(api);
+					
+					current = 0;
+					int perPage = Math.min(count - current, AppConstants.CACHES_PER_REQUEST);
+					
+					while (current < count) {
+						publishProgress(current);
+						
+						@SuppressWarnings({ "unchecked", "rawtypes" })
+						List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
+								new CacheCodeFilter(getPagedCaches(params, current, AppConstants.CACHES_PER_REQUEST))
+						});
+						
+						if (isCancelled())
+							return null;
+		
+						if (cachesToAdd.size() == 0)
+							break;
+						
+						result.addAll(cachesToAdd);
+						
+						current = current + perPage;		
+					}
+					Log.i(TAG, "updated caches: " + result.size());
+		
+					return result;
+				} catch (InvalidSessionException e) {
+					Log.e(TAG, e.getMessage(), e);
+					Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+					
+					if (attempt == 1)
+						continue;
+					
+					throw e;
+				} catch (OperationCanceledException e) {
+					Log.e(TAG, e.getMessage(), e);
+					
+					return null;
+				}
 			}
-			
-			if (isCancelled())
-				return null;
-			
-			return cache;
+
+			return null;
 		}
 		
+		protected String[] getPagedCaches(String[] params, int current, int cachesPerRequest) {
+			int count = Math.min(params.length - current, cachesPerRequest);
+			
+			String[] ret = new String[count];
+			System.arraycopy(params,current, ret, 0, count);
+			
+			return ret;
+		}
+
 		@Override
 		protected void onCancelled() {
 			super.onCancelled();

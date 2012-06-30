@@ -8,7 +8,7 @@
 	<string name="search_activity_name">Caches in der Umgebung</string>
 	<string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
 	<string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
-	<string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
+	<string name="acquiring_network_location">Positionsbestimmung via WIFI…</string>
 	<string name="preferences">Einstellungen</string>
 	<string name="wrong_coordinates">Falsches Koordinatenformat!</string>
 	<string name="coordinates">Koordinaten</string>
@@ -54,7 +54,7 @@
 	<string name="close">Schließen</string>
 	<string name="pref_show_disabled">Zeige deaktivierte</string>
 	<string name="pref_show_disabled_summary">Zeige vorübergehend deaktivierte Caches</string>
-	<string name="import_cache_progress">Lade caches...</string>
+	<string name="import_cache_progress">Lade caches…</string>
 	<string name="pref_title_about">Über</string>
 	<string name="pref_version">Version</string>
 	<string name="pref_author">Autor</string>

@@ -60,7 +60,7 @@
 	<string name="pref_author">Autor</string>
 	<string name="pref_website">Website, forum, etc.</string>
 	<string name="pref_donate_paypal">Doar por Paypal</string>
-	<string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros...</string>
+	<string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros…</string>
 	<string name="pref_donate_paypal_choose_currency">Escolha a moeda</string>
 	<string name="pref_title_cache_type_filter">Tipos de caches</string>
 	<string name="pref_title_difficulty_filter">Dificuldade</string>

@@ -53,6 +53,9 @@ public class LocusDataMapper {
 	}
 	
 	public static Point toLocusPoint(Context context, SimpleGeocache cache) {
+		if (cache == null)
+			return null;
+		
 		Location loc = new Location(cache.getClass().getName());
 		loc.setLatitude(cache.getLatitude());
 		loc.setLongitude(cache.getLongitude());

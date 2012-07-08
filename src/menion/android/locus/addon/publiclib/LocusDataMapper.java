@@ -47,6 +47,7 @@ public class LocusDataMapper {
 	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
 	protected static final String GSAK_USERNAME = "gsak";
+	protected static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -114,15 +115,47 @@ public class LocusDataMapper {
 			for (Waypoint waypoint : getWaypointsFromNote(context, gc.getPersonalNote(), gc.getCacheCode())) {
 				d.waypoints.add(toLocusWaypoint(waypoint));
 			}
-			
 		}
 		
 		p.setGeocachingData(d);
 
+		if (cache instanceof Geocache) {
+			Geocache gc = (Geocache) cache;
+			updateCacheLocationByCorrectedCoordinates(context, p, gc.getUserWaypoints());
+		}
+
 		return p;
 	}
 
-	protected static PointGeocachingDataWaypoint toLocusWaypoint(Waypoint waypoint) {
+	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Point p, List<UserWaypoint> userWaypoints) {
+		if (userWaypoints.size() != 1)
+			return;
+
+		Location original = p.getLocation();
+		UserWaypoint userWaypoint = userWaypoints.get(0);
+
+		Location loc = new Location(userWaypoint.getClass().getName());
+		loc.setLatitude(userWaypoint.getLatitude());
+		loc.setLongitude(userWaypoint.getLongitude());
+		p.getLocation().set(loc);
+
+		p.getGeocachingData().computed = true;
+
+		// store original location to waypoint
+		PointGeocachingDataWaypoint waypoint = getWaypointByNamePrefix(p, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
+		if (waypoint == null) {
+			waypoint = new PointGeocachingDataWaypoint();
+			p.getGeocachingData().waypoints.add(waypoint);
+		}
+
+		waypoint.code = ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.getGeocachingData().cacheID.substring(2);
+		waypoint.type = PointGeocachingData.CACHE_WAYPOINT_TYPE_REFERENCE;
+		waypoint.name = mContext.getString(R.string.original_coordinates_name);
+		waypoint.lat = original.getLatitude();
+		waypoint.lon = original.getLongitude();
+	}
+
+  protected static PointGeocachingDataWaypoint toLocusWaypoint(Waypoint waypoint) {
 		PointGeocachingDataWaypoint w = new PointGeocachingDataWaypoint();
 		
 		w.code = waypoint.getWaypointCode();
@@ -347,27 +380,28 @@ public class LocusDataMapper {
     	
     	int count = 1;
     	for (UserWaypoint uw : userWaypoints) {
-			final String name = context.getString(R.string.final_location_name, count);
-			final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
-    		
-			res.add(new Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));
-			count++;
+    		final String name = context.getString(R.string.final_location_name, count);
+    		final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
+
+    		res.add(new Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));
+    		count++;
     	}
-    	
+          	
     	return res;
     }
     
-    public static Point mergePoints(Point toPoint, Point fromPoint) {
+    public static Point mergePoints(Context mContext, Point toPoint, Point fromPoint) {
     	if (fromPoint == null || fromPoint.getGeocachingData() == null)
     		return toPoint;
     	
-    	fixArchivedCacheLocation(toPoint, fromPoint);
-    	mergeCacheLogs(toPoint, fromPoint);
+    	fixArchivedCacheLocation(mContext, toPoint, fromPoint);
+    	mergeCacheLogs(mContext, toPoint, fromPoint);
+    	fixComputedCoordinates(mContext, toPoint, fromPoint);
     	
     	return toPoint;
     }
     
-    public static Point mergeCacheLogs(Point toPoint, Point fromPoint) {
+    public static Point mergeCacheLogs(Context mContext, Point toPoint, Point fromPoint) {
     	// issue #14: Keep cache logs from GSAK when updating cache
     	if (fromPoint.getGeocachingData().logs.size() == 0) 
     		return toPoint;
@@ -382,15 +416,55 @@ public class LocusDataMapper {
     	return toPoint;
     }
     
-    public static Point fixArchivedCacheLocation(Point toPoint, Point fromPoint) {
+    public static Point fixArchivedCacheLocation(Context mContext, Point toPoint, Point fromPoint) {
     	// issue #13: Use old coordinates when cache is archived after update
     	if (!toPoint.getGeocachingData().archived || (fromPoint.getLocation().getLatitude() == 0 && fromPoint.getLocation().getLongitude() == 0) 
-    			|| Double.isNaN(fromPoint.getLocation().getLatitude()) || Double.isNaN(fromPoint.getLocation().getLongitude())) 
+    			|| Double.isNaN(fromPoint.getLocation().getLatitude()) || Double.isNaN(fromPoint.getLocation().getLongitude())
+    			|| fromPoint.getGeocachingData().computed) 
     		return toPoint;
-    	
+
     	toPoint.getLocation().setLatitude(fromPoint.getLocation().getLatitude());
     	toPoint.getLocation().setLongitude(fromPoint.getLocation().getLongitude());
-    	
+
     	return toPoint;
     }
-}
+
+    public static Point fixComputedCoordinates(Context mContext, Point toPoint, Point fromPoint) {
+    	if (!fromPoint.getGeocachingData().computed || toPoint.getGeocachingData().computed)
+    		return toPoint;
+
+    	Location original = toPoint.getLocation();
+
+    	toPoint.getLocation().set(fromPoint.getLocation());
+    	toPoint.getGeocachingData().computed = true;
+
+    	// store original location to waypoint
+    	PointGeocachingDataWaypoint waypoint = getWaypointByNamePrefix(toPoint, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
+    	if (waypoint == null) {
+    		waypoint = new PointGeocachingDataWaypoint();
+    		toPoint.getGeocachingData().waypoints.add(waypoint);
+    	}
+
+    	waypoint.code = ORIGINAL_COORDINATES_WAYPOINT_PREFIX + toPoint.getGeocachingData().cacheID.substring(2);
+    	waypoint.type = PointGeocachingData.CACHE_WAYPOINT_TYPE_REFERENCE;
+    	waypoint.name = mContext.getString(R.string.original_coordinates_name);
+    	waypoint.lat = original.getLatitude();
+    	waypoint.lon = original.getLongitude();
+
+
+    	return toPoint;
+    }
+
+    protected static PointGeocachingDataWaypoint getWaypointByNamePrefix(Point fromPoint, String prefix) {
+    	if (fromPoint.getGeocachingData() == null)
+    		return null;
+
+    	for (PointGeocachingDataWaypoint waypoint : fromPoint.getGeocachingData().waypoints) {
+    		if (waypoint.code != null && waypoint.code.startsWith(prefix)) {
+    			return waypoint;
+    		}
+    	}
+
+    	return null;
+    }
+ }

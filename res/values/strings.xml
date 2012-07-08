@@ -133,5 +133,6 @@
     
     <string name="error_network">Network unavailable. Please check your connection.</string>
     <string name="update_caches_progress">Updating caches…</string>
+    <string name="original_coordinates_name">Original coordinates</string>
 </resources>
 

@@ -256,7 +256,7 @@ public class UpdateActivity extends Activity {
 					p = activity.oldPoints.get(i);
 				}
 				
-				p = LocusDataMapper.mergePoints(p, activity.oldPoints.get(i));
+				p = LocusDataMapper.mergePoints(activity, p, activity.oldPoints.get(i));
 			
 				if (replaceCache) {
 					DisplayDataExtended.storeGeocacheToCache(activity, p);

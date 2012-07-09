@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;
@@ -43,6 +44,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 	private SharedPreferences prefs;
 	private PreferenceScreen cacheTypeFilterScreen;
+	private PreferenceScreen containerTypeFilterScreen;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,21 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			intent.putExtra("ShowCacheTypeFilterScreen", true);
 			cacheTypeFilterScreen.setIntent(intent);
 		}
+		
+		containerTypeFilterScreen = (PreferenceScreen) findPreference("container_type_filter_screen");
+		if (containerTypeFilterScreen != null) {
+			Intent intent = new Intent(this, PreferenceActivity.class);
+			intent.putExtra("ShowContainerTypeFilterScreen", true);
+			containerTypeFilterScreen.setIntent(intent);
+		}
 
 		if (getIntent().getBooleanExtra("ShowCacheTypeFilterScreen", false)) {
 			setPreferenceScreen(cacheTypeFilterScreen);
+			return;
+		}
+		
+		if (getIntent().getBooleanExtra("ShowContainerTypeFilterScreen", false)) {
+			setPreferenceScreen(containerTypeFilterScreen);
 			return;
 		}
 	}
@@ -67,7 +81,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
-		if (!getIntent().getBooleanExtra("ShowCacheTypeFilterScreen", false)) {
+		if (!getIntent().getBooleanExtra("ShowCacheTypeFilterScreen", false)
+				&& !getIntent().getBooleanExtra("ShowContainerTypeFilterScreen", false)) {
 			preparePreferences();
 		}
 	}
@@ -295,7 +310,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (getPreferenceScreen().equals(cacheTypeFilterScreen)) {
+		if (getPreferenceScreen().equals(cacheTypeFilterScreen)
+				|| getPreferenceScreen().equals(containerTypeFilterScreen)) {
 			MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.cache_type_option_menu, menu);
 			return true;
@@ -311,12 +327,22 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				finish();
 				return true;
 			case R.id.selectAll:
-				for (int i = 0; i < CacheType.values().length; i++)
-					findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
+				if (getPreferenceScreen().equals(cacheTypeFilterScreen)) {
+					for (int i = 0; i < CacheType.values().length; i++)
+						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
+				} else if (getPreferenceScreen().equals(containerTypeFilterScreen)) {
+					for (int i = 0; i < ContainerType.values().length; i++)
+						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
+				}
 				return true;
 			case R.id.deselectAll:
-				for (int i = 0; i < CacheType.values().length; i++)
-					findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
+				if (getPreferenceScreen().equals(cacheTypeFilterScreen)) {
+					for (int i = 0; i < CacheType.values().length; i++)
+						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
+				} else if (getPreferenceScreen().equals(containerTypeFilterScreen)) {
+					for (int i = 0; i < ContainerType.values().length; i++)
+						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
+				}
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

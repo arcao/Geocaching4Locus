@@ -20,12 +20,14 @@ import android.util.Log;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
@@ -63,6 +65,7 @@ public class SearchGeocacheService extends AbstractService {
 	private boolean importCaches;
 	private int logCount;
 	private CacheType[] cacheTypes;
+	private ContainerType[] containerTypes;
 
 	public SearchGeocacheService() {
 		super(TAG, R.string.downloading, R.string.downloading);
@@ -142,6 +145,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		importCaches = prefs.getBoolean(PrefConstants.IMPORT_CACHES, false);
 		cacheTypes = getCacheTypeFilterResult(prefs);
+		containerTypes = getContainerTypeFilterResult(prefs);
 	}
 
 	private void callLocus(List<SimpleGeocache> caches) {
@@ -201,6 +205,18 @@ public class SearchGeocacheService extends AbstractService {
 
 		return filter.toArray(new CacheType[0]);
 	}
+	
+	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+		Vector<ContainerType> filter = new Vector<ContainerType>();
+
+		for (int i = 0; i < ContainerType.values().length; i++) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
+				filter.add(ContainerType.values()[i]);
+			}
+		}
+
+		return filter.toArray(new ContainerType[0]);
+	}
 
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
 		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
@@ -237,6 +253,7 @@ public class SearchGeocacheService extends AbstractService {
 						cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
 								new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 								new GeocacheTypeFilter(cacheTypes),
+								new GeocacheContainerSizeFilter(containerTypes),
 								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
 								new NotFoundByUsersFilter(showFound ? null : username),
 								new NotHiddenByUsersFilter(showOwn ? null : username),

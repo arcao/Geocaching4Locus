@@ -22,12 +22,14 @@ import android.widget.Toast;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
@@ -64,6 +66,7 @@ public class LiveMapService extends IntentService {
 	private float terrainMin;
 	private float terrainMax;
 	private CacheType[] cacheTypes;
+	private ContainerType[] containerTypes;
 
 	public LiveMapService() {
 		super(TAG);
@@ -135,6 +138,7 @@ public class LiveMapService extends IntentService {
 		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 		
 		cacheTypes = getCacheTypeFilterResult(prefs);
+		containerTypes = getContainerTypeFilterResult(prefs);
 	}
 	
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
@@ -147,6 +151,18 @@ public class LiveMapService extends IntentService {
 		}
 
 		return filter.toArray(new CacheType[0]);
+	}
+	
+	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+		Vector<ContainerType> filter = new Vector<ContainerType>();
+
+		for (int i = 0; i < ContainerType.values().length; i++) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
+				filter.add(ContainerType.values()[i]);
+			}
+		}
+
+		return filter.toArray(new ContainerType[0]);
 	}
 	
 	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
@@ -177,6 +193,7 @@ public class LiveMapService extends IntentService {
 						cachesToAdd = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
 								new PointRadiusFilter(latitude, longitude, 60000),
 								new GeocacheTypeFilter(cacheTypes),
+								new GeocacheContainerSizeFilter(containerTypes),
 								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
 								new NotFoundByUsersFilter(showFound ? null : username),
 								new NotHiddenByUsersFilter(showOwn ? null : username),

@@ -10,6 +10,7 @@ public interface PrefConstants {
 	static final String SESSION  = "session";
 
 	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";
+	static final String FILTER_CONTAINER_TYPE_PREFIX = "container_filter_";
 	static final String FILTER_DIFFICULTY_MIN = "difficulty_filter_min";
 	static final String FILTER_DIFFICULTY_MAX = "difficulty_filter_max";
 	static final String FILTER_TERRAIN_MIN = "terrain_filter_min";

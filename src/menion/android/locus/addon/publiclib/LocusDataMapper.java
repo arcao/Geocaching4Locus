@@ -1,5 +1,10 @@
 package menion.android.locus.addon.publiclib;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +21,8 @@ import menion.android.locus.addon.publiclib.geoData.PointGeocachingData;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataLog;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataTravelBug;
 import menion.android.locus.addon.publiclib.geoData.PointGeocachingDataWaypoint;
+import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
+import net.sf.jtpl.Template;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,6 +32,7 @@ import android.util.Log;
 
 import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.ImageData;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.Trackable;
 import com.arcao.geocaching.api.data.User;
@@ -52,6 +60,8 @@ public class LocusDataMapper {
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
+	
+	protected static File spoilersBasePath;
 	
 	public static Point toLocusPoint(Context context, SimpleGeocache cache) {
 		if (cache == null)
@@ -122,9 +132,50 @@ public class LocusDataMapper {
 		if (cache instanceof Geocache) {
 			Geocache gc = (Geocache) cache;
 			updateCacheLocationByCorrectedCoordinates(context, p, gc.getUserWaypoints());
+			if (gc.getImages().size() > 0) {
+				generateSpoilersHtml(context, gc);
+			}
 		}
 
 		return p;
+	}
+
+	protected static void generateSpoilersHtml(Context context, Geocache gc) {
+		try {
+			Template t = new Template(new InputStreamReader(context.getResources().openRawResource(R.raw.spoilers), "UTF-8"));
+			
+			for (ImageData image : gc.getImages()) {
+				t.parse("main.images", image);
+			}
+			
+			t.parse("main", gc);
+			
+			File spoilerFile = new File(getSpoilersBasePath(context), gc.getCacheCode() + ".html");
+			if (spoilerFile.exists()) {
+				spoilerFile.delete();
+			}
+			
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(spoilerFile), "UTF-8"));
+			bw.write(t.out());
+			bw.flush();
+			bw.close();
+			
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
+	}
+	
+	protected static File getSpoilersBasePath(Context context) throws RequiredVersionMissingException {
+		if (spoilersBasePath == null) {
+			File locusBasePath = new File(LocusIntents.getLocusRootDirectory(context));
+			
+			spoilersBasePath = new File (locusBasePath, "data" + File.pathSeparator + "geocaching" + File.pathSeparator + "geocaching4locus");
+		}
+		
+		// create directories recursively
+		spoilersBasePath.mkdirs();
+		
+		return spoilersBasePath;
 	}
 
 	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Point p, List<UserWaypoint> userWaypoints) {
@@ -208,10 +259,18 @@ public class LocusDataMapper {
 				return PointGeocachingData.CACHE_TYPE_EVENT;
 			case GpsAdventuresExhibit:
 				return PointGeocachingData.CACHE_TYPE_GPS_ADVENTURE;
+			case GroundspeakBlockParty:
+				return PointGeocachingData.CACHE_TYPE_GROUNDSPEAK;
+			case GroudspeakHQ:
+				return PointGeocachingData.CACHE_TYPE_GROUNDSPEAK;
+			case GroudspeakLostAndFoundCelebration:
+				return PointGeocachingData.CACHE_TYPE_LF_CELEBRATION;
 			case LetterboxHybrid:
 				return PointGeocachingData.CACHE_TYPE_LETTERBOX;
 			case Locationless:
 				return PointGeocachingData.CACHE_TYPE_LOCATIONLESS;
+			case LostAndFoundEvent:
+				return PointGeocachingData.CACHE_TYPE_LF_EVENT;
 			case MegaEvent:
 				return PointGeocachingData.CACHE_TYPE_MEGA_EVENT;
 			case Multi:
@@ -250,7 +309,7 @@ public class LocusDataMapper {
 			case Small:
 				return PointGeocachingData.CACHE_SIZE_SMALL;
 			default:
-				return PointGeocachingData.CACHE_SIZE_NOT_CHOSEN;
+				return PointGeocachingData.CACHE_SIZE_OTHER;
 		}
 	}
 	

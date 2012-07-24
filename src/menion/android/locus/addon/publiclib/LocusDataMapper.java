@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.content.Context;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching.api.data.CacheLog;
@@ -47,6 +48,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
 
 public class LocusDataMapper {
@@ -132,7 +134,7 @@ public class LocusDataMapper {
 		if (cache instanceof Geocache) {
 			Geocache gc = (Geocache) cache;
 			updateCacheLocationByCorrectedCoordinates(context, p, gc.getUserWaypoints());
-			if (gc.getImages().size() > 0) {
+			if (gc.getImages().size() > 0 && isSpoilersAllowed(context)) {
 				generateSpoilersHtml(context, gc);
 			}
 		}
@@ -140,12 +142,16 @@ public class LocusDataMapper {
 		return p;
 	}
 
+	protected static boolean isSpoilersAllowed(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PrefConstants.DOWNLOADING_CREATE_SPOILERS_TAB, false);
+	}
+
 	protected static void generateSpoilersHtml(Context context, Geocache gc) {
 		try {
 			Template t = new Template(new InputStreamReader(context.getResources().openRawResource(R.raw.spoilers), "UTF-8"));
 			
 			for (ImageData image : gc.getImages()) {
-				t.parse("main.images", image);
+				t.parse("main.image", image);
 			}
 			
 			t.parse("main", gc);
@@ -169,7 +175,7 @@ public class LocusDataMapper {
 		if (spoilersBasePath == null) {
 			File locusBasePath = new File(LocusIntents.getLocusRootDirectory(context));
 			
-			spoilersBasePath = new File (locusBasePath, "data" + File.pathSeparator + "geocaching" + File.pathSeparator + "geocaching4locus");
+			spoilersBasePath = new File (locusBasePath, "data" + File.separator + "geocaching" + File.separator + "geocaching4locus");
 		}
 		
 		// create directories recursively

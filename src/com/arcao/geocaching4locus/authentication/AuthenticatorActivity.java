@@ -13,11 +13,13 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -71,9 +73,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
     mPasswordEdit = (EditText) findViewById(R.id.password);
 
     if (!mRequestNewAccount) {
-    	mUsernameEdit.setText(mUsername);
-    	mUsernameEdit.setEnabled(false);
-    }    
+      mUsernameEdit.setText(mUsername);
+      mUsernameEdit.setEnabled(false);
+    }
+
+    final CheckBox mPasswordCheckbox = (CheckBox) findViewById(R.id.passwordCheckbox);
+    mPasswordCheckbox.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (mPasswordCheckbox.isChecked()) {
+          mPasswordEdit.setTransformationMethod(new PasswordTransformationMethod());
+        } else {
+          mPasswordEdit.setTransformationMethod(null);
+        }
+      }
+    });
 		
     // attach activity instance to AuthenticatorTask if is necessary
     if ((task = (AuthenticatorTask) getLastNonConfigurationInstance()) != null) {

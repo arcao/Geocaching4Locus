@@ -43,6 +43,14 @@
                 android:inputType="textPassword"
                 android:nextFocusDown="@+id/login_button" />
 
+            <CheckBox
+                android:id="@+id/passwordCheckbox"
+                style="@style/SimpleCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:text="@string/login_show_password" />
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >

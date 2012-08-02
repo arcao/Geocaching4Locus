@@ -1,111 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">حدث خطأ أثناء تحمي الكاش &lt;br&gt;Description: %1$s </string>
-	<string name="downloading">تنزيل الكاش</string>
-	<string name="downloading_cache">تزيل الكاش (%3$d/%4$d): %1$s - %2$s</string>
-	<string name="error_locus_not_found">الرجاء تثبيت لوكس</string>
-	<string name="search_activity_name">اقرب كاش</string>
-	<string name="error_location">الحصول على مكان باستخدام شبكة لاسلكية غير مسموح به! يرجى تمكينه في إعدادات أندرويد.</string>
-	<string name="acquiring_gps_location">الحصول على المكان من ال جي بي اس</string>
-	<string name="acquiring_network_location">الحصول على المكان من شبكة لاسلكية</string>
-	<string name="preferences">الخصائص</string>
-	<string name="wrong_coordinates">نسق الإحداثيات غير صحيح</string>
-	<string name="coordinates">الاحداثيات</string>
-	<string name="pref_title_geocaching_credentials">شهادات Geocaching.com </string>
-	<string name="pref_username">اسم المستخدم</string>
-	<string name="pref_password">كلمة المرور</string>
-	<string name="pref_title_filter">الفلتر</string>
-	<string name="pref_distance">المسافة</string>
-	<string name="pref_distance_summary_km">المسافة بال كم</string>
-	<string name="pref_distance_summary_miles">المسافة بالميل</string>
-	<string name="pref_count_of_caches">عدد الكاش</string>
-	<string name="pref_count_of_caches_text">الكاش</string>
-	<string name="pref_count_of_caches_summary">عدد الذاكرات المؤقتة الجاهزة للتحميل</string>
-	<string name="pref_title_advanced">متقدم</string>
-	<string name="pref_use_compression">استخدم الضغط</string>
-	<string name="pref_use_compression_summary">إستخدم ضغط HTTP (تجريبي)</string>
-	<string name="pref_imperial_units">وحدات القياس الإمبراطوري</string>
-	<string name="pref_imperial_units_summary">استخدم الميل بدلا من ال كم</string>
-	<string name="import_caches">إستيراد الذاكرات المؤقتة</string>
-	<string name="error_credentials">اسم مستخدم او كلمة مرور خاطئة الرجاء التأكد من الاعدادات</string>
-	<string name="error_title">حدث خطأ!</string>
-	<string name="ok_button">حسنا</string>
-	<string name="error_locus_old">النسخة المثبتة من الحالة رقم قديمة جدا. Geocaching4Locus تتطلب الإصدار %s أو أكبر للعمل بشكل صحيح.</string>
-	<string name="cancel_button">الغاء</string>
-	<string name="pref_show_found">اظهار ما تم العثور عليه</string>
-	<string name="pref_show_found_summary">اظهر الكاش المكتشفة</string>
-	<string name="pref_show_own">اظهار المخفي</string>
-	<string name="pref_show_own_summary">اظهار الكاش المخفي بواسطتك</string>
-	<string name="pref_menu_select_all">تحديد الكل</string>
-	<string name="pref_menu_deselect_all">الغاء تحديد الكل</string>
-	<string name="locus_update_cache">تحديث الكاش</string>
-	<string name="locus_import_cache">استقدام الكاش</string>
-	<string name="update_cache_progress">تحديث الكاش</string>
-	<string name="pref_title_downloading">تنزيل</string>
-	<string name="pref_count_of_logs">عدد السجلات</string>
-	<string name="pref_count_of_logs_text">لوج</string>
-	<string name="pref_count_of_logs_summary">عدد اللوج لتنزيلها من الكاش</string>
-	<string name="pref_count_of_trackables">عدد القابل للتبع</string>
-	<string name="pref_count_of_trackables_text">قابل للتبع</string>
-	<string name="pref_count_of_trackables_summary">عدد القابل للتبع لتنزيلها مع الكاش</string>
-	<string name="pref_not_filled">لم يعبأ</string>
-	<string name="gps">GPS</string>
-	<string name="close">اغلاق</string>
-	<string name="pref_show_disabled">اظهار الملغي</string>
-	<string name="pref_show_disabled_summary">اظهار الكاش الملغي بشكل مؤقت</string>
-	<string name="import_cache_progress">تنزيل الكاش</string>
-	<string name="pref_title_about">حول</string>
-	<string name="pref_version">نسخة البرنامج</string>
-	<string name="pref_author">الكاتب</string>
-	<string name="pref_website">الموقع , المنتدى , غيره</string>
-	<string name="pref_donate_paypal">التبرع بواسطة باي بال</string>
-	<string name="pref_donate_paypal_summary">دعم التطوير المستقبلي</string>
-	<string name="pref_donate_paypal_choose_currency">اختر عملتك</string>
-	<string name="pref_title_cache_type_filter">نوع الكاش</string>
-	<string name="pref_title_difficulty_filter">درجة الصعوبة</string>
-	<string name="pref_title_terrain_filter">منطقة</string>
-	<string name="pref_difficulty_min">الصعوبة الصغرى</string>
-	<string name="pref_difficulty_max">الصعوبة القصوى</string>
-	<string name="pref_terrain_min">المنطقة السفلى</string>
-	<string name="pref_terrain_max">المنطقة العليا</string>
-	<string name="download_button">تنزيل الى لوكس</string>
-	<string name="pref_download_basic">المعلومات الاساسية فقط</string>
-	<string name="pref_download_basic_summary">تنزيل المعلومات الاساسية حول الكاش فقط</string>
-	<string name="pref_download_on_show">تنزيل باقي المعلومات</string>
-	<string name="pref_download_on_show_summary">تنزيل المعلومات الباقية حول الكاش عندما تكون معروضة في لوكس</string>
-	<string-array name="pref_download_on_show_entries">
-		<item>مرة واحدة</item>
-		<item>كل</item>
-		<item>ابدا</item>
-	</string-array>
-	<string name="menu_live_map">خريطة مباشرة</string>
-	<string name="menu_nearest">الأقرب</string>
-	<string name="menu_manual">يدوي</string>
-	<string name="menu_preferences">الاعدادات</string>
-	<string name="pref_livemap">خريطة مباشرة</string>
-	<string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Other → Enable periodic updates)</string>
-	<string name="user_waypoint_name">اضافة نقطة من المستخدم %1$d</string>
-	<string name="final_location_name">الموقع النهائي %1$d</string>
-	<string name="account_logging_in">يتم الدخول</string>
-	<string name="pref_account_login">تسجيل الدخول</string>
-	<string name="pref_account_login_summary">تسجيل الدخول كحساب Geocaching.com</string>
-	<string name="pref_account_logout">تسجيل الخروج</string>
-	<string name="pref_account_logout_summary">داخل ك%s </string>
-	<string name="login_username">اسم المستخدم</string>
-	<string name="login_password">كلمة المرور</string>
-	<string name="login_button_cancel">الغاء</string>
-	<string name="login_button_login">تسجيل الدخول</string>
-	<string name="login_error_title">فشل تسجيل الدخول</string>
-	<string name="login_error_credentials">اسم مستخدم أو كلمة مرور خاطئة</string>
-	<string name="login_message">الرجاء ادخل البيانات من Geocaching.com</string>
-	<string name="error_report_error">تقرير بالخطأ</string>
-	<string name="crash_notif_ticker_text">فشل البرنامج Geocaching4Locus</string>
-	<string name="crash_notif_title">Geocaching4Locus فشل البرنامج</string>
-	<string name="crash_notif_text">الرجاء النقر هنا لحل هذه المشكلة</string>
-	<string name="crash_dialog_title">فشل البرنامج Geocaching4Locus</string>
-	<string name="crash_dialog_text">حدث خطأ غير متوقع لاغلاق البرنامج , الرجاء المساعدة بارسال تقرير بالمشكلة , فقط قم بالنقر على \"حسنا\" .</string>
-	<string name="crash_dialog_comment_prompt">يمكنك اضافة تعليقك بالأسفل عن المشكلة : </string>
-	<string name="crash_dialog_ok_toast">جزاك الله خيرا !</string>
-	<string name="error_network">الشبكة غير متاحة , الرجاء التحقق من الاتصال </string>
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
+    <string name="downloading">تنزيل الكاش</string>
+    <string name="downloading_cache">تزيل الكاش (%3$d/%4$d): %1$s - %2$s</string>
+    <string name="error_locus_not_found">الرجاء تثبيت لوكاس</string>
+    <string name="search_activity_name">اقرب كاش</string>
+    <string name="error_location">الحصول على مكان باستخدام شبكة لاسلكية غير مسموح به! يرجى تمكينه في إعدادات أندرويد.</string>
+    <string name="acquiring_gps_location">الحصول على المكان من ال جي بي اس</string>
+    <string name="acquiring_network_location">الحصول على المكان من شبكة لاسلكية</string>
+    
+    <string name="preferences">الخصائص</string>
+    <string name="wrong_coordinates">نسق الإحداثيات غير صحيح</string>
+    <string name="coordinates">الاحداثيات</string>
+    
+    <string name="pref_title_geocaching_credentials">شهادات Geocaching.com </string>
+    <string name="pref_username">اسم المستخدم</string>
+    <string name="pref_password">كلمة المرور</string>
+    
+    <string name="pref_title_filter">الفلتر</string>
+    <string name="pref_distance">المسافة</string>
+    <string name="pref_distance_summary_km">المسافة بال كم</string>
+    <string name="pref_distance_summary_miles">المسافة بالميل</string>
+    <string name="pref_count_of_caches">عدد الكاش</string>
+    <string name="pref_count_of_caches_text">الكاش</string>
+    <string name="pref_count_of_caches_summary">عدد الذاكرات المؤقتة الجاهزة للتحميل</string>
+    <string name="pref_title_advanced">متقدم</string>
+    <string name="pref_use_compression">استخدم الضغط</string>
+    <string name="pref_use_compression_summary">إستخدم ضغط HTTP (تجريبي)</string>
+    <string name="pref_imperial_units">الوحدات العامة</string>
+    <string name="pref_imperial_units_summary">إستخدم الأميال بدلا من الكيلومترات</string>
+    
+    <string name="import_caches">إستيراد الذاكرات المؤقتة</string>
+    
+    <string name="error_credentials">اسم مستخدم او كلمة مرور خاطئة الرجاء التأكد من الاعدادات</string>
+    <string name="error_title">حدث خطأ</string>
+    
+    <string name="ok_button">حسنا</string>
+    
+    <string name="error_locus_old">النسخة المثبتة من الحالة رقم قديمة جدا. Geocaching4Locus تتطلب الإصدار %s أو أكبر للعمل بشكل صحيح.</string>
+    
+    <string name="cancel_button">الغاء</string>
+    
+    <string name="pref_show_found">اظهار ما تم العثور عليه</string>
+    <string name="pref_show_found_summary">إظهار الذاكرات المؤقتة المكتشفة</string>
+    <string name="pref_show_own">اظهار المخفي</string>
+    <string name="pref_show_own_summary">إظهار ذاكراتي المؤقتة (المخفية من قبلي)</string>
+    <string name="pref_menu_select_all">تحديد الكل</string>
+    <string name="pref_menu_deselect_all">الغاء تحديد الكل</string>
+    
+    <string name="locus_update_cache">تحديث الذاكرة المؤقتة</string>
+    <string name="locus_import_cache">استقدام الكاش</string>
+    <string name="update_cache_progress">تحديث الكاش</string>
+    
+    <string name="pref_title_downloading">تنزيل</string>
+    <string name="pref_count_of_logs">عدد السجلات</string>
+    <string name="pref_count_of_logs_text">السجل</string>
+    <string name="pref_count_of_logs_summary">عدد السجلات لتنزيلها مع الذاكرة المؤقتة</string>
+    <string name="pref_not_filled">لم يعبأ</string>
+    <string name="gps">GPS</string>
+    <string name="close">اغلاق</string>
+    <string name="pref_show_disabled">اظهار الملغي</string>
+    <string name="pref_show_disabled_summary">اظهار الكاش الملغي بشكل مؤقت</string>
+    
+    <string name="import_cache_progress">تنزيل الكاش</string>
+    
+    <string name="pref_title_about">حول</string>
+    <string name="pref_version">نسخة البرنامج</string>
+    <string name="pref_author">الكاتب</string>
+    <string name="pref_website">الموقع , المنتدى , غيره</string>
+    <string name="pref_donate_paypal">التبرع بواسطة باي بال</string>
+    <string name="pref_donate_paypal_summary">دعم التطوير المستقبلي</string>
+    <string name="pref_donate_paypal_choose_currency">اختر عملتك</string>
+    
+    <string name="pref_title_cache_type_filter">نوع الكاش</string>
+    <string name="pref_title_difficulty_filter">درجة الصعوبة</string>
+    <string name="pref_title_terrain_filter">منطقة</string>
+    <string name="pref_difficulty_min">الصعوبة الصغرى</string>
+    <string name="pref_difficulty_max">الصعوبة القصوى</string>
+    <string name="pref_terrain_min">المنطقة السفلى</string>
+    <string name="pref_terrain_max">المنطقة العليا</string>
+    
+    <string name="download_button">تنزيل الى لوكس</string>
+    
+    <string name="pref_download_basic">المعلومات الاساسية فقط</string>
+    <string name="pref_download_basic_summary">تنزيل المعلومات الاساسية حول الكاش فقط</string>
+    <string name="pref_download_on_show">تنزيل باقي المعلومات</string>
+    <string name="pref_download_on_show_summary">تنزيل المعلومات الباقية حول الكاش عندما تكون معروضة في لوكس</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>مرة واحدة</item>
+        <item>كل</item>
+        <item>ابدا</item>
+    </string-array>
+    
+    <string name="menu_live_map">خريطة مباشرة</string>
+    <string name="menu_nearest">الأقرب</string>
+    <string name="menu_manual">يدوي</string>
+    <string name="menu_preferences">الخصائص</string>
+    
+    <string name="pref_livemap">خريطة مباشرة</string>
+    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Other → Enable periodic updates)</string>
+    
+    <string name="user_waypoint_name">اضافة نقطة من المستخدم %1$d</string>
+    <string name="final_location_name">الموقع النهائي %1$d</string>
+    
+    <string name="account_logging_in">يتم الدخول</string>
+    
+    <string name="pref_account_login">تسجيل الدخول</string>
+    <string name="pref_account_login_summary">تسجيل الدخول كحساب Geocaching.com</string>
+    <string name="pref_account_logout">تسجيل الخروج</string>
+    <string name="pref_account_logout_summary">داخل ك%s </string>
+    
+    <string name="login_username">اسم المستخدم</string>
+    <string name="login_password">كلمة المرور</string>
+    <string name="login_button_cancel">الغاء</string>
+    <string name="login_button_login">تسجيل الدخول</string>
+    
+    <string name="login_error_title">فشل تسجيل الدخول</string>
+    <string name="login_error_credentials">اسم مستخدم أو كلمة مرور خاطئة</string>
+    <string name="login_message">الرجاء ادخل البيانات من Geocaching.com</string>
+    
+    <string name="error_report_error">تقرير بالخطأ</string>
+    
+    <string name="crash_notif_ticker_text">فشل البرنامج Geocaching4Locus</string>
+    <string name="crash_notif_title">فشل البرنامج Geocaching4Locus</string>
+    <string name="crash_notif_text">الرجاء النقر هنا لحل هذه المشكلة</string>
+    
+    <string name="crash_dialog_title">فشل البرنامج Geocaching4Locus</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">يمكنك اضافة تعليقك بالأسفل عن المشكلة : </string>
+    <string name="crash_dialog_ok_toast">جزاك الله خيرا !</string>
+    
+    <string name="error_network">الشبكة غير متاحة , الرجاء التحقق من الاتصال </string>
+
+    <string name="update_caches_progress">Updating caches…</string>
+    <string name="original_coordinates_name">Original coordinates</string>
+    <string name="pref_title_container_type_filter">Container size</string>
+    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
+    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
+    <string name="login_show_password">Show password</string>
 </resources>
+

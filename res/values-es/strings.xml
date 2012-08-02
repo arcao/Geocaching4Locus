@@ -1,111 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Se ha producido un error al descargar los cachés.&lt;br&gt;Descripción: %1$s</string>
-	<string name="downloading">Descargando cachés…</string>
-	<string name="downloading_cache">Descargando caché (%3$d/%4$d): %1$s - %2$s</string>
-	<string name="error_locus_not_found">¡Por favor instale Locus!</string>
-	<string name="search_activity_name">Cachés más cercanos</string>
-	<string name="error_location">¡No se permite adquirir la posición usando red! Por favor actívelo en ajustes de  Android.</string>
-	<string name="acquiring_gps_location">Adquiriendo posición desde GPS …</string>
-	<string name="acquiring_network_location">Adquiriendo posición desde red…</string>
-	<string name="preferences">Preferencias</string>
-	<string name="wrong_coordinates">¡Formato de coordenadas erróneo!</string>
-	<string name="coordinates">Coordenadas</string>
-	<string name="pref_title_geocaching_credentials">Credenciales de Geocaching.com</string>
-	<string name="pref_username">Nombre de usuario</string>
-	<string name="pref_password">Contraseña</string>
-	<string name="pref_title_filter">Filtro</string>
-	<string name="pref_distance">Distancia</string>
-	<string name="pref_distance_summary_km">Distancia en km</string>
-	<string name="pref_distance_summary_miles">Distancia en millas</string>
-	<string name="pref_count_of_caches">Recuento de cachés</string>
-	<string name="pref_count_of_caches_text">cachés</string>
-	<string name="pref_count_of_caches_summary">Recuento de cachés a descargar</string>
-	<string name="pref_title_advanced">Avanzado</string>
-	<string name="pref_use_compression">Usar compresión</string>
-	<string name="pref_use_compression_summary">Usar compresión HTTP (experimental)</string>
-	<string name="pref_imperial_units">Unidades imperiales</string>
-	<string name="pref_imperial_units_summary">Usar millas en vez de kilómetros</string>
-	<string name="import_caches">Importar caches</string>
-	<string name="error_credentials">Nombre usuario o contraseña no válidos. Por favor compruebe su estado de conexión en preferencias.</string>
-	<string name="error_title">¡Se ha producido un error!</string>
-	<string name="ok_button">OK</string>
-	<string name="error_locus_old">La versión instalada de Locus es demasiado antigua. Geocaching4Locus requiere la versión %s o superior para funcionar correctamente.</string>
-	<string name="cancel_button">Cancelar</string>
-	<string name="pref_show_found">Mostrar encontrados</string>
-	<string name="pref_show_found_summary">Mostrar cachés encontrados</string>
-	<string name="pref_show_own">Mostrar escondidos</string>
-	<string name="pref_show_own_summary">Mostrar cachés propios (escondidos por ti)</string>
-	<string name="pref_menu_select_all">Seleccionar todo</string>
-	<string name="pref_menu_deselect_all">Deseleccionar todo</string>
-	<string name="locus_update_cache">Actualizar caché</string>
-	<string name="locus_import_cache">Importar caché</string>
-	<string name="update_cache_progress">Actualizando caché…</string>
-	<string name="pref_title_downloading">Descargando</string>
-	<string name="pref_count_of_logs">Recuento de registros</string>
-	<string name="pref_count_of_logs_text">registros</string>
-	<string name="pref_count_of_logs_summary">Recuento de registros a descargar con caché</string>
-	<string name="pref_count_of_trackables">Recuento de rastreables</string>
-	<string name="pref_count_of_trackables_text">rastreables</string>
-	<string name="pref_count_of_trackables_summary">Recuento de rastreables a descargar con caché</string>
-	<string name="pref_not_filled">no llena</string>
-	<string name="gps">GPS</string>
-	<string name="close">Cerrar</string>
-	<string name="pref_show_disabled">Mostrar deshabilitados</string>
-	<string name="pref_show_disabled_summary">Mostrar cachés temporalmente deshabilitados</string>
-	<string name="import_cache_progress">Descargando caché…</string>
-	<string name="pref_title_about">Acerca de</string>
-	<string name="pref_version">Versión</string>
-	<string name="pref_author">Autor</string>
-	<string name="pref_website">Sitio web, foro, etc.</string>
-	<string name="pref_donate_paypal">Donar vía Paypal</string>
-	<string name="pref_donate_paypal_summary">Apoyar desarrollo futuro …</string>
-	<string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
-	<string name="pref_title_cache_type_filter">Tipos de caché</string>
-	<string name="pref_title_difficulty_filter">Dificultad</string>
-	<string name="pref_title_terrain_filter">Terreno</string>
-	<string name="pref_difficulty_min">Min. dificultad</string>
-	<string name="pref_difficulty_max">Max. dificultad</string>
-	<string name="pref_terrain_min">Min. terreno</string>
-	<string name="pref_terrain_max">Max. terreno</string>
-	<string name="download_button">Descargar a Locus</string>
-	<string name="pref_download_basic">Información básica solo</string>
-	<string name="pref_download_basic_summary">Descargar solo información básica del caché</string>
-	<string name="pref_download_on_show">Descargar resto de información en vista</string>
-	<string name="pref_download_on_show_summary">Descargar resto de información del caché cuando se muestre el contenido del caché en Locus</string>
-	<string-array name="pref_download_on_show_entries">
-		<item>una vez</item>
-		<item>cada vez</item>
-		<item>nunca</item>
-	</string-array>
-	<string name="menu_live_map">Mapa dinámico</string>
-	<string name="menu_nearest">Más cercano</string>
-	<string name="menu_manual">Manual</string>
-	<string name="menu_preferences">Preferencias</string>
-	<string name="pref_livemap">Mapa dinámico</string>
-	<string name="pref_livemap_summary">Carga dinámica de cachés en mapa (activar en Locus: Ajustes → Otros → Activar actualizaciones periódicas)</string>
-	<string name="user_waypoint_name">Waypoint usuario %1$d</string>
-	<string name="final_location_name">Ubicación final %1$d</string>
-	<string name="account_logging_in">Iniciando sesión…</string>
-	<string name="pref_account_login">Iniciar sesión</string>
-	<string name="pref_account_login_summary">Iniciar sesión en cuenta de Geocaching.com</string>
-	<string name="pref_account_logout">Cerrar sesión</string>
-	<string name="pref_account_logout_summary">Conectado como %s</string>
-	<string name="login_username">Nombre de usuario</string>
-	<string name="login_password">Contraseña</string>
-	<string name="login_button_cancel">Cancelar</string>
-	<string name="login_button_login">Iniciar sesión</string>
-	<string name="login_error_title">Fallo inicio sesión</string>
-	<string name="login_error_credentials">Nombre usuario o contraseña no válido.</string>
-	<string name="login_message">Por favor complete sus credenciales de Geocaching.com</string>
-	<string name="error_report_error">Informe de errores</string>
-	<string name="crash_notif_ticker_text">Geocaching4Locus se ha bloqueado ...</string>
-	<string name="crash_notif_title">Geocaching4Locus se ha bloqueado ...</string>
-	<string name="crash_notif_text">Por favor haga clik aquí para ayudar a corregir esto.</string>
-	<string name="crash_dialog_title">Geocaching4Locus se ha bloqueado</string>
-	<string name="crash_dialog_text">Ha ocurrido un error inesperado que ha forzado el cierre de la aplicación. Por favor ayúdenos a solucionar esto enviándonos los datos del error, todo lo que tiene que hacer es pulsar \"OK\".</string>
-	<string name="crash_dialog_comment_prompt">A continuación puede añadir comentarios sobre el problema:</string>
-	<string name="crash_dialog_ok_toast">¡Gracias!</string>
-	<string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
+    <string name="downloading">Descargando cachés…</string>
+    <string name="downloading_cache">Descargando caché (%3$d/%4$d): %1$s - %2$s</string>
+    <string name="error_locus_not_found">¡Por favor instale Locus!</string>
+    <string name="search_activity_name">Cachés más cercanos</string>
+    <string name="error_location">¡No se permite adquirir la posición usando red! Por favor actívelo en ajustes de  Android.</string>
+    <string name="acquiring_gps_location">Adquiriendo posición desde GPS ...</string>
+    <string name="acquiring_network_location">Adquiriendo posición desde red…</string>
+    
+    <string name="preferences">Preferencias</string>
+    <string name="wrong_coordinates">¡Formato de coordenadas erróneo!</string>
+    <string name="coordinates">Coordenadas</string>
+    
+    <string name="pref_title_geocaching_credentials">Credenciales de Geocaching.com</string>
+    <string name="pref_username">Nombre de usuario</string>
+    <string name="pref_password">Contraseña</string>
+    
+    <string name="pref_title_filter">Filtro</string>
+    <string name="pref_distance">Distancia</string>
+    <string name="pref_distance_summary_km">Distancia en km</string>
+    <string name="pref_distance_summary_miles">Distancia en millas</string>
+    <string name="pref_count_of_caches">Recuento de cachés</string>
+    <string name="pref_count_of_caches_text">cachés</string>
+    <string name="pref_count_of_caches_summary">Recuento de cachés a descargar</string>
+    <string name="pref_title_advanced">Avanzado</string>
+    <string name="pref_use_compression">Usar compresión</string>
+    <string name="pref_use_compression_summary">Usar compresión HTTP (experimental)</string>
+    <string name="pref_imperial_units">Unidades imperiales</string>
+    <string name="pref_imperial_units_summary">Usar millas en vez de kilómetros</string>
+    
+    <string name="import_caches">Importar caches</string>
+    
+    <string name="error_credentials">Nombre usuario o contraseña no válidos. Por favor compruebe su estado de conexión en preferencias.</string>
+    <string name="error_title">¡Se ha producido un error!</string>
+    
+    <string name="ok_button">OK</string>
+    
+    <string name="error_locus_old">La versión instalada de Locus es demasiado antigua. Geocaching4Locus requiere la versión %s o superior para funcionar correctamente.</string>
+    
+    <string name="cancel_button">Cancelar</string>
+    
+    <string name="pref_show_found">Mostrar encontrados</string>
+    <string name="pref_show_found_summary">Mostrar cachés encontrados</string>
+    <string name="pref_show_own">Mostrar escondidos</string>
+    <string name="pref_show_own_summary">Mostrar cachés propios (escondidos por ti)</string>
+    <string name="pref_menu_select_all">Seleccionar todo</string>
+    <string name="pref_menu_deselect_all">Deseleccionar todo</string>
+    
+    <string name="locus_update_cache">Actualizar caché</string>
+    <string name="locus_import_cache">Importar caché</string>
+    <string name="update_cache_progress">Actualizando caché…</string>
+    
+    <string name="pref_title_downloading">Descargando</string>
+    <string name="pref_count_of_logs">Recuento de registros</string>
+    <string name="pref_count_of_logs_text">registros</string>
+    <string name="pref_count_of_logs_summary">Recuento de registros a descargar con caché</string>
+    <string name="pref_not_filled">no llena</string>
+    <string name="gps">GPS</string>
+    <string name="close">Cerrar</string>
+    <string name="pref_show_disabled">Mostrar deshabilitados</string>
+    <string name="pref_show_disabled_summary">Mostrar cachés temporalmente deshabilitados</string>
+    
+    <string name="import_cache_progress">Descargando caché…</string>
+    
+    <string name="pref_title_about">Acerca de</string>
+    <string name="pref_version">Versión</string>
+    <string name="pref_author">Autor</string>
+    <string name="pref_website">Sitio web, foro, etc.</string>
+    <string name="pref_donate_paypal">Donar vía Paypal</string>
+    <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro ...</string>
+    <string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
+    
+    <string name="pref_title_cache_type_filter">Tipos de caché</string>
+    <string name="pref_title_difficulty_filter">Dificultad</string>
+    <string name="pref_title_terrain_filter">Terreno</string>
+    <string name="pref_difficulty_min">Min. dificultad</string>
+    <string name="pref_difficulty_max">Max. dificultad</string>
+    <string name="pref_terrain_min">Min. terreno</string>
+    <string name="pref_terrain_max">Max. terreno</string>
+    
+    <string name="download_button">Descargar a Locus</string>
+    
+    <string name="pref_download_basic">Información básica solo</string>
+    <string name="pref_download_basic_summary">Descargar solo información básica del caché</string>
+    <string name="pref_download_on_show">Descargar resto de información en vista</string>
+    <string name="pref_download_on_show_summary">Descargar resto de información del caché cuando se muestre el contenido del caché en Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>una vez</item>
+        <item>cada vez</item>
+        <item>nunca</item>
+    </string-array>
+    
+    <string name="menu_live_map">Mapa dinámico</string>
+    <string name="menu_nearest">Más cercano</string>
+    <string name="menu_manual">Manual</string>
+    <string name="menu_preferences">Preferencias</string>
+    
+    <string name="pref_livemap">Mapa dinámico</string>
+    <string name="pref_livemap_summary">Carga dinámica de cachés en mapa (activar en Locus: Ajustes → Otros → Activar actualizaciones periódicas)</string>
+    
+    <string name="user_waypoint_name">Waypoint usuario %1$d</string>
+    <string name="final_location_name">Ubicación final %1$d</string>
+    
+    <string name="account_logging_in">Iniciando sesión…</string>
+    
+    <string name="pref_account_login">Iniciar sesión</string>
+    <string name="pref_account_login_summary">Iniciar sesión en cuenta de Geocaching.com</string>
+    <string name="pref_account_logout">Cerrar sesión</string>
+    <string name="pref_account_logout_summary">Conectado como %s</string>
+    
+    <string name="login_username">Nombre de usuario</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_button_cancel">Cancelar</string>
+    <string name="login_button_login">Iniciar sesión</string>
+    
+    <string name="login_error_title">Fallo inicio sesión</string>
+    <string name="login_error_credentials">Nombre usuario o contraseña no válido.</string>
+    <string name="login_message">Por favor complete sus credenciales de Geocaching.com</string>
+    
+    <string name="error_report_error">Informe de errores</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus se ha bloqueado ...</string>
+    <string name="crash_notif_title">Geocaching4Locus se ha bloqueado ...</string>
+    <string name="crash_notif_text">Por favor haga clik aquí para ayudar a corregir esto.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus se ha bloqueado</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">A continuación puede añadir comentarios sobre el problema:</string>
+    <string name="crash_dialog_ok_toast">¡Gracias!</string>
+    
+    <string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
+
+    <string name="update_caches_progress">Updating caches…</string>
+    <string name="original_coordinates_name">Original coordinates</string>
+    <string name="pref_title_container_type_filter">Container size</string>
+    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
+    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
+    <string name="login_show_password">Show password</string>
 </resources>
+

@@ -1,111 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Došlo k chybe pri sťahovaní kešiek.&lt;br&gt;Popis: %1$s</string>
-	<string name="downloading">Sťahujem kešky…</string>
-	<string name="downloading_cache">Sťahovanie kešky (%3$d/%4$d): %1$s - %2$s</string>
-	<string name="error_locus_not_found">Prosím, nainštalujte Locus!</string>
-	<string name="search_activity_name">Najbližšie kešky</string>
-	<string name="error_location">Získať polohu pomocou bezdrôtovej siete je zakázané! Prosím, zmeňte nastavenia telefónu.</string>
-	<string name="acquiring_gps_location">Získavam polohu z GPS…</string>
-	<string name="acquiring_network_location">Získavam polohu z bezdrôtovej siete…</string>
-	<string name="preferences">Nastavenia</string>
-	<string name="wrong_coordinates">Zlý formát súradníc!</string>
-	<string name="coordinates">Súradnice</string>
-	<string name="pref_title_geocaching_credentials">Geocaching.com prihlasovacie údaje</string>
-	<string name="pref_username">Užívateľské meno</string>
-	<string name="pref_password">Heslo</string>
-	<string name="pref_title_filter">Filter</string>
-	<string name="pref_distance">Vzdialenosť</string>
-	<string name="pref_distance_summary_km">Vzdialenosť v km</string>
-	<string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
-	<string name="pref_count_of_caches">Počet kešiek</string>
-	<string name="pref_count_of_caches_text">kešiek</string>
-	<string name="pref_count_of_caches_summary">Počet kešiek na stiahnutie</string>
-	<string name="pref_title_advanced">Pokročilé</string>
-	<string name="pref_use_compression">Použiť kompresiu</string>
-	<string name="pref_use_compression_summary">Použitie kompresie HTTP (experimentálne)</string>
-	<string name="pref_imperial_units">Imperiálne jednotky</string>
-	<string name="pref_imperial_units_summary">Použitie míl namiesto kilometrov</string>
-	<string name="import_caches">Importovať kešky</string>
-	<string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastavení.</string>
-	<string name="error_title">Došlo k chybe!</string>
-	<string name="ok_button">OK</string>
-	<string name="error_locus_old">Nainštalovaná verzia Locusu je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
-	<string name="cancel_button">Zrušiť</string>
-	<string name="pref_show_found">Zobraziť najdené</string>
-	<string name="pref_show_found_summary">Zobraziť nájdené kešky</string>
-	<string name="pref_show_own">Zobraziť vlastné</string>
-	<string name="pref_show_own_summary">Zobraziť vlastné kešky</string>
-	<string name="pref_menu_select_all">Vybrať všetko</string>
-	<string name="pref_menu_deselect_all">Odznačiť všetko</string>
-	<string name="locus_update_cache">Aktualizovať kešku</string>
-	<string name="locus_import_cache">Importovať kešku</string>
-	<string name="update_cache_progress">Aktualizujem kešku…</string>
-	<string name="pref_title_downloading">Sťahovanie</string>
-	<string name="pref_count_of_logs">Počet logov</string>
-	<string name="pref_count_of_logs_text">logov</string>
-	<string name="pref_count_of_logs_summary">Počet logov, ktoré sa majú stiahnuť s keší</string>
-	<string name="pref_count_of_trackables">Počet trackovateľných predmetov</string>
-	<string name="pref_count_of_trackables_text">predmetov</string>
-	<string name="pref_count_of_trackables_summary">Počet trackovateľných predmetov na stiahnutie s kešou</string>
-	<string name="pref_not_filled">nevyplnené</string>
-	<string name="gps">GPS</string>
-	<string name="close">Zavrieť</string>
-	<string name="pref_show_disabled">Zobraziť zablokované</string>
-	<string name="pref_show_disabled_summary">Zobraziť dočasne zablokované kešky</string>
-	<string name="import_cache_progress">Sťahujem kešku…</string>
-	<string name="pref_title_about">O aplikácii</string>
-	<string name="pref_version">Verzia</string>
-	<string name="pref_author">Autor</string>
-	<string name="pref_website">Stránky, diskusné fórum, atď</string>
-	<string name="pref_donate_paypal">Prispieť pomocou PayPal</string>
-	<string name="pref_donate_paypal_summary">Podpora ďalšieho vývoja…</string>
-	<string name="pref_donate_paypal_choose_currency">Vyberte vašu menu</string>
-	<string name="pref_title_cache_type_filter">Typy kešiek</string>
-	<string name="pref_title_difficulty_filter">Obtiažnosť</string>
-	<string name="pref_title_terrain_filter">Terén</string>
-	<string name="pref_difficulty_min">Min. obtiažnosť</string>
-	<string name="pref_difficulty_max">Max. obtiažnosť</string>
-	<string name="pref_terrain_min">Min. terén</string>
-	<string name="pref_terrain_max">Max. terén</string>
-	<string name="download_button">Stiahnuť do Locusu</string>
-	<string name="pref_download_basic">Iba základné info</string>
-	<string name="pref_download_basic_summary">Stiahnuť len základné informácie o keške</string>
-	<string name="pref_download_on_show">Stiahnuť zvyšné info pri zobrazení</string>
-	<string name="pref_download_on_show_summary">Stiahnuť zvyšné informácie o keške, až keď Locus zobrazí obsah kešky</string>
-	<string-array name="pref_download_on_show_entries">
-		<item>raz</item>
-		<item>po každej</item>
-		<item>nikdy</item>
-	</string-array>
-	<string name="menu_live_map">Aktívna mapa</string>
-	<string name="menu_nearest">Najbližšie</string>
-	<string name="menu_manual">Manuál</string>
-	<string name="menu_preferences">Nastavenia </string>
-	<string name="pref_livemap">Aktívna mapa</string>
-	<string name="pref_livemap_summary">Živé načítanie kešiek do mapy (povoľte v Locusu: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie)</string>
-	<string name="user_waypoint_name">Užívateľský bod trasy %1$d</string>
-	<string name="final_location_name">Konečné umiestnenie %1$d</string>
-	<string name="account_logging_in">Prihlasujem sa…</string>
-	<string name="pref_account_login">Prihlásiť</string>
-	<string name="pref_account_login_summary">Prihlásiť k Geocaching.com účtu</string>
-	<string name="pref_account_logout">Odhlásiť</string>
-	<string name="pref_account_logout_summary">Prihlásený ako %s</string>
-	<string name="login_username">Užívateľské meno</string>
-	<string name="login_password">Heslo</string>
-	<string name="login_button_cancel">Zrušiť</string>
-	<string name="login_button_login">Prihlásiť</string>
-	<string name="login_error_title">Nepodarilo sa prihlásiť</string>
-	<string name="login_error_credentials">Chybné užívateľské meno alebo heslo.</string>
-	<string name="login_message">Prosím vyplňte vaše prihlasovacie údaje na Geocaching.com.</string>
-	<string name="error_report_error">Nahlásiť chybu</string>
-	<string name="crash_notif_ticker_text">Geocaching4Locus spadol…</string>
-	<string name="crash_notif_title">Geocaching4Locus spadol…</string>
-	<string name="crash_notif_text">Prosím, kliknite tu pre vyriešenie problému.</string>
-	<string name="crash_dialog_title">Geocaching4Locus spadol</string>
-	<string name="crash_dialog_text">Neočakávaná chyba spôsobila ukončenie aplikácie. Pomôžte nám ju opraviť zaslaním dát o chybe. Všetko, čo musíte urobiť, je kliknúť na \"OK\".</string>
-	<string name="crash_dialog_comment_prompt">Nižšie môžete pridať svoj ​​komentár o tomto probléme:</string>
-	<string name="crash_dialog_ok_toast">Vďaka!</string>
-	<string name="error_network">Sieť nie je k dispozícii. Skontrolujte pripojenie.</string>
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Nastala chyba pri sťahovaní kešek.&lt;br&gt;Popis: %1$s</string>
+    <string name="downloading">Sťahujem kešky…</string>
+    <string name="downloading_cache">Sťahovanie kešky (%3$d/%4$d): %1$s - %2$s</string>
+    <string name="error_locus_not_found">Prosím, nainštalujte Locus!</string>
+    <string name="search_activity_name">Najbližšie kešky</string>
+    <string name="error_location">Získať polohu pomocou bezdrôtovej siete je zakázané! Prosím, zmeňte nastavenia telefónu.</string>
+    <string name="acquiring_gps_location">Získavam polohu z GPS…</string>
+    <string name="acquiring_network_location">Získavam polohu z bezdrôtovej siete…</string>
+    
+    <string name="preferences">Nastavenia</string>
+    <string name="wrong_coordinates">Zlý formát súradníc!</string>
+    <string name="coordinates">Súradnice</string>
+    
+    <string name="pref_title_geocaching_credentials">Geocaching.com prihlasovacie údaje</string>
+    <string name="pref_username">Užívateľské meno</string>
+    <string name="pref_password">Heslo</string>
+    
+    <string name="pref_title_filter">Filter</string>
+    <string name="pref_distance">Vzdialenosť</string>
+    <string name="pref_distance_summary_km">Vzdialenosť v km</string>
+    <string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
+    <string name="pref_count_of_caches">Počet kešiek</string>
+    <string name="pref_count_of_caches_text">kešiek</string>
+    <string name="pref_count_of_caches_summary">Počet kešiek na stiahnutie</string>
+    <string name="pref_title_advanced">Pokročilé</string>
+    <string name="pref_use_compression">Použiť kompresiu</string>
+    <string name="pref_use_compression_summary">Použitie kompresie HTTP (experimentálne)</string>
+    <string name="pref_imperial_units">Imperiálne jednotky</string>
+    <string name="pref_imperial_units_summary">Použitie míl namiesto kilometrov</string>
+    
+    <string name="import_caches">Importovať kešky</string>
+    
+    <string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastavení.</string>
+    <string name="error_title">Došlo k chybe!</string>
+    
+    <string name="ok_button">OK</string>
+    
+    <string name="error_locus_old">Nainštalovaná verzia Locusu je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
+    
+    <string name="cancel_button">Zrušiť</string>
+    
+    <string name="pref_show_found">Zobraziť najdené</string>
+    <string name="pref_show_found_summary">Zobraziť nájdené kešky</string>
+    <string name="pref_show_own">Zobraziť vlastné</string>
+    <string name="pref_show_own_summary">Zobraziť vlastné kešky</string>
+    <string name="pref_menu_select_all">Vybrať všetko</string>
+    <string name="pref_menu_deselect_all">Odznačiť všetko</string>
+    
+    <string name="locus_update_cache">Aktualizovať kešku</string>
+    <string name="locus_import_cache">Importovať kešku</string>
+    <string name="update_cache_progress">Aktualizujem kešku…</string>
+    
+    <string name="pref_title_downloading">Sťahovanie</string>
+    <string name="pref_count_of_logs">Počet logov</string>
+    <string name="pref_count_of_logs_text">logov</string>
+    <string name="pref_count_of_logs_summary">Počet logov, ktoré sa majú stiahnuť s keší</string>
+    <string name="pref_not_filled">nevyplnené</string>
+    <string name="gps">GPS</string>
+    <string name="close">Zavrieť</string>
+    <string name="pref_show_disabled">Zobraziť zablokované</string>
+    <string name="pref_show_disabled_summary">Zobraziť dočasne zablokované kešky</string>
+    
+    <string name="import_cache_progress">Sťahujem kešku…</string>
+    
+    <string name="pref_title_about">O aplikácii</string>
+    <string name="pref_version">Verzia</string>
+    <string name="pref_author">Autor</string>
+    <string name="pref_website">Stránky, diskusné fórum, atď</string>
+    <string name="pref_donate_paypal">Prispieť pomocou PayPal</string>
+    <string name="pref_donate_paypal_summary">Podpora ďalšieho vývoja…</string>
+    <string name="pref_donate_paypal_choose_currency">Vyberte vašu menu</string>
+    
+    <string name="pref_title_cache_type_filter">Typy kešiek</string>
+    <string name="pref_title_difficulty_filter">Obtiažnosť</string>
+    <string name="pref_title_terrain_filter">Terén</string>
+    <string name="pref_difficulty_min">Min. obtiažnosť</string>
+    <string name="pref_difficulty_max">Max. obtiažnosť</string>
+    <string name="pref_terrain_min">Min. terén</string>
+    <string name="pref_terrain_max">Max. terén</string>
+    
+    <string name="download_button">Stiahnuť do Locusu</string>
+    
+    <string name="pref_download_basic">Iba základné info</string>
+    <string name="pref_download_basic_summary">Stiahnuť len základné informácie o keške</string>
+    <string name="pref_download_on_show">Stiahnuť zvyšné info pri zobrazení</string>
+    <string name="pref_download_on_show_summary">Stiahnuť zvyšné informácie o keške, až keď Locus zobrazí obsah kešky</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>raz</item>
+        <item>po každej</item>
+        <item>nikdy</item>
+    </string-array>
+    
+    <string name="menu_live_map">Aktívna mapa</string>
+    <string name="menu_nearest">Najbližšie</string>
+    <string name="menu_manual">Manuál</string>
+    <string name="menu_preferences">Nastavenia</string>
+    
+    <string name="pref_livemap">Aktívna mapa</string>
+    <string name="pref_livemap_summary">Živé načítanie kešiek do mapy (povoľte v Locusu: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie)</string>
+    
+    <string name="user_waypoint_name">Užívateľský bod trasy %1$d</string>
+    <string name="final_location_name">Konečné umiestnenie %1$d</string>
+    
+    <string name="account_logging_in">Prihlasujem sa…</string>
+    
+    <string name="pref_account_login">Prihlásiť</string>
+    <string name="pref_account_login_summary">Prihlásiť k Geocaching.com účtu</string>
+    <string name="pref_account_logout">Odhlásiť</string>
+    <string name="pref_account_logout_summary">Prihlásený ako %s</string>
+    
+    <string name="login_username">Užívateľské meno</string>
+    <string name="login_password">Heslo</string>
+    <string name="login_button_cancel">Zrušiť</string>
+    <string name="login_button_login">Prihlásiť</string>
+    
+    <string name="login_error_title">Nepodarilo sa prihlásiť</string>
+    <string name="login_error_credentials">Chybné užívateľské meno alebo heslo.</string>
+    <string name="login_message">Prosím vyplňte vaše prihlasovacie údaje na Geocaching.com.</string>
+    
+    <string name="error_report_error">Nahlásiť chybu</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus spadol…</string>
+    <string name="crash_notif_title">Geocaching4Locus spadol…</string>
+    <string name="crash_notif_text">Prosím, kliknite tu pre vyriešenie problému.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus spadol</string>
+    <string name="crash_dialog_text">Neočakávaná chyba spôsobila ukončenie aplikácie. Pomôžte nám ju opraviť zaslaním dát o chybe. Všetko, čo musíte urobiť, je kliknúť na "OK".</string>
+    <string name="crash_dialog_comment_prompt">Nižšie môžete pridať svoj ​​komentár o tomto probléme:</string>
+    <string name="crash_dialog_ok_toast">Vďaka!</string>
+    
+    <string name="error_network">Sieť nie je k dispozícii. Skontrolujte pripojenie.</string>
+
+    <string name="update_caches_progress">Aktualizujem kešky…</string>
+    <string name="original_coordinates_name">Pôvodné súradnice</string>
+    <string name="pref_title_container_type_filter">Veľkosť schránky</string>
+    <string name="pref_create_spoilers_tab">Vytvoriť záložku Spoilers</string>
+    <string name="pref_create_spoilers_tab_summary">Vytvoriť záložku Spoilers s odkazmi na Spoiler obrázky</string>
+    <string name="login_show_password">Zobraziť heslo</string>
 </resources>
+

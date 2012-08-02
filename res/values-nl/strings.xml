@@ -1,112 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Geocaching4Locus</string>
-	<string name="error">Er is een fout opgetreden bij het downloaden van de caches.&lt;br&gt;Omschrijving: %1$s</string>
-	<string name="downloading">Bezig met downloaden van caches…</string>
-	<string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
-	<string name="error_locus_not_found">Gelieve Locus te installeren!</string>
-	<string name="search_activity_name">Caches dichtbij</string>
-	<string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Er is een fout opgetreden bij downloaden van caches.&lt;br&gt;Omschrijving: %1$s</string>
+    <string name="downloading">Bezig met downloaden van caches…</string>
+    <string name="downloading_cache">Bezig met downloaden van cache (%3$d/%4$d): %1$s - %2$s</string>
+    <string name="error_locus_not_found">Gelieve Locus te installeren!</string>
+    <string name="search_activity_name">Caches dichtbij</string>
+    <string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
 Gelieve het in te schakelen in Android instellingen.</string>
-	<string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
-	<string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
-	<string name="preferences">Voorkeuren</string>
-	<string name="wrong_coordinates">Foutief coördinaten formaat!</string>
-	<string name="coordinates">Coördinaten</string>
-	<string name="pref_title_geocaching_credentials">Geocaching.com logingegevens</string>
-	<string name="pref_username">Gebruikersnaam</string>
-	<string name="pref_password">Wachtwoord</string>
-	<string name="pref_title_filter">Filter</string>
-	<string name="pref_distance">Afstand</string>
-	<string name="pref_distance_summary_km">Afstand in km</string>
-	<string name="pref_distance_summary_miles">Afstand in miles</string>
-	<string name="pref_count_of_caches">Aantal caches</string>
-	<string name="pref_count_of_caches_text">caches</string>
-	<string name="pref_count_of_caches_summary">Aantal caches om te downloaden</string>
-	<string name="pref_title_advanced">Geavanceerd</string>
-	<string name="pref_use_compression">Gebruik compressie</string>
-	<string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
-	<string name="pref_imperial_units">Imperiale eenheden</string>
-	<string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
-	<string name="import_caches">Importeer caches</string>
-	<string name="error_credentials">Ongeldige gebruikersnaam of paswoord. Controleer AUB de inloggegevens in Voorkeuren</string>
-	<string name="error_title">Er is een fout opgetreden!</string>
-	<string name="ok_button">Ok</string>
-	<string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
-	<string name="cancel_button">Annuleren</string>
-	<string name="pref_show_found">Toon gevonden</string>
-	<string name="pref_show_found_summary">Toon gevonden caches</string>
-	<string name="pref_show_own">Toon eigen verborgen</string>
-	<string name="pref_show_own_summary">Toon eigen caches (verborgen door jou)</string>
-	<string name="pref_menu_select_all">Alles selecteren</string>
-	<string name="pref_menu_deselect_all">Niets selecteren</string>
-	<string name="locus_update_cache">Update cache</string>
-	<string name="locus_import_cache">Importeren naar Locus</string>
-	<string name="update_cache_progress">Bezig met updaten van cache…</string>
-	<string name="pref_title_downloading">Bezig met downloaden</string>
-	<string name="pref_count_of_logs">Aantal logs</string>
-	<string name="pref_count_of_logs_text">logs</string>
-	<string name="pref_count_of_logs_summary">Aantal logs om te downloaden met cache</string>
-	<string name="pref_count_of_trackables">Aantal trackables</string>
-	<string name="pref_count_of_trackables_text">trackables</string>
-	<string name="pref_count_of_trackables_summary">Aantal trackables om te downloaden met cache</string>
-	<string name="pref_not_filled">niet gevuld</string>
-	<string name="gps">GPS</string>
-	<string name="close">Sluit</string>
-	<string name="pref_show_disabled">Toon uitgeschakelde</string>
-	<string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
-	<string name="import_cache_progress">Bezig met downloaden van cache…</string>
-	<string name="pref_title_about">Over</string>
-	<string name="pref_version">Versie</string>
-	<string name="pref_author">Auteur</string>
-	<string name="pref_website">Website, forum, enz.</string>
-	<string name="pref_donate_paypal">Doneer via Paypal</string>
-	<string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling…</string>
-	<string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
-	<string name="pref_title_cache_type_filter">Soort Cache</string>
-	<string name="pref_title_difficulty_filter">Moeilijkheid</string>
-	<string name="pref_title_terrain_filter">Terrein</string>
-	<string name="pref_difficulty_min">Minimum moeilijkheid</string>
-	<string name="pref_difficulty_max">Maximum moeilijkheid</string>
-	<string name="pref_terrain_min">Minimum terrein</string>
-	<string name="pref_terrain_max">Maximum terrein</string>
-	<string name="download_button">Downloaden naar Locus</string>
-	<string name="pref_download_basic">Alleen basis informatie</string>
-	<string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
-	<string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
-	<string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
-	<string-array name="pref_download_on_show_entries">
-		<item>eenmalig</item>
-		<item>Iedere</item>
-		<item>nooit</item>
-	</string-array>
-	<string name="menu_live_map">Live kaart</string>
-	<string name="menu_nearest">Dichtsbijzijnde</string>
-	<string name="menu_manual">Handmatig</string>
-	<string name="menu_preferences">Voorkeuren</string>
-	<string name="pref_livemap">Live kaart</string>
-	<string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
-	<string name="user_waypoint_name">Gebruikers via punt %1$d</string>
-	<string name="final_location_name">Eindbestemming %1$d</string>
-	<string name="account_logging_in">Ingelogd...</string>
-	<string name="pref_account_login">Aanmelden</string>
-	<string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>
-	<string name="pref_account_logout">Afmelden</string>
-	<string name="pref_account_logout_summary">Aangemeld als %s</string>
-	<string name="login_username">Gebruikersnaam</string>
-	<string name="login_password">Paswoord</string>
-	<string name="login_button_cancel">Annuleren</string>
-	<string name="login_button_login">Aanmelden</string>
-	<string name="login_error_title">Aanmelden mislukt</string>
-	<string name="login_error_credentials">Ongeldige gebruikersnaam of paswoord</string>
-	<string name="login_message">Gelieve uw Geocaching.com logingegevens in te vullen.</string>
-	<string name="error_report_error">Fout rapporteren</string>
-	<string name="crash_notif_ticker_text">Geocaching4Locus is gecrashed...</string>
-	<string name="crash_notif_title">Geocaching4Locus is gecrashed...</string>
-	<string name="crash_notif_text">Klik hier aub om het probleem te helpen oplossen</string>
-	<string name="crash_dialog_title">Geocaching4Locus is gecrashed</string>
-	<string name="crash_dialog_text">Een onbekende fout is opgetreden waardoor de toepassing werd gestopt. Help ons aub dit probleem op te lossen door ons de fout gegevens op te sturen, je moet enkel \'OK\' klikken...</string>
-	<string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
-	<string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
-	<string name="error_network">Netwerk onbeschikbaar. Controleer de verbinding AUB.</string>
+    <string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
+    <string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
+    
+    <string name="preferences">Voorkeuren</string>
+    <string name="wrong_coordinates">Foutief coördinaten formaat!</string>
+    <string name="coordinates">Coördinaten</string>
+    
+    <string name="pref_title_geocaching_credentials">Geocaching.com logingegevens</string>
+    <string name="pref_username">Gebruikersnaam</string>
+    <string name="pref_password">Wachtwoord</string>
+    
+    <string name="pref_title_filter">Filter</string>
+    <string name="pref_distance">Afstand</string>
+    <string name="pref_distance_summary_km">Afstand in km</string>
+    <string name="pref_distance_summary_miles">Afstand in miles</string>
+    <string name="pref_count_of_caches">Aantal caches</string>
+    <string name="pref_count_of_caches_text">caches</string>
+    <string name="pref_count_of_caches_summary">Aantal caches om te downloaden</string>
+    <string name="pref_title_advanced">Geavanceerd</string>
+    <string name="pref_use_compression">Gebruik compressie</string>
+    <string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
+    <string name="pref_imperial_units">Imperiale eenheden</string>
+    <string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
+    
+    <string name="import_caches">Importeer caches</string>
+    
+    <string name="error_credentials">Ongeldige gebruikersnaam of paswoord. Controleer AUB de inloggegevens in Voorkeuren</string>
+    <string name="error_title">Er is een fout opgetreden!</string>
+    
+    <string name="ok_button">Ok</string>
+    
+    <string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
+    
+    <string name="cancel_button">Annuleren</string>
+    
+    <string name="pref_show_found">Toon gevonden</string>
+    <string name="pref_show_found_summary">Toon gevonden caches</string>
+    <string name="pref_show_own">Toon eigen verborgen</string>
+    <string name="pref_show_own_summary">Toon eigen caches (verborgen door jou)</string>
+    <string name="pref_menu_select_all">Alles selecteren</string>
+    <string name="pref_menu_deselect_all">Niets selecteren</string>
+    
+    <string name="locus_update_cache">Update cache</string>
+    <string name="locus_import_cache">Importeren naar Locus</string>
+    <string name="update_cache_progress">Bezig met updaten van cache…</string>
+    
+    <string name="pref_title_downloading">Bezig met downloaden</string>
+    <string name="pref_count_of_logs">Aantal logs</string>
+    <string name="pref_count_of_logs_text">logs</string>
+    <string name="pref_count_of_logs_summary">Aantal logs om te downloaden met cache</string>
+    <string name="pref_not_filled">niet gevuld</string>
+    <string name="gps">GPS</string>
+    <string name="close">Sluit</string>
+    <string name="pref_show_disabled">Toon uitgeschakelde</string>
+    <string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
+    
+    <string name="import_cache_progress">Bezig met downloaden van cache…</string>
+    
+    <string name="pref_title_about">Over</string>
+    <string name="pref_version">Versie</string>
+    <string name="pref_author">Auteur</string>
+    <string name="pref_website">Website, forum, enz.</string>
+    <string name="pref_donate_paypal">Doneer via Paypal</string>
+    <string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
+    <string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
+    
+    <string name="pref_title_cache_type_filter">Soort Cache</string>
+    <string name="pref_title_difficulty_filter">Moeilijkheid</string>
+    <string name="pref_title_terrain_filter">Terrein</string>
+    <string name="pref_difficulty_min">Minimum moeilijkheid</string>
+    <string name="pref_difficulty_max">Maximum moeilijkheid</string>
+    <string name="pref_terrain_min">Minimum terrein</string>
+    <string name="pref_terrain_max">Maximum terrein</string>
+    
+    <string name="download_button">Downloaden naar Locus</string>
+    
+    <string name="pref_download_basic">Alleen basis informatie</string>
+    <string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
+    <string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
+    <string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>eenmalig</item>
+        <item>Iedere</item>
+        <item>nooit</item>
+    </string-array>
+    
+    <string name="menu_live_map">Live kaart</string>
+    <string name="menu_nearest">Dichtsbijzijnde</string>
+    <string name="menu_manual">Handmatig</string>
+    <string name="menu_preferences">Voorkeuren</string>
+    
+    <string name="pref_livemap">Live kaart</string>
+    <string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
+    
+    <string name="user_waypoint_name">Gebruikers via punt %1$d</string>
+    <string name="final_location_name">Eindbestemming %1$d</string>
+    
+    <string name="account_logging_in">Ingelogd...</string>
+    
+    <string name="pref_account_login">Aanmelden</string>
+    <string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>
+    <string name="pref_account_logout">Afmelden</string>
+    <string name="pref_account_logout_summary">Aangemeld als %s</string>
+    
+    <string name="login_username">Gebruikersnaam</string>
+    <string name="login_password">Wachtwoord</string>
+    <string name="login_button_cancel">Annuleren</string>
+    <string name="login_button_login">Aanmelden</string>
+    
+    <string name="login_error_title">Aanmelden mislukt</string>
+    <string name="login_error_credentials">Ongeldige gebruikersnaam of paswoord</string>
+    <string name="login_message">Gelieve uw Geocaching.com logingegevens in te vullen.</string>
+    
+    <string name="error_report_error">Fout rapporteren</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus is gecrashed...</string>
+    <string name="crash_notif_title">Geocaching4Locus is gecrashed...</string>
+    <string name="crash_notif_text">Klik hier aub om het probleem te helpen oplossen</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus is gecrashed</string>
+    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
+    <string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
+    
+    <string name="error_network">Netwerk onbeschikbaar. Controleer de verbinding AUB.</string>
+
+    <string name="update_caches_progress">Bezig met updaten van caches...</string>
+    <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
+    <string name="pref_title_container_type_filter">Container size</string>
+    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
+    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
+    <string name="login_show_password">Show password</string>
 </resources>
+

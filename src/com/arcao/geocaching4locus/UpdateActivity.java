@@ -104,6 +104,8 @@ public class UpdateActivity extends Activity {
 		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
 			cacheId = new String[] { getIntent().getStringExtra(
 					PARAM_SIMPLE_CACHE_ID) };
+			oldPoints.add(null);
+			
 			String repeatUpdate = prefs
 					.getString(
 							PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,

@@ -82,9 +82,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity implemen
       @Override
       public void onClick(View v) {
         if (mPasswordCheckbox.isChecked()) {
-          mPasswordEdit.setTransformationMethod(new PasswordTransformationMethod());
-        } else {
           mPasswordEdit.setTransformationMethod(null);
+        } else {
+          mPasswordEdit.setTransformationMethod(new PasswordTransformationMethod());
         }
       }
     });

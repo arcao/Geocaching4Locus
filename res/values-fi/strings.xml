@@ -3,7 +3,6 @@
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Virhe kätköjä ladattaessa.&lt;br&gt;Kuvaus: %1$s</string>
     <string name="downloading">Lataan kätköjä…</string>
-    <string name="downloading_cache">Lataan kätköä (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Asenna Locus-ohjelma ensin!</string>
     <string name="search_activity_name">Lähimmät kätköt</string>
     <string name="error_location">Ei oikeuksia verkkopohjaisiin sijaintitietoihin. Salli toiminto Androidin asetuksista.</string>
@@ -15,8 +14,6 @@
     <string name="coordinates">Koordinaatit</string>
     
     <string name="pref_title_geocaching_credentials">Geocaching.com-tunnukset</string>
-    <string name="pref_username">Käyttäjätunnus</string>
-    <string name="pref_password">Salasana</string>
     
     <string name="pref_title_filter">Suodatin</string>
     <string name="pref_distance">Etäisyys</string>
@@ -104,20 +101,12 @@
     <string name="user_waypoint_name">Oma paikkamerkki %1$d</string>
     <string name="final_location_name">Loppupiste %1$d</string>
     
-    <string name="account_logging_in">Kirjaudutaan…</string>
-    
     <string name="pref_account_login">Kirjaudu sisään</string>
     <string name="pref_account_login_summary">Kirjaudu Geocaching.com-tilillesi</string>
     <string name="pref_account_logout">Kirjaudu ulos</string>
     <string name="pref_account_logout_summary">Kirjautunut käyttäjänä %s</string>
-    
-    <string name="login_username">Käyttäjätunnus</string>
-    <string name="login_password">Salasana</string>
-    <string name="login_button_cancel">Peruuta</string>
-    <string name="login_button_login">Kirjaudu sisään</string>
-    
+       
     <string name="login_error_title">Kirjautuminen epäonnistui</string>
-    <string name="login_error_credentials">Väärä käyttäjätunnus tai salasana.</string>
     <string name="login_message">Täytä Geocaching.com-tunnuksesi.</string>
     
     <string name="error_report_error">Raportoi virhe</string>
@@ -138,6 +127,7 @@
     <string name="pref_title_container_type_filter">Koko</string>
     <string name="pref_create_spoilers_tab">Luo paljastusvälilehti</string>
     <string name="pref_create_spoilers_tab_summary">Luo paljastusvälilehti kuvalinkkeineen</string>
-    <string name="login_show_password">Show password</string>
+    
+    <string name="loading">Loading, please wait…</string>
 </resources>
 

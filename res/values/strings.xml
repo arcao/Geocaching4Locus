@@ -128,6 +128,6 @@
     <string name="pref_create_spoilers_tab">Create spoilers tab</string>
     <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
     
-    <string name="loading">Loading… Please wait.</string>
+    <string name="loading">Loading, please wait…</string>
 </resources>
 

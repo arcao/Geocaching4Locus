@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
+    <string name="error">Erros a descarregar as caches.ches.&lt;br&gt;Descrição: %1$s</string>
     <string name="downloading">A descarregar caches…</string>
-    <string name="downloading_cache">A descarregar a cache (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Por favor instale o Locus!</string>
     <string name="search_activity_name">Caches mais próximas</string>
     <string name="error_location">Não é permitida a aquisição de coordenadas através da rede Wireless. Por favor active a opção nas configurações do Android.</string>
@@ -15,8 +14,6 @@
     <string name="coordinates">Coordenadas</string>
     
     <string name="pref_title_geocaching_credentials">Credenciais geocaching.com</string>
-    <string name="pref_username">Nome de Utilizador</string>
-    <string name="pref_password">Senha</string>
     
     <string name="pref_title_filter">Filtro</string>
     <string name="pref_distance">Distância</string>
@@ -104,20 +101,12 @@
     <string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
     <string name="final_location_name">Local final %1$d</string>
     
-    <string name="account_logging_in">Registando…</string>
-    
     <string name="pref_account_login">Entrar</string>
     <string name="pref_account_login_summary">Entrar na conta Geocaching.com</string>
     <string name="pref_account_logout">Logout</string>
     <string name="pref_account_logout_summary">Registado como %s</string>
-    
-    <string name="login_username">Nome de Utilizador</string>
-    <string name="login_password">Senha</string>
-    <string name="login_button_cancel">Cancel</string>
-    <string name="login_button_login">Entrar</string>
-    
+       
     <string name="login_error_title">Falha ao entrar</string>
-    <string name="login_error_credentials">Nome de utilizador ou password inválidos.</string>
     <string name="login_message">Por favor, preencha os dados de acesso a geocaching.com.</string>
     
     <string name="error_report_error">Relatar erro</string>
@@ -127,17 +116,18 @@
     <string name="crash_notif_text">Carregue aqui para ajudar a corrigir o problema.</string>
     
     <string name="crash_dialog_title">Geocaching4Locus crashou</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_text">Occorreu um erro inesperado que forçou a aplicação a fechar. Por favor ajude a corrigir enviando os dados do erro, tudo o que tem de fazer é carregar em \'OK\'.</string>
     <string name="crash_dialog_comment_prompt">Pode adicionar comentários ao problema em baixo:</string>
     <string name="crash_dialog_ok_toast">Obrigado!</string>
     
-    <string name="error_network">Network unavailable. Please check your connection.</string>
+    <string name="error_network">Rede inacessível. Por favor verifique a ligação.</string>
 
-    <string name="update_caches_progress">Updating caches…</string>
-    <string name="original_coordinates_name">Original coordinates</string>
-    <string name="pref_title_container_type_filter">Container size</string>
-    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
-    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
-    <string name="login_show_password">Show password</string>
+    <string name="update_caches_progress">A actualizar caches...</string>
+    <string name="original_coordinates_name">Coordenadas originais</string>
+    <string name="pref_title_container_type_filter">Tamanho do container</string>
+    <string name="pref_create_spoilers_tab">Criar separador com spoilers</string>
+    <string name="pref_create_spoilers_tab_summary">Criar separador de spoilers com ligação às imagens.</string>
+    
+    <string name="loading">Loading, please wait…</string>
 </resources>
 

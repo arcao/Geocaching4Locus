@@ -3,7 +3,6 @@
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Nastala chyba při stahování keší.&lt;br&gt;Popis: %1$s</string>
     <string name="downloading">Stahuji keše…</string>
-    <string name="downloading_cache">Stahuji keš (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="search_activity_name">Nejbližší keše</string>
     <string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
@@ -15,8 +14,6 @@
     <string name="coordinates">Souřadnice</string>
     
     <string name="pref_title_geocaching_credentials">Přihlašovací údaje pro Geocaching.com</string>
-    <string name="pref_username">Uživatelské jméno</string>
-    <string name="pref_password">Heslo</string>
     
     <string name="pref_title_filter">Filtr</string>
     <string name="pref_distance">Vzdálenost</string>
@@ -104,20 +101,12 @@
     <string name="user_waypoint_name">Uživatelský waypoint %1$d</string>
     <string name="final_location_name">Konečné umístění %1$d</string>
     
-    <string name="account_logging_in">Přihlašuji se…</string>
-    
     <string name="pref_account_login">Přihlásit se</string>
     <string name="pref_account_login_summary">Přihlásit se k Geocaching.com účtu</string>
     <string name="pref_account_logout">Odhlásit</string>
     <string name="pref_account_logout_summary">Přihlášen jako %s</string>
-    
-    <string name="login_username">Uživatelské jméno</string>
-    <string name="login_password">Heslo</string>
-    <string name="login_button_cancel">Storno</string>
-    <string name="login_button_login">Přihlásit se</string>
-    
+       
     <string name="login_error_title">Přihlášení se nezdařilo</string>
-    <string name="login_error_credentials">Chybné uživatelské jméno nebo heslo.</string>
     <string name="login_message">Prosím vyplňte vaše přihlašovací údaje na Geocaching.com.</string>
     
     <string name="error_report_error">Nahlásit chybu</string>
@@ -138,6 +127,7 @@
     <string name="pref_title_container_type_filter">Velikost schránky</string>
     <string name="pref_create_spoilers_tab">Vytvořit záložku Spoilers</string>
     <string name="pref_create_spoilers_tab_summary">Vytvořit záložku Spoilers s odkazy na Spoiler obrázky</string>
-    <string name="login_show_password">Zobrazit heslo</string>
+    
+    <string name="loading">Nahrávám, prosím čekejte…</string>
 </resources>
 

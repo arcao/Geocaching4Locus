@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
+    <string name="error">Ocurrió un error al descargar caches.&lt;br&gt;Descripción: %1$s</string>
     <string name="downloading">Descargando cachés…</string>
-    <string name="downloading_cache">Descargando caché (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">¡Por favor instale Locus!</string>
     <string name="search_activity_name">Cachés más cercanos</string>
     <string name="error_location">¡No se permite adquirir la posición usando red! Por favor actívelo en ajustes de  Android.</string>
@@ -15,8 +14,6 @@
     <string name="coordinates">Coordenadas</string>
     
     <string name="pref_title_geocaching_credentials">Credenciales de Geocaching.com</string>
-    <string name="pref_username">Nombre de usuario</string>
-    <string name="pref_password">Contraseña</string>
     
     <string name="pref_title_filter">Filtro</string>
     <string name="pref_distance">Distancia</string>
@@ -104,20 +101,12 @@
     <string name="user_waypoint_name">Waypoint usuario %1$d</string>
     <string name="final_location_name">Ubicación final %1$d</string>
     
-    <string name="account_logging_in">Iniciando sesión…</string>
-    
     <string name="pref_account_login">Iniciar sesión</string>
     <string name="pref_account_login_summary">Iniciar sesión en cuenta de Geocaching.com</string>
     <string name="pref_account_logout">Cerrar sesión</string>
     <string name="pref_account_logout_summary">Conectado como %s</string>
-    
-    <string name="login_username">Nombre de usuario</string>
-    <string name="login_password">Contraseña</string>
-    <string name="login_button_cancel">Cancelar</string>
-    <string name="login_button_login">Iniciar sesión</string>
-    
+       
     <string name="login_error_title">Fallo inicio sesión</string>
-    <string name="login_error_credentials">Nombre usuario o contraseña no válido.</string>
     <string name="login_message">Por favor complete sus credenciales de Geocaching.com</string>
     
     <string name="error_report_error">Informe de errores</string>
@@ -127,17 +116,18 @@
     <string name="crash_notif_text">Por favor haga clik aquí para ayudar a corregir esto.</string>
     
     <string name="crash_dialog_title">Geocaching4Locus se ha bloqueado</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_text">Ha ocurrido un error inesperado que ha forzado la aplicación a detenerse. Por favor ayúdenos a corregirlo enviándonos los datos de error, todo lo que ha de hacer es pulsar \'OK\'.</string>
     <string name="crash_dialog_comment_prompt">A continuación puede añadir comentarios sobre el problema:</string>
     <string name="crash_dialog_ok_toast">¡Gracias!</string>
     
     <string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
 
-    <string name="update_caches_progress">Updating caches…</string>
-    <string name="original_coordinates_name">Original coordinates</string>
-    <string name="pref_title_container_type_filter">Container size</string>
-    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
-    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
-    <string name="login_show_password">Show password</string>
+    <string name="update_caches_progress">Actualizando caches…</string>
+    <string name="original_coordinates_name">Coordenadas originales</string>
+    <string name="pref_title_container_type_filter">Tamaño contenedor</string>
+    <string name="pref_create_spoilers_tab">Crear pestaña spoilers</string>
+    <string name="pref_create_spoilers_tab_summary">Crear pestaña spoilers con enlaces a imágenes spoiler</string>
+    
+    <string name="loading">Loading, please wait…</string>
 </resources>
 

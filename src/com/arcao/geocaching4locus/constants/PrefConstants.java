@@ -26,7 +26,7 @@ public interface PrefConstants {
 	static final String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";
 	static final String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
 	static final String DOWNLOADING_COUNT_OF_TRACKABLES = "downloading_count_of_trackables";
-	static final String DOWNLOADING_CREATE_SPOILERS_TAB = "downloading_create_spoilers_tab";
+	static final String DOWNLOADING_CREATE_IMAGES_TAB = "downloading_create_images_tab";
 
 	static final String IMPERIAL_UNITS = "imperial_units";
 

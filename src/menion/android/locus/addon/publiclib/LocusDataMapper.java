@@ -63,7 +63,7 @@ public class LocusDataMapper {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
 	
-	protected static File spoilersBasePath;
+	protected static File locusGeocachingDataBasePath;
 	
 	public static Point toLocusPoint(Context context, SimpleGeocache cache) {
 		if (cache == null)
@@ -134,21 +134,21 @@ public class LocusDataMapper {
 		if (cache instanceof Geocache) {
 			Geocache gc = (Geocache) cache;
 			updateCacheLocationByCorrectedCoordinates(context, p, gc.getUserWaypoints());
-			if (gc.getImages().size() > 0 && isSpoilersAllowed(context)) {
-				generateSpoilersHtml(context, gc);
+			if (gc.getImages().size() > 0 && isCacheImagesTabAllowed(context)) {
+				generateImagesHtml(context, gc);
 			}
 		}
 
 		return p;
 	}
 
-	protected static boolean isSpoilersAllowed(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PrefConstants.DOWNLOADING_CREATE_SPOILERS_TAB, false);
+	protected static boolean isCacheImagesTabAllowed(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PrefConstants.DOWNLOADING_CREATE_IMAGES_TAB, false);
 	}
 
-	protected static void generateSpoilersHtml(Context context, Geocache gc) {
+	protected static void generateImagesHtml(Context context, Geocache gc) {
 		try {
-			Template t = new Template(new InputStreamReader(context.getResources().openRawResource(R.raw.spoilers), "UTF-8"));
+			Template t = new Template(new InputStreamReader(context.getResources().openRawResource(R.raw.images), "UTF-8"));
 			
 			for (ImageData image : gc.getImages()) {
 				t.parse("main.image", image);
@@ -156,12 +156,12 @@ public class LocusDataMapper {
 			
 			t.parse("main", gc);
 			
-			File spoilerFile = new File(getSpoilersBasePath(context), gc.getCacheCode() + ".html");
-			if (spoilerFile.exists()) {
-				spoilerFile.delete();
+			File imagesHtmlFile = new File(getCacheImageBasePath(context, gc), "images.html");
+			if (imagesHtmlFile.exists()) {
+				imagesHtmlFile.delete();
 			}
 			
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(spoilerFile), "UTF-8"));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(imagesHtmlFile), "UTF-8"));
 			bw.write(t.out());
 			bw.flush();
 			bw.close();
@@ -170,19 +170,30 @@ public class LocusDataMapper {
 			Log.e(TAG, e.getMessage(), e);
 		}
 	}
-	
-	protected static File getSpoilersBasePath(Context context) throws RequiredVersionMissingException {
-		if (spoilersBasePath == null) {
-			File locusBasePath = new File(LocusIntents.getLocusRootDirectory(context));
-			
-			spoilersBasePath = new File (locusBasePath, "data" + File.separator + "geocaching" + File.separator + "geocaching4locus");
-		}
 		
-		// create directories recursively
-		spoilersBasePath.mkdirs();
-		
-		return spoilersBasePath;
+	protected static File getCacheImageBasePath(Context context, Geocache cache) throws RequiredVersionMissingException {
+	  if (locusGeocachingDataBasePath == null) {
+      File locusBasePath = new File(LocusIntents.getLocusRootDirectory(context));
+      
+      locusGeocachingDataBasePath = new File (locusBasePath, "data" + File.separator + "geocaching");
+    }
+	  
+	  String cacheCode = cache.getCacheCode();
+	  
+	  StringBuilder sb = new StringBuilder();
+	  sb.append(cacheCode.charAt(cacheCode.length() - 1));
+	  sb.append(File.separatorChar);
+	  sb.append(cacheCode.charAt(cacheCode.length() - 2));
+	  sb.append(File.separatorChar);
+	  sb.append(cacheCode);
+	  
+	  File cacheImageDir = new File(locusGeocachingDataBasePath, sb.toString());
+	  
+	  cacheImageDir.mkdirs();
+	  
+	  return cacheImageDir;
 	}
+	
 
 	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Point p, List<UserWaypoint> userWaypoints) {
 		if (userWaypoints.size() != 1)

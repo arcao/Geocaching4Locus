@@ -125,8 +125,8 @@
     <string name="update_caches_progress">Päivitetään kätköjä...</string>
     <string name="original_coordinates_name">Alkuperäiset koordinaatit</string>
     <string name="pref_title_container_type_filter">Koko</string>
-    <string name="pref_create_spoilers_tab">Luo paljastusvälilehti</string>
-    <string name="pref_create_spoilers_tab_summary">Luo paljastusvälilehti kuvalinkkeineen</string>
+    <string name="pref_create_images_tab">Create images tab</string>
+    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">Loading, please wait…</string>
 </resources>

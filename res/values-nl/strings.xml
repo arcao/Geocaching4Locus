@@ -126,8 +126,8 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="update_caches_progress">Bezig met updaten van caches...</string>
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
     <string name="pref_title_container_type_filter">Container size</string>
-    <string name="pref_create_spoilers_tab">Create spoilers tab</string>
-    <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
+    <string name="pref_create_images_tab">Create images tab</string>
+    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">Loading, please wait…</string>
 </resources>

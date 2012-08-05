@@ -125,9 +125,9 @@
     <string name="update_caches_progress">Actualizando caches…</string>
     <string name="original_coordinates_name">Coordenadas originales</string>
     <string name="pref_title_container_type_filter">Tamaño contenedor</string>
-    <string name="pref_create_spoilers_tab">Crear pestaña spoilers</string>
-    <string name="pref_create_spoilers_tab_summary">Crear pestaña spoilers con enlaces a imágenes spoiler</string>
+    <string name="pref_create_images_tab">Create images tab</string>
+    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
-    <string name="loading">Loading, please wait…</string>
+    <string name="loading">Cargando, espere por favor…</string>
 </resources>
 

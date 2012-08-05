@@ -12,14 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.arcao.geocaching.api.GeocachingApi;
-import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
-import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
-import com.arcao.geocaching4locus.constants.AppConstants;
 
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
 	private static final String TAG = "G4L|AccountAuthenicator";
@@ -73,35 +67,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 			return result;
 		}
 
-		final AccountManager am = AccountManager.get(mContext);
-		
-		final String password = am.getPassword(account);
-		
-		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
-
-		try {
-			if (password != null) {
-				api.openSession(account.name, password);
-				
-				result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-				result.putString(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
-				result.putString(AccountManager.KEY_AUTHTOKEN, api.getSession());
-				return result;
-			}
-		} catch (InvalidCredentialsException e) {
-			result.putString(AccountManager.KEY_AUTH_FAILED_MESSAGE, mContext.getString(R.string.error_credentials));
-			Log.e(TAG, e.getMessage(), e);
-		} catch (NetworkException e) {
-			Log.e(TAG, e.getMessage(), e);
-			throw new NetworkErrorException(e);
-		} catch (GeocachingApiException e) {
-			Log.e(TAG, e.getMessage(), e);
-			result.putString(AccountManager.KEY_ERROR_MESSAGE, e.getMessage());
-			return result;
-		}
-		
-		// Password is missing or incorrect. Start the activity to add the missing
-		// data.
+		// Token is missing. Start the activity to retrieve a new token
 		final Intent intent = new Intent(mContext, AuthenticatorActivity.class);
 		intent.putExtra(AuthenticatorActivity.PARAM_AUTHTOKEN_TYPE, authTokenType);
 		intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
@@ -133,7 +99,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 		Log.i(TAG, "updateCredentials: " + response);
 		
 		final Intent intent = new Intent(mContext, AuthenticatorActivity.class);
-    intent.putExtra(AuthenticatorActivity.PARAM_USERNAME, account.name);
     intent.putExtra(AuthenticatorActivity.PARAM_AUTHTOKEN_TYPE, authTokenType);
     //intent.putExtra(AuthenticatorActivity.PARAM_CONFIRMCREDENTIALS, false);
     

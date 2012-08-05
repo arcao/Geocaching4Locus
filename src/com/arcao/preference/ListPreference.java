@@ -283,6 +283,7 @@ public class ListPreference extends DialogPreference {
             super(superState);
         }
 
+        @SuppressWarnings("unused")
         public static final Parcelable.Creator<SavedState> CREATOR =
                 new Parcelable.Creator<SavedState>() {
             @Override

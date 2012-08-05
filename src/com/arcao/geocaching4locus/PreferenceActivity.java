@@ -2,12 +2,10 @@ package com.arcao.geocaching4locus;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -275,7 +273,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		fullCacheDataOnShowPreference.setSummary(preparePreferenceSummary(fullCacheDataOnShowPreference.getEntry(), R.string.pref_download_on_show_summary));
 
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
-		versionPreference.setSummary(getVersion(this));
+		versionPreference.setSummary(Geocaching4LocusApplication.getVersion());
 	}
 	
 	protected void prepareAccountPreference() {
@@ -413,15 +411,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 	protected void donatePaypal() {
 		showDialog(DIALOG_DONATE_ID);
-	}
-
-	protected String getVersion(Context context) {
-		try {
-			return context.getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-		} catch (NameNotFoundException e) {
-			Log.e(TAG, e.getMessage(), e);
-			return "?";
-		}
 	}
 
 	@SuppressWarnings("unchecked")

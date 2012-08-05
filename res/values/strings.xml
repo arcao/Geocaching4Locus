@@ -3,7 +3,6 @@
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Downloading caches…</string>
-    <string name="downloading_cache">Downloading cache (%3$d/%4$d): %1$s - %2$s</string>
     <string name="error_locus_not_found">Please install Locus!</string>
     <string name="search_activity_name">Nearest caches</string>
     <string name="error_location">Acquring the location using Wireless network is not allowed! Please enable it in Android settings.</string>
@@ -15,8 +14,6 @@
     <string name="coordinates">Coordinates</string>
     
     <string name="pref_title_geocaching_credentials">Geocaching.com credentials</string>
-    <string name="pref_username">Username</string>
-    <string name="pref_password">Password</string>
     
     <string name="pref_title_filter">Filter</string>
     <string name="pref_distance">Distance</string>
@@ -104,20 +101,12 @@
     <string name="user_waypoint_name">User waypoint %1$d</string>
     <string name="final_location_name">Final location %1$d</string>
     
-    <string name="account_logging_in">Logging in…</string>
-    
     <string name="pref_account_login">Log in</string>
     <string name="pref_account_login_summary">Log in to Geocaching.com account</string>
     <string name="pref_account_logout">Log out</string>
     <string name="pref_account_logout_summary">Logged as %s</string>
-    
-    <string name="login_username">Username</string>
-    <string name="login_password">Password</string>
-    <string name="login_button_cancel">Cancel</string>
-    <string name="login_button_login">Log in</string>
-    
+       
     <string name="login_error_title">Login failed</string>
-    <string name="login_error_credentials">Invalid username or password.</string>
     <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
     
     <string name="error_report_error">Report error</string>
@@ -138,6 +127,7 @@
     <string name="pref_title_container_type_filter">Container size</string>
     <string name="pref_create_spoilers_tab">Create spoilers tab</string>
     <string name="pref_create_spoilers_tab_summary">Create spoilers tab with links to spoiler images</string>
-    <string name="login_show_password">Show password</string>
+    
+    <string name="loading">Loading… Please wait.</string>
 </resources>
 

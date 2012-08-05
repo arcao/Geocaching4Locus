@@ -229,7 +229,7 @@ public class SearchGeocacheService extends AbstractService {
 		
 		ErrorReporter.getInstance().putCustomData("source", "search;" + latitude + ";" + longitude);
 
-		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
+		GeocachingApi api = new LiveGeocachingApi();
 		
 		int attempt = 0;
 		

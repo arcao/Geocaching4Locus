@@ -1,5 +1,7 @@
 package com.arcao.geocaching4locus;
 
+import java.util.UUID;
+
 import org.acra.ACRA;
 import org.acra.ErrorReporter;
 import org.acra.ReportingInteractionMode;
@@ -8,7 +10,11 @@ import org.acra.annotation.ReportsCrashes;
 import android.Manifest.permission;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.arcao.geocaching4locus.authentication.helper.AccountAuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
@@ -29,8 +35,11 @@ import com.arcao.geocaching4locus.constants.AppConstants;
     resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
 )
 public class Geocaching4LocusApplication extends Application {
+  private static final String TAG = "G4L|Geocaching4LocusApplication";
+  
 	private static Context context;
 	private static AuthenticatorHelper authenticatorHelper;
+	private static String deviceId;
 
 	@Override
 	public void onCreate() {
@@ -52,6 +61,8 @@ public class Geocaching4LocusApplication extends Application {
 			ErrorReporter.getInstance().putCustomData("userName", authenticatorHelper.getAccount().name);
 		}
 		
+		System.setProperty("debug", "1");
+		
 		super.onCreate();
 	}
 	
@@ -61,5 +72,29 @@ public class Geocaching4LocusApplication extends Application {
 	
 	public static AuthenticatorHelper getAuthenticatorHelper() {
 		return authenticatorHelper;
+	}
+	
+	public static String getDeviceId() {
+    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+    
+    if (deviceId == null) {
+      deviceId = pref.getString("device_id", null);
+    }
+    
+    if (deviceId == null) {   
+      deviceId = UUID.randomUUID().toString();
+      pref.edit().putString("device_id", deviceId).commit();
+    }
+    
+    return deviceId;
+  }
+
+	public static String getVersion() {
+	  try {
+	    return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+	  } catch (NameNotFoundException e) {
+	    Log.e(TAG, e.getMessage(), e);
+	    return "1.0";
+	  }
 	}
 }

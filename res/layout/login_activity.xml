@@ -10,67 +10,9 @@
         android:layout_height="@dimen/title_height"
         layout="@layout/header" />
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/message"
-                style="@style/LoginMessageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_message" />
-
-            <EditText
-                android:id="@+id/username"
-                style="@style/SimpleEditText"
-                android:layout_marginTop="5.0dip"
-                android:hint="@string/login_username"
-                android:imeOptions="actionNext"
-                android:inputType="textNoSuggestions" />
-
-            <EditText
-                android:id="@+id/password"
-                style="@style/SimpleEditText"
-                android:hint="@string/login_password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:nextFocusDown="@+id/login_button" />
-
-            <CheckBox
-                android:id="@+id/passwordCheckbox"
-                style="@style/SimpleCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dip"
-                android:text="@string/login_show_password" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:onClick="onClickCancel"
-                    android:text="@string/login_button_cancel" />
-
-                <Button
-                    android:id="@+id/login_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:onClick="onClickContinue"
-                    android:text="@string/login_button_login" />
-            </RelativeLayout>
-        </LinearLayout>
-    </ScrollView>
+	<FrameLayout android:id="@+id/webViewPlaceholder"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"/>
 
 </LinearLayout>

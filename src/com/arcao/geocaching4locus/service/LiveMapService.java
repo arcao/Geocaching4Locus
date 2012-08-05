@@ -40,7 +40,6 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class LiveMapService extends IntentService {
@@ -171,7 +170,7 @@ public class LiveMapService extends IntentService {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
+		GeocachingApi api = new LiveGeocachingApi();
 		
 		int attempt = 0;
 		

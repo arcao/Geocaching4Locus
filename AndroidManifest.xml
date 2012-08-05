@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.4.2" android:versionCode="26"
+      android:versionName="1.4.2.1" android:versionCode="26"
       android:installLocation="auto">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -94,7 +94,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Dialog.NoTitle" android:noHistory="true"/>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.NoTitle" android:noHistory="true" android:configChanges="keyboard|keyboardHidden|orientation"/>
         <activity android:name="org.acra.CrashReportDialog" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="SendErrorActivity" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
     </application>

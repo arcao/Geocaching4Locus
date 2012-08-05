@@ -308,7 +308,7 @@ public class UpdateActivity extends Activity {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
-			GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
+			GeocachingApi api = new LiveGeocachingApi();
 			
 			int attempt = 0;
 			int current = 0;

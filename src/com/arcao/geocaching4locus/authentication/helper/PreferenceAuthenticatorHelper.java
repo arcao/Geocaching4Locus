@@ -9,11 +9,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
@@ -34,17 +31,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		if (!hasAccount())
 			return null;
 		
-		String token = pref.getString(PrefConstants.SESSION, null);
-		if (token != null)
-			return token;
-		
-		String username = pref.getString(PrefConstants.USERNAME, null);
-		String password = pref.getString(PrefConstants.PASSWORD, null);
-		
-		// try to login		
-		GeocachingApi api = new LiveGeocachingApi(AppConstants.CONSUMER_KEY, AppConstants.LICENCE_KEY);
-		api.openSession(username, password);				
-		return api.getSession();
+		return pref.getString(PrefConstants.SESSION, null);
 	}
 	
 	@Override
@@ -69,7 +56,6 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		
 		Editor editor = pref.edit();
 		editor.putString(PrefConstants.USERNAME, account.name);
-		editor.putString(PrefConstants.PASSWORD, password);
 		editor.remove(PrefConstants.SESSION);
 		editor.commit();
 
@@ -78,13 +64,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	
 	@Override
 	public void setPassword(Account account, String password) {
-		if (!hasAccount())
-			return;
-		
-		Editor editor = pref.edit();
-		editor.putString(PrefConstants.PASSWORD, password);
-		editor.remove(PrefConstants.SESSION);
-		editor.commit();
+	  return;
 	}
 	
 	@Override
@@ -132,5 +112,10 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		editor.remove(PrefConstants.PASSWORD);
 		editor.remove(PrefConstants.SESSION);
 		editor.commit();
+		
+		// remove account when password is set
+		if (pref.contains(PrefConstants.PASSWORD)) {
+		  removeAccount();
+		}
 	}
 }

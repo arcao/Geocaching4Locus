@@ -64,7 +64,7 @@
 	<PreferenceCategory android:title="@string/pref_title_about">
 	    <Preference android:title="@string/pref_version" android:key="about_version"/>
 	    <Preference android:title="@string/pref_author" android:summary="Arcao"/>
-	    <Preference android:title="@string/pref_website" android:summary="http://g4l.arcao.com/" android:key="about_website"/>
+	    <Preference android:title="@string/pref_website" android:summary="" android:key="about_website"/>
 	    <Preference android:title="@string/pref_donate_paypal" android:summary="@string/pref_donate_paypal_summary" android:key="about_donate_paypal"/>
 	</PreferenceCategory>
 </PreferenceScreen>

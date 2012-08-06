@@ -21,6 +21,6 @@ public interface AppConstants {
 	static final String ERROR_FORM_KEY = "dFJfSDQzTlI2ZzhxaFJndm1MYjhkWHc6MQ";
 
 	static final Uri MANUAL_URI = Uri.parse("http://geocaching4locus.eu/manual/");
-	static final Uri WEBSITE_URI = Uri.parse("http://g4l.arcao.com");
+	static final Uri WEBSITE_URI = Uri.parse("http://geocaching4locus.eu/");
 	static final String DONATE_PAYPAL_URI = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=arcao%%40arcao%%2ecom&lc=CZ&item_name=Geocaching4Locus&item_number=g4l&currency_code=%s&bn=PP%%2dDonationsBF%%3abtn_donateCC_LG%%2egif%%3aNonHosted";	
 }

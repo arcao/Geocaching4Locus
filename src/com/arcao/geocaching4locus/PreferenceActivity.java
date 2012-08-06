@@ -184,6 +184,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
+		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());
 
 		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 		donatePaypalPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

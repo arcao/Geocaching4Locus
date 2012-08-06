@@ -2,6 +2,11 @@ package com.arcao.geocaching4locus;
 
 import java.util.UUID;
 
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+
 import org.acra.ACRA;
 import org.acra.ErrorReporter;
 import org.acra.ReportingInteractionMode;
@@ -40,6 +45,10 @@ public class Geocaching4LocusApplication extends Application {
 	private static Context context;
 	private static AuthenticatorHelper authenticatorHelper;
 	private static String deviceId;
+	
+  private static OAuthConsumer oAuthConsumer;
+  private static OAuthProvider oAuthProvider;
+
 
 	@Override
 	public void onCreate() {
@@ -97,4 +106,17 @@ public class Geocaching4LocusApplication extends Application {
 	    return "1.0";
 	  }
 	}
+	
+	public static OAuthConsumer getOAuthConsumer() {
+	  if (oAuthConsumer == null)
+	    oAuthConsumer = new CommonsHttpOAuthConsumer(AppConstants.OAUTH_CONSUMER_KEY, AppConstants.OAUTH_CONSUMER_SECRET);
+	    
+    return oAuthConsumer;
+  }
+	
+	public static OAuthProvider getOAuthProvider() {
+	  if (oAuthProvider == null)
+	    oAuthProvider = new CommonsHttpOAuthProvider(AppConstants.OAUTH_REQUEST_URL, AppConstants.OAUTH_ACCESS_URL, AppConstants.OAUTH_AUTHORIZE_URL);
+    return oAuthProvider;
+  }
 }

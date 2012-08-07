@@ -12,8 +12,6 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -168,22 +166,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     finish();
   }
   
-  protected void tryOpenStockBrowser(final Uri uri) {
-    final Intent stockBrowser = new Intent()
-        .setComponent(new ComponentName("com.android.browser",
-                        "com.android.browser.BrowserActivity"))
-        .setData(uri)
-        .setAction(Intent.ACTION_VIEW)
-        .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-    // try the stock browser first, fall back to implicit intent if not found
-    try {
-        startActivity(stockBrowser);
-    } catch (ActivityNotFoundException e) {
-        Log.w(TAG, "default browser not found, falling back");
-        startActivity(new Intent(Intent.ACTION_VIEW, uri).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-    }
-}
+  protected void openUriInBrowser(final Uri uri) {
+    startActivity(new Intent(Intent.ACTION_VIEW, uri).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+  }
 
   static class OAuthTask extends UserTask<String, Void, String[]> {
     private AuthenticatorActivity activity;
@@ -246,7 +231,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         
         activity.authUrl = result[0];
         
-        activity.tryOpenStockBrowser(Uri.parse(result[0]));
+        activity.openUriInBrowser(Uri.parse(result[0]));
         activity.finish();
       } else if (result.length == 2) {
         activity.storeToken(result[0], result[1]);

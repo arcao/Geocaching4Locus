@@ -88,11 +88,13 @@ public class UpdateActivity extends Activity {
       
       // remove points without geocaching data
       if (pointsData != null && pointsData.size() > 0) {
-      	for(PointsData data : pointsData) {
-      		for (Point p : data.getPoints()) {
-      			oldPoints.add(p);
-      		}
-      	}
+        for(PointsData data : pointsData) {
+          for (Point p : data.getPoints()) {
+            if (p.getGeocachingData() != null) {
+              oldPoints.add(p);
+            }
+          }
+        }
       }
 
       cacheId = new String[oldPoints.size()];

@@ -25,6 +25,7 @@ import com.arcao.geocaching4locus.authentication.helper.AccountAuthenticatorHelp
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.constants.PrefConstants;
 
 @ReportsCrashes(
 		formKey = AppConstants.ERROR_FORM_KEY,
@@ -119,4 +120,35 @@ public class Geocaching4LocusApplication extends Application {
 	    oAuthProvider = new CommonsHttpOAuthProvider(AppConstants.OAUTH_REQUEST_URL, AppConstants.OAUTH_ACCESS_URL, AppConstants.OAUTH_AUTHORIZE_URL);
     return oAuthProvider;
   }
+	
+  /**
+   * Some lowend phones can kill the app so if is necessary we must temporary store Token and Token secret 
+   * @param consumer consumer object with valid Token and Token secret
+   */
+	public static void storeRequestTokens(OAuthConsumer consumer) {
+	  if (consumer.getToken() == null || consumer.getTokenSecret() == null)
+      return;
+	  
+	  SharedPreferences pref = context.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+	  
+	  pref.edit()
+	    .putString(PrefConstants.OAUTH_TOKEN, consumer.getToken())
+	    .putString(PrefConstants.OAUTH_TOKEN_SECRET, consumer.getTokenSecret())
+	    .commit();
+	}
+	
+	/**
+	 * Some lowend phones can kill the app so if is necessary we must load temporary saved tokens back to consumer 
+	 * @param consumer consumer object where will be Token and Token secret stored
+	 */
+	public static void loadRequestTokensIfNecessary(OAuthConsumer consumer) {
+	  if (consumer.getToken() != null && consumer.getTokenSecret() != null)
+	    return;
+	  
+	  SharedPreferences pref = context.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+	  consumer.setTokenWithSecret(
+	      pref.getString(PrefConstants.OAUTH_TOKEN, null),
+	      pref.getString(PrefConstants.OAUTH_TOKEN_SECRET, null)
+	  );
+	}
 }

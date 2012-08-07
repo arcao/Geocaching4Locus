@@ -213,10 +213,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
       OAuthProvider provider = Geocaching4LocusApplication.getOAuthProvider();
       
       if (params.length == 0) {
-        return new String[] { 
-            provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL)
-        };
+        String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL); 
+        Geocaching4LocusApplication.storeRequestTokens(consumer);
+        return new String[] { authUrl };
       } else {
+        Geocaching4LocusApplication.loadRequestTokensIfNecessary(consumer);
         provider.retrieveAccessToken(consumer, params[0]);
         
         // get account name

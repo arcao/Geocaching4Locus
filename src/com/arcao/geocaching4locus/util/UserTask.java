@@ -497,6 +497,16 @@ public abstract class UserTask<Params, Progress, Result> {
 		onPostExecute(result);
 		mStatus = Status.FINISHED;
 	}
+	
+	private void exception(Throwable e) {
+	  onException(e);
+	  mStatus = Status.FINISHED;
+	}
+	
+	private void cancel() {
+	  onCancelled();
+	  mStatus = Status.FINISHED;
+	}
 
 	private static class InternalHandler<Params, Progress, Result> extends Handler {
 		@SuppressWarnings("unchecked")
@@ -513,11 +523,11 @@ public abstract class UserTask<Params, Progress, Result> {
 					result.mTask.onProgressUpdate((Progress[]) result.mData);
 					break;
 				case MESSAGE_POST_CANCEL:
-					result.mTask.onCancelled();
+					result.mTask.cancel();
 					result.mTask.onFinally();
 					break;
 				case MESSAGE_POST_EXCEPTION:
-					result.mTask.onException(result.mException);
+					result.mTask.exception(result.mException);
 					result.mTask.onFinally();
 					break;
 			}

@@ -116,8 +116,11 @@ public class Geocaching4LocusApplication extends Application {
   }
 	
 	public static OAuthProvider getOAuthProvider() {
-	  if (oAuthProvider == null)
+	  if (oAuthProvider == null) {
 	    oAuthProvider = new CommonsHttpOAuthProvider(AppConstants.OAUTH_REQUEST_URL, AppConstants.OAUTH_ACCESS_URL, AppConstants.OAUTH_AUTHORIZE_URL);
+	    // always use OAuth 1.0a
+	    oAuthProvider.setOAuth10a(true);
+	  }
     return oAuthProvider;
   }
 	

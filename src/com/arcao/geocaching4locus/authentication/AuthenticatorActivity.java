@@ -4,6 +4,7 @@ import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
 
 import org.acra.ErrorReporter;
 
@@ -43,6 +44,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
   public static final int DIALOG_ERROR_CREDENTIALS_ID = 1;
   public static final int DIALOG_ERROR_NETWORK_ID = 2;
   public static final int DIALOG_ERROR_WRONG_INPUT_ID = 3;
+  
+  public static final int ERROR_ACTIVITY_REQUEST_CODE = 1;
 
   protected OAuthTask task;
   
@@ -80,7 +83,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
       task.execute();
     }
   }
-
   
   @Override
   public Object onRetainNonConfigurationInstance() {
@@ -197,24 +199,33 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
       OAuthConsumer consumer = Geocaching4LocusApplication.getOAuthConsumer();
       OAuthProvider provider = Geocaching4LocusApplication.getOAuthProvider();
       
-      if (params.length == 0) {
-        String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL); 
-        Geocaching4LocusApplication.storeRequestTokens(consumer);
-        return new String[] { authUrl };
-      } else {
-        Geocaching4LocusApplication.loadRequestTokensIfNecessary(consumer);
-        provider.retrieveAccessToken(consumer, params[0]);
+      try {
+        if (params.length == 0) {
+          String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL); 
+          Geocaching4LocusApplication.storeRequestTokens(consumer);
+          return new String[] { authUrl };
+        } else {
+          Geocaching4LocusApplication.loadRequestTokensIfNecessary(consumer);
+          provider.retrieveAccessToken(consumer, params[0]);
+          
+          // get account name
+          GeocachingApi api = new LiveGeocachingApi();
+          api.openSession(consumer.getToken());
+          
+          UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());
+          
+          return new String[] { 
+              userProfile.getUser().getUserName(),
+              api.getSession()
+          };
+        }
+      } catch (OAuthExpectationFailedException e) {
+        if (provider.getResponseParameters().containsKey(AppConstants.OAUTH_ERROR_MESSAGE_PARAMETER)) {
+          throw new OAuthExpectationFailedException("Request token or token secret not set in server reply. " 
+              + provider.getResponseParameters().getFirst(AppConstants.OAUTH_ERROR_MESSAGE_PARAMETER));
+        }
         
-        // get account name
-        GeocachingApi api = new LiveGeocachingApi();
-        api.openSession(consumer.getToken());
-        
-        UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());
-        
-        return new String[] { 
-            userProfile.getUser().getUserName(),
-            api.getSession()
-        };
+        throw e;
       }
     }
 
@@ -274,14 +285,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         if (message == null)
           message = "";
 
-        activity.startActivity(ErrorActivity.createErrorIntent(activity, R.string.error,
-            String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e));
-        
-        activity.startActivity(new Intent().setClass(activity.getApplicationContext(), PreferenceActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
+        activity.startActivity(ErrorActivity.createErrorIntent(activity, 0,
+            String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), true, e));
         activity.finish();
       }
-      
     }
   }
 }

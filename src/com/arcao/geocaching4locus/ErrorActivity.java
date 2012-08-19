@@ -43,7 +43,6 @@ public class ErrorActivity extends Activity {
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this)
 					.setTitle(R.string.error_title)
-					.setMessage(Html.fromHtml(String.format(getString(resId), additionalMessage)))
 					.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {			
@@ -51,14 +50,20 @@ public class ErrorActivity extends Activity {
 							
 							if (openPreference) {
 								Intent intent = new Intent(ErrorActivity.this, PreferenceActivity.class);
-								intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+								intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 								startActivity(intent);
 							}
 							finish();
 						}
 					})
 					.setCancelable(false);
-					
+				
+				if (resId != 0) {
+          builder.setMessage(Html.fromHtml(String.format(getString(resId), additionalMessage)));
+        } else {
+          builder.setMessage(Html.fromHtml(additionalMessage));
+        }
+				
 				if (t != null) {
 					builder.setNeutralButton(R.string.error_report_error, new DialogInterface.OnClickListener() {
 						@Override

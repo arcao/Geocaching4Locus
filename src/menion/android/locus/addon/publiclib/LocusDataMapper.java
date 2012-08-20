@@ -77,6 +77,11 @@ public class LocusDataMapper {
 
 		PointGeocachingData d = new PointGeocachingData();
 		d.cacheID = cache.getCacheCode();
+
+		long id = GeocachingUtils.cacheCodeToCacheId(d.cacheID);
+		if (id < Integer.MAX_VALUE)
+		  d.id = (int) id; 
+
 		d.name = cache.getName();
 		d.type = toLocusCacheType(cache.getCacheType());
 		d.difficulty = cache.getDifficultyRating();

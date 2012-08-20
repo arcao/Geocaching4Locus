@@ -146,7 +146,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		imperialUnitsPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float distance = Float.parseFloat(filterDistancePreference.getText());
+				float distance;
+				try {
+					distance = Float.parseFloat(filterDistancePreference.getText());
+				} catch (NumberFormatException e) {
+					Log.e(TAG, e.getMessage(), e);
+					distance = 100;
+				}
+				
 				if (((Boolean) newValue)) {
 					filterDistancePreference.setText(Float.toString(distance / 1.609344F));
 					filterDistancePreference.setSummary(preparePreferenceSummary(Float.toString(distance / 1.609344F) + UNIT_MILES, R.string.pref_distance_summary_miles));

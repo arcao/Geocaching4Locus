@@ -186,9 +186,10 @@ public class SearchGeocacheService extends AbstractService {
 				intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
 			}
 
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-			DisplayDataExtended.sendData(getApplication(), intent, importCaches);
+			if (intent != null) {
+			  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			  DisplayDataExtended.sendData(getApplication(), intent, importCaches);
+			}
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
 		}

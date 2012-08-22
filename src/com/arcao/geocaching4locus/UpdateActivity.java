@@ -293,9 +293,11 @@ public class UpdateActivity extends Activity {
 				intent = DisplayDataExtended.prepareDataCursor(pointDataCollection, DataStorageProvider.URI);
 			}
 
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-			DisplayDataExtended.sendData(activity, intent, true);
+			if (intent != null) {
+			  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			  DisplayDataExtended.sendData(activity, intent, true);
+			}
+			
 			activity.finish();
 			return;			
 		}

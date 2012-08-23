@@ -117,7 +117,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="crash_notif_text">Klik hier aub om het probleem te helpen oplossen</string>
     
     <string name="crash_dialog_title">Geocaching4Locus is gecrashed</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
+    <string name="crash_dialog_text">Er is een onbekende fout opgetreden welke de applicatie heeft doen stoppen. Gelieve ons te helpen om dit probleem op te lossen door ons de fout gegevens te sturen, je hoeft enkel op \'OK\' te klikken.</string>
     <string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
     <string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
     
@@ -125,10 +125,10 @@ Gelieve het in te schakelen in Android instellingen.</string>
 
     <string name="update_caches_progress">Bezig met updaten van caches...</string>
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
-    <string name="pref_title_container_type_filter">Container size</string>
-    <string name="pref_create_images_tab">Create images tab</string>
-    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
+    <string name="pref_title_container_type_filter">Container grootte</string>
+    <string name="pref_create_images_tab">Maak afbeeldingen tab</string>
+    <string name="pref_create_images_tab_summary">Maak afbeeldingen tab in cache venster</string>
     
-    <string name="loading">Loading, please wait…</string>
+    <string name="loading">Bezig met laden, gelieve te wachten...</string>
 </resources>
 

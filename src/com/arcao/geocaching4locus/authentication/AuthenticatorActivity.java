@@ -191,6 +191,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
     protected void onPreExecute() {
       super.onPreExecute();
 
+			if (activity.isFinishing()) {
+				cancel(true);
+				return;
+			}
+      
       activity.showDialog(DIALOG_PROGRESS_ID);
     }
 

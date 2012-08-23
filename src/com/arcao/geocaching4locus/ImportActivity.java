@@ -136,6 +136,11 @@ public class ImportActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			
+			if (activity.isFinishing()) {
+				cancel(true);
+				return;
+			}
 
 			activity.showDialog(DIALOG_PROGRESS_ID);
 			

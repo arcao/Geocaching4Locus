@@ -227,6 +227,11 @@ public class UpdateActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			
+			if (activity.isFinishing()) {
+				cancel(true);
+				return;
+			}
+			
 			activity.showDialog(DIALOG_PROGRESS_ID);
 			
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);

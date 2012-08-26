@@ -58,7 +58,7 @@
 	    <!-- <com.hlidskialf.android.preference.SeekBarPreference android:key="downloading_count_of_trackable_logs" android:max="50" android:title="@string/pref_count_of_trackable_logs" android:text="@string/pref_count_of_trackable_logs_text" android:dialogMessage="@string/pref_count_of_trackable_logs_summary" android:defaultValue="10" android:summary="@string/pref_count_of_trackable_logs_summary"/> -->
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">
-		<CheckBoxPreference android:key="compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>
+		<CheckBoxPreference android:key="use_compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>
 		<CheckBoxPreference android:key="imperial_units" android:summary="@string/pref_imperial_units_summary" android:title="@string/pref_imperial_units"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_about">

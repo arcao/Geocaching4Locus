@@ -24,7 +24,7 @@ import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.PreferenceActivity;
@@ -214,7 +214,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
           provider.retrieveAccessToken(consumer, params[0]);
           
           // get account name
-          GeocachingApi api = new LiveGeocachingApi();
+          GeocachingApi api = LiveGeocachingApiFactory.create();
           api.openSession(consumer.getToken());
           
           UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());

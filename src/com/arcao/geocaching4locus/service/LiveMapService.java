@@ -26,7 +26,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
@@ -170,7 +170,7 @@ public class LiveMapService extends IntentService {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		GeocachingApi api = new LiveGeocachingApi();
+		GeocachingApi api = LiveGeocachingApiFactory.create();
 		
 		int attempt = 0;
 		

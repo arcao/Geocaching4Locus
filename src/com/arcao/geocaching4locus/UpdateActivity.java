@@ -31,7 +31,7 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
+import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -317,7 +317,7 @@ public class UpdateActivity extends Activity {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
-			GeocachingApi api = new LiveGeocachingApi();
+			GeocachingApi api = LiveGeocachingApiFactory.create();
 			
 			int attempt = 0;
 			int current = 0;

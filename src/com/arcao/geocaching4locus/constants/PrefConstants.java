@@ -34,6 +34,7 @@ public interface PrefConstants {
 	static final String DOWNLOADING_CREATE_IMAGES_TAB = "downloading_create_images_tab";
 
 	static final String IMPERIAL_UNITS = "imperial_units";
+	static final String USE_COMPRESSION = "use_compression";
 
 	static final String ABOUT_VERSION = "about_version";
 	static final String ABOUT_WEBSITE = "about_website";

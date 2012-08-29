@@ -1,5 +1,9 @@
 package com.arcao.geocaching4locus.authentication;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Date;
+
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
@@ -7,6 +11,7 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 
 import org.acra.ErrorReporter;
+import org.apache.http.impl.cookie.DateUtils;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -204,14 +209,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
       OAuthConsumer consumer = Geocaching4LocusApplication.getOAuthConsumer();
       OAuthProvider provider = Geocaching4LocusApplication.getOAuthProvider();
       
+      // we use server time for OAuth timestamp because device can have wrong timezone or time
+      String timestamp = Long.toString(getServerDate(AppConstants.GEOCACHING_WEBSITE_URL).getTime() / 1000);
+      
       try {
         if (params.length == 0) {
-          String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL); 
+          String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL, OAuth.OAUTH_TIMESTAMP, timestamp); 
           Geocaching4LocusApplication.storeRequestTokens(consumer);
           return new String[] { authUrl };
         } else {
           Geocaching4LocusApplication.loadRequestTokensIfNecessary(consumer);
-          provider.retrieveAccessToken(consumer, params[0]);
+          provider.retrieveAccessToken(consumer, params[0], OAuth.OAUTH_TIMESTAMP, timestamp);
           
           // get account name
           GeocachingApi api = LiveGeocachingApiFactory.create();
@@ -295,5 +303,33 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
         activity.finish();
       }
     }
-  }
+    
+		private static Date getServerDate(String url) {
+			HttpURLConnection c = null;
+
+			try {
+				Log.i(TAG, "Getting server time from url: " + url);
+				c = (HttpURLConnection) new URL(url).openConnection();
+				c.setRequestMethod("HEAD");
+				c.setDoInput(false);
+				c.setDoOutput(false);
+				c.connect();
+				if (c.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					String date = c.getHeaderField("Date");
+					if (date != null) {
+						Log.i(TAG, "We got time: " + date);
+						return DateUtils.parseDate(date);
+					}
+				}
+			} catch (Exception e) {
+				new NetworkException(e.getMessage(), e);
+			} finally {
+				if (c != null)
+					c.disconnect();
+			}
+
+			Log.e(TAG, "No Date header found in a response, used device time instead.");
+			return new Date();
+		}
+	}
 }

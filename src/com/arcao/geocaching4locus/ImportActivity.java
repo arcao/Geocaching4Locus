@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import menion.android.locus.addon.publiclib.DisplayData;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
+import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
 
@@ -115,7 +116,7 @@ public class ImportActivity extends Activity {
 	}
 
 	
-	static class ImportTask extends UserTask<String, Void, Geocache> {
+	static class ImportTask extends UserTask<String, Void, Point> {
 		private int logCount;
 		
 		private ImportActivity activity;
@@ -150,7 +151,7 @@ public class ImportActivity extends Activity {
 		}	
 		
 		@Override
-		protected void onPostExecute(Geocache result) {
+		protected void onPostExecute(Point result) {
 			super.onPostExecute(result);
 			
 			try {
@@ -159,7 +160,7 @@ public class ImportActivity extends Activity {
 			
 			if (result != null) {			
 				PointsData pointsData = new PointsData(TAG);
-				pointsData.addPoint(LocusDataMapper.toLocusPoint(activity, result));
+				pointsData.addPoint(result);
 				
 				try {
 					DisplayData.sendData(activity, pointsData, true);
@@ -172,7 +173,7 @@ public class ImportActivity extends Activity {
 		}
 
 		@Override
-		protected Geocache doInBackground(String... params) throws Exception {
+		protected Point doInBackground(String... params) throws Exception {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
@@ -203,7 +204,7 @@ public class ImportActivity extends Activity {
 			if (isCancelled())
 				return null;
 			
-			return cache;
+			return LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);
 		}
 		
 		@Override

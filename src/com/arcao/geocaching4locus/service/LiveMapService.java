@@ -99,12 +99,11 @@ public class LiveMapService extends IntentService {
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 		
 		try {			
-			List<SimpleGeocache> caches = downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
+			List<Point> points = downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 			
 			PointsData pd = new PointsData(TAG);
-			for (SimpleGeocache cache : caches) {
-				Point p = LocusDataMapper.toLocusPoint(this, cache);
-				p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
+			for (Point p : points) {
+				p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.getGeocachingData().cacheID);
 				pd.addPoint(p);
 			}
 
@@ -164,8 +163,8 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new ContainerType[0]);
 	}
 	
-	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
-		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
+	protected List<Point> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
+		final List<Point> points = new ArrayList<Point>();
 
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -204,18 +203,18 @@ public class LiveMapService extends IntentService {
 						cachesToAdd = api.getMoreGeocaches(true, current, perPage, 0, 0);
 					}
 									
-					caches.addAll(cachesToAdd);
+					points.addAll(LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd));
 					
 					if (cachesToAdd.size() != perPage)
 						break;
 	
 					current = current + perPage;
 				}
-				int count = caches.size();
+				int count = points.size();
 	
 				Log.i(TAG, "found caches: " + count);
 	
-				return caches;
+				return points;
 			} catch (InvalidSessionException e) {
 				Log.e(TAG, e.getMessage(), e);
 				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
@@ -231,7 +230,7 @@ public class LiveMapService extends IntentService {
 			}
 		}
 		
-		return caches; 
+		return points; 
 	}
 	
 	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {

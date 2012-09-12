@@ -206,7 +206,7 @@ public class UpdateActivity extends Activity {
 	}
 
 	
-	static class UpdateTask extends UserTask<String, Integer, List<Geocache>> {
+	static class UpdateTask extends UserTask<String, Integer, List<Point>> {
 		private boolean replaceCache;
 		private int logCount;
 		private UpdateActivity activity;
@@ -241,7 +241,7 @@ public class UpdateActivity extends Activity {
 		}	
 		
 		@Override
-		protected void onPostExecute(List<Geocache> result) {
+		protected void onPostExecute(List<Point> result) {
 			super.onPostExecute(result);
 			
 			try {
@@ -258,7 +258,7 @@ public class UpdateActivity extends Activity {
 			PointsData points = new PointsData("G4L");
 			
 			for (int i = 0; i < result.size(); i++) {
-				Point p = LocusDataMapper.toLocusPoint(activity, result.get(i));
+				Point p = result.get(i);
 				
 				// if updated cache doesn't exist use old
 				if (p == null) {
@@ -313,7 +313,7 @@ public class UpdateActivity extends Activity {
 		}
 
 		@Override
-		protected List<Geocache> doInBackground(String... params) throws Exception {
+		protected List<Point> doInBackground(String... params) throws Exception {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
@@ -324,7 +324,7 @@ public class UpdateActivity extends Activity {
 			int count = params.length;
 			
 			while (++attempt <= 2) {
-				List<Geocache> result = new ArrayList<Geocache>();
+				List<Point> points = new ArrayList<Point>();
 
 				try {
 					login(api);
@@ -346,13 +346,13 @@ public class UpdateActivity extends Activity {
 						if (cachesToAdd.size() == 0)
 							break;
 						
-						result.addAll(cachesToAdd);
+						points.addAll(LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd));
 						
 						current = current + perPage;		
 					}
-					Log.i(TAG, "updated caches: " + result.size());
+					Log.i(TAG, "updated caches: " + points.size());
 		
-					return result;
+					return points;
 				} catch (InvalidSessionException e) {
 					Log.e(TAG, e.getMessage(), e);
 					Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();

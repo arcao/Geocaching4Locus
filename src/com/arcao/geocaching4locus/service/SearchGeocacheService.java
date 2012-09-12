@@ -100,7 +100,7 @@ public class SearchGeocacheService extends AbstractService {
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 
 		sendProgressUpdate();
-		List<SimpleGeocache> caches = downloadCaches(latitude, longitude);
+		List<Point> caches = downloadCaches(latitude, longitude);
 		sendProgressComplete(count);
 		if (caches != null && caches.size() > 0)
 			callLocus(caches);
@@ -148,7 +148,7 @@ public class SearchGeocacheService extends AbstractService {
 		containerTypes = getContainerTypeFilterResult(prefs);
 	}
 
-	private void callLocus(List<SimpleGeocache> caches) {
+	private void callLocus(List<Point> points) {
 		try {
 			ArrayList<PointsData> pointDataCollection = new ArrayList<PointsData>();
 
@@ -157,24 +157,22 @@ public class SearchGeocacheService extends AbstractService {
 			// so we split points into several PointsData object with same uniqueName
 			// - Locus merge it automatically
 			// since version 1.9.5
-			PointsData points = new PointsData("G4L");
-			for (SimpleGeocache cache : caches) {
-				if (points.getPoints().size() >= 50) {
-					pointDataCollection.add(points);
-					points = new PointsData("G4L");
+			PointsData pointsData = new PointsData("G4L");
+			for (Point p : points) {
+				if (pointsData.getPoints().size() >= 50) {
+					pointDataCollection.add(pointsData);
+					pointsData = new PointsData("G4L");
 				}
-				// convert SimpleGeocache to Point
-				Point p = LocusDataMapper.toLocusPoint(this, cache);
 				
 				if (simpleCacheData) {
-					p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
+					p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.getGeocachingData().cacheID);
 				}
 
-				points.addPoint(p);
+				pointsData.addPoint(p);
 			}
 
-			if (!points.getPoints().isEmpty())
-				pointDataCollection.add(points);
+			if (!pointsData.getPoints().isEmpty())
+				pointDataCollection.add(pointsData);
 
 			Intent intent = null;
 			
@@ -219,8 +217,8 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new ContainerType[0]);
 	}
 
-	protected List<SimpleGeocache> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
-		final List<SimpleGeocache> caches = new ArrayList<SimpleGeocache>();
+	protected List<Point> downloadCaches(double latitude, double longitude) throws GeocachingApiException {
+		final List<Point> points = new ArrayList<Point>();
 
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -278,17 +276,17 @@ public class SearchGeocacheService extends AbstractService {
 							break;
 					}
 					
-					caches.addAll(cachesToAdd);
+					points.addAll(LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd));
 	
 					current = current + perPage;
 	
 					sendProgressUpdate();
 				}
-				int count = caches.size();
+				int count = points.size();
 	
 				Log.i(TAG, "found caches: " + count);
 	
-				return caches;
+				return points;
 			} catch (InvalidSessionException e) {
 				Log.e(TAG, e.getMessage(), e);
 				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();

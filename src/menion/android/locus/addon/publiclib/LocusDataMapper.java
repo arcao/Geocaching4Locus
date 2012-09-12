@@ -65,6 +65,15 @@ public class LocusDataMapper {
 	
 	protected static File locusGeocachingDataBasePath;
 	
+	public static List<Point> toLocusPoints(Context context, List<? extends SimpleGeocache> caches) {
+		List<Point> points = new ArrayList<Point>();
+		for (SimpleGeocache cache : caches) {
+			points.add(toLocusPoint(context, cache));
+		}
+		
+		return points;
+	}
+	
 	public static Point toLocusPoint(Context context, SimpleGeocache cache) {
 		if (cache == null)
 			return null;
@@ -78,7 +87,7 @@ public class LocusDataMapper {
 		PointGeocachingData d = new PointGeocachingData();
 		d.cacheID = cache.getCacheCode();
 
-		long id = GeocachingUtils.cacheCodeToCacheId(d.cacheID);
+		long id = cache.getId();
 		if (id < Integer.MAX_VALUE)
 		  d.id = (int) id; 
 
@@ -248,17 +257,22 @@ public class LocusDataMapper {
 		t.goal = trackable.getGoal();
 		t.imgUrl = trackable.getTrackableTypeImage();
 		t.name = trackable.getName();
-		//p.origin = 
+		//t.origin = 
 		if (trackable.getOwner() != null) {
 			t.owner = trackable.getOwner().getUserName();
 		}
-		//p.released = 
+		t.released = GPX_TIME_FMT.format(trackable.getCreated()); 
 		t.srcDetails = String.format(TRACKABLE_URL, trackable.getTrackingNumber());
 		return t;
 	}
 
 	protected static PointGeocachingDataLog toLocusCacheLog(CacheLog log) {
 		PointGeocachingDataLog l = new PointGeocachingDataLog();
+		
+		long id = log.getId();
+		if (id < Integer.MAX_VALUE) {
+			l.id = (int) id;
+		}
 		
 		l.date = GPX_TIME_FMT.format(log.getVisited());
 		User author = log.getAuthor();

@@ -5,12 +5,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +56,7 @@ import com.arcao.geocaching4locus.util.ReverseListIterator;
 public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
 	
-	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
 	protected static final String GSAK_USERNAME = "gsak";
 	protected static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
@@ -492,11 +494,23 @@ public class LocusDataMapper {
     	fixArchivedCacheLocation(mContext, toPoint, fromPoint);
     	mergeCacheLogs(mContext, toPoint, fromPoint);
     	fixComputedCoordinates(mContext, toPoint, fromPoint);
+    	clearExtraOnDisplayCallback(toPoint);
     	
     	return toPoint;
-    }
+    }    
     
-    public static Point mergeCacheLogs(Context mContext, Point toPoint, Point fromPoint) {
+    public static void clearExtraOnDisplayCallback(Point p) {
+    	try {
+				Field field = Point.class.getDeclaredField("mExtraOnDisplay");
+				field.setAccessible(true);
+				field.set(p, "clear;;;;;");
+			} catch (Exception e) {
+				Log.e(TAG, "Clearing ExtraOnDisplay callback failed.", e);
+			}
+    	
+    }
+
+		public static Point mergeCacheLogs(Context mContext, Point toPoint, Point fromPoint) {
     	// issue #14: Keep cache logs from GSAK when updating cache
     	if (fromPoint.getGeocachingData().logs.size() == 0) 
     		return toPoint;

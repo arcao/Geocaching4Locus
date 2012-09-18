@@ -1,9 +1,17 @@
 package com.arcao.geocaching4locus;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import menion.android.locus.addon.publiclib.DisplayDataExtended;
 import menion.android.locus.addon.publiclib.LocusDataMapper;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.geoData.Point;
+import menion.android.locus.addon.publiclib.geoData.PointsData;
+import menion.android.locus.addon.publiclib.util.PointsDataOutputStream;
 
 import org.acra.ErrorReporter;
 
@@ -26,83 +34,75 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.UserTask;
 
-public class UpdateActivity extends Activity {
+public class UpdateMoreActivity extends Activity {
 	private final static String TAG = "G4L|UpdateActivity";
 	
 	public static String PARAM_CACHE_ID = "cacheId";
-	public static String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 	
 	public static final int DIALOG_PROGRESS_ID = 0;
 	
-	private UpdateTask task;
+	private UpdateMoreTask task;
 	
-	protected Point oldPoint;
+	protected List<Point> oldPoints;
+	protected boolean fromPointsScreen;
+	protected int count;
 	protected ProgressDialog pd;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+			
+		oldPoints = new ArrayList<Point>();
+		String[] cacheId = new String[0];
 		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	
-		String cacheId = null;
+		if (LocusIntents.isIntentPointsScreenTools(getIntent())) {
+      ArrayList<PointsData> pointsData = LocusIntents.handleIntentPointsScreenTools(getIntent());
+      
+      // remove points without geocaching data
+      if (pointsData != null && pointsData.size() > 0) {
+        for(PointsData data : pointsData) {
+          for (Point p : data.getPoints()) {
+            if (p.getGeocachingData() != null) {
+              oldPoints.add(p);
+            }
+          }
+        }
+      }
 
-		if (getIntent().hasExtra(PARAM_CACHE_ID)) {
-			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
-			oldPoint = null;
-			
-		} else if (LocusIntents.isIntentOnPointAction(getIntent())) {
-			Point p = LocusIntents.handleIntentOnPointAction(getIntent()); 
-		
-			if (p != null && p.getGeocachingData() != null) {
-				cacheId = p.getGeocachingData().cacheID; 
-				oldPoint = p;
-			}
-			
-		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
-			cacheId = getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID);
-			oldPoint = null;
-			
-			String repeatUpdate = prefs.getString(
-							PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
-							PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
-
-			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
-				Log.i(TAG, "Updating simple cache on dispaying is not allowed!");
-				setResult(RESULT_CANCELED);
-				finish();
-				return;
-			} else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(repeatUpdate)) {
-				Point p = DisplayDataExtended.loadGeocacheFromCache(this,	cacheId);
-				if (p != null) {
-					Log.i(TAG, "Found cache file for: " + cacheId);
-					setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, false));
-					finish();
-					return;
-				}
+      cacheId = new String[oldPoints.size()];
+      
+      for (int i = 0; i < oldPoints.size(); i++) {
+				cacheId[i] = oldPoints.get(i).getGeocachingData().cacheID;
 			}
 		}
 
-		if (cacheId == null || PARAM_CACHE_ID__DO_NOTHING.equals(cacheId)) {
+		count = cacheId.length;
+
+		if (count == 0) {
 			Log.e(TAG, "cacheId/simpleCacheId not found");
 			setResult(RESULT_CANCELED);
 			finish();
 			return;
 		}
 
-		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
+		ErrorReporter.getInstance().putCustomData("source",
+				"update;" + Arrays.toString(cacheId));
+		ErrorReporter.getInstance().putCustomData("count", String.valueOf(cacheId.length));
 
-		if ((task = (UpdateTask) getLastNonConfigurationInstance()) == null) {
-			Log.i(TAG, "Starting update task for " + cacheId);
-			task = new UpdateTask(this);
+		if ((task = (UpdateMoreTask) getLastNonConfigurationInstance()) == null) {
+			Log.i(TAG, "Starting update task for " + Arrays.toString(cacheId));
+			task = new UpdateMoreTask(this);
 			task.execute(cacheId);
 		} else {
-			Log.i(TAG, "Restarting update task for " + cacheId);
+			Log.i(TAG, "Restarting update task for " + Arrays.toString(cacheId));
 			task.attach(this);
 		}
 	}
@@ -118,8 +118,10 @@ public class UpdateActivity extends Activity {
 		switch (id) {
 			case DIALOG_PROGRESS_ID:
 				ProgressDialog dialog = new ProgressDialog(this);
-			  dialog.setMessage(getText(R.string.update_cache_progress));
-			  dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+				dialog.setMax(count);
+				dialog.setMessage(getText(R.string.update_caches_progress));
+				dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+				dialog.setCancelable(false);
 				dialog.setButton(getText(R.string.cancel_button), new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -151,16 +153,15 @@ public class UpdateActivity extends Activity {
 	}
 
 	
-	static class UpdateTask extends UserTask<String, Void, Point> {
-		private boolean replaceCache;
+	static class UpdateMoreTask extends UserTask<String, Integer, File> {
 		private int logCount;
-		private UpdateActivity activity;
+		private UpdateMoreActivity activity;
 		
-		public UpdateTask(UpdateActivity activity) {
+		public UpdateMoreTask(UpdateMoreActivity activity) {
 			attach(activity);
 		}
 		
-		public void attach(UpdateActivity activity) {
+		public void attach(UpdateMoreActivity activity) {
 			this.activity = activity;			
 		}
 		
@@ -182,11 +183,10 @@ public class UpdateActivity extends Activity {
 			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
 			
 			logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-			replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));								
 		}	
 		
 		@Override
-		protected void onPostExecute(Point result) {
+		protected void onPostExecute(File result) {
 			super.onPostExecute(result);
 			
 			try {
@@ -198,36 +198,96 @@ public class UpdateActivity extends Activity {
 				activity.finish();
 				return;
 			}
-			
-			Point p = LocusDataMapper.mergePoints(activity, result, activity.oldPoint);
-		
-			if (replaceCache) {
-				DisplayDataExtended.storeGeocacheToCache(activity, p);
+						
+			Intent intent = DisplayDataExtended.createDataFileIntent(result);
+			if (intent != null) {
+			  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			  DisplayDataExtended.sendData(activity, intent, true);
 			}
 			
-			activity.setResult(RESULT_OK, LocusIntents.prepareResultExtraOnDisplayIntent(p, replaceCache));
 			activity.finish();
+			return;			
 		}
 		
 		@Override
-		protected Point doInBackground(String... params) throws Exception {
+		protected void onProgressUpdate(Integer... values) {
+			if (activity != null)
+				activity.onUpdateProgress(values[0]);
+		}
+
+		@Override
+		protected File doInBackground(String... params) throws Exception {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
 			GeocachingApi api = LiveGeocachingApiFactory.create();
 			
 			int attempt = 0;
+			int current = 0;
+			int count = params.length;
+			
+			File dataFile = DisplayDataExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
 			
 			while (++attempt <= 2) {
+				PointsDataOutputStream pdos = null;
+
 				try {
 					login(api);
+					
+					pdos = DisplayDataExtended.createDataFile(dataFile);
+					
+					current = 0;
+					while (current < count) {						
+						@SuppressWarnings({ "unchecked", "rawtypes" })
+						List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
+								new CacheCodeFilter(getPagedCaches(params, current, AppConstants.CACHES_PER_REQUEST))
+						});
 						
-					Geocache cache = api.getCache(params[0], logCount, 0);
-						
-					if (isCancelled())
-						return null;
+						if (isCancelled())
+							return null;
 		
-					return LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);						
+						if (cachesToAdd.size() == 0)
+							break;
+						
+						PointsData pointsData = new PointsData(TAG);
+						List<Point> points = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
+						
+						int index = current;
+						for (Point p : points) {
+							Point oldPoint = activity.oldPoints.get(index);
+							
+							// if updated cache doesn't exist use old
+							if (p == null) {
+								p = oldPoint;
+							}
+														
+							p = LocusDataMapper.mergePoints(activity, p, oldPoint);
+							
+							pointsData.addPoint(p);
+							index++;
+						}
+						
+						pdos.write(pointsData);
+						pdos.flush();
+						
+						current = current + cachesToAdd.size();
+						publishProgress(current);
+						
+						// force memory clean
+						cachesToAdd = null;
+						points = null;
+						pointsData = null;
+						
+					}
+					publishProgress(current);
+
+					Log.i(TAG, "updated caches: " + current);
+		
+					if (current > 0) {
+						return dataFile;
+					} else {
+						return null;
+					}
 				} catch (InvalidSessionException e) {
 					Log.e(TAG, e.getMessage(), e);
 					Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
@@ -240,12 +300,25 @@ public class UpdateActivity extends Activity {
 					Log.e(TAG, e.getMessage(), e);
 					
 					return null;
+				} finally {
+					if (pdos != null) {
+						try { pdos.close(); } catch (IOException e) {}
+					}
 				}
 			}
 
 			return null;
 		}
 		
+		protected String[] getPagedCaches(String[] params, int current, int cachesPerRequest) {
+			int count = Math.min(params.length - current, cachesPerRequest);
+			
+			String[] ret = new String[count];
+			System.arraycopy(params,current, ret, 0, count);
+			
+			return ret;
+		}
+
 		@Override
 		protected void onCancelled() {
 			super.onCancelled();

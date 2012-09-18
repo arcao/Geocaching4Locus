@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import menion.android.locus.addon.publiclib.geoData.Point;
 import menion.android.locus.addon.publiclib.geoData.PointsData;
+import menion.android.locus.addon.publiclib.util.PointsDataOutputStream;
 import menion.android.locus.addon.publiclib.utils.DataStorage;
 import android.content.Context;
 import android.content.Intent;
@@ -57,52 +58,45 @@ public class DisplayDataExtended extends DisplayData {
 		if (data == null || data.size() == 0)
 			return null;
 		
-		FileOutputStream os = null;
-		DataOutputStream dos = null;
+		// store data to file
+		PointsDataOutputStream pdos = null;
 		try {
-			if (file.exists())
-				file.delete();
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-
-			os = new FileOutputStream(file, false);
-			dos = new DataOutputStream(os);
-	
-			// write current version
-			dos.writeInt(FILE_VERSION);
-			
-			// write data
-			for (int i = 0; i < data.size(); i++) {
-				// get byte array
-				Parcel par = Parcel.obtain();
-				data.get(i).writeToParcel(par, 0);
-				byte[] byteData = par.marshall();
+			pdos = createDataFile(file);
+			pdos.write(data);
 				
-				// write data
-				dos.writeInt(byteData.length);
-				dos.write(byteData);
-			}
-				
-			os.flush();
+			pdos.flush();
 		} catch (Exception e) {
-			Log.e(TAG, "saveBytesInstant(" + file + ", " + data + ")", e);
+			Log.e(TAG, "prepareDataFile(" + data + "," + file + ")", e);
 			return null;
 		} finally {
 			try {
-				if (dos != null) {
-					dos.close();
+				if (pdos != null) {
+					pdos.close();
 				}
 			} catch (Exception e) {
-				Log.e(TAG, "saveBytesInstant(" + file + ", " + data + ")", e);
+				Log.e(TAG, "prepareDataFile(" + data + "," + file + ")", e);
 			}
 		}
 		
-		// store data to file
+		return createDataFileIntent(file);
+	}
+	
+	public static PointsDataOutputStream createDataFile(File file) throws IOException {
+		if (file.exists())
+			file.delete();
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+
+		return new PointsDataOutputStream(new FileOutputStream(file));
+	}
+	
+	public static Intent createDataFileIntent(File file) {
 		Intent intent = new Intent();
 		intent.putExtra(LocusConst.EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
-		return intent;
+		return intent;		
 	}
+	
 	
 	/**
 	 * Call Locus with specified Intent object. Intent must be prepared with a 
@@ -158,10 +152,13 @@ public class DisplayDataExtended extends DisplayData {
 	 * @return	path to file 
 	 */
 	public static File getCacheFileName(Context context) {
-		if (!isExternalStorageWritable())
-			return context.getCacheDir();
+		File storageDirectory = null;
+		if (isExternalStorageWritable()) {
+			storageDirectory = Environment.getExternalStorageDirectory();
+		} else {
+			storageDirectory = context.getCacheDir();
+		}
 		
-		File storageDirectory = Environment.getExternalStorageDirectory();
 		File cacheFile = new File(storageDirectory, String.format("/Android/data/%s/cache/data.locus", context.getPackageName()));
 		cacheFile.getParentFile().mkdirs();
 		

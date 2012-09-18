@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.provider;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import menion.android.locus.addon.publiclib.geoData.PointsData;
 import menion.android.locus.addon.publiclib.utils.DataCursor;
@@ -15,7 +16,7 @@ import android.util.Log;
 public class DataStorageProvider extends ContentProvider {
 
 	private final static String TAG = "DataStorageProvider";
-	public final static String URI = "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase();
+	public final static String URI = "content://" + DataStorageProvider.class.getCanonicalName().toLowerCase(Locale.US);
 	
 	@Override
 	public Cursor query(Uri aUri, String[] aProjection, String aSelection,

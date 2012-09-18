@@ -20,11 +20,17 @@ public class WherigoServiceException extends IOException {
 	}
 	
 	public WherigoServiceException(int code, String message, Throwable t) {
-		super(message, t);
+		super(message);
+		initCause(t);
 		this.code = code;
 	}
 	
 	public int getCode() {
 		return code;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " (" + code + ")";
 	}
 }

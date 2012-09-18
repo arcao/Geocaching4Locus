@@ -177,10 +177,11 @@ public class ImportActivity extends Activity {
 			if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 				throw new InvalidCredentialsException("Account not found.");
 			
+			WherigoService wherigoService = new WherigoServiceImpl();
+
 			// if it's guid we need to convert to cache code
 			for (int i = 0; i < params.length; i++) {
 				if (!CACHE_CODE_PATTERN.matcher(params[i]).find()) {
-					WherigoService wherigoService = new WherigoServiceImpl();
 					params[i] = wherigoService.getCacheCodeFromGuid(params[i]);
 				}
 			}

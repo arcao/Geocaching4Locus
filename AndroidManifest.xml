@@ -55,8 +55,8 @@
             </intent-filter>
         </activity>
         <activity android:label="@string/preferences" android:theme="@style/Theme.Settings" android:name="PreferenceActivity"/>
-        <activity android:theme="@style/Theme.Invisible" android:name="ErrorActivity" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true" android:noHistory="true"/>
-        <activity android:name="UpdateActivity" android:theme="@style/Theme.Invisible" android:noHistory="true" android:exported="true">
+        <activity android:theme="@style/Theme.Invisible" android:name="ErrorActivity" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
+        <activity android:name="UpdateActivity" android:theme="@style/Theme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
                 <action android:name="menion.android.locus.ON_POINT_ACTION" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -64,13 +64,13 @@
                 <data android:pathPrefix="menion.android.locus/point_geocache" />
             </intent-filter>
         </activity>
-        <activity android:name="UpdateMoreActivity" android:theme="@style/Theme.Invisible" android:noHistory="true" android:exported="true">
+        <activity android:name="UpdateMoreActivity" android:theme="@style/Theme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
                 <action android:name="menion.android.locus.POINTS_SCREEN_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportActivity" android:theme="@style/Theme.Invisible" android:label="@string/locus_import_cache" android:noHistory="true" android:exported="true">
+        <activity android:name=".ImportActivity" android:theme="@style/Theme.Invisible" android:label="@string/locus_import_cache" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

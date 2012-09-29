@@ -106,7 +106,7 @@ public class UpdateMoreActivity extends Activity {
 			task.attach(this);
 		}
 	}
-	
+		
 	@Override
 	public Object onRetainNonConfigurationInstance() {
 		task.detach();
@@ -128,20 +128,11 @@ public class UpdateMoreActivity extends Activity {
 						task.cancel(true);
 					}
 				});
+				pd = dialog;
 				return dialog;
 
 			default:
 				return super.onCreateDialog(id);
-		}
-	}
-	
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		switch (id) {
-			case DIALOG_PROGRESS_ID:
-				pd = (ProgressDialog) dialog;
-			default:
-					super.onPrepareDialog(id, dialog);
 		}
 	}
 	

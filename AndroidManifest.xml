@@ -99,7 +99,6 @@
         <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/Theme.Invisible" android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="x-g4l" android:host="oauth.callback" />

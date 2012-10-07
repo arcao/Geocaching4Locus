@@ -9,7 +9,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -36,8 +38,6 @@ public abstract class AbstractService extends IntentService {
 	private boolean canceled;
 	
 	protected NotificationManager notificationManager;
-	protected RemoteViews contentViews;
-	protected Notification progressNotification;
 
 	protected int notificationId;
 	protected int actionTextId;
@@ -64,44 +64,72 @@ public abstract class AbstractService extends IntentService {
 			
 		canceled = false;
 
-		progressNotification = createProgressNotification(); 
-		startForeground(notificationId, progressNotification);
+		startForeground(notificationId, createProgressNotification(0, 0));
 	}
 
-	protected Notification createProgressNotification() {
-		// extract colors and text sizes for notification
-		extractColors();
-		
-		Notification n = new Notification();
-		
-		n.icon = R.drawable.ic_launcher;
-		n.tickerText = null;
-		n.flags |= Notification.FLAG_ONGOING_EVENT;				
-		n.contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
-		n.contentView.setTextViewText(R.id.progress_title, getText(actionTextId));
-		
-		// correct size and color
-		n.contentView.setTextColor(R.id.progress_title, notification_title_color);
-		n.contentView.setFloat(R.id.progress_title, "setTextSize", notification_title_size);
-		
-		n.contentView.setTextColor(R.id.progress_text, notification_text_color);
+	protected Notification createProgressNotification(int count, int current) {
 		
 		Intent intent = createOngoingEventIntent();
 		if (intent != null)
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+		NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
 		
-		n.contentIntent = PendingIntent.getActivity(getBaseContext(), 0, intent, 0);
-		return n;
+		nb.setSmallIcon(R.drawable.ic_launcher);
+		nb.setOngoing(true);
+		
+		int percent = 0;
+		if (count > 0)
+			percent = ((current * 100) / count);
+		
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			// extract colors and text sizes for notification
+			extractColors();
+
+			RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
+			contentView.setTextViewText(R.id.progress_title, getText(actionTextId));
+			
+			// correct size and color
+			contentView.setTextColor(R.id.progress_title, notification_title_color);
+			contentView.setFloat(R.id.progress_title, "setTextSize", notification_title_size);
+			contentView.setTextColor(R.id.progress_text, notification_text_color);
+			
+			if (count <= 0) {
+				contentView.setProgressBar(R.id.progress_bar, 0, 0, true);
+			} else {
+				contentView.setProgressBar(R.id.progress_bar, count, current, false);
+			}
+			contentView.setTextViewText(R.id.progress_text, percent + "%");
+
+			nb.setContent(contentView);
+		} else {
+			if (count <= 0) {
+				nb.setProgress(0, 0, true);
+			} else {
+				nb.setProgress(count, current, false);
+				nb.setContentText(String.format("%d / %d (%d%%)", current, count, percent));
+			}
+			
+			nb.setContentTitle(getText(actionTextId));
+		}
+
+		
+		nb.setContentIntent(PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
+		return nb.build();
 	}
 	
 	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference, Throwable exception) {
-		Notification n = new Notification();
+		NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
 		
-		n.icon = R.drawable.ic_launcher;
-		n.tickerText = getText(R.string.error_title);
-		n.when = new Date().getTime(); 
-		
+		nb.setSmallIcon(R.drawable.ic_launcher);
+		nb.setOngoing(false);
+		nb.setWhen(new Date().getTime());
+		nb.setTicker(getText(R.string.error_title));
+		nb.setContentTitle(getText(R.string.error_title));
+		nb.setContentText(Html.fromHtml(getString(resErrorId, errorText)));
+			
 		Intent intent = new Intent(this, ErrorActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setAction(ErrorActivity.ACTION_ERROR);
 		intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
 		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
@@ -110,9 +138,9 @@ public abstract class AbstractService extends IntentService {
 		if (exception != null)
 			intent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
 		
-		n.setLatestEventInfo(this, getText(R.string.error_title), Html.fromHtml(getString(resErrorId, errorText)), PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
+		nb.setContentIntent(PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
 		
-		return n;
+		return nb.build();
 	}
 
 	@Override
@@ -154,14 +182,8 @@ public abstract class AbstractService extends IntentService {
 	public void sendProgressUpdate(int current, int count) {
 		if (canceled)
 			return;
-		
-		int percent = 100;
-		if (count > 0)
-			percent = ((current * 100) / count);
-		
-		progressNotification.contentView.setProgressBar(R.id.progress_bar, count, current, false);
-		progressNotification.contentView.setTextViewText(R.id.progress_text, percent + "%");
-		notificationManager.notify(notificationId, progressNotification);
+			
+		notificationManager.notify(notificationId, createProgressNotification(count, current));
 		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
@@ -173,9 +195,7 @@ public abstract class AbstractService extends IntentService {
 	
 	protected void sendProgressComplete(int count) {
 		if (!canceled) {
-			progressNotification.contentView.setProgressBar(R.id.progress_bar, count, count, false);
-			progressNotification.contentView.setTextViewText(R.id.progress_text, "100%");
-			notificationManager.notify(notificationId, progressNotification);
+			notificationManager.notify(notificationId, createProgressNotification(count, count));
 		}
 		
 		Intent broadcastIntent = new Intent();
@@ -248,6 +268,7 @@ public abstract class AbstractService extends IntentService {
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void extractColors() {
 		if (notification_title_color != null && notification_text_color != null)
 			return;

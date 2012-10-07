@@ -101,9 +101,10 @@ public class SearchGeocacheService extends AbstractService {
 
 		sendProgressUpdate();
 		File file = downloadCaches(latitude, longitude);
-		sendProgressComplete(count);
-		if (file != null)
+		if (file != null) {
+			sendProgressComplete(count);
 			callLocus(file);
+		}
 	}
 
 	@Override

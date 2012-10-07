@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -43,7 +44,13 @@ public class MenuActivity extends Activity {
 		boolean activated = !prefs.getBoolean(PrefConstants.LIVE_MAP, false);
 		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
 		
-		((ToggleButton)view).setChecked(activated);
+		if (activated) {
+			Toast.makeText(this, getText(R.string.livemap_activated), Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
+		}
+		
+		finish();
 	}
 	
 	public void onClickManual(View view) {

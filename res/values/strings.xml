@@ -129,5 +129,8 @@
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">Loading, please wait…</string>
+    
+    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map deactivated.</string>
 </resources>
 

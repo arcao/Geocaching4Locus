@@ -3,24 +3,15 @@ package com.arcao.geocaching4locus;
 import menion.android.locus.addon.publiclib.LocusIntents;
 import menion.android.locus.addon.publiclib.LocusIntents.OnIntentMainFunction;
 import menion.android.locus.addon.publiclib.geoData.Point;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -33,34 +24,40 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.receiver.MainActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
+import com.arcao.geocaching4locus.task.LocationUpdateTask;
+import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-public class MainActivity extends Activity implements LocationListener, OnIntentMainFunction {
+public class MainActivity extends FragmentActivity implements LocationUpdate, OnIntentMainFunction {
 	private static final String TAG = "G4L|MainActivity";
 	
+	public static int DOWNLOAD_PROGRESS_DIALOG_ID = 1;
+	
 	private Resources res;
-	private LocationManager locationManager;
 
 	private double latitude = Double.NaN;
 	private double longitude = Double.NaN;
 	private boolean hasCoordinates = false;
-	private ProgressDialog pd;
 
-	private Handler handler;
 	private SharedPreferences prefs;
 
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
 	private CheckBox importCachesCheckBox;
 	private boolean locusInstalled = true;
+	
+	private MainActivityBroadcastReceiver mainActivityBroadcastReceiver;
+	private LocationUpdateTask locationUpdateTask;
 		
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		res = getResources();
+		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
 		hasCoordinates = false;
 
 		setContentView(R.layout.main_activity);
@@ -72,7 +69,11 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			return;
 		}
 
-
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
+		longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
+		
+		
 		if (LocusIntents.isIntentOnPointAction(getIntent())) {
 			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
 			if (p == null) {
@@ -87,6 +88,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		}
 		if (LocusIntents.isIntentMainFunction(getIntent())) {
 			LocusIntents.handleIntentMainFunction(getIntent(), this);
+		}
+		
+		if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
+			hasCoordinates = true;
 		}
 	}
 	
@@ -108,18 +113,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	protected void onResume() {	
 		super.onResume();
 		
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
-		IntentFilter filter = new IntentFilter(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
-		
-		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
-		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
-		filter.addAction(ErrorActivity.ACTION_ERROR);
-		
-		registerReceiver(searchGeocacheReceiver, filter);
+		mainActivityBroadcastReceiver.register();
 				
-		handler = new Handler();
-
 		// temporary fix for bug
 		if (findViewById(R.id.latitudeEditText) == null)
 			setContentView(R.layout.main_activity);
@@ -180,12 +175,11 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	@Override
 	protected void onPause() {
 		super.onPause();
-		removeLocationUpdates();
 		
-		if (pd != null && pd.isShowing())
-			pd.dismiss();
-		
-		unregisterReceiver(searchGeocacheReceiver);
+		if (locationUpdateTask != null)
+			locationUpdateTask.detach();
+				
+		mainActivityBroadcastReceiver.unregister();
 		
 		Log.i(TAG, "Receiver unregistred.");
 	}
@@ -234,6 +228,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			showError(R.string.wrong_coordinates, null);
 		}
 		
+		Editor editor = prefs.edit();
+		editor.putFloat(PrefConstants.LAST_LATITUDE, (float) latitude);
+		editor.putFloat(PrefConstants.LAST_LONGITUDE, (float) longitude);
+		editor.commit();
 		
 		Intent intent = new Intent(this, SearchGeocacheService.class);
 		intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, latitude);
@@ -257,59 +255,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 	protected void acquireCoordinates() {
 		// search location
 		// Acquire a reference to the system Location Manager
-		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-		pd = new ProgressDialog(this);
-		pd.setMessage(res.getText(R.string.acquiring_gps_location));
-		pd.setCancelable(true);
-		pd.setOnCancelListener(new OnCancelListener() {
-			@Override
-			public void onCancel(DialogInterface dialog) {
-				cancelAcquiring();
-			}
-		});
-		pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				cancelAcquiring();
-			}
-		});
-		pd.show();
-
-		// Register the listener with the Location Manager to receive location
-		// updates
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-		} else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-		} else {
-			cancelAcquiring();
-		}
+		locationUpdateTask = new LocationUpdateTask(this);
+		locationUpdateTask.execute();
 	}
 	
-	protected void cancelAcquiring() {
-		removeLocationUpdates();
-
-		if (pd != null && pd.isShowing())
-			pd.dismiss();	
-		
-		Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		if (location == null)
-			location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
-		if (location == null) {
-			latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0F);
-			longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0F);
-		} else {
-			latitude = location.getLatitude();
-			longitude = location.getLongitude();
-		}
-		
-		hasCoordinates = true;
-		
-		updateCoordinateTextView();
-	}
-
 	private void updateCoordinateTextView() {
 		if (latitudeEditText != null)
 			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
@@ -317,30 +266,8 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
 	
-	protected void removeLocationUpdates() {
-		if (locationManager != null)
-			locationManager.removeUpdates(this);
-	}
-	
 	@Override
-	public void onLocationChanged(Location location) {
-		removeLocationUpdates();
-		
-		if (location == null) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					pd.dismiss();
-					Log.e(TAG, "onLocationChanged() location is not avaible.");
-					showError(R.string.error_location, null);
-				}
-			});
-			return;
-		}
-
-		if (!pd.isShowing())
-			return;
-
+	public void onLocationUpdate(Location location) {
 		latitude = location.getLatitude();
 		longitude = location.getLongitude();
 		hasCoordinates = true;
@@ -351,98 +278,10 @@ public class MainActivity extends Activity implements LocationListener, OnIntent
 		editor.putFloat(PrefConstants.LAST_LATITUDE, (float) latitude);
 		editor.putFloat(PrefConstants.LAST_LONGITUDE, (float) longitude);
 		editor.commit();
-
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				pd.dismiss();
-			}
-		});
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		removeLocationUpdates();
-		
-		if (LocationManager.GPS_PROVIDER.equals(provider)) {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					pd.setMessage(res.getString(R.string.acquiring_network_location));
-				}
-			});
-
-			try {
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-				return;
-			} catch(IllegalArgumentException e) {
-				Log.e(TAG, e.getMessage(), e);
-			}
-		}
-		onLocationChanged(locationManager.getLastKnownLocation(provider));
 	}
 
 	protected void requestProgressUpdate() {
 		if (SearchGeocacheService.getInstance() != null)
 			SearchGeocacheService.getInstance().sendProgressUpdate();
-	}
-	
-	private final BroadcastReceiver searchGeocacheReceiver = new BroadcastReceiver() {	
-		@Override
-		public void onReceive(Context context, final Intent intent) {
-			if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
-				if (pd == null || !pd.isShowing()) {
-					pd = new ProgressDialog(MainActivity.this);
-					pd.setCancelable(true);
-					pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							stopService(new Intent(MainActivity.this, SearchGeocacheService.class));
-						}
-					});
-					pd.setButton(res.getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							stopService(new Intent(MainActivity.this, SearchGeocacheService.class));
-						}
-					});
-					pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-					pd.setMax(intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1));
-					pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-					pd.setMessage(res.getText(R.string.downloading));
-					pd.show();
-				}
-				
-				pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-			} else if (SearchGeocacheService.ACTION_PROGRESS_COMPLETE.equals(intent.getAction())) {
-				if (pd != null && pd.isShowing())
-					pd.dismiss();
-				
-				if (intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 0) != 0 && !MainActivity.this.isFinishing()) {
-					MainActivity.this.finish();
-				}
-			} else if (ErrorActivity.ACTION_ERROR.equals(intent.getAction())) {
-				if (pd != null && pd.isShowing())
-					pd.dismiss();
-
-				Intent errorIntent = new Intent(MainActivity.this, ErrorActivity.class);
-				errorIntent.setAction(ErrorActivity.ACTION_ERROR);
-				errorIntent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0));
-				errorIntent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE));
-				errorIntent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, false));
-				errorIntent.putExtra(ErrorActivity.PARAM_EXCEPTION, intent.getSerializableExtra(ErrorActivity.PARAM_EXCEPTION));
-				errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-				
-				MainActivity.this.startActivity(errorIntent);
-			}
-		}		
-	};
-
-	@Override
-	public void onProviderEnabled(String provider) {
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
+	}	
 }

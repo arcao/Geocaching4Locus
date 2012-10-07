@@ -5,7 +5,7 @@
     <string name="downloading">Downloading caches…</string>
     <string name="error_locus_not_found">Please install Locus!</string>
     <string name="search_activity_name">Nearest caches</string>
-    <string name="error_location">Acquring the location using Wireless network is not allowed! Please enable it in Android settings.</string>
+    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">Acquiring location from GPS…</string>
     <string name="acquiring_network_location">Acquiring location from Wireless network…</string>
     
@@ -132,5 +132,7 @@
     
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="error_location_title">No location service allowed</string>
+    <string name="error_location_settings_button">Settings</string>
 </resources>
 

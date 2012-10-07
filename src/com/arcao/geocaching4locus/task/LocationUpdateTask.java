@@ -6,18 +6,26 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.CustomDialogFragment;
 import com.arcao.geocaching4locus.fragment.CustomDialogFragment.Cancellable;
 import com.arcao.geocaching4locus.fragment.LocationUpdateProgressDialogFragment;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -76,6 +84,8 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			Log.i(TAG, "No location providers found, used last location.");
 			
 			cancel();
+			
+			NoLocationProviderDialogFragment.newInstance().show(activity.getSupportFragmentManager());
 			return;
 		}
 		
@@ -176,7 +186,6 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		}
 	}
 
-
 	@Override
 	public void onProviderEnabled(String provider) {
 	}
@@ -184,13 +193,34 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
-	
-	
-	
-	
+	}	
 	
 	public abstract static interface LocationUpdate {
 		public abstract void onLocationUpdate(Location location);
+	}
+	
+	protected static class NoLocationProviderDialogFragment extends CustomDialogFragment {
+		public NoLocationProviderDialogFragment() {
+			super();
+		}
+		
+		public static CustomDialogFragment newInstance() {
+			return new NoLocationProviderDialogFragment();
+		}
+		
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setMessage(R.string.error_location);
+			builder.setTitle(R.string.error_location_title);
+			builder.setPositiveButton(R.string.ok_button, null);
+			builder.setNeutralButton(R.string.error_location_settings_button, new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+				}
+			});
+			return builder.create();
+		}
 	}
 }

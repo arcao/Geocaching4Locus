@@ -77,6 +77,7 @@ public abstract class AbstractService extends IntentService {
 		
 		nb.setSmallIcon(R.drawable.ic_launcher);
 		nb.setOngoing(true);
+		nb.setWhen(0); // this fix redraw issue while refreshing
 		
 		int percent = 0;
 		if (count > 0)

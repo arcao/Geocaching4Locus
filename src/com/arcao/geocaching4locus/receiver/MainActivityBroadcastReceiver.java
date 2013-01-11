@@ -6,16 +6,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.fragment.CustomDialogFragment.Cancellable;
+import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
 import com.arcao.geocaching4locus.fragment.DownloadProgressDialogFragment;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 
-public class MainActivityBroadcastReceiver extends BroadcastReceiver implements Cancellable<DownloadProgressDialogFragment> {
+public class MainActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
 	protected WeakReference<MainActivity> activityRef;
 	protected DownloadProgressDialogFragment pd;
 	
@@ -30,10 +32,14 @@ public class MainActivityBroadcastReceiver extends BroadcastReceiver implements 
 		filter.addAction(ErrorActivity.ACTION_ERROR);
 		
 		Geocaching4LocusApplication.getAppContext().registerReceiver(this, filter);
+		Log.i(getClass().getName(), "Receiver registred.");
 	}
 	
 	public void unregister() {
 		Geocaching4LocusApplication.getAppContext().unregisterReceiver(this);
+		
+		if (pd != null)
+			pd.dismiss();
 	}
 	
 	@Override
@@ -44,8 +50,9 @@ public class MainActivityBroadcastReceiver extends BroadcastReceiver implements 
 		
 		if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
 			if (pd == null || !pd.isShowing()) {
-				pd = DownloadProgressDialogFragment.newInstance(R.string.downloading, this, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-				pd.show(activity.getSupportFragmentManager());
+				pd = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
+				pd.setOnCancelListener(this);
+				pd.show(activity.getSupportFragmentManager(), DownloadProgressDialogFragment.TAG);
 			} else {
 				pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 			}
@@ -73,7 +80,7 @@ public class MainActivityBroadcastReceiver extends BroadcastReceiver implements 
 	}
 	
 	@Override
-	public void onCancel(DownloadProgressDialogFragment downloadProgressDialogFragment) {
+	public void onCancel(AbstractDialogFragment dialogFragment) {
 		MainActivity activity = activityRef.get();
 		if (activity == null)
 			return;

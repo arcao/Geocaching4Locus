@@ -1,25 +1,33 @@
 package com.arcao.geocaching4locus;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.example.android.cheatsheet.CheatSheet;
 
-public class MenuActivity extends Activity {
+public class MenuActivity extends FragmentActivity {
 	private SharedPreferences prefs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.menu_dialog);
+		
+    applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
+    applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 	}
@@ -31,15 +39,7 @@ public class MenuActivity extends Activity {
 		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
 	}
-	
-	public void onClickClose(View view) {
-		finish();
-	}
-	
-	public void onClickSettings(View view) {
-		startActivity(new Intent(this, PreferenceActivity.class));
-	}
-	
+			
 	public void onClickLiveMap(View view) {
 		boolean activated = !prefs.getBoolean(PrefConstants.LIVE_MAP, false);
 		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
@@ -65,5 +65,49 @@ public class MenuActivity extends Activity {
 		
 		startActivity(intent);
 		finish();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_option_menu, menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(int itemId) {
+		switch (itemId) {
+			case R.id.main_activity_option_menu_preferences:
+				startActivity(new Intent(this, PreferenceActivity.class));
+				return true;
+			case R.id.main_activity_option_menu_close:
+			case android.R.id.home:
+				finish();
+				return true;
+			default:
+				return false;
+		}
+	}
+	
+	@Override
+	public final boolean onOptionsItemSelected(MenuItem item) {
+		if (onOptionsItemSelected(item.getItemId())) {
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+	
+	protected void applyMenuItemOnView(final int resMenuItem, int resView) {
+		View v = findViewById(resView);
+		if (v == null)
+			return;
+
+		v.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onOptionsItemSelected(resMenuItem);
+			}
+		});
+		CheatSheet.setup(v);
 	}
 }

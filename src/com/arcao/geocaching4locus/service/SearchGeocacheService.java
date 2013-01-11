@@ -1,15 +1,17 @@
 package com.arcao.geocaching4locus.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 
-import menion.android.locus.addon.publiclib.DisplayDataExtended;
-import menion.android.locus.addon.publiclib.LocusDataMapper;
-import menion.android.locus.addon.publiclib.geoData.Point;
-import menion.android.locus.addon.publiclib.geoData.PointsData;
-import menion.android.locus.addon.publiclib.util.PointsDataOutputStream;
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableDataOutputStream;
+import locus.api.utils.Utils;
 
 import org.acra.ErrorReporter;
 
@@ -152,9 +154,7 @@ public class SearchGeocacheService extends AbstractService {
 	private void callLocus(File file) {
 		try {
 			if (file != null) {
-				Intent intent = DisplayDataExtended.createDataFileIntent(file);
-			  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			  DisplayDataExtended.sendData(getApplication(), intent, importCaches);
+			  ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, importCaches, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
@@ -197,17 +197,18 @@ public class SearchGeocacheService extends AbstractService {
 		GeocachingApi api = LiveGeocachingApiFactory.create();
 		int attempt = 0;
 		
-		File dataFile = DisplayDataExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
+		File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
 		
 		while (++attempt <= 2) {
-			PointsDataOutputStream pdos = null;
+			StoreableDataOutputStream sdos = null;
 
 			try {
 				login(api);
 				
 				String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
 				
-				pdos = DisplayDataExtended.createDataFile(dataFile);
+				sdos = new StoreableDataOutputStream(new FileOutputStream(dataFile));
+				sdos.beginList();
 				
 				sendProgressUpdate();
 				
@@ -248,29 +249,30 @@ public class SearchGeocacheService extends AbstractService {
 							break;
 					}
 					
-					PointsData pointsData = new PointsData(TAG);
-					List<Point> points = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
+					PackWaypoints pw = new PackWaypoints(TAG);
+					List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
 					
-					for (Point p : points) {
+					for (Waypoint wpt : waypoints) {
 						if (simpleCacheData) {
-							p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.getGeocachingData().cacheID);
+							wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
 						}
 						
-						pointsData.addPoint(p);
+						pw.addWaypoint(wpt);
 					}
 					
-					pdos.write(pointsData);
-					pdos.flush();
+					sdos.write(pw);
 	
 					current = current + cachesToAdd.size();
 					
 					// force memory clean
 					cachesToAdd = null;
-					points = null;
-					pointsData = null;
+					waypoints = null;
+					pw = null;
 	
 					sendProgressUpdate();
 				}
+				
+				sdos.endList();
 	
 				Log.i(TAG, "found caches: " + current);
 	
@@ -295,9 +297,7 @@ public class SearchGeocacheService extends AbstractService {
 				Log.e(TAG, e.getMessage(), e);
 				throw new GeocachingApiException(e.getMessage(), e);
 			} finally {
-				if (pdos != null) {
-					try { pdos.close(); } catch (IOException e) {}
-				}
+				Utils.closeStream(sdos);
 			}
 		}
 		

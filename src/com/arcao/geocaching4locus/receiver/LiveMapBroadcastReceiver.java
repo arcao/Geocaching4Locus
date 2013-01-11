@@ -1,12 +1,12 @@
 package com.arcao.geocaching4locus.receiver;
 
-import menion.android.locus.addon.publiclib.PeriodicUpdate;
-import menion.android.locus.addon.publiclib.PeriodicUpdate.UpdateContainer;
+import locus.api.android.PeriodicUpdate;
+import locus.api.android.PeriodicUpdate.UpdateContainer;
+import locus.api.objects.extra.Location;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.preference.PreferenceManager;
 
 import com.arcao.geocaching4locus.service.LiveMapService;
@@ -18,7 +18,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			return;
 		
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
+		
 		if (!prefs.getBoolean("live_map", false)) {
 			return;
 		}
@@ -50,7 +50,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 						|| Double.isNaN(update.mapBottomRight.getLatitude()) || Double.isNaN(update.mapBottomRight.getLongitude()))
 					return;
 								
-				Location l = PeriodicUpdate.getInstance().getLastMapCenter();
+				Location l = update.locMapCenter;
 				
 				// Start service to download caches
 				context.startService(LiveMapService.createIntent(

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import menion.android.locus.addon.publiclib.DisplayData;
-import menion.android.locus.addon.publiclib.LocusDataMapper;
-import menion.android.locus.addon.publiclib.geoData.Point;
-import menion.android.locus.addon.publiclib.geoData.PointsData;
-import menion.android.locus.addon.publiclib.utils.RequiredVersionMissingException;
+import locus.api.android.ActionDisplayPoints;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
 import android.accounts.OperationCanceledException;
 import android.app.IntentService;
 import android.content.Context;
@@ -99,15 +99,15 @@ public class LiveMapService extends IntentService {
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 		
 		try {			
-			List<Point> points = downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
+			List<Waypoint> waypoints = downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 			
-			PointsData pd = new PointsData(TAG);
-			for (Point p : points) {
-				p.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.getGeocachingData().cacheID);
-				pd.addPoint(p);
+			PackWaypoints pw = new PackWaypoints(TAG);
+			for (Waypoint wpt : waypoints) {
+				wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
+				pw.addWaypoint(wpt);
 			}
 
-			DisplayData.sendDataSilent(this, pd);
+			ActionDisplayPoints.sendPackSilent(this, pw);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, e.getMessage(), e);
 		} catch (InvalidCredentialsException e) {
@@ -163,8 +163,8 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new ContainerType[0]);
 	}
 	
-	protected List<Point> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
-		final List<Point> points = new ArrayList<Point>();
+	protected List<Waypoint> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
+		final List<Waypoint> points = new ArrayList<Waypoint>();
 
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");

@@ -44,10 +44,10 @@ public class SendErrorActivity extends Activity {
 		LinearLayout root = new LinearLayout(this);
 		root.setOrientation(LinearLayout.VERTICAL);
 		root.setPadding(10, 10, 10, 10);
-		root.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		root.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 		ScrollView scroll = new ScrollView(this);
-		root.addView(scroll, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1.0f));
+		root.addView(scroll, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f));
 
 		// Add an optional prompt for user comments
 		int commentPromptId = ACRA.getConfig().resDialogCommentPrompt();
@@ -56,13 +56,13 @@ public class SendErrorActivity extends Activity {
 			label.setText(getText(commentPromptId));
 
 			label.setPadding(label.getPaddingLeft(), 10, label.getPaddingRight(), label.getPaddingBottom());
-			root.addView(label, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			root.addView(label, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 			userComment = new EditText(this);
 
 			userComment.setLines(2);
 			root.addView(userComment,
-					new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+					new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		}
 
 		// Add an optional user email field
@@ -72,7 +72,7 @@ public class SendErrorActivity extends Activity {
 			label.setText(getText(emailPromptId));
 
 			label.setPadding(label.getPaddingLeft(), 10, label.getPaddingRight(), label.getPaddingBottom());
-			root.addView(label, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			root.addView(label, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 			userEmail = new EditText(this);
 			userEmail.setSingleLine();
@@ -82,11 +82,11 @@ public class SendErrorActivity extends Activity {
 					.sharedPreferencesMode());
 			userEmail.setText(prefs.getString(ACRA.PREF_USER_EMAIL_ADDRESS, ""));
 
-			root.addView(userEmail, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			root.addView(userEmail, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		}
 
 		LinearLayout buttons = new LinearLayout(this);
-		buttons.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		buttons.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		buttons.setPadding(buttons.getPaddingLeft(), 10, buttons.getPaddingRight(), buttons.getPaddingBottom());
 
 		Button yes = new Button(this);
@@ -124,7 +124,7 @@ public class SendErrorActivity extends Activity {
 			}
 		});
 		
-		buttons.addView(yes, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1.0f));
+		buttons.addView(yes, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1.0f));
 		Button no = new Button(this);
 		no.setText(android.R.string.no);
 		no.setOnClickListener(new View.OnClickListener() {
@@ -134,8 +134,8 @@ public class SendErrorActivity extends Activity {
 			}
 
 		});
-		buttons.addView(no, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT, 1.0f));
-		root.addView(buttons, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		buttons.addView(no, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1.0f));
+		root.addView(buttons, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
 		setContentView(root);
 

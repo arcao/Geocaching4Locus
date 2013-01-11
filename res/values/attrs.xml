@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="windowHeightMargin" format="dimension" />
+    <attr name="windowWidthMargin" format="dimension" />
+    <attr name="windowMinHeight" format="dimension" />
+    <attr name="windowMinWidth" format="dimension" />
+    <attr name="windowMaxHeight" format="dimension" />
+    <attr name="windowMaxWidth" format="dimension" />
+    <attr name="windowMarginTop" format="dimension" />
+    
+    <attr name="buttonPanelStyle" format="reference" />
+    <attr name="buttonBarStyle" format="reference" />
+    <attr name="buttonBarButtonStyle" format="reference" />
+    
     <declare-styleable name="SeekBarPreference">
         <attr name="android:max" />
         <attr name="android:text" />
@@ -15,5 +27,5 @@
         <attr name="android:entries"/>
         <!-- The array to find the value to save for a preference when an entry from entries is selected. If a user clicks on the second item in entries, the second item in this array will be saved to the preference. -->
         <attr name="android:entryValues"/>
-    </declare-styleable>
+    </declare-styleable>    
 </resources>

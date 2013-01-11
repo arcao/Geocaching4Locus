@@ -196,7 +196,7 @@ public abstract class AbstractService extends IntentService {
 	
 	protected void sendProgressComplete(int count) {
 		if (!canceled) {
-			notificationManager.notify(notificationId, createProgressNotification(count, count));
+			notificationManager.cancel(notificationId);
 		}
 		
 		Intent broadcastIntent = new Intent();

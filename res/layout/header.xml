@@ -4,7 +4,8 @@
     android:layout_height="@dimen/title_height"
     android:background="@drawable/var_panel_top"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:id="@+id/header" >
 
     <TextView
         style="@style/TitleBarTitle"
@@ -15,10 +16,9 @@
         style="@style/TitleBarSeparator" />
 
     <ImageButton
-        android:id="@+id/image_button_title_setting"
+        android:id="@+id/header_preferences"
         style="@style/TitleBarButton"
         android:contentDescription="@string/preferences"
-        android:onClick="onClickSettings"
         android:src="@drawable/ic_settings_default" />
 
     <ImageView
@@ -26,10 +26,8 @@
         style="@style/TitleBarSeparator" />
 
     <ImageButton
-        android:id="@+id/image_button_title_close"
+        android:id="@+id/header_close"
         style="@style/TitleBarButton"
         android:contentDescription="@string/close"
-        android:onClick="onClickClose"
         android:src="@drawable/ic_cancel_default" />
-
 </LinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Downloading caches…</string>
@@ -133,6 +133,6 @@
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>
     <string name="error_location_title">No location service allowed</string>
-    <string name="error_location_settings_button">Settings</string>
+    <string name="error_location_settings_button">Settings</string>    
 </resources>
 

@@ -13,7 +13,6 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import android.Manifest.permission;
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -40,7 +39,7 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
     resDialogCommentPrompt = R.string.crash_dialog_comment_prompt, // optional. when defined, adds a user text field input with this text resource as a label
     resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
 )
-public class Geocaching4LocusApplication extends Application {
+public class Geocaching4LocusApplication extends android.app.Application {
   private static final String TAG = "G4L|Geocaching4LocusApplication";
   
 	private static Context context;

@@ -6,6 +6,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -25,12 +26,12 @@ import android.util.Log;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.fragment.CustomDialogFragment;
-import com.arcao.geocaching4locus.fragment.CustomDialogFragment.Cancellable;
+import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
 import com.arcao.geocaching4locus.fragment.LocationUpdateProgressDialogFragment;
 import com.arcao.geocaching4locus.util.UserTask;
 
-public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, Cancellable<LocationUpdateProgressDialogFragment> {
+public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, CancellableDialog {
 	private static final String TAG = LocationUpdateTask.class.getName();
 	private static final int TIMEOUT = 120; // in sec
 	
@@ -58,7 +59,9 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	
 	@Override
 	protected void onPreExecute() {
-		if (activityRef.get() == null) {
+		FragmentActivity activity = activityRef.get();
+
+		if (activity == null) {
 			cancel();
 			return;
 		}
@@ -66,7 +69,6 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		int source = LocationUpdateProgressDialogFragment.SOURCE_NETWORK;
 		bestLocation = getLastLocation();
 		
-		FragmentActivity activity = activityRef.get();
 		if (activity != null && activity instanceof LocationUpdate) {
 			((LocationUpdate)activity).onLocationUpdate(bestLocation);
 		}
@@ -85,12 +87,12 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			
 			cancel();
 			
-			NoLocationProviderDialogFragment.newInstance().show(activity.getSupportFragmentManager());
+			NoLocationProviderDialogFragment.newInstance().show(activity.getSupportFragmentManager(), NoLocationProviderDialogFragment.TAG);
 			return;
 		}
 		
-		pd = LocationUpdateProgressDialogFragment.newInstance(source, this);
-		pd.show(activityRef.get().getSupportFragmentManager());
+		pd = LocationUpdateProgressDialogFragment.newInstance(source);
+		pd.show(activity.getSupportFragmentManager(), LocationUpdateProgressDialogFragment.TAG);
 	}
 	
 	protected Location getLastLocation() {
@@ -136,7 +138,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	
 	@Override
 	protected void onPostExecute(Location result) {
-		FragmentActivity activity = activityRef.get();
+		Activity activity = activityRef.get();
 		if (activity != null && activity instanceof LocationUpdate) {
 			((LocationUpdate)activity).onLocationUpdate(bestLocation);
 		}
@@ -144,7 +146,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	
 	@Override
 	protected void onFinally() {
-		if (pd != null)
+		if (pd != null && pd.isShowing())
 			pd.dismiss();
 	}
 	
@@ -154,13 +156,15 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	}
 		
 	@Override
-	public void onCancel(LocationUpdateProgressDialogFragment customDialogFragment) {
+	public void onCancel(AbstractDialogFragment dialogFragment) {
 		cancel();
 	}
 	
 	
 	@Override
 	public void onLocationChanged(Location location) {
+		Log.i(TAG, "New location found for: " + location.toString());
+		
 		bestLocation = location;
 		try {
 			barrier.await(0, TimeUnit.MILLISECONDS);
@@ -199,12 +203,14 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		public abstract void onLocationUpdate(Location location);
 	}
 	
-	protected static class NoLocationProviderDialogFragment extends CustomDialogFragment {
+	protected static class NoLocationProviderDialogFragment extends AbstractDialogFragment {
+		public static final String TAG = NoLocationProviderDialogFragment.class.getName();
+
 		public NoLocationProviderDialogFragment() {
 			super();
 		}
 		
-		public static CustomDialogFragment newInstance() {
+		public static AbstractDialogFragment newInstance() {
 			return new NoLocationProviderDialogFragment();
 		}
 		

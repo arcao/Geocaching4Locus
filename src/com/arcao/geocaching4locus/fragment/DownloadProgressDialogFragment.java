@@ -1,31 +1,27 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 
-public class DownloadProgressDialogFragment extends CustomDialogFragment {
-	private static final String TAG = DownloadProgressDialogFragment.class.getName();
+public class DownloadProgressDialogFragment extends AbstractDialogFragment {
+	public static final String TAG = DownloadProgressDialogFragment.class.getName();
 	
 	protected static final String PARAM_MESSAGE_ID = "MESSAGE_ID";
 	protected static final String PARAM_COUNT = "COUNT";
 	protected static final String PARAM_CURRENT = "CURRENT";
 	
-	protected WeakReference<Cancellable<DownloadProgressDialogFragment>> listenerRef;
-	
-	public static DownloadProgressDialogFragment newInstance(int messageId, Cancellable<DownloadProgressDialogFragment> listener) {
-		return newInstance(messageId, listener, -1, -1);
+	public static DownloadProgressDialogFragment newInstance(int messageId) {
+		return newInstance(messageId, -1, -1);
 	}
 	
-	public static DownloadProgressDialogFragment newInstance(int messageId, Cancellable<DownloadProgressDialogFragment> listener, int count, int current) {
+	public static DownloadProgressDialogFragment newInstance(int messageId, int count, int current) {
 		DownloadProgressDialogFragment frag = new DownloadProgressDialogFragment();
-		frag.listenerRef = new WeakReference<Cancellable<DownloadProgressDialogFragment>>(listener);
     
 		Bundle args = new Bundle();
     args.putInt(PARAM_MESSAGE_ID, messageId);
@@ -46,20 +42,15 @@ public class DownloadProgressDialogFragment extends CustomDialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle arguments = getArguments();
 		
-		ProgressDialog pd = new ProgressDialog(getActivity());
+		ProgressDialog pd = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		pd.setCancelable(false);
 		
-		if (listenerRef.get() != null) {
-			pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Cancellable<DownloadProgressDialogFragment> listener = listenerRef.get();
-					if (listener != null) {
-						listener.onCancel(DownloadProgressDialogFragment.this);
-					}
-				}
-			});
-		}
+		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				callOnCancelListener(DownloadProgressDialogFragment.this);
+			}
+		});
 		
 		int count = arguments.getInt(PARAM_COUNT);
 		int current = arguments.getInt(PARAM_CURRENT);

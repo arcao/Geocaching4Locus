@@ -1,13 +1,13 @@
 package com.arcao.geocaching4locus;
 
-import menion.android.locus.addon.publiclib.LocusIntents;
-import menion.android.locus.addon.publiclib.LocusIntents.OnIntentMainFunction;
-import menion.android.locus.addon.publiclib.geoData.Point;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.objects.extra.Waypoint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -30,14 +31,15 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import com.example.android.cheatsheet.CheatSheet;
 
 public class MainActivity extends FragmentActivity implements LocationUpdate, OnIntentMainFunction {
 	private static final String TAG = "G4L|MainActivity";
 	
-	public static int DOWNLOAD_PROGRESS_DIALOG_ID = 1;
+	private static String STATE_LATITUDE = "latitude";
+	private static String STATE_LONGITUDE = "longitude";
+	private static String STATE_HAS_COORDINATES = "has_coordinates";
 	
-	private Resources res;
-
 	private double latitude = Double.NaN;
 	private double longitude = Double.NaN;
 	private boolean hasCoordinates = false;
@@ -47,7 +49,7 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
 	private CheckBox importCachesCheckBox;
-	private boolean locusInstalled = true;
+	private boolean locusInstalled = false;
 	
 	private MainActivityBroadcastReceiver mainActivityBroadcastReceiver;
 	private LocationUpdateTask locationUpdateTask;
@@ -56,26 +58,30 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		res = getResources();
+				
 		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
 		hasCoordinates = false;
+	
+    //showAsPopup();
+    setContentView(R.layout.main_activity);
+    //prepareActionBar();
 
-		setContentView(R.layout.main_activity);
-
-		locusInstalled = true;
-		if (!LocusTesting.isLocusInstalled(this)) {
-			locusInstalled = false;
-			LocusTesting.showLocusMissingError(this);
-			return;
-		}
+    applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
+    applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
 		longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 		
-		
-		if (LocusIntents.isIntentOnPointAction(getIntent())) {
-			Point p = LocusIntents.handleIntentOnPointAction(getIntent());
+		if (LocusUtils.isIntentPointTools(getIntent())) {
+			Waypoint p = null;
+			
+			try {
+				p = LocusUtils.handleIntentPointTools(this, getIntent());
+			} catch (RequiredVersionMissingException e) {
+				Log.e(TAG, e.getMessage(), e);
+			}
+			
 			if (p == null) {
 				Toast.makeText(this, "Wrong INTENT - no point!", Toast.LENGTH_SHORT).show();
 			} else {
@@ -86,8 +92,17 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 				hasCoordinates = true;
 			}
 		}
-		if (LocusIntents.isIntentMainFunction(getIntent())) {
-			LocusIntents.handleIntentMainFunction(getIntent(), this);
+		else if (LocusUtils.isIntentMainFunction(getIntent())) {
+			LocusUtils.handleIntentMainFunction(getIntent(), this);
+		}
+		else if (LocusUtils.isIntentSearchList(getIntent())) {
+			LocusUtils.handleIntentSearchList(getIntent(), this);
+		}
+		
+		if (savedInstanceState != null && savedInstanceState.getBoolean(STATE_HAS_COORDINATES)) {
+			latitude = savedInstanceState.getDouble(STATE_LATITUDE);
+			longitude = savedInstanceState.getDouble(STATE_LONGITUDE);
+			hasCoordinates = true;
 		}
 		
 		if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
@@ -95,11 +110,11 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 		}
 	}
 	
+	
 	@Override
-	public void onLocationReceived(boolean gpsEnabled, Location locGps, Location locMapCenter) {
-		Location l = locMapCenter;
-		latitude = l.getLatitude();
-		longitude = l.getLongitude();
+	public void onReceived(locus.api.objects.extra.Location locGps, locus.api.objects.extra.Location locMapCenter) {
+		latitude = locMapCenter.getLatitude();
+		longitude = locMapCenter.getLongitude();
 
 		Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
 		
@@ -115,10 +130,6 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 		
 		mainActivityBroadcastReceiver.register();
 				
-		// temporary fix for bug
-		if (findViewById(R.id.latitudeEditText) == null)
-			setContentView(R.layout.main_activity);
-		
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
 		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
@@ -161,15 +172,20 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 			}
 		});
 		
+		if (!locusInstalled && !LocusTesting.isLocusInstalled(this)) {
+			locusInstalled = false;
+			LocusTesting.showLocusMissingError(this);
+			return;
+		}
+		
+		locusInstalled = true;
+		
 		if (!hasCoordinates) {
-			if (locusInstalled)
-				acquireCoordinates();
+			acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
 			requestProgressUpdate();
 		}
-		
-		Log.i(TAG, "Receiver registred.");
 	}
 	
 	@Override
@@ -185,23 +201,16 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 	}
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_activity_option_menu, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.main_activity_option_menu_preferences:
-				startActivity(new Intent(this, PreferenceActivity.class));
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putBoolean(STATE_HAS_COORDINATES, hasCoordinates);
+		if (hasCoordinates) {
+			outState.putDouble(STATE_LATITUDE, latitude);
+			outState.putDouble(STATE_LONGITUDE, longitude);
 		}
 	}
-
+	
 	public void onClickSearch(View view) {
 		download();
 	}
@@ -244,7 +253,7 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 			return;
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String message = String.format(res.getString(errorResId), additionalMessage);
+		String message = String.format(getString(errorResId), additionalMessage);
 		
 		builder.setMessage(Html.fromHtml(message));
 		builder.setTitle(R.string.error_title);
@@ -283,5 +292,49 @@ public class MainActivity extends FragmentActivity implements LocationUpdate, On
 	protected void requestProgressUpdate() {
 		if (SearchGeocacheService.getInstance() != null)
 			SearchGeocacheService.getInstance().sendProgressUpdate();
-	}	
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_option_menu, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(int itemId) {
+		switch (itemId) {
+			case R.id.main_activity_option_menu_preferences:
+				startActivity(new Intent(this, PreferenceActivity.class));
+				return true;
+			case R.id.main_activity_option_menu_close:
+			case android.R.id.home:
+				finish();
+				return true;
+			default:
+				return false;
+		}
+	}
+	
+	@Override
+	public final boolean onOptionsItemSelected(MenuItem item) {
+		if (onOptionsItemSelected(item.getItemId())) {
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+	
+	protected void applyMenuItemOnView(final int resMenuItem, int resView) {
+		View v = findViewById(resView);
+		if (v == null)
+			return;
+
+		v.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onOptionsItemSelected(resMenuItem);
+			}
+		});
+		CheatSheet.setup(v);
+	}
 }

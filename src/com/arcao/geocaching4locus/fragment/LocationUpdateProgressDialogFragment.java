@@ -1,29 +1,27 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 
-public class LocationUpdateProgressDialogFragment extends CustomDialogFragment {
+public class LocationUpdateProgressDialogFragment extends AbstractDialogFragment {
+	public static final String TAG = LocationUpdateProgressDialogFragment.class.getName();
+	
 	private static final String PARAM_SOURCE = "SOURCE";
 	
 	public static final int SOURCE_GPS = 0;
 	public static final int SOURCE_NETWORK = 1;
 	
-	private WeakReference<Cancellable<LocationUpdateProgressDialogFragment>> listenerRef;
-	
 	public LocationUpdateProgressDialogFragment() {
 		super();
 	}
 		
-	public static LocationUpdateProgressDialogFragment newInstance(int source, Cancellable<LocationUpdateProgressDialogFragment> listener) {
+	public static LocationUpdateProgressDialogFragment newInstance(int source) {
 		LocationUpdateProgressDialogFragment frag = new LocationUpdateProgressDialogFragment();
-		frag.listenerRef = new WeakReference<CustomDialogFragment.Cancellable<LocationUpdateProgressDialogFragment>>(listener);
 		
 		Bundle args = new Bundle();
     args.putInt(PARAM_SOURCE, source);
@@ -34,7 +32,7 @@ public class LocationUpdateProgressDialogFragment extends CustomDialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		ProgressDialog pd = new ProgressDialog(getActivity());
+		ProgressDialog pd = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		
 		switch (getArguments().getInt(PARAM_SOURCE, SOURCE_NETWORK)) {
 			case SOURCE_GPS:
@@ -46,17 +44,12 @@ public class LocationUpdateProgressDialogFragment extends CustomDialogFragment {
 		
 		pd.setCancelable(false);
 		
-		if (listenerRef.get() != null) {
-			pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Cancellable<LocationUpdateProgressDialogFragment> listener = listenerRef.get();
-					if (listener != null) {
-						listener.onCancel(LocationUpdateProgressDialogFragment.this);
-					}
-				}
-			});
-		}
+		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				callOnCancelListener(LocationUpdateProgressDialogFragment.this);
+			}
+		});
 		
 		return pd;
 	}

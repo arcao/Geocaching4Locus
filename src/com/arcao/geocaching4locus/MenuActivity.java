@@ -4,76 +4,73 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.example.android.cheatsheet.CheatSheet;
 
-public class MenuActivity extends FragmentActivity {
+public class MenuActivity extends AbstractActionBarActivity {
 	private SharedPreferences prefs;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.menu_dialog);
-		
-    applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
-    applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
-		
+
+		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
+		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
+
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
 	}
-			
+
 	public void onClickLiveMap(View view) {
 		boolean activated = !prefs.getBoolean(PrefConstants.LIVE_MAP, false);
 		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
-		
+
 		if (activated) {
 			Toast.makeText(this, getText(R.string.livemap_activated), Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this, getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
 		}
-		
+
 		finish();
 	}
-	
+
 	public void onClickManual(View view) {
 		startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.MANUAL_URI));
 		finish();
 	}
-	
+
 	public void onClickNearest(View view) {
 		// copy intent data from Locus
 		Intent intent = new Intent(getIntent());
 		intent.setClass(this, MainActivity.class);
-		
+
 		startActivity(intent);
 		finish();
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_option_menu, menu);
 		return true;
 	}
-	
+
+	@Override
 	public boolean onOptionsItemSelected(int itemId) {
 		switch (itemId) {
 			case R.id.main_activity_option_menu_preferences:
@@ -86,28 +83,5 @@ public class MenuActivity extends FragmentActivity {
 			default:
 				return false;
 		}
-	}
-	
-	@Override
-	public final boolean onOptionsItemSelected(MenuItem item) {
-		if (onOptionsItemSelected(item.getItemId())) {
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-	
-	protected void applyMenuItemOnView(final int resMenuItem, int resView) {
-		View v = findViewById(resView);
-		if (v == null)
-			return;
-
-		v.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onOptionsItemSelected(resMenuItem);
-			}
-		});
-		CheatSheet.setup(v);
 	}
 }

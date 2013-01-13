@@ -4,21 +4,32 @@
     </style>
 	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent">
 	</style>
-    <style name="G4LTheme.Light" parent="@android:style/Theme">
+
+	<style name="G4LTheme.Light" parent="@android:style/Theme">
     </style>
+    <style name="G4LTheme.Light.NoTitle" parent="@android:style/Theme">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="G4LTheme.Dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@drawable/var_dialog_bg</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <style name="G4LTheme.MainActivity" parent="G4LTheme.Dialog">
+    <style name="G4LTheme.Dialog.NoTitle">
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog">
-        <item name="android:windowNoTitle">true</item>
+
+    <style name="G4LTheme.MainActivity" parent="G4LTheme.Light.NoTitle">
     </style>
-    <style name="G4LTheme.Settings" parent="@android:style/Theme" />
+    <style name="G4LTheme.MainActivity.Dialog" parent="G4LTheme.Dialog.NoTitle">
+        <item name="normalWindow">@style/G4LTheme.MainActivity</item>
+    </style>
+    <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog.NoTitle">
+    </style>
+
+    <style name="G4LTheme.Settings" parent="G4LTheme.Light" />
     <style name="SimpleEditText" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

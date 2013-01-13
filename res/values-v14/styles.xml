@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Holo.Dialog.NoActionBar"></style>
+
     <style name="G4LTheme.Light" parent="@android:style/Theme.Holo.Light">
         <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
         <item name="buttonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="buttonBarButtonStyle">?android:attr/buttonBarButtonStyle</item> 
+    </style>
+    <style name="G4LTheme.Light.NoTitle">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="G4LTheme.Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
@@ -17,6 +22,12 @@
         <item name="buttonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="buttonBarButtonStyle">?android:attr/buttonBarButtonStyle</item> 
     </style>
+    <style name="G4LTheme.Dialog.NoTitle">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="G4LTheme.Settings" parent="@android:style/Theme.Holo.Light" />
+
     
     <style name="CustomButtonPanelStyle">
         <item name="android:minHeight">48dip</item>
@@ -25,24 +36,10 @@
         <item name="android:dividerPadding">0dip</item>
     </style> 
     
-    <style name="G4LTheme.Settings" parent="@android:style/Theme.Holo.Light" />
-
-    <style name="G4LTheme.Dialog.NoTitle">
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="G4LTheme.Settings" parent="@android:style/Theme.Holo.Light" />
-
     <style name="LoginMessageView" parent="android:Widget.TextView">
         <item name="android:layout_marginTop">10.0dip</item>
         <item name="android:padding">5.0dip</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
     </style>
-    <style name="PopUpLayout">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_marginTop">8dp</item>
-    </style>
-
 </resources>

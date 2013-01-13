@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="windowHeightMargin" format="dimension" />
-    <attr name="windowWidthMargin" format="dimension" />
-    <attr name="windowMinHeight" format="dimension" />
-    <attr name="windowMinWidth" format="dimension" />
-    <attr name="windowMaxHeight" format="dimension" />
-    <attr name="windowMaxWidth" format="dimension" />
-    <attr name="windowMarginTop" format="dimension" />
-    
     <attr name="buttonPanelStyle" format="reference" />
     <attr name="buttonBarStyle" format="reference" />
     <attr name="buttonBarButtonStyle" format="reference" />
+    
+    <attr name="normalWindow" format="reference" />
     
     <declare-styleable name="SeekBarPreference">
         <attr name="android:max" />

@@ -1,5 +1,7 @@
 package com.arcao.geocaching4locus.constants;
 
+import org.osgi.framework.Version;
+
 import android.net.Uri;
 
 public interface AppConstants {
@@ -24,4 +26,9 @@ public interface AppConstants {
 	
 	/** OAuth response parameter that contains error message - specific Groundspeak extension */
 	static final String OAUTH_ERROR_MESSAGE_PARAMETER = "oauth_error_message";
+	
+	static final Version LOCUS_MIN_VERSION = Version.parseVersion("2.8.3.2");
+	static final String GOOGLE_PLAY_PREFIX = "https://play.google.com/store/apps/details?id=";
+	static final Uri ANDROIDPIT_LOCUS_FREE_LINK = Uri.parse("http://www.androidpit.com/en/android/market/apps/app/menion.android.locus/Locus-Free");
+	static final Uri ANDROIDPIT_LOCUS_PRO_LINK = Uri.parse("http://www.androidpit.com/en/android/market/apps/app/menion.android.locus.pro/Locus-Pro");
 }

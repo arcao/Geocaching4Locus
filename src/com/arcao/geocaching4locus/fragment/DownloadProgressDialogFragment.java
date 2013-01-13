@@ -9,7 +9,7 @@ import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 
-public class DownloadProgressDialogFragment extends AbstractDialogFragment {
+public final class DownloadProgressDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = DownloadProgressDialogFragment.class.getName();
 	
 	protected static final String PARAM_MESSAGE_ID = "MESSAGE_ID";

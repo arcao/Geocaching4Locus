@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
 
-public class UpdateMoreDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
+public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = UpdateMoreDialogFragment.class.getName();
 			
 	protected UpdateMoreTask mTask;

@@ -8,18 +8,14 @@ import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 
-public class LocationUpdateProgressDialogFragment extends AbstractDialogFragment {
+public final class LocationUpdateProgressDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = LocationUpdateProgressDialogFragment.class.getName();
 	
 	private static final String PARAM_SOURCE = "SOURCE";
 	
 	public static final int SOURCE_GPS = 0;
 	public static final int SOURCE_NETWORK = 1;
-	
-	public LocationUpdateProgressDialogFragment() {
-		super();
-	}
-		
+			
 	public static LocationUpdateProgressDialogFragment newInstance(int source) {
 		LocationUpdateProgressDialogFragment frag = new LocationUpdateProgressDialogFragment();
 		

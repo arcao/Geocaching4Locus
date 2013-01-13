@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.ImportTask;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 
-public class ImportDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
+public final class ImportDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = ImportDialogFragment.class.getName();
 	
 	protected String cacheId;

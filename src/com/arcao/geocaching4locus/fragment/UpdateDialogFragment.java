@@ -20,7 +20,7 @@ import com.arcao.geocaching4locus.task.UpdateTask;
 import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 
-public class UpdateDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
+public final class UpdateDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = UpdateDialogFragment.class.getName();
 
 	protected UpdateTask mTask;

@@ -164,10 +164,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity {
       helper.removeAccount();
     }
     
-    final Account account = new Account(username, AccountAuthenticator.ACCOUNT_TYPE);
+    final Account account = new Account(username, AuthenticatorHelper.ACCOUNT_TYPE);
     
     helper.addAccountExplicitly(account, null);
-    helper.setAuthToken(account, AccountAuthenticator.ACCOUNT_TYPE, token);
+    helper.setAuthToken(account, AuthenticatorHelper.ACCOUNT_TYPE, token);
 
     startActivity(new Intent().setClass(getApplicationContext(), PreferenceActivity.class).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP));
     finish();

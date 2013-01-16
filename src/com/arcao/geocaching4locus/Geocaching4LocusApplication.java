@@ -12,15 +12,12 @@ import org.acra.ErrorReporter;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
-import android.Manifest.permission;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.arcao.geocaching4locus.authentication.helper.AccountAuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -57,13 +54,7 @@ public class Geocaching4LocusApplication extends android.app.Application {
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
 		
-    PackageManager pm = getPackageManager();
-    if (pm != null && pm.checkPermission(permission.MANAGE_ACCOUNTS, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-    	authenticatorHelper = new AccountAuthenticatorHelper(this);
-    } else {
-    	authenticatorHelper = new PreferenceAuthenticatorHelper(this);
-    }
-
+   	authenticatorHelper = new PreferenceAuthenticatorHelper(this);
 		authenticatorHelper.convertFromOldStorage();
 		
 		if (authenticatorHelper.hasAccount()) {

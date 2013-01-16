@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.task;
 
 import java.lang.ref.WeakReference;
 
-import locus.api.android.ActionDisplayPoints;
+import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
@@ -63,7 +63,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			pack.addWaypoint(result);
 			
 			try {
-				ActionDisplayPoints.sendPack(Geocaching4LocusApplication.getAppContext(), pack, true);
+				ActionDisplayPointsExtended.sendPack(Geocaching4LocusApplication.getAppContext(), pack, true, Intent.FLAG_ACTIVITY_NEW_TASK);
 			} catch (RequiredVersionMissingException e) {
 				Log.e(TAG, e.getMessage(), e);
 			}

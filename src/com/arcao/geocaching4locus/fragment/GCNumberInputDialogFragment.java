@@ -5,6 +5,7 @@ import java.lang.ref.WeakReference;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -61,13 +62,15 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		editText = new EditText(getActivity());
+		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
+		
+		editText = new EditText(context);
 		
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
 			editText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
 		}
 		
-		return new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog))
+		return new AlertDialog.Builder(context)
 			.setTitle(R.string.gc_number_input_title)
 			.setView(editText)
 			.setPositiveButton(R.string.ok_button, new OnClickListener() {

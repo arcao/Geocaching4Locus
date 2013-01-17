@@ -22,6 +22,9 @@ public class MenuActivity extends AbstractActionBarActivity {
 
 		setContentView(R.layout.menu_dialog);
 
+		findViewById(R.id.image_view_separator_setting).setVisibility(View.GONE);
+		findViewById(R.id.header_preferences).setVisibility(View.GONE);
+		
 		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
 		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 
@@ -34,6 +37,10 @@ public class MenuActivity extends AbstractActionBarActivity {
 
 		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
+	}
+	
+	public void onClickImportFromGC(View view) {
+		startActivityForResult(new Intent(this, ImportFromGCActivity.class), 0);
 	}
 
 	public void onClickLiveMap(View view) {
@@ -82,6 +89,13 @@ public class MenuActivity extends AbstractActionBarActivity {
 				return true;
 			default:
 				return false;
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			finish();
 		}
 	}
 }

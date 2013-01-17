@@ -3,6 +3,7 @@
     <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Dialog">
     </style>
 	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent">
+	    <item name="android:windowNoTitle">true</item>
 	</style>
 
 	<style name="G4LTheme.Light" parent="@android:style/Theme">
@@ -153,6 +154,7 @@
         <item name="android:layout_width">0.0dip</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1.0</item>
+        <item name="android:maxLines">1</item>
     </style>
     <style name="LoginMessageView" parent="android:Widget.TextView">
         <item name="android:layout_marginTop">10.0dip</item>

@@ -5,26 +5,74 @@
     android:layout_gravity="right"
     android:orientation="vertical" >
 
-	<include layout="@layout/header"/>  	
-    
-    <LinearLayout android:orientation="vertical" style="@style/ScreenContainer"
-	  xmlns:android="http://schemas.android.com/apk/res/android">
-	    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-	
-	        <ToggleButton
-	            android:id="@+id/btn_menu_live_map"
-	            style="@style/MainMenuButton"
-	            android:drawableTop="@drawable/ic_menu_live_map"
-	            android:onClick="onClickLiveMap"
-	            android:textOff="@string/menu_live_map"
-	            android:textOn="@string/menu_live_map" />
-	
-	        <ImageView style="@style/SeparatorVertical.Dark" />
-	        <!-- <Button android:onClick="onClickManual" android:text="@string/menu_manual" android:drawableTop="@drawable/ic_menu_manual" style="@style/MainMenuButton" /> -->
-	        <Button android:onClick="onClickSettings" android:text="@string/menu_preferences" android:drawableTop="@drawable/ic_menu_settings" style="@style/MainMenuButton" />
-	        <ImageView style="@style/SeparatorVertical.Dark" />
-	        <Button android:onClick="onClickNearest" android:text="@string/menu_nearest" android:drawableTop="@drawable/ic_launcher" style="@style/MainMenuButton" />
-	    </LinearLayout>
-	    <LinearLayout android:id="@+id/linear_layout_main_menu_bottom" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-	</LinearLayout>
+    <include layout="@layout/header" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/ScreenContainer"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ToggleButton
+                android:id="@+id/btn_menu_live_map"
+                style="@style/MainMenuButton"
+                android:drawableTop="@drawable/ic_menu_live_map"
+                android:onClick="onClickLiveMap"
+                android:textOff="@string/menu_live_map"
+                android:textOn="@string/menu_live_map" />
+
+            <ImageView style="@style/SeparatorVertical.Dark" />
+
+            <Button
+                style="@style/MainMenuButton"
+                android:drawableTop="@drawable/ic_menu_gc_input"
+                android:onClick="onClickImportFromGC"
+                android:text="@string/menu_import_from_gc" />
+
+            <ImageView style="@style/SeparatorVertical.Dark" />
+
+            <Button
+                style="@style/MainMenuButton"
+                android:drawableTop="@drawable/ic_menu_nearest"
+                android:onClick="onClickNearest"
+                android:text="@string/menu_nearest" />
+        </LinearLayout>
+
+        <ImageView style="@style/SeparatorHorizontal.Dark" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                style="@style/MainMenuButton"
+                android:drawableTop="@drawable/ic_menu_settings"
+                android:onClick="onClickSettings"
+                android:text="@string/menu_preferences" />
+
+            <ImageView style="@style/SeparatorVertical.Dark" />
+
+            <Button
+                style="@style/MainMenuButton"
+                android:drawableTop="@drawable/ic_menu_manual"
+                android:onClick="onClickManual"
+                android:text="@string/menu_manual" />
+
+            <ImageView style="@style/SeparatorVertical.Dark" />
+
+            <Button
+                style="@style/MainMenuButton"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_main_menu_bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </LinearLayout>

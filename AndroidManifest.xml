@@ -31,11 +31,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/G4LTheme.MainActivity.Dialog" android:name="com.arcao.geocaching4locus.MainActivity" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:icon="@drawable/ic_launcher" android:theme="@style/G4LTheme.MainActivity.Dialog" android:name="com.arcao.geocaching4locus.MainActivity" android:exported="true">
             <intent-filter android:label="@string/search_activity_name">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -65,7 +61,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportActivity" android:theme="@style/G4LTheme.Invisible" android:label="@string/locus_import_cache" android:exported="true">
+        <activity android:name=".ImportActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -85,13 +81,17 @@
                 <data android:scheme="http" android:host="www.geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
             </intent-filter>            
         </activity>
-        <activity android:name="MenuActivity" android:theme="@style/G4LTheme.MenuActivity" android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:exported="true" android:windowSoftInputMode="adjustPan">
+        <activity android:name="MenuActivity" android:theme="@style/G4LTheme.MenuActivity" android:exported="true" android:windowSoftInputMode="adjustPan">
+            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <intent-filter android:label="@string/app_name" android:icon="@drawable/ic_launcher">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance">
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -101,5 +101,11 @@
         </activity>
         <activity android:name="org.acra.CrashReportDialog" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="SendErrorActivity" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
+        <activity android:name="ImportFromGCActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
+            <intent-filter android:label="@string/import_from_gc_activity_name">
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

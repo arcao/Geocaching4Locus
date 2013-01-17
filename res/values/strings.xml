@@ -133,6 +133,10 @@
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>
     <string name="error_location_title">No location service allowed</string>
-    <string name="error_location_settings_button">Settings</string>    
+    <string name="error_location_settings_button">Settings</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="gc_number_input_title">Enter GC code</string>
+    <string name="import_from_gc_activity_name">Import from GC code</string>
 </resources>
 

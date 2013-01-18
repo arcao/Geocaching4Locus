@@ -17,11 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
+import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.MainActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
@@ -30,7 +31,7 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-public class MainActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction {
+public class MainActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
 	private static final String TAG = "G4L|MainActivity";
 
 	private static String STATE_LATITUDE = "latitude";
@@ -45,7 +46,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 
 	private EditText latitudeEditText;
 	private EditText longitudeEditText;
-	private CheckBox importCachesCheckBox;
+	private EditText countOfCachesEditText;
 	private boolean locusInstalled = false;
 
 	private MainActivityBroadcastReceiver mainActivityBroadcastReceiver;
@@ -54,11 +55,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
-		hasCoordinates = false;
-		
+		// setTheme must be called before super method for devices < API v11
 		if (!getResources().getBoolean(R.bool.show_main_activity_as_dialog)) {
 			TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] { R.attr.normalWindow });
 			int normalWindowRes = typedArray.getResourceId(0, 0);
@@ -67,6 +64,11 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 			}
 			typedArray.recycle();
 		}
+
+		super.onCreate(savedInstanceState);
+		
+		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
+		hasCoordinates = false;
 
 		setContentView(R.layout.main_activity);
 		
@@ -142,7 +144,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
-		importCachesCheckBox = (CheckBox) findViewById(R.id.importCachesCheckBox);
+		countOfCachesEditText = (EditText) findViewById(R.id.cacheCountEditText);
 
 		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
@@ -172,13 +174,12 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 			}
 		});
 
-		importCachesCheckBox.setChecked(prefs.getBoolean(PrefConstants.IMPORT_CACHES, false));
-		importCachesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		countOfCachesEditText.setText(String.valueOf(prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20)));
+		countOfCachesEditText.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				Editor edit = prefs.edit();
-				edit.putBoolean(PrefConstants.IMPORT_CACHES, isChecked);
-				edit.commit();
+			public void onClick(View v) {
+				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.pref_count_of_caches, R.plurals.dialog_count_of_caches_prefix, 1, 200, 20);
+				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});
 
@@ -196,6 +197,14 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 			updateCoordinateTextView();
 			requestProgressUpdate();
 		}
+	}
+	
+	@Override
+	public void onNumberChooserDialogClosed(NumberChooserDialogFragment fragment) {
+		int value = fragment.getValue();
+		
+		countOfCachesEditText.setText(String.valueOf(value));
+		prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).commit();
 	}
 
 	@Override

@@ -59,11 +59,23 @@
                         android:inputType="textNoSuggestions" />
                 </TableRow>
             </TableLayout>
+            
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/pref_count_of_caches" />
 
-            <CheckBox
-                android:id="@+id/importCachesCheckBox"
-                style="@style/SimpleCheckbox"
-                android:text="@string/import_caches" />
+            <EditText
+                android:id="@+id/cacheCountEditText"
+                style="@style/SimpleEditText"
+                android:focusableInTouchMode="false"
+                android:inputType="none" >
+
+                <requestFocus />
+            </EditText>
+            
         </LinearLayout>
     </ScrollView>
 

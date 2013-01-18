@@ -19,7 +19,7 @@
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance in km</string>
     <string name="pref_distance_summary_miles">Distance in miles</string>
-    <string name="pref_count_of_caches">Count of cache</string>
+    <string name="pref_count_of_caches">Count of caches</string>
     <string name="pref_count_of_caches_text">caches</string>
     <string name="pref_count_of_caches_summary">Count of caches to download</string>
     <string name="pref_title_advanced">Advanced</string>
@@ -140,5 +140,9 @@
     <string name="import_from_gc_activity_name">Import from GC code</string>
     <string name="error_input_gc">Cache code is not valid.</string>
     <string name="error_cache_not_found">Cache %s was not found.</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
 </resources>
 

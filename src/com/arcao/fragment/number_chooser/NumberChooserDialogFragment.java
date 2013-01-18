@@ -1,5 +1,8 @@
 package com.arcao.fragment.number_chooser;
 
+import java.lang.ref.WeakReference;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -30,7 +33,9 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	protected int mNewValue = mValue;
 	
 	protected int mPrefixTextRes = 0;
-
+	
+	protected WeakReference<OnNumberChooserDialogClosedListener> onNumberChooserDialogClosedListenerRef;  
+	
 	public static NumberChooserDialogFragment newInstance(int titleRes, int prefixQuantityRes, int minValue, int maxValue, int defaultValue) {
 		NumberChooserDialogFragment fragment;
 
@@ -47,12 +52,31 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		args.putInt(PARAM_MAX_VALUE, maxValue);
 		args.putInt(PARAM_DEFAULT_VALUE, defaultValue);
 		fragment.setArguments(args);
+		fragment.setCancelable(false);
 
 		return fragment;
 	}
 	
 	public int getValue() {
 		return mNewValue;
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		
+		try {
+			onNumberChooserDialogClosedListenerRef = new WeakReference<OnNumberChooserDialogClosedListener>((OnNumberChooserDialogClosedListener) activity);
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString() + " must implement OnNumberChooserDialogClosedListener");
+		}
+	}
+	
+	protected void fireOnNumberChooserDialogClosedListener() {
+		OnNumberChooserDialogClosedListener listener = onNumberChooserDialogClosedListenerRef.get();
+		if (listener != null) {
+			listener.onNumberChooserDialogClosed(this);
+		}
 	}
 	
 	@Override
@@ -80,9 +104,15 @@ public class NumberChooserDialogFragment extends DialogFragment {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					mNewValue = mValue;
+					fireOnNumberChooserDialogClosedListener();
 				}
 			})
-			.setNegativeButton(R.string.cancel_button, null)
+			.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					fireOnNumberChooserDialogClosedListener();
+				}
+			})
 			.create();
 	}
 	
@@ -96,7 +126,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
 		
 		final TextView textView = (TextView) view.findViewById(R.id.number_picker_dialog_prefix_text);
-		textView.setText(getResources().getQuantityText(mPrefixTextRes, mValue));
+		textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));
 		
 		// SeekBar doesn't support minimal value, we must transpose values	
 		SeekBar seekBar =	(SeekBar) view.findViewById(R.id.number_picker_dialog_seek_bar);
@@ -112,7 +142,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				mValue = progress + mMinValue;
-				textView.setText(getResources().getQuantityText(mPrefixTextRes, mValue));
+				textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));
 			}
 		});
 		
@@ -143,6 +173,12 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		ft.addToBackStack(null);
 
 		super.show(manager, tag);
+	}
+	
+	// --------------------------- Listeners -----------------------------------------------
+
+	public interface OnNumberChooserDialogClosedListener {
+		public void onNumberChooserDialogClosed(NumberChooserDialogFragment fragment);
 	}
 
 }

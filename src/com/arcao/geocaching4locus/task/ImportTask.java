@@ -118,6 +118,10 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		if (isCancelled())
 			return null;
 		
+		if (cache == null) {
+			throw new CacheNotFoundException(cacheId);
+		}
+		
 		return LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);
 	}
 	
@@ -136,6 +140,8 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		
 		if (e instanceof InvalidCredentialsException) {
 			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, true, null);
+		} else if (e instanceof CacheNotFoundException) {
+			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_cache_not_found, ((CacheNotFoundException) e).getCacheCode(), false, null);
 		} else if (e instanceof NetworkException || 
 				(e instanceof WherigoServiceException && ((WherigoServiceException) e).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
@@ -165,5 +171,17 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		}
 			
 		api.openSession(token);
-	}		
+	}
+	
+	private class CacheNotFoundException extends Exception {
+		protected String cacheCode;
+		
+		public CacheNotFoundException(String cacheCode) {
+			this.cacheCode = cacheCode;
+		}
+		
+		public String getCacheCode() {
+			return cacheCode;
+		}
+	}
 }

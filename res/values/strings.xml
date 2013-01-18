@@ -138,5 +138,7 @@
     <string name="menu_import_from_gc">Import GC</string>
     <string name="gc_number_input_title">Enter GC code</string>
     <string name="import_from_gc_activity_name">Import from GC code</string>
+    <string name="error_input_gc">Cache code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
 </resources>
 

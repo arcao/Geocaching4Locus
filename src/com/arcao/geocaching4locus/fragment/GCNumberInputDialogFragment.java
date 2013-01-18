@@ -9,9 +9,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
+import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 
 
@@ -65,6 +71,19 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
 		
 		editText = new EditText(context);
+		editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+		editText.addTextChangedListener(new TextWatcher() {
+	    @Override
+			public void afterTextChanged(Editable s) {}
+	    @Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	    @Override
+			public void onTextChanged(CharSequence s, int start, int before, int count){
+	        if(s != null && s.length() > 0 && editText.getError() != null) {
+	            editText.setError(null);
+	        }
+	    }
+		}); 
 		
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
 			editText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
@@ -73,12 +92,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		return new AlertDialog.Builder(context)
 			.setTitle(R.string.gc_number_input_title)
 			.setView(editText)
-			.setPositiveButton(R.string.ok_button, new OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					fireOnInputFinished(editText.getText().toString());
-				}
-			})
+			.setPositiveButton(R.string.ok_button, null)
 			.setNegativeButton(R.string.cancel_button, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -86,6 +100,44 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 				}
 			})
 			.create();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		// this is a little bit tricky to prevent auto dismiss
+		// source: http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
+		final AlertDialog alertDialog = (AlertDialog) getDialog();
+		Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+		button.setOnClickListener(new View.OnClickListener() { 
+			@Override
+			public void onClick(View v)
+			{
+				if (validateInput(editText)) {
+					fireOnInputFinished(editText.getText().toString());
+					alertDialog.dismiss();
+				}
+			}
+		});
+	}
+	
+	protected boolean validateInput(EditText editText) {
+		String value = editText.getText().toString();
+		
+		if (value.length() == 0) {
+			editText.setError(getString(R.string.error_input_gc));
+			return false;
+		}
+		
+		try {
+			if (GeocachingUtils.cacheCodeToCacheId(value) > 0) {
+				return true;
+			}
+		} catch (IllegalArgumentException e) {}
+		
+		editText.setError(getString(R.string.error_input_gc));
+		return false;
 	}
 	
 	public interface OnInputFinishedListener {

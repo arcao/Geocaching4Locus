@@ -74,6 +74,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
 		
 		editText = new EditText(context);
+		editText.setText("GC");
 		editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 		editText.addTextChangedListener(new TextWatcher() {
 	    @Override

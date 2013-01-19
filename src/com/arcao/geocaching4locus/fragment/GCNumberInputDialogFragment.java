@@ -19,12 +19,14 @@ import android.widget.EditText;
 
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
 
 
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = GCNumberInputDialogFragment.class.getName();
 	
 	protected static final String PARAM_INPUT = "INPUT";
+	protected static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
 	
 	protected WeakReference<OnInputFinishedListener> inputFinishedListenerRef;
 	protected EditText editText;
@@ -50,6 +52,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		
 		if (editText != null && isShowing()) {
 			outState.putCharSequence(PARAM_INPUT, editText.getText());
+			outState.putCharSequence(PARAM_ERROR_MESSAGE, editText.getError());
 		}
 	}
 	
@@ -87,12 +90,14 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
 			editText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
+			editText.setError(savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE));
 		}
 		
 		return new AlertDialog.Builder(context)
 			.setTitle(R.string.gc_number_input_title)
 			.setView(editText)
-			.setPositiveButton(R.string.ok_button, null)
+			// Beware listener can't be null!
+			.setPositiveButton(R.string.ok_button, new EmptyDialogOnClickListener())
 			.setNegativeButton(R.string.cancel_button, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -109,6 +114,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		// this is a little bit tricky to prevent auto dismiss
 		// source: http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
 		final AlertDialog alertDialog = (AlertDialog) getDialog();
+		if (alertDialog == null)
+			return;
+		
 		Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 		button.setOnClickListener(new View.OnClickListener() { 
 			@Override

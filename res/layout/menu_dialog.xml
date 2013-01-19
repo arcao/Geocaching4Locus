@@ -49,8 +49,8 @@
 
             <Button
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_settings"
-                android:onClick="onClickSettings"
+                android:drawableTop="@drawable/ic_menu_preferences"
+                android:onClick="onClickPreferences"
                 android:text="@string/menu_preferences" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />

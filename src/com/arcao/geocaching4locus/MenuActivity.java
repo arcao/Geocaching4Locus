@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus;
 
+import locus.api.android.utils.LocusUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -62,12 +63,23 @@ public class MenuActivity extends AbstractActionBarActivity {
 	}
 
 	public void onClickNearest(View view) {
+		Intent intent = null;
+		
 		// copy intent data from Locus
-		Intent intent = new Intent(getIntent());
-		intent.setClass(this, MainActivity.class);
+		// FIX Android 2.3.3 can't start activity second time
+		if (LocusUtils.isIntentMainFunction(getIntent())) {
+			intent = new Intent(getIntent());
+			intent.setClass(this, MainActivity.class);
+		} else {
+			intent = new Intent(this, MainActivity.class);
+		}
 
 		startActivity(intent);
 		finish();
+	}
+	
+	public void onClickPreferences(View view) {
+		startActivity(new Intent(this, PreferenceActivity.class));
 	}
 
 	@Override

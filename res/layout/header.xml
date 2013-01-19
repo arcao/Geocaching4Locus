@@ -19,7 +19,7 @@
         android:id="@+id/header_preferences"
         style="@style/TitleBarButton"
         android:contentDescription="@string/preferences"
-        android:src="@drawable/ic_settings_default" />
+        android:src="@drawable/ic_action_preferences" />
 
     <ImageView
         android:id="@+id/image_view_separator_close"
@@ -29,5 +29,5 @@
         android:id="@+id/header_close"
         style="@style/TitleBarButton"
         android:contentDescription="@string/close"
-        android:src="@drawable/ic_cancel_default" />
+        android:src="@drawable/ic_action_close" />
 </LinearLayout>

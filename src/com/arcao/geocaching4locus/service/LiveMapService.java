@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -52,8 +51,9 @@ public class LiveMapService extends IntentService {
 	public static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
 	public static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
 	
+	private static final int REQUESTS = 5;
 	private static final int CACHES_PER_REQUEST = 50;
-	private static final int CACHES_COUNT = CACHES_PER_REQUEST;
+	private static final int CACHES_COUNT = REQUESTS * CACHES_PER_REQUEST;
 	
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 	
@@ -82,11 +82,23 @@ public class LiveMapService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Log.d(TAG, "Handling job, count=" + countOfJobs.get());
+		int jobId = countOfJobs.get();
+		Log.d(TAG, "Handling job, count=" + jobId);
 		
 		// we skip all jobs before last one
-		if (countOfJobs.getAndDecrement() != 1)
+		if (countOfJobs.getAndDecrement() > 1)
 			return;
+		
+		// wait 1100 ms, next job could come
+		/*try {
+			Thread.sleep(1100);
+		} catch(InterruptedException e) {}
+		
+		// if so skip this job
+		if (countOfJobs.get() > 0) {
+			Log.d(TAG, "New job found, skipped...");
+			return;
+		}*/
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); 
 		loadConfiguration(prefs);
@@ -99,17 +111,13 @@ public class LiveMapService extends IntentService {
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 		
 		try {			
-			List<Waypoint> waypoints = downloadCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
-			
-			PackWaypoints pw = new PackWaypoints(TAG);
-			for (Waypoint wpt : waypoints) {
-				wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
-				pw.addWaypoint(wpt);
-			}
-
-			ActionDisplayPoints.sendPackSilent(this, pw);
+			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, e.getMessage(), e);
+			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			
+			// disable live map
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (InvalidCredentialsException e) {
 			e.printStackTrace();
 			Toast.makeText(this, getString(R.string.error_credentials), Toast.LENGTH_LONG).show();
@@ -163,74 +171,85 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new ContainerType[0]);
 	}
 	
-	protected List<Waypoint> downloadCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException {
-		final List<Waypoint> points = new ArrayList<Waypoint>();
-
+	protected void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
-		
-		int attempt = 0;
-		
-		while (++attempt <= 2) {
-			try {
-				login(api);
-				
-				String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
-		
-				int current = 0;
-				int perPage = CACHES_PER_REQUEST;
-				
-				while (current < CACHES_COUNT) {
-					perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
 	
-					List<SimpleGeocache> cachesToAdd;
-					
-					if (current == 0) {
-						cachesToAdd = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
-								new PointRadiusFilter(latitude, longitude, 60000),
-								new GeocacheTypeFilter(cacheTypes),
-								new GeocacheContainerSizeFilter(containerTypes),
-								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
-								new NotFoundByUsersFilter(showFound ? null : username),
-								new NotHiddenByUsersFilter(showOwn ? null : username),
-								new DifficultyFilter(difficultyMin, difficultyMax),
-								new TerrainFilter(terrainMin, terrainMax),
-								new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude)
-						});
-					} else {
-						cachesToAdd = api.getMoreGeocaches(true, current, perPage, 0, 0);
-					}
-									
-					points.addAll(LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd));
-					
-					if (cachesToAdd.size() != perPage)
-						break;
-	
-					current = current + perPage;
+		int current = 0;
+		int perPage = CACHES_PER_REQUEST;
+		
+		int requests = 0;
+		
+		try {
+			login(api);
+			
+			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+				
+			while (current < CACHES_COUNT) {
+				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
+
+				if (countOfJobs.get() > 0) {
+					Log.d(TAG, "New job found, skipped downloading next caches ...");
+					break;
 				}
-				int count = points.size();
-	
-				Log.i(TAG, "found caches: " + count);
-	
-				return points;
-			} catch (InvalidSessionException e) {
-				Log.e(TAG, e.getMessage(), e);
-				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
-				if (attempt == 1)
-					continue;
+				List<SimpleGeocache> caches;
 				
-				throw e;
-			} catch (OperationCanceledException e) {
-				Log.e(TAG, e.getMessage(), e);
+				if (current == 0) {
+					caches = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
+							new PointRadiusFilter(latitude, longitude, 60000),
+							new GeocacheTypeFilter(cacheTypes),
+							new GeocacheContainerSizeFilter(containerTypes),
+							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
+							new NotFoundByUsersFilter(showFound ? null : username),
+							new NotHiddenByUsersFilter(showOwn ? null : username),
+							new DifficultyFilter(difficultyMin, difficultyMax),
+							new TerrainFilter(terrainMin, terrainMax),
+							new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude)
+					});
+				} else {
+					caches = api.getMoreGeocaches(true, current, perPage, 0, 0);
+				}
 				
-				throw new InvalidCredentialsException("Log in operation cancelled");
+				if (caches.size() == 0)
+					break;
+				
+				current = current + caches.size();
+				
+				requests++;
+
+				PackWaypoints pw = new PackWaypoints(TAG + "|" + requests);
+				for (SimpleGeocache cache : caches) {
+					Waypoint wpt = LocusDataMapper.toLocusPoint(getApplicationContext(), cache);
+					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
+					pw.addWaypoint(wpt);
+				}
+
+				ActionDisplayPoints.sendPackSilent(this, pw);
+				
+				if (caches.size() != perPage)
+					break;
 			}
+		} catch (InvalidSessionException e) {
+			Log.e(TAG, e.getMessage(), e);
+			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			
+			throw e;
+		} catch (OperationCanceledException e) {
+			Log.e(TAG, e.getMessage(), e);
+			
+			throw new InvalidCredentialsException("Log in operation cancelled");
+		} finally {
+			Log.i(TAG, "Count of caches sent to Locus: " + current);
 		}
 		
-		return points; 
+		// HACK we must remove old PackWaypoints from the map
+		for (int i = requests + 1; i < REQUESTS; i++) {
+			PackWaypoints pw = new PackWaypoints(TAG + "|" + i);
+			ActionDisplayPoints.sendPackSilent(this, pw);
+		}
 	}
 	
 	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {

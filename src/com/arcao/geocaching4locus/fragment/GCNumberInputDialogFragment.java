@@ -10,9 +10,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,9 +73,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
 		
-		editText = new EditText(context);
+		View view = LayoutInflater.from(context).inflate(R.layout.gc_number_input_dialog, null); 
+		
+		editText = (EditText) view.findViewById(R.id.gc_number_input_edit_text);
 		editText.setText("GC");
-		editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 		editText.addTextChangedListener(new TextWatcher() {
 	    @Override
 			public void afterTextChanged(Editable s) {}
@@ -94,9 +95,12 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			editText.setError(savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE));
 		}
 		
+		// move caret on a last position
+		editText.setSelection(editText.getText().length());
+		
 		return new AlertDialog.Builder(context)
 			.setTitle(R.string.gc_number_input_title)
-			.setView(editText)
+			.setView(view)
 			// Beware listener can't be null!
 			.setPositiveButton(R.string.ok_button, new EmptyDialogOnClickListener())
 			.setNegativeButton(R.string.cancel_button, new OnClickListener() {

@@ -31,7 +31,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:icon="@drawable/ic_launcher" android:theme="@style/G4LTheme.MainActivity.Dialog" android:name="com.arcao.geocaching4locus.MainActivity" android:exported="true">
+        <activity android:icon="@drawable/ic_launcher_nearest" android:theme="@style/G4LTheme.MainActivity.Dialog" android:name="com.arcao.geocaching4locus.MainActivity" android:exported="true">
             <intent-filter android:label="@string/search_activity_name">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -48,7 +48,7 @@
         <activity android:name="PreferenceActivity" android:label="@string/preferences" android:theme="@style/G4LTheme.Settings"/>
         <activity android:name="ErrorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="UpdateActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
+            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/locus_update_cache">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" />
@@ -56,7 +56,7 @@
             </intent-filter>
         </activity>
         <activity android:name="UpdateMoreActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/locus_update_cache">
+            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/locus_update_cache">
                 <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -86,7 +86,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -102,7 +102,7 @@
         <activity android:name="org.acra.CrashReportDialog" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="SendErrorActivity" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="ImportFromGCActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
-            <intent-filter android:label="@string/import_from_gc_activity_name">
+            <intent-filter android:icon="@drawable/ic_launcher_gc_input" android:label="@string/import_from_gc_activity_name">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

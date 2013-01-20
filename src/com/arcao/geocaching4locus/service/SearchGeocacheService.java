@@ -64,7 +64,6 @@ public class SearchGeocacheService extends AbstractService {
 	private float terrainMax;
 	private boolean simpleCacheData;
 	private double distance;
-	private boolean importCaches;
 	private int logCount;
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
@@ -146,7 +145,6 @@ public class SearchGeocacheService extends AbstractService {
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 
-		importCaches = prefs.getBoolean(PrefConstants.IMPORT_CACHES, false);
 		cacheTypes = getCacheTypeFilterResult(prefs);
 		containerTypes = getContainerTypeFilterResult(prefs);
 	}
@@ -154,7 +152,7 @@ public class SearchGeocacheService extends AbstractService {
 	private void callLocus(File file) {
 		try {
 			if (file != null) {
-			  ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, importCaches, Intent.FLAG_ACTIVITY_NEW_TASK);
+			  ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);

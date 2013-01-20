@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Ocurrió un error al descargar caches.&lt;br&gt;Descripción: %1$s</string>
     <string name="downloading">Descargando cachés…</string>
     <string name="error_locus_not_found">¡Por favor instale Locus!</string>
-    <string name="search_activity_name">Cachés más cercanos</string>
-    <string name="error_location">¡No se permite adquirir la posición usando red! Por favor actívelo en ajustes de  Android.</string>
+    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">Adquiriendo posición desde GPS ...</string>
     <string name="acquiring_network_location">Adquiriendo posición desde red…</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Distancia</string>
     <string name="pref_distance_summary_km">Distancia en km</string>
     <string name="pref_distance_summary_miles">Distancia en millas</string>
-    <string name="pref_count_of_caches">Recuento de cachés</string>
-    <string name="pref_count_of_caches_text">cachés</string>
-    <string name="pref_count_of_caches_summary">Recuento de cachés a descargar</string>
     <string name="pref_title_advanced">Avanzado</string>
     <string name="pref_use_compression">Usar compresión</string>
     <string name="pref_use_compression_summary">Usar compresión HTTP (experimental)</string>
     <string name="pref_imperial_units">Unidades imperiales</string>
     <string name="pref_imperial_units_summary">Usar millas en vez de kilómetros</string>
-    
-    <string name="import_caches">Importar caches</string>
     
     <string name="error_credentials">Nombre usuario o contraseña no válidos. Por favor compruebe su estado de conexión en preferencias.</string>
     <string name="error_title">¡Se ha producido un error!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Seleccionar todo</string>
     <string name="pref_menu_deselect_all">Deseleccionar todo</string>
     
-    <string name="locus_update_cache">Actualizar caché</string>
-    <string name="locus_import_cache">Importar caché</string>
     <string name="update_cache_progress">Actualizando caché…</string>
     
     <string name="pref_title_downloading">Descargando</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">Cargando, espere por favor…</string>
+    
+    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="error_location_title">No location service allowed</string>
+    <string name="error_location_settings_button">Settings</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Cachés más cercanos</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Actualizar caché</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

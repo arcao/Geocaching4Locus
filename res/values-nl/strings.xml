@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Er is een fout opgetreden bij downloaden van caches.&lt;br&gt;Omschrijving: %1$s</string>
     <string name="downloading">Bezig met downloaden van caches…</string>
-    <string name="error_locus_not_found">Gelieve Locus te installeren!</string>
-    <string name="search_activity_name">Caches dichtbij</string>
-    <string name="error_location">Locatie verkrijgen via draadloos netwerk is niet toegestaan!
-Gelieve het in te schakelen in Android instellingen.</string>
+    <string name="error_locus_not_found">Installeer Locus aub!</string>
+    <string name="error_location">Sta de WIFI of GPS-locatie dienst toe in \'Instellingen\'.</string>
     <string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
     <string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
     
@@ -20,16 +18,11 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="pref_distance">Afstand</string>
     <string name="pref_distance_summary_km">Afstand in km</string>
     <string name="pref_distance_summary_miles">Afstand in miles</string>
-    <string name="pref_count_of_caches">Aantal caches</string>
-    <string name="pref_count_of_caches_text">caches</string>
-    <string name="pref_count_of_caches_summary">Aantal caches om te downloaden</string>
     <string name="pref_title_advanced">Geavanceerd</string>
     <string name="pref_use_compression">Gebruik compressie</string>
     <string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
     <string name="pref_imperial_units">Imperiale eenheden</string>
     <string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
-    
-    <string name="import_caches">Importeer caches</string>
     
     <string name="error_credentials">Ongeldige gebruikersnaam of paswoord. Controleer AUB de inloggegevens in Voorkeuren</string>
     <string name="error_title">Er is een fout opgetreden!</string>
@@ -47,8 +40,6 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="pref_menu_select_all">Alles selecteren</string>
     <string name="pref_menu_deselect_all">Niets selecteren</string>
     
-    <string name="locus_update_cache">Update cache</string>
-    <string name="locus_import_cache">Importeren naar Locus</string>
     <string name="update_cache_progress">Bezig met updaten van cache…</string>
     
     <string name="pref_title_downloading">Bezig met downloaden</string>
@@ -119,7 +110,7 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="crash_dialog_title">Geocaching4Locus is gecrashed</string>
     <string name="crash_dialog_text">Er is een onbekende fout opgetreden welke de applicatie heeft doen stoppen. Gelieve ons te helpen om dit probleem op te lossen door ons de fout gegevens te sturen, je hoeft enkel op \'OK\' te klikken.</string>
     <string name="crash_dialog_comment_prompt">Je kan uw opmerkingen over het probleem hieronder toevoegen:</string>
-    <string name="crash_dialog_ok_toast">Bedankt!Je kan opmerkingen over het probleem hieronder toevoegen:</string>
+    <string name="crash_dialog_ok_toast">Bedankt!</string>
     
     <string name="error_network">Netwerk onbeschikbaar. Controleer de verbinding AUB.</string>
 
@@ -130,5 +121,32 @@ Gelieve het in te schakelen in Android instellingen.</string>
     <string name="pref_create_images_tab_summary">Maak afbeeldingen tab in cache venster</string>
     
     <string name="loading">Bezig met laden, gelieve te wachten...</string>
+    
+    <string name="livemap_activated">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
+    <string name="livemap_deactivated">Live kaart gedeactiveerd</string>
+    <string name="error_location_title">Geen locatie diensten toegestaan</string>
+    <string name="error_location_settings_button">Instellingen</string>
+    
+    <string name="menu_import_from_gc">Importeer GC</string>
+    <string name="dialog_gc_number_input_title">Importeer via GC code</string>
+    <string name="error_input_gc">Geen geldige GC code.</string>
+    <string name="error_cache_not_found">Cache %s niet gevonden.</string>
+    
+    <string name="dialog_count_of_caches_title">Aantal caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Caches dichtbij</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Update cache</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Importeer via GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Erros a descarregar as caches.ches.&lt;br&gt;Descrição: %1$s</string>
     <string name="downloading">A descarregar caches…</string>
     <string name="error_locus_not_found">Por favor instale o Locus!</string>
-    <string name="search_activity_name">Caches mais próximas</string>
-    <string name="error_location">Não é permitida a aquisição de coordenadas através da rede Wireless. Por favor active a opção nas configurações do Android.</string>
+    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">Adquirindo coordenadas através do GPS…</string>
     <string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles…</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Distância</string>
     <string name="pref_distance_summary_km">Distância em km</string>
     <string name="pref_distance_summary_miles">Distância em milhas</string>
-    <string name="pref_count_of_caches">Contagem de Caches</string>
-    <string name="pref_count_of_caches_text">caches</string>
-    <string name="pref_count_of_caches_summary">Número de caches a descarregar</string>
     <string name="pref_title_advanced">Avançado</string>
     <string name="pref_use_compression">Usar compressão</string>
     <string name="pref_use_compression_summary">Usar compressão HTTP (Experimental)</string>
     <string name="pref_imperial_units">Unidades Imperiais</string>
     <string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
-    
-    <string name="import_caches">Importar caches</string>
     
     <string name="error_credentials">Nome de utilizador ou password inválidos. Por favor verifique as credenciais.</string>
     <string name="error_title">Ocorrência de erros!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Selecionar tudo</string>
     <string name="pref_menu_deselect_all">Retirar seleção</string>
     
-    <string name="locus_update_cache">Atualizar cache</string>
-    <string name="locus_import_cache">Importar cache</string>
     <string name="update_cache_progress">A atualizar cache…</string>
     
     <string name="pref_title_downloading">A descarregar</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">A carregar, por favor espere....</string>
+    
+    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="error_location_title">No location service allowed</string>
+    <string name="error_location_settings_button">Settings</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Caches mais próximas</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Atualizar cache</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

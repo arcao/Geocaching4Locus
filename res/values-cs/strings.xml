@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Nastala chyba při stahování keší.&lt;br&gt;Popis: %1$s</string>
     <string name="downloading">Stahuji keše…</string>
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
-    <string name="search_activity_name">Nejbližší keše</string>
-    <string name="error_location">Zaměření pozice pomocí bezdrátové sítě není povoleno! Povolte ji v nastavení Androidu.</string>
+    <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
     <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Vzdálenost</string>
     <string name="pref_distance_summary_km">Vzdálenost v km</string>
     <string name="pref_distance_summary_miles">Vzdálenost v mílích</string>
-    <string name="pref_count_of_caches">Počet keší</string>
-    <string name="pref_count_of_caches_text">keší</string>
-    <string name="pref_count_of_caches_summary">Počet keší ke stáhnutí</string>
     <string name="pref_title_advanced">Pokročilé</string>
     <string name="pref_use_compression">Použít kompresi</string>
     <string name="pref_use_compression_summary">Použít HTTP kompresi (experimentální)</string>
     <string name="pref_imperial_units">Imperiální jednotky</string>
     <string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
-    
-    <string name="import_caches">Importovat keše</string>
     
     <string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zkontrolujte stav přihlášení v nastavení.</string>
     <string name="error_title">Nastala chyba!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Označit vše</string>
     <string name="pref_menu_deselect_all">Odznačit vše</string>
     
-    <string name="locus_update_cache">Aktualizovat keš</string>
-    <string name="locus_import_cache">Importovat keš</string>
     <string name="update_cache_progress">Aktualizuji keš…</string>
     
     <string name="pref_title_downloading">Stahování</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Vytvořit záložku s obrázky v dialogovém okně keše</string>
     
     <string name="loading">Nahrávám, prosím čekejte…</string>
+    
+    <string name="livemap_activated">Live mapa zapnuta. Nyní pohněte s mapou, aby se zobrazily keše.</string>
+    <string name="livemap_deactivated">Live mapa vypnuta.</string>
+    <string name="error_location_title">Služba k určení polohy není povolena</string>
+    <string name="error_location_settings_button">Nastavení</string>
+    
+    <string name="menu_import_from_gc">Importovat GC</string>
+    <string name="dialog_gc_number_input_title">Importovat z GC kódu</string>
+    <string name="error_input_gc">GC kód není správný.</string>
+    <string name="error_cache_not_found">Keš %s nebyla nalezena.</string>
+    
+    <string name="dialog_count_of_caches_title">Počet keší</string>
+    <string name="dialog_count_of_caches_description">Počet keší ke stažení:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d keš</item>
+        <item quantity="few">%d keše</item>
+        <item quantity="other">%d keší</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Nejbližší keše</string>
+    <string name="launcher_import_cache">Importovat keš do Locusu</string>
+    <string name="launcher_update_cache">Aktualizovat keš</string>    
+    <string name="launcher_update_more_caches">Aktualizovat keše</string>
+    <string name="launcher_import_from_gc">Importovat z GC kódu</string>
+    
+    <string name="title_count_of_caches">Počet keší</string>
+    
 </resources>
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Nastala chyba pri sťahovaní kešek.&lt;br&gt;Popis: %1$s</string>
     <string name="downloading">Sťahujem kešky…</string>
     <string name="error_locus_not_found">Prosím, nainštalujte Locus!</string>
-    <string name="search_activity_name">Najbližšie kešky</string>
-    <string name="error_location">Získať polohu pomocou bezdrôtovej siete je zakázané! Prosím, zmeňte nastavenia telefónu.</string>
+    <string name="error_location">Prosím povolte službu určenie polohy z bezdrôtovej siete alebo zo satelitov GPS v "Nastavenia".</string>
     <string name="acquiring_gps_location">Získavam polohu z GPS…</string>
     <string name="acquiring_network_location">Získavam polohu z bezdrôtovej siete…</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Vzdialenosť</string>
     <string name="pref_distance_summary_km">Vzdialenosť v km</string>
     <string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
-    <string name="pref_count_of_caches">Počet kešiek</string>
-    <string name="pref_count_of_caches_text">kešiek</string>
-    <string name="pref_count_of_caches_summary">Počet kešiek na stiahnutie</string>
     <string name="pref_title_advanced">Pokročilé</string>
     <string name="pref_use_compression">Použiť kompresiu</string>
     <string name="pref_use_compression_summary">Použitie kompresie HTTP (experimentálne)</string>
     <string name="pref_imperial_units">Imperiálne jednotky</string>
     <string name="pref_imperial_units_summary">Použitie míl namiesto kilometrov</string>
-    
-    <string name="import_caches">Importovať kešky</string>
     
     <string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastavení.</string>
     <string name="error_title">Došlo k chybe!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Vybrať všetko</string>
     <string name="pref_menu_deselect_all">Odznačiť všetko</string>
     
-    <string name="locus_update_cache">Aktualizovať kešku</string>
-    <string name="locus_import_cache">Importovať kešku</string>
     <string name="update_cache_progress">Aktualizujem kešku…</string>
     
     <string name="pref_title_downloading">Sťahovanie</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Vytvoriť záložku s obrázkami v dialógovom okne kešky</string>
     
     <string name="loading">Nahrávám, prosím čakajte…</string>
+    
+    <string name="livemap_activated">Aktívna mapa zapnutá. Teraz pohnite s mapou, aby sa zobrazili kešky.</string>
+    <string name="livemap_deactivated">Aktívna mapa vypnutá.</string>
+    <string name="error_location_title">Služba na určenie polohy nie je povolená</string>
+    <string name="error_location_settings_button">Nastavenia</string>
+    
+    <string name="menu_import_from_gc">Importovať GC</string>
+    <string name="dialog_gc_number_input_title">Importovať z GC kódu</string>
+    <string name="error_input_gc">GC kód nie je správny.</string>
+    <string name="error_cache_not_found">Keška %s nebola nájdená.</string>
+    
+    <string name="dialog_count_of_caches_title">Počet kešiek</string>
+    <string name="dialog_count_of_caches_description">Počet kešiek na stiahnutie:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d keška</item>
+        <item quantity="few">%d kešky</item>
+        <item quantity="other">%d kešiek</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Najbližšie kešky</string>
+    <string name="launcher_import_cache">Importovať kešky do Locusu</string>
+    <string name="launcher_update_cache">Aktualizovať kešku</string>    
+    <string name="launcher_update_more_caches">Aktualizovať kešky</string>
+    <string name="launcher_import_from_gc">Importovať z GC kódu</string>
+    
+    <string name="title_count_of_caches">Počet kešiek</string>
+    
 </resources>
 

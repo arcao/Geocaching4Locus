@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Napaka pri prenašanju caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Prenašanje...</string>
     <string name="error_locus_not_found">Prosimo namestite Locus!</string>
-    <string name="search_activity_name">Najbližji cachi</string>
-    <string name="error_location">Določanje lokacije preko wi-fi ni dovoljeno! Prosimo dajte nam dovoljenje v nastavitvah</string>
+    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">Določanje lokacije preko GPS...</string>
     <string name="acquiring_network_location">Določanje lokacije preko wi-fi...</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Razdalja</string>
     <string name="pref_distance_summary_km">Razdalja v km</string>
     <string name="pref_distance_summary_miles">Razdalja v miljah</string>
-    <string name="pref_count_of_caches">Števec cachov</string>
-    <string name="pref_count_of_caches_text">Cachi</string>
-    <string name="pref_count_of_caches_summary">Števec cachov za prenašanje</string>
     <string name="pref_title_advanced">Napredno</string>
     <string name="pref_use_compression">Uporabi stiskanje</string>
     <string name="pref_use_compression_summary">Uporabi HTTP stiskanje (eksperimentalno)</string>
     <string name="pref_imperial_units">Imperialne enote</string>
     <string name="pref_imperial_units_summary">Uporabi milje namesto kilometrov</string>
-    
-    <string name="import_caches">Uvozi cache</string>
     
     <string name="error_credentials">Napačno uporabniško ime ali geslo. Prosimo preverite vpisne nastavitve.</string>
     <string name="error_title">Napaka!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Izberi vse</string>
     <string name="pref_menu_deselect_all">Odznači vse</string>
     
-    <string name="locus_update_cache">Posodobi cache</string>
-    <string name="locus_import_cache">Uvozi cache</string>
     <string name="update_cache_progress">Posodabljanje cacha...</string>
     
     <string name="pref_title_downloading">Prenašanje</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Ustvari zavihek "slike" v dialogu cacha</string>
     
     <string name="loading">Nalaganje prosimo počakajte...</string>
+    
+    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="error_location_title">No location service allowed</string>
+    <string name="error_location_settings_button">Settings</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Najbližji cachi</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Posodobi cache</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">تنزيل الكاش</string>
     <string name="error_locus_not_found">الرجاء تثبيت لوكاس</string>
-    <string name="search_activity_name">اقرب كاش</string>
-    <string name="error_location">الحصول على مكان باستخدام شبكة لاسلكية غير مسموح به! يرجى تمكينه في إعدادات أندرويد.</string>
+    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">الحصول على المكان من ال جي بي اس</string>
     <string name="acquiring_network_location">الحصول على المكان من شبكة لاسلكية</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">المسافة</string>
     <string name="pref_distance_summary_km">المسافة بال كم</string>
     <string name="pref_distance_summary_miles">المسافة بالميل</string>
-    <string name="pref_count_of_caches">عدد الكاش</string>
-    <string name="pref_count_of_caches_text">الكاش</string>
-    <string name="pref_count_of_caches_summary">عدد الذاكرات المؤقتة الجاهزة للتحميل</string>
     <string name="pref_title_advanced">متقدم</string>
     <string name="pref_use_compression">استخدم الضغط</string>
     <string name="pref_use_compression_summary">إستخدم ضغط HTTP (تجريبي)</string>
     <string name="pref_imperial_units">الوحدات العامة</string>
     <string name="pref_imperial_units_summary">إستخدم الأميال بدلا من الكيلومترات</string>
-    
-    <string name="import_caches">إستيراد الذاكرات المؤقتة</string>
     
     <string name="error_credentials">اسم مستخدم او كلمة مرور خاطئة الرجاء التأكد من الاعدادات</string>
     <string name="error_title">حدث خطأ</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">تحديد الكل</string>
     <string name="pref_menu_deselect_all">الغاء تحديد الكل</string>
     
-    <string name="locus_update_cache">تحديث الذاكرة المؤقتة</string>
-    <string name="locus_import_cache">استقدام الكاش</string>
     <string name="update_cache_progress">تحديث الكاش</string>
     
     <string name="pref_title_downloading">تنزيل</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
     <string name="loading">Loading, please wait…</string>
+    
+    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="error_location_title">No location service allowed</string>
+    <string name="error_location_settings_button">Settings</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">اقرب كاش</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">تحديث الذاكرة المؤقتة</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

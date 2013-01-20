@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Es ist ein Fehler während dem Cache-Download aufgetreten.&lt;br&gt;Fehlerbeschreibung: %1$s</string>
     <string name="downloading">Lade caches…</string>
     <string name="error_locus_not_found">Bitte Locus installieren!</string>
-    <string name="search_activity_name">Caches in der Umgebung</string>
-    <string name="error_location">Die Positionsbestimmung mittels Mobilfunknetz ist nicht erlaubt! Bitte in den Android-Einstellungen aktivieren.</string>
+    <string name="error_location">Positionsbestimmung via WiFi, mobile Netzwerke oder GPS erlauben:  \'Settings\'.</string>
     <string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
     <string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
     
@@ -16,26 +15,21 @@
     <string name="pref_title_geocaching_credentials">Geocaching.com Benutzerdaten</string>
     
     <string name="pref_title_filter">Filter</string>
-    <string name="pref_distance">Distanz</string>
-    <string name="pref_distance_summary_km">Distanz in km</string>
-    <string name="pref_distance_summary_miles">Distanz in Meilen</string>
-    <string name="pref_count_of_caches">Anzahl Caches</string>
-    <string name="pref_count_of_caches_text">Caches</string>
-    <string name="pref_count_of_caches_summary">Anzahl der zu ladenden Caches</string>
+    <string name="pref_distance">Entfernung</string>
+    <string name="pref_distance_summary_km">Entfernung in Kilometern</string>
+    <string name="pref_distance_summary_miles">Entfernung in Meilen</string>
     <string name="pref_title_advanced">Erweitert</string>
     <string name="pref_use_compression">Komprimierung benutzen</string>
     <string name="pref_use_compression_summary">HTTP Komprimierung benutzen (experimentell)</string>
     <string name="pref_imperial_units">Englisches System</string>
     <string name="pref_imperial_units_summary">Zeige Meilen statt Kilometer</string>
     
-    <string name="import_caches">Caches importieren</string>
-    
     <string name="error_credentials">Ungültiger Benutzername oder Kennwort. Bitte überprüfen Sie Ihre Login-Zustand in den Einstellungen.</string>
     <string name="error_title">Ein Fehler ist aufgetreten!</string>
     
     <string name="ok_button">Ok</string>
     
-    <string name="error_locus_old">Die installierte Version von Locus ist zu alt. Geocaching4Locus benötigt mindestens Version %s.</string>
+    <string name="error_locus_old">Ihre Locus-Version ist veraltet. Geocaching4locus benötigt Version %s oder höher.</string>
     
     <string name="cancel_button">Abbrechen</string>
     
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Alle wählen</string>
     <string name="pref_menu_deselect_all">Alle abwählen</string>
     
-    <string name="locus_update_cache">Cache aktualisieren</string>
-    <string name="locus_import_cache">Importieren in Locus</string>
     <string name="update_cache_progress">Aktualisiere Cache…</string>
     
     <string name="pref_title_downloading">Empfange Daten</string>
@@ -96,7 +88,7 @@
     <string name="menu_preferences">Einstellungen</string>
     
     <string name="pref_livemap">Live Karte</string>
-    <string name="pref_livemap_summary">Direktes laden der Caches auf die Karte (aktiviere in Locus: Einstellungen → Verschiedenes → Aktiviere periodische Updates)</string>
+    <string name="pref_livemap_summary">Direktes Laden der Caches auf die Karte (aktiviere in Locus: Einstellung → Verschiedenes → Regelmäßige Updates aktivieren)</string>
     
     <string name="user_waypoint_name">Benutzerwegpunkte %1$d</string>
     <string name="final_location_name">Final bei %1$d</string>
@@ -129,5 +121,32 @@
     <string name="pref_create_images_tab_summary">Erstelle Bilder-Registerkarte im Cache-Dialog</string>
     
     <string name="loading">Geladen, bitte warten…</string>
+    
+    <string name="livemap_activated">Live Karte aktiviert. Bewege nun die Karte um Caches zu sehen</string>
+    <string name="livemap_deactivated">Live Karte deaktiviert</string>
+    <string name="error_location_title">Positionsbestimmung nicht aktiviert</string>
+    <string name="error_location_settings_button">Einstellungen</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Caches in der Umgebung</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Cache aktualisieren</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

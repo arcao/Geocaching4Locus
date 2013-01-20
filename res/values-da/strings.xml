@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Fejl opstået under indhentning af caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Henter cacher ned...</string>
     <string name="error_locus_not_found">Installer venligst Locus! </string>
-    <string name="search_activity_name">Nærmeste cacher</string>
-    <string name="error_location">Forsøget på at finde din position via trådløst netværk mislykkedes! Tænd venligst det trådløsnet under Android indstillingerne.</string>
+    <string name="error_location">Tillad venligst at det trådløse net eller GPS er tændt under \'Settings\'.</string>
     <string name="acquiring_gps_location">Finder din lokation via GPS</string>
     <string name="acquiring_network_location">Finder din lokation via Trådløst net...</string>
     
@@ -19,16 +18,11 @@
     <string name="pref_distance">Afstand</string>
     <string name="pref_distance_summary_km">Afstand i Km</string>
     <string name="pref_distance_summary_miles">Afstand i miles</string>
-    <string name="pref_count_of_caches">Antal af cacher</string>
-    <string name="pref_count_of_caches_text">cacher</string>
-    <string name="pref_count_of_caches_summary">Antal cacher du ønsker at hente ned</string>
     <string name="pref_title_advanced">Avanceret</string>
     <string name="pref_use_compression">Brug kompression </string>
     <string name="pref_use_compression_summary">Brug HTTP kompression (eksperimentel)</string>
     <string name="pref_imperial_units">Engelske mål</string>
     <string name="pref_imperial_units_summary">Brug miles i stedet for kilometer </string>
-    
-    <string name="import_caches">Importer cacher</string>
     
     <string name="error_credentials">Ugyldigt brugernavn og eller password. Check dine Log-in indstillinger.</string>
     <string name="error_title">Fejl opstået!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Vælg alle</string>
     <string name="pref_menu_deselect_all">Fravælg alle</string>
     
-    <string name="locus_update_cache">Opdater cache</string>
-    <string name="locus_import_cache">Importer cache</string>
     <string name="update_cache_progress">Opdatere cache...</string>
     
     <string name="pref_title_downloading">Henter ned</string>
@@ -125,9 +117,36 @@
     <string name="update_caches_progress">Opdaterer caches</string>
     <string name="original_coordinates_name">Originale kordinater</string>
     <string name="pref_title_container_type_filter">Beholder størrelse</string>
-    <string name="pref_create_images_tab">Create images tab</string>
-    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
+    <string name="pref_create_images_tab">Skab billeder faneblad</string>
+    <string name="pref_create_images_tab_summary">Skab billeder faneblad i en cache dialog</string>
     
     <string name="loading">Starter op, vent venligst...</string>
+    
+    <string name="livemap_activated">Live kort aktiveret. Bevæg kortet og se cacherne</string>
+    <string name="livemap_deactivated">Live kort deaktiveret</string>
+    <string name="error_location_title">Lokalitets tjeneste er ikke tilladt</string>
+    <string name="error_location_settings_button">Indstillinger</string>
+    
+    <string name="menu_import_from_gc">Import GC</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
+    <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Nærmeste cacher</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Opdater cache</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

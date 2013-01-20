@@ -114,7 +114,8 @@ public class LocusDataMapper {
 			d.setShortDescription(gc.getShortDescription(), true);
 			d.setLongDescription(gc.getLongDescription(), true);
 			d.setEncodedHints(gc.getHint());
-			d.setNotes(gc.getPersonalNote());			
+			d.setNotes(gc.getPersonalNote());
+			d.favoritePoints = gc.getFavoritePoints();
 
 			for (CacheLog log : gc.getCacheLogs()) {
 				d.logs.add(toLocusCacheLog(log));

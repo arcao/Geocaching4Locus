@@ -8,7 +8,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -55,7 +54,9 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// setTheme must be called before super method for devices < API v11
+		super.onCreate(savedInstanceState);
+		
+		/*// setTheme must be called before super method for devices < API v11
 		if (!getResources().getBoolean(R.bool.show_main_activity_as_dialog)) {
 			TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] { R.attr.normalWindow });
 			int normalWindowRes = typedArray.getResourceId(0, 0);
@@ -63,9 +64,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 				setTheme(normalWindowRes);
 			}
 			typedArray.recycle();
-		}
-
-		super.onCreate(savedInstanceState);
+		}*/
 		
 		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
 		hasCoordinates = false;
@@ -178,7 +177,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 		countOfCachesEditText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.pref_count_of_caches, R.plurals.dialog_count_of_caches_prefix, 1, 200, 20);
+				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.dialog_count_of_caches_prefix, 1, 200, 20);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});

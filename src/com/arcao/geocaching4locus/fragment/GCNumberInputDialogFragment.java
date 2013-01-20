@@ -99,7 +99,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		editText.setSelection(editText.getText().length());
 		
 		return new AlertDialog.Builder(context)
-			.setTitle(R.string.gc_number_input_title)
+			.setTitle(R.string.dialog_gc_number_input_title)
 			.setView(view)
 			// Beware listener can't be null!
 			.setPositiveButton(R.string.ok_button, new EmptyDialogOnClickListener())

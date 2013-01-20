@@ -4,7 +4,6 @@
     <string name="error">Error occurs while downloading caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Downloading caches…</string>
     <string name="error_locus_not_found">Please install Locus!</string>
-    <string name="search_activity_name">Nearest caches</string>
     <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
     <string name="acquiring_gps_location">Acquiring location from GPS…</string>
     <string name="acquiring_network_location">Acquiring location from Wireless network…</string>
@@ -19,16 +18,11 @@
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance in km</string>
     <string name="pref_distance_summary_miles">Distance in miles</string>
-    <string name="pref_count_of_caches">Count of caches</string>
-    <string name="pref_count_of_caches_text">caches</string>
-    <string name="pref_count_of_caches_summary">Count of caches to download</string>
     <string name="pref_title_advanced">Advanced</string>
     <string name="pref_use_compression">Use compression</string>
     <string name="pref_use_compression_summary">Use HTTP compression (experimental)</string>
     <string name="pref_imperial_units">Imperial units</string>
     <string name="pref_imperial_units_summary">Use miles instead of kilemeters</string>
-    
-    <string name="import_caches">Import caches</string>
     
     <string name="error_credentials">Invalid username or password. Please check your log-in state in preferences.</string>
     <string name="error_title">Error occurs!</string>
@@ -46,8 +40,6 @@
     <string name="pref_menu_select_all">Select all</string>
     <string name="pref_menu_deselect_all">Deselect all</string>
     
-    <string name="locus_update_cache">Update cache</string>
-    <string name="locus_import_cache">Import cache</string>
     <string name="update_cache_progress">Updating cache…</string>
     
     <string name="pref_title_downloading">Downloading</string>
@@ -136,13 +128,25 @@
     <string name="error_location_settings_button">Settings</string>
     
     <string name="menu_import_from_gc">Import GC</string>
-    <string name="gc_number_input_title">Enter GC code</string>
-    <string name="import_from_gc_activity_name">Import from GC code</string>
-    <string name="error_input_gc">Cache code is not valid.</string>
+    <string name="dialog_gc_number_input_title">Import from GC code</string>
+    <string name="error_input_gc">GC code is not valid.</string>
     <string name="error_cache_not_found">Cache %s was not found.</string>
+    
+    <string name="dialog_count_of_caches_title">Count of caches</string>
+    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
         <item quantity="other">%d caches</item>
     </plurals>
+
+    <string name="launcher_nearest_caches">Nearest caches</string>
+    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_update_cache">Update cache</string>    
+    <string name="launcher_update_more_caches">Update caches</string>
+    <string name="launcher_import_from_gc">Import from GC code</string>
+    
+    <string name="title_count_of_caches">Count of caches</string>
+    
 </resources>
 

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="G4LTheme" parent="@android:style/Theme">
+    </style>
     <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Dialog">
     </style>
 	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent">
 	    <item name="android:windowNoTitle">true</item>
 	</style>
-
-	<style name="G4LTheme.Light" parent="@android:style/Theme">
+	<style name="G4LTheme.Light" parent="@android:style/Theme.Light">
     </style>
-    <style name="G4LTheme.Light.NoTitle" parent="@android:style/Theme">
+    <style name="G4LTheme.Light.NoTitle">
         <item name="android:windowNoTitle">true</item>
     </style>
 
@@ -30,7 +31,7 @@
     <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog.NoTitle">
     </style>
 
-    <style name="G4LTheme.Settings" parent="G4LTheme.Light" />
+    <style name="G4LTheme.Settings" />
     <style name="SimpleEditText" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -39,8 +40,23 @@
         <item name="android:maxLines">1</item>
         <item name="android:inputType">text</item>
     </style>
+    <style name="SimpleEditTextButton" parent="SimpleEditText">
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:inputType">none</item>
+        
+        <item name="android:background">@android:drawable/btn_dropdown</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="SimpleCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5.0dip</item>
+        <item name="android:layout_marginRight">5.0dip</item>
+    </style>
+    <style name="SimpleButton" parent="@android:style/Widget.Button">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">5.0dip</item>
@@ -133,10 +149,6 @@
         <item name="android:layout_height">1dp</item>
     </style>
     <style name="ScreenContainer">
-        <item name="android:paddingLeft">8.0dip</item>
-        <item name="android:paddingTop">8.0dip</item>
-        <item name="android:paddingRight">8.0dip</item>
-        <item name="android:paddingBottom">8.0dip</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

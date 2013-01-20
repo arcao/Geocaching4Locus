@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +18,7 @@ import java.util.regex.Pattern;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.objects.extra.ExtraData;
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
@@ -492,16 +492,10 @@ public class LocusDataMapper {
     }    
     
     public static void clearExtraOnDisplayCallback(Waypoint p) {
-    	try {
-			Field field = Waypoint.class.getDeclaredField("mExtraOnDisplay");
-			field.setAccessible(true);
-			field.set(p, "clear;;;;;");
-		} catch (Exception e) {
-			Log.e(TAG, "Clearing ExtraOnDisplay callback failed.", e);
-		}
+    	p.addParameter(ExtraData.PAR_INTENT_EXTRA_CALLBACK, "clear;;;;;;");
     }
 
-	public static Waypoint mergeCacheLogs(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
+    public static Waypoint mergeCacheLogs(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
     	// issue #14: Keep cache logs from GSAK when updating cache
     	if (fromPoint.gcData.logs.size() == 0) 
     		return toPoint;

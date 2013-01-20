@@ -38,8 +38,8 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsers
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
-import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -88,7 +88,7 @@ public class SearchGeocacheService extends AbstractService {
 
 	@Override
 	protected Intent createOngoingEventIntent() {
-		return new Intent(this, MainActivity.class);
+		return new Intent(this, SearchNearestActivity.class);
 	}
 
 	public void sendProgressUpdate() {

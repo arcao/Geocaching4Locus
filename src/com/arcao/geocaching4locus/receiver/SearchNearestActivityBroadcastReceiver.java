@@ -10,19 +10,19 @@ import android.util.Log;
 
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
-import com.arcao.geocaching4locus.MainActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
 import com.arcao.geocaching4locus.fragment.DownloadProgressDialogFragment;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 
-public class MainActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
-	protected WeakReference<MainActivity> activityRef;
+public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
+	protected WeakReference<SearchNearestActivity> activityRef;
 	protected DownloadProgressDialogFragment pd;
 	
-	public MainActivityBroadcastReceiver(MainActivity activity) {
-		activityRef = new WeakReference<MainActivity>(activity);
+	public SearchNearestActivityBroadcastReceiver(SearchNearestActivity activity) {
+		activityRef = new WeakReference<SearchNearestActivity>(activity);
 	}
 	
 	public void register() {
@@ -44,7 +44,7 @@ public class MainActivityBroadcastReceiver extends BroadcastReceiver implements 
 	
 	@Override
 	public void onReceive(Context context, final Intent intent) {
-		MainActivity activity = activityRef.get();
+		SearchNearestActivity activity = activityRef.get();
 		if (activity == null)
 			return;
 		
@@ -81,7 +81,7 @@ public class MainActivityBroadcastReceiver extends BroadcastReceiver implements 
 	
 	@Override
 	public void onCancel(AbstractDialogFragment dialogFragment) {
-		MainActivity activity = activityRef.get();
+		SearchNearestActivity activity = activityRef.get();
 		if (activity == null)
 			return;
 		

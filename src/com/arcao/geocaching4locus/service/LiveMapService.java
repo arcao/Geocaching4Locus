@@ -14,6 +14,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
@@ -66,9 +68,12 @@ public class LiveMapService extends IntentService {
 	private float terrainMax;
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
+	private final Handler mMainThreadHandler;
 
 	public LiveMapService() {
 		super(TAG);
+		
+		mMainThreadHandler = new Handler();
 	}
 	
 	@Override
@@ -114,19 +119,24 @@ public class LiveMapService extends IntentService {
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, e.getMessage(), e);
-			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			showMessage("Error: " + e.getMessage());
 			
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (InvalidCredentialsException e) {
-			e.printStackTrace();
-			Toast.makeText(this, getString(R.string.error_credentials), Toast.LENGTH_LONG).show();
+			Log.e(TAG, e.getMessage(), e);
+			showMessage(getString(R.string.error_credentials));
 
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
-		} catch (GeocachingApiException e) {
+		} catch (NetworkException e) {
 			Log.e(TAG, e.getMessage(), e);
-			Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			showMessage(getString(R.string.error_network));
+
+			// disable live map
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage(), e);
 		} finally {
 			Log.d(TAG, "Job finished.");
 		}
@@ -273,5 +283,14 @@ public class LiveMapService extends IntentService {
 		i.putExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, bottomRightLongitude);
 		
 		return i;
+	}
+	
+	protected void showMessage(final String message) {
+		mMainThreadHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 }

@@ -69,9 +69,9 @@ public class MenuActivity extends AbstractActionBarActivity {
 		// FIX Android 2.3.3 can't start activity second time
 		if (LocusUtils.isIntentMainFunction(getIntent())) {
 			intent = new Intent(getIntent());
-			intent.setClass(this, MainActivity.class);
+			intent.setClass(this, SearchNearestActivity.class);
 		} else {
-			intent = new Intent(this, MainActivity.class);
+			intent = new Intent(this, SearchNearestActivity.class);
 		}
 
 		startActivity(intent);

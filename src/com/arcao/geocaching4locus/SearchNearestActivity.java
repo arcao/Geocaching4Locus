@@ -23,14 +23,14 @@ import android.widget.Toast;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.receiver.MainActivityBroadcastReceiver;
+import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-public class MainActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
+public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
 	private static final String TAG = "G4L|MainActivity";
 
 	private static String STATE_LATITUDE = "latitude";
@@ -48,7 +48,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 	private EditText countOfCachesEditText;
 	private boolean locusInstalled = false;
 
-	private MainActivityBroadcastReceiver mainActivityBroadcastReceiver;
+	private SearchNearestActivityBroadcastReceiver broadcastReceiver;
 	private LocationUpdateTask locationUpdateTask;
 
 	/** Called when the activity is first created. */
@@ -66,7 +66,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 			typedArray.recycle();
 		}*/
 		
-		mainActivityBroadcastReceiver = new MainActivityBroadcastReceiver(this);
+		broadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
 		hasCoordinates = false;
 
 		setContentView(R.layout.main_activity);
@@ -139,7 +139,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 	protected void onResume() {	
 		super.onResume();
 
-		mainActivityBroadcastReceiver.register();
+		broadcastReceiver.register();
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
@@ -213,7 +213,7 @@ public class MainActivity extends AbstractActionBarActivity implements LocationU
 		if (locationUpdateTask != null)
 			locationUpdateTask.detach();
 
-		mainActivityBroadcastReceiver.unregister();
+		broadcastReceiver.unregister();
 
 		Log.i(TAG, "Receiver unregistred.");
 	}

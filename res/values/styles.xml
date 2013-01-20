@@ -23,10 +23,10 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="G4LTheme.MainActivity" parent="G4LTheme.Light.NoTitle">
+    <style name="G4LTheme.SearchNearestActivity" parent="G4LTheme.Light.NoTitle">
     </style>
-    <style name="G4LTheme.MainActivity.Dialog" parent="G4LTheme.Dialog.NoTitle">
-        <item name="normalWindow">@style/G4LTheme.MainActivity</item>
+    <style name="G4LTheme.SearchNearestActivity.Dialog" parent="G4LTheme.Dialog.NoTitle">
+        <item name="normalWindow">@style/G4LTheme.SearchNearestActivity</item>
     </style>
     <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog.NoTitle">
     </style>

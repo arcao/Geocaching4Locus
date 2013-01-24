@@ -174,6 +174,8 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	}
 	
 	private class CacheNotFoundException extends Exception {
+		private static final long serialVersionUID = 1435947072951481547L;
+
 		protected String cacheCode;
 		
 		public CacheNotFoundException(String cacheCode) {

@@ -127,13 +127,13 @@
     <string name="error_location_title">Positionsbestimmung nicht aktiviert</string>
     <string name="error_location_settings_button">Einstellungen</string>
     
-    <string name="menu_import_from_gc">Import GC</string>
-    <string name="dialog_gc_number_input_title">Import from GC code</string>
-    <string name="error_input_gc">GC code is not valid.</string>
-    <string name="error_cache_not_found">Cache %s was not found.</string>
+    <string name="menu_import_from_gc">Importiere GC</string>
+    <string name="dialog_gc_number_input_title">Import via GC code</string>
+    <string name="error_input_gc">Ungültiger GC code</string>
+    <string name="error_cache_not_found">Chache %s nicht gefunden.</string>
     
-    <string name="dialog_count_of_caches_title">Count of caches</string>
-    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <string name="dialog_count_of_caches_title">Anzahl der Caches</string>
+    <string name="dialog_count_of_caches_description">Anzahl der zu ladenden Caches</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -141,12 +141,13 @@
     </plurals>
 
     <string name="launcher_nearest_caches">Caches in der Umgebung</string>
-    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_import_cache">Cache in Locus importieren</string>
     <string name="launcher_update_cache">Cache aktualisieren</string>    
-    <string name="launcher_update_more_caches">Update caches</string>
-    <string name="launcher_import_from_gc">Import from GC code</string>
+    <string name="launcher_update_more_caches">Caches aktualisieren</string>
+    <string name="launcher_import_from_gc">Import via GC code</string>
     
-    <string name="title_count_of_caches">Count of caches</string>
+    <string name="title_count_of_caches">Anzahl der Caches</string>
     
+    <string name="error_login">%s</string>
 </resources>
 

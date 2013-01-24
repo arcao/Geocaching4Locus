@@ -148,5 +148,6 @@
     
     <string name="title_count_of_caches">Count of caches</string>
     
+    <string name="error_login">%s</string>
 </resources>
 

@@ -133,7 +133,7 @@
     <string name="error_cache_not_found">Cache %s niet gevonden.</string>
     
     <string name="dialog_count_of_caches_title">Aantal caches</string>
-    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <string name="dialog_count_of_caches_description">Aantal caches om te downloaden.</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -141,12 +141,13 @@
     </plurals>
 
     <string name="launcher_nearest_caches">Caches dichtbij</string>
-    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_import_cache">Importeer cache in Locus</string>
     <string name="launcher_update_cache">Update cache</string>    
     <string name="launcher_update_more_caches">Update caches</string>
     <string name="launcher_import_from_gc">Importeer via GC code</string>
     
-    <string name="title_count_of_caches">Count of caches</string>
+    <string name="title_count_of_caches">Aantal caches</string>
     
+    <string name="error_login">%s</string>
 </resources>
 

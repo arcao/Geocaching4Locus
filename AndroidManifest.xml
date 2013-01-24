@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.4.2.5" android:versionCode="30"
+      android:versionName="1.5" android:versionCode="31"
       android:installLocation="auto">
     
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -91,14 +91,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="x-g4l" android:host="oauth.callback" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".authentication.AuthenticatorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance" />
         <activity android:name="org.acra.CrashReportDialog" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="SendErrorActivity" android:theme="@style/G4LTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="ImportFromGCActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">

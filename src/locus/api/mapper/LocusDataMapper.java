@@ -488,6 +488,7 @@ public class LocusDataMapper {
     	mergeCacheLogs(mContext, toPoint, fromPoint);
     	fixComputedCoordinates(mContext, toPoint, fromPoint);
     	clearExtraOnDisplayCallback(toPoint);
+    	copyWaypointId(toPoint, fromPoint);
     	
     	return toPoint;
     }    
@@ -549,6 +550,16 @@ public class LocusDataMapper {
 
     	return toPoint;
     }
+    
+    public static Waypoint copyWaypointId(Waypoint toPoint, Waypoint fromPoint) {
+    	if (fromPoint.id == 0)
+    		return toPoint;
+    	
+    	toPoint.id = fromPoint.id;
+    	
+    	return toPoint;
+    }
+
 
     protected static GeocachingWaypoint getWaypointByNamePrefix(Waypoint fromPoint, String prefix) {
     	if (fromPoint.gcData == null)

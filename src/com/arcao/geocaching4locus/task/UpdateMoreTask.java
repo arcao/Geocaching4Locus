@@ -84,7 +84,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		
 		int attempt = 0;
 		int current = 0;
-		int count = params.length;
+		int count = pointIndexes.length;
 		
 		while (++attempt <= 2) {
 			try {
@@ -161,15 +161,17 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		return null;
 	}
 	
-	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, long[] pointIndexes, int current, int count) {
+	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, long[] pointIndexes, int current, int cachesPerRequest) {
 		List<Waypoint> waypoints = new ArrayList<Waypoint>();
 		
-		for (int i = current; i < count; i++) {
+		int count = Math.min(pointIndexes.length - current, cachesPerRequest);
+		
+		for (int i = 0; i < count; i++) {
 			try {
 				// get old waypoint from Locus
-				Waypoint wpt = ActionTools.getLocusWaypoint(context, pointIndexes[i]);
+				Waypoint wpt = ActionTools.getLocusWaypoint(context, pointIndexes[current + i]);
 				if (wpt.gcData == null) {
-					Log.w(TAG, "Waypoint " + i + " with id " + pointIndexes[i] + " isn't cache. Skipped...");
+					Log.w(TAG, "Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
 					continue;
 				}
 				

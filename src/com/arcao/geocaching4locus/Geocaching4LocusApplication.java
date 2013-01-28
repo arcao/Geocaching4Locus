@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus;
 
 import java.util.UUID;
 
+import locus.api.android.utils.LocusUtils;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -14,6 +15,7 @@ import org.acra.annotation.ReportsCrashes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -59,6 +61,12 @@ public class Geocaching4LocusApplication extends android.app.Application {
 		
 		if (authenticatorHelper.hasAccount()) {
 			ErrorReporter.getInstance().putCustomData("userName", authenticatorHelper.getAccount().name);
+		}
+		
+		PackageInfo pi = LocusUtils.getLocusPackageInfo(this);
+		if (pi != null) {
+			ErrorReporter.getInstance().putCustomData("LocusVersion", pi.versionName);	
+			ErrorReporter.getInstance().putCustomData("LocusPackage", pi.packageName);
 		}
 		
 		System.setProperty("debug", "1");

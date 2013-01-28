@@ -4,8 +4,7 @@
     </style>
     <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Dialog">
     </style>
-	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent">
-	    <item name="android:windowNoTitle">true</item>
+	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent.NoTitleBar">
 	</style>
 	<style name="G4LTheme.Light" parent="@android:style/Theme.Light">
     </style>

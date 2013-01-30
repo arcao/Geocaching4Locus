@@ -5,7 +5,6 @@ import java.lang.ref.WeakReference;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
 	protected WeakReference<CancellableDialog> cancellableRef;
@@ -25,14 +24,19 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 		// DialogFragment.show() will take care of adding the fragment
 		// in a transaction.  We also want to remove any currently showing
 		// dialog, so make our own transaction and take care of that here.
-		FragmentTransaction ft = manager.beginTransaction();
 		Fragment prev = manager.findFragmentByTag(tag);
 		if (prev != null) {
-			ft.remove(prev);
+			return;
 		}
-		ft.addToBackStack(null);		
 		
 		super.show(manager, tag);
+	}
+	
+	public void hide(FragmentManager manager) {
+		dismiss();
+		manager.beginTransaction().remove(this).commit();
+		// apply all commits
+		manager.executePendingTransactions();
 	}
 	
 	public boolean isShowing() {

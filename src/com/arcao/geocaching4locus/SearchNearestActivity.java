@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
+import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
@@ -36,6 +37,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	private static String STATE_LATITUDE = "latitude";
 	private static String STATE_LONGITUDE = "longitude";
 	private static String STATE_HAS_COORDINATES = "has_coordinates";
+	
+	private static final int REQUEST_LOGIN = 1; 
 
 	private double latitude = Double.NaN;
 	private double longitude = Double.NaN;
@@ -245,7 +248,13 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		startActivity(new Intent(this, PreferenceActivity.class));
 	}
 
-	protected void download() {	
+	protected void download() {
+		// test if user is logged in
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+			startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
+			return;
+		}
+		
 		Log.i(TAG, "Lat: " + latitudeEditText.getText().toString() + "; Lon: " + longitudeEditText.getText().toString());
 
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
@@ -331,6 +340,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				return true;
 			default:
 				return false;
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// restart download process after log in
+		if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
+			download();
 		}
 	}
 }

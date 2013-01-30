@@ -31,4 +31,7 @@ public interface AppConstants {
 	static final String GOOGLE_PLAY_PREFIX = "https://play.google.com/store/apps/details?id=";
 	static final Uri ANDROIDPIT_LOCUS_FREE_LINK = Uri.parse("http://www.androidpit.com/en/android/market/apps/app/menion.android.locus/Locus-Free");
 	static final Uri ANDROIDPIT_LOCUS_PRO_LINK = Uri.parse("http://www.androidpit.com/en/android/market/apps/app/menion.android.locus.pro/Locus-Pro");
+	
+	/** Login dialog visible state */
+	static final String STATE_AUTHENTICATOR_ACTIVITY_VISIBLE = "AUTHENTICATOR_ACTIVITY_VISIBLE";
 }

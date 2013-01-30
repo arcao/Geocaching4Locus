@@ -149,5 +149,9 @@
     <string name="title_count_of_caches">Count of caches</string>
     
     <string name="error_login">%s</string>
+    <string name="button_login_start">Log in</string>
+    <string name="login_required_title">Log in required</string>
+    <string name="login_required_message">To continue, you must log in to your Geocaching.com account.</string>
+    
 </resources>
 

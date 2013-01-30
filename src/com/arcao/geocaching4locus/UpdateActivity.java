@@ -13,6 +13,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
@@ -23,13 +25,41 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 	public static String PARAM_CACHE_ID = "cacheId";
 	public static String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
+	
+	private static final int REQUEST_LOGIN = 1;
+	
+	protected boolean authenticatorActivityVisible = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		// test if user is logged in
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+			if (savedInstanceState != null)
+				authenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
+
+			if (!authenticatorActivityVisible) {
+				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
+				authenticatorActivityVisible = true;
+			}
+
+			return;
+		}
+
+		showUpdateDialog();
+	}
 	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible); 
+	}
+	
+	public void showUpdateDialog() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		String cacheId = null;
 		Waypoint oldPoint = null;
 
@@ -64,15 +94,7 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 				setResult(RESULT_CANCELED);
 				finish();
 				return;
-			}/* else if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(repeatUpdate)) {
-				Waypoint p = ActionDisplayPointsExtended.loadGeocacheFromCache(this, cacheId);
-				if (p != null) {
-					Log.i(TAG, "Found cache file for: " + cacheId);
-					setResult(RESULT_OK, LocusUtils.prepareResultExtraOnDisplayIntent(p, false));
-					finish();
-					return;
-				}
-			}*/
+			}
 		}
 
 		if (cacheId == null || PARAM_CACHE_ID__DO_NOTHING.equals(cacheId)) {
@@ -88,7 +110,7 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		if (fragment == null)
 			fragment = UpdateDialogFragment.newInstance(cacheId, oldPoint);
 			
-		fragment.show(getSupportFragmentManager(), UpdateDialogFragment.TAG);
+		fragment.show(getSupportFragmentManager(), UpdateDialogFragment.TAG);		
 	}
 	
 	@Override
@@ -96,5 +118,18 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		Log.d(TAG, "onTaskFinished result: " + result);
 		setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
 		finish();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// restart update process after log in
+		if (requestCode == REQUEST_LOGIN) {
+			authenticatorActivityVisible = false;
+			if (resultCode == RESULT_OK) {
+				showUpdateDialog();
+			} else {
+				onTaskFinished(null);
+			}
+		}
 	}
 }

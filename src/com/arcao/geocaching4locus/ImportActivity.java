@@ -5,11 +5,14 @@ import java.util.regex.Pattern;
 
 import org.acra.ErrorReporter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
@@ -18,6 +21,10 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 	private final static String TAG = "G4L|ImportActivity";
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE); 
 	public final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
+	
+	private static final int REQUEST_LOGIN = 1;
+	
+	protected boolean authenticatorActivityVisible = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,30 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 			return;
 		}
 		
+		// test if user is logged in
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+			if (savedInstanceState != null)
+				authenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
+			
+			if (!authenticatorActivityVisible) {
+				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
+				authenticatorActivityVisible = true;
+			}
+			
+			return;
+		}
+
+		showImportDialog();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible); 
+	}
+	
+	protected void showImportDialog() {
 		if (getIntent().getData() == null) {
 			Log.e(TAG, "Data uri is null!!!");
 			finish();
@@ -63,5 +94,18 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 		Log.d(TAG, "onTaskFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// restart update process after log in
+		if (requestCode == REQUEST_LOGIN) {
+			authenticatorActivityVisible = false;
+			if (resultCode == RESULT_OK) {
+				showImportDialog();
+			} else {
+				onTaskFinished(false);
+			}
+		}
 	}
 }

@@ -149,5 +149,9 @@
     <string name="title_count_of_caches">Počet kešiek</string>
     
     <string name="error_login">%s</string>
+    <string name="button_login_start">Prihlásiť</string>
+    <string name="login_required_title">Je nutné prihlásenie</string>
+    <string name="login_required_message">Pre pokračovanie je potrebné sa prihlásiť k vášmu Geocaching.com účtu.</string>
+    
 </resources>
 

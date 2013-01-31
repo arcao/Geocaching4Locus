@@ -68,11 +68,6 @@
                 android:visibility="invisible" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear_layout_main_menu_bottom"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>

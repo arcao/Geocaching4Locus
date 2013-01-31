@@ -131,21 +131,21 @@
         <item name="android:background">@color/title_separator</item>
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginTop">4.0dip</item>
+        <item name="android:layout_marginBottom">4.0dip</item>
     </style>
     <style name="SeparatorHorizontal">
         <item name="android:background">@color/title_separator</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dp</item>
-    </style>
+        <item name="android:layout_marginLeft">4.0dip</item>
+        <item name="android:layout_marginRight">4.0dip</item>
+        </style>
     <style name="SeparatorVertical.Dark" parent="@style/SeparatorVertical">
         <item name="android:background">@color/title_separator_dark</item>
-        <item name="android:layout_width">1dp</item>
-        <item name="android:layout_height">fill_parent</item>
     </style>
     <style name="SeparatorHorizontal.Dark" parent="@style/SeparatorHorizontal">
         <item name="android:background">@color/title_separator_dark</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">1dp</item>
     </style>
     <style name="ScreenContainer">
         <item name="android:layout_width">fill_parent</item>
@@ -153,10 +153,10 @@
     </style>
     <style name="MainMenuButton">
         <item name="android:textSize">@dimen/text_size_tiny</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/foreground1</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center|top</item>
+        <!-- <item name="android:layout_gravity">center</item> -->
         <item name="android:background">@drawable/item_background_holo_light</item>
         <item name="android:paddingLeft">4.0dip</item>
         <item name="android:paddingTop">10.0dip</item>
@@ -165,7 +165,6 @@
         <item name="android:layout_width">0.0dip</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1.0</item>
-        <item name="android:maxLines">1</item>
     </style>
     <style name="LoginMessageView" parent="android:Widget.TextView">
         <item name="android:layout_marginTop">10.0dip</item>

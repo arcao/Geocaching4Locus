@@ -2,7 +2,9 @@ package com.arcao.geocaching4locus.task;
 
 import java.lang.ref.WeakReference;
 
+import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.ExtraData;
 import locus.api.objects.extra.Waypoint;
@@ -81,6 +83,15 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		if (replaceCache) {
 			//ActionDisplayPointsExtended.storeGeocacheToCache(mContext, p);
 			p.addParameter(ExtraData.PAR_INTENT_EXTRA_ON_DISPLAY, "clear;;;;;");
+		}
+		
+		// if Waypoint is already in DB we must update it manually
+		if (result.cache.getValue() != null) {
+			try {
+				ActionTools.updateLocusWaypoint(mContext, result.newPoint, false);
+			} catch (RequiredVersionMissingException e) {
+				Log.e(TAG, e.getMessage(), e);
+			}
 		}
 		
 		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();

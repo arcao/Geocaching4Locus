@@ -4,7 +4,7 @@
     <string name="error">Ocurrió un error al descargar caches.&lt;br&gt;Descripción: %1$s</string>
     <string name="downloading">Descargando cachés…</string>
     <string name="error_locus_not_found">¡Por favor instale Locus!</string>
-    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
+    <string name="error_location">Por favor active servicio de localización por Wireless o GPS en \'Ajustes\'.</string>
     <string name="acquiring_gps_location">Adquiriendo posición desde GPS ...</string>
     <string name="acquiring_network_location">Adquiriendo posición desde red…</string>
     
@@ -122,18 +122,18 @@
     
     <string name="loading">Cargando, espere por favor…</string>
     
-    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
-    <string name="livemap_deactivated">Live map deactivated.</string>
-    <string name="error_location_title">No location service allowed</string>
-    <string name="error_location_settings_button">Settings</string>
+    <string name="livemap_activated">Mapa dinámico activado. Ahora muévete con el mapa para ver los caches.</string>
+    <string name="livemap_deactivated">Mapa dinámico desactivado.</string>
+    <string name="error_location_title">Servicio de localización no permitido</string>
+    <string name="error_location_settings_button">Ajustes</string>
     
-    <string name="menu_import_from_gc">Import GC</string>
-    <string name="dialog_gc_number_input_title">Import from GC code</string>
-    <string name="error_input_gc">GC code is not valid.</string>
-    <string name="error_cache_not_found">Cache %s was not found.</string>
+    <string name="menu_import_from_gc">Importar GC</string>
+    <string name="dialog_gc_number_input_title">Importar desde código GC</string>
+    <string name="error_input_gc">Código GC no válido.</string>
+    <string name="error_cache_not_found">No se encontró cache %s.</string>
     
-    <string name="dialog_count_of_caches_title">Count of caches</string>
-    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
+    <string name="dialog_count_of_caches_title">Contador de cachés</string>
+    <string name="dialog_count_of_caches_description">Número de caches a descargar:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -141,17 +141,17 @@
     </plurals>
 
     <string name="launcher_nearest_caches">Cachés más cercanos</string>
-    <string name="launcher_import_cache">Import cache to Locus</string>
+    <string name="launcher_import_cache">Importar cache a Locus</string>
     <string name="launcher_update_cache">Actualizar caché</string>    
-    <string name="launcher_update_more_caches">Update caches</string>
-    <string name="launcher_import_from_gc">Import from GC code</string>
+    <string name="launcher_update_more_caches">Actualizar caches</string>
+    <string name="launcher_import_from_gc">Importar desde código GC</string>
     
-    <string name="title_count_of_caches">Count of caches</string>
+    <string name="title_count_of_caches">Número de caches</string>
     
     <string name="error_login">%s</string>
     <string name="button_login_start">Log in</string>
-    <string name="login_required_title">Log in required</string>
-    <string name="login_required_message">To continue, you must log in to your Geocaching.com account.</string>
+    <string name="login_required_title">Log in requerido</string>
+    <string name="login_required_message">Para continuar, debes iniciar sesión en tu cuenta de Geocaching.com.</string>
     
 </resources>
 

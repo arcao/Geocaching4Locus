@@ -489,11 +489,12 @@ public class LocusDataMapper {
     	fixComputedCoordinates(mContext, toPoint, fromPoint);
     	clearExtraOnDisplayCallback(toPoint);
     	copyWaypointId(toPoint, fromPoint);
+    	copyGcVote(toPoint, fromPoint);
     	
     	return toPoint;
     }    
     
-    public static void clearExtraOnDisplayCallback(Waypoint p) {
+		public static void clearExtraOnDisplayCallback(Waypoint p) {
     	p.addParameter(ExtraData.PAR_INTENT_EXTRA_CALLBACK, "clear;;;;;;");
     }
 
@@ -573,4 +574,15 @@ public class LocusDataMapper {
 
     	return null;
     }
+    
+    protected static Waypoint copyGcVote(Waypoint toPoint, Waypoint fromPoint) {
+    	if (fromPoint.gcData == null)
+    		return null;
+
+    	toPoint.gcData.gcVoteAverage = fromPoint.gcData.gcVoteAverage;
+    	toPoint.gcData.gcVoteNumOfVotes = fromPoint.gcData.gcVoteNumOfVotes;
+    	toPoint.gcData.gcVoteUserVote = fromPoint.gcData.gcVoteUserVote;
+    	
+    	return toPoint;
+		}
  }

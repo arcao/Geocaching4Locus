@@ -93,7 +93,14 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				current = 0;
 				while (current < count) {
 					// prepare old cache data
-					List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, AppConstants.CACHES_PER_REQUEST); 
+					List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, AppConstants.CACHES_PER_REQUEST);
+					
+					if (oldPoints.size() == 0) {
+						// all are Waypoints without geocaching data
+						current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
+						publishProgress(current);
+						continue;
+					}
 					
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
@@ -125,7 +132,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 						index++;
 					}
 										
-					current = current + cachesToAdd.size();
+					current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
 					publishProgress(current);
 					
 					// force memory clean

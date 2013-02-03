@@ -17,6 +17,10 @@
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        
+        <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
+        <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
+        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item> 
     </style>
     <style name="G4LTheme.Dialog.NoTitle">
         <item name="android:windowNoTitle">true</item>
@@ -31,6 +35,19 @@
     </style>
 
     <style name="G4LTheme.Settings" />
+    <style name="SimpleHeader" parent="@android:style/Widget.TextView">
+        <item name="android:background">@drawable/dark_header_dither</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:layout_marginBottom">5dip</item>
+    </style>
     <style name="SimpleEditText" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -46,14 +63,7 @@
         <item name="android:inputType">none</item>
         
         <item name="android:background">@android:drawable/btn_dropdown</item>
-        <item name="android:gravity">center</item>
-    </style>
-    <style name="SimpleCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">5.0dip</item>
-        <item name="android:layout_marginRight">5.0dip</item>
+        <item name="android:gravity">left</item>
     </style>
     <style name="SimpleButton" parent="@android:style/Widget.Button">
         <item name="android:layout_width">fill_parent</item>
@@ -61,10 +71,21 @@
         <item name="android:layout_marginLeft">5.0dip</item>
         <item name="android:layout_marginRight">5.0dip</item>
     </style>
+    <style name="SimpleButton.GPS">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginLeft">0dip</item>
+    </style>
+    <style name="CustomButtonPanelStyle">
+        <item name="android:minHeight">54dip</item>
+        <item name="android:background">#A9A9A9</item>
+    </style>
     <style name="CustomButtonBarStyle">
+        <item name="android:paddingTop">5dip</item>
+        <item name="android:paddingLeft">4dip</item>
+        <item name="android:paddingRight">4dip</item>
     </style>
     <style name="CustomButtonBarButtonStyle">
-        <item name="android:layout_gravity">center</item>
     </style>
     	
 	<!-- Status Bar Styles -->

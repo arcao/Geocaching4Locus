@@ -21,10 +21,9 @@
             android:orientation="vertical" >
 
             <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/SimpleHeader"
                 android:text="@string/coordinates" >
+
             </TextView>
 
             <TableLayout
@@ -41,10 +40,8 @@
 
                     <Button
                         android:id="@+id/buttonGps"
-                        android:layout_height="wrap_content"
+                        style="@style/SimpleButton.GPS"
                         android:onClick="onClickGps"
-                        android:paddingLeft="10dip"
-                        android:paddingRight="10dip"
                         android:text="@string/gps" >
                     </Button>
                 </TableRow>
@@ -61,9 +58,7 @@
             </TableLayout>
             
             <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/SimpleHeader"
                 android:layout_marginTop="20dp"
                 android:text="@string/title_count_of_caches" />
 

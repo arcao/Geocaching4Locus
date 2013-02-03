@@ -45,15 +45,32 @@
         <item name="android:dividerPadding">0dip</item>
     </style> 
     
-    <style name="ScreenContainer">
-        <item name="android:paddingLeft">8.0dip</item>
-        <item name="android:paddingTop">8.0dip</item>
-        <item name="android:paddingRight">8.0dip</item>
-        <item name="android:paddingBottom">8.0dip</item>
+    <style name="SimpleHeader" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:background">@drawable/list_section_divider_holo_light</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:textAllCaps">true</item>
+        
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
     </style>
-    
+    <style name="SimpleEditText" parent="@android:style/Widget.EditText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
+    </style>
     <style name="SimpleEditTextButton" parent="SimpleEditText">
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
@@ -63,7 +80,14 @@
         <item name="android:background">@drawable/spinner_background_holo_light</item>
         <item name="android:gravity">left|center_vertical</item>
     </style>
-    
+    <style name="SimpleButton" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+        
     <style name="LoginMessageView" parent="android:Widget.TextView">
         <item name="android:layout_marginTop">10.0dip</item>
         <item name="android:padding">5.0dip</item>

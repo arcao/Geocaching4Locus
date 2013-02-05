@@ -104,7 +104,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
-							new CacheCodeFilter(getPagedCachesIds(oldPoints, current, AppConstants.CACHES_PER_REQUEST))
+							new CacheCodeFilter(getCachesIds(oldPoints))
 					});
 					
 					if (isCancelled())
@@ -115,21 +115,18 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					
 					List<Waypoint> points = LocusDataMapper.toLocusPoints(context, cachesToAdd);
 					
-					int index = 0;
 					for (Waypoint p : points) {
-						Waypoint oldPoint = oldPoints.get(index);
+						if (p == null || p.gcData == null)
+							continue;
 						
-						// if updated cache doesn't exist use old
-						if (p == null) {
-							p = oldPoint;
-						}
-													
+						// Geocaching API can return caches in a different order
+						Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
+																			
 						p = LocusDataMapper.mergePoints(Geocaching4LocusApplication.getAppContext(), p, oldPoint);
 						
 						// update new point data in Locus
 						ActionTools.updateLocusWaypoint(context, p, false);
 						
-						index++;
 					}
 										
 					current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
@@ -168,6 +165,19 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		return null;
 	}
 	
+	private Waypoint searchOldPointByGCCode(List<Waypoint> oldPoints, String gcCode) {
+		if (gcCode == null || gcCode.length() == 0)
+			return null;
+		
+		for (Waypoint oldPoint : oldPoints) {
+			if (oldPoint.gcData != null && gcCode.equals(oldPoint.gcData.getCacheID())) {
+				return oldPoint;
+			}
+		}
+		
+		return null;
+	}
+	
 	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, long[] pointIndexes, int current, int cachesPerRequest) {
 		List<Waypoint> waypoints = new ArrayList<Waypoint>();
 		
@@ -192,13 +202,13 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		return waypoints;
 	}
 
-	protected String[] getPagedCachesIds(List<Waypoint> caches, int current, int cachesPerRequest) {
-		int count = Math.min(caches.size() - current, cachesPerRequest);
+	protected String[] getCachesIds(List<Waypoint> caches) {
+		int count = caches.size();
 		
 		String[] ret = new String[count];
 
 		for (int i = 0; i < count; i++) {
-			ret[i] = caches.get(current + i).gcData.getCacheID();
+			ret[i] = caches.get(i).gcData.getCacheID();
 		}
 		
 		return ret;

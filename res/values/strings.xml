@@ -24,7 +24,7 @@
     <string name="pref_imperial_units">Imperial units</string>
     <string name="pref_imperial_units_summary">Use miles instead of kilemeters</string>
     
-    <string name="error_credentials">Invalid username or password. Please check your log-in state in preferences.</string>
+    <string name="error_credentials">Invalid username or password. Please check your sign-in state in preferences.</string>
     <string name="error_title">Error occurs!</string>
     
     <string name="ok_button">OK</string>
@@ -93,12 +93,12 @@
     <string name="user_waypoint_name">User waypoint %1$d</string>
     <string name="final_location_name">Final location %1$d</string>
     
-    <string name="pref_account_login">Log in</string>
-    <string name="pref_account_login_summary">Log in to Geocaching.com account</string>
-    <string name="pref_account_logout">Log out</string>
-    <string name="pref_account_logout_summary">Logged as %s</string>
+    <string name="pref_account_login">Sign in</string>
+    <string name="pref_account_login_summary">Sign in to Geocaching.com account</string>
+    <string name="pref_account_logout">Sign out</string>
+    <string name="pref_account_logout_summary">Signed in as %s</string>
        
-    <string name="login_error_title">Login failed</string>
+    <string name="login_error_title">Sign-in failed</string>
     <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
     
     <string name="error_report_error">Report error</string>
@@ -149,9 +149,9 @@
     <string name="title_count_of_caches">Count of caches</string>
     
     <string name="error_login">%s</string>
-    <string name="button_login_start">Log in</string>
-    <string name="login_required_title">Log in required</string>
-    <string name="login_required_message">To continue, you must log in to your Geocaching.com account.</string>
+    <string name="button_login_start">Sign in</string>
+    <string name="login_required_title">Sign-in required</string>
+    <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
     
 </resources>
 

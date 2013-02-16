@@ -60,6 +60,7 @@ public class LocusDataMapper {
 	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
 	protected static final String GSAK_USERNAME = "gsak";
 	protected static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
+	protected static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -434,9 +435,15 @@ public class LocusDataMapper {
                 	name = name.substring(lastLineEnd +1);
                 
                 Matcher nameMatcher = namePattern.matcher(name);
+
+                WaypointType waypointType = WaypointType.ReferencePoint;
                 
                 if (nameMatcher.find() && nameMatcher.group(1).trim().length() > 0) {
                 	name = nameMatcher.group(1).trim();
+                	
+                	if (FINAL_WAYPOINT_NAME_PATTERN.matcher(name).matches()) {
+                		waypointType = WaypointType.FinalLocation;
+                	}
                 } else {
                 	nameCount++;
                 	name = context.getString(R.string.user_waypoint_name, nameCount);
@@ -444,7 +451,7 @@ public class LocusDataMapper {
                 
                 final String code = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
                 
-                res.add(new com.arcao.geocaching.api.data.Waypoint(point, new Date(), code, name, "", WaypointType.ReferencePoint));
+                res.add(new com.arcao.geocaching.api.data.Waypoint(point, new Date(), code, name, "", waypointType));
                 
                 namePrefix = "";
             } catch (ParseException e) {

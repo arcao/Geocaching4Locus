@@ -8,7 +8,6 @@
     <include layout="@layout/header" />
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         style="@style/ScreenContainer"
         android:orientation="vertical" >
 

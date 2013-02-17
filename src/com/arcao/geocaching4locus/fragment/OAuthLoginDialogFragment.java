@@ -257,7 +257,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
 
-			if (progressHolder != null) {
+			if (progressHolder != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
 				progressHolder.setVisibility(View.GONE);
 			}
 		}

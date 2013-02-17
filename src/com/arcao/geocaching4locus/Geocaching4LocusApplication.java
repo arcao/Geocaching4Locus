@@ -19,6 +19,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
@@ -151,5 +153,38 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	      pref.getString(PrefConstants.OAUTH_TOKEN, null),
 	      pref.getString(PrefConstants.OAUTH_TOKEN_SECRET, null)
 	  );
+	}
+	
+	public static void clearGeocachingCookies() {
+		// setCookie acts differently when trying to expire cookies between builds of Android that are using
+		// Chromium HTTP stack and those that are not. Using both of these domains to ensure it works on both.
+		clearCookiesForDomain(context, "geocaching.com");
+		clearCookiesForDomain(context, ".geocaching.com");
+		clearCookiesForDomain(context, "https://geocaching.com");
+		clearCookiesForDomain(context, "https://.geocaching.com");
+	}
+
+	private static void clearCookiesForDomain(Context context, String domain) {
+		// This is to work around a bug where CookieManager may fail to instantiate if CookieSyncManager
+		// has never been created.
+		CookieSyncManager syncManager = CookieSyncManager.createInstance(context);
+		syncManager.sync();
+
+		CookieManager cookieManager = CookieManager.getInstance();
+
+		String cookies = cookieManager.getCookie(domain);
+		if (cookies == null) {
+			return;
+		}
+
+		String[] splitCookies = cookies.split(";");
+		for (String cookie : splitCookies) {
+			String[] cookieParts = cookie.split("=");
+			if (cookieParts.length > 0) {
+				String newCookie = cookieParts[0].trim() + "=;expires=Sat, 1 Jan 2000 00:00:01 UTC;";
+				cookieManager.setCookie(domain, newCookie);
+			}
+		}
+		cookieManager.removeExpiredCookie();
 	}
 }

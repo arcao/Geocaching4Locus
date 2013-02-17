@@ -53,7 +53,10 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
-
+		
+		// clear geocaching.com cookies
+		Geocaching4LocusApplication.clearGeocachingCookies();
+			
 		mTask = new OAuthLoginTask();
 		mTask.setOAuthLoginTaskListener(this);
 		mTask.execute();
@@ -160,7 +163,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		return view;
 	}
-	
+		
 	@SuppressLint("SetJavaScriptEnabled")
 	public WebView createWebView(Bundle savedInstanceState) {
 		WebView webView = new WebView(getActivity()) {

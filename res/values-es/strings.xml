@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Cerrar sesión</string>
     <string name="pref_account_logout_summary">Conectado como %s</string>
        
-    <string name="login_error_title">Fallo inicio sesión</string>
-    <string name="login_message">Por favor complete sus credenciales de Geocaching.com</string>
-    
     <string name="error_report_error">Informe de errores</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus se ha bloqueado ...</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Create images tab</string>
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
-    <string name="loading">Cargando, espere por favor…</string>
-    
     <string name="livemap_activated">Mapa dinámico activado. Ahora muévete con el mapa para ver los caches.</string>
     <string name="livemap_deactivated">Mapa dinámico desactivado.</string>
     <string name="error_location_title">Servicio de localización no permitido</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">No se encontró cache %s.</string>
     
     <string name="dialog_count_of_caches_title">Contador de cachés</string>
-    <string name="dialog_count_of_caches_description">Número de caches a descargar:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>

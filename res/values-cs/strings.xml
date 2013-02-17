@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Odhlásit</string>
     <string name="pref_account_logout_summary">Přihlášen jako %s</string>
        
-    <string name="login_error_title">Přihlášení se nezdařilo</string>
-    <string name="login_message">Prosím vyplňte vaše přihlašovací údaje na Geocaching.com.</string>
-    
     <string name="error_report_error">Nahlásit chybu</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus spadl…</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Vytvořit záložku s obrázky</string>
     <string name="pref_create_images_tab_summary">Vytvořit záložku s obrázky v dialogovém okně keše</string>
     
-    <string name="loading">Nahrávám, prosím čekejte…</string>
-    
     <string name="livemap_activated">Live mapa zapnuta. Nyní pohněte s mapou, aby se zobrazily keše.</string>
     <string name="livemap_deactivated">Live mapa vypnuta.</string>
     <string name="error_location_title">Služba k určení polohy není povolena</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">Keš %s nebyla nalezena.</string>
     
     <string name="dialog_count_of_caches_title">Počet keší</string>
-    <string name="dialog_count_of_caches_description">Počet keší ke stažení:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d keš</item>
         <item quantity="few">%d keše</item>

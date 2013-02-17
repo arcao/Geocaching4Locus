@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">При скачивании кэша произошла ошибка<br>Описание: %1$s</string>
+    <string name="downloading">Скачивание кэшей</string>
+    <string name="error_locus_not_found">Устаноыите пожалуйста Locus!</string>
+    <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
+    <string name="acquiring_gps_location">Определяется положение GPS...</string>
+    <string name="acquiring_network_location">Определяется положение через беспроводную сеть...</string>
+    
+    <string name="preferences">Настройки</string>
+    <string name="wrong_coordinates">Неправильный формат координат!</string>
+    <string name="coordinates">Координаты</string>
+    
+    <string name="pref_title_geocaching_credentials">данные пользователя Geocaching.com </string>
+    
+    <string name="pref_title_filter">Фильтр</string>
+    <string name="pref_distance">Дистанция</string>
+    <string name="pref_distance_summary_km">Дистанция в км</string>
+    <string name="pref_distance_summary_miles">Дистанция в милях</string>
+    <string name="pref_title_advanced">Дополнительно</string>
+    <string name="pref_use_compression">Использовать компрессию</string>
+    <string name="pref_use_compression_summary">Использовать компрессию HTTP  (экспериментально)</string>
+    <string name="pref_imperial_units">Имперские единицы</string>
+    <string name="pref_imperial_units_summary">Использовать мили вместо километров</string>
+    
+    <string name="error_credentials">Неверный логин или пароль. Пожалуйста проверьте состояние логина в настройках.</string>
+    <string name="error_title">Произошла ошибка</string>
+    
+    <string name="ok_button">Ок</string>
+    
+    <string name="error_locus_old">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
+    
+    <string name="cancel_button">Отмена</string>
+    
+    <string name="pref_show_found">Показать найденное</string>
+    <string name="pref_show_found_summary">Показать найденные кэши</string>
+    <string name="pref_show_own">Показать свои спрятанные</string>
+    <string name="pref_show_own_summary">Показать свои кэши (спрятанные тобой)</string>
+    <string name="pref_menu_select_all">Выбрать всё</string>
+    <string name="pref_menu_deselect_all">Отменить всё выбранное</string>
+    
+    <string name="update_cache_progress">Обновление кэша</string>
+    
+    <string name="pref_title_downloading">Скачивание</string>
+    <string name="pref_count_of_logs">Количество записей</string>
+    <string name="pref_count_of_logs_text">записи</string>
+    <string name="pref_count_of_logs_summary">Количество записей для скачивания с кэшем</string>
+    <string name="pref_not_filled">не заполненно</string>
+    <string name="gps">GPS</string>
+    <string name="close">Закрыть</string>
+    <string name="pref_show_disabled">Показать неактивные</string>
+    <string name="pref_show_disabled_summary">Показать временно неактивные кэши</string>
+    
+    <string name="import_cache_progress">Скачивание кэша...</string>
+    
+    <string name="pref_title_about">О программе</string>
+    <string name="pref_version">Версия</string>
+    <string name="pref_author">Автор</string>
+    <string name="pref_website">Сайт, форум, итд.</string>
+    <string name="pref_donate_paypal">Пожетвовать через Paypal</string>
+    <string name="pref_donate_paypal_summary">Поддержать дальнейшую разработку</string>
+    <string name="pref_donate_paypal_choose_currency">Выбрать валюту</string>
+    
+    <string name="pref_title_cache_type_filter">Типы кэшей</string>
+    <string name="pref_title_difficulty_filter">Сложность</string>
+    <string name="pref_title_terrain_filter">Местность</string>
+    <string name="pref_difficulty_min">Мин. сложность</string>
+    <string name="pref_difficulty_max">Макс. сложность</string>
+    <string name="pref_terrain_min">Мин. проходимость</string>
+    <string name="pref_terrain_max">Макс. проходимость</string>
+    
+    <string name="download_button">Скачать на Locus</string>
+    
+    <string name="pref_download_basic">Только основная информация</string>
+    <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
+    <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
+    <string name="pref_download_on_show_summary">Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>один раз</item>
+        <item>каждый раз</item>
+        <item>никогда</item>
+    </string-array>
+    
+    <string name="menu_live_map">Live карта</string>
+    <string name="menu_nearest">Ближайшие</string>
+    <string name="menu_manual">Руководство</string>
+    <string name="menu_preferences">Настройки</string>
+    
+    <string name="pref_livemap">Live карта</string>
+    <string name="pref_livemap_summary">Онлайн скачивание кэшей на карту (активировать в Locus: Settings → Other → Enable periodic updates)</string>
+    
+    <string name="user_waypoint_name">Точка нахождения пользователя %1$d</string>
+    <string name="final_location_name">Точка назначения %1$d</string>
+    
+    <string name="pref_account_login">Логин</string>
+    <string name="pref_account_login_summary">Зайти на аккаунт Geocaching.com</string>
+    <string name="pref_account_logout">Выйти</string>
+    <string name="pref_account_logout_summary">Залогинен как %s</string>
+       
+    <string name="error_report_error">Отчет об ошибке</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus произошёл сбой...</string>
+    <string name="crash_notif_title">Geocaching4Locus произошёл сбой...</string>
+    <string name="crash_notif_text">Нажмите здесь, чтобы помочь решить проблему.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus произошёл сбой</string>
+    <string name="crash_dialog_text">Неожиданная ошибка привела к остановке работы приложения. Пожалуйста помогите нам в решении этой проблемы, прислав отчет об ошибке. Необходимо просто нажать \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">Вы можете оставить свой комментарий об ошибке:</string>
+    <string name="crash_dialog_ok_toast">Спасибо!</string>
+    
+    <string name="error_network">Сеть недоступна. Проверьте пожалуйста подключение.</string>
+
+    <string name="update_caches_progress">Кэш обновляется...</string>
+    <string name="original_coordinates_name">Оригинальные координаты</string>
+    <string name="pref_title_container_type_filter">Размер контейнера</string>
+    <string name="pref_create_images_tab">Создать images tab</string>
+    <string name="pref_create_images_tab_summary">Создать images tab в диалоговом окне кэша</string>
+    
+    <string name="livemap_activated">Онлайн карта активирована. Теперь отправляйтесь с картой на поиск кэшей.</string>
+    <string name="livemap_deactivated">Онлайн карта деактивирована.</string>
+    <string name="error_location_title">Сервис локации недоступен</string>
+    <string name="error_location_settings_button">Настройки</string>
+    
+    <string name="menu_import_from_gc">Импортировать GC</string>
+    <string name="dialog_gc_number_input_title">Импортировать из GC кода</string>
+    <string name="error_input_gc">Неверный GC код.</string>
+    <string name="error_cache_not_found">Кэш %s не найден</string>
+    
+    <string name="dialog_count_of_caches_title">Количество кэшей</string>
+    <plurals name="dialog_count_of_caches_prefix">
+        <item quantity="one">%d кэш</item>
+        <item quantity="few">%d кэши</item>
+        <item quantity="other">%d кэши</item>
+    </plurals>
+
+    <string name="launcher_nearest_caches">Ближайшие кэши</string>
+    <string name="launcher_import_cache">Импортировать кэши в Locus</string>
+    <string name="launcher_update_cache">Обновить кэш</string>    
+    <string name="launcher_update_more_caches">Обновить кэши</string>
+    <string name="launcher_import_from_gc">Импортировать из GC кода</string>
+    
+    <string name="title_count_of_caches">Количество кэшей</string>
+    
+    <string name="error_login">%s</string>
+    <string name="button_login_start">Вход</string>
+    <string name="login_required_title">Необходима авторизация</string>
+    <string name="login_required_message">Для продолжения необходима аторизация аккаунта Geocaching.com</string>
+    
+</resources>
+

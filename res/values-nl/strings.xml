@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Afmelden</string>
     <string name="pref_account_logout_summary">Aangemeld als %s</string>
        
-    <string name="login_error_title">Aanmelden mislukt</string>
-    <string name="login_message">Gelieve uw Geocaching.com logingegevens in te vullen.</string>
-    
     <string name="error_report_error">Fout rapporteren</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus is gecrashed...</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Maak afbeeldingen tab</string>
     <string name="pref_create_images_tab_summary">Maak afbeeldingen tab in cache venster</string>
     
-    <string name="loading">Bezig met laden, gelieve te wachten...</string>
-    
     <string name="livemap_activated">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
     <string name="livemap_deactivated">Live kaart gedeactiveerd</string>
     <string name="error_location_title">Geen locatie diensten toegestaan</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">Cache %s niet gevonden.</string>
     
     <string name="dialog_count_of_caches_title">Aantal caches</string>
-    <string name="dialog_count_of_caches_description">Aantal caches om te downloaden.</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>

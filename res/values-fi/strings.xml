@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Kirjaudu ulos</string>
     <string name="pref_account_logout_summary">Kirjautunut käyttäjänä %s</string>
        
-    <string name="login_error_title">Kirjautuminen epäonnistui</string>
-    <string name="login_message">Täytä Geocaching.com-tunnuksesi.</string>
-    
     <string name="error_report_error">Raportoi virhe</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus kaatui…</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Luo kuvavälilehti</string>
     <string name="pref_create_images_tab_summary">Luo kuvavälilehti kätkötietoihin</string>
     
-    <string name="loading">Ladataan...</string>
-    
     <string name="livemap_activated">Live-kartta päällä. Liiku kartalla nähdäksesi kätköjä.</string>
     <string name="livemap_deactivated">Live-kartta pois päältä.</string>
     <string name="error_location_title">Paikannusta ei sallittu.</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">Kätköä %s ei löytynyt.</string>
     
     <string name="dialog_count_of_caches_title">Kätköjen lukumäärä</string>
-    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d kätkö</item>
         <item quantity="few">%d kätköä</item>
@@ -149,9 +143,9 @@
     <string name="title_count_of_caches">Count of caches</string>
     
     <string name="error_login">%s</string>
-    <string name="button_login_start">Log in</string>
-    <string name="login_required_title">Log in required</string>
-    <string name="login_required_message">To continue, you must log in to your Geocaching.com account.</string>
+    <string name="button_login_start">Sign in</string>
+    <string name="login_required_title">Sign-in required</string>
+    <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
     
 </resources>
 

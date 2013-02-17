@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Abmelden</string>
     <string name="pref_account_logout_summary">Angemeldet als %s</string>
        
-    <string name="login_error_title">Login fehlgeschlagen</string>
-    <string name="login_message">Bitte füllen Sie Login-Daten auf Geocaching.com.</string>
-    
     <string name="error_report_error">Fehlermelden</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus ist abgestürzt…</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Erstelle Bilder-Registerkarte</string>
     <string name="pref_create_images_tab_summary">Erstelle Bilder-Registerkarte im Cache-Dialog</string>
     
-    <string name="loading">Geladen, bitte warten…</string>
-    
     <string name="livemap_activated">Live Karte aktiviert. Bewege nun die Karte um Caches zu sehen</string>
     <string name="livemap_deactivated">Live Karte deaktiviert</string>
     <string name="error_location_title">Positionsbestimmung nicht aktiviert</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">Chache %s nicht gefunden.</string>
     
     <string name="dialog_count_of_caches_title">Anzahl der Caches</string>
-    <string name="dialog_count_of_caches_description">Anzahl der zu ladenden Caches</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -151,7 +145,7 @@
     <string name="error_login">%s</string>
     <string name="button_login_start">Anmelden</string>
     <string name="login_required_title">Anmeldung erforderlich</string>
-    <string name="login_required_message">To continue, you must log in to your Geocaching.com account.</string>
+    <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
     
 </resources>
 

@@ -54,12 +54,14 @@ public class MenuActivity extends AbstractActionBarActivity {
 			Toast.makeText(this, getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
 		}
 
-		finish();
+		// hide dialog only when was started from Locus
+		if (LocusUtils.isIntentMainFunction(getIntent())) {
+			finish();
+		}
 	}
 
 	public void onClickManual(View view) {
 		startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.MANUAL_URI));
-		finish();
 	}
 
 	public void onClickNearest(View view) {

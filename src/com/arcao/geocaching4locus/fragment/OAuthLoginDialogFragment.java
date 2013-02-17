@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -181,7 +180,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
     	webView.restoreState(savedInstanceState);
     
     // FIX on screen keyboard issue
-    webView.requestFocus(View.FOCUS_DOWN);
+    /*webView.requestFocus(View.FOCUS_DOWN);
     webView.setOnTouchListener(new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -195,7 +194,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
             }
             return false;
         }
-    });
+    });*/
     
     return webView;
 	}

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">При скачивании кэша произошла ошибка<br>Описание: %1$s</string>
+    <string name="error">При скачивании кэша произошла ошибка<br/>Описание: %1$s</string>
     <string name="downloading">Скачивание кэшей</string>
     <string name="error_locus_not_found">Устаноыите пожалуйста Locus!</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
-    <string name="acquiring_gps_location">Определяется положение GPS...</string>
-    <string name="acquiring_network_location">Определяется положение через беспроводную сеть...</string>
+    <string name="acquiring_gps_location">Определяется положение GPS…</string>
+    <string name="acquiring_network_location">Определяется положение через беспроводную сеть…</string>
     
     <string name="preferences">Настройки</string>
     <string name="wrong_coordinates">Неправильный формат координат!</string>
@@ -52,7 +52,7 @@
     <string name="pref_show_disabled">Показать неактивные</string>
     <string name="pref_show_disabled_summary">Показать временно неактивные кэши</string>
     
-    <string name="import_cache_progress">Скачивание кэша...</string>
+    <string name="import_cache_progress">Скачивание кэша…</string>
     
     <string name="pref_title_about">О программе</string>
     <string name="pref_version">Версия</string>
@@ -100,8 +100,8 @@
        
     <string name="error_report_error">Отчет об ошибке</string>
     
-    <string name="crash_notif_ticker_text">Geocaching4Locus произошёл сбой...</string>
-    <string name="crash_notif_title">Geocaching4Locus произошёл сбой...</string>
+    <string name="crash_notif_ticker_text">Geocaching4Locus произошёл сбой…</string>
+    <string name="crash_notif_title">Geocaching4Locus произошёл сбой…</string>
     <string name="crash_notif_text">Нажмите здесь, чтобы помочь решить проблему.</string>
     
     <string name="crash_dialog_title">Geocaching4Locus произошёл сбой</string>
@@ -111,7 +111,7 @@
     
     <string name="error_network">Сеть недоступна. Проверьте пожалуйста подключение.</string>
 
-    <string name="update_caches_progress">Кэш обновляется...</string>
+    <string name="update_caches_progress">Кэш обновляется…</string>
     <string name="original_coordinates_name">Оригинальные координаты</string>
     <string name="pref_title_container_type_filter">Размер контейнера</string>
     <string name="pref_create_images_tab">Создать images tab</string>

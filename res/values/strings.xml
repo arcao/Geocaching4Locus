@@ -98,9 +98,6 @@
     <string name="pref_account_logout">Sign out</string>
     <string name="pref_account_logout_summary">Signed in as %s</string>
        
-    <string name="login_error_title">Sign-in failed</string>
-    <string name="login_message">Please fill-in your Geocaching.com credentials.</string>
-    
     <string name="error_report_error">Report error</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus has crashed…</string>
@@ -120,8 +117,6 @@
     <string name="pref_create_images_tab">Create images tab</string>
     <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
     
-    <string name="loading">Loading, please wait…</string>
-    
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>
     <string name="error_location_title">No location service allowed</string>
@@ -133,7 +128,6 @@
     <string name="error_cache_not_found">Cache %s was not found.</string>
     
     <string name="dialog_count_of_caches_title">Count of caches</string>
-    <string name="dialog_count_of_caches_description">Count of caches to download:</string>
     <plurals name="dialog_count_of_caches_prefix">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>

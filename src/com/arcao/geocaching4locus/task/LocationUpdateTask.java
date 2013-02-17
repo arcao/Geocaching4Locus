@@ -34,6 +34,7 @@ import com.arcao.geocaching4locus.util.UserTask;
 public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, CancellableDialog {
 	private static final String TAG = LocationUpdateTask.class.getName();
 	private static final int TIMEOUT = 120; // in sec
+	private static final String PASSIVE_PROVIDER = "passive";
 	
 	protected final CyclicBarrier barrier = new CyclicBarrier(2); // task + location update callback
 	protected LocationUpdateProgressDialogFragment pd;
@@ -110,7 +111,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		} else if (gpsLocation != null && networkLocation != null) {
 			location = (networkLocation.getTime() < gpsLocation.getTime()) ? gpsLocation : networkLocation;
 		} else {
-			location = new Location(LocationManager.PASSIVE_PROVIDER);
+			location = new Location(PASSIVE_PROVIDER);
 			location.setLatitude(prefs.getFloat(PrefConstants.LAST_LATITUDE, 0));
 			location.setLongitude(prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0));
 		}

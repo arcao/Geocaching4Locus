@@ -6,7 +6,7 @@
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
+    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
     
     <string name="preferences">Nastavení</string>
     <string name="wrong_coordinates">Špatný formát souřadnic!</string>

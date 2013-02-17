@@ -48,7 +48,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		// remove previous dialog
 		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
-			fragment.hide(getSupportFragmentManager());
+			fragment.dismiss();
 		
 		OAuthLoginDialogFragment.newInstance().show(getSupportFragmentManager(), TAG_DIALOG);
 	}

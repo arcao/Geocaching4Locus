@@ -31,12 +31,11 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 		
 		super.show(manager, tag);
 	}
-	
-	public void hide(FragmentManager manager) {
-		dismiss();
-		manager.beginTransaction().remove(this).commit();
-		// apply all commits
-		manager.executePendingTransactions();
+
+	@Override
+	public void dismiss() {
+		// this fix IllegalStateException when App is hidden
+		dismissAllowingStateLoss();
 	}
 	
 	public boolean isShowing() {

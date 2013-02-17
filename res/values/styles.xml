@@ -63,7 +63,7 @@
         <item name="android:inputType">none</item>
         
         <item name="android:background">@android:drawable/btn_dropdown</item>
-        <item name="android:gravity">left</item>
+        <item name="android:gravity">left|center_vertical</item>
     </style>
     <style name="SimpleButton" parent="@android:style/Widget.Button">
         <item name="android:layout_width">fill_parent</item>

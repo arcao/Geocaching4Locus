@@ -5,8 +5,8 @@ import org.osgi.framework.Version;
 import android.net.Uri;
 
 public interface AppConstants {
-  static final String OAUTH_CONSUMER_KEY = "90C7F340-7998-477D-B4D3-AC48A9A0F560";
-  static final String OAUTH_CONSUMER_SECRET = "55BBC3C1-24CF-4D1B-B7EC-7A8E75DAB7D1";
+  static final String OAUTH_CONSUMER_KEY = "";
+  static final String OAUTH_CONSUMER_SECRET = "";
 
   static final String OAUTH_AUTHORIZE_URL = "https://www.geocaching.com/oauth/mobileoauth.ashx";
   static final String OAUTH_REQUEST_URL = OAUTH_AUTHORIZE_URL;

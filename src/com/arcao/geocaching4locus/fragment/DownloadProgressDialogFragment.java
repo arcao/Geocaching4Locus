@@ -16,10 +16,6 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	protected static final String PARAM_COUNT = "COUNT";
 	protected static final String PARAM_CURRENT = "CURRENT";
 	
-	public static DownloadProgressDialogFragment newInstance(int messageId) {
-		return newInstance(messageId, -1, -1);
-	}
-	
 	public static DownloadProgressDialogFragment newInstance(int messageId, int count, int current) {
 		DownloadProgressDialogFragment frag = new DownloadProgressDialogFragment();
     

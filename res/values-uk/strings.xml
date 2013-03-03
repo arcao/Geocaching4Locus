@@ -128,7 +128,7 @@
     <string name="error_cache_not_found">Кеш %s не знайдено.</string>
     
     <string name="dialog_count_of_caches_title">Лічильник кешів</string>
-    <plurals name="dialog_count_of_caches_prefix">
+    <plurals name="plurals_cache">
         <item quantity="one">%d кеш</item>
         <item quantity="few">%d кеші</item>
         <item quantity="other">%d кешів</item>
@@ -142,7 +142,6 @@
     
     <string name="title_count_of_caches">Лічильник кешів</string>
     
-    <string name="error_login">%s</string>
     <string name="button_login_start">Увійти</string>
     <string name="login_required_title">Потрібний вхід</string>
     <string name="login_required_message">Для продовження вам спершу потрібно увійти у ваш обліковий запис на Geocaching.com.</string>

@@ -13,9 +13,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.Html;
 
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
@@ -150,9 +152,27 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
+			
+			// apply format on a text
+			int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
+			int period = (int) restrictions.getFullGeocacheLimitPeriod();
+			
+			String periodString = null;
+			if (period < 60) {
+				periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
+			} else {
+				period = period / 60;
+				periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
+			}
+			
+			String cacheString = getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
+			
+			String message = getString(R.string.basic_member_sign_on_warning_message, cacheString, periodString);
+			
 			return new AlertDialog.Builder(getActivity())
 				.setTitle(R.string.basic_member_warning_title)
-				.setMessage(R.string.basic_member_warning_message)
+				.setMessage(Html.fromHtml(message))
 				.setPositiveButton(R.string.ok_button, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

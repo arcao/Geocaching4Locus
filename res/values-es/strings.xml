@@ -128,7 +128,7 @@
     <string name="error_cache_not_found">No se encontró cache %s.</string>
     
     <string name="dialog_count_of_caches_title">Contador de cachés</string>
-    <plurals name="dialog_count_of_caches_prefix">
+    <plurals name="plurals_cache">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
         <item quantity="other">%d caches</item>
@@ -142,7 +142,6 @@
     
     <string name="title_count_of_caches">Número de caches</string>
     
-    <string name="error_login">%s</string>
     <string name="button_login_start">Log in</string>
     <string name="login_required_title">Log in requerido</string>
     <string name="login_required_message">Para continuar, debes iniciar sesión en tu cuenta de Geocaching.com.</string>

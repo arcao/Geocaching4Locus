@@ -128,12 +128,6 @@
     <string name="error_cache_not_found">Cache %s was not found.</string>
     
     <string name="dialog_count_of_caches_title">Count of caches</string>
-    <plurals name="dialog_count_of_caches_prefix">
-        <item quantity="one">%d cache</item>
-        <item quantity="few">%d caches</item>
-        <item quantity="other">%d caches</item>
-    </plurals>
-
     <string name="launcher_nearest_caches">Nearest caches</string>
     <string name="launcher_import_cache">Import cache to Locus</string>
     <string name="launcher_update_cache">Update cache</string>    
@@ -142,17 +136,48 @@
     
     <string name="title_count_of_caches">Count of caches</string>
     
-    <string name="error_login">%s</string>
     <string name="button_login_start">Sign in</string>
     <string name="login_required_title">Sign-in required</string>
     <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
     
     <string name="basic_member_warning_title">Basic member access</string>
-    <string name="basic_member_warning_message">As a basic member of geocaching.com you can download full details of <b>3 caches per 24 hours period</b>.
-        
-Upgrade to geocaching.com Premium Membership today to download the <b>full details for up to 6000 caches</b> per day and access many more benefits.
-
-Visit geocaching.com to upgrade.</string>
-
+    <string name="premium_member_warning_title">Premium member access</string>
+    <string name="basic_member_sign_on_warning_message">As a basic member of geocaching.com you can download full details of &lt;b>%1$s per %2$s period&lt;/b>.&lt;br>
+        &lt;br>
+        &lt;i>Upgrade to geocaching.com Premium Membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocache.com to upgrade.&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">You reached the limit for downloading full details of &lt;b>%1$s per %2$s period&lt;/b>. Your daily quota will be reset at %3$s.&lt;br>
+        &lt;br>
+        &lt;i>Upgrade to geocaching.com Premium Membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocache.com to upgrade.&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">You reached the limit for downloading full details of &lt;b>6000 caches per 24 hours period&lt;/b>.</string>
+    <string name="method_quota_exceeded_title">Hey, slow down!</string>
+    <string name="method_quota_exceeded_message">You reached the limit for maximum actions/calls per minute period.</string>
+    <string name="basic_member_full_geocache_warning_message">As a basic member of geocaching.com you can download full details of %1$s per %2$s period.&lt;br>
+        &lt;br>
+        &lt;b>You may download %3$s until %4$s when the limit will be reset&lt;/b>&lt;br>
+        &lt;br>
+        &lt;i>Upgrade to geocaching.com Premium Membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocache.com to upgrade.&lt;/i>
+        &lt;br>
+        &lt;br>&lt;b>Do you want continue with downloading?&lt;/b></string>
+    <string name="button_yes">Yes</string>
+    <string name="button_no">No</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d hour</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minute</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    
 </resources>
 

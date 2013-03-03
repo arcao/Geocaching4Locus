@@ -128,7 +128,7 @@
     <string name="error_cache_not_found">Кэш %s не найден</string>
     
     <string name="dialog_count_of_caches_title">Количество кэшей</string>
-    <plurals name="dialog_count_of_caches_prefix">
+    <plurals name="plurals_cache">
         <item quantity="one">%d кэш</item>
         <item quantity="few">%d кэши</item>
         <item quantity="other">%d кэши</item>
@@ -142,7 +142,6 @@
     
     <string name="title_count_of_caches">Количество кэшей</string>
     
-    <string name="error_login">%s</string>
     <string name="button_login_start">Вход</string>
     <string name="login_required_title">Необходима авторизация</string>
     <string name="login_required_message">Для продолжения необходима аторизация аккаунта Geocaching.com</string>

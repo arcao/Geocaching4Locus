@@ -30,7 +30,7 @@ public class AccountRestrictions {
 	
 	protected void init() {
 		maxFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, Long.MAX_VALUE);
-		currentFullGeocacheLimit = mPrefs.getInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);
+		currentFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);
 		fullGeocacheLimitPeriod = mPrefs.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, 365*24*3600);
 		renewFullGeocacheLimit = new Date(mPrefs.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0));
 		premiumMember = mPrefs.getBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, false);
@@ -82,7 +82,7 @@ public class AccountRestrictions {
 			currentFullGeocacheLimit = cacheLimits.getCurrentCacheCount();
 			
 			Calendar c = Calendar.getInstance();
-			c.add(Calendar.SECOND, (int) fullGeocacheLimitPeriod);
+			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
 			
 			renewFullGeocacheLimit = c.getTime();
 			
@@ -119,7 +119,7 @@ public class AccountRestrictions {
 		
 		if (renewFullGeocacheLimit.before(new Date())) {
 			Calendar c = Calendar.getInstance();
-			c.add(Calendar.SECOND, (int) fullGeocacheLimitPeriod);
+			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
 			renewFullGeocacheLimit = c.getTime();
 
 			// store it to preferences
@@ -131,4 +131,7 @@ public class AccountRestrictions {
 		return renewFullGeocacheLimit;
 	}
 
+	public long getFullGeocacheLimitPeriod() {
+		return fullGeocacheLimitPeriod;
+	}
 }

@@ -16,7 +16,8 @@ import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 public class ErrorActivity extends FragmentActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
 	
-	public static final String PARAM_RESOURCE_ID = "RESOURCE_ID";
+	public static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
+	public static final String PARAM_RESOURCE_TEXT = "RESOURCE_TEXT";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
 	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
 	public static final String PARAM_EXCEPTION = "EXCEPTION";
@@ -35,19 +36,25 @@ public class ErrorActivity extends FragmentActivity {
 	}
 	
 	protected void showErrorDialog () {
-		final int resId = getIntent().getIntExtra(PARAM_RESOURCE_ID, 0);
+		final int resTitleId = getIntent().getIntExtra(PARAM_RESOURCE_TITLE, 0);
+		final int resTextId = getIntent().getIntExtra(PARAM_RESOURCE_TEXT, 0);
 		final boolean openPreference = getIntent().getBooleanExtra(PARAM_OPEN_PREFERENCE, false);
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 		
-		CustomErrorDialogFragment.newInstance(resId, openPreference, additionalMessage, t)
+		CustomErrorDialogFragment.newInstance(resTitleId, resTextId, openPreference, additionalMessage, t)
 			.show(getSupportFragmentManager(), CustomErrorDialogFragment.TAG);
 	}
 		
-	public static Intent createErrorIntent(Context ctx, int resErrorId, String errorText, boolean openPreference, Throwable exception) {
+	public static Intent createErrorIntent(Context ctx, int resErrorText, String errorText, boolean openPreference, Throwable exception) {
+		return createErrorIntent(ctx, 0, resErrorText, errorText, openPreference, exception);
+	}
+	
+	public static Intent createErrorIntent(Context ctx, int resErrorTitle, int resErrorText, String errorText, boolean openPreference, Throwable exception) {
 		Intent intent = new Intent(ctx, ErrorActivity.class);
 		intent.setAction(ErrorActivity.ACTION_ERROR);
-		intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
+		intent.putExtra(ErrorActivity.PARAM_RESOURCE_TITLE, resErrorTitle);
+		intent.putExtra(ErrorActivity.PARAM_RESOURCE_TEXT, resErrorText);
 		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
 		intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
 		
@@ -60,15 +67,17 @@ public class ErrorActivity extends FragmentActivity {
 	public static class CustomErrorDialogFragment extends AbstractDialogFragment {
 		public static final String TAG = CustomErrorDialogFragment.class.getName();
 		
-		int resId;
+		int resTitleId;
+		int resTextId;
 		boolean openPreference;
 		String additionalMessage;
 		Throwable t;
 		
-		public static CustomErrorDialogFragment newInstance(int resId, boolean openPreference, String additionalMessage, Throwable t) {
+		public static CustomErrorDialogFragment newInstance(int resTitleId, int resTextId, boolean openPreference, String additionalMessage, Throwable t) {
 			CustomErrorDialogFragment fragment = new CustomErrorDialogFragment();
 			
-			fragment.resId = resId;
+			fragment.resTitleId = resTitleId == 0 ? R.string.error_title : resTitleId;
+			fragment.resTextId = resTextId;
 			fragment.openPreference = openPreference;
 			fragment.additionalMessage = additionalMessage;
 			fragment.t = t;
@@ -79,7 +88,7 @@ public class ErrorActivity extends FragmentActivity {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog))
-					.setTitle(R.string.error_title)
+					.setTitle(resTitleId)
 					.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -95,8 +104,8 @@ public class ErrorActivity extends FragmentActivity {
 					})
 					.setCancelable(false);
 
-			if (resId != 0) {
-				builder.setMessage(Html.fromHtml(String.format(getString(resId), additionalMessage)));
+			if (resTextId != 0) {
+				builder.setMessage(Html.fromHtml(String.format(getString(resTextId), additionalMessage)));
 			} else {
 				builder.setMessage(Html.fromHtml(additionalMessage));
 			}

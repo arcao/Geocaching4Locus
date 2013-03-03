@@ -122,7 +122,7 @@ public abstract class AbstractService extends IntentService {
 	protected Notification createErrorNotification(Intent errorIntent) {
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
 		
-		final int resErrorId = errorIntent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0);
+		final int resErrorId = errorIntent.getIntExtra(ErrorActivity.PARAM_RESOURCE_TEXT, 0);
 		final String additionalMessage = errorIntent.getStringExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE);
 		
 		nb.setSmallIcon(R.drawable.ic_launcher);
@@ -193,7 +193,7 @@ public abstract class AbstractService extends IntentService {
 	
 	protected void sendError(Throwable exception) {
 		Intent intent = new ExceptionHandler(this).handle(exception);
-		final int resErrorId = intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0);
+		final int resErrorId = intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_TEXT, 0);
 		
 		// error notification
 		notificationManager.notify(resErrorId, createErrorNotification(intent));

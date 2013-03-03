@@ -6,10 +6,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.arcao.geocaching4locus.ErrorActivity;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
@@ -25,18 +25,18 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 		activityRef = new WeakReference<SearchNearestActivity>(activity);
 	}
 	
-	public void register() {
+	public void register(Context ctx) {
 		IntentFilter filter = new IntentFilter();		
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
 		filter.addAction(ErrorActivity.ACTION_ERROR);
 		
-		Geocaching4LocusApplication.getAppContext().registerReceiver(this, filter);
+		LocalBroadcastManager.getInstance(ctx).registerReceiver(this, filter);
 		Log.i(getClass().getName(), "Receiver registred.");
 	}
 	
-	public void unregister() {
-		Geocaching4LocusApplication.getAppContext().unregisterReceiver(this);
+	public void unregister(Context ctx) {
+		LocalBroadcastManager.getInstance(ctx).unregisterReceiver(this);
 		
 		if (pd != null)
 			pd.dismiss();
@@ -67,14 +67,8 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 			if (pd != null && pd.isShowing())
 				pd.dismiss();
 
-			Intent errorIntent = new Intent(activity, ErrorActivity.class);
-			errorIntent.setAction(ErrorActivity.ACTION_ERROR);
-			errorIntent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0));
-			errorIntent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, intent.getStringExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE));
-			errorIntent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, intent.getBooleanExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, false));
-			errorIntent.putExtra(ErrorActivity.PARAM_EXCEPTION, intent.getSerializableExtra(ErrorActivity.PARAM_EXCEPTION));
-			errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-			
+			Intent errorIntent = new Intent(intent);
+			errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);			
 			activity.startActivity(errorIntent);
 		}
 	}

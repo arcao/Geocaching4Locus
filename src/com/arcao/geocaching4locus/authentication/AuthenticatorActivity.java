@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinishedListener;
@@ -56,6 +57,15 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 	public void showWizardDialog() {
 		new WizardDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
 	}
+	
+	public void showBasicMemberWarning() {
+		// remove previous dialog
+		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
+		if (fragment != null)
+			fragment.dismiss();
+		
+		new BasicMemberLoginWarningDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
+	}
 
 	@Override
 	public void onTaskFinished(Intent errorIntent) {
@@ -63,7 +73,17 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 			startActivity(errorIntent);
 		}
 		
-		setResult(Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount() ? RESULT_OK : RESULT_CANCELED);
+		AuthenticatorHelper helper = Geocaching4LocusApplication.getAuthenticatorHelper(); 
+		
+		boolean hasAccount = helper.hasAccount();
+		
+		// for basic member show warning dialog about limits
+		if (hasAccount && !helper.getRestrictions().isPremiumMember()) {
+			showBasicMemberWarning();
+			return;
+		}
+		
+		setResult(hasAccount ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
 
@@ -112,6 +132,40 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 				})
 				.create();
 		}
-		
 	}
+	
+	protected static class BasicMemberLoginWarningDialogFragment extends AbstractDialogFragment {
+		protected WeakReference<AuthenticatorActivity> activityRef;
+		
+		public BasicMemberLoginWarningDialogFragment() {
+			setCancelable(false);
+		}
+				
+		@Override
+		public void onAttach(Activity activity) {
+			super.onAttach(activity);
+			
+			activityRef = new WeakReference<AuthenticatorActivity>((AuthenticatorActivity) activity);
+		}
+		
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			return new AlertDialog.Builder(getActivity())
+				.setTitle(R.string.basic_member_warning_title)
+				.setMessage(R.string.basic_member_warning_message)
+				.setPositiveButton(R.string.ok_button, new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						AuthenticatorActivity activity = activityRef.get();
+						if (activity != null) {
+							activity.setResult(RESULT_OK);
+							activity.finish();
+						}
+					}
+				})
+				.create();
+		}		
+	}
+	
+
 }

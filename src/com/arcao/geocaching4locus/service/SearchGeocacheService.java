@@ -15,7 +15,6 @@ import locus.api.utils.Utils;
 
 import org.acra.ErrorReporter;
 
-import android.accounts.OperationCanceledException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -183,6 +182,7 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new ContainerType[0]);
 	}
 
+	@SuppressWarnings("resource")
 	protected File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -193,113 +193,103 @@ public class SearchGeocacheService extends AbstractService {
 		ErrorReporter.getInstance().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
-		int attempt = 0;
-		
-		File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
-		
-		while (++attempt <= 2) {
-			StoreableDataOutputStream sdos = null;
 
-			try {
-				login(api);
+		File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
+		StoreableDataOutputStream sdos = null;
+
+		try {
+			login(api);
+			
+			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+			
+			sdos = new StoreableDataOutputStream(new FileOutputStream(dataFile));
+			sdos.beginList();
+			
+			sendProgressUpdate();
+			
+			current = 0;
+			int perPage = AppConstants.CACHES_PER_REQUEST;
+			
+			while (current < count) {
+				perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
+
+				List<SimpleGeocache> cachesToAdd;
 				
-				String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+				if (current == 0) {
+					cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
+							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
+							new GeocacheTypeFilter(cacheTypes),
+							new GeocacheContainerSizeFilter(containerTypes),
+							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
+							new NotFoundByUsersFilter(showFound ? null : username),
+							new NotHiddenByUsersFilter(showOwn ? null : username),
+							new DifficultyFilter(difficultyMin, difficultyMax),
+							new TerrainFilter(terrainMin, terrainMax)
+					});
+				} else {
+					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);
+				}
 				
-				sdos = new StoreableDataOutputStream(new FileOutputStream(dataFile));
-				sdos.beginList();
+				if (!simpleCacheData)
+					Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
+
+				if (isCanceled())
+					return null;
+
+				if (cachesToAdd.size() == 0)
+					break;
 				
-				sendProgressUpdate();
-				
-				current = 0;
-				int perPage = AppConstants.CACHES_PER_REQUEST;
-				
-				while (current < count) {
-					perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
-	
-					List<SimpleGeocache> cachesToAdd;
+				// FIX for not working distance filter
+				if (computeDistance(latitude, longitude, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
+					removeCachesOverDistance(cachesToAdd, latitude, longitude, distance);
 					
-					if (current == 0) {
-						cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
-								new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
-								new GeocacheTypeFilter(cacheTypes),
-								new GeocacheContainerSizeFilter(containerTypes),
-								new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
-								new NotFoundByUsersFilter(showFound ? null : username),
-								new NotHiddenByUsersFilter(showOwn ? null : username),
-								new DifficultyFilter(difficultyMin, difficultyMax),
-								new TerrainFilter(terrainMin, terrainMax)
-						});
-					} else {
-						cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);
-					}
-	
-					if (isCanceled())
-						return null;
-	
 					if (cachesToAdd.size() == 0)
 						break;
-					
-					// FIX for not working distance filter
-					if (computeDistance(latitude, longitude, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
-						removeCachesOverDistance(cachesToAdd, latitude, longitude, distance);
-						
-						if (cachesToAdd.size() == 0)
-							break;
-					}
-					
-					PackWaypoints pw = new PackWaypoints(TAG);
-					List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
-					
-					for (Waypoint wpt : waypoints) {
-						if (simpleCacheData) {
-							wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
-						}
-						
-						pw.addWaypoint(wpt);
-					}
-					
-					sdos.write(pw);
-	
-					current = current + cachesToAdd.size();
-					
-					// force memory clean
-					cachesToAdd = null;
-					waypoints = null;
-					pw = null;
-	
-					sendProgressUpdate();
 				}
 				
-				sdos.endList();
-	
-				Log.i(TAG, "found caches: " + current);
-	
-				if (current > 0) {
-					return dataFile;
-				} else {
-					return null;
+				PackWaypoints pw = new PackWaypoints(TAG);
+				List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
+				
+				for (Waypoint wpt : waypoints) {
+					if (simpleCacheData) {
+						wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
+					}
+					
+					pw.addWaypoint(wpt);
 				}
-			} catch (InvalidSessionException e) {
-				Log.e(TAG, e.getMessage(), e);
-				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 				
-				if (attempt == 1)
-					continue;
+				sdos.write(pw);
+
+				current = current + cachesToAdd.size();
 				
-				throw e;
-			} catch (OperationCanceledException e) {
-				Log.e(TAG, e.getMessage(), e);
-				
-				return null;
-			} catch (IOException e) {
-				Log.e(TAG, e.getMessage(), e);
-				throw new GeocachingApiException(e.getMessage(), e);
-			} finally {
-				Utils.closeStream(sdos);
+				// force memory clean
+				cachesToAdd = null;
+				waypoints = null;
+				pw = null;
+
+				sendProgressUpdate();
 			}
+			
+			sdos.endList();
+
+			Log.i(TAG, "found caches: " + current);
+
+			if (current > 0) {
+				return dataFile;
+			} else {
+				return null;
+			}
+		} catch (InvalidSessionException e) {
+			Log.e(TAG, e.getMessage(), e);
+			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			
+			throw e;
+		} catch (IOException e) {
+			Log.e(TAG, e.getMessage(), e);
+			throw new GeocachingApiException(e.getMessage(), e);
+		} finally {
+			Utils.closeStream(sdos);
 		}
-		
-		return null; 
 	}
 	
 	protected void removeCachesOverDistance(List<SimpleGeocache> caches, double latitude, double longitude, double maxDistance) {
@@ -328,7 +318,7 @@ public class SearchGeocacheService extends AbstractService {
     return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
   } 
 
-	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
+	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
 		if (token == null) {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();

@@ -1,15 +1,12 @@
 package com.arcao.geocaching4locus.authentication.helper;
 
 import android.accounts.Account;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
-
-import com.arcao.geocaching.api.exception.GeocachingApiException;
 
 public interface AuthenticatorHelper {
 	public static final String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
 
-	String getAuthToken() throws OperationCanceledException, GeocachingApiException;
+	String getAuthToken();
 	Account getAccount();
 	void addAccount(Activity activity);
 	boolean addAccountExplicitly(Account account, String password);
@@ -19,4 +16,6 @@ public interface AuthenticatorHelper {
 	void removeAccount();
 	void invalidateAuthToken();
 	void convertFromOldStorage();
+	
+	AccountRestrictions getRestrictions();
 }

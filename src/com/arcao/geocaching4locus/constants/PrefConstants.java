@@ -3,6 +3,9 @@ package com.arcao.geocaching4locus.constants;
 import oauth.signpost.OAuth;
 
 public interface PrefConstants {
+	static final String PREF_VERSION = "pref_version";
+	static final int CURRENT_PREF_VERSION = 1;
+	
 	static final String IMPORT_CACHES  = "import_caches";
 	static final String LAST_LATITUDE  = "latitude";
 	static final String LAST_LONGITUDE = "longitude";
@@ -40,6 +43,11 @@ public interface PrefConstants {
 	static final String ABOUT_WEBSITE = "about_website";
 	static final String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
 
+	static final String RESTRICTION__PREMIUM_MEMBER = "premium_account";
+	static final String RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit";
+	static final String RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD = "full_geocache_limit_period";
+	static final String RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit";
+	static final String RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit";
 
 
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE  = "0";

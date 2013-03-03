@@ -59,16 +59,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		/*// setTheme must be called before super method for devices < API v11
-		if (!getResources().getBoolean(R.bool.show_main_activity_as_dialog)) {
-			TypedArray typedArray = getTheme().obtainStyledAttributes(new int[] { R.attr.normalWindow });
-			int normalWindowRes = typedArray.getResourceId(0, 0);
-			if (normalWindowRes != 0) { 
-				setTheme(normalWindowRes);
-			}
-			typedArray.recycle();
-		}*/
-		
 		broadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
 		hasCoordinates = false;
 
@@ -142,7 +132,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	protected void onResume() {	
 		super.onResume();
 
-		broadcastReceiver.register();
+		broadcastReceiver.register(this);
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
@@ -216,7 +206,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		if (locationUpdateTask != null)
 			locationUpdateTask.detach();
 
-		broadcastReceiver.unregister();
+		broadcastReceiver.unregister(this);
 
 		Log.i(TAG, "Receiver unregistred.");
 	}

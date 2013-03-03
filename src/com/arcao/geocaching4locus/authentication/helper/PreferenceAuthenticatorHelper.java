@@ -1,7 +1,6 @@
 package com.arcao.geocaching4locus.authentication.helper;
 
 import android.accounts.Account;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,25 +8,32 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	protected final SharedPreferences pref;
 	protected final Context mContext;
+	protected final AccountRestrictions restrictions;
 	
 	public PreferenceAuthenticatorHelper(Context ctx) {
 		// Do not store username, password and hash in default shared preferences
 		// Default shared preferences are sent by ACRA in error report
 		// Also PreferencesBackupAgent backup default shared preferences to Google Backup Service 
-		pref = ctx.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+		pref = ctx.getSharedPreferences("ACCOUNT", 3);
 		
 		mContext = ctx;
+		
+		restrictions = new AccountRestrictions(ctx);
 	}
 	
 	@Override
-	public String getAuthToken() throws OperationCanceledException, GeocachingApiException {	
+	public AccountRestrictions getRestrictions() {
+		return restrictions;
+	}
+	
+	@Override
+	public String getAuthToken() {	
 		if (!hasAccount())
 			return null;
 		
@@ -113,9 +119,14 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		editor.remove(PrefConstants.SESSION);
 		editor.commit();
 		
+		int prefVersion = pref.getInt(PrefConstants.PREF_VERSION, 0);
+		
 		// remove account when password is set
-		if (pref.contains(PrefConstants.PASSWORD)) {
-		  removeAccount();
+		// remove old accounts with not set premium account property
+		if (pref.contains(PrefConstants.PASSWORD) || prefVersion < 1) {
+		  removeAccount();		  
 		}
-	}
+		
+	  pref.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).commit();
+	}	
 }

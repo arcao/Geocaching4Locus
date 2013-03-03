@@ -8,7 +8,6 @@ import locus.api.android.ActionTools;
 import locus.api.android.utils.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
-import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,15 +19,13 @@ import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
-import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
 
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
@@ -82,87 +79,77 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		
 		GeocachingApi api = LiveGeocachingApiFactory.create();
 		
-		int attempt = 0;
 		int current = 0;
 		int count = pointIndexes.length;
 		
-		while (++attempt <= 2) {
-			try {
-				login(api);
+		try {
+			login(api);
+			
+			current = 0;
+			while (current < count) {
+				// prepare old cache data
+				List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, AppConstants.CACHES_PER_REQUEST);
 				
-				current = 0;
-				while (current < count) {
-					// prepare old cache data
-					List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, AppConstants.CACHES_PER_REQUEST);
-					
-					if (oldPoints.size() == 0) {
-						// all are Waypoints without geocaching data
-						current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
-						publishProgress(current);
-						continue;
-					}
-					
-					@SuppressWarnings({ "unchecked", "rawtypes" })
-					List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
-							new CacheCodeFilter(getCachesIds(oldPoints))
-					});
-					
-					if (isCancelled())
-						return false;
-	
-					if (cachesToAdd.size() == 0)
-						break;
-					
-					List<Waypoint> points = LocusDataMapper.toLocusPoints(context, cachesToAdd);
-					
-					for (Waypoint p : points) {
-						if (p == null || p.gcData == null)
-							continue;
-						
-						// Geocaching API can return caches in a different order
-						Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
-																			
-						p = LocusDataMapper.mergePoints(Geocaching4LocusApplication.getAppContext(), p, oldPoint);
-						
-						// update new point data in Locus
-						ActionTools.updateLocusWaypoint(context, p, false);
-						
-					}
-										
+				if (oldPoints.size() == 0) {
+					// all are Waypoints without geocaching data
 					current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
 					publishProgress(current);
-					
-					// force memory clean
-					oldPoints = null;
-					cachesToAdd = null;
-					points = null;
-				}
-				publishProgress(current);
-
-				Log.i(TAG, "updated caches: " + current);
-	
-				if (current > 0) {
-					return true;
-				} else {
-					return false;
-				}
-				
-			} catch (InvalidSessionException e) {
-				Log.e(TAG, e.getMessage(), e);
-				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
-				
-				if (attempt == 1)
 					continue;
+				}
 				
-				throw e;
-			} catch (OperationCanceledException e) {
-				Log.e(TAG, e.getMessage(), e);
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
+						new CacheCodeFilter(getCachesIds(oldPoints))
+				});
 				
+				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
+				
+				if (isCancelled())
+					return false;
+
+				if (cachesToAdd.size() == 0)
+					break;
+				
+				List<Waypoint> points = LocusDataMapper.toLocusPoints(context, cachesToAdd);
+				
+				for (Waypoint p : points) {
+					if (p == null || p.gcData == null)
+						continue;
+					
+					// Geocaching API can return caches in a different order
+					Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
+																		
+					p = LocusDataMapper.mergePoints(Geocaching4LocusApplication.getAppContext(), p, oldPoint);
+					
+					// update new point data in Locus
+					ActionTools.updateLocusWaypoint(context, p, false);
+					
+				}
+									
+				current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
+				publishProgress(current);
+				
+				// force memory clean
+				oldPoints = null;
+				cachesToAdd = null;
+				points = null;
+			}
+			publishProgress(current);
+
+			Log.i(TAG, "updated caches: " + current);
+
+			if (current > 0) {
+				return true;
+			} else {
 				return false;
 			}
+			
+		} catch (InvalidSessionException e) {
+			Log.e(TAG, e.getMessage(), e);
+			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();			
+			
+			throw e;
 		}
-
-		return null;
 	}
 	
 	private Waypoint searchOldPointByGCCode(List<Waypoint> oldPoints, String gcCode) {
@@ -224,29 +211,17 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	}
 	
 	@Override
-	protected void onException(Throwable e) {
-		super.onException(e);
+	protected void onException(Throwable t) {
+		super.onException(t);
 
 		if (isCancelled())
 			return;
 		
-		Log.e(TAG, e.getMessage(), e);
+		Log.e(TAG, t.getMessage(), t);
 		
-		Intent intent;
 		Context mContext = Geocaching4LocusApplication.getAppContext();
 		
-		if (e instanceof InvalidCredentialsException) {
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, true, null);
-		} else if (e instanceof NetworkException) {
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
-		} else {
-			String message = e.getMessage();
-			if (message == null)
-				message = "";
-			
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
-		}
-		
+		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 		
 		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
@@ -256,7 +231,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		mContext.startActivity(intent);
 	}
 	
-	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
+	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
 		if (token == null) {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();

@@ -147,5 +147,12 @@
     <string name="login_required_title">Sign-in required</string>
     <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
     
+    <string name="basic_member_warning_title">Basic member access</string>
+    <string name="basic_member_warning_message">As a basic member of geocaching.com you can download full details of <b>3 caches per 24 hours period</b>.
+        
+Upgrade to geocaching.com Premium Membership today to download the <b>full details for up to 6000 caches</b> per day and access many more benefits.
+
+Visit geocaching.com to upgrade.</string>
+
 </resources>
 

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -21,10 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
-import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.exception.ExceptionHandler;
 
 public abstract class AbstractService extends IntentService {
 	protected String TAG;
@@ -119,26 +119,22 @@ public abstract class AbstractService extends IntentService {
 		return nb.build();
 	}
 	
-	protected Notification createErrorNotification(int resErrorId, String errorText, boolean openPreference, Throwable exception) {
+	protected Notification createErrorNotification(Intent errorIntent) {
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
+		
+		final int resErrorId = errorIntent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0);
+		final String additionalMessage = errorIntent.getStringExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE);
 		
 		nb.setSmallIcon(R.drawable.ic_launcher);
 		nb.setOngoing(false);
 		nb.setWhen(new Date().getTime());
 		nb.setTicker(getText(R.string.error_title));
 		nb.setContentTitle(getText(R.string.error_title));
-		nb.setContentText(Html.fromHtml(getString(resErrorId, errorText)));
-			
-		Intent intent = new Intent(this, ErrorActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.setAction(ErrorActivity.ACTION_ERROR);
-		intent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, resErrorId);
-		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
-		intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
+		if (resErrorId != 0)
+			nb.setContentText(Html.fromHtml(getString(resErrorId, additionalMessage)));
 
-		if (exception != null)
-			intent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
-		
+		Intent intent = new Intent(errorIntent);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		nb.setContentIntent(PendingIntent.getActivity(getBaseContext(), 0, intent, 0));
 		
 		return nb.build();
@@ -150,19 +146,8 @@ public abstract class AbstractService extends IntentService {
 					
 		try {
 			run(intent);
-		} catch (InvalidCredentialsException e) {
-			Log.e(TAG, e.getMessage(), e);
-			sendError(R.string.error_credentials, null, true, null);
-		} catch (NetworkException e) {
-			Log.e(TAG, e.getMessage(), e);
-			sendError(R.string.error_network, null, false, null);
 		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
-			String message = e.getMessage();
-			if (message == null)
-				message = "";
-			
-			sendError(R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
+			sendError(e);
 		}
 	}
 		
@@ -188,10 +173,10 @@ public abstract class AbstractService extends IntentService {
 		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_UPDATE);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
 		broadcastIntent.putExtra(PARAM_COUNT, count);
 		broadcastIntent.putExtra(PARAM_CURRENT, current);
-		sendBroadcast(broadcastIntent);
+		
+		LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
 	}
 	
 	protected void sendProgressComplete(int count) {
@@ -201,26 +186,18 @@ public abstract class AbstractService extends IntentService {
 		
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_COMPLETE);
-		//broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
 		broadcastIntent.putExtra(PARAM_COUNT, count);
 		broadcastIntent.putExtra(PARAM_CURRENT, count);
-		sendBroadcast(broadcastIntent);
+		LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
 	}
 	
-	protected void sendError(int error, String additionalMessage, boolean openPreference, Throwable exception) {
+	protected void sendError(Throwable exception) {
+		Intent intent = new ExceptionHandler(this).handle(exception);
+		final int resErrorId = intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_ID, 0);
+		
 		// error notification
-		notificationManager.notify(error, createErrorNotification(error, additionalMessage, openPreference, exception));
-		
-		Intent broadcastIntent = new Intent();
-		broadcastIntent.setAction(ErrorActivity.ACTION_ERROR);
-		broadcastIntent.putExtra(ErrorActivity.PARAM_RESOURCE_ID, error);
-		if (additionalMessage != null)
-			broadcastIntent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, additionalMessage);
-		
-		broadcastIntent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
-		if (exception != null)
-			broadcastIntent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
-		sendBroadcast(broadcastIntent);
+		notificationManager.notify(resErrorId, createErrorNotification(intent));
+		LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 	}
 
 	// --------------------- Methods to get right color and text size for title and text for notification ------------------

@@ -11,7 +11,6 @@ import locus.api.objects.extra.Waypoint;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,12 +22,10 @@ import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
-import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.UserTask;
 
@@ -119,61 +116,37 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		
 		GeocachingApi api = LiveGeocachingApiFactory.create();
 		
-		int attempt = 0;
-		
-		while (++attempt <= 2) {
-			try {
-				login(api);
-					
-				Geocache cache = api.getCache(result.cache.getKey(), logCount, 0);
-					
-				if (isCancelled())
-					return null;
-	
-				result.newPoint = LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);
-				return result;
-			} catch (InvalidSessionException e) {
-				Log.e(TAG, e.getMessage(), e);
-				Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+		try {
+			login(api);
 				
-				if (attempt == 1)
-					continue;
+			Geocache cache = api.getCache(result.cache.getKey(), logCount, 0);
+			Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
 				
-				throw e;
-			} catch (OperationCanceledException e) {
-				Log.e(TAG, e.getMessage(), e);
-				
+			if (isCancelled())
 				return null;
-			}
-		}
 
-		return null;
+			result.newPoint = LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);
+			return result;
+		} catch (InvalidSessionException e) {
+			Log.e(TAG, e.getMessage(), e);
+			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			
+			throw e;
+		}
 	}
 	
 	@Override
-	protected void onException(Throwable e) {
-		super.onException(e);
+	protected void onException(Throwable t) {
+		super.onException(t);
 
 		if (isCancelled())
 			return;
 		
-		Log.e(TAG, e.getMessage(), e);
+		Log.e(TAG, t.getMessage(), t);
 		
-		Intent intent;
 		Context mContext = Geocaching4LocusApplication.getAppContext();
 		
-		if (e instanceof InvalidCredentialsException) {
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, true, null);
-		} else if (e instanceof NetworkException) {
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
-		} else {
-			String message = e.getMessage();
-			if (message == null)
-				message = "";
-			
-			intent = ErrorActivity.createErrorIntent(mContext, R.string.error, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), false, e);
-		}
-		
+		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 		
 		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
@@ -184,7 +157,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		mContext.startActivity(intent);
 	}
 	
-	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
+	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
 		if (token == null) {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();

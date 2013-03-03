@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
+import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
@@ -67,6 +68,11 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 				api.openSession(consumer.getToken());
 
 				UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());
+				ApiLimits apiLimits = api.getApiLimits();
+				
+				// update member type and restrictions
+				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateMemberType(userProfile.getUser().getMemberType());
+				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(apiLimits);
 
 				return new String[] { 
 						userProfile.getUser().getUserName(),

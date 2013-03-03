@@ -3,8 +3,6 @@ package com.arcao.geocaching4locus.fragment;
 import java.lang.ref.WeakReference;
 
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
 	protected WeakReference<CancellableDialog> cancellableRef;
@@ -18,24 +16,18 @@ public abstract class AbstractDialogFragment extends DialogFragment {
           getDialog().setDismissMessage(null);
       super.onDestroyView();
   }
-	
-	@Override
-	public void show(FragmentManager manager, String tag) {
-		// DialogFragment.show() will take care of adding the fragment
-		// in a transaction.  We also want to remove any currently showing
-		// dialog, so make our own transaction and take care of that here.
-		Fragment prev = manager.findFragmentByTag(tag);
-		if (prev != null) {
-			return;
-		}
-		
-		super.show(manager, tag);
-	}
 
 	@Override
 	public void dismiss() {
+		
 		// this fix IllegalStateException when App is hidden
-		dismissAllowingStateLoss();
+		try {
+			super.dismiss();
+			if (getDialog() != null)
+				getDialog().dismiss();
+		} catch(IllegalStateException e) {
+			dismissAllowingStateLoss();
+		}
 	}
 	
 	public boolean isShowing() {

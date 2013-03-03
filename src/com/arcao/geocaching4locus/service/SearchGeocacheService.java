@@ -144,8 +144,11 @@ public class SearchGeocacheService extends AbstractService {
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 
-		cacheTypes = getCacheTypeFilterResult(prefs);
-		containerTypes = getContainerTypeFilterResult(prefs);
+		// Premium member feature?
+		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
+			cacheTypes = getCacheTypeFilterResult(prefs);
+			containerTypes = getContainerTypeFilterResult(prefs);
+		}
 	}
 
 	private void callLocus(File file) {

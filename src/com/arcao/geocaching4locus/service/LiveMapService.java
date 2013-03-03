@@ -153,8 +153,11 @@ public class LiveMapService extends IntentService {
 		terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
 		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 		
-		cacheTypes = getCacheTypeFilterResult(prefs);
-		containerTypes = getContainerTypeFilterResult(prefs);
+		// Premium member feature?
+		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
+			cacheTypes = getCacheTypeFilterResult(prefs);
+			containerTypes = getContainerTypeFilterResult(prefs);
+		}
 	}
 	
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {

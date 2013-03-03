@@ -5,16 +5,15 @@ import org.osgi.framework.Version;
 import android.net.Uri;
 
 public interface AppConstants {
-  static final String OAUTH_CONSUMER_KEY = "";
-  static final String OAUTH_CONSUMER_SECRET = "";
-
-  static final String OAUTH_AUTHORIZE_URL = "https://www.geocaching.com/oauth/mobileoauth.ashx";
-  static final String OAUTH_REQUEST_URL = OAUTH_AUTHORIZE_URL;
-  static final String OAUTH_ACCESS_URL = OAUTH_AUTHORIZE_URL;
+	static final boolean USE_PRODUCTION_CONFIGURATION = false;
+	static final String STAGGING_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.StaggingConfiguration";
+	static final String PRODUCTION_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.ProductionConfiguration";
   
-  static final String OAUTH_CALLBACK_URL = "x-g4l://oauth.callback/callback";
+	static final String STAGGING_COMPRESSION_PROXY_SERVICE_URL = "http://wherigo-service.appspot.com/stagging_geocaching_proxy";
 	static final String COMPRESSION_PROXY_SERVICE_URL = "http://wherigo-service.appspot.com/geocaching_proxy";
+
 	static final String GEOCACHING_WEBSITE_URL = "http://www.geocaching.com/";
+  static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
 
 	static final int CACHES_PER_REQUEST = 10;
 

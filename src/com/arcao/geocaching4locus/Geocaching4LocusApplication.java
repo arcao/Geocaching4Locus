@@ -22,6 +22,8 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.arcao.geocaching.api.configuration.GeocachingApiConfigurationResolver;
+import com.arcao.geocaching.api.configuration.OAuthGeocachingApiConfiguration;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -46,6 +48,7 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	private static Context context;
 	private static AuthenticatorHelper authenticatorHelper;
 	private static String deviceId;
+	private static OAuthGeocachingApiConfiguration geocachingApiConfiguration;
 	
   private static OAuthConsumer oAuthConsumer;
   private static OAuthProvider oAuthProvider;
@@ -54,6 +57,12 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	@Override
 	public void onCreate() {
 		context = getApplicationContext();
+		
+		if (AppConstants.USE_PRODUCTION_CONFIGURATION) {
+			geocachingApiConfiguration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.PRODUCTION_CONFIGURATION);
+		} else {
+			geocachingApiConfiguration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.STAGGING_CONFIGURATION);
+		}
 		
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
@@ -108,16 +117,20 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	  }
 	}
 	
+	public static OAuthGeocachingApiConfiguration getGeocachingApiConfiguration() {
+		return geocachingApiConfiguration;
+	}
+	
 	public static OAuthConsumer getOAuthConsumer() {
 	  if (oAuthConsumer == null)
-	    oAuthConsumer = new CommonsHttpOAuthConsumer(AppConstants.OAUTH_CONSUMER_KEY, AppConstants.OAUTH_CONSUMER_SECRET);
+	    oAuthConsumer = new CommonsHttpOAuthConsumer(geocachingApiConfiguration.getConsumerKey(), geocachingApiConfiguration.getConsumerSecret());
 	    
     return oAuthConsumer;
   }
 	
 	public static OAuthProvider getOAuthProvider() {
 	  if (oAuthProvider == null) {
-	    oAuthProvider = new CommonsHttpOAuthProvider(AppConstants.OAUTH_REQUEST_URL, AppConstants.OAUTH_ACCESS_URL, AppConstants.OAUTH_AUTHORIZE_URL);
+	    oAuthProvider = new CommonsHttpOAuthProvider(geocachingApiConfiguration.getOAuthRequestUrl(), geocachingApiConfiguration.getOAuthAccessUrl(), geocachingApiConfiguration.getOAuthAuthorizeUrl());
 	    // always use OAuth 1.0a
 	    oAuthProvider.setOAuth10a(true);
 	  }

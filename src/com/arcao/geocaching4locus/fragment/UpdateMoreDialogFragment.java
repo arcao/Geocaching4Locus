@@ -33,6 +33,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		super.onCreate(savedInstanceState);
 		
 		setRetainInstance(true);
+		setCancelable(false);
 		
 		mTask.setOnTaskUpdateListener(this);
 		mTask.execute(pointIndexes);
@@ -82,7 +83,6 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setCancelable(false);
 		dialog.setMax(pointIndexes.length);
 		dialog.setMessage(getText(R.string.update_caches_progress));
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);

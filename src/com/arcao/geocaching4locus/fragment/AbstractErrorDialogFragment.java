@@ -20,6 +20,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 		args.putInt(PARAM_ERROR_MESSAGE, resErrorMessage);
 		args.putString(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
 		setArguments(args);
+		setCancelable(false);
 	}
 	
 	public DialogInterface.OnClickListener getPositiveButtonOnClickListener() {
@@ -33,7 +34,6 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 		Bundle args = getArguments();		
 		String message = getString(args.getInt(PARAM_ERROR_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE));
 		
-		builder.setCancelable(false);
 		builder.setTitle(args.getInt(PARAM_TITLE));
 		builder.setMessage(Html.fromHtml(message));
 		builder.setPositiveButton(R.string.ok_button, getPositiveButtonOnClickListener());

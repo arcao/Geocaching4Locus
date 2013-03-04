@@ -18,6 +18,7 @@ public final class LocationUpdateProgressDialogFragment extends AbstractDialogFr
 			
 	public static LocationUpdateProgressDialogFragment newInstance(int source) {
 		LocationUpdateProgressDialogFragment frag = new LocationUpdateProgressDialogFragment();
+		frag.setCancelable(false);
 		
 		Bundle args = new Bundle();
     args.putInt(PARAM_SOURCE, source);
@@ -37,8 +38,6 @@ public final class LocationUpdateProgressDialogFragment extends AbstractDialogFr
 			default:
 				pd.setMessage(getText(R.string.acquiring_network_location));
 		}
-		
-		pd.setCancelable(false);
 		
 		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
 			@Override

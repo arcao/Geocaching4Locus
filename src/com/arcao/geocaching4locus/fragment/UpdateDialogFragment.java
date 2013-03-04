@@ -40,6 +40,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
+		setCancelable(false);
 
 		mTask.setOnTaskFinishedListener(this);
 		mTask.execute(data);
@@ -81,7 +82,6 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		dialog.setIndeterminate(true);
-		dialog.setCancelable(false);
 		dialog.setMessage(getText(R.string.update_cache_progress));
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
 		return dialog;

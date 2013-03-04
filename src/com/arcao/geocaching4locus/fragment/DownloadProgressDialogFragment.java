@@ -18,6 +18,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	
 	public static DownloadProgressDialogFragment newInstance(int messageId, int count, int current) {
 		DownloadProgressDialogFragment frag = new DownloadProgressDialogFragment();
+		frag.setCancelable(false);
     
 		Bundle args = new Bundle();
     args.putInt(PARAM_MESSAGE_ID, messageId);
@@ -39,7 +40,6 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 		Bundle arguments = getArguments();
 		
 		ProgressDialog pd = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
-		pd.setCancelable(false);
 		
 		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
 			@Override

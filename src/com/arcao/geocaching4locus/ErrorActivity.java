@@ -75,6 +75,7 @@ public class ErrorActivity extends FragmentActivity {
 		
 		public static CustomErrorDialogFragment newInstance(int resTitleId, int resTextId, boolean openPreference, String additionalMessage, Throwable t) {
 			CustomErrorDialogFragment fragment = new CustomErrorDialogFragment();
+			fragment.setCancelable(false);
 			
 			fragment.resTitleId = resTitleId == 0 ? R.string.error_title : resTitleId;
 			fragment.resTextId = resTextId;
@@ -101,8 +102,7 @@ public class ErrorActivity extends FragmentActivity {
 							}
 							getActivity().finish();
 						}
-					})
-					.setCancelable(false);
+					});
 
 			if (resTextId != 0) {
 				builder.setMessage(Html.fromHtml(String.format(getString(resTextId), additionalMessage)));

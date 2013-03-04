@@ -34,6 +34,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		super.onCreate(savedInstanceState);
 		
 		setRetainInstance(true);
+		setCancelable(false);
 		
 		mTask.setOnTaskFinishedListener(this);
 		mTask.execute(cacheId);
@@ -74,7 +75,6 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		dialog.setIndeterminate(true);
-		dialog.setCancelable(false);
 		dialog.setMessage(getText(R.string.import_cache_progress));
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
 		return dialog;

@@ -114,12 +114,6 @@ public class SearchGeocacheService extends AbstractService {
 		showDisabled = prefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
 		simpleCacheData = prefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
 
-		difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
-		difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
-		
-		terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
-		terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
-		
 		String distanceString;
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "100");
@@ -144,8 +138,21 @@ public class SearchGeocacheService extends AbstractService {
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 
+		// default values for basic member
+		difficultyMin = 1;
+		difficultyMax = 5;
+		
+		terrainMin = 1;
+		terrainMax = 5;
+		
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
+			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
+			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
+			
+			terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
+			terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
+			
 			cacheTypes = getCacheTypeFilterResult(prefs);
 			containerTypes = getContainerTypeFilterResult(prefs);
 		}

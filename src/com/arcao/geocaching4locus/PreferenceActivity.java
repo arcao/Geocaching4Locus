@@ -299,6 +299,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	
 	protected void prepareAccountPreference() {
 		final Preference accountPreference = findPreference(ACCOUNT, EditTextPreference.class);
+		final CheckBoxPreference simpleCacheDataPreference = findPreference(DOWNLOADING_SIMPLE_CACHE_DATA, CheckBoxPreference.class);
+		final Preference difficultyPreference = findPreference("difficulty_filter", Preference.class);
+		final Preference terrainPreference = findPreference("terrain_filter", Preference.class);
+
 		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
@@ -307,13 +311,23 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 					accountPreference.setTitle(R.string.pref_account_login);
 					accountPreference.setSummary(R.string.pref_account_login_summary);
 				} else {
-					try {
-						Geocaching4LocusApplication.getAuthenticatorHelper().addAccount(PreferenceActivity.this);
-					} catch (Exception e) {
-						Log.e(TAG, e.getMessage(), e);
-					}
+					Geocaching4LocusApplication.getAuthenticatorHelper().addAccount(PreferenceActivity.this);
 				}
 				
+				// account restrictions for basic member
+				final boolean premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
+				simpleCacheDataPreference.setEnabled(premiumMember);
+				if (!premiumMember)
+					simpleCacheDataPreference.setChecked(true);
+				if (cacheTypeFilterScreen != null)
+					cacheTypeFilterScreen.setEnabled(premiumMember);
+				if (containerTypeFilterScreen != null)
+					containerTypeFilterScreen.setEnabled(premiumMember);
+				if (difficultyPreference != null)
+					difficultyPreference.setEnabled(premiumMember);
+				if (terrainPreference != null)
+					terrainPreference.setEnabled(premiumMember);
+
 				return true;
 			}
 		});
@@ -325,6 +339,20 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);
 		}
+
+		// account restrictions for basic member
+		final boolean premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
+		simpleCacheDataPreference.setEnabled(premiumMember);
+		if (!premiumMember)
+			simpleCacheDataPreference.setChecked(true);
+		if (cacheTypeFilterScreen != null)
+			cacheTypeFilterScreen.setEnabled(premiumMember);
+		if (containerTypeFilterScreen != null)
+			containerTypeFilterScreen.setEnabled(premiumMember);
+		if (difficultyPreference != null)
+			difficultyPreference.setEnabled(premiumMember);
+		if (terrainPreference != null)
+			terrainPreference.setEnabled(premiumMember);
 	}
 
 	@Override

@@ -121,11 +121,6 @@ public class AccountRestrictions {
 			Calendar c = Calendar.getInstance();
 			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
 			renewFullGeocacheLimit = c.getTime();
-
-			// store it to preferences
-			Editor editor = mPrefs.edit();
-			editor.putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.getTime());
-			editor.commit();
 		}
 		
 		return renewFullGeocacheLimit;

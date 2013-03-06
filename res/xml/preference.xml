@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res/com.arcao.geocaching4locus">
 	<PreferenceCategory android:title="@string/pref_title_geocaching_credentials">
 	    <Preference android:key="account"/>
     </PreferenceCategory>
@@ -63,5 +63,6 @@
 	    <Preference android:title="@string/pref_author" android:summary="Arcao"/>
 	    <Preference android:title="@string/pref_website" android:summary="" android:key="about_website"/>
 	    <Preference android:title="@string/pref_donate_paypal" android:summary="@string/pref_donate_paypal_summary" android:key="about_donate_paypal"/>
+	    <com.arcao.preference.IconPreferenceScreen android:title="Powered by Geocaching Live" app:icon="@drawable/geocaching_live_icon" android:key="about_geocaching_live" />
 	</PreferenceCategory>
 </PreferenceScreen>

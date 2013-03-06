@@ -295,6 +295,15 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return true;
 			}
 		});
+		
+		final Preference geocachingLivePreference = findPreference(ABOUT_GEOCACHING_LIVE, Preference.class);
+		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.GEOCACHING_LIVE_URI));
+				return true;
+			}
+		});
 	}
 	
 	protected void prepareAccountPreference() {

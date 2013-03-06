@@ -42,6 +42,7 @@ public interface PrefConstants {
 	static final String ABOUT_VERSION = "about_version";
 	static final String ABOUT_WEBSITE = "about_website";
 	static final String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
+	static final String ABOUT_GEOCACHING_LIVE = "about_geocaching_live";
 
 	static final String RESTRICTION__PREMIUM_MEMBER = "premium_account";
 	static final String RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit";

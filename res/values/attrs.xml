@@ -14,6 +14,10 @@
         <attr name="android:dialogMessage" />
         <attr name="android:summary" />
     </declare-styleable>
+    
+    <declare-styleable name="IconPreferenceScreen">
+         <attr name="icon" format="reference" />
+    </declare-styleable>
 
     <!-- Base attributes available to ListPreference. -->
     <declare-styleable name="ListPreference" >

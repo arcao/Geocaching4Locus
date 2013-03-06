@@ -41,6 +41,7 @@ public class AccountRestrictions {
 			case Charter:
 			case Premium:
 				premiumMember = true;
+				break;
 			default:
 				premiumMember = false;
 				break;

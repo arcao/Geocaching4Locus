@@ -11,10 +11,12 @@ import android.util.Log;
 
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.UpdateMoreDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
 
-public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener {
+public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
 
 	private static final int REQUEST_LOGIN = 1;
@@ -38,6 +40,9 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 			return;
 		}
 		
+		if (showBasicMemeberWarningDialog())
+			return;
+		
 		showUpdateMoreDialog();
 	}
 	
@@ -46,6 +51,24 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		super.onSaveInstanceState(outState);
 		
 		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible); 
+	}
+	
+	protected boolean showBasicMemeberWarningDialog() {
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
+			return false;
+		
+		// check next dialog fragment
+		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
+			return false;
+		
+		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
+		if (fragment == null) {
+			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
+		}
+		
+		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		
+		return true;
 	}
 	
 	protected void showUpdateMoreDialog() {
@@ -82,6 +105,15 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 	@Override
 	public void onProgressUpdate(int count) {
 		// unused
+	}
+	
+	@Override
+	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
+		if (success) {
+			showUpdateMoreDialog();
+		} else {
+			onTaskFinished(false);
+		}
 	}
 	
 	@Override

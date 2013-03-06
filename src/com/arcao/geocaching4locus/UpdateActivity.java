@@ -16,10 +16,12 @@ import android.util.Log;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
 
-public class UpdateActivity extends FragmentActivity implements OnTaskFinishedListener {
+public class UpdateActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
 	
 	public static String PARAM_CACHE_ID = "cacheId";
@@ -46,8 +48,29 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 
 			return;
 		}
+		
+		if (showBasicMemeberWarningDialog())
+			return;
 
 		showUpdateDialog();
+	}
+	
+	protected boolean showBasicMemeberWarningDialog() {
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
+			return false;
+		
+		// check next dialog fragment
+		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG) != null)
+			return false;
+		
+		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
+		if (fragment == null) {
+			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
+		}
+		
+		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		
+		return true;
 	}
 	
 	@Override
@@ -118,6 +141,15 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		Log.d(TAG, "onTaskFinished result: " + result);
 		setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
 		finish();
+	}
+	
+	@Override
+	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
+		if (success) {
+			showUpdateDialog();
+		} else {
+			onTaskFinished(null);
+		}
 	}
 	
 	@Override

@@ -112,21 +112,37 @@ public class AccountRestrictions {
 	}
 	
 	public long getCurrentFullGeocacheLimit() {
+		checkRenewPeriod();
+
 		return currentFullGeocacheLimit;
 	}
 	
 	public Date getRenewFullGeocacheLimit() {
-		
-		if (renewFullGeocacheLimit.before(new Date())) {
-			Calendar c = Calendar.getInstance();
-			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
-			renewFullGeocacheLimit = c.getTime();
-		}
+		checkRenewPeriod();
 		
 		return renewFullGeocacheLimit;
 	}
 
 	public long getFullGeocacheLimitPeriod() {
 		return fullGeocacheLimitPeriod;
+	}
+
+	public long getFullGeocacheLimitLeft() {
+		checkRenewPeriod();
+
+		return Math.max(0, maxFullGeocacheLimit - currentFullGeocacheLimit);
+	}
+	
+	public boolean isFullGeocachesLimitWarningRequired() {
+		return !premiumMember && getFullGeocacheLimitLeft() > 0;
+	}
+	
+	protected void checkRenewPeriod() {
+		if (renewFullGeocacheLimit.before(new Date())) {
+			Calendar c = Calendar.getInstance();
+			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
+			renewFullGeocacheLimit = c.getTime();
+			currentFullGeocacheLimit = 0; 
+		}
 	}
 }

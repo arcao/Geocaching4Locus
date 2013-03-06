@@ -9,13 +9,15 @@ import android.util.Log;
 
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
+import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.GCNumberInputDialogFragment.OnInputFinishedListener;
 import com.arcao.geocaching4locus.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-public class ImportFromGCActivity extends FragmentActivity implements OnTaskFinishedListener, OnInputFinishedListener {
+public class ImportFromGCActivity extends FragmentActivity implements OnTaskFinishedListener, OnInputFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private static final String TAG = ImportFromGCActivity.class.getName();
 
 	private static final int REQUEST_LOGIN = 1; 
@@ -50,6 +52,9 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 			return;
 		}
 		
+		if (showBasicMemeberWarningDialog())
+			return;
+		
 		showGCNumberInputDialog();
 	}
 	
@@ -60,13 +65,31 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible); 
 	}
 	
-	protected void showGCNumberInputDialog() {
+	protected void showGCNumberInputDialog() {		
 		GCNumberInputDialogFragment fragment = (GCNumberInputDialogFragment) getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG);
 		if (fragment == null) {
 			fragment = GCNumberInputDialogFragment.newInstance();
 		}
 		
 		fragment.show(getSupportFragmentManager(), GCNumberInputDialogFragment.TAG);
+	}
+	
+	protected boolean showBasicMemeberWarningDialog() {
+		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
+			return false;
+		
+		// check next dialog fragment
+		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG) != null)
+			return false;
+		
+		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
+		if (fragment == null) {
+			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
+		}
+		
+		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		
+		return true;
 	}
 	
 	protected void startImport(String cacheId) {
@@ -93,6 +116,16 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		Log.d(TAG, "onTaskFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
+	}
+	
+	@Override
+	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
+		Log.d(TAG, "onFullCacheDownloadConfirmDialogFinished result: " + success);
+		if (success) {
+			showGCNumberInputDialog();
+		} else {
+			onTaskFinished(false);
+		}
 	}
 	
 	@Override

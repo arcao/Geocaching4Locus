@@ -33,6 +33,7 @@
                 style="@style/TextAppearance.StatusBar.EventContent"
                 android:singleLine="true"
                 android:layout_gravity="center_horizontal"
+                android:textIsSelectable="false"
                 />
         </LinearLayout>
 

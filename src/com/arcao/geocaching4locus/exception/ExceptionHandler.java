@@ -58,7 +58,7 @@ public class ExceptionHandler {
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
 				int period = (int) restrictions.getFullGeocacheLimitPeriod();
 				
-				String periodString = null;
+				String periodString = "";
 				if (period < 60) {
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 				} else {

@@ -148,12 +148,12 @@
     <string name="basic_member_full_geocaching_quota_exceeded">You reached the limit for downloading full details of &lt;b>%1$s per %2$s period&lt;/b>. Your daily quota will be reset at %3$s.&lt;br>
         &lt;br>
         &lt;i>Upgrade to geocaching.com Premium Membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocaching.com to upgrade.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">You reached the limit for downloading full details of &lt;b>6000 caches per 24 hours period&lt;/b>.</string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">You reached the limit for downloading full details of &lt;b>6000 caches per 24 hours period&lt;/b>. Your daily quota will be reset at %3$s.</string>
     <string name="method_quota_exceeded_title">Hey, slow down!</string>
     <string name="method_quota_exceeded_message">You reached the limit for maximum actions/calls per minute period.</string>
     <string name="basic_member_full_geocache_warning_message">As a basic member of geocaching.com you can download full details of %1$s per %2$s period.&lt;br>
         &lt;br>
-        &lt;b>You may download %3$s until %4$s when the limit will be reset&lt;/b>.&lt;br>
+        &lt;b>You may download %3$s until %4$s when the quota will be reset&lt;/b>.&lt;br>
         &lt;br>
         &lt;i>Upgrade to geocaching.com Premium Membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocaching.com to upgrade.&lt;/i>
         &lt;br>
@@ -179,5 +179,7 @@
         <item quantity="other">%d minutes</item>
     </plurals>
     
+    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_message">Geocaching4Locus use Geocaching Live for getting information about caches. Tap for more information…</string>
 </resources>
 

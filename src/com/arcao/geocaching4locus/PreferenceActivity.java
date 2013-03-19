@@ -296,7 +296,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 		
-		final Preference geocachingLivePreference = findPreference(ABOUT_GEOCACHING_LIVE, Preference.class);
+		final Preference geocachingLivePreference = findPreference(ACCOUNT_GEOCACHING_LIVE, Preference.class);
 		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {

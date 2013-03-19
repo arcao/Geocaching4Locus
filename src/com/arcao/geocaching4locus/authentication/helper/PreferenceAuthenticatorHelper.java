@@ -99,6 +99,8 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		editor.remove(PrefConstants.PASSWORD);
 		editor.remove(PrefConstants.SESSION);
 		editor.commit();
+		
+		restrictions.remove();
 	}
 	
 	@Override

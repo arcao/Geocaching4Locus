@@ -28,6 +28,18 @@ public class AccountRestrictions {
 		init();
 	}
 	
+	protected void remove() {
+		Editor editor = mPrefs.edit();
+		editor.remove(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT);
+		editor.remove(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT);
+		editor.remove(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD);
+		editor.remove(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT);
+		editor.remove(PrefConstants.RESTRICTION__PREMIUM_MEMBER);
+		editor.commit();
+		
+		init();
+	}
+	
 	protected void init() {
 		maxFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, Long.MAX_VALUE);
 		currentFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);

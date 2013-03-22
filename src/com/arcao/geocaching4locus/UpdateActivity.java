@@ -30,7 +30,8 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 	
 	private static final int REQUEST_LOGIN = 1;
 	
-	protected boolean authenticatorActivityVisible = false;
+	private boolean authenticatorActivityVisible = false;
+	private boolean showUpdateDialog = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,17 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		if (showBasicMemeberWarningDialog())
 			return;
 
-		showUpdateDialog();
+		showUpdateDialog = true;
+	}
+	
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		
+		if (showUpdateDialog) {
+			showUpdateDialog();
+			showUpdateDialog = false;
+		}
 	}
 	
 	protected boolean showBasicMemeberWarningDialog() {
@@ -158,7 +169,8 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		if (requestCode == REQUEST_LOGIN) {
 			authenticatorActivityVisible = false;
 			if (resultCode == RESULT_OK) {
-				showUpdateDialog();
+				// we can't show dialog here, we'll do it in onPostResume
+				showUpdateDialog = true;
 			} else {
 				onTaskFinished(null);
 			}

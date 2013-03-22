@@ -22,6 +22,7 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 
 	private static final int REQUEST_LOGIN = 1; 
 	private boolean authenticatorActivityVisible = false;
+	private boolean showGCNumberInputDialog = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,17 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		if (showBasicMemeberWarningDialog())
 			return;
 		
-		showGCNumberInputDialog();
+		showGCNumberInputDialog = true;
+	}
+	
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		
+		if (showGCNumberInputDialog) {
+			showGCNumberInputDialog();
+			showGCNumberInputDialog = false;
+		}
 	}
 	
 	@Override
@@ -127,7 +138,7 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 			onTaskFinished(false);
 		}
 	}
-	
+		
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
@@ -135,7 +146,8 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 			authenticatorActivityVisible = false;
 			
 			if (resultCode == RESULT_OK) {
-				showGCNumberInputDialog();
+				// we can't show dialog here, we'll do it in onPostResume
+				showGCNumberInputDialog = true;
 			} else {
 				onTaskFinished(false);
 			}

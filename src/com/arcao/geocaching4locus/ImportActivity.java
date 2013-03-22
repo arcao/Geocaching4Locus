@@ -24,7 +24,8 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 	
 	private static final int REQUEST_LOGIN = 1;
 	
-	protected boolean authenticatorActivityVisible = false;
+	private boolean authenticatorActivityVisible = false;
+	private boolean showImportDialog = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,17 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 			return;
 		}
 
-		showImportDialog();
+		showImportDialog = true;
+	}
+	
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		
+		if (showImportDialog) {
+			showImportDialog();
+			showImportDialog = false;
+		}
 	}
 	
 	@Override
@@ -102,7 +113,8 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 		if (requestCode == REQUEST_LOGIN) {
 			authenticatorActivityVisible = false;
 			if (resultCode == RESULT_OK) {
-				showImportDialog();
+				// we can't show dialog here, we'll do it in onPostResume
+				showImportDialog = true;
 			} else {
 				onTaskFinished(false);
 			}

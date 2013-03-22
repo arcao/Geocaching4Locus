@@ -21,7 +21,8 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 
 	private static final int REQUEST_LOGIN = 1;
 	
-	protected boolean authenticatorActivityVisible = false;
+	private boolean authenticatorActivityVisible = false;
+	private boolean showUpdateMoreDialog = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,17 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		if (showBasicMemeberWarningDialog())
 			return;
 		
-		showUpdateMoreDialog();
+		showUpdateMoreDialog = true;
+	}
+	
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		
+		if (showUpdateMoreDialog) {
+			showUpdateMoreDialog();
+			showUpdateMoreDialog = false;
+		}
 	}
 	
 	@Override
@@ -123,7 +134,7 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 			authenticatorActivityVisible = false;
 			
 			if (resultCode == RESULT_OK) {
-				showUpdateMoreDialog();
+				showUpdateMoreDialog = true;
 			} else {
 				onTaskFinished(false);
 			}

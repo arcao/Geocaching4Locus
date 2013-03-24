@@ -15,7 +15,7 @@
         <attr name="android:summary" />
     </declare-styleable>
     
-    <declare-styleable name="IconPreferenceScreen">
+    <declare-styleable name="IconPreference">
          <attr name="icon" format="reference" />
     </declare-styleable>
 

@@ -180,6 +180,6 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
-    <string name="account_geocaching_live_message">Geocaching4Locus use Geocaching Live for getting information about caches. Tap for more information…</string>
+    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
 </resources>
 

@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.receiver;
 import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_BBOX_TOP_LEFT;
 import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_CENTER;
 import locus.api.android.PeriodicUpdate;
-import locus.api.android.PeriodicUpdate.UpdateContainer;
+import locus.api.android.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.PeriodicUpdatesConst;
 import locus.api.objects.extra.Location;
@@ -50,31 +50,31 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			@Override
 			public void onUpdate(UpdateContainer update) {
 				// sending data back to Locus based on events if has a new map center or zoom level and map is visible
-				if (!update.mapVisible)
+				if (!update.isMapVisible())
 					return;
 				
-				if (!update.newMapCenter && !update.newZoomLevel)
+				if (!update.isNewMapCenter() && !update.isNewZoomLevel())
 					return;
 				
 				// When Live map is enabled, Locus sometimes send NaN when is starting
-				if (Double.isNaN(update.mapTopLeft.getLatitude()) || Double.isNaN(update.mapTopLeft.getLongitude())
-						|| Double.isNaN(update.mapBottomRight.getLatitude()) || Double.isNaN(update.mapBottomRight.getLongitude()))
+				if (Double.isNaN(update.getMapTopLeft().getLatitude()) || Double.isNaN(update.getMapTopLeft().getLongitude())
+						|| Double.isNaN(update.getMapBottomRight().getLatitude()) || Double.isNaN(update.getMapBottomRight().getLongitude()))
 					return;
 				
-				if (update.mapTopLeft.distanceTo(update.mapBottomRight) >= MAX_DIAGONAL_DISTANCE)
+				if (update.getMapTopLeft().distanceTo(update.getMapBottomRight()) >= MAX_DIAGONAL_DISTANCE)
 					return;
 								
-				Location l = update.locMapCenter;
+				Location l = update.getLocMapCenter();
 				
 				// Start service to download caches
 				context.startService(LiveMapService.createIntent(
 						context,
 						l.getLatitude(),
 						l.getLongitude(),
-						update.mapTopLeft.getLatitude(),
-						update.mapTopLeft.getLongitude(),
-						update.mapBottomRight.getLatitude(),
-						update.mapBottomRight.getLongitude()
+						update.getMapTopLeft().getLatitude(),
+						update.getMapTopLeft().getLongitude(),
+						update.getMapBottomRight().getLatitude(),
+						update.getMapBottomRight().getLongitude()
 				));
 			}
 		});

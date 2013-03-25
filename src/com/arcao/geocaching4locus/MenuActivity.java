@@ -1,10 +1,14 @@
 package com.arcao.geocaching4locus;
 
+import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.RequiredVersionMissingException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -15,7 +19,10 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class MenuActivity extends AbstractActionBarActivity {
+	private final static String TAG = "G4L|MenuActivity";
+	
 	private SharedPreferences prefs;
+	private ToggleButton liveMapButton; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +37,14 @@ public class MenuActivity extends AbstractActionBarActivity {
 		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		ToggleButton liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
 	}
 	
@@ -45,14 +53,20 @@ public class MenuActivity extends AbstractActionBarActivity {
 	}
 
 	public void onClickLiveMap(View view) {
-		boolean activated = !prefs.getBoolean(PrefConstants.LIVE_MAP, false);
-		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
+		boolean activated = liveMapButton.isChecked();
+		
+		if (activated && !isPeriodicUpdateEnabled(this)) {
+			activated = false;
+			liveMapButton.setChecked(activated);
 
-		if (activated) {
+			Toast.makeText(this, getText(R.string.livemap_disabled), Toast.LENGTH_LONG).show();
+		} else if (activated) {
 			Toast.makeText(this, getText(R.string.livemap_activated), Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this, getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
 		}
+
+		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
 
 		// hide dialog only when was started from Locus
 		if (LocusUtils.isIntentMainFunction(getIntent())) {
@@ -110,6 +124,15 @@ public class MenuActivity extends AbstractActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			finish();
+		}
+	}
+	
+	public static boolean isPeriodicUpdateEnabled(Context ctx) {
+		try {
+			return ActionTools.isPeriodicUpdatesEnabled(ctx);
+		} catch (RequiredVersionMissingException e) {
+			Log.e(TAG, e.toString(), e);
+			return false;
 		}
 	}
 }

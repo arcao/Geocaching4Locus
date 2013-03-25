@@ -19,7 +19,6 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
 	@Override
 	public void dismiss() {
-		
 		// this fix IllegalStateException when App is hidden
 		try {
 			super.dismiss();
@@ -27,8 +26,8 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 			dismissAllowingStateLoss();
 		}
 
-		getFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
-		getFragmentManager().executePendingTransactions();
+		//getFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
+		//getFragmentManager().executePendingTransactions();
 	}
 	
 	public boolean isShowing() {

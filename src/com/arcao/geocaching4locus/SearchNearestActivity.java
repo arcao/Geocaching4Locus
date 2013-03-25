@@ -201,14 +201,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	@Override
 	protected void onPause() {
-		super.onPause();
-
 		if (locationUpdateTask != null)
 			locationUpdateTask.detach();
 
 		broadcastReceiver.unregister(this);
 
 		Log.i(TAG, "Receiver unregistred.");
+
+		super.onPause();
 	}
 
 	@Override

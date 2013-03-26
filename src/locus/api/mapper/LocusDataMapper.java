@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.objects.extra.ExtraData;
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
@@ -487,13 +488,14 @@ public class LocusDataMapper {
     }
     
     public static Waypoint mergePoints(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
+    	clearExtraOnDisplayCallback(toPoint);
+
     	if (fromPoint == null || fromPoint.gcData == null)
     		return toPoint;
     	
     	fixArchivedCacheLocation(mContext, toPoint, fromPoint);
     	mergeCacheLogs(mContext, toPoint, fromPoint);
     	fixComputedCoordinates(mContext, toPoint, fromPoint);
-    	clearExtraOnDisplayCallback(toPoint);
     	copyWaypointId(toPoint, fromPoint);
     	copyGcVote(toPoint, fromPoint);
     	
@@ -501,7 +503,7 @@ public class LocusDataMapper {
     }    
     
 		public static void clearExtraOnDisplayCallback(Waypoint p) {
-    	p.removeExtraOnDisplay();
+    	p.addParameter(ExtraData.PAR_INTENT_EXTRA_ON_DISPLAY, "clear");
     }
 
     public static Waypoint mergeCacheLogs(Context mContext, Waypoint toPoint, Waypoint fromPoint) {

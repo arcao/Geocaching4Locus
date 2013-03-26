@@ -62,9 +62,9 @@
     <string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
     <string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
     
-    <string name="pref_title_cache_type_filter">Soort Cache</string>
-    <string name="pref_title_difficulty_filter">Moeilijkheid</string>
-    <string name="pref_title_terrain_filter">Terrein</string>
+    <string name="pref_title_cache_type_filter">Cache types (Premium lid)</string>
+    <string name="pref_title_difficulty_filter">Moeilijkheid (Premium lid)</string>
+    <string name="pref_title_terrain_filter">Terrein (Premium lid)</string>
     <string name="pref_difficulty_min">Minimum moeilijkheid</string>
     <string name="pref_difficulty_max">Maximum moeilijkheid</string>
     <string name="pref_terrain_min">Minimum terrein</string>
@@ -72,7 +72,7 @@
     
     <string name="download_button">Downloaden naar Locus</string>
     
-    <string name="pref_download_basic">Alleen basis informatie</string>
+    <string name="pref_download_basic">Alleen basis info (Premium lid)</string>
     <string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
     <string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
     <string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
@@ -88,7 +88,7 @@
     <string name="menu_preferences">Voorkeuren</string>
     
     <string name="pref_livemap">Live kaart</string>
-    <string name="pref_livemap_summary">Live laden van caches naar kaart (Inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
+    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Miscellaneous → Enable periodic updates)</string>
     
     <string name="user_waypoint_name">Gebruikers via punt %1$d</string>
     <string name="final_location_name">Eindbestemming %1$d</string>
@@ -113,12 +113,13 @@
 
     <string name="update_caches_progress">Bezig met updaten van caches...</string>
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
-    <string name="pref_title_container_type_filter">Container grootte</string>
+    <string name="pref_title_container_type_filter">Grootte van container (Premium lid)</string>
     <string name="pref_create_images_tab">Maak afbeeldingen tab</string>
     <string name="pref_create_images_tab_summary">Maak afbeeldingen tab in cache venster</string>
     
     <string name="livemap_activated">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
     <string name="livemap_deactivated">Live kaart gedeactiveerd</string>
+    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
     <string name="error_location_title">Geen locatie diensten toegestaan</string>
     <string name="error_location_settings_button">Instellingen</string>
     
@@ -128,12 +129,6 @@
     <string name="error_cache_not_found">Cache %s niet gevonden.</string>
     
     <string name="dialog_count_of_caches_title">Aantal caches</string>
-    <plurals name="plurals_cache">
-        <item quantity="one">%d cache</item>
-        <item quantity="few">%d caches</item>
-        <item quantity="other">%d caches</item>
-    </plurals>
-
     <string name="launcher_nearest_caches">Caches dichtbij</string>
     <string name="launcher_import_cache">Importeer cache in Locus</string>
     <string name="launcher_update_cache">Update cache</string>    
@@ -146,5 +141,46 @@
     <string name="login_required_title">Inloggen vereist</string>
     <string name="login_required_message">Om verder te gaan moet je inloggen op je Geocaching.com account.</string>
     
+    <string name="basic_member_warning_title">Basis lid toegang</string>
+    <string name="premium_member_warning_title">Premium lid toegang</string>
+    <string name="basic_member_sign_on_warning_message">Als basis lid van geocaching.com kan je alle details downloaden van &lt;b>%1$s per %2$s periode&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Je hebt de limiet om alle details te dowloaden van &lt;b>%1$s per %2$s periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.&lt;br>
+&lt;br>
+&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Je hebt de limiet om het downloaden van alle details van &lt;b>6000 caches per 24 uur periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
+    <string name="method_quota_exceeded_title">Hey, kalm aan!</string>
+    <string name="method_quota_exceeded_message">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
+    <string name="basic_member_full_geocache_warning_message">Als basis lid van geocaching.com kan je alle details downloaden van &lt;b>%1$s per %2$s periode&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Je mag %3$s downloaden tot %4$s dan zal de limiet gereset worden&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Wilt u doorgaan met downloaden?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
+    <string name="button_yes">Ja</string>
+    <string name="button_no">Nee</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d uur</item>
+        <item quantity="few">%d uren</item>
+        <item quantity="other">%d uren</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minuut</item>
+        <item quantity="few">%d minuten</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Aangedreven door Geocaching Live</string>
+    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
 </resources>
 

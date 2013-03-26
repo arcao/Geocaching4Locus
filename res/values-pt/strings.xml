@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Erros a descarregar as caches.ches.&lt;br&gt;Descrição: %1$s</string>
+    <string name="downloading">A descarregar caches…</string>
+    <string name="error_locus_not_found">Por favor instale o Locus!</string>
+    <string name="error_location">Por favor ative a localização através de Wireless ou GPS nas definições.</string>
+    <string name="acquiring_gps_location">Adquirindo coordenadas através do GPS…</string>
+    <string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles…</string>
+    
+    <string name="preferences">Configuração</string>
+    <string name="wrong_coordinates">Formato de coordenadas errado!</string>
+    <string name="coordinates">Coordenadas</string>
+    
+    <string name="pref_title_geocaching_credentials">Credenciais geocaching.com</string>
+    
+    <string name="pref_title_filter">Filtro</string>
+    <string name="pref_distance">Distância</string>
+    <string name="pref_distance_summary_km">Distância em km</string>
+    <string name="pref_distance_summary_miles">Distância em milhas</string>
+    <string name="pref_title_advanced">Avançado</string>
+    <string name="pref_use_compression">Usar compressão</string>
+    <string name="pref_use_compression_summary">Usar compressão HTTP (Experimental)</string>
+    <string name="pref_imperial_units">Unidades Imperiais</string>
+    <string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
+    
+    <string name="error_credentials">Nome de utilizador ou password inválidos. Por favor verifique as credenciais.</string>
+    <string name="error_title">Ocorrência de erros!</string>
+    
+    <string name="ok_button">Ok</string>
+    
+    <string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
+    
+    <string name="cancel_button">Cancel</string>
+    
+    <string name="pref_show_found">Mostrar encontradas</string>
+    <string name="pref_show_found_summary">Mostrar caches encontradas</string>
+    <string name="pref_show_own">Mostrar escondidas pelo próprio</string>
+    <string name="pref_show_own_summary">Mostrar caches próprias (escondidas por si)</string>
+    <string name="pref_menu_select_all">Selecionar tudo</string>
+    <string name="pref_menu_deselect_all">Retirar seleção</string>
+    
+    <string name="update_cache_progress">A atualizar cache…</string>
+    
+    <string name="pref_title_downloading">A descarregar</string>
+    <string name="pref_count_of_logs">Número de registos</string>
+    <string name="pref_count_of_logs_text">registos</string>
+    <string name="pref_count_of_logs_summary">Número de registos a descarregar com a cache</string>
+    <string name="pref_not_filled">Não preenchido</string>
+    <string name="gps">GPS</string>
+    <string name="close">Fechar</string>
+    <string name="pref_show_disabled">Mostrar inativos</string>
+    <string name="pref_show_disabled_summary">Mostrar caches temporariamente inativas</string>
+    
+    <string name="import_cache_progress">A descarregar cache…</string>
+    
+    <string name="pref_title_about">Sobre</string>
+    <string name="pref_version">Versão</string>
+    <string name="pref_author">Autor</string>
+    <string name="pref_website">Website, forum, etc.</string>
+    <string name="pref_donate_paypal">Doar por Paypal</string>
+    <string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros...</string>
+    <string name="pref_donate_paypal_choose_currency">Escolha a moeda</string>
+    
+    <string name="pref_title_cache_type_filter">Tipos de Caches (Membros Premium)</string>
+    <string name="pref_title_difficulty_filter">Dificuldade (Membros Premium)</string>
+    <string name="pref_title_terrain_filter">Terreno (Membros Premium)</string>
+    <string name="pref_difficulty_min">Dificuldade Mín.</string>
+    <string name="pref_difficulty_max">Dificuldade Máx.</string>
+    <string name="pref_terrain_min">Terreno Mín.</string>
+    <string name="pref_terrain_max">Terreno Máx.</string>
+    
+    <string name="download_button">Download para o Locus</string>
+    
+    <string name="pref_download_basic">Apenas Informação Básica (Membros Premium)</string>
+    <string name="pref_download_basic_summary">Descarregar apenas a informação básica da cache</string>
+    <string name="pref_download_on_show">Descarregar o restante da informação apenas na visualização</string>
+    <string name="pref_download_on_show_summary">Descarregar o restante da informação apenas quando o conteudo for visualizado no Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>uma vez</item>
+        <item>sempre</item>
+        <item>nunca</item>
+    </string-array>
+    
+    <string name="menu_live_map">Mapa ao vivo</string>
+    <string name="menu_nearest">Mais perto</string>
+    <string name="menu_manual">Manual</string>
+    <string name="menu_preferences">Configuração</string>
+    
+    <string name="pref_livemap">Mapa ao vivo</string>
+    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Miscellaneous → Enable periodic updates)</string>
+    
+    <string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
+    <string name="final_location_name">Local final %1$d</string>
+    
+    <string name="pref_account_login">Entrar</string>
+    <string name="pref_account_login_summary">Entrar na conta Geocaching.com</string>
+    <string name="pref_account_logout">Logout</string>
+    <string name="pref_account_logout_summary">Registado como %s</string>
+       
+    <string name="error_report_error">Relatar erro</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus crashou</string>
+    <string name="crash_notif_title">Geocaching4Locus crashou</string>
+    <string name="crash_notif_text">Carregue aqui para ajudar a corrigir o problema.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus crashou</string>
+    <string name="crash_dialog_text">Occorreu um erro inesperado que forçou a aplicação a fechar. Por favor ajude a corrigir enviando os dados do erro, tudo o que tem de fazer é carregar em \'OK\'.</string>
+    <string name="crash_dialog_comment_prompt">Pode adicionar comentários ao problema em baixo:</string>
+    <string name="crash_dialog_ok_toast">Obrigado!</string>
+    
+    <string name="error_network">Rede inacessível. Por favor verifique a ligação.</string>
+
+    <string name="update_caches_progress">A actualizar caches...</string>
+    <string name="original_coordinates_name">Coordenadas originais</string>
+    <string name="pref_title_container_type_filter">Tamanho (Membros Premium)</string>
+    <string name="pref_create_images_tab">Criar separador de imagens</string>
+    <string name="pref_create_images_tab_summary">Criar separador de imagens num caixa de diálogo</string>
+    
+    <string name="livemap_activated">Mapa ao vivo ativo. Movimente-se no mapa para ver as caches.</string>
+    <string name="livemap_deactivated">Mapa ao viva inativo.</string>
+    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
+    <string name="error_location_title">Nenhum serviço de localização permitido.</string>
+    <string name="error_location_settings_button">Definições</string>
+    
+    <string name="menu_import_from_gc">Importar cache</string>
+    <string name="dialog_gc_number_input_title">Importar a partir do código GC</string>
+    <string name="error_input_gc">Código GC inválido.</string>
+    <string name="error_cache_not_found">A cache %s não foi encontrada.</string>
+    
+    <string name="dialog_count_of_caches_title">Contagem de caches</string>
+    <string name="launcher_nearest_caches">Caches mais próximas</string>
+    <string name="launcher_import_cache">Importar cache para  Locus</string>
+    <string name="launcher_update_cache">Atualizar cache</string>    
+    <string name="launcher_update_more_caches">Atualizar caches</string>
+    <string name="launcher_import_from_gc">Importar a partir do código GC</string>
+    
+    <string name="title_count_of_caches">Contagem de caches</string>
+    
+    <string name="button_login_start">Entrar</string>
+    <string name="login_required_title">Necessário entrar na conta</string>
+    <string name="login_required_message">Para continuar tem de entrar na conta Geocaching.com</string>
+    
+    <string name="basic_member_warning_title">Acesso de membros básicos</string>
+    <string name="premium_member_warning_title">Acesso de membros Premium</string>
+    <string name="basic_member_sign_on_warning_message">Como membro básico apenas pode descarregar detalhes completos de &lt;b>%1$s por %2$s período&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Atingiu o limite para descarregar detalhes completos das caches de  &lt;b>%1$s por %2$s período&lt;/b>. A sua quota diária voltará a 0 às %3$s.&lt;br>
+&lt;br>
+&lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Atingiu o limite para descarregar detalhes completos de  &lt;b>6000 caches por período de 24 horas&lt;/b>. A sua quota diária voltará a 0 às %3$s.</string>
+    <string name="method_quota_exceeded_title">Alto, devagar!</string>
+    <string name="method_quota_exceeded_message">Atingiu o máximo de ações/chamadas por minuto.</string>
+    <string name="basic_member_full_geocache_warning_message">Como membro básico apenas pode descarregar detalhes completos de %1$s por %2$s período.&lt;br>
+&lt;br>
+&lt;b>Pode descarregar %3$s até %4$s quando a quota voltar a 0&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Pretende continuar a descarregar?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
+    <string name="button_yes">Sim</string>
+    <string name="button_no">Não</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d hora</item>
+        <item quantity="few">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minuto</item>
+        <item quantity="few">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
+</resources>
+

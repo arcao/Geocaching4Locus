@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Geocaching4Locus</string>
+    <string name="error">Fejl opstået under indhentning af caches.&lt;br&gt;Description: %1$s</string>
+    <string name="downloading">Henter cacher ned...</string>
+    <string name="error_locus_not_found">Installer venligst Locus! </string>
+    <string name="error_location">Tillad venligst at det trådløse net eller GPS er tændt under \'Settings\'.</string>
+    <string name="acquiring_gps_location">Finder din lokation via GPS...</string>
+    <string name="acquiring_network_location">Finder din lokation via Trådløst net...</string>
+    
+    <string name="preferences">Præferencer</string>
+    <string name="wrong_coordinates">Koordinat fejl, forkert format!</string>
+    <string name="coordinates">Koordinater </string>
+    
+    <string name="pref_title_geocaching_credentials">Geocaching.com legitimationsoplysninger</string>
+    
+    <string name="pref_title_filter">Filter</string>
+    <string name="pref_distance">Afstand</string>
+    <string name="pref_distance_summary_km">Afstand i Km</string>
+    <string name="pref_distance_summary_miles">Afstand i miles</string>
+    <string name="pref_title_advanced">Avanceret</string>
+    <string name="pref_use_compression">Brug kompression </string>
+    <string name="pref_use_compression_summary">Brug HTTP kompression (eksperimentel)</string>
+    <string name="pref_imperial_units">Engelske mål</string>
+    <string name="pref_imperial_units_summary">Brug miles i stedet for kilometer </string>
+    
+    <string name="error_credentials">Ugyldigt brugernavn og eller password. Check dine Log-in indstillinger.</string>
+    <string name="error_title">Fejl opstået!</string>
+    
+    <string name="ok_button">Ok</string>
+    
+    <string name="error_locus_old">Din version af Locus er for gammel. Geocaching4Locus skal bruge version %s eller højere for at virke ordentligt.</string>
+    
+    <string name="cancel_button">Annuller</string>
+    
+    <string name="pref_show_found">Vis fundne</string>
+    <string name="pref_show_found_summary">Vis fundne cacher</string>
+    <string name="pref_show_own">Vis egne gemte</string>
+    <string name="pref_show_own_summary">Vis egne caches (gemt af dig)</string>
+    <string name="pref_menu_select_all">Vælg alle</string>
+    <string name="pref_menu_deselect_all">Fravælg alle</string>
+    
+    <string name="update_cache_progress">Opdatere cache...</string>
+    
+    <string name="pref_title_downloading">Henter ned</string>
+    <string name="pref_count_of_logs">Antal logs</string>
+    <string name="pref_count_of_logs_text">logs</string>
+    <string name="pref_count_of_logs_summary">Antal logs der hentes pr. cache</string>
+    <string name="pref_not_filled">ikke udfyldt</string>
+    <string name="gps">GPS</string>
+    <string name="close">Luk</string>
+    <string name="pref_show_disabled">Vis deaktiveret</string>
+    <string name="pref_show_disabled_summary">Vis midlertidigt deaktiverede caches</string>
+    
+    <string name="import_cache_progress">Henter cache ned...</string>
+    
+    <string name="pref_title_about">Om programmet</string>
+    <string name="pref_version">Version</string>
+    <string name="pref_author">Forfatter</string>
+    <string name="pref_website">Hjemside, fora, osv.</string>
+    <string name="pref_donate_paypal">Doner via PayPal</string>
+    <string name="pref_donate_paypal_summary">Støt fremtidig udvikling...</string>
+    <string name="pref_donate_paypal_choose_currency">Vælg din møntfod</string>
+    
+    <string name="pref_title_cache_type_filter">Cache typer (Premium medlem)</string>
+    <string name="pref_title_difficulty_filter">Sværhedsgrad (Premium medlem)</string>
+    <string name="pref_title_terrain_filter">Terrain (Premium medlem)</string>
+    <string name="pref_difficulty_min">Min. sværhedsgrad</string>
+    <string name="pref_difficulty_max">Max. sværhedsgrad</string>
+    <string name="pref_terrain_min">Min. terræn</string>
+    <string name="pref_terrain_max">Max. terræn</string>
+    
+    <string name="download_button">Hent ned til Locus</string>
+    
+    <string name="pref_download_basic">Basis info (Premium medlem)</string>
+    <string name="pref_download_basic_summary">Hent kun basal info om cache</string>
+    <string name="pref_download_on_show">Hent resterende info ved visning</string>
+    <string name="pref_download_on_show_summary">Hent resten af cache info når cache indholdet vises i Locus</string>
+    <string-array name="pref_download_on_show_entries">
+        <item>en gang</item>
+        <item>hver gang</item>
+        <item>aldrig</item>
+    </string-array>
+    
+    <string name="menu_live_map">Live kort</string>
+    <string name="menu_nearest">Nærmeste</string>
+    <string name="menu_manual">Manual</string>
+    <string name="menu_preferences">Præferencer</string>
+    
+    <string name="pref_livemap">Live kort</string>
+    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Miscellaneous → Enable periodic updates)</string>
+    
+    <string name="user_waypoint_name">Bruger waypoint (koordinatpunkter) %1$d</string>
+    <string name="final_location_name">Sidste lokation %1$d</string>
+    
+    <string name="pref_account_login">Log-på</string>
+    <string name="pref_account_login_summary">Log-på til Geocaching.com konto</string>
+    <string name="pref_account_logout">Log-ud</string>
+    <string name="pref_account_logout_summary">Logget på som %s</string>
+       
+    <string name="error_report_error">Reporter Fejl</string>
+    
+    <string name="crash_notif_ticker_text">Geocaching4Locus er gået ned…</string>
+    <string name="crash_notif_title">Geocaching4Locus er gået ned…</string>
+    <string name="crash_notif_text">Klik her for at hjælpe med at rette problemet.</string>
+    
+    <string name="crash_dialog_title">Geocaching4Locus gik ned</string>
+    <string name="crash_dialog_text">En uventet fejl er opstået og tvang App\'en til at stoppe. Hjælp os venligst med at rette fejlen ved at data\'erne, det kræver kun at Du klikker \'OK\' her. -tak.</string>
+    <string name="crash_dialog_comment_prompt">Du har mulighed for at tilføje en kommentar til problemet herunder:</string>
+    <string name="crash_dialog_ok_toast">Mange Tak !</string>
+    
+    <string name="error_network">Netværk ikke tilgængeligt. Check venligst din forbindelse.</string>
+
+    <string name="update_caches_progress">Opdaterer caches</string>
+    <string name="original_coordinates_name">Originale kordinater</string>
+    <string name="pref_title_container_type_filter">Beholder størrelse (Premium medlem)</string>
+    <string name="pref_create_images_tab">Skab billeder faneblad</string>
+    <string name="pref_create_images_tab_summary">Skab billeder faneblad i en cache dialog</string>
+    
+    <string name="livemap_activated">Live kort aktiveret. Bevæg kortet og se cacherne</string>
+    <string name="livemap_deactivated">Live kort deaktiveret</string>
+    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
+    <string name="error_location_title">Lokalitets tjeneste er ikke tilladt</string>
+    <string name="error_location_settings_button">Indstillinger</string>
+    
+    <string name="menu_import_from_gc">Importer GC</string>
+    <string name="dialog_gc_number_input_title">Importer fra GC kode</string>
+    <string name="error_input_gc">GC koden er ikke gyldig.</string>
+    <string name="error_cache_not_found">Cachen %s kunne ikke findes.</string>
+    
+    <string name="dialog_count_of_caches_title">Antal caches</string>
+    <string name="launcher_nearest_caches">Nærmeste cacher</string>
+    <string name="launcher_import_cache">Importer cache til Locus</string>
+    <string name="launcher_update_cache">Opdater cache</string>    
+    <string name="launcher_update_more_caches">Update cacher</string>
+    <string name="launcher_import_from_gc">Importer fra GC kode</string>
+    
+    <string name="title_count_of_caches">Antal caches</string>
+    
+    <string name="button_login_start">Log in</string>
+    <string name="login_required_title">Log-in nødvendigt</string>
+    <string name="login_required_message">For at forsætte, skal du være logget ind på din Geocaching.com konto.</string>
+    
+    <string name="basic_member_warning_title">Basis medlems adgang</string>
+    <string name="premium_member_warning_title">Premium medlems adgang</string>
+    <string name="basic_member_sign_on_warning_message">Som Basis medlem af geocaching.com kan du hente de fulde detalier &lt;b>%1$s per %2$s period&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Opgrader til geocaching.com Premium Medlemsskab og download alle detalier helt op til 6000 caches i døgnet og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Du har nået begrænsningen for at du kan hente de fulde detalier i dag &lt;b>%1$s per %2$s period&lt;/b>. Your daily quota will be reset at %3$s.&lt;br>
+&lt;br>
+&lt;i>Opgrader til geocaching.com Premium Medlemsskab og download alle detalier helt op til 6000 caches i døgnet og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Du har nået begrænsningen for at du kan hente de fulde detalier i dag of &lt;b>6000 caches i døgnet &lt;/b>. Your daily quota will be reset at %3$s.</string>
+    <string name="method_quota_exceeded_title">Så, rolig nu!</string>
+    <string name="method_quota_exceeded_message">Du har nået  bebrænsningen for antal forspørgsler/opkald i minuttet</string>
+    <string name="basic_member_full_geocache_warning_message">Som basis medlem af geocaching.com kan du hente alle detalier %1$s per %2$s period.&lt;br>
+&lt;br>
+&lt;b>Du kan downloade %3$s indtil %4$s hvor kvoten bliver resat&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Vil du forsætte med at downloade?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Opgrader til geocaching.com Premium Medlemsskab og download alle detalier helt op til 6000 caches i døgnet og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.&lt;/i></string>
+    <string name="button_yes">Ja</string>
+    <string name="button_no">Nej</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d cacher</item>
+        <item quantity="other">%d cacher</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d time</item>
+        <item quantity="few">%d timer</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minut</item>
+        <item quantity="few">%d minutter</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
+</resources>
+

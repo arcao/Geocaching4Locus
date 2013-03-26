@@ -6,7 +6,7 @@
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
+    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
     
     <string name="preferences">Nastavení</string>
     <string name="wrong_coordinates">Špatný formát souřadnic!</string>
@@ -62,9 +62,9 @@
     <string name="pref_donate_paypal_summary">Podpora dalšího vývoje…</string>
     <string name="pref_donate_paypal_choose_currency">Vyberte vaši měnu</string>
     
-    <string name="pref_title_cache_type_filter">Typy keší</string>
-    <string name="pref_title_difficulty_filter">Obtížnost</string>
-    <string name="pref_title_terrain_filter">Terén</string>
+    <string name="pref_title_cache_type_filter">Typy keší (Premium member)</string>
+    <string name="pref_title_difficulty_filter">Obtížnost (Premium member)</string>
+    <string name="pref_title_terrain_filter">Terén (Premium member)</string>
     <string name="pref_difficulty_min">Min. obtížnost</string>
     <string name="pref_difficulty_max">Max. obtížnost</string>
     <string name="pref_terrain_min">Min. terén</string>
@@ -72,7 +72,7 @@
     
     <string name="download_button">Stáhnout do Locusu</string>
     
-    <string name="pref_download_basic">Pouze základní info</string>
+    <string name="pref_download_basic">Pouze základní info (Premium member)</string>
     <string name="pref_download_basic_summary">Stáhnout pouze základní informace o keši</string>
     <string name="pref_download_on_show">Stáhnout zbývající info při zobrazení</string>
     <string name="pref_download_on_show_summary">Stáhnout zbývající informace o keši, až když Locus zobrazí obsah keše</string>
@@ -113,12 +113,13 @@
 
     <string name="update_caches_progress">Aktualizuji keše…</string>
     <string name="original_coordinates_name">Původní souřadnice</string>
-    <string name="pref_title_container_type_filter">Velikost schránky</string>
+    <string name="pref_title_container_type_filter">Velikost schránky (Premium member)</string>
     <string name="pref_create_images_tab">Vytvořit záložku s obrázky</string>
     <string name="pref_create_images_tab_summary">Vytvořit záložku s obrázky v dialogovém okně keše</string>
     
     <string name="livemap_activated">Live mapa zapnuta. Nyní pohněte s mapou, aby se zobrazily keše.</string>
     <string name="livemap_deactivated">Live mapa vypnuta.</string>
+    <string name="livemap_disabled">Nemáte povolené zasílání periodických aktualizací z Locusu. Nejprve je prosím povolte v Locusu: Nastavení → Různé → Povolit periodické aktualizace.</string>
     <string name="error_location_title">Služba k určení polohy není povolena</string>
     <string name="error_location_settings_button">Nastavení</string>
     
@@ -128,12 +129,6 @@
     <string name="error_cache_not_found">Keš %s nebyla nalezena.</string>
     
     <string name="dialog_count_of_caches_title">Počet keší</string>
-    <plurals name="plurals_cache">
-        <item quantity="one">%d keš</item>
-        <item quantity="few">%d keše</item>
-        <item quantity="other">%d keší</item>
-    </plurals>
-
     <string name="launcher_nearest_caches">Nejbližší keše</string>
     <string name="launcher_import_cache">Importovat keš do Locusu</string>
     <string name="launcher_update_cache">Aktualizovat keš</string>    
@@ -146,5 +141,46 @@
     <string name="login_required_title">Je vyžadováno přihlášení</string>
     <string name="login_required_message">Pro pokračování je třeba se přihlásit k vašemu Geocaching.com účtu.</string>
     
+    <string name="basic_member_warning_title">Přístup pro běžné uživatele</string>
+    <string name="premium_member_warning_title">Přístup pro prémiové uživatele</string>
+    <string name="basic_member_sign_on_warning_message">Jako základní uživatel (Basic member) na geocaching.com můžete stáhnout plné detaily pro &lt;b>%1$s za %2$s&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Pořiďte si ještě dnes prémiový účet (Premium member) na geocaching.com, aby jste mohl stáhnout plné detaily až 6000 keší za den a využívat další benefity. Navštivte geocaching.com...&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Dosáhl jste limitu stažení plných detailů pro &lt;b>%1$s za %2$s&lt;/b>.Vaše dení kvóta bude obnovena v %3$s.&lt;br>
+&lt;br>
+&lt;i>Pořiďte si ještě dnes prémiový účet (Premium member) na geocaching.com, aby jste mohl stáhnout plné detaily až 6000 keší za den a využívat další benefity. Navštivte geocaching.com…&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Dosáhl jste limitu stažení plných detailů pro &lt;b>6000 keší za 24 hodin&lt;/b>. Vaše dení kvóta bude obnovena v %3$s.</string>
+    <string name="method_quota_exceeded_title">Hej, zpomal!</string>
+    <string name="method_quota_exceeded_message">Dosáhl si limitu počtu vykonaných akcí/volání za minutu.</string>
+    <string name="basic_member_full_geocache_warning_message">Jako základní uživatel (Basic member) na geocaching.com můžete stáhnout plné detaily pro &lt;b>%1$s za %2$s&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Ještě můžete stáhnout %3$s do %4$s, kdy bude kvóta znovu obnovena&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Opravdu chcete pokračovat ve stahování?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Pořiďte si ještě dnes prémiový účet (Premium member) na geocaching.com, aby jste mohl stáhnout plné detaily až 6000 keší za den a využívat další benefity. Navštivte geocaching.com...&lt;/i></string>
+    <string name="button_yes">Ano</string>
+    <string name="button_no">Ne</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d keš</item>
+        <item quantity="few">%d keší</item>
+        <item quantity="other">%d keše</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d hodinu</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="other">%d hodin</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minutu</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_message">Toto rozšíření využívá Geocaching Live k získávání informací o keších. Klepněte zde pro více informací…</string>
 </resources>
 

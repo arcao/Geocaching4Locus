@@ -62,9 +62,9 @@
     <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro ...</string>
     <string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
     
-    <string name="pref_title_cache_type_filter">Tipos de caché</string>
-    <string name="pref_title_difficulty_filter">Dificultad</string>
-    <string name="pref_title_terrain_filter">Terreno</string>
+    <string name="pref_title_cache_type_filter">Tipo cache (Usuario Premium)</string>
+    <string name="pref_title_difficulty_filter">Dificultad (Usuario Premium)</string>
+    <string name="pref_title_terrain_filter">Terreno (Usuario Premium)</string>
     <string name="pref_difficulty_min">Min. dificultad</string>
     <string name="pref_difficulty_max">Max. dificultad</string>
     <string name="pref_terrain_min">Min. terreno</string>
@@ -72,7 +72,7 @@
     
     <string name="download_button">Descargar a Locus</string>
     
-    <string name="pref_download_basic">Información básica solo</string>
+    <string name="pref_download_basic">Solo información básica (Usuario Premium)</string>
     <string name="pref_download_basic_summary">Descargar solo información básica del caché</string>
     <string name="pref_download_on_show">Descargar resto de información en vista</string>
     <string name="pref_download_on_show_summary">Descargar resto de información del caché cuando se muestre el contenido del caché en Locus</string>
@@ -88,7 +88,7 @@
     <string name="menu_preferences">Preferencias</string>
     
     <string name="pref_livemap">Mapa dinámico</string>
-    <string name="pref_livemap_summary">Carga dinámica de cachés en mapa (activar en Locus: Ajustes → Otros → Activar actualizaciones periódicas)</string>
+    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Miscellaneous → Enable periodic updates)</string>
     
     <string name="user_waypoint_name">Waypoint usuario %1$d</string>
     <string name="final_location_name">Ubicación final %1$d</string>
@@ -113,12 +113,13 @@
 
     <string name="update_caches_progress">Actualizando caches…</string>
     <string name="original_coordinates_name">Coordenadas originales</string>
-    <string name="pref_title_container_type_filter">Tamaño contenedor</string>
-    <string name="pref_create_images_tab">Create images tab</string>
-    <string name="pref_create_images_tab_summary">Create images tab in a cache dialog</string>
+    <string name="pref_title_container_type_filter">Tamaño contenedor (Usuario Premium)</string>
+    <string name="pref_create_images_tab">Pestaña crear imágenes</string>
+    <string name="pref_create_images_tab_summary">Pestaña crear imágenes en diálogo de cache</string>
     
     <string name="livemap_activated">Mapa dinámico activado. Ahora muévete con el mapa para ver los caches.</string>
     <string name="livemap_deactivated">Mapa dinámico desactivado.</string>
+    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
     <string name="error_location_title">Servicio de localización no permitido</string>
     <string name="error_location_settings_button">Ajustes</string>
     
@@ -128,12 +129,6 @@
     <string name="error_cache_not_found">No se encontró cache %s.</string>
     
     <string name="dialog_count_of_caches_title">Contador de cachés</string>
-    <plurals name="plurals_cache">
-        <item quantity="one">%d cache</item>
-        <item quantity="few">%d caches</item>
-        <item quantity="other">%d caches</item>
-    </plurals>
-
     <string name="launcher_nearest_caches">Cachés más cercanos</string>
     <string name="launcher_import_cache">Importar cache a Locus</string>
     <string name="launcher_update_cache">Actualizar caché</string>    
@@ -146,5 +141,46 @@
     <string name="login_required_title">Log in requerido</string>
     <string name="login_required_message">Para continuar, debes iniciar sesión en tu cuenta de Geocaching.com.</string>
     
+    <string name="basic_member_warning_title">Acceso miembro básico</string>
+    <string name="premium_member_warning_title">Acceso miembro premium</string>
+    <string name="basic_member_sign_on_warning_message">Como usuario básico de geocaching.com puedes descargar detalles completos de &lt;b>%1$s por %2$s periodo&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Actualízate a usuario Premium en geocaching.com para descargar detalles completos de hasta 6000 caches por día y accede a muchos más beneficios. Visita geocaching.com para actualizar.&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Has alcanzado el límite de descarga de detalles completos de &lt;b>%1$s por %2$s periodo&lt;/b>. Tu cuota diaria se reseteará en %3$s.&lt;br>
+&lt;br>
+&lt;i>Actualízate a usuario Premium en geocaching.com para descargar detalles completos de hasta 6000 caches por día y accede a muchos más beneficios. Visita geocaching.com para actualizar.&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Has alcanzado el límite de descarga de detalles completos de &lt;b>6000 caches en un periodo de 24 horas &lt;/b>. Tu cuota diaria se reseteará en %3$s.</string>
+    <string name="method_quota_exceeded_title">¡Eh, despacio!</string>
+    <string name="method_quota_exceeded_message">Se ha alcanzado el límite máximo de acciones/llamadas por minuto.</string>
+    <string name="basic_member_full_geocache_warning_message">Como usuario básico de geocaching.com puedes descargar los detalles completos de %1$s por periodo de %2$s .&lt;br>
+&lt;br>
+&lt;b>Puedes descargar %3$s hasta %4$s cuando se reseteará la cuota&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>¿Quieres continuar con la descarga?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Actualízate a usuario Premium en geocaching.com para descargar detalles completos de hasta 6000 caches por día y accede a muchos más beneficios. Visita geocaching.com para actualizar.&lt;/i></string>
+    <string name="button_yes">Si</string>
+    <string name="button_no">No</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d hora</item>
+        <item quantity="few">%d horas</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minuto</item>
+        <item quantity="few">%d minutos</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Desarrollado por Geocaching Live</string>
+    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
 </resources>
 

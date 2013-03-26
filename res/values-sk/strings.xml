@@ -62,9 +62,9 @@
     <string name="pref_donate_paypal_summary">Podpora ďalšieho vývoja…</string>
     <string name="pref_donate_paypal_choose_currency">Vyberte vašu menu</string>
     
-    <string name="pref_title_cache_type_filter">Typy kešiek</string>
-    <string name="pref_title_difficulty_filter">Obtiažnosť</string>
-    <string name="pref_title_terrain_filter">Terén</string>
+    <string name="pref_title_cache_type_filter">Typy kešiek (Premium member)</string>
+    <string name="pref_title_difficulty_filter">Obtiažnosť (Premium member)</string>
+    <string name="pref_title_terrain_filter">Terén (Premium member)</string>
     <string name="pref_difficulty_min">Min. obtiažnosť</string>
     <string name="pref_difficulty_max">Max. obtiažnosť</string>
     <string name="pref_terrain_min">Min. terén</string>
@@ -72,7 +72,7 @@
     
     <string name="download_button">Stiahnuť do Locusu</string>
     
-    <string name="pref_download_basic">Iba základné info</string>
+    <string name="pref_download_basic">Iba základné info (Premium member)</string>
     <string name="pref_download_basic_summary">Stiahnuť len základné informácie o keške</string>
     <string name="pref_download_on_show">Stiahnuť zvyšné info pri zobrazení</string>
     <string name="pref_download_on_show_summary">Stiahnuť zvyšné informácie o keške, až keď Locus zobrazí obsah kešky</string>
@@ -113,12 +113,13 @@
 
     <string name="update_caches_progress">Aktualizujem kešky…</string>
     <string name="original_coordinates_name">Pôvodné súradnice</string>
-    <string name="pref_title_container_type_filter">Veľkosť schránky</string>
+    <string name="pref_title_container_type_filter">Veľkosť schránky (Premium member)</string>
     <string name="pref_create_images_tab">Vytvoriť záložku s obrázkami</string>
     <string name="pref_create_images_tab_summary">Vytvoriť záložku s obrázkami v dialógovom okne kešky</string>
     
     <string name="livemap_activated">Aktívna mapa zapnutá. Teraz pohnite s mapou, aby sa zobrazili kešky.</string>
     <string name="livemap_deactivated">Aktívna mapa vypnutá.</string>
+    <string name="livemap_disabled">Nemáte povolené zasielanie pravidelných aktualizácií z Locusu. Najprv ich prosím povoľte v Locusu: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
     <string name="error_location_title">Služba na určenie polohy nie je povolená</string>
     <string name="error_location_settings_button">Nastavenia</string>
     
@@ -128,12 +129,6 @@
     <string name="error_cache_not_found">Keška %s nebola nájdená.</string>
     
     <string name="dialog_count_of_caches_title">Počet kešiek</string>
-    <plurals name="plurals_cache">
-        <item quantity="one">%d keška</item>
-        <item quantity="few">%d kešky</item>
-        <item quantity="other">%d kešiek</item>
-    </plurals>
-
     <string name="launcher_nearest_caches">Najbližšie kešky</string>
     <string name="launcher_import_cache">Importovať kešky do Locusu</string>
     <string name="launcher_update_cache">Aktualizovať kešku</string>    
@@ -146,5 +141,46 @@
     <string name="login_required_title">Je nutné prihlásenie</string>
     <string name="login_required_message">Pre pokračovanie je potrebné sa prihlásiť k vášmu Geocaching.com účtu.</string>
     
+    <string name="basic_member_warning_title">Prístup pre bežných užívateľov</string>
+    <string name="premium_member_warning_title">Prístup pre prémiové užívateľa</string>
+    <string name="basic_member_sign_on_warning_message">Ako základný užívateľ (Basic member) na geocaching.com môžeš stiahnuť plné detaily pre &lt;b>%1$s za %2$s&lt;/b>.&lt;br>
+&lt;br>
+&lt;i>Kúp si ešte dnes prémiový účet (Premium member) na geocaching.com, aby si mohol stiahnuť plné detaily až 6000 kešiek za deň a využívať ďalšie benefity. Navštív geocaching.com...&lt;/i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Dosiahol ste limitu stiahnutie plných detailov pre &lt;b>%1$s za %2$s&lt;/b>. Vaše denie kvóta bude obnovená v %3$s.&lt;br>
+&lt;br>
+&lt;i>Kúpte si ešte dnes prémiový účet (Premium member) na geocaching.com, aby ste mohli stiahnuť plné detaily až 6000 Kesi za deň a využívať ďalšie benefity. Navštívte geocaching.com…&lt;/i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Dosiahol ste limitu stiahnutie plných detailov pre &lt;b>6000 kešiek za 24  hodin&lt;/b>. Vaše denie kvóta bude obnovená v %3$s.</string>
+    <string name="method_quota_exceeded_title">Hej, spomaľ!</string>
+    <string name="method_quota_exceeded_message">Dosiahol si limitu počtu vykonaných akcií/volanie za minútu.</string>
+    <string name="basic_member_full_geocache_warning_message">Ako základný užívateľ (Basic member) na geocaching.com môžete stiahnuť plné detaily pre %1$s za %2$s.&lt;br>
+&lt;br>
+&lt;b>Ešte môžete stiahnuť %3$s do %4$s, kedy bude kvóta znovu obnovená&lt;/b>.&lt;br>
+&lt;br>
+&lt;b>Naozaj chcete pokračovať v sťahovaní?&lt;/b>
+&lt;br>
+&lt;br>&lt;i>Kúpte si ešte dnes prémiový účet (Premium member) na geocaching.com, aby ste mohli stiahnuť plné detaily až 6000 kešiek za deň a využívať ďalšie benefity. Navštívte geocaching.com…&lt;/i></string>
+    <string name="button_yes">Áno</string>
+    <string name="button_no">Nie</string>
+    
+    <plurals name="plurals_cache">
+        <item quantity="one">%d keška</item>
+        <item quantity="few">%d kešky</item>
+        <item quantity="other">%d kešiek</item>
+    </plurals>
+    
+    <plurals name="plurals_hour">
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="other">%d hodín</item>
+    </plurals>
+    
+    <plurals name="plurals_minute">
+        <item quantity="one">%d minúta</item>
+        <item quantity="few">%d minúty</item>
+        <item quantity="other">%d minút</item>
+    </plurals>
+    
+    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_message">Toto rozšírenie využíva Geocaching Live na získavanie informácií o kešiach. Klepnite tu pre viac informácií…</string>
 </resources>
 

@@ -5,7 +5,7 @@ import org.osgi.framework.Version;
 import android.net.Uri;
 
 public interface AppConstants {
-	static final boolean USE_PRODUCTION_CONFIGURATION = false;
+	static final boolean USE_PRODUCTION_CONFIGURATION = true;
 	static final String STAGGING_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.StaggingConfiguration";
 	static final String PRODUCTION_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.ProductionConfiguration";
   

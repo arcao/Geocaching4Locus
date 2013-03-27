@@ -166,12 +166,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		
 	@SuppressLint("SetJavaScriptEnabled")
 	public WebView createWebView(Bundle savedInstanceState) {
-		WebView webView = new WebView(getActivity()) {
-			@Override
-			public boolean onCheckIsTextEditor() {
-				return true;
-			}
-		};
+		WebView webView = new WebView(getActivity());
 		
     //webView.setVerticalScrollBarEnabled(false);
     webView.setHorizontalScrollBarEnabled(false);
@@ -181,23 +176,6 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
     
     if (savedInstanceState != null)
     	webView.restoreState(savedInstanceState);
-    
-    // FIX on screen keyboard issue
-    /*webView.requestFocus(View.FOCUS_DOWN);
-    webView.setOnTouchListener(new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                case MotionEvent.ACTION_UP:
-                    if (!v.hasFocus()) {
-                        v.requestFocus();
-                    }
-                    break;
-            }
-            return false;
-        }
-    });*/
     
     return webView;
 	}

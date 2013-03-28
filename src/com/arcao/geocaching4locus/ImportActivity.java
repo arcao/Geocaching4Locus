@@ -93,11 +93,10 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 		
 		ErrorReporter.getInstance().putCustomData("source", "import;" + cacheId);
 		
-		ImportDialogFragment fragment = (ImportDialogFragment) getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG);
-		if (fragment == null)
-			fragment = ImportDialogFragment.newInstance(cacheId);
+		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null)
+			return;
 			
-		fragment.show(getSupportFragmentManager(), ImportDialogFragment.TAG);
+		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.TAG);
 	}
 	
 	@Override

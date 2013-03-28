@@ -35,7 +35,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		
 		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null) {
-			fragment.show(getSupportFragmentManager(), TAG_DIALOG);
+			//fragment.show(getSupportFragmentManager(), TAG_DIALOG);
 			return;
 		}
 

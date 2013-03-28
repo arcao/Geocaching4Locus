@@ -42,6 +42,9 @@ public class ErrorActivity extends FragmentActivity {
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 		
+		if (getSupportFragmentManager().findFragmentByTag(CustomErrorDialogFragment.TAG) != null)
+			return;
+			
 		CustomErrorDialogFragment.newInstance(resTitleId, resTextId, openPreference, additionalMessage, t)
 			.show(getSupportFragmentManager(), CustomErrorDialogFragment.TAG);
 	}

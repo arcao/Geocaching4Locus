@@ -72,13 +72,10 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
 			return false;
 		
-		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
-		if (fragment == null) {
-			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
-		}
+		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
+			return true;
 		
-		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
-		
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);		
 		return true;
 	}
 	
@@ -100,10 +97,10 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		ErrorReporter.getInstance().putCustomData("count", String.valueOf(pointIndexes.length));
 
 		UpdateMoreDialogFragment fragment = (UpdateMoreDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG);
-		if (fragment == null)
+		if (fragment == null) {
 			fragment = UpdateMoreDialogFragment.newInstance(pointIndexes);
-			
-		fragment.show(getSupportFragmentManager(), UpdateMoreDialogFragment.TAG);
+			fragment.show(getSupportFragmentManager(), UpdateMoreDialogFragment.TAG);
+		}
 	}
 		
 	@Override

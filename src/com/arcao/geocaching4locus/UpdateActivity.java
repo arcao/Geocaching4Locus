@@ -74,13 +74,10 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG) != null)
 			return false;
 		
-		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
-		if (fragment == null) {
-			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
-		}
+		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
+			return true;
 		
-		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
-		
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
 		return true;
 	}
 	
@@ -140,11 +137,10 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 
 		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
 
-		UpdateDialogFragment fragment = (UpdateDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG);
-		if (fragment == null)
-			fragment = UpdateDialogFragment.newInstance(cacheId, oldPoint);
-			
-		fragment.show(getSupportFragmentManager(), UpdateDialogFragment.TAG);		
+		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG) != null)
+			return;
+		
+		UpdateDialogFragment.newInstance(cacheId, oldPoint).show(getSupportFragmentManager(), UpdateDialogFragment.TAG);
 	}
 	
 	@Override

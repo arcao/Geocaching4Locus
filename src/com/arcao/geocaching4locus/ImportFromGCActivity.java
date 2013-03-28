@@ -77,12 +77,10 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	}
 	
 	protected void showGCNumberInputDialog() {		
-		GCNumberInputDialogFragment fragment = (GCNumberInputDialogFragment) getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG);
-		if (fragment == null) {
-			fragment = GCNumberInputDialogFragment.newInstance();
-		}
+		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG) != null)
+			return;
 		
-		fragment.show(getSupportFragmentManager(), GCNumberInputDialogFragment.TAG);
+		GCNumberInputDialogFragment.newInstance().show(getSupportFragmentManager(), GCNumberInputDialogFragment.TAG);
 	}
 	
 	protected boolean showBasicMemeberWarningDialog() {
@@ -93,12 +91,10 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG) != null)
 			return false;
 		
-		FullCacheDownloadConfirmDialogFragment fragment = (FullCacheDownloadConfirmDialogFragment) getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG);
-		if (fragment == null) {
-			fragment = FullCacheDownloadConfirmDialogFragment.newInstance();
-		}
+		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
+			return true;
 		
-		fragment.show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
 		
 		return true;
 	}
@@ -106,11 +102,10 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	protected void startImport(String cacheId) {
 		ErrorReporter.getInstance().putCustomData("source", "importFromGC;" + cacheId);
 		
-		ImportDialogFragment fragment = (ImportDialogFragment) getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG);
-		if (fragment == null)
-			fragment = ImportDialogFragment.newInstance(cacheId);
-			
-		fragment.show(getSupportFragmentManager(), ImportDialogFragment.TAG);
+		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null)
+			return;
+
+		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.TAG);
 	}
 	
 	@Override

@@ -37,8 +37,10 @@ public class LocusTesting {
 	}
 	
 	public static void showLocusMissingError(final FragmentActivity activity) {
-		LocusTestingErrorDialogFragment fragment = LocusTestingErrorDialogFragment.newInstance();
-		fragment.show(activity.getSupportFragmentManager(), LocusTestingErrorDialogFragment.TAG);
+		if (activity.getSupportFragmentManager().findFragmentByTag(LocusTestingErrorDialogFragment.TAG) != null)
+			return;
+		
+		LocusTestingErrorDialogFragment.newInstance().show(activity.getSupportFragmentManager(), LocusTestingErrorDialogFragment.TAG);
 	}
 	
 	public static boolean isAndroidMarketInstalled(Context context) {

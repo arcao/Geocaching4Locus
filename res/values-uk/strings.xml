@@ -88,7 +88,7 @@
     <string name="menu_preferences">Параметри</string>
     
     <string name="pref_livemap">Жива карта</string>
-    <string name="pref_livemap_summary">Live loading caches to map (enable in Locus: Settings → Miscellaneous → Enable periodic updates)</string>
+    <string name="pref_livemap_summary">Вживу завантажувати кеш на карту (увімкніть у Locus: Параметри → Інші → Увімкнути періодичні оновлення)</string>
     
     <string name="user_waypoint_name">Дорожня точка %1$d</string>
     <string name="final_location_name">Кінцеве розташування %1$d</string>
@@ -119,7 +119,7 @@
     
     <string name="livemap_activated">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
     <string name="livemap_deactivated">Жива карта деактивована.</string>
-    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
+    <string name="livemap_disabled">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
     <string name="error_location_title">Послуга розташування не дозволена</string>
     <string name="error_location_settings_button">Налаштування</string>
     
@@ -181,6 +181,6 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>
-    <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
+    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації ...</string>
 </resources>
 

@@ -9,7 +9,7 @@
     <string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
     
     <string name="preferences">Einstellungen</string>
-    <string name="wrong_coordinates">Falsches Koordinatenformat!</string>
+    <string name="wrong_coordinates">Ungültiges Koordinatenformat!</string>
     <string name="coordinates">Koordinaten</string>
     
     <string name="pref_title_geocaching_credentials">Geocaching.com Benutzerdaten</string>
@@ -21,10 +21,10 @@
     <string name="pref_title_advanced">Erweitert</string>
     <string name="pref_use_compression">Komprimierung benutzen</string>
     <string name="pref_use_compression_summary">HTTP Komprimierung benutzen (experimentell)</string>
-    <string name="pref_imperial_units">Englisches System</string>
+    <string name="pref_imperial_units">Britische Maßeinheiten</string>
     <string name="pref_imperial_units_summary">Zeige Meilen statt Kilometer</string>
     
-    <string name="error_credentials">Ungültiger Benutzername oder Kennwort. Bitte überprüfen Sie Ihre Login-Zustand in den Einstellungen.</string>
+    <string name="error_credentials">Benutzername oder Kennwort ungültig. Bitte überprüfen Sie Ihre Login-Angaben in den Einstellungen.</string>
     <string name="error_title">Ein Fehler ist aufgetreten!</string>
     
     <string name="ok_button">Ok</string>
@@ -35,9 +35,9 @@
     
     <string name="pref_show_found">Funde zeigen</string>
     <string name="pref_show_found_summary">Zeige gefundene Caches</string>
-    <string name="pref_show_own">Zeige versteckte</string>
+    <string name="pref_show_own">Zeige selbst versteckte</string>
     <string name="pref_show_own_summary">Zeige eigene Caches (selbst versteckt)</string>
-    <string name="pref_menu_select_all">Alle wählen</string>
+    <string name="pref_menu_select_all">Alle auswählen</string>
     <string name="pref_menu_deselect_all">Alle abwählen</string>
     
     <string name="update_cache_progress">Aktualisiere Cache…</string>
@@ -62,17 +62,17 @@
     <string name="pref_donate_paypal_summary">Unterstützen Sie die zukünftige Entwicklung…</string>
     <string name="pref_donate_paypal_choose_currency">Wählen Sie Ihre Währung</string>
     
-    <string name="pref_title_cache_type_filter">Cachetypen (Premium Member)</string>
-    <string name="pref_title_difficulty_filter">Schwierigkeit (Premium Member)</string>
-    <string name="pref_title_terrain_filter">Gelände (Premium Member)</string>
+    <string name="pref_title_cache_type_filter">Cachetyp (Premium Mitglieder)</string>
+    <string name="pref_title_difficulty_filter">Schwierigkeitswertung (Premium Mitglieder)</string>
+    <string name="pref_title_terrain_filter">Geländewertung (Premium Mitglieder)</string>
     <string name="pref_difficulty_min">Minimale Schwierigkeit</string>
     <string name="pref_difficulty_max">Maximale Schwierigkeit</string>
-    <string name="pref_terrain_min">minimale Geländewertung</string>
-    <string name="pref_terrain_max">maximale Geländewertung</string>
+    <string name="pref_terrain_min">Minimale Geländewertung</string>
+    <string name="pref_terrain_max">Maximale Geländewertung</string>
     
     <string name="download_button">Nach Locus herunterladen</string>
     
-    <string name="pref_download_basic">Nur Basisdaten (Premium Member)</string>
+    <string name="pref_download_basic">Nur Basisdaten (Premium Mitglieder)</string>
     <string name="pref_download_basic_summary">Nur Basisinformationen zum Cache herunterladen</string>
     <string name="pref_download_on_show">Restliche Infos beim Anzeigen herunterladen</string>
     <string name="pref_download_on_show_summary">Die restlichen Infos über den Cache herunterladen, wenn dieser in Locus angezeigt wird</string>
@@ -84,42 +84,43 @@
     
     <string name="menu_live_map">Live Karte</string>
     <string name="menu_nearest">Nächste</string>
-    <string name="menu_manual">Manuell</string>
+    <string name="menu_manual">Beschreibung</string>
     <string name="menu_preferences">Einstellungen</string>
     
     <string name="pref_livemap">Live Karte</string>
     <string name="pref_livemap_summary">Direktes Laden der Caches auf die Karte (aktiviere in Locus: Einstellung → Verschiedenes → Regelmäßige Updates aktivieren)</string>
     
     <string name="user_waypoint_name">Benutzerwegpunkte %1$d</string>
-    <string name="final_location_name">Final bei %1$d</string>
+    <string name="final_location_name">Zielpunkt bei %1$d</string>
     
     <string name="pref_account_login">Anmelden</string>
-    <string name="pref_account_login_summary">Anmelden Sie sich bei Geocaching.com Konto</string>
+    <string name="pref_account_login_summary">Melden Sie sich bei Ihrem Geocaching.com Konto an</string>
     <string name="pref_account_logout">Abmelden</string>
     <string name="pref_account_logout_summary">Angemeldet als %s</string>
        
-    <string name="error_report_error">Fehlermelden</string>
+    <string name="error_report_error">Fehler melden</string>
     
     <string name="crash_notif_ticker_text">Geocaching4Locus ist abgestürzt…</string>
     <string name="crash_notif_title">Geocaching4Locus ist abgestürzt…</string>
-    <string name="crash_notif_text">Bitte klicken Sie hier um uns bei der Fehlerbehebung zu helfen.</string>
+    <string name="crash_notif_text">Bitte klicken Sie hier, um uns bei der Fehlerbehebung zu helfen.</string>
     
     <string name="crash_dialog_title">Geocaching4Locus ist abgestürzt</string>
     <string name="crash_dialog_text">Ein unerwarteter Fehler ist aufgetreten, die Anwendung wurde beendet. Bitte helfen Sie uns, dieses Problem zu beheben, indem Sie uns einen Fehlerbericht senden. Klicken Sie hierzu einfach auf "OK".</string>
-    <string name="crash_dialog_comment_prompt">Unten können Sie Ihren Kommentar zu diesem Problem:</string>
+    <string name="crash_dialog_comment_prompt">Unten können Sie Ihren Kommentar zu diesem Problem eintragen:</string>
     <string name="crash_dialog_ok_toast">Vielen Dank!</string>
     
     <string name="error_network">Netzwerk nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.</string>
 
     <string name="update_caches_progress">Caches werden aktualisiert ...</string>
     <string name="original_coordinates_name">Ursprüngliche Koordinaten</string>
-    <string name="pref_title_container_type_filter">Behältergröße (Premium Member)</string>
+    <string name="pref_title_container_type_filter">Behältergröße (Premium Mitglieder)</string>
     <string name="pref_create_images_tab">Erstelle Bilder-Registerkarte</string>
     <string name="pref_create_images_tab_summary">Erstelle Bilder-Registerkarte im Cache-Dialog</string>
     
-    <string name="livemap_activated">Live Karte aktiviert. Bewege nun die Karte um Caches zu sehen</string>
+    <string name="livemap_activated">Live Karte aktiviert. Bewege nun die Karte, um Caches zu sehen</string>
     <string name="livemap_deactivated">Live Karte deaktiviert</string>
-    <string name="livemap_disabled">Du musst in Locus unter: Einstellungen -> Verschiedenes -> Regelmäßige Updates aktivieren.</string>
+    <string name="livemap_disabled">Sie haben das Senden von regelmäßigen Updates nicht aktiviert.
+Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktivieren.</string>
     <string name="error_location_title">Positionsbestimmung nicht aktiviert</string>
     <string name="error_location_settings_button">Einstellungen</string>
     
@@ -130,7 +131,7 @@
     
     <string name="dialog_count_of_caches_title">Anzahl der Caches</string>
     <string name="launcher_nearest_caches">Caches in der Umgebung</string>
-    <string name="launcher_import_cache">Cache in Locus importieren</string>
+    <string name="launcher_import_cache">Cache zu Locus importieren</string>
     <string name="launcher_update_cache">Cache aktualisieren</string>    
     <string name="launcher_update_more_caches">Caches aktualisieren</string>
     <string name="launcher_import_from_gc">Import via GC code</string>
@@ -141,8 +142,8 @@
     <string name="login_required_title">Anmeldung erforderlich</string>
     <string name="login_required_message">Zur Fortsetzung bitte bei Ihrem Geocaching.com-Konto anmelden</string>
     
-    <string name="basic_member_warning_title">Zugang für Basic Member</string>
-    <string name="premium_member_warning_title">Zugang  für Premium Member</string>
+    <string name="basic_member_warning_title">Zugang für Basis Mitglieder</string>
+    <string name="premium_member_warning_title">Zugang für Premium Mitglieder</string>
     <string name="basic_member_sign_on_warning_message">Als Basic Member von geocaching.com können Sie nur die kompletten Informationen von &lt;b>%1$s pro %2$s Periode&lt;/b>.&lt;br>
 &lt;br> herunterladen
 &lt;i>Erwerben Sie heute bei geocaching.com eine Premium-Mitgliedschaft, um neben anderen Vorteilen alle Informationen von bis zu 6000 Caches pro Tag herunterzuladen. Besuchen Sie geocaching.com zum Upgraden.&lt;/i></string>
@@ -150,7 +151,7 @@
 &lt;br>
 &lt;i>Erwerben Sie heute bei geocaching.com eine Premium-Mitgliedschaft, um neben anderen Vorteilen alle Informationen von bis zu 6000 Caches pro Tag herunterzuladen. Besuchen Sie geocaching.com zum Upgraden.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Sie haben das Download-Limit für Cache-Komplettinfos von &lt;b>6000 Caches pro 24 Stunden&lt;/b> erreicht. Ihr tägliches Limit ist jetzt %3$s.</string>
-    <string name="method_quota_exceeded_title">Gemach...</string>
+    <string name="method_quota_exceeded_title">Langsamer!</string>
     <string name="method_quota_exceeded_message">Sie haben das Limit der maximalen Aktionen/Aufrufe pro Minute erreicht </string>
     <string name="basic_member_full_geocache_warning_message">Sie haben das Limit zum Herunterladen der kompletten Informationen von %1$s pro %2$s Periode erreicht.&lt;br>
 &lt;br>
@@ -163,8 +164,8 @@
     <string name="button_no">Nein</string>
     
     <plurals name="plurals_cache">
-        <item quantity="one">%d cache</item>
-        <item quantity="few">%d caches</item>
+        <item quantity="one">%d Cache</item>
+        <item quantity="few">%d Caches</item>
         <item quantity="other">%d caches</item>
     </plurals>
     

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="currency">
+    <string-array name="currency" translatable="false">
         <item>USD</item>
         <item>EUR</item>
         <item>CZK</item>
         <item>GBP</item>
     </string-array>
-    <string-array name="rating">
+    <string-array name="rating" translatable="false">
         <item>1</item>
         <item>1.5</item>
         <item>2</item>
@@ -17,7 +17,7 @@
         <item>4.5</item>
         <item>5</item>
     </string-array>
-    <string-array name="pref_download_on_show_values">
+    <string-array name="pref_download_on_show_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>

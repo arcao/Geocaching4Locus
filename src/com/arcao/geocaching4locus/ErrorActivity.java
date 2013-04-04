@@ -70,27 +70,31 @@ public class ErrorActivity extends FragmentActivity {
 	public static class CustomErrorDialogFragment extends AbstractDialogFragment {
 		public static final String TAG = CustomErrorDialogFragment.class.getName();
 		
-		int resTitleId;
-		int resTextId;
-		boolean openPreference;
-		String additionalMessage;
-		Throwable t;
 		
 		public static CustomErrorDialogFragment newInstance(int resTitleId, int resTextId, boolean openPreference, String additionalMessage, Throwable t) {
 			CustomErrorDialogFragment fragment = new CustomErrorDialogFragment();
 			fragment.setCancelable(false);
 			
-			fragment.resTitleId = resTitleId == 0 ? R.string.error_title : resTitleId;
-			fragment.resTextId = resTextId;
-			fragment.openPreference = openPreference;
-			fragment.additionalMessage = additionalMessage;
-			fragment.t = t;
+			Bundle args = new Bundle();
+			args.putInt(PARAM_RESOURCE_TITLE, resTitleId == 0 ? R.string.error_title : resTitleId); 
+			args.putInt(PARAM_RESOURCE_TEXT, resTextId);
+			args.putBoolean(PARAM_OPEN_PREFERENCE, openPreference);
+			args.putString(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
+			args.putSerializable(PARAM_EXCEPTION, t);
+			
+			fragment.setArguments(args);
 			
 			return fragment;
 		}
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			final int resTitleId = getArguments().getInt(PARAM_RESOURCE_TITLE);
+			final int resTextId = getArguments().getInt(PARAM_RESOURCE_TEXT);
+			final boolean openPreference = getArguments().getBoolean(PARAM_OPEN_PREFERENCE);
+			final String additionalMessage = getArguments().getString(PARAM_ADDITIONAL_MESSAGE);
+			final Throwable t = (Throwable) getArguments().getSerializable(PARAM_EXCEPTION);
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog))
 					.setTitle(resTitleId)
 					.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {

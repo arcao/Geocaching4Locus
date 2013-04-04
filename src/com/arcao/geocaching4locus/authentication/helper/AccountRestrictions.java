@@ -89,6 +89,8 @@ public class AccountRestrictions {
 		
 		maxFullGeocacheLimit = cacheLimits.getMaxCacheCount();
 		
+		Editor editor = mPrefs.edit();
+
 		// cache limit was renew
 		if (currentFullGeocacheLimit > cacheLimits.getCurrentCacheCount()
 				|| (currentFullGeocacheLimit == 0 && cacheLimits.getCurrentCacheCount() > 0)) {
@@ -100,20 +102,20 @@ public class AccountRestrictions {
 			renewFullGeocacheLimit = c.getTime();
 			
 			// store it to preferences
-			Editor editor = mPrefs.edit();
 			editor.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit);
 			editor.putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit);
 			editor.putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.getTime());
-			editor.commit();
 		} else {
 			currentFullGeocacheLimit = cacheLimits.getCurrentCacheCount();
 			
 			// store it to preferences
-			Editor editor = mPrefs.edit();
 			editor.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit);
 			editor.putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit);
-			editor.commit();
 		}
+		
+		// this is some type of HACK, there is no other way how to detect change of Member type
+		editor.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, maxFullGeocacheLimit > 1000);
+		editor.commit();
 	}
 	
 	public boolean isPremiumMember() {

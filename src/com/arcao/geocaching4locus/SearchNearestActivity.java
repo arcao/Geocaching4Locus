@@ -37,8 +37,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	private static String STATE_LATITUDE = "latitude";
 	private static String STATE_LONGITUDE = "longitude";
 	private static String STATE_HAS_COORDINATES = "has_coordinates";
-	
-	private static final int REQUEST_LOGIN = 1; 
+
+	private static final int REQUEST_LOGIN = 1;
 
 	private double latitude = Double.NaN;
 	private double longitude = Double.NaN;
@@ -53,19 +53,19 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	private SearchNearestActivityBroadcastReceiver broadcastReceiver;
 	private LocationUpdateTask locationUpdateTask;
-	
+
 	private boolean startDownload = false;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		broadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
 		hasCoordinates = false;
 
 		setContentView(R.layout.main_activity);
-		
+
 		// hide close button in normal view
 		if (!isFloatingWindow()) {
 			findViewById(R.id.image_view_separator_close).setVisibility(View.GONE);
@@ -131,10 +131,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	public void onFailed() {}
 
 	@Override
-	protected void onResume() {	
+	protected void onResume() {
 		super.onResume();
-
-		broadcastReceiver.register(this);
 
 		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
 		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
@@ -176,6 +174,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});
+	}
+
+	@Override
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+
+		// play with fragments here
+		broadcastReceiver.register(this);
 
 		if (!locusInstalled && !LocusTesting.isLocusInstalled(this)) {
 			locusInstalled = false;
@@ -184,22 +190,23 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 
 		locusInstalled = true;
-		
-	  if (startDownload) {
-	  	startDownload = false;
-	  	download();		
-	  } else if (!hasCoordinates) {
+
+		if (startDownload) {
+			startDownload = false;
+			download();
+		} else if (!hasCoordinates) {
 			acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
 			requestProgressUpdate();
 		}
+
 	}
-	
+
 	@Override
 	public void onNumberChooserDialogClosed(NumberChooserDialogFragment fragment) {
 		int value = fragment.getValue();
-		
+
 		countOfCachesEditText.setText(String.valueOf(value));
 		prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).commit();
 	}
@@ -249,7 +256,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
 			return;
 		}
-		
+
 		Log.i(TAG, "Lat: " + latitudeEditText.getText().toString() + "; Lon: " + longitudeEditText.getText().toString());
 
 		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
@@ -337,7 +344,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				return false;
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart download process after log in

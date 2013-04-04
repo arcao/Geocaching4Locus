@@ -20,14 +20,14 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 	private final static String TAG = "G4L|UpdateActivity";
 
 	private static final int REQUEST_LOGIN = 1;
-	
+
 	private boolean authenticatorActivityVisible = false;
 	private boolean showUpdateMoreDialog = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		// test if user is logged in
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
 			if (savedInstanceState != null)
@@ -40,50 +40,51 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 
 			return;
 		}
-		
+
 		if (showBasicMemeberWarningDialog())
 			return;
-		
+
 		showUpdateMoreDialog = true;
 	}
-	
+
 	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-		
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+
+		// play with fragments here
 		if (showUpdateMoreDialog) {
 			showUpdateMoreDialog();
 			showUpdateMoreDialog = false;
 		}
 	}
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible); 
+
+		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible);
 	}
-	
+
 	protected boolean showBasicMemeberWarningDialog() {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
 			return false;
-		
+
 		// check next dialog fragment
 		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
 			return false;
-		
+
 		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
 			return true;
-		
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);		
+
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
 		return true;
 	}
-	
+
 	protected void showUpdateMoreDialog() {
-		long[] pointIndexes = null; 
-		
+		long[] pointIndexes = null;
+
 		if (LocusUtils.isIntentPointsScreenTools(getIntent())) {
-      pointIndexes = LocusUtils.handleIntentPointsScreenTools(getIntent());      
+			pointIndexes = LocusUtils.handleIntentPointsScreenTools(getIntent());
 		}
 
 		if (pointIndexes.length == 0) {
@@ -96,25 +97,24 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		ErrorReporter.getInstance().putCustomData("source", "update;");
 		ErrorReporter.getInstance().putCustomData("count", String.valueOf(pointIndexes.length));
 
-		UpdateMoreDialogFragment fragment = (UpdateMoreDialogFragment) getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG);
-		if (fragment == null) {
-			fragment = UpdateMoreDialogFragment.newInstance(pointIndexes);
-			fragment.show(getSupportFragmentManager(), UpdateMoreDialogFragment.TAG);
-		}
+		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
+			return;
+
+		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getSupportFragmentManager(), UpdateMoreDialogFragment.TAG);
 	}
-		
+
 	@Override
 	public void onTaskFinished(boolean success) {
 		Log.d(TAG, "onTaskFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
-	
+
 	@Override
 	public void onProgressUpdate(int count) {
 		// unused
 	}
-	
+
 	@Override
 	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
 		if (success) {
@@ -123,13 +123,13 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 			onTaskFinished(false);
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
 			authenticatorActivityVisible = false;
-			
+
 			if (resultCode == RESULT_OK) {
 				showUpdateMoreDialog = true;
 			} else {

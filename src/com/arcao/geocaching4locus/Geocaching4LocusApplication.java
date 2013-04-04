@@ -17,6 +17,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
@@ -57,6 +59,8 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	@Override
 	public void onCreate() {
 		context = getApplicationContext();
+		
+		disableConnectionReuseIfNecessary();
 		
 		if (AppConstants.USE_PRODUCTION_CONFIGURATION) {
 			geocachingApiConfiguration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.PRODUCTION_CONFIGURATION);
@@ -199,5 +203,12 @@ public class Geocaching4LocusApplication extends android.app.Application {
 			}
 		}
 		cookieManager.removeExpiredCookie();
+	}
+	
+	private static void disableConnectionReuseIfNecessary() {
+		// HTTP connection reuse which was buggy pre-froyo
+		if (VERSION.SDK_INT < VERSION_CODES.FROYO) {
+			System.setProperty("http.keepAlive", "false");
+		}
 	}
 }

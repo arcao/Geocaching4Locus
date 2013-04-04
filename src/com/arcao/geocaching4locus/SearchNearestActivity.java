@@ -53,6 +53,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	private SearchNearestActivityBroadcastReceiver broadcastReceiver;
 	private LocationUpdateTask locationUpdateTask;
+	
+	private boolean startDownload = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -182,8 +184,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 
 		locusInstalled = true;
-
-		if (!hasCoordinates) {
+		
+	  if (startDownload) {
+	  	startDownload = false;
+	  	download();		
+	  } else if (!hasCoordinates) {
 			acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
@@ -337,7 +342,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart download process after log in
 		if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
-			download();
+			// do not call download method directly here, must be called in onResume method
+			startDownload = true;
 		}
 	}
 }

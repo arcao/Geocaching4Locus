@@ -26,46 +26,55 @@ import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinish
 public class AuthenticatorActivity extends FragmentActivity implements OnTaskFinishedListener {
 	protected static final String PARAM_SHOW_WIZARD = "SHOW_WIZARD";
 	protected static final String TAG_DIALOG = "dialog";
-	
+
+	protected boolean showBasicMemberWarning = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
+
 		ErrorReporter.getInstance().putCustomData("source", "login");
-		
-		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
-		if (fragment != null) {
-			//fragment.show(getSupportFragmentManager(), TAG_DIALOG);
+
+		if (getSupportFragmentManager().findFragmentByTag(TAG_DIALOG) != null)
 			return;
-		}
 
 		if (getIntent().getBooleanExtra(PARAM_SHOW_WIZARD, false)) {
 			showWizardDialog();
 			return;
 		}
-		
+
 		showLoginDialog();
 	}
-	
+
+	@Override
+	protected void onResumeFragments() {
+		super.onResumeFragments();
+
+		if (showBasicMemberWarning) {
+			showBasicMemberWarning = false;
+			showBasicMemberWarning();
+		}
+	}
+
 	public void showLoginDialog() {
 		// remove previous dialog
 		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
 			fragment.dismiss();
-		
+
 		OAuthLoginDialogFragment.newInstance().show(getSupportFragmentManager(), TAG_DIALOG);
 	}
-	
+
 	public void showWizardDialog() {
 		new WizardDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
 	}
-	
+
 	public void showBasicMemberWarning() {
 		// remove previous dialog
 		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
 			fragment.dismiss();
-		
+
 		new BasicMemberLoginWarningDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
 	}
 
@@ -74,43 +83,43 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		if (errorIntent != null) {
 			startActivity(errorIntent);
 		}
-		
-		AuthenticatorHelper helper = Geocaching4LocusApplication.getAuthenticatorHelper(); 
-		
+
+		AuthenticatorHelper helper = Geocaching4LocusApplication.getAuthenticatorHelper();
+
 		boolean hasAccount = helper.hasAccount();
-		
+
 		// for basic member show warning dialog about limits
 		if (hasAccount && !helper.getRestrictions().isPremiumMember()) {
-			showBasicMemberWarning();
+			showBasicMemberWarning = true;
 			return;
 		}
-		
+
 		setResult(hasAccount ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
 
-	
+
 	public static Intent createIntent(Context mContext, boolean mShowWizard) {
 		Intent intent = new Intent(mContext, AuthenticatorActivity.class);
 		intent.putExtra(PARAM_SHOW_WIZARD, mShowWizard);
-		
+
 		return intent;
 	}
-	
+
 	protected static class WizardDialogFragment extends AbstractDialogFragment {
 		protected WeakReference<AuthenticatorActivity> activityRef;
-		
+
 		public WizardDialogFragment() {
 			setCancelable(false);
 		}
-		
+
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			
+
 			activityRef = new WeakReference<AuthenticatorActivity>((AuthenticatorActivity) activity);
 		}
-		
+
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(getActivity())
@@ -135,29 +144,29 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 				.create();
 		}
 	}
-	
+
 	protected static class BasicMemberLoginWarningDialogFragment extends AbstractDialogFragment {
 		protected WeakReference<AuthenticatorActivity> activityRef;
-		
+
 		public BasicMemberLoginWarningDialogFragment() {
 			setCancelable(false);
 		}
-				
+
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			
+
 			activityRef = new WeakReference<AuthenticatorActivity>((AuthenticatorActivity) activity);
 		}
-		
+
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
-			
+
 			// apply format on a text
 			int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
 			int period = (int) restrictions.getFullGeocacheLimitPeriod();
-			
+
 			String periodString = null;
 			if (period < 60) {
 				periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
@@ -165,11 +174,11 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 				period = period / 60;
 				periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 			}
-			
+
 			String cacheString = getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-			
+
 			String message = getString(R.string.basic_member_sign_on_warning_message, cacheString, periodString);
-			
+
 			return new AlertDialog.Builder(getActivity())
 				.setTitle(R.string.basic_member_warning_title)
 				.setMessage(Html.fromHtml(message))
@@ -184,8 +193,6 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 					}
 				})
 				.create();
-		}		
+		}
 	}
-	
-
 }

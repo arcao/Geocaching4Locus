@@ -8,10 +8,8 @@ import java.util.Date;
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
-import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 
-import org.acra.ErrorReporter;
 import org.apache.http.impl.cookie.DateUtils;
 
 import android.content.Context;
@@ -21,13 +19,11 @@ import android.util.Log;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
-import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.DeviceInfoFactory;
 import com.arcao.geocaching4locus.util.UserTask;
 
@@ -39,13 +35,13 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		void onOAuthTaskFinished(String userName, String token);
 		void onTaskError(Intent errorIntent);
 	}
-	
+
 	private WeakReference<OAuthLoginTaskListener> oAuthLoginTaskListenerRef;
-	
+
 	public void setOAuthLoginTaskListener(OAuthLoginTaskListener oAuthLoginTaskListener) {
 		this.oAuthLoginTaskListenerRef = new WeakReference<OAuthLoginTaskListener>(oAuthLoginTaskListener);
 	}
-	
+
 	@Override
 	protected String[] doInBackground(String... params) throws Exception {
 		OAuthConsumer consumer = Geocaching4LocusApplication.getOAuthConsumer();
@@ -56,7 +52,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 		try {
 			if (params.length == 0) {
-				String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL, OAuth.OAUTH_TIMESTAMP, timestamp); 
+				String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL, OAuth.OAUTH_TIMESTAMP, timestamp);
 				Geocaching4LocusApplication.storeRequestTokens(consumer);
 				return new String[] { authUrl };
 			} else {
@@ -69,19 +65,19 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 				UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());
 				ApiLimits apiLimits = api.getApiLimits();
-				
+
 				// update member type and restrictions
 				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateMemberType(userProfile.getUser().getMemberType());
 				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(apiLimits);
 
-				return new String[] { 
+				return new String[] {
 						userProfile.getUser().getUserName(),
 						api.getSession()
 				};
 			}
 		} catch (OAuthExpectationFailedException e) {
 			if (provider.getResponseParameters().containsKey(AppConstants.OAUTH_ERROR_MESSAGE_PARAMETER)) {
-				throw new OAuthExpectationFailedException("Request token or token secret not set in server reply. " 
+				throw new OAuthExpectationFailedException("Request token or token secret not set in server reply. "
 						+ provider.getResponseParameters().getFirst(AppConstants.OAUTH_ERROR_MESSAGE_PARAMETER));
 			}
 
@@ -92,7 +88,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	@Override
 	protected void onPostExecute(String[] result) {
 		OAuthLoginTaskListener listener = oAuthLoginTaskListenerRef.get();
-		
+
 		if (result.length == 1) {
 
 			if (listener != null) {
@@ -106,32 +102,22 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	}
 
 	@Override
-	protected void onException(Throwable e) {
-		Log.e(TAG, e.getMessage(), e);
-		
+	protected void onException(Throwable t) {
+		super.onException(t);
+
+		if (isCancelled())
+			return;
+
+		Log.e(TAG, t.getMessage(), t);
+
 		Context mContext = Geocaching4LocusApplication.getAppContext();
-		
-		Intent errorIntent;
 
-		if (e instanceof InvalidCredentialsException) {
-			errorIntent = ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, false, null);
-		} else if (e instanceof NetworkException || e instanceof OAuthCommunicationException) {
-			errorIntent = ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
-		} else {
-			ErrorReporter.getInstance().putCustomData("source", "login");
+		Intent intent = new ExceptionHandler(mContext).handle(t);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-			String message = e.getMessage();
-			if (message == null)
-				message = "";
-
-			errorIntent = ErrorActivity.createErrorIntent(mContext, 0, String.format("%s<br>Exception: %s", message, e.getClass().getSimpleName()), true, e);
-		}
-		
-		errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
-		
 		OAuthLoginTaskListener listener = oAuthLoginTaskListenerRef.get();
 		if (listener != null) {
-			listener.onTaskError(errorIntent);
+			listener.onTaskError(intent);
 		}
 	}
 

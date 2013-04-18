@@ -182,5 +182,7 @@
     
     <string name="account_geocaching_live_title">Aangedreven door Geocaching Live</string>
     <string name="account_geocaching_live_message">Deze add-on gebruikt Geocaching Live om informatie te verkrijgen over Geocaches. Druk hier voor meer informatie...</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
 </resources>
 

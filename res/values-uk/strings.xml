@@ -182,5 +182,7 @@
     
     <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>
     <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації ...</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:&lt;br>%s</string>
 </resources>
 

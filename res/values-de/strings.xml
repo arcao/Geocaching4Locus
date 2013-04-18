@@ -140,7 +140,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     
     <string name="button_login_start">Anmelden</string>
     <string name="login_required_title">Anmeldung erforderlich</string>
-    <string name="login_required_message">Zur Fortsetzung bitte bei Ihrem Geocaching.com-Konto anmelden</string>
+    <string name="login_required_message">Um fortzufahren, bitte bei Ihrem Geocaching.com-Konto anmelden</string>
     
     <string name="basic_member_warning_title">Zugang für Basis Mitglieder</string>
     <string name="premium_member_warning_title">Zugang für Premium Mitglieder</string>
@@ -183,5 +183,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen...</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
 </resources>
 

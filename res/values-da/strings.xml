@@ -182,5 +182,7 @@
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Denne tilføjelse bruger Geocaching Live til at hente information om Geocaches. Tryk her for mere information…</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
 </resources>
 

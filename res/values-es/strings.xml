@@ -182,5 +182,7 @@
     
     <string name="account_geocaching_live_title">Desarrollado por Geocaching Live</string>
     <string name="account_geocaching_live_message">Este add-on usa Geocaching Live para obtener información de Geocaches. Pulsa aquí para más información…</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
 </resources>
 

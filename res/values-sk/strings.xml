@@ -182,5 +182,7 @@
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Toto rozšírenie využíva Geocaching Live na získavanie informácií o kešiach. Klepnite tu pre viac informácií…</string>
+    
+    <string name="error_invalid_api_response">Geocaching Live vrátil neplatnú odpoveď:&lt;br>%s</string>
 </resources>
 

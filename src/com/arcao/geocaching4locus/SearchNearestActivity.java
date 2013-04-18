@@ -170,7 +170,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		countOfCachesEditText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache, 1, 200, 20);
+				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);
+				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache, 1, 200, countOfCaches);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});

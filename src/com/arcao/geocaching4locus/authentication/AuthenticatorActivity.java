@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 
@@ -28,6 +29,10 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 	protected static final String TAG_DIALOG = "dialog";
 
 	protected boolean showBasicMemberWarning = false;
+
+	protected Handler handler = new Handler();
+	protected boolean paused = false;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,17 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 	}
 
 	@Override
+	protected void onPause() {
+		super.onPause();
+
+		paused = true;
+	}
+
+	@Override
 	protected void onResumeFragments() {
 		super.onResumeFragments();
+
+		paused = false;
 
 		if (showBasicMemberWarning) {
 			showBasicMemberWarning = false;
@@ -90,7 +104,16 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 
 		// for basic member show warning dialog about limits
 		if (hasAccount && !helper.getRestrictions().isPremiumMember()) {
-			showBasicMemberWarning = true;
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					if (!paused) {
+						showBasicMemberWarning();
+					} else {
+						showBasicMemberWarning = true;
+					}
+				}
+			});
 			return;
 		}
 

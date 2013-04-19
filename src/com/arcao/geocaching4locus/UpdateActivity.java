@@ -30,6 +30,8 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 
 	private static final int REQUEST_LOGIN = 1;
 
+	private SharedPreferences prefs;
+
 	private boolean authenticatorActivityVisible = false;
 	private boolean showUpdateDialog = false;
 
@@ -50,7 +52,13 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 			return;
 		}
 
-		if (showBasicMemeberWarningDialog())
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		String repeatUpdate = prefs.getString(
+			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
+			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
+
+		if (!PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate) && showBasicMemeberWarningDialog())
 			return;
 
 		showUpdateDialog = true;
@@ -90,8 +98,6 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 	}
 
 	public void showUpdateDialog() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
 		String cacheId = null;
 		Waypoint oldPoint = null;
 

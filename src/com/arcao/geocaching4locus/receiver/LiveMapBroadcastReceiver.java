@@ -18,31 +18,31 @@ import com.arcao.geocaching4locus.service.LiveMapService;
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundpseak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
-	
+
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 		if (intent == null || intent.getAction() == null)
 			return;
-		
+
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		
+
 		if (!prefs.getBoolean("live_map", false)) {
 			return;
 		}
-		
+
 		// ignore onTouch events
 		if (intent.getBooleanExtra(PeriodicUpdatesConst.VAR_B_MAP_USER_TOUCHES, false))
 			return;
-				
+
 		// get valid instance of PeriodicUpdate object
 		PeriodicUpdate pu = PeriodicUpdate.getInstance();
 
 		// set notification of new locations
 		pu.setLocNotificationLimit(computeNotificationLimit(intent));
-		
+
 		// handle event
 		pu.onReceive(context, intent, new PeriodicUpdate.OnUpdate() {
-			
+
 			@Override
 			public void onIncorrectData() {
 			}
@@ -52,20 +52,20 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				// sending data back to Locus based on events if has a new map center or zoom level and map is visible
 				if (!update.isMapVisible())
 					return;
-				
+
 				if (!update.isNewMapCenter() && !update.isNewZoomLevel())
 					return;
-				
+
 				// When Live map is enabled, Locus sometimes send NaN when is starting
 				if (Double.isNaN(update.getMapTopLeft().getLatitude()) || Double.isNaN(update.getMapTopLeft().getLongitude())
 						|| Double.isNaN(update.getMapBottomRight().getLatitude()) || Double.isNaN(update.getMapBottomRight().getLongitude()))
 					return;
-				
+
 				if (update.getMapTopLeft().distanceTo(update.getMapBottomRight()) >= MAX_DIAGONAL_DISTANCE)
 					return;
-								
+
 				Location l = update.getLocMapCenter();
-				
+
 				// Start service to download caches
 				context.startService(LiveMapService.createIntent(
 						context,
@@ -79,11 +79,14 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			}
 		});
 	}
-	
+
 	protected static float computeNotificationLimit(Intent i) {
 		Location locMapCenter = LocusUtils.getLocationFromIntent(i, VAR_LOC_MAP_CENTER);
 		Location mapTopLeft = LocusUtils.getLocationFromIntent(i, VAR_LOC_MAP_BBOX_TOP_LEFT);
-		
+
+		if (locMapCenter == null || mapTopLeft == null)
+			return 100F;
+
 		return mapTopLeft.distanceTo(locMapCenter) / 2.5F;
 	}
 }

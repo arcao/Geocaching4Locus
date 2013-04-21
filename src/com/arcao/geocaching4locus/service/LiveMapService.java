@@ -154,6 +154,9 @@ public class LiveMapService extends IntentService {
 		terrainMin = 1;
 		terrainMax = 5;
 
+		cacheTypes = null;
+		containerTypes = null;
+
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));

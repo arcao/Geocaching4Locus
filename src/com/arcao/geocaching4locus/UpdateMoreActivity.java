@@ -87,7 +87,7 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 			pointIndexes = LocusUtils.handleIntentPointsScreenTools(getIntent());
 		}
 
-		if (pointIndexes.length == 0) {
+		if (pointIndexes == null || pointIndexes.length == 0) {
 			Log.e(TAG, "No caches received");
 			setResult(RESULT_CANCELED);
 			finish();

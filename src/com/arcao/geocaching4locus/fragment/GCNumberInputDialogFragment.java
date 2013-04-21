@@ -24,57 +24,58 @@ import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
 
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = GCNumberInputDialogFragment.class.getName();
-	
+
 	protected static final String PARAM_INPUT = "INPUT";
 	protected static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
-	
+
 	protected WeakReference<OnInputFinishedListener> inputFinishedListenerRef;
 	protected EditText editText;
+	protected CharSequence errorMessage = null;
 
 	public static GCNumberInputDialogFragment newInstance() {
-		return new GCNumberInputDialogFragment();	
+		return new GCNumberInputDialogFragment();
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
+
 		try {
 			inputFinishedListenerRef = new WeakReference<OnInputFinishedListener>((OnInputFinishedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnInputFinishedListener");
 		}
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
+
 		if (editText != null && isShowing()) {
 			outState.putCharSequence(PARAM_INPUT, editText.getText());
 			outState.putCharSequence(PARAM_ERROR_MESSAGE, editText.getError());
 		}
 	}
-	
+
 	protected void fireOnInputFinished(String input) {
 		OnInputFinishedListener listener = inputFinishedListenerRef.get();
 		if (listener != null) {
 			listener.onInputFinished(input);
 		}
 	}
-	
+
 	@Override
 	public void onCancel(DialogInterface dialog) {
 		fireOnInputFinished(null);
 		super.onCancel(dialog);
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
-		
-		View view = LayoutInflater.from(context).inflate(R.layout.gc_number_input_dialog, null); 
-		
+
+		View view = LayoutInflater.from(context).inflate(R.layout.gc_number_input_dialog, null);
+
 		editText = (EditText) view.findViewById(R.id.gc_number_input_edit_text);
 		editText.setText("GC");
 		editText.addTextChangedListener(new TextWatcher() {
@@ -88,16 +89,16 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	            editText.setError(null);
 	        }
 	    }
-		}); 
-		
+		});
+
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
 			editText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
-			editText.setError(savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE));
+			errorMessage = savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE);
 		}
-		
+
 		// move caret on a last position
 		editText.setSelection(editText.getText().length());
-		
+
 		return new AlertDialog.Builder(context)
 			.setTitle(R.string.dialog_gc_number_input_title)
 			.setView(view)
@@ -111,7 +112,20 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			})
 			.create();
 	}
-	
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
+		// More here: http://code.google.com/p/android/issues/detail?id=19173
+		if (errorMessage != null) {
+			editText.setError(errorMessage);
+			errorMessage = null;
+		}
+	}
+
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -121,9 +135,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		final AlertDialog alertDialog = (AlertDialog) getDialog();
 		if (alertDialog == null)
 			return;
-		
+
 		Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-		button.setOnClickListener(new View.OnClickListener() { 
+		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v)
 			{
@@ -134,25 +148,25 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			}
 		});
 	}
-	
+
 	protected boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
-		
+
 		if (value.length() == 0) {
 			editText.setError(getString(R.string.error_input_gc));
 			return false;
 		}
-		
+
 		try {
 			if (GeocachingUtils.cacheCodeToCacheId(value) > 0) {
 				return true;
 			}
 		} catch (IllegalArgumentException e) {}
-		
+
 		editText.setError(getString(R.string.error_input_gc));
 		return false;
 	}
-	
+
 	public interface OnInputFinishedListener {
 		void onInputFinished(String input);
 	}

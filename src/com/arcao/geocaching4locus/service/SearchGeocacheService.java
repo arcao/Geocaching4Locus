@@ -120,14 +120,14 @@ public class SearchGeocacheService extends AbstractService {
 		} else {
 			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "160.9344");
 		}
-		
+
 		try {
 			distance = Float.parseFloat(distanceString);
 		} catch (NumberFormatException e) {
 			Log.e(TAG, e.getMessage(), e);
 			distance = 100;
 		}
-		
+
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			// get kilometers from miles
 			distance = distance * 1.609344F;
@@ -141,18 +141,18 @@ public class SearchGeocacheService extends AbstractService {
 		// default values for basic member
 		difficultyMin = 1;
 		difficultyMax = 5;
-		
+
 		terrainMin = 1;
 		terrainMax = 5;
-		
+
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
 			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
-			
+
 			terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
 			terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
-			
+
 			cacheTypes = getCacheTypeFilterResult(prefs);
 			containerTypes = getContainerTypeFilterResult(prefs);
 		}
@@ -179,7 +179,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		return filter.toArray(new CacheType[0]);
 	}
-	
+
 	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
 		Vector<ContainerType> filter = new Vector<ContainerType>();
 
@@ -199,32 +199,33 @@ public class SearchGeocacheService extends AbstractService {
 
 		if (isCanceled())
 			return null;
-		
+
 		ErrorReporter.getInstance().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
 
-		File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
 		StoreableDataOutputStream sdos = null;
 
 		try {
+			File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
+
 			login(api);
-			
+
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
-			
+
 			sdos = new StoreableDataOutputStream(new FileOutputStream(dataFile));
 			sdos.beginList();
-			
+
 			sendProgressUpdate();
-			
+
 			current = 0;
 			int perPage = AppConstants.CACHES_PER_REQUEST;
-			
+
 			while (current < count) {
 				perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
 
 				List<SimpleGeocache> cachesToAdd;
-				
+
 				if (current == 0) {
 					cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
 							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
@@ -239,7 +240,7 @@ public class SearchGeocacheService extends AbstractService {
 				} else {
 					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);
 				}
-				
+
 				if (!simpleCacheData)
 					Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
 
@@ -248,30 +249,30 @@ public class SearchGeocacheService extends AbstractService {
 
 				if (cachesToAdd.size() == 0)
 					break;
-				
+
 				// FIX for not working distance filter
 				if (computeDistance(latitude, longitude, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
 					removeCachesOverDistance(cachesToAdd, latitude, longitude, distance);
-					
+
 					if (cachesToAdd.size() == 0)
 						break;
 				}
-				
+
 				PackWaypoints pw = new PackWaypoints(TAG);
 				List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
-				
+
 				for (Waypoint wpt : waypoints) {
 					if (simpleCacheData) {
 						wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
 					}
-					
+
 					pw.addWaypoint(wpt);
 				}
-				
+
 				sdos.write(pw);
 
 				current = current + cachesToAdd.size();
-				
+
 				// force memory clean
 				cachesToAdd = null;
 				waypoints = null;
@@ -279,7 +280,7 @@ public class SearchGeocacheService extends AbstractService {
 
 				sendProgressUpdate();
 			}
-			
+
 			sdos.endList();
 
 			Log.i(TAG, "found caches: " + current);
@@ -292,7 +293,7 @@ public class SearchGeocacheService extends AbstractService {
 		} catch (InvalidSessionException e) {
 			Log.e(TAG, e.getMessage(), e);
 			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
-			
+
 			throw e;
 		} catch (IOException e) {
 			Log.e(TAG, e.getMessage(), e);
@@ -301,12 +302,12 @@ public class SearchGeocacheService extends AbstractService {
 			Utils.closeStream(sdos);
 		}
 	}
-	
+
 	protected void removeCachesOverDistance(List<SimpleGeocache> caches, double latitude, double longitude, double maxDistance) {
 		while (caches.size() > 0) {
 			SimpleGeocache cache = caches.get(caches.size() - 1);
-			double distance = computeDistance(latitude, longitude, cache); 
-			
+			double distance = computeDistance(latitude, longitude, cache);
+
 			if (distance > maxDistance) {
 				Log.i(TAG, "Cache " + cache.getCacheCode() + " is over distance.");
 				caches.remove(cache);
@@ -326,7 +327,7 @@ public class SearchGeocacheService extends AbstractService {
     double longitudeTo = Math.toRadians(cache.getLongitude());
 
     return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
-  } 
+  }
 
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
@@ -334,7 +335,7 @@ public class SearchGeocacheService extends AbstractService {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
 		}
-			
+
 		api.openSession(token);
 	}
 }

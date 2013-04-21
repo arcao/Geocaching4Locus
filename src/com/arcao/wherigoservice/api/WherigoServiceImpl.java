@@ -12,6 +12,7 @@ import java.util.zip.InflaterInputStream;
 import android.util.Log;
 
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.geocaching.api.util.DisconnectableInputStream;
 import com.arcao.shade.gson.stream.MalformedJsonException;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
@@ -87,13 +88,13 @@ public class WherigoServiceImpl implements WherigoService {
 		InputStream is = null;
 		InputStreamReader isr = null;
 
-		Log.i(TAG, "Getting " + maskPassword(function));
+		Log.i(TAG, "Getting " + maskParameterValues(function));
 
 		try {
 			URL url = new URL(BASE_URL + function);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
-			// important! sometimes GC API takes too long to get response
+			// important! sometimes GC API takes too long to return response
 			con.setConnectTimeout(30000);
 			con.setReadTimeout(30000);
 
@@ -103,20 +104,42 @@ public class WherigoServiceImpl implements WherigoService {
 			con.setRequestProperty("Accept-Language", "en-US");
 			con.setRequestProperty("Accept-Encoding", "gzip, deflate");
 
+			if (con.getResponseCode() >= 400) {
+				is = con.getErrorStream();
+			} else {
+				is = con.getInputStream();
+			}
+
 			final String encoding = con.getContentEncoding();
 
 			if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
 				Log.i(TAG, "callGet(): GZIP OK");
-				is = new GZIPInputStream(con.getInputStream());
+				is = new GZIPInputStream(is);
 			} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
 				Log.i(TAG, "callGet(): DEFLATE OK");
-				is = new InflaterInputStream(con.getInputStream(), new Inflater(true));
+				is = new InflaterInputStream(is, new Inflater(true));
 			} else {
 				Log.i(TAG, "callGet(): WITHOUT COMPRESSION");
-				is = con.getInputStream();
 			}
 
-			isr = new InputStreamReader(is, "UTF-8");
+			if (con.getResponseCode() >= 400) {
+				isr = new InputStreamReader(is, "UTF-8");
+
+				StringBuilder sb = new StringBuilder();
+				char buffer[] = new char[1024];
+				int len = 0;
+
+				while ((len = isr.read(buffer)) != -1) {
+					sb.append(buffer, 0, len);
+				}
+
+				isr.close();
+
+				// read error response
+				throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, sb.toString());
+			}
+
+			isr = new InputStreamReader(new DisconnectableInputStream(is, con), "UTF-8");
 			return new JsonReader(isr);
 		} catch (Exception e) {
 			Log.e(TAG, e.toString(), e);
@@ -124,12 +147,10 @@ public class WherigoServiceImpl implements WherigoService {
 		}
 	}
 
-	protected String maskPassword(String input) {
-		int start;
-		if ((start = input.indexOf("&Password=")) == -1)
-			return input;
-
-		return input.substring(0, start + 10) + "******" + input.substring(input.indexOf('&', start + 10));
+	protected String maskParameterValues(String function) {
+		// do nothing
+		//function = function.replaceAll("([Aa]ccess[Tt]oken=)([^&]+)", "$1******");
+		return function;
 	}
 
 	protected boolean isGsonException(Throwable t) {

@@ -3,9 +3,6 @@ package com.arcao.geocaching4locus.fragment;
 import java.lang.ref.WeakReference;
 
 import locus.api.objects.extra.Waypoint;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,14 +20,17 @@ import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 public final class UpdateDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = UpdateDialogFragment.class.getName();
 
+	public static final String PARAM_UPDATE_DATA = "UPDATE_DATA";
+
 	protected UpdateTask mTask;
-	protected UpdateTaskData data = new UpdateTaskData();
 	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint) {
 		UpdateDialogFragment fragment = new UpdateDialogFragment();
-		fragment.mTask = new UpdateTask();
-		fragment.data.cache = Pair.of(cacheId, oldPoint);
+
+		Bundle args = new Bundle();
+		args.putSerializable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint));
+		fragment.setArguments(args);
 
 		return fragment;
 	}
@@ -42,6 +42,9 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		setRetainInstance(true);
 		setCancelable(false);
 
+		UpdateTaskData data = (UpdateTaskData) getArguments().getSerializable(PARAM_UPDATE_DATA);
+
+		mTask = new UpdateTask();
 		mTask.setOnTaskFinishedListener(this);
 		mTask.execute(data);
 	}
@@ -56,14 +59,14 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
 		}
 	}
-	
+
 
 	@Override
 	public void onTaskFinished(Intent intent) {
 		mTask = null;
 
 		dismiss();
-		
+
 		OnTaskFinishedListener taskFinishedListener = taskFinishedListenerRef.get();
 		if (taskFinishedListener != null) {
 			taskFinishedListener.onTaskFinished(intent);

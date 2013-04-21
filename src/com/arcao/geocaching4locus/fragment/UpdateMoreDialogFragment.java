@@ -16,61 +16,68 @@ import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
 
 public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = UpdateMoreDialogFragment.class.getName();
-			
+
+	public static final String PARAM_POINT_INDEXES = "POINT_INDEXES";
+
 	protected UpdateMoreTask mTask;
-	protected long[] pointIndexes;
 	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
-	
+
 	public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {
 		UpdateMoreDialogFragment fragment = new UpdateMoreDialogFragment();
-		fragment.mTask = new UpdateMoreTask();
-		fragment.pointIndexes = pointIndexes;
+
+		Bundle args = new Bundle();
+		args.putLongArray(PARAM_POINT_INDEXES, pointIndexes);
+		fragment.setArguments(args);
+
 		return fragment;
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setRetainInstance(true);
 		setCancelable(false);
-		
+
+		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
+
+		mTask = new UpdateMoreTask();
 		mTask.setOnTaskUpdateListener(this);
 		mTask.execute(pointIndexes);
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
+
 		try {
 			taskFinishedListenerRef = new WeakReference<OnTaskFinishedListener>((OnTaskFinishedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
 		}
 	}
-		
+
 	@Override
 	public void onTaskFinished(boolean success) {
 		mTask = null;
-		
+
 		dismiss();
-		
+
 		OnTaskFinishedListener taskFinishedListener = taskFinishedListenerRef.get();
 		if (taskFinishedListener != null) {
 			taskFinishedListener.onTaskFinished(success);
 		}
 	}
-	
+
 	@Override
 	public void onProgressUpdate(int count) {
 		ProgressDialog dialog = (ProgressDialog) getDialog();
 		if (dialog != null) {
 			dialog.setProgress(count);
 		}
-				
+
 	}
-	
+
 	@Override
 	public void onDismiss(DialogInterface dialog) {
 		super.onDismiss(dialog);
@@ -78,14 +85,16 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 			mTask.cancel(false);
 		}
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
+
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setMax(pointIndexes.length);
 		dialog.setMessage(getText(R.string.update_caches_progress));
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
 		return dialog;
-	}	
+	}
 }

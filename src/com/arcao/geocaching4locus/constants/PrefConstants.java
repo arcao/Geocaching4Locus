@@ -5,7 +5,7 @@ import oauth.signpost.OAuth;
 public interface PrefConstants {
 	static final String PREF_VERSION = "pref_version";
 	static final int CURRENT_PREF_VERSION = 1;
-	
+
 	static final String IMPORT_CACHES  = "import_caches";
 	static final String LAST_LATITUDE  = "latitude";
 	static final String LAST_LONGITUDE = "longitude";
@@ -13,7 +13,7 @@ public interface PrefConstants {
 	static final String USERNAME = "username";
 	static final String PASSWORD = "password";
 	static final String SESSION  = "session";
-	
+
 	static final String OAUTH_TOKEN  = OAuth.OAUTH_TOKEN;
 	static final String OAUTH_TOKEN_SECRET  = OAuth.OAUTH_TOKEN_SECRET;
 
@@ -27,7 +27,7 @@ public interface PrefConstants {
 	static final String FILTER_SHOW_FOUND = "filter_show_found";
 	static final String FILTER_SHOW_OWN = "filter_show_own";
 	static final String FILTER_SHOW_DISABLED = "filter_show_disabled";
-	
+
 	static final String LIVE_MAP = "live_map";
 	static final String DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";

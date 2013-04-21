@@ -14,7 +14,7 @@ public abstract class AbstractActionBarActivity extends FragmentActivity {
 	@Override
 	public abstract boolean onCreateOptionsMenu(Menu menu);
 	public abstract boolean onOptionsItemSelected(int itemId);
-	
+
 	@Override
 	public final boolean onOptionsItemSelected(MenuItem item) {
 		if (onOptionsItemSelected(item.getItemId())) {
@@ -23,7 +23,7 @@ public abstract class AbstractActionBarActivity extends FragmentActivity {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	protected void applyMenuItemOnView(final int resMenuItem, int resView) {
 		View v = findViewById(resView);
 		if (v == null)
@@ -37,17 +37,17 @@ public abstract class AbstractActionBarActivity extends FragmentActivity {
 		});
 		CheatSheet.setup(v);
 	}
-	
+
 	public boolean isFloatingWindow() {
 		TypedArray typedArray = getTheme().obtainStyledAttributes(new int [] { android.R.attr.windowIsFloating });
-		
+
 		if (typedArray == null)
 			return false;
-		
+
 		try {
 			return typedArray.getBoolean(0, false);
 		} finally {
-			typedArray.recycle();			
+			typedArray.recycle();
 		}
 	}
 }

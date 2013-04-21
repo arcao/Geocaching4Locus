@@ -53,10 +53,10 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
-		
+
 		// clear geocaching.com cookies
 		Geocaching4LocusApplication.clearGeocachingCookies();
-			
+
 		mTask = new OAuthLoginTask();
 		mTask.setOAuthLoginTaskListener(this);
 		mTask.execute();
@@ -79,14 +79,14 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 			webView.loadUrl(url);
 		}
 	}
-	
+
 	@Override
 	public void onCancel(DialogInterface dialog) {
 		super.onCancel(dialog);
-		
+
 		if (mTask != null)
 			mTask.cancel(false);
-		
+
 		OnTaskFinishedListener listener = taskFinishedListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(null);
@@ -123,20 +123,20 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 			listener.onTaskFinished(errorIntent);
 		}
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
-		if (webView != null) {		
+
+		if (webView != null) {
 			webView.saveState(outState);
 		}
-		
+
 		if (progressHolder != null) {
 			outState.putInt(STATE_PROGRESS_VISIBLE, progressHolder.getVisibility());
 			Log.d(TAG, "setVisibility: " + progressHolder.getVisibility());
 		}
-		
+
 		lastInstanceState = outState;
 	}
 
@@ -145,17 +145,17 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		// FIX savedInstanceState is null after rotation change
 		if (savedInstanceState == null)
 			savedInstanceState = lastInstanceState;
-		
+
 		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		View view = inflater.inflate(R.layout.dialog_login, container);
 		progressHolder = view.findViewById(R.id.progressHolder);
 		progressHolder.setVisibility(View.VISIBLE);
-		
+
 		if (savedInstanceState != null) {
 			progressHolder.setVisibility(savedInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
 		}
-			
+
 		webView = createWebView(savedInstanceState);
 
 		FrameLayout webViewHolder = (FrameLayout) view.findViewById(R.id.webViewPlaceholder);
@@ -163,21 +163,21 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		return view;
 	}
-		
+
 	@SuppressLint("SetJavaScriptEnabled")
 	public WebView createWebView(Bundle savedInstanceState) {
 		WebView webView = new WebView(getActivity());
-		
-    //webView.setVerticalScrollBarEnabled(false);
-    webView.setHorizontalScrollBarEnabled(false);
-    webView.setWebViewClient(new DialogWebViewClient());
-    webView.getSettings().setJavaScriptEnabled(true);
-    webView.getSettings().setSavePassword(false);
-    
-    if (savedInstanceState != null)
-    	webView.restoreState(savedInstanceState);
-    
-    return webView;
+
+		//webView.setVerticalScrollBarEnabled(false);
+		webView.setHorizontalScrollBarEnabled(false);
+		webView.setWebViewClient(new DialogWebViewClient());
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.getSettings().setSavePassword(false);
+
+		if (savedInstanceState != null)
+			webView.restoreState(savedInstanceState);
+
+		return webView;
 	}
 
 	private class DialogWebViewClient extends WebViewClient {
@@ -185,36 +185,36 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
 				Uri uri = Uri.parse(url);
-				
+
 				if (progressHolder != null) {
 					progressHolder.setVisibility(View.VISIBLE);
 				}
-				
+
 				mTask = new OAuthLoginTask();
 				mTask.setOAuthLoginTaskListener(OAuthLoginDialogFragment.this);
 				mTask.execute(uri.getQueryParameter(OAuth.OAUTH_VERIFIER));
-				
+
 				return true;
 			}
 
 			if (!isOAuthUrl(url)) {
 				Log.d(TAG, "External URL: " + url);
-				
+
 				// launch external URLs in a full browser
 				getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 				return true;
 			}
-			
+
 			return false;
 		}
-		
+
 		protected boolean isOAuthUrl(String url) {
 			url = url.toLowerCase(Locale.US);
-			
-			return url.contains("/oauth/") ||	
-					url.contains("/mobileoauth/") || 
-					url.contains("/mobilesignin/") || 
-					url.contains("/mobilecontent/") || 
+
+			return url.contains("/oauth/") ||
+					url.contains("/mobileoauth/") ||
+					url.contains("/mobilesignin/") ||
+					url.contains("/mobilecontent/") ||
 					url.contains("//m.facebook");
 		}
 
@@ -227,7 +227,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			super.onPageStarted(view, url, favicon);			
+			super.onPageStarted(view, url, favicon);
 			if (progressHolder != null) {
 				progressHolder.setVisibility(View.VISIBLE);
 			}

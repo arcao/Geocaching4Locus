@@ -35,29 +35,29 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	private static final String TAG = LocationUpdateTask.class.getName();
 	private static final int TIMEOUT = 120; // in sec
 	private static final String PASSIVE_PROVIDER = "passive";
-	
+
 	protected final CyclicBarrier barrier = new CyclicBarrier(2); // task + location update callback
 	protected LocationUpdateProgressDialogFragment pd;
-	
+
 	protected WeakReference<FragmentActivity> activityRef;
 	protected LocationManager locationManager;
 	protected Location bestLocation;
 
-  public LocationUpdateTask(FragmentActivity activity) {
-    attach(activity);
-    
-    locationManager = (LocationManager) Geocaching4LocusApplication.getAppContext().getSystemService(Context.LOCATION_SERVICE);
-  }
+	public LocationUpdateTask(FragmentActivity activity) {
+		attach(activity);
 
-  public void attach(FragmentActivity activity) {
-    activityRef = new WeakReference<FragmentActivity>(activity);
-  }
+		locationManager = (LocationManager) Geocaching4LocusApplication.getAppContext().getSystemService(Context.LOCATION_SERVICE);
+	}
 
-  public void detach() {
-  	cancel();
-  }
+	public void attach(FragmentActivity activity) {
+		activityRef = new WeakReference<FragmentActivity>(activity);
+	}
 
-	
+	public void detach() {
+		cancel();
+	}
+
+
 	@Override
 	protected void onPreExecute() {
 		FragmentActivity activity = activityRef.get();
@@ -66,14 +66,14 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			cancel();
 			return;
 		}
-		
+
 		int source = LocationUpdateProgressDialogFragment.SOURCE_NETWORK;
 		bestLocation = getLastLocation();
-		
+
 		if (activity != null && activity instanceof LocationUpdate) {
 			((LocationUpdate)activity).onLocationUpdate(bestLocation);
 		}
-		
+
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 			Log.i(TAG, "Searching location via " + LocationManager.GPS_PROVIDER);
 
@@ -81,28 +81,28 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			source = LocationUpdateProgressDialogFragment.SOURCE_GPS;
 		} else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 			Log.i(TAG, "Searching location via " + LocationManager.NETWORK_PROVIDER);
-			
+
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		} else {
 			Log.i(TAG, "No location providers found, used last location.");
-			
+
 			cancel();
-			
+
 			NoLocationProviderDialogFragment.newInstance().show(activity.getSupportFragmentManager(), NoLocationProviderDialogFragment.TAG);
 			return;
 		}
-		
+
 		pd = LocationUpdateProgressDialogFragment.newInstance(source);
 		pd.show(activity.getSupportFragmentManager(), LocationUpdateProgressDialogFragment.TAG);
 	}
-	
+
 	protected Location getLastLocation() {
-		// use last available location			
+		// use last available location
 		Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Geocaching4LocusApplication.getAppContext());
-		
+
 		Location location;
 		if (gpsLocation == null && networkLocation != null) {
 			location = networkLocation;
@@ -115,13 +115,13 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			location.setLatitude(prefs.getFloat(PrefConstants.LAST_LATITUDE, 0));
 			location.setLongitude(prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0));
 		}
-		
+
 		Log.i(TAG, "Last location found for: " + location.toString());
-		
+
 		return location;
 	}
-	
-	
+
+
 	@Override
 	protected Location doInBackground(Void... params) throws Exception {
 		try {
@@ -136,7 +136,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		}
 		return bestLocation;
 	}
-	
+
 	@Override
 	protected void onPostExecute(Location result) {
 		Activity activity = activityRef.get();
@@ -144,28 +144,28 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			((LocationUpdate)activity).onLocationUpdate(bestLocation);
 		}
 	}
-	
+
 	@Override
 	protected void onFinally() {
 		if (pd != null && pd.isShowing())
 			pd.dismiss();
 	}
-	
+
 	public void cancel() {
 		cancel(false);
 		barrier.reset();
 	}
-		
+
 	@Override
 	public void onCancel(AbstractDialogFragment dialogFragment) {
 		cancel();
 	}
-	
-	
+
+
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.i(TAG, "New location found for: " + location.toString());
-		
+
 		bestLocation = location;
 		try {
 			barrier.await(0, TimeUnit.MILLISECONDS);
@@ -181,10 +181,10 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
 		locationManager.removeUpdates(this);
 		Log.i(TAG, "Location listener removed.");
-		
+
 		if (LocationManager.GPS_PROVIDER.equals(provider) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 			Log.i(TAG, "Switching to " + LocationManager.NETWORK_PROVIDER + " provider.");
-			
+
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		} else {
 			cancel();
@@ -198,23 +198,23 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}	
-	
+	}
+
 	public abstract static interface LocationUpdate {
 		public abstract void onLocationUpdate(Location location);
 	}
-	
+
 	protected static class NoLocationProviderDialogFragment extends AbstractDialogFragment {
 		public static final String TAG = NoLocationProviderDialogFragment.class.getName();
 
 		public NoLocationProviderDialogFragment() {
 			super();
 		}
-		
+
 		public static AbstractDialogFragment newInstance() {
 			return new NoLocationProviderDialogFragment();
 		}
-		
+
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

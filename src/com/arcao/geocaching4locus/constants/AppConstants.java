@@ -13,7 +13,7 @@ public interface AppConstants {
 	static final String COMPRESSION_PROXY_SERVICE_URL = "http://wherigo-service.appspot.com/geocaching_proxy";
 
 	static final String GEOCACHING_WEBSITE_URL = "http://www.geocaching.com/";
-  static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
+	static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
 
 	static final int CACHES_PER_REQUEST = 10;
 

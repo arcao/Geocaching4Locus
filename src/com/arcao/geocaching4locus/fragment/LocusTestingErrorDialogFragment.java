@@ -15,24 +15,24 @@ import com.arcao.geocaching4locus.util.LocusTesting;
 
 public final class LocusTestingErrorDialogFragment extends AbstractErrorDialogFragment {
 	public static final String TAG = LocusTestingErrorDialogFragment.class.getName();
-	
+
 	public static LocusTestingErrorDialogFragment newInstance() {
 		Context context = Geocaching4LocusApplication.getAppContext();
-		
+
 		LocusTestingErrorDialogFragment fragment = new LocusTestingErrorDialogFragment();
 		fragment.prepareDialog(R.string.error_title, LocusUtils.isLocusAvailable(context) ? R.string.error_locus_old : R.string.error_locus_not_found, AppConstants.LOCUS_MIN_VERSION.toString());
 
 		return fragment;
 	}
-	
-	
+
+
 	@Override
 	public OnClickListener getPositiveButtonOnClickListener() {
 		return new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				FragmentActivity activity = getActivity();
-				
+
 				Uri localUri;
 				if (LocusTesting.isAndroidMarketInstalled(activity)) {
 					// create Uri for Locus Free on Google Play

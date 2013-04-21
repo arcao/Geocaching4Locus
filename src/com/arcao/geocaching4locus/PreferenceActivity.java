@@ -39,9 +39,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	private static final String TAG = "G4L|PreferenceActivity";
 
 	public static final int DIALOG_DONATE_ID = 0;
-	
+
 	protected static final String ACCOUNT = "account";
-	
+
 	protected static final String UNIT_KM = "km";
 	protected static final String UNIT_MILES = "mi";
 
@@ -61,7 +61,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			intent.putExtra("ShowCacheTypeFilterScreen", true);
 			cacheTypeFilterScreen.setIntent(intent);
 		}
-		
+
 		containerTypeFilterScreen = (PreferenceScreen) findPreference("container_type_filter_screen");
 		if (containerTypeFilterScreen != null) {
 			Intent intent = new Intent(this, PreferenceActivity.class);
@@ -73,7 +73,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			setPreferenceScreen(cacheTypeFilterScreen);
 			return;
 		}
-		
+
 		if (getIntent().getBooleanExtra("ShowContainerTypeFilterScreen", false)) {
 			setPreferenceScreen(containerTypeFilterScreen);
 			return;
@@ -153,7 +153,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 					Log.e(TAG, e.getMessage(), e);
 					distance = 100;
 				}
-				
+
 				if (((Boolean) newValue)) {
 					filterDistancePreference.setText(Float.toString(distance / 1.609344F));
 					filterDistancePreference.setSummary(preparePreferenceSummary(Float.toString(distance / 1.609344F) + UNIT_MILES, R.string.pref_distance_summary_miles));
@@ -271,14 +271,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				if (secretPrefsAllowingQueue.size() >= 5) {
 					Date firstDate = secretPrefsAllowingQueue.poll();
 					Date threeSecsBeforeDate = new Date(new Date().getTime() - 3000);
-					
+
 					if (firstDate.after(threeSecsBeforeDate)) {
 						useCompressionPreference.setEnabled(true);
 					}
 				}
-				
+
 				secretPrefsAllowingQueue.add(new Date());
-				
+
 				return true;
 			}
 		});
@@ -286,7 +286,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
 		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());
-		
+
 		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 		donatePaypalPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
@@ -295,7 +295,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return true;
 			}
 		});
-		
+
 		final Preference geocachingLivePreference = findPreference(ACCOUNT_GEOCACHING_LIVE, Preference.class);
 		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
@@ -305,7 +305,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 	}
-	
+
 	protected void prepareAccountPreference() {
 		final Preference accountPreference = findPreference(ACCOUNT, EditTextPreference.class);
 		final CheckBoxPreference simpleCacheDataPreference = findPreference(DOWNLOADING_SIMPLE_CACHE_DATA, CheckBoxPreference.class);
@@ -322,7 +322,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				} else {
 					Geocaching4LocusApplication.getAuthenticatorHelper().addAccount(PreferenceActivity.this);
 				}
-				
+
 				// account restrictions for basic member
 				final boolean premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
 				simpleCacheDataPreference.setEnabled(premiumMember);
@@ -340,7 +340,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return true;
 			}
 		});
-		
+
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
 			accountPreference.setTitle(R.string.pref_account_logout);
 			accountPreference.setSummary(prepareAcountSummary(Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name, R.string.pref_account_logout_summary));
@@ -404,7 +404,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -450,7 +450,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			return preparePreferenceSummary(value, resId);
 		return Html.fromHtml(summary);
 	}
-	
+
 	protected Spanned prepareAcountSummary(CharSequence value, int resId) {
 		String summary = "%s";
 		if (resId != 0)

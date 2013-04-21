@@ -38,7 +38,7 @@ public class SendErrorActivity extends Activity {
 		} else {
 			finish();
 		}
-		
+
 		requestWindowFeature(Window.FEATURE_LEFT_ICON);
 
 		LinearLayout root = new LinearLayout(this);
@@ -123,7 +123,7 @@ public class SendErrorActivity extends Activity {
 				finish();
 			}
 		});
-		
+
 		buttons.addView(yes, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1.0f));
 		Button no = new Button(this);
 		no.setText(android.R.string.no);
@@ -140,7 +140,7 @@ public class SendErrorActivity extends Activity {
 		setContentView(root);
 
 		setTitle(R.string.error_report_error);
-		
+
 		getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, ACRA.getConfig().resDialogIcon());
 	}
 }

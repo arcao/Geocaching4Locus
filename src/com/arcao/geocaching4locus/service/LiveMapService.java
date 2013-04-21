@@ -45,20 +45,20 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class LiveMapService extends IntentService {
 	private static final String TAG = "G4L|LiveMapService";
-	
+
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
 	public static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
 	public static final String PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE";
 	public static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
 	public static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
-	
+
 	private static final int REQUESTS = 5;
 	private static final int CACHES_PER_REQUEST = 50;
 	private static final int CACHES_COUNT = REQUESTS * CACHES_PER_REQUEST;
-	
+
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
-	
+
 	private boolean showFound;
 	private boolean showOwn;
 	private boolean showDisabled;
@@ -72,16 +72,16 @@ public class LiveMapService extends IntentService {
 
 	public LiveMapService() {
 		super(TAG);
-		
+
 		mMainThreadHandler = new Handler();
 	}
-	
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// increase count of jobs
 		countOfJobs.incrementAndGet();
 		Log.d(TAG, "New job, count=" + countOfJobs.get());
-		
+
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -89,38 +89,38 @@ public class LiveMapService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		int jobId = countOfJobs.get();
 		Log.d(TAG, "Handling job, count=" + jobId);
-		
+
 		// we skip all jobs before last one
 		if (countOfJobs.getAndDecrement() > 1)
 			return;
-		
+
 		// wait 1100 ms, next job could come
 		/*try {
 			Thread.sleep(1100);
 		} catch(InterruptedException e) {}
-		
+
 		// if so skip this job
 		if (countOfJobs.get() > 0) {
 			Log.d(TAG, "New job found, skipped...");
 			return;
 		}*/
-		
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); 
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		loadConfiguration(prefs);
-		
+
 		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 		double topLeftLatitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
 		double topLeftLongitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LONGITUDE, 0D);
 		double bottomRightLatitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
-		
-		try {			
+
+		try {
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (RequiredVersionMissingException e) {
 			Log.e(TAG, e.getMessage(), e);
 			showMessage("Error: " + e.getMessage());
-			
+
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (InvalidCredentialsException e) {
@@ -141,7 +141,7 @@ public class LiveMapService extends IntentService {
 			Log.d(TAG, "Job finished.");
 		}
 	}
-	
+
 	protected void loadConfiguration(SharedPreferences prefs) {
 		showFound = prefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
 		showOwn = prefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
@@ -150,23 +150,23 @@ public class LiveMapService extends IntentService {
 		// default values for basic member
 		difficultyMin = 1;
 		difficultyMax = 5;
-		
+
 		terrainMin = 1;
 		terrainMax = 5;
-		
+
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
 			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
-			
+
 			terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
 			terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
-			
+
 			cacheTypes = getCacheTypeFilterResult(prefs);
 			containerTypes = getContainerTypeFilterResult(prefs);
 		}
 	}
-	
+
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
 		Vector<CacheType> filter = new Vector<CacheType>();
 
@@ -178,7 +178,7 @@ public class LiveMapService extends IntentService {
 
 		return filter.toArray(new CacheType[0]);
 	}
-	
+
 	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
 		Vector<ContainerType> filter = new Vector<ContainerType>();
 
@@ -190,23 +190,23 @@ public class LiveMapService extends IntentService {
 
 		return filter.toArray(new ContainerType[0]);
 	}
-	
+
 	protected void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
-	
+
 		int current = 0;
 		int perPage = CACHES_PER_REQUEST;
-		
+
 		int requests = 0;
-		
+
 		try {
 			login(api);
-			
+
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
-				
+
 			while (current < CACHES_COUNT) {
 				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
 
@@ -214,9 +214,9 @@ public class LiveMapService extends IntentService {
 					Log.d(TAG, "New job found, skipped downloading next caches ...");
 					break;
 				}
-				
+
 				List<SimpleGeocache> caches;
-				
+
 				if (current == 0) {
 					caches = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
 							new PointRadiusFilter(latitude, longitude, 60000),
@@ -232,12 +232,12 @@ public class LiveMapService extends IntentService {
 				} else {
 					caches = api.getMoreGeocaches(true, current, perPage, 0, 0);
 				}
-				
+
 				if (caches.size() == 0)
 					break;
-				
+
 				current = current + caches.size();
-				
+
 				requests++;
 
 				PackWaypoints pw = new PackWaypoints(TAG + "|" + requests);
@@ -248,53 +248,53 @@ public class LiveMapService extends IntentService {
 				}
 
 				ActionDisplayPoints.sendPackSilent(this, pw);
-				
+
 				if (caches.size() != perPage)
 					break;
 			}
 		} catch (InvalidSessionException e) {
 			Log.e(TAG, e.getMessage(), e);
 			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
-			
+
 			throw e;
 		} catch (OperationCanceledException e) {
 			Log.e(TAG, e.getMessage(), e);
-			
+
 			throw new InvalidCredentialsException("Log in operation cancelled");
 		} finally {
 			Log.i(TAG, "Count of caches sent to Locus: " + current);
 		}
-		
+
 		// HACK we must remove old PackWaypoints from the map
 		for (int i = requests + 1; i < REQUESTS; i++) {
 			PackWaypoints pw = new PackWaypoints(TAG + "|" + i);
 			ActionDisplayPoints.sendPackSilent(this, pw);
 		}
 	}
-	
+
 	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
 		if (token == null) {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
 		}
-			
+
 		api.openSession(token);
-  }
+	}
 
 	public static Intent createIntent(Context context, double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) {
 		Intent i = new Intent(context, LiveMapService.class);
-		
+
 		i.putExtra(PARAM_LATITUDE, latitude);
 		i.putExtra(PARAM_LONGITUDE, longitude);
 		i.putExtra(PARAM_TOP_LEFT_LATITUDE, topLeftLatitude);
 		i.putExtra(PARAM_TOP_LEFT_LONGITUDE, topLeftLongitude);
 		i.putExtra(PARAM_BOTTOM_RIGHT_LATITUDE, bottomRightLatitude);
 		i.putExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, bottomRightLongitude);
-		
+
 		return i;
 	}
-	
+
 	protected void showMessage(final String message) {
 		mMainThreadHandler.post(new Runnable() {
 			@Override

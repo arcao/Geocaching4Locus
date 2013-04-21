@@ -26,16 +26,16 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	public static String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
 	public static String PARAM_MIN_VALUE = "MIN_VALUE";
 	public static String PARAM_MAX_VALUE = "MAX_VALUE";
-	
+
 	protected int mMinValue = 0;
 	protected int mMaxValue = 100;
 	protected int mValue = mMinValue;
 	protected int mNewValue = mValue;
-	
+
 	protected int mPrefixTextRes = 0;
-	
-	protected WeakReference<OnNumberChooserDialogClosedListener> onNumberChooserDialogClosedListenerRef;  
-	
+
+	protected WeakReference<OnNumberChooserDialogClosedListener> onNumberChooserDialogClosedListenerRef;
+
 	public static NumberChooserDialogFragment newInstance(int titleRes, int prefixQuantityRes, int minValue, int maxValue, int defaultValue) {
 		NumberChooserDialogFragment fragment;
 
@@ -56,47 +56,47 @@ public class NumberChooserDialogFragment extends DialogFragment {
 
 		return fragment;
 	}
-	
+
 	public int getValue() {
 		return mNewValue;
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
+
 		try {
 			onNumberChooserDialogClosedListenerRef = new WeakReference<OnNumberChooserDialogClosedListener>((OnNumberChooserDialogClosedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnNumberChooserDialogClosedListener");
 		}
 	}
-	
+
 	protected void fireOnNumberChooserDialogClosedListener() {
 		OnNumberChooserDialogClosedListener listener = onNumberChooserDialogClosedListenerRef.get();
 		if (listener != null) {
 			listener.onNumberChooserDialogClosed(this);
 		}
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mMinValue = getArguments().getInt(PARAM_MIN_VALUE, mMinValue);
 		mMaxValue = getArguments().getInt(PARAM_MAX_VALUE, mMaxValue);
 		mValue = getArguments().getInt(PARAM_DEFAULT_VALUE, mValue);
-		
+
 		if (mValue < mMinValue) {
 			mValue = mMinValue;
 		}
-		
+
 		mPrefixTextRes = getArguments().getInt(PARAM_PREFIX_TEXT, mPrefixTextRes);
-		
+
 		mNewValue = mValue;
-		
+
 		if (savedInstanceState != null ) {
 			mValue = savedInstanceState.getInt(PARAM_DEFAULT_VALUE, mValue);
 		}
-		
+
 		return new AlertDialog.Builder(getActivity())
 			.setTitle(getArguments().getInt(PARAM_TITLE))
 			.setView(prepareView())
@@ -115,40 +115,40 @@ public class NumberChooserDialogFragment extends DialogFragment {
 			})
 			.create();
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putInt(PARAM_DEFAULT_VALUE, mValue);
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	protected View prepareView() {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
-		
+
 		final TextView textView = (TextView) view.findViewById(R.id.number_picker_dialog_prefix_text);
 		textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));
-		
-		// SeekBar doesn't support minimal value, we must transpose values	
+
+		// SeekBar doesn't support minimal value, we must transpose values
 		SeekBar seekBar =	(SeekBar) view.findViewById(R.id.number_picker_dialog_seek_bar);
 		seekBar.setMax(mMaxValue - mMinValue);
-		seekBar.setProgress(mValue - mMinValue);		
+		seekBar.setProgress(mValue - mMinValue);
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {}
-			
+
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
+
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				mValue = progress + mMinValue;
 				textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));
 			}
 		});
-		
+
 		return view;
 	}
-	
+
 	// --------------------------- Helper methods ------------------------------------------
 
 	// This is to work around what is apparently a bug. If you don't have it
@@ -171,7 +171,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 
 		super.show(manager, tag);
 	}
-	
+
 	// --------------------------- Listeners -----------------------------------------------
 
 	public interface OnNumberChooserDialogClosedListener {

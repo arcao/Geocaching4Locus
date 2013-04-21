@@ -20,9 +20,9 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class MenuActivity extends AbstractActionBarActivity {
 	private final static String TAG = "G4L|MenuActivity";
-	
+
 	private SharedPreferences prefs;
-	private ToggleButton liveMapButton; 
+	private ToggleButton liveMapButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +32,12 @@ public class MenuActivity extends AbstractActionBarActivity {
 
 		findViewById(R.id.image_view_separator_setting).setVisibility(View.GONE);
 		findViewById(R.id.header_preferences).setVisibility(View.GONE);
-		
+
 		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
 		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 	}
 
@@ -47,14 +47,14 @@ public class MenuActivity extends AbstractActionBarActivity {
 
 		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
 	}
-	
+
 	public void onClickImportFromGC(View view) {
 		startActivityForResult(new Intent(this, ImportFromGCActivity.class), 0);
 	}
 
 	public void onClickLiveMap(View view) {
 		boolean activated = liveMapButton.isChecked();
-		
+
 		if (activated && !isPeriodicUpdateEnabled(this)) {
 			activated = false;
 			liveMapButton.setChecked(activated);
@@ -80,7 +80,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 
 	public void onClickNearest(View view) {
 		Intent intent = null;
-		
+
 		// copy intent data from Locus
 		// FIX Android 2.3.3 can't start activity second time
 		if (LocusUtils.isIntentMainFunction(getIntent())) {
@@ -93,7 +93,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 		startActivity(intent);
 		finish();
 	}
-	
+
 	public void onClickPreferences(View view) {
 		startActivity(new Intent(this, PreferenceActivity.class));
 	}
@@ -119,14 +119,14 @@ public class MenuActivity extends AbstractActionBarActivity {
 				return false;
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			finish();
 		}
 	}
-	
+
 	public static boolean isPeriodicUpdateEnabled(Context ctx) {
 		try {
 			return ActionTools.isPeriodicUpdatesEnabled(ctx);

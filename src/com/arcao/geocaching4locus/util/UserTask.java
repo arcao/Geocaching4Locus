@@ -12,13 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  * Modification:
  *  Martin Arcao Sloup (2011-08-11):
  *   - support for onException handler (runs on UI thread)
  *   - support for onFinish handler (runs on UI thread)
  *   - some methods are protected instead of public
- * 
+ *
  */
 
 package com.arcao.geocaching4locus.util;
@@ -45,7 +45,7 @@ import android.os.Process;
  * perform background operations and publish results on the UI thread without
  * having to manipulate threads and/or handlers.
  * </p>
- * 
+ *
  * <p>
  * A user task is defined by a computation that runs on a background thread and
  * whose result is published on the UI thread. A user task is defined by 3
@@ -54,18 +54,18 @@ import android.os.Process;
  * <code>doInBackground</code>, <code>processProgress<code> and <code>end</code>
  * .
  * </p>
- * 
+ *
  * <h2>Usage</h2>
  * <p>
  * UserTask must be subclassed to be used. The subclass will override at least
  * one method ({@link #doInBackground(Object[])}), and most often will override
  * a second one ({@link #onPostExecute(Object)}.)
  * </p>
- * 
+ *
  * <p>
  * Here is an example of subclassing:
  * </p>
- * 
+ *
  * <pre>
  * private class DownloadFilesTask extends UserTask&lt;URL, Integer, Long&gt; {
  * 	protected File doInBackground(URL... urls) {
@@ -76,25 +76,25 @@ import android.os.Process;
  * 			publishProgress((int) ((i / (float) count) * 100));
  * 		}
  * 	}
- * 
+ *
  * 	protected void onProgressUpdate(Integer... progress) {
  * 		setProgressPercent(progress[0]);
  * 	}
- * 
+ *
  * 	protected void onPostExecute(Long result) {
  * 		showDialog(&quot;Downloaded &quot; + result + &quot; bytes&quot;);
  * 	}
  * }
  * </pre>
- * 
+ *
  * <p>
  * Once created, a task is executed very simply:
  * </p>
- * 
+ *
  * <pre>
  * new DownloadFilesTask().execute(new URL[] { ... });
  * </pre>
- * 
+ *
  * <h2>User task's generic types</h2>
  * <p>
  * The three types used by a user task are the following:
@@ -111,11 +111,11 @@ import android.os.Process;
  * Not all types are always used by a user task. To mark a type as unused,
  * simply use the type {@link Void}:
  * </p>
- * 
+ *
  * <pre>
  * private class MyTask extends UserTask<Void, Void, Void) { ... }
  * </pre>
- * 
+ *
  * <h2>The 4 steps</h2>
  * <p>
  * When a user task is executed, the task goes through 4 steps:
@@ -141,7 +141,7 @@ import android.os.Process;
  * background computation finishes. The result of the background computation is
  * passed to this step as a parameter.</li>
  * </ol>
- * 
+ *
  * <h2>Threading rules</h2>
  * <p>
  * There are a few threading rules that must be followed for this class to work
@@ -259,7 +259,7 @@ public abstract class UserTask<Params, Progress, Result> {
 
 	/**
 	 * Returns the current status of this task.
-	 * 
+	 *
 	 * @return The current status.
 	 */
 	public final Status getStatus() {
@@ -270,19 +270,19 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * Override this method to perform a computation on a background thread. The
 	 * specified parameters are the parameters passed to
 	 * {@link #execute(Object[])} by the caller of this task.
-	 * 
+	 *
 	 * This method can call {@link #publishProgress(Object[])} to publish updates
 	 * on the UI thread.
-	 * 
+	 *
 	 * @param params
 	 *          The parameters of the task.
-	 * 
+	 *
 	 * @return A result, defined by the subclass of this task.
-	 * 
+	 *
 	 * @throws If
 	 *           error occurs in this method exceptions can be handled in
 	 *           {@link #onException(Exception)}.
-	 * 
+	 *
 	 * @see #onPreExecute()
 	 * @see #onPostExecute(Object)
 	 * @see #onFinally()
@@ -293,7 +293,7 @@ public abstract class UserTask<Params, Progress, Result> {
 
 	/**
 	 * Runs on the UI thread before {@link #doInBackground(Object[])}.
-	 * 
+	 *
 	 * @see #onPostExecute(Object)
 	 * @see #doInBackground(Object[])
 	 */
@@ -304,11 +304,11 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * Runs on the UI thread after {@link #doInBackground(Object[])}. The
 	 * specified result is the value returned by {@link #doInBackground(Object[])}
 	 * or null if the task was cancelled or an exception occured.
-	 * 
+	 *
 	 * @param result
 	 *          The result of the operation computed by
 	 *          {@link #doInBackground(Object[])}.
-	 * 
+	 *
 	 * @see #onPreExecute()
 	 * @see #doInBackground(Object[])
 	 */
@@ -319,10 +319,10 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * Runs on the UI thread after {@link #publishProgress(Object[])} is invoked.
 	 * The specified values are the values passed to
 	 * {@link #publishProgress(Object[])}.
-	 * 
+	 *
 	 * @param values
 	 *          The values indicating progress.
-	 * 
+	 *
 	 * @see #publishProgress(Object[])
 	 * @see #doInBackground(Object[])
 	 */
@@ -331,7 +331,7 @@ public abstract class UserTask<Params, Progress, Result> {
 
 	/**
 	 * Runs on the UI thread after {@link #cancel(boolean)} is invoked.
-	 * 
+	 *
 	 * @see #cancel(boolean)
 	 * @see #isCancelled()
 	 */
@@ -341,9 +341,9 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Returns <tt>true</tt> if this task was cancelled before it completed
 	 * normally.
-	 * 
+	 *
 	 * @return <tt>true</tt> if task was cancelled before it completed
-	 * 
+	 *
 	 * @see #cancel(boolean)
 	 */
 	public final boolean isCancelled() {
@@ -358,14 +358,14 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * task has already started, then the <tt>mayInterruptIfRunning</tt> parameter
 	 * determines whether the thread executing this task should be interrupted in
 	 * an attempt to stop the task.
-	 * 
+	 *
 	 * @param mayInterruptIfRunning
 	 *          <tt>true</tt> if the thread executing this task should be
 	 *          interrupted; otherwise, in-progress tasks are allowed to complete.
-	 * 
+	 *
 	 * @return <tt>false</tt> if the task could not be cancelled, typically
 	 *         because it has already completed normally; <tt>true</tt> otherwise
-	 * 
+	 *
 	 * @see #isCancelled()
 	 * @see #onCancelled()
 	 */
@@ -376,7 +376,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Runs on the UI thread after {@link #onPostExecute(Object)} or
 	 * {@link #onCancelled()};
-	 * 
+	 *
 	 * @see #onPostExecute(Object)
 	 * @see #onCancelled()
 	 */
@@ -386,10 +386,10 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Runs on the UI thread when errors occurs in
 	 * {@link #doInBackground(Object...)} method.
-	 * 
+	 *
 	 * @param e
 	 *          Exception
-	 * 
+	 *
 	 * @see #doInBackground(Object...)
 	 */
 	protected void onException(Throwable e) {
@@ -398,9 +398,9 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Waits if necessary for the computation to complete, and then retrieves its
 	 * result.
-	 * 
+	 *
 	 * @return The computed result.
-	 * 
+	 *
 	 * @throws CancellationException
 	 *           If the computation was cancelled.
 	 * @throws ExecutionException
@@ -415,14 +415,14 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Waits if necessary for at most the given time for the computation to
 	 * complete, and then retrieves its result.
-	 * 
+	 *
 	 * @param timeout
 	 *          Time to wait before cancelling the operation.
 	 * @param unit
 	 *          The time unit for the timeout.
-	 * 
+	 *
 	 * @return The computed result.
-	 * 
+	 *
 	 * @throws CancellationException
 	 *           If the computation was cancelled.
 	 * @throws ExecutionException
@@ -440,14 +440,14 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Executes the task with the specified parameters. The task returns itself
 	 * (this) so that the caller can keep a reference to it.
-	 * 
+	 *
 	 * This method must be invoked on the UI thread.
-	 * 
+	 *
 	 * @param params
 	 *          The parameters of the task.
-	 * 
+	 *
 	 * @return This instance of UserTask.
-	 * 
+	 *
 	 * @throws IllegalStateException
 	 *           If {@link #getStatus()} returns either
 	 *           {@link UserTask.Status#RUNNING} or
@@ -482,10 +482,10 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * publish updates on the UI thread while the background computation is still
 	 * running. Each call to this method will trigger the execution of
 	 * {@link #onProgressUpdate(Object[])} on the UI thread.
-	 * 
+	 *
 	 * @param values
 	 *          The progress values to update the UI with.
-	 * 
+	 *
 	 * @see # onProgressUpdate (Object[])
 	 * @see #doInBackground(Object[])
 	 */
@@ -498,12 +498,12 @@ public abstract class UserTask<Params, Progress, Result> {
 		onPostExecute(result);
 		mStatus = Status.FINISHED;
 	}
-	
+
 	private void exception(Throwable e) {
 	  onException(e);
 	  mStatus = Status.FINISHED;
 	}
-	
+
 	private void cancel() {
 	  onCancelled();
 	  mStatus = Status.FINISHED;

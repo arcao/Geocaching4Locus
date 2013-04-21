@@ -22,15 +22,15 @@ public class WherigoJsonResultParser {
 		r.endObject();
 		return status;
 	}
-	
+
 	public static class Result {
 		protected int statusCode;
 		protected String statusMessage;
-				
+
 		public int getStatusCode() {
 			return statusCode;
 		}
-		
+
 		public String getStatusMessage() {
 			return statusMessage;
 		}

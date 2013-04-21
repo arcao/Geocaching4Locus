@@ -161,7 +161,7 @@ public class SearchGeocacheService extends AbstractService {
 	private void callLocus(File file) {
 		try {
 			if (file != null) {
-			  ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, Intent.FLAG_ACTIVITY_NEW_TASK);
+				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);
@@ -318,16 +318,16 @@ public class SearchGeocacheService extends AbstractService {
 	}
 
 	protected double computeDistance(double latitude, double longitude, SimpleGeocache cache) {
-    final double r = 6366.707;
+		final double r = 6366.707;
 
-    // convert to radians
-    double latitudeFrom = Math.toRadians(latitude);
-    double longitudeFrom = Math.toRadians(longitude);
-    double latitudeTo = Math.toRadians(cache.getLatitude());
-    double longitudeTo = Math.toRadians(cache.getLongitude());
+		// convert to radians
+		double latitudeFrom = Math.toRadians(latitude);
+		double longitudeFrom = Math.toRadians(longitude);
+		double latitudeTo = Math.toRadians(cache.getLatitude());
+		double longitudeTo = Math.toRadians(cache.getLongitude());
 
-    return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
-  }
+		return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
+	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();

@@ -11,7 +11,7 @@ import android.util.Log;
 @TargetApi(8)
 public class PreferencesBackupAgent extends BackupAgentHelper {
 	private static final String TAG = "Geocaching4Locus|PreferencesBackupAgent";
-	
+
 	// A key to uniquely identify the set of backup data
 	private static final String PREFS_BACKUP_KEY = "PREFERENCES";
 
@@ -22,7 +22,7 @@ public class PreferencesBackupAgent extends BackupAgentHelper {
 	}
 
 	private static String getDefaultSharedPreferencesName(Context context) {
-		String name = context.getPackageName() + "_preferences"; 
+		String name = context.getPackageName() + "_preferences";
 		Log.i(TAG, "getDefaultSharedPreferencesName: " + name);
 		return name;
 	}

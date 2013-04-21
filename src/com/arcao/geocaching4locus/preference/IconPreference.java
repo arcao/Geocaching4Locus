@@ -11,40 +11,43 @@ import android.widget.ImageView;
 import com.arcao.geocaching4locus.R;
 
 public class IconPreference extends Preference {
-  private Drawable mIcon;
+	private Drawable mIcon;
 
-  public IconPreference(Context context, AttributeSet attrs) {
-      this(context, attrs, 0);
-  }
+	public IconPreference(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
 
-  public IconPreference(Context context, AttributeSet attrs, int defStyle) {
-      super(context, attrs, defStyle);
-      setLayoutResource(R.layout.preference_icon);
-      TypedArray a = context.obtainStyledAttributes(attrs,
-              R.styleable.IconPreference, defStyle, 0);
-      mIcon = a.getDrawable(R.styleable.IconPreference_icon);
-      a.recycle();
-  }
+	public IconPreference(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
 
-  @Override
-  public void onBindView(View view) {
-      super.onBindView(view);
-      ImageView imageView = (ImageView) view.findViewById(R.id.icon);
-      if (imageView != null && mIcon != null) {
-          imageView.setImageDrawable(mIcon);
-      }
-  }
+		setLayoutResource(R.layout.preference_icon);
 
-  @Override
+		TypedArray a = context.obtainStyledAttributes(attrs,
+			R.styleable.IconPreference, defStyle, 0);
+		mIcon = a.getDrawable(R.styleable.IconPreference_icon);
+		a.recycle();
+	}
+
+	@Override
+	public void onBindView(View view) {
+		super.onBindView(view);
+
+		ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+		if (imageView != null && mIcon != null) {
+			imageView.setImageDrawable(mIcon);
+		}
+	}
+
+	@Override
 	public void setIcon(Drawable icon) {
-      if ((icon == null && mIcon != null) || (icon != null && !icon.equals(mIcon))) {
-          mIcon = icon;
-          notifyChanged();
-      }
-  }
+		if ((icon == null && mIcon != null) || (icon != null && !icon.equals(mIcon))) {
+			mIcon = icon;
+			notifyChanged();
+		}
+	}
 
-  @Override
+	@Override
 	public Drawable getIcon() {
-      return mIcon;
-  }
+		return mIcon;
+	}
 }

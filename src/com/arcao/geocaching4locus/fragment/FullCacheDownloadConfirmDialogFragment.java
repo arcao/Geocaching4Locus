@@ -17,45 +17,45 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 
 public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = FullCacheDownloadConfirmDialogFragment.class.getName();
-	
+
 	public interface OnFullCacheDownloadConfirmDialogListener {
 		void onFullCacheDownloadConfirmDialogFinished(boolean success);
 	}
-	
+
 	protected WeakReference<OnFullCacheDownloadConfirmDialogListener> fullCacheDownloadConfirmDialogListenerRef;
-	
+
 	public static FullCacheDownloadConfirmDialogFragment newInstance() {
 		return new FullCacheDownloadConfirmDialogFragment();
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setCancelable(false);
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		
+
 		try {
 			fullCacheDownloadConfirmDialogListenerRef = new WeakReference<OnFullCacheDownloadConfirmDialogListener>((OnFullCacheDownloadConfirmDialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnFullCacheDownloadConfirmDialogListener");
-		} 
+		}
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
-		
+
 		// apply format on a text
 		int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
 		int period = (int) restrictions.getFullGeocacheLimitPeriod();
-		
+
 		int cachesLeft = (int) restrictions.getFullGeocacheLimitLeft();
-		
+
 		String periodString = null;
 		if (period < 60) {
 			periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
@@ -63,13 +63,13 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 			period = period / 60;
 			periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 		}
-		
+
 		String cacheString = getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
 		String cachesLeftString = getResources().getQuantityString(R.plurals.plurals_cache, cachesLeft, cachesLeft);
 		String renewTime = DateFormat.getTimeFormat(getActivity()).format(restrictions.getRenewFullGeocacheLimit());
-		
+
 		String message = getString(R.string.basic_member_full_geocache_warning_message, cacheString, periodString, cachesLeftString, renewTime);
-		
+
 		return new AlertDialog.Builder(getActivity())
 			.setTitle(R.string.basic_member_warning_title)
 			.setMessage(Html.fromHtml(message))

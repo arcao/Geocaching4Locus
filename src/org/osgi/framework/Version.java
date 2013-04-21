@@ -1,6 +1,6 @@
 /*
  * Copyright (c) OSGi Alliance (2004, 2009). All Rights Reserved.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
 
 /**
  * Version identifier for bundles and packages.
- * 
+ *
  * <p>
  * Version identifiers have four components.
  * <ol>
@@ -31,10 +31,10 @@ import java.util.StringTokenizer;
  * <li>Qualifier. A text string. See <code>Version(String)</code> for the
  * format of the qualifier string.</li>
  * </ol>
- * 
+ *
  * <p>
  * <code>Version</code> objects are immutable.
- * 
+ *
  * @since 1.3
  * @Immutable
  * @version $Revision: 6860 $
@@ -55,10 +55,10 @@ public class Version implements Comparable {
 
 	/**
 	 * Creates a version identifier from the specified numerical components.
-	 * 
+	 *
 	 * <p>
 	 * The qualifier is set to the empty string.
-	 * 
+	 *
 	 * @param major Major component of the version identifier.
 	 * @param minor Minor component of the version identifier.
 	 * @param micro Micro component of the version identifier.
@@ -71,7 +71,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Creates a version identifier from the specified components.
-	 * 
+	 *
 	 * @param major Major component of the version identifier.
 	 * @param minor Minor component of the version identifier.
 	 * @param micro Micro component of the version identifier.
@@ -95,10 +95,10 @@ public class Version implements Comparable {
 
 	/**
 	 * Created a version identifier from the specified string.
-	 * 
+	 *
 	 * <p>
 	 * Here is the grammar for version strings.
-	 * 
+	 *
 	 * <pre>
 	 * version ::= major('.'minor('.'micro('.'qualifier)?)?)?
 	 * major ::= digit+
@@ -108,9 +108,9 @@ public class Version implements Comparable {
 	 * digit ::= [0..9]
 	 * alpha ::= [a..zA..Z]
 	 * </pre>
-	 * 
+	 *
 	 * There must be no whitespace in version.
-	 * 
+	 *
 	 * @param version String representation of the version identifier.
 	 * @throws IllegalArgumentException If <code>version</code> is improperly
 	 *         formatted.
@@ -157,7 +157,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Called by the Version constructors to validate the version components.
-	 * 
+	 *
 	 * @throws IllegalArgumentException If the numerical components are negative
 	 *         or the qualifier string is invalid.
 	 */
@@ -193,10 +193,10 @@ public class Version implements Comparable {
 
 	/**
 	 * Parses a version identifier from the specified string.
-	 * 
+	 *
 	 * <p>
 	 * See <code>Version(String)</code> for the format of the version string.
-	 * 
+	 *
 	 * @param version String representation of the version identifier. Leading
 	 *        and trailing whitespace will be ignored.
 	 * @return A <code>Version</code> object representing the version
@@ -221,7 +221,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns the major component of this version identifier.
-	 * 
+	 *
 	 * @return The major component.
 	 */
 	public int getMajor() {
@@ -230,7 +230,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns the minor component of this version identifier.
-	 * 
+	 *
 	 * @return The minor component.
 	 */
 	public int getMinor() {
@@ -239,7 +239,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns the micro component of this version identifier.
-	 * 
+	 *
 	 * @return The micro component.
 	 */
 	public int getMicro() {
@@ -248,7 +248,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns the qualifier component of this version identifier.
-	 * 
+	 *
 	 * @return The qualifier component.
 	 */
 	public String getQualifier() {
@@ -257,12 +257,12 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns the string representation of this version identifier.
-	 * 
+	 *
 	 * <p>
 	 * The format of the version string will be <code>major.minor.micro</code>
 	 * if qualifier is the empty string or
 	 * <code>major.minor.micro.qualifier</code> otherwise.
-	 * 
+	 *
 	 * @return The string representation of this version identifier.
 	 */
 	@Override
@@ -283,7 +283,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Returns a hash code value for the object.
-	 * 
+	 *
 	 * @return An integer which is a hash code value for this object.
 	 */
 	@Override
@@ -294,12 +294,12 @@ public class Version implements Comparable {
 
 	/**
 	 * Compares this <code>Version</code> object to another object.
-	 * 
+	 *
 	 * <p>
 	 * A version is considered to be <b>equal to </b> another version if the
 	 * major, minor and micro components are equal and the qualifier component
 	 * is equal (using <code>String.equals</code>).
-	 * 
+	 *
 	 * @param object The <code>Version</code> object to be compared.
 	 * @return <code>true</code> if <code>object</code> is a
 	 *         <code>Version</code> and is equal to this object;
@@ -322,7 +322,7 @@ public class Version implements Comparable {
 
 	/**
 	 * Compares this <code>Version</code> object to another object.
-	 * 
+	 *
 	 * <p>
 	 * A version is considered to be <b>less than </b> another version if its
 	 * major component is less than the other version's major component, or the
@@ -332,12 +332,12 @@ public class Version implements Comparable {
 	 * or the major, minor and micro components are equal and it's qualifier
 	 * component is less than the other version's qualifier component (using
 	 * <code>String.compareTo</code>).
-	 * 
+	 *
 	 * <p>
 	 * A version is considered to be <b>equal to</b> another version if the
 	 * major, minor and micro components are equal and the qualifier component
 	 * is equal (using <code>String.compareTo</code>).
-	 * 
+	 *
 	 * @param object The <code>Version</code> object to be compared.
 	 * @return A negative integer, zero, or a positive integer if this object is
 	 *         less than, equal to, or greater than the specified

@@ -16,6 +16,6 @@ public interface AuthenticatorHelper {
 	void removeAccount();
 	void invalidateAuthToken();
 	void convertFromOldStorage();
-	
+
 	AccountRestrictions getRestrictions();
 }

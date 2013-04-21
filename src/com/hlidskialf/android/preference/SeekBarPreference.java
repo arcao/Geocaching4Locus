@@ -1,6 +1,6 @@
-/* The following code was written by Matthew Wiggins 
- * and is released under the APACHE 2.0 license 
- * 
+/* The following code was written by Matthew Wiggins
+ * and is released under the APACHE 2.0 license
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 package com.hlidskialf.android.preference;
@@ -20,7 +20,7 @@ import com.arcao.geocaching4locus.R;
 
 public class SeekBarPreference extends DialogPreference implements
 		SeekBar.OnSeekBarChangeListener {
-	
+
 	private SeekBar mSeekBar;
 	private TextView mSplashText, mValueText;
 	private final Context mContext;
@@ -32,14 +32,14 @@ public class SeekBarPreference extends DialogPreference implements
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
-		
+
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SeekBarPreference);
 
 		mDialogMessage = a.getText(R.styleable.SeekBarPreference_android_dialogMessage);
 		mSuffix = a.getText(R.styleable.SeekBarPreference_android_text);
 		mDefault = a.getInt(R.styleable.SeekBarPreference_android_defaultValue, 0);
 		mMax = a.getInt(R.styleable.SeekBarPreference_android_max, 100);
-		
+
 		mValue = getPersistedInt(mDefault);
 
 		a.recycle();

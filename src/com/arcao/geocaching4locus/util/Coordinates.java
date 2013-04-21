@@ -23,7 +23,7 @@ public class Coordinates {
 			deg++;
 			min = 0D;
 		}
-		
+
 		sb.append(deg);
 		sb.append("\u00B0 ");
 		sb.append(round(min, precision));
@@ -90,7 +90,7 @@ public class Coordinates {
 		}
 		return source.length();
 	}
-	
+
 	public static double roundDouble(double source, int decimalPlaces) {
 	    double multipicationFactor = Math.pow(10, decimalPlaces);
 	    double sourceMultipled = source * multipicationFactor;

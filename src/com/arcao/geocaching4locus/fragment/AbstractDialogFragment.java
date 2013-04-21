@@ -25,9 +25,6 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 		} catch(IllegalStateException e) {
 			dismissAllowingStateLoss();
 		}
-
-		//getFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
-		//getFragmentManager().executePendingTransactions();
 	}
 
 	public boolean isShowing() {

@@ -164,8 +164,8 @@
     
     <plurals name="plurals_cache">
         <item quantity="one">%d keš</item>
-        <item quantity="few">%d keší</item>
-        <item quantity="other">%d keše</item>
+        <item quantity="few">%d keše</item>
+        <item quantity="other">%d keší</item>
     </plurals>
     
     <plurals name="plurals_hour">

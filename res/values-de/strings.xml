@@ -184,6 +184,6 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen...</string>
     
-    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live gibt eine ungültige Angabe zurück:&lt;br>%s</string>
 </resources>
 

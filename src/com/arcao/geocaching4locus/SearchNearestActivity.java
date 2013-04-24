@@ -79,6 +79,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
 		longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 
+		if (!LocusTesting.isLocusInstalled(this)) {
+			locusInstalled = false;
+			return; // skip retrieving Waypoint, it can crash because of old Locus API
+		}
+
 		if (LocusUtils.isIntentPointTools(getIntent())) {
 			Waypoint p = null;
 

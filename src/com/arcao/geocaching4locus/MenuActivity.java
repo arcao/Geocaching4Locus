@@ -55,7 +55,15 @@ public class MenuActivity extends AbstractActionBarActivity {
 	public void onClickLiveMap(View view) {
 		boolean activated = liveMapButton.isChecked();
 
-		if (activated && !isPeriodicUpdateEnabled(this)) {
+		// Temporary fix for NPE in Locus API.
+		boolean periodicUpdateEnabled = true;
+		try {
+			periodicUpdateEnabled = isPeriodicUpdateEnabled(this);
+		} catch (Exception e) {
+			Log.e(TAG, "Unable to receive info about current state of prediodic update events from Locus.", e);
+		}
+
+		if (activated && !periodicUpdateEnabled) {
 			activated = false;
 			liveMapButton.setChecked(activated);
 

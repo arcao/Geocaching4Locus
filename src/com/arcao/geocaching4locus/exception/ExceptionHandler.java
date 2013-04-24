@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.exception;
 
+import oauth.signpost.exception.OAuthCommunicationException;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
@@ -37,7 +38,7 @@ public class ExceptionHandler {
 			return ErrorActivity.createErrorIntent(mContext, R.string.error_invalid_api_response, t.getMessage(), false, t);
 		} else if (t instanceof CacheNotFoundException) {
 			return ErrorActivity.createErrorIntent(mContext, R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode(), false, null);
-		} else if (t instanceof NetworkException ||
+		} else if (t instanceof NetworkException || t instanceof OAuthCommunicationException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			return ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
 		} else {

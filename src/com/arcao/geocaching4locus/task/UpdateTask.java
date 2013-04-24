@@ -180,7 +180,12 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 			out.defaultWriteObject();
 
-			oldWaypoint.write(new DataOutputStream(out));
+			if (oldWaypoint != null) {
+				out.writeBoolean(true);
+				oldWaypoint.write(new DataOutputStream(out));
+			} else {
+				out.writeBoolean(false);
+			}
 
 			if (newPoint != null) {
 				out.writeBoolean(true);
@@ -193,7 +198,9 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 			in.defaultReadObject();
 
-			oldWaypoint = new Waypoint(new DataInputStream(in));
+			if (in.readBoolean()) {
+				oldWaypoint = new Waypoint(new DataInputStream(in));
+			}
 
 			if (in.readBoolean()) {
 				newPoint = new Waypoint(new DataInputStream(in));

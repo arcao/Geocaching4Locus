@@ -39,6 +39,8 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
 		// test if user is logged in
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
 			if (savedInstanceState != null)
@@ -51,8 +53,6 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 
 			return;
 		}
-
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		String repeatUpdate = prefs.getString(
 			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,

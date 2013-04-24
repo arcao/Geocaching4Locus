@@ -222,7 +222,8 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 
-			onTaskError(ErrorActivity.createErrorIntent(getActivity(), 0, description, false, null));
+			if (getActivity() != null)
+				onTaskError(ErrorActivity.createErrorIntent(getActivity(), 0, description, false, null));
 		}
 
 		@Override

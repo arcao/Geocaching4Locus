@@ -21,11 +21,18 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 	protected WeakReference<SearchNearestActivity> activityRef;
 	protected DownloadProgressDialogFragment pd;
 
+	protected boolean registered;
+
 	public SearchNearestActivityBroadcastReceiver(SearchNearestActivity activity) {
 		activityRef = new WeakReference<SearchNearestActivity>(activity);
+
+		registered = false;
 	}
 
 	public void register(Context ctx) {
+		if (registered)
+			return;
+
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_UPDATE);
 		filter.addAction(SearchGeocacheService.ACTION_PROGRESS_COMPLETE);
@@ -33,19 +40,26 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 
 		LocalBroadcastManager.getInstance(ctx).registerReceiver(this, filter);
 		Log.i(getClass().getName(), "Receiver registred.");
+		registered = true;
 	}
 
 	public void unregister(Context ctx) {
+		if (!registered)
+			return;
+
 		LocalBroadcastManager.getInstance(ctx).unregisterReceiver(this);
 
 		if (pd != null)
 			pd.dismiss();
+
+		Log.i(getClass().getName(), "Receiver unregistred.");
+		registered = false;
 	}
 
 	@Override
 	public synchronized void onReceive(Context context, final Intent intent) {
 		SearchNearestActivity activity = activityRef.get();
-		if (activity == null)
+		if (activity == null || !registered)
 			return;
 
 		if (pd == null)

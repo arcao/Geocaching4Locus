@@ -33,6 +33,7 @@ import com.arcao.geocaching4locus.util.LocusTesting;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
 	private static final String TAG = "G4L|MainActivity";
+	private static final boolean HONEYCOMB = android.os.Build.VERSION.SDK_INT >= 11;
 
 	private static String STATE_LATITUDE = "latitude";
 	private static String STATE_LONGITUDE = "longitude";
@@ -224,13 +225,19 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 		broadcastReceiver.unregister(this);
 
-		Log.i(TAG, "Receiver unregistred.");
-
 		super.onPause();
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
+		// Fragments can't be used after onSaveInstanceState on Honeycomb+
+		if (HONEYCOMB) {
+			if (locationUpdateTask != null)
+				locationUpdateTask.detach();
+
+			broadcastReceiver.unregister(this);
+		}
+
 		super.onSaveInstanceState(outState);
 
 		outState.putBoolean(STATE_HAS_COORDINATES, hasCoordinates);

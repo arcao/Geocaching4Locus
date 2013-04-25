@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.fragment;
 
 import java.lang.ref.WeakReference;
 
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
@@ -23,6 +24,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	public void dismiss() {
 		// this fix IllegalStateException when App is hidden
 		if (!isAdded() || getFragmentManager() == null) {
+			if (getArguments() == null)
+				setArguments(new Bundle());
+
 			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
 		}
 
@@ -37,7 +41,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	public void onResume() {
 		super.onResume();
 
-		if (getArguments().getBoolean(PARAM_DISMISS_LATER, false)) {
+		if (getArguments() != null && getArguments().getBoolean(PARAM_DISMISS_LATER, false)) {
 			dismiss();
 		}
 	}

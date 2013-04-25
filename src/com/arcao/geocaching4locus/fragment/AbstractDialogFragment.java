@@ -5,6 +5,8 @@ import java.lang.ref.WeakReference;
 import android.support.v4.app.DialogFragment;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
+	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
+
 	protected WeakReference<CancellableDialog> cancellableRef;
 
 	// This is to work around what is apparently a bug. If you don't have it
@@ -20,10 +22,23 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	@Override
 	public void dismiss() {
 		// this fix IllegalStateException when App is hidden
+		if (!isAdded() || getFragmentManager() == null) {
+			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
+		}
+
 		try {
 			super.dismiss();
 		} catch(IllegalStateException e) {
 			dismissAllowingStateLoss();
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if (getArguments().getBoolean(PARAM_DISMISS_LATER, false)) {
+			dismiss();
 		}
 	}
 

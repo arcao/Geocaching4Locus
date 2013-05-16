@@ -498,6 +498,7 @@ public class LocusDataMapper {
 		fixComputedCoordinates(mContext, toPoint, fromPoint);
 		copyWaypointId(toPoint, fromPoint);
 		copyGcVote(toPoint, fromPoint);
+		fixEditedWaypoints(toPoint, fromPoint);
 
 		return toPoint;
 	}
@@ -585,11 +586,35 @@ public class LocusDataMapper {
 
 	protected static Waypoint copyGcVote(Waypoint toPoint, Waypoint fromPoint) {
 		if (fromPoint.gcData == null)
-			return null;
+			return toPoint;
 
 		toPoint.gcData.gcVoteAverage = fromPoint.gcData.gcVoteAverage;
 		toPoint.gcData.gcVoteNumOfVotes = fromPoint.gcData.gcVoteNumOfVotes;
 		toPoint.gcData.gcVoteUserVote = fromPoint.gcData.gcVoteUserVote;
+
+		return toPoint;
+	}
+
+	protected static Waypoint fixEditedWaypoints(Waypoint toPoint, Waypoint fromPoint) {
+		if (fromPoint.gcData.waypoints == null || fromPoint.gcData.waypoints.size() == 0
+			|| toPoint.gcData == null || toPoint.gcData.waypoints.size() == 0)
+			return toPoint;
+
+		// find Waypoint with zero coordinates
+		for (GeocachingWaypoint waypoint : toPoint.gcData.waypoints) {
+			if (waypoint.lat == 0 && waypoint.lon == 0) {
+
+				// replace with coordinates from fromPoint Waypoint
+				for (GeocachingWaypoint fromWaypoint : fromPoint.gcData.waypoints) {
+
+					if (waypoint.code.equalsIgnoreCase(fromWaypoint.code)) {
+						waypoint.lat = fromWaypoint.lat;
+						waypoint.lon = fromWaypoint.lon;
+					}
+				}
+
+			}
+		}
 
 		return toPoint;
 	}

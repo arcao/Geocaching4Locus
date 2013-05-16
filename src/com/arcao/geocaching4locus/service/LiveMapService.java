@@ -28,6 +28,7 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
@@ -69,6 +70,7 @@ public class LiveMapService extends IntentService {
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
 	private final Handler mMainThreadHandler;
+	private Boolean excludeIgnoreList;
 
 	public LiveMapService() {
 		super(TAG);
@@ -156,6 +158,7 @@ public class LiveMapService extends IntentService {
 
 		cacheTypes = null;
 		containerTypes = null;
+		excludeIgnoreList = null;
 
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
@@ -167,6 +170,7 @@ public class LiveMapService extends IntentService {
 
 			cacheTypes = getCacheTypeFilterResult(prefs);
 			containerTypes = getContainerTypeFilterResult(prefs);
+			excludeIgnoreList = true;
 		}
 	}
 
@@ -230,7 +234,8 @@ public class LiveMapService extends IntentService {
 							new NotHiddenByUsersFilter(showOwn ? null : username),
 							new DifficultyFilter(difficultyMin, difficultyMax),
 							new TerrainFilter(terrainMin, terrainMax),
-							new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude)
+							new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude),
+							new BookmarksExcludeFilter(excludeIgnoreList)
 					});
 				} else {
 					caches = api.getMoreGeocaches(true, current, perPage, 0, 0);

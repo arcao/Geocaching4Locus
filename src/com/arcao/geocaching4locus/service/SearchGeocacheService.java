@@ -27,6 +27,7 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
@@ -66,6 +67,7 @@ public class SearchGeocacheService extends AbstractService {
 	private int logCount;
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
+	private Boolean excludeIgnoreList;
 
 	public SearchGeocacheService() {
 		super(TAG, R.string.downloading, R.string.downloading);
@@ -147,6 +149,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		cacheTypes = null;
 		containerTypes = null;
+		excludeIgnoreList = null;
 
 		// Premium member feature?
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
@@ -158,6 +161,7 @@ public class SearchGeocacheService extends AbstractService {
 
 			cacheTypes = getCacheTypeFilterResult(prefs);
 			containerTypes = getContainerTypeFilterResult(prefs);
+			excludeIgnoreList = true;
 		}
 	}
 
@@ -238,7 +242,8 @@ public class SearchGeocacheService extends AbstractService {
 							new NotFoundByUsersFilter(showFound ? null : username),
 							new NotHiddenByUsersFilter(showOwn ? null : username),
 							new DifficultyFilter(difficultyMin, difficultyMax),
-							new TerrainFilter(terrainMin, terrainMax)
+							new TerrainFilter(terrainMin, terrainMax),
+							new BookmarksExcludeFilter(excludeIgnoreList)
 					});
 				} else {
 					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);

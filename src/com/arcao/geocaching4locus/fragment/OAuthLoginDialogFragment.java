@@ -203,7 +203,10 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 				Log.d(TAG, "External URL: " + url);
 
 				// launch external URLs in a full browser
-				getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				
+				Geocaching4LocusApplication.getAppContext().startActivity(intent);
 				return true;
 			}
 

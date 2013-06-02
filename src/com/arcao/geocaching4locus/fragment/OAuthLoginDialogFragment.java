@@ -7,11 +7,13 @@ import oauth.signpost.OAuth;
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -166,7 +168,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 	@SuppressLint("SetJavaScriptEnabled")
 	public WebView createWebView(Bundle savedInstanceState) {
-		WebView webView = new WebView(getActivity());
+		WebView webView = new FixedWebView(getActivity());
 
 		//webView.setVerticalScrollBarEnabled(false);
 		webView.setHorizontalScrollBarEnabled(false);
@@ -240,6 +242,30 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 			if (progressHolder != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
 				progressHolder.setVisibility(View.GONE);
+			}
+		}
+	}
+
+	public static class FixedWebView extends WebView {
+		public FixedWebView(Context context) {
+			super (context);
+		}
+
+		public FixedWebView(Context context, AttributeSet attrs, int defStyle) {
+			super (context, attrs, defStyle);
+		}
+
+		public FixedWebView(Context context, AttributeSet attrs) {
+			super (context, attrs);
+		}
+
+		@Override
+		public void onWindowFocusChanged(boolean hasWindowFocus) {
+			try {
+				super.onWindowFocusChanged(hasWindowFocus);
+			} catch (NullPointerException e) {
+				// Catch null pointer exception
+				// suggested workaround from Web
 			}
 		}
 	}

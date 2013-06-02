@@ -14,7 +14,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -69,13 +68,10 @@ public class LiveMapService extends IntentService {
 	private float terrainMax;
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
-	private final Handler mMainThreadHandler;
 	private Boolean excludeIgnoreList;
 
 	public LiveMapService() {
 		super(TAG);
-
-		mMainThreadHandler = new Handler();
 	}
 
 	@Override
@@ -304,11 +300,6 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected void showMessage(final String message) {
-		mMainThreadHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-			}
-		});
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}
 }

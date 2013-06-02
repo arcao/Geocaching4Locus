@@ -13,7 +13,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
+import com.arcao.geocaching4locus.util.LocusTesting;
 
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundpseak side to 100000 meters
@@ -26,12 +28,24 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-		if (!prefs.getBoolean("live_map", false)) {
+		if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false)) {
 			return;
+		}
+
+		// Test if correct Locus version is installed
+		if (!LocusTesting.isLocusInstalled(context)) {
+			LocusTesting.showLocusTooOldToast(context);
+
+			// disable live map
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		}
 
 		// ignore onTouch events
 		if (intent.getBooleanExtra(PeriodicUpdatesConst.VAR_B_MAP_USER_TOUCHES, false))
+			return;
+
+		// temporary fix for NPE bug (locMapCenter can be null)
+		if (LocusUtils.getLocationFromIntent(intent, VAR_LOC_MAP_CENTER) == null)
 			return;
 
 		// get valid instance of PeriodicUpdate object

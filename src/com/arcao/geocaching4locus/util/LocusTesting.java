@@ -14,7 +14,9 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.LocusTestingErrorDialogFragment;
 
@@ -41,6 +43,10 @@ public class LocusTesting {
 			return;
 
 		LocusTestingErrorDialogFragment.newInstance().show(activity.getSupportFragmentManager(), LocusTestingErrorDialogFragment.TAG);
+	}
+
+	public static void showLocusTooOldToast(final Context context) {
+		Toast.makeText(context, context.getString(R.string.error_locus_old, AppConstants.LOCUS_MIN_VERSION.toString()), Toast.LENGTH_LONG).show();
 	}
 
 	public static boolean isAndroidMarketInstalled(Context context) {

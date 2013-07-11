@@ -192,6 +192,10 @@ public abstract class AbstractService extends IntentService {
 	}
 
 	protected void sendError(Throwable exception) {
+		if (!canceled) {
+			notificationManager.cancel(notificationId);
+		}
+
 		Intent intent = new ExceptionHandler(this).handle(exception);
 		final int resErrorId = intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_TEXT, 0);
 

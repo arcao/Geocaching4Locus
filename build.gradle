@@ -18,16 +18,19 @@ dependencies {
     compile 'ch.acra:acra:4.2.3'
     compile 'org.apache.commons:commons-lang3:3.1'
     compile('com.arcao:geocaching-api:1.5.14') {
-      exclude module: 'log4j'
-		}
+      exclude group: 'log4j', module: 'log4j' /* Not working in Android, log4j-over-slf4j used instead */
+    }
     compile('net.sf.jtpl:jtpl:2.2') {
-      exclude module: 'junit'
-		}
+      exclude group: 'junit', module: 'junit' /* Not required */ 
+    }
     compile 'menion:locus-api-android:1.6.7'
-    compile 'oauth.signpost:signpost-commonshttp4:1.2.1.2'
+    compile('oauth.signpost:signpost-commonshttp4:1.2.1.2') {
+      exclude group: 'org.apache.httpcomponents', module: 'httpclient' /* already in Android */ 
+      exclude group: 'commons-codec', module: 'commons-codec' /* already in Android */
+    }
     compile('org.slf4j:log4j-over-slf4j:1.6.4') {
-      exclude module: 'slf4j-api'
-		}
+      exclude group: 'org.slf4j', module: 'slf4j-api' /* Not working in Android, slf4j-android used instead */
+    }
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 }
 
@@ -72,7 +75,7 @@ if (project.hasProperty('storeFile') &&
     android.signingConfigs.release.storePassword = storePassword
     android.signingConfigs.release.keyPassword = keyPassword
 } else {
-    buildTypes.release.signingConfig = null
+    buildTypes.release.signingConfig = debug
 }
 
 task wrapper(type: Wrapper) {

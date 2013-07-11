@@ -17,13 +17,17 @@ dependencies {
     compile files('libs/android-support-v4.jar')
     compile 'ch.acra:acra:4.2.3'
     compile 'org.apache.commons:commons-lang3:3.1'
-    compile 'com.arcao:geocaching-api:1.5.14'
-    compile 'net.sf.jtpl:jtpl:2.2'
-    compile 'menion:locus-api:1.6'
+    compile('com.arcao:geocaching-api:1.5.14') {
+      exclude module: 'log4j'
+		}
+    compile('net.sf.jtpl:jtpl:2.2') {
+      exclude module: 'junit'
+		}
     compile 'menion:locus-api-android:1.6.7'
-    compile 'oauth.signpost:signpost-core:1.2.1.2'
     compile 'oauth.signpost:signpost-commonshttp4:1.2.1.2'
-    compile 'org.slf4j:log4j-over-slf4j:1.6.4'
+    compile('org.slf4j:log4j-over-slf4j:1.6.4') {
+      exclude module: 'slf4j-api'
+		}
     compile 'org.slf4j:slf4j-android:1.6.1-RC1'
 }
 

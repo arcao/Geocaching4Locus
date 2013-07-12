@@ -332,8 +332,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	protected void requestProgressUpdate() {
-		if (SearchGeocacheService.getInstance() != null)
+        if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
 			SearchGeocacheService.getInstance().sendProgressUpdate();
+        }
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	private static final String TAG = ActionDisplayPointsExtended.class.getName();
 	private static final int FILE_VERSION = 2;
 
-	public static boolean sendPack(Context context, PackWaypoints data, boolean callImport, int intentFlags)
+	public static boolean sendPack(Context context, PackWaypoints data, boolean callImport, boolean center, int intentFlags)
 			throws RequiredVersionMissingException {
 		if (data == null)
 			return false;
@@ -30,14 +30,14 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 		intent.addFlags(intentFlags);
 		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_DATA,
 				data.getAsBytes());
-		return sendData(LocusConst.ACTION_DISPLAY_DATA, context, intent, callImport);
+		return sendData(LocusConst.ACTION_DISPLAY_DATA, context, intent, callImport, center);
 	}
 
-	public static boolean sendPacksFile(Context context, File file, boolean callImport, int intentFlags) throws RequiredVersionMissingException {
-		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, intentFlags);
+	public static boolean sendPacksFile(Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
+		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center, intentFlags);
 	}
 
-	public static boolean sendPacksFile(String action, Context context, File file, boolean callImport, int intentFlags) throws RequiredVersionMissingException {
+	public static boolean sendPacksFile(String action, Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
 		if (!file.exists())
 			return false;
 
@@ -45,7 +45,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 		intent.addFlags(intentFlags);
 		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
 
-		return sendData(action, context, intent, callImport);
+		return sendData(action, context, intent, callImport, center);
 	}
 
 	/**

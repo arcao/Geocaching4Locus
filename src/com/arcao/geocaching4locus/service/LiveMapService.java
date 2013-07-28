@@ -251,7 +251,7 @@ public class LiveMapService extends IntentService {
 					pw.addWaypoint(wpt);
 				}
 
-				ActionDisplayPoints.sendPackSilent(this, pw);
+				ActionDisplayPoints.sendPackSilent(this, pw, false);
 
 				if (caches.size() != perPage)
 					break;
@@ -272,7 +272,7 @@ public class LiveMapService extends IntentService {
 		// HACK we must remove old PackWaypoints from the map
 		for (int i = requests + 1; i < REQUESTS; i++) {
 			PackWaypoints pw = new PackWaypoints(TAG + "|" + i);
-			ActionDisplayPoints.sendPackSilent(this, pw);
+			ActionDisplayPoints.sendPackSilent(this, pw, false);
 		}
 	}
 

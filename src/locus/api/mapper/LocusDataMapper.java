@@ -102,7 +102,8 @@ public class LocusDataMapper {
 		d.archived = cache.isArchived();
 		d.premiumOnly = cache.isPremiumListing();
 		d.hidden = cache.getPlaced().getTime();
-		d.exported = new Date().getTime();
+		d.dateCreated = cache.getCreated().getTime();
+        d.lastUpdated = cache.getLastUpdated().getTime();
 		d.container = toLocusContainerType(cache.getContainerType());
 		d.found = cache.isFound();
 

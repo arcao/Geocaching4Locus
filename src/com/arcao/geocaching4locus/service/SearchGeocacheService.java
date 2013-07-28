@@ -168,7 +168,7 @@ public class SearchGeocacheService extends AbstractService {
 	private void callLocus(File file) {
 		try {
 			if (file != null) {
-				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, Intent.FLAG_ACTIVITY_NEW_TASK);
+				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "callLocus()", e);

@@ -60,7 +60,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			pack.addWaypoint(result);
 
 			try {
-				ActionDisplayPointsExtended.sendPack(Geocaching4LocusApplication.getAppContext(), pack, true, Intent.FLAG_ACTIVITY_NEW_TASK);
+				ActionDisplayPointsExtended.sendPack(Geocaching4LocusApplication.getAppContext(), pack, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			} catch (RequiredVersionMissingException e) {
 				Log.e(TAG, e.getMessage(), e);
 			}

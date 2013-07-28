@@ -5,3 +5,5 @@ proguard
 .gradle
 build
 *.iml
+.classpath
+.project

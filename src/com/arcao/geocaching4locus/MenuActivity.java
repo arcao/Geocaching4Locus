@@ -60,7 +60,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 		try {
 			periodicUpdateEnabled = isPeriodicUpdateEnabled(this);
 		} catch (Exception e) {
-			Log.e(TAG, "Unable to receive info about current state of prediodic update events from Locus.", e);
+			Log.e(TAG, "Unable to receive info about current state of periodic update events from Locus.", e);
 		}
 
 		if (activated && !periodicUpdateEnabled) {

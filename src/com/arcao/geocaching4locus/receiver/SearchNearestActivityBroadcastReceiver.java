@@ -66,10 +66,11 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 			pd = (DownloadProgressDialogFragment) activity.getSupportFragmentManager().findFragmentByTag(DownloadProgressDialogFragment.TAG);
 
 		if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
-			if (pd == null) {
+			if (pd == null || !pd.isShowing()) {
 				pd = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 				pd.setOnCancelListener(this);
 				pd.show(activity.getSupportFragmentManager(), DownloadProgressDialogFragment.TAG);
+				activity.getSupportFragmentManager().executePendingTransactions(); // show dialog before setting progress
 			}
 			pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 		} else if (SearchGeocacheService.ACTION_PROGRESS_COMPLETE.equals(intent.getAction())) {
@@ -95,7 +96,10 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 		if (activity == null)
 			return;
 
-        pd = null;
+		if (pd != null && pd.isShowing())
+			pd.dismiss();
+
+		pd = null;
 		activity.stopService(new Intent(activity, SearchGeocacheService.class));
 	}
 }

@@ -180,9 +180,7 @@ public abstract class AbstractService extends IntentService {
 	}
 
 	protected void sendProgressComplete(int count) {
-		if (!canceled) {
-			notificationManager.cancel(notificationId);
-		}
+		notificationManager.cancel(notificationId);
 
 		Intent broadcastIntent = new Intent();
 		broadcastIntent.setAction(ACTION_PROGRESS_COMPLETE);
@@ -192,9 +190,7 @@ public abstract class AbstractService extends IntentService {
 	}
 
 	protected void sendError(Throwable exception) {
-		if (!canceled) {
-			notificationManager.cancel(notificationId);
-		}
+		notificationManager.cancel(notificationId);
 
 		Intent intent = new ExceptionHandler(this).handle(exception);
 		final int resErrorId = intent.getIntExtra(ErrorActivity.PARAM_RESOURCE_TEXT, 0);

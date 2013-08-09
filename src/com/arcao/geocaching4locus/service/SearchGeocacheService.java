@@ -89,7 +89,7 @@ public class SearchGeocacheService extends AbstractService {
 
 	@Override
 	protected Intent createOngoingEventIntent() {
-		return new Intent(this, SearchNearestActivity.class);
+		return new Intent(this, SearchNearestActivity.class).addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 	}
 
 	public void sendProgressUpdate() {

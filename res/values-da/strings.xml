@@ -36,20 +36,20 @@
     <string name="pref_show_found">Vis fundne</string>
     <string name="pref_show_found_summary">Vis fundne cacher</string>
     <string name="pref_show_own">Vis egne gemte</string>
-    <string name="pref_show_own_summary">Vis egne caches (gemt af dig)</string>
+    <string name="pref_show_own_summary">Vis din egne caches (gemt af dig)</string>
     <string name="pref_menu_select_all">Vælg alle</string>
     <string name="pref_menu_deselect_all">Fravælg alle</string>
     
-    <string name="update_cache_progress">Opdatere cache...</string>
+    <string name="update_cache_progress">Updatere cache...</string>
     
-    <string name="pref_title_downloading">Henter ned</string>
-    <string name="pref_count_of_logs">Antal logs</string>
-    <string name="pref_count_of_logs_text">logs</string>
-    <string name="pref_count_of_logs_summary">Antal logs der hentes pr. cache</string>
+    <string name="pref_title_downloading">Downloader</string>
+    <string name="pref_count_of_logs">Antal af Logninger</string>
+    <string name="pref_count_of_logs_text">Logninger</string>
+    <string name="pref_count_of_logs_summary">Antal logs som hentes med cachen</string>
     <string name="pref_not_filled">ikke udfyldt</string>
     <string name="gps">GPS</string>
     <string name="close">Luk</string>
-    <string name="pref_show_disabled">Vis deaktiveret</string>
+    <string name="pref_show_disabled">Vis ikke deaktivede</string>
     <string name="pref_show_disabled_summary">Vis midlertidigt deaktiverede caches</string>
     
     <string name="import_cache_progress">Henter cache ned...</string>
@@ -183,6 +183,6 @@
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Denne tilføjelse bruger Geocaching Live til at hente information om Geocaches. Tryk her for mere information…</string>
     
-    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live har modtaget et ugyldigt svar:&lt;br>%s</string>
 </resources>
 

@@ -211,16 +211,26 @@ public class LocusDataMapper {
 
 
 	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, List<UserWaypoint> userWaypoints) {
-		if (userWaypoints.size() != 1)
+		UserWaypoint correctedCoordinateUserWaypoint = null;
+
+		// find corrected coordinate user waypoint
+		for (UserWaypoint w : userWaypoints) {
+			if (w.isCorrectedCoordinate()) {
+				correctedCoordinateUserWaypoint = w;
+				break;
+			}
+		}
+
+		// continue only if something was found
+		if (correctedCoordinateUserWaypoint == null)
 			return;
 
-		Location original = p.getLocation();
-		UserWaypoint userWaypoint = userWaypoints.get(0);
+		Location originalLocation = p.getLocation();
 
-		Location loc = new Location(userWaypoint.getClass().getName());
-		loc.setLatitude(userWaypoint.getLatitude());
-		loc.setLongitude(userWaypoint.getLongitude());
-		p.getLocation().set(loc);
+		Location newLocation = new Location(correctedCoordinateUserWaypoint.getClass().getName());
+		newLocation.setLatitude(correctedCoordinateUserWaypoint.getLatitude());
+		newLocation.setLongitude(correctedCoordinateUserWaypoint.getLongitude());
+		p.getLocation().set(newLocation);
 
 		p.gcData.computed = true;
 
@@ -234,8 +244,8 @@ public class LocusDataMapper {
 		waypoint.code = ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.gcData.getCacheID().substring(2);
 		waypoint.type = GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE;
 		waypoint.name = mContext.getString(R.string.original_coordinates_name);
-		waypoint.lat = original.getLatitude();
-		waypoint.lon = original.getLongitude();
+		waypoint.lat = originalLocation.getLatitude();
+		waypoint.lon = originalLocation.getLongitude();
 	}
 
 	protected static GeocachingWaypoint toLocusWaypoint(com.arcao.geocaching.api.data.Waypoint waypoint) {
@@ -478,6 +488,9 @@ public class LocusDataMapper {
 
 		int count = 1;
 		for (UserWaypoint uw : userWaypoints) {
+			if (!uw.isCorrectedCoordinate())
+				continue;
+
 			final String name = context.getString(R.string.final_location_name, count);
 			final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
 

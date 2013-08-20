@@ -7,8 +7,8 @@ How to compile
 ==============
 Application can be easily build by Gradle. If you don't have Gradle, you can use gradlew batch scripts instead (included in a repository).
 
-    gradle assemblyDebug - create a debug APK
-    gradle assemblyRelease - create a release APK
+    gradle assembleDebug - create a debug APK
+    gradle assembleRelease - create a release APK
 
 Assembly release task will try to sign with a private key. To sign it, create `gradle.properties` configuration in your user gradle directory (usually `~/.gradle/gradle.properties` or `C:\Users\username\.gradle\gradle.properties`):
 

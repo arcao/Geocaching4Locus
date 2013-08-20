@@ -18,7 +18,7 @@ Assembly release task will try to sign with a private key. To sign it, create `g
 
 The key name in a keystore must be `geocaching4locus` (or modify application `build.gradle` script).
 
-**The created APKs will not work, because for sign in to Geocaching Live API you need OAuth key and secret. The Geocaching license agreement doesn't allow distribute OAuth key and secret with sources.**
+**The created APKs will not work, because for sign in to Geocaching Live API you need OAuth key and secret. The Geocaching Live API license agreement doesn't allow distribute OAuth key and secret with sources.**
 
 But if you get them, simply copy `ProductionConfiguration` and `StaggingConfiguration` classes from `com.arcao.geocaching.api.configuration.impl_sample` package to `com.arcao.geocaching.api.configuration.impl` and change `YOUR_OAUTH_KEY` and `YOUR_OAUTH_SECRET` with your OAuth key and secret. The `StaggingConfiguration` class is for a test server provide by Grounspeak. OAuth key and secret for this server is different than for production use. Which of these configuration has to be used, you can change in `AppConstants.USE_PRODUCTION_CONFIGURATION`.
 

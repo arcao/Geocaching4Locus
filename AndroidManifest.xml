@@ -67,19 +67,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="coord.info" android:pathPrefix="/GC" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" android:host="www.geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
-            </intent-filter>            
+                <data android:scheme="http" android:host="geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="http" android:host="www.geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="https" android:host="geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="https" android:host="www.geocaching.com" android:pathPrefix="/geocache/GC" />
+            </intent-filter>
         </activity>
         <activity android:name="MenuActivity" android:theme="@style/G4LTheme.MenuActivity" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">

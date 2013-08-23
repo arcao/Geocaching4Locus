@@ -75,7 +75,7 @@ if (project.hasProperty('storeFile') &&
     android.signingConfigs.release.storePassword = storePassword
     android.signingConfigs.release.keyPassword = keyPassword
 } else {
-    buildTypes.release.signingConfig = debug
+    android.buildTypes.release.signingConfig = android.signingConfigs.debug
 }
 
 task wrapper(type: Wrapper) {

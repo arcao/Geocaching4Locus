@@ -1,9 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Queue;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,13 +8,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
+import android.preference.*;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.DigitsKeyListener;
@@ -27,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -48,7 +38,6 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	private SharedPreferences prefs;
 	private PreferenceScreen cacheTypeFilterScreen;
 	private PreferenceScreen containerTypeFilterScreen;
-	private final Queue<Date> secretPrefsAllowingQueue = new LinkedList<Date>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -260,28 +249,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		fullCacheDataOnShowPreference.setEnabled(simpleCacheDataPreference.isChecked());
 		fullCacheDataOnShowPreference.setSummary(preparePreferenceSummary(fullCacheDataOnShowPreference.getEntry(), R.string.pref_download_on_show_summary));
 
-		final CheckBoxPreference useCompressionPreference = findPreference(USE_COMPRESSION, CheckBoxPreference.class);
-		useCompressionPreference.setEnabled(useCompressionPreference.isChecked());
-
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
 		versionPreference.setSummary(Geocaching4LocusApplication.getVersion());
-		versionPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				if (secretPrefsAllowingQueue.size() >= 5) {
-					Date firstDate = secretPrefsAllowingQueue.poll();
-					Date threeSecsBeforeDate = new Date(new Date().getTime() - 3000);
-
-					if (firstDate.after(threeSecsBeforeDate)) {
-						useCompressionPreference.setEnabled(true);
-					}
-				}
-
-				secretPrefsAllowingQueue.add(new Date());
-
-				return true;
-			}
-		});
 
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));

@@ -56,7 +56,6 @@
 	    <CheckBoxPreference android:key="downloading_create_images_tab" android:title="@string/pref_create_images_tab" android:summary="@string/pref_create_images_tab_summary" android:defaultValue="false"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_advanced">
-		<CheckBoxPreference android:key="use_compression" android:summary="@string/pref_use_compression_summary" android:title="@string/pref_use_compression" android:enabled="false"/>
 		<CheckBoxPreference android:key="imperial_units" android:summary="@string/pref_imperial_units_summary" android:title="@string/pref_imperial_units"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_title_about">

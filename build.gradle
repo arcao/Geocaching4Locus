@@ -17,7 +17,7 @@ dependencies {
     compile files('libs/android-support-v4.jar')
     compile 'ch.acra:acra:4.2.3'
     compile 'org.apache.commons:commons-lang3:3.1'
-    compile('com.arcao:geocaching-api:1.5.15') {
+    compile('com.arcao:geocaching-api:1.5.16') {
       exclude group: 'log4j', module: 'log4j' /* Not working in Android, log4j-over-slf4j used instead */
     }
     compile('net.sf.jtpl:jtpl:2.2') {
@@ -76,8 +76,4 @@ if (project.hasProperty('storeFile') &&
     android.signingConfigs.release.keyPassword = keyPassword
 } else {
     android.buildTypes.release.signingConfig = android.signingConfigs.debug
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
 }

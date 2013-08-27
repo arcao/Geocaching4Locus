@@ -1,18 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import java.util.UUID;
-
-import locus.api.android.utils.LocusUtils;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
-
-import org.acra.ACRA;
-import org.acra.ErrorReporter;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -23,13 +10,23 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
-import com.arcao.geocaching.api.configuration.GeocachingApiConfigurationResolver;
 import com.arcao.geocaching.api.configuration.OAuthGeocachingApiConfiguration;
+import com.arcao.geocaching.api.configuration.resolver.GeocachingApiConfigurationResolver;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import locus.api.android.utils.LocusUtils;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+import org.acra.ACRA;
+import org.acra.ErrorReporter;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+
+import java.util.UUID;
 
 @ReportsCrashes(
 		formKey = AppConstants.ERROR_FORM_KEY,

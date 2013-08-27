@@ -2,8 +2,8 @@ package com.arcao.geocaching.api.impl;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching.api.configuration.GeocachingApiConfiguration;
+import com.arcao.geocaching.api.configuration.impl.AbstractGeocachingApiConfiguration;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -20,7 +20,7 @@ public class LiveGeocachingApiFactory {
 
 	}
 
-	private static class ProxyConfiguration implements GeocachingApiConfiguration {
+	private static class ProxyConfiguration extends AbstractGeocachingApiConfiguration {
 		private static final String STAGGING ="stagging";
 
 		private String entryPointUrl;
@@ -33,7 +33,6 @@ public class LiveGeocachingApiFactory {
 			}
 		}
 
-		@Override
 		public String getApiServiceEntryPointUrl() {
 			return entryPointUrl;
 		}

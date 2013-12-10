@@ -3,18 +3,18 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
+        classpath 'com.android.tools.build:gradle:0.6.+'
     }
 }
 apply plugin: 'android'
 
 repositories {
     mavenCentral()
-    mavenRepo name: "arcao", url: "http://maven.arcao.com/"
+    maven { url "http://maven.arcao.com/" }
 }
 
 dependencies {
-    compile files('libs/android-support-v4.jar')
+    compile 'com.android.support:support-v4:19.0.+'
     compile 'ch.acra:acra:4.2.3'
     compile 'org.apache.commons:commons-lang3:3.1'
     compile('com.arcao:geocaching-api:1.5.16') {
@@ -23,7 +23,7 @@ dependencies {
     compile('net.sf.jtpl:jtpl:2.2') {
       exclude group: 'junit', module: 'junit' /* Not required */ 
     }
-    compile 'menion:locus-api-android:1.8.9'
+    compile 'menion:locus-api-android:1.12.10'
     compile('oauth.signpost:signpost-commonshttp4:1.2.1.2') {
       exclude group: 'org.apache.httpcomponents', module: 'httpclient' /* already in Android */ 
       exclude group: 'commons-codec', module: 'commons-codec' /* already in Android */
@@ -35,8 +35,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "18.0.1"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.0"
 
     signingConfigs {
         release {

@@ -16,7 +16,7 @@ AssembleRelease task will try to sign APK with a private key. To sign it, create
     storePassword=mykeystorepassword
     keyPassword=mykeypassword  
 
-The key name in a keystore must be `geocaching4locus` (or modify application `build.gradle` script).
+The key name in a keystore must be `geocaching4locus` (or modify application `build.gradle` script). **If the configuration for signing is missing, Gradle build script use ADK debug private key for signing.**
 
 **The created APKs will not work, because for sign in to Geocaching Live API you need OAuth key and secret. The Geocaching Live API license agreement doesn't allow distribute OAuth key and secret with sources.**
 

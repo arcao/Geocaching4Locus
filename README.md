@@ -10,7 +10,7 @@ Application can be easily build by Gradle. If you don't have Gradle, you can use
     gradle assembleDebug - create a debug APK
     gradle assembleRelease - create a release APK
 
-Assembly release task will try to sign APK with a private key. To sign it, create `gradle.properties` configuration in your user gradle directory (usually `~/.gradle/gradle.properties` or `C:\Users\username\.gradle\gradle.properties`):
+AssembleRelease task will try to sign APK with a private key. To sign it, create `gradle.properties` configuration in your user gradle directory (usually `~/.gradle/gradle.properties` or `C:\Users\username\.gradle\gradle.properties`):
 
     storeFile=file:///path/to/keystore.keys or file://c:/path/to/keystore.keys 
     storePassword=mykeystorepassword
@@ -20,9 +20,9 @@ The key name in a keystore must be `geocaching4locus` (or modify application `bu
 
 **The created APKs will not work, because for sign in to Geocaching Live API you need OAuth key and secret. The Geocaching Live API license agreement doesn't allow distribute OAuth key and secret with sources.**
 
-But if you get them, simply copy `ProductionConfiguration` and `StaggingConfiguration` classes from `com.arcao.geocaching.api.configuration.impl_sample` package to `com.arcao.geocaching.api.configuration.impl` and change `YOUR_OAUTH_KEY` and `YOUR_OAUTH_SECRET` with your OAuth key and secret. The `StaggingConfiguration` class is for a test server provided by Grounspeak. OAuth key and secret for this server is different than for production server. Which of these configuration has to be used, you can select by `AppConstants.USE_PRODUCTION_CONFIGURATION`.
+But if you get them, simply copy `ProductionConfiguration` and `StaggingConfiguration` classes from `com.arcao.geocaching.api.configuration.impl_sample` package to `com.arcao.geocaching.api.configuration.impl` and change `YOUR_OAUTH_KEY` and `YOUR_OAUTH_SECRET` with your OAuth key and secret. The `StaggingConfiguration` class is for a test server provided by Grounspeak. OAuth key and secret for this server is different than for production server. Which of these configuration will be used, you can select with constant `AppConstants.USE_PRODUCTION_CONFIGURATION`.
 
-The configuration instances of these classes are automatically resolved by `GeocachingApiConfigurationResolver` on application start, see `Geocaching4LocusApplication` class.
+The configuration instances of these classes are automatically resolved in `GeocachingApiConfigurationResolver` on application start, see `Geocaching4LocusApplication` class.
 
 Dependencies
 ============
@@ -31,7 +31,7 @@ Dependencies
 * [Apache Commons Lang][02]
 * [Geocaching API for Java][01]
 * [Jtpl][04]
-* [Locus Addon Public Library][06]
+* [Locus API Library][06]
 * [OAuth Signpost][03]
 * [Simple Logging Facade for Java (SLF4J)][05]
 

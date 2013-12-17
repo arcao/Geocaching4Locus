@@ -1,57 +1,32 @@
 package locus.api.mapper;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import android.content.Context;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import com.arcao.geocaching.api.data.*;
+import com.arcao.geocaching.api.data.coordinates.Coordinates;
+import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
+import com.arcao.geocaching.api.data.type.*;
+import com.arcao.geocaching.api.util.GeocachingUtils;
+import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.ReverseListIterator;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.RequiredVersionMissingException;
 import locus.api.objects.extra.ExtraData;
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.GeocachingAttribute;
-import locus.api.objects.geocaching.GeocachingData;
-import locus.api.objects.geocaching.GeocachingLog;
-import locus.api.objects.geocaching.GeocachingTrackable;
-import locus.api.objects.geocaching.GeocachingWaypoint;
+import locus.api.objects.geocaching.*;
 import net.sf.jtpl.Template;
-
 import org.apache.commons.lang3.StringUtils;
 
-import android.content.Context;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.arcao.geocaching.api.data.CacheLog;
-import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.data.ImageData;
-import com.arcao.geocaching.api.data.SimpleGeocache;
-import com.arcao.geocaching.api.data.Trackable;
-import com.arcao.geocaching.api.data.User;
-import com.arcao.geocaching.api.data.UserWaypoint;
-import com.arcao.geocaching.api.data.coordinates.Coordinates;
-import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.AttributeType;
-import com.arcao.geocaching.api.data.type.CacheLogType;
-import com.arcao.geocaching.api.data.type.CacheType;
-import com.arcao.geocaching.api.data.type.ContainerType;
-import com.arcao.geocaching.api.data.type.WaypointType;
-import com.arcao.geocaching.api.util.GeocachingUtils;
-import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.ReverseListIterator;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
@@ -103,7 +78,7 @@ public class LocusDataMapper {
 		d.premiumOnly = cache.isPremiumListing();
 		d.hidden = cache.getPlaced().getTime();
 		d.dateCreated = cache.getCreated().getTime();
-        d.lastUpdated = cache.getLastUpdated().getTime();
+    d.lastUpdated = cache.getLastUpdated().getTime();
 		d.container = toLocusContainerType(cache.getContainerType());
 		d.found = cache.isFound();
 
@@ -113,8 +88,8 @@ public class LocusDataMapper {
 			d.setCountry(gc.getCountryName());
 			d.setState(gc.getStateName());
 
-			d.setShortDescription(gc.getShortDescription(), true);
-			d.setLongDescription(gc.getLongDescription(), true);
+			d.setShortDescription(gc.getShortDescription(), gc.isShortDescriptionHtml());
+			d.setLongDescription(gc.getLongDescription(), gc.isLongDescriptionHtml());
 			d.setEncodedHints(gc.getHint());
 			d.setNotes(gc.getPersonalNote());
 			d.favoritePoints = gc.getFavoritePoints();

@@ -114,6 +114,12 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		} else if (DOWNLOADING_FULL_CACHE_DATE_ON_SHOW.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), R.string.pref_download_on_show_summary));
+		} else if (LIVE_MAP.equals(key)) {
+			final CheckBoxPreference p = findPreference(key, CheckBoxPreference.class);
+			final boolean newState = prefs.getBoolean(key, false);
+			if (p.isChecked() != newState) {
+				p.setChecked(newState);
+			}
 		}
 	}
 
@@ -312,7 +318,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
 			accountPreference.setTitle(R.string.pref_account_logout);
-			accountPreference.setSummary(prepareAcountSummary(Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name, R.string.pref_account_logout_summary));
+			accountPreference.setSummary(prepareAccountSummary(Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name, R.string.pref_account_logout_summary));
 		} else {
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);
@@ -420,7 +426,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		return Html.fromHtml(summary);
 	}
 
-	protected Spanned prepareAcountSummary(CharSequence value, int resId) {
+	protected Spanned prepareAccountSummary(CharSequence value, int resId) {
 		String summary = "%s";
 		if (resId != 0)
 			summary = getText(resId).toString();

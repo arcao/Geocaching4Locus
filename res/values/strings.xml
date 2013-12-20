@@ -184,5 +184,15 @@
     <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about Geocaches. Tap here for more information…</string>
     
     <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
+
+    <string name="livemap_notification_title">Geocaching4Locus Live map</string>
+    <string name="livemap_notification_message_enabled">Live map is enabled. Move with map in Locus to show caches.</string>
+    <string name="livemap_notification_message_disabled">Live map is disabled.</string>
+    <string name="livemap_notification_message_downloading">Downloading Live map caches...</string>
+    <string name="livemap_notification_action_enable">Enable Live Map</string>
+    <string name="livemap_notification_action_disable">Disable Live Map</string>
+    <string name="livemap_error">Geocaching4Locus Live map: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Show always Live map notification</string>
+    <string name="pref_livemap_show_disabled_notification_summary">This works only if the periodic updates are allowed in Locus and Locus is running.</string>
 </resources>
 

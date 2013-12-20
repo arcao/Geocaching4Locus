@@ -1,14 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import locus.api.android.ActionDisplayPoints;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
 import android.accounts.OperationCanceledException;
 import android.app.IntentService;
 import android.content.Context;
@@ -17,7 +8,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -27,21 +17,21 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+import locus.api.android.ActionDisplayPoints;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiveMapService extends IntentService {
 	private static final String TAG = "G4L|LiveMapService";
@@ -70,8 +60,17 @@ public class LiveMapService extends IntentService {
 	private ContainerType[] containerTypes;
 	private Boolean excludeIgnoreList;
 
+	protected SharedPreferences prefs;
+
 	public LiveMapService() {
 		super(TAG);
+	}
+
+	@Override
+	public void onCreate() {
+		super.onCreate();
+
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
 	@Override
@@ -103,7 +102,6 @@ public class LiveMapService extends IntentService {
 			return;
 		}*/
 
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		loadConfiguration(prefs);
 
 		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
@@ -130,9 +128,6 @@ public class LiveMapService extends IntentService {
 		} catch (NetworkException e) {
 			Log.e(TAG, e.getMessage(), e);
 			showMessage(getString(R.string.error_network));
-
-			// disable live map
-			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage(), e);
 		} finally {
@@ -199,6 +194,7 @@ public class LiveMapService extends IntentService {
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
+		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 
 		int current = 0;
 		int perPage = CACHES_PER_REQUEST;
@@ -209,6 +205,8 @@ public class LiveMapService extends IntentService {
 			login(api);
 
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+
+			notificationManager.setDownloadingProgress(0);
 
 			while (current < CACHES_COUNT) {
 				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
@@ -240,6 +238,9 @@ public class LiveMapService extends IntentService {
 				if (caches.size() == 0)
 					break;
 
+				if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false))
+					break;
+
 				current = current + caches.size();
 
 				requests++;
@@ -252,6 +253,8 @@ public class LiveMapService extends IntentService {
 				}
 
 				ActionDisplayPoints.sendPackSilent(this, pw, false);
+
+				notificationManager.setDownloadingProgress((current * 100) / CACHES_COUNT);
 
 				if (caches.size() != perPage)
 					break;
@@ -268,6 +271,8 @@ public class LiveMapService extends IntentService {
 		} finally {
 			Log.i(TAG, "Count of caches sent to Locus: " + current);
 		}
+
+		notificationManager.setDownloadingProgress(100);
 
 		// HACK we must remove old PackWaypoints from the map
 		for (int i = requests + 1; i < REQUESTS; i++) {
@@ -300,6 +305,6 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected void showMessage(final String message) {
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), getResources().getString(R.string.livemap_error, message), Toast.LENGTH_LONG).show();
 	}
 }

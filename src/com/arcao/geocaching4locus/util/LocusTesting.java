@@ -1,11 +1,5 @@
 package com.arcao.geocaching4locus.util;
 
-import java.util.List;
-
-import locus.api.android.utils.LocusUtils;
-
-import org.osgi.framework.Version;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -15,10 +9,13 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.LocusTestingErrorDialogFragment;
+import locus.api.android.utils.LocusUtils;
+import org.osgi.framework.Version;
+
+import java.util.List;
 
 public class LocusTesting {
 	private static final String TAG = LocusTesting.class.getName();
@@ -33,7 +30,7 @@ public class LocusTesting {
 			locusVersion = Version.parseVersion(null);
 		}
 
-		Log.i(TAG, "Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
+		Log.v(TAG, "Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
 
 		return locusVersion.compareTo(AppConstants.LOCUS_MIN_VERSION) >= 0;
 	}

@@ -1,28 +1,20 @@
 package com.arcao.geocaching4locus;
 
-import locus.api.android.ActionTools;
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.RequiredVersionMissingException;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+import locus.api.android.utils.LocusUtils;
 
 public class MenuActivity extends AbstractActionBarActivity {
 	private final static String TAG = "G4L|MenuActivity";
 
-	private SharedPreferences prefs;
 	private ToggleButton liveMapButton;
+	private LiveMapNotificationManager liveMapNotificationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +28,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
 		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
 
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+		liveMapNotificationManager = LiveMapNotificationManager.get(this);
 		liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 	}
 
@@ -45,7 +36,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 	protected void onResume() {
 		super.onResume();
 
-		liveMapButton.setChecked(prefs.getBoolean(PrefConstants.LIVE_MAP, false));
+		liveMapButton.setChecked(liveMapNotificationManager.isLiveMapEnabled());
 	}
 
 	public void onClickImportFromGC(View view) {
@@ -53,28 +44,8 @@ public class MenuActivity extends AbstractActionBarActivity {
 	}
 
 	public void onClickLiveMap(View view) {
-		boolean activated = liveMapButton.isChecked();
-
-		// Temporary fix for NPE in Locus API.
-		boolean periodicUpdateEnabled = true;
-		try {
-			periodicUpdateEnabled = isPeriodicUpdateEnabled(this);
-		} catch (Exception e) {
-			Log.e(TAG, "Unable to receive info about current state of periodic update events from Locus.", e);
-		}
-
-		if (activated && !periodicUpdateEnabled) {
-			activated = false;
-			liveMapButton.setChecked(activated);
-
-			Toast.makeText(this, getText(R.string.livemap_disabled), Toast.LENGTH_LONG).show();
-		} else if (activated) {
-			Toast.makeText(this, getText(R.string.livemap_activated), Toast.LENGTH_LONG).show();
-		} else {
-			Toast.makeText(this, getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
-		}
-
-		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, activated).commit();
+		liveMapNotificationManager.setLiveMapEnabled(!liveMapNotificationManager.isLiveMapEnabled());
+		liveMapButton.setChecked(liveMapNotificationManager.isLiveMapEnabled());
 
 		// hide dialog only when was started from Locus
 		if (LocusUtils.isIntentMainFunction(getIntent())) {
@@ -87,7 +58,7 @@ public class MenuActivity extends AbstractActionBarActivity {
 	}
 
 	public void onClickNearest(View view) {
-		Intent intent = null;
+		Intent intent;
 
 		// copy intent data from Locus
 		// FIX Android 2.3.3 can't start activity second time
@@ -132,15 +103,6 @@ public class MenuActivity extends AbstractActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			finish();
-		}
-	}
-
-	public static boolean isPeriodicUpdateEnabled(Context ctx) {
-		try {
-			return ActionTools.isPeriodicUpdatesEnabled(ctx);
-		} catch (RequiredVersionMissingException e) {
-			Log.e(TAG, e.toString(), e);
-			return false;
 		}
 	}
 }

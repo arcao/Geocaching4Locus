@@ -1,21 +1,22 @@
 package com.arcao.geocaching4locus.receiver;
 
-import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_BBOX_TOP_LEFT;
-import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_CENTER;
-import locus.api.android.PeriodicUpdate;
-import locus.api.android.UpdateContainer;
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.PeriodicUpdatesConst;
-import locus.api.objects.extra.Location;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
+import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import locus.api.android.PeriodicUpdate;
+import locus.api.android.UpdateContainer;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.PeriodicUpdatesConst;
+import locus.api.objects.extra.Location;
+
+import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_BBOX_TOP_LEFT;
+import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_CENTER;
 
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundpseak side to 100000 meters
@@ -28,6 +29,11 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
+		final LiveMapNotificationManager liveMapNotificationManager = LiveMapNotificationManager.get(context);
+
+		if (liveMapNotificationManager.handleBroadcastIntent(intent))
+			return;
+
 		if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false)) {
 			return;
 		}
@@ -37,7 +43,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			LocusTesting.showLocusTooOldToast(context);
 
 			// disable live map
-			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
+			liveMapNotificationManager.setLiveMapEnabled(false);
 		}
 
 		// ignore onTouch events

@@ -34,9 +34,8 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		}
 
 		// if import task is running, show the import task progress dialog
-		ImportDialogFragment fragment = (ImportDialogFragment) getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG);
-		if (fragment != null) {
-			fragment.show(getSupportFragmentManager(), ImportDialogFragment.TAG);
+		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null) {
+			showGCNumberInputDialog = false;
 			return;
 		}
 

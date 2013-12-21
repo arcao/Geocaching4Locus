@@ -1,24 +1,20 @@
 package locus.api.android;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.objects.extra.Waypoint;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Environment;
-import android.util.Log;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
+	private static final String LOCUS_CACHE_FILENAME = "data.locus";
+
 	private static final String TAG = ActionDisplayPointsExtended.class.getName();
 	private static final int FILE_VERSION = 2;
 
@@ -49,130 +45,34 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	}
 
 	/**
-	 * Is external storage available for writing file?
-	 * @return true if we can write to storage otherwise false
-	 */
-	public static boolean isExternalStorageWritable() {
-		String state = Environment.getExternalStorageState();
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			// We can read and write the media
-			return true;
-		} else {
-			// Something else is wrong. It may be one of many other states, but all we
-			// need
-			// to know is we can neither read nor write
-			return false;
-		}
-	}
-
-	/**
 	 * Get a path including file name to save data for Locus
 	 * @param context	Context
 	 * @return	path to file
 	 * @throws IOException If external storage isn't available or writable
 	 */
 	public static File getCacheFileName(Context context) throws IOException {
-		if (!isExternalStorageWritable())
-			throw new IOException("External storage (or SD Card) is not available.");
-
-		File cacheFile = new File(Environment.getExternalStorageDirectory(), String.format("/Android/data/%s/cache/data.locus", context.getPackageName()));
-		File parentDirectory = cacheFile.getParentFile();
-
-		parentDirectory.mkdirs();
-
-		if (!parentDirectory.isDirectory())
-			throw new IOException("External storage (or SD Card) is not writable.");
+		File cacheFile = context.getFileStreamPath(LOCUS_CACHE_FILENAME);
+		Log.d(TAG, "Cache file for Locus: " + cacheFile.toString());
 
 		return cacheFile;
 	}
 
 	/**
-	 * Get a path including file name to save geocache for later use
-	 * @param context	Context
-	 * @return	path to file
+	 * Get a OutputFileStream to save data for Locus
+	 * @param context Context
+	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
+	 * @throws IOException If I/O error occurs
 	 */
-	public static File getGeocacheCacheFileName(Context context, String cacheCode) {
-		if (!isExternalStorageWritable())
-			return new File(context.getCacheDir(), cacheCode + ".locus");
+	public static FileOutputStream getCacheFileOutputStream(Context context) throws IOException {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			return context.openFileOutput(LOCUS_CACHE_FILENAME, Context.MODE_WORLD_READABLE); // file has to be readable for Locus
+		} else {
+			File file = getCacheFileName(context);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.flush(); // create empty file
+			file.setReadable(true, false); // file has to be readable for Locus
 
-		File storageDirectory = Environment.getExternalStorageDirectory();
-		File cacheFile = new File(storageDirectory, String.format("/Android/data/%s/cache/%s.locus", context.getPackageName(), cacheCode));
-		cacheFile.getParentFile().mkdirs();
-
-		return cacheFile;
-	}
-
-	public static void storeGeocacheToCache(Context context, Waypoint point) {
-		File f = getGeocacheCacheFileName(context, point.gcData.getCacheID());
-		if (f == null) {
-			Log.e(TAG, "SD card isn't writeable!");
-			return;
-		}
-
-		if (f.exists()) {
-			if (!f.delete()) {
-				Log.e(TAG, "Geocache cache can't be deleted!");
-				return;
-			}
-		}
-
-		DataOutputStream dos = null;
-
-		try {
-			dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-
-			// write current version
-			dos.writeInt(FILE_VERSION);
-			point.write(dos);
-
-			dos.flush();
-			dos.close();
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage(), e);
-		} finally {
-			if (dos != null) {
-				try {
-					dos.close();
-				} catch (IOException e) {}
-			}
-		}
-	}
-
-	public static Waypoint loadGeocacheFromCache(Context context, String cacheCode) {
-		File f = getGeocacheCacheFileName(context, cacheCode);
-
-		if (f == null) {
-			Log.e(TAG, "SD card isn't writeable!");
-			return null;
-		}
-
-		if (!f.exists()) {
-			Log.w(TAG, "Cache file not found: " + f);
-			return null;
-		}
-
-		DataInputStream dis = null;
-
-		try {
-			dis = new DataInputStream(new BufferedInputStream(new FileInputStream(f)));
-
-			// check version
-			if (FILE_VERSION != dis.readInt()) {
-				return null;
-			}
-
-			Waypoint point = new Waypoint(dis);
-			return point;
-		} catch (IOException e) {
-			Log.e(TAG, e.getMessage(), e);
-			return null;
-		} finally {
-			if (dis != null) {
-				try {
-					dis.close();
-				} catch (IOException e) {}
-			}
+			return fos;
 		}
 	}
 }

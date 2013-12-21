@@ -1,24 +1,8 @@
 package com.arcao.geocaching4locus.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Vector;
-
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableDataOutputStream;
-import locus.api.utils.Utils;
-
-import org.acra.ErrorReporter;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -27,22 +11,25 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableDataOutputStream;
+import locus.api.utils.Utils;
+import org.acra.ErrorReporter;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 public class SearchGeocacheService extends AbstractService {
 	private static final String TAG = "G4L|SearchGeocacheService";
@@ -220,7 +207,7 @@ public class SearchGeocacheService extends AbstractService {
 
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
 
-			sdos = new StoreableDataOutputStream(new FileOutputStream(dataFile));
+			sdos = new StoreableDataOutputStream(ActionDisplayPointsExtended.getCacheFileOutputStream(Geocaching4LocusApplication.getAppContext()));
 			sdos.beginList();
 
 			sendProgressUpdate();

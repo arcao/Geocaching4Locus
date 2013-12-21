@@ -5,6 +5,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -305,6 +307,10 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected void showMessage(final String message) {
-		Toast.makeText(getApplicationContext(), getResources().getString(R.string.livemap_error, message), Toast.LENGTH_LONG).show();
+		new Handler(Looper.getMainLooper()).post(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.livemap_error, message), Toast.LENGTH_LONG).show();}
+		});
 	}
 }

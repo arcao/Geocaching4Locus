@@ -6,11 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
+import com.arcao.geocaching4locus.MenuActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
@@ -145,6 +147,10 @@ public class LiveMapNotificationManager {
 		}
 
 		nb.setPriority(NotificationCompat.PRIORITY_MAX); // always show button
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+			nb.setContentIntent(PendingIntent.getActivity(mContext, 0, new Intent(mContext, MenuActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
+		}
 
 		return nb;
 	}

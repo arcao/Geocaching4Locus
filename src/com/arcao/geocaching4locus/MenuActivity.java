@@ -10,7 +10,7 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import locus.api.android.utils.LocusUtils;
 
-public class MenuActivity extends AbstractActionBarActivity {
+public class MenuActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
 	private final static String TAG = "G4L|MenuActivity";
 
 	private ToggleButton liveMapButton;
@@ -37,6 +37,14 @@ public class MenuActivity extends AbstractActionBarActivity {
 		super.onResume();
 
 		liveMapButton.setChecked(liveMapNotificationManager.isLiveMapEnabled());
+		liveMapNotificationManager.addLiveMapStateChangeListener(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		liveMapNotificationManager.removeLiveMapStateChangeListener(this);
 	}
 
 	public void onClickImportFromGC(View view) {
@@ -104,5 +112,10 @@ public class MenuActivity extends AbstractActionBarActivity {
 		if (resultCode == RESULT_OK) {
 			finish();
 		}
+	}
+
+	@Override
+	public void onLiveMapStateChange(boolean newState) {
+		liveMapButton.setChecked(newState);
 	}
 }

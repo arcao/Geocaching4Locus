@@ -208,7 +208,7 @@ public class LiveMapService extends IntentService {
 
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
 
-			notificationManager.setDownloadingProgress(0);
+			notificationManager.setDownloadingProgress(0, CACHES_COUNT);
 
 			while (current < CACHES_COUNT) {
 				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
@@ -256,7 +256,7 @@ public class LiveMapService extends IntentService {
 
 				ActionDisplayPoints.sendPackSilent(this, pw, false);
 
-				notificationManager.setDownloadingProgress((current * 100) / CACHES_COUNT);
+				notificationManager.setDownloadingProgress(current, CACHES_COUNT);
 
 				if (caches.size() != perPage)
 					break;
@@ -274,7 +274,7 @@ public class LiveMapService extends IntentService {
 			Log.i(TAG, "Count of caches sent to Locus: " + current);
 		}
 
-		notificationManager.setDownloadingProgress(100);
+		notificationManager.setDownloadingProgress(CACHES_COUNT, CACHES_COUNT);
 
 		// HACK we must remove old PackWaypoints from the map
 		for (int i = requests + 1; i < REQUESTS; i++) {

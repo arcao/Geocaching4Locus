@@ -22,10 +22,11 @@ import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.preference.ListPreference;
 import com.hlidskialf.android.preference.SeekBarPreference;
 
-public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
+public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants, LiveMapNotificationManager.LiveMapStateChangeListener {
 	private static final String TAG = "G4L|PreferenceActivity";
 
 	public static final int DIALOG_DONATE_ID = 0;
@@ -39,10 +40,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	private PreferenceScreen cacheTypeFilterScreen;
 	private PreferenceScreen containerTypeFilterScreen;
 
+	private LiveMapNotificationManager liveMapNotificationManager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preference);
+
+		liveMapNotificationManager = LiveMapNotificationManager.get(this);
 
 		cacheTypeFilterScreen = (PreferenceScreen) findPreference("cache_type_filter_screen");
 		if (cacheTypeFilterScreen != null) {
@@ -73,6 +78,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	protected void onResume() {
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		liveMapNotificationManager.addLiveMapStateChangeListener(this);
 
 		if (!getIntent().getBooleanExtra("ShowCacheTypeFilterScreen", false)
 				&& !getIntent().getBooleanExtra("ShowContainerTypeFilterScreen", false)) {
@@ -84,6 +90,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 	protected void onPause() {
 		super.onPause();
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+		liveMapNotificationManager.removeLiveMapStateChangeListener(this);
 	}
 
 	@Override
@@ -114,12 +121,14 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		} else if (DOWNLOADING_FULL_CACHE_DATE_ON_SHOW.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), R.string.pref_download_on_show_summary));
-		} else if (LIVE_MAP.equals(key)) {
-			final CheckBoxPreference p = findPreference(key, CheckBoxPreference.class);
-			final boolean newState = prefs.getBoolean(key, false);
-			if (p.isChecked() != newState) {
-				p.setChecked(newState);
-			}
+		}
+	}
+
+	@Override
+	public void onLiveMapStateChange(boolean newState) {
+		final CheckBoxPreference p = findPreference(PrefConstants.LIVE_MAP, CheckBoxPreference.class);
+		if (p != null) {
+			p.setChecked(newState);
 		}
 	}
 

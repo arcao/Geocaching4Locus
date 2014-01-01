@@ -18,7 +18,10 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
 import locus.api.android.ActionTools;
 
-public class LiveMapNotificationManager {
+import java.util.HashSet;
+import java.util.Set;
+
+public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 	protected static final String TAG = "LiveMapNM";
 	protected static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
 	protected static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
@@ -33,6 +36,8 @@ public class LiveMapNotificationManager {
 	protected NotificationManager mNotificationManager;
 	protected SharedPreferences mSharedPrefs;
 	protected boolean showLiveMapDisabledNotification;
+
+	protected final Set<LiveMapStateChangeListener> mLiveMapStateChangeListeners = new HashSet<>();
 
 	public static LiveMapNotificationManager get(Context context) {
 		return new LiveMapNotificationManager(context);
@@ -76,31 +81,31 @@ public class LiveMapNotificationManager {
 					showNotification();
 					lastLiveMapState = isLiveMapEnabled();
 				}
-				setNotificationHideAlarm();
+				updateNotificationHideAlarm();
 				return false;
 		}
 	}
 
-	public void setDownloadingProgress(int progress) {
+	public void setDownloadingProgress(int current, int count) {
 		if (!notificationShown)
 			return;
 
 		NotificationCompat.Builder nb = createBaseNotification();
 
-		if (progress == 0) {
+		if (current == 0) {
 			nb.setProgress(0, 0, true);
-		} else if (progress < 100) {
-			nb.setProgress(100, progress, false);
+		} else if (current < count) {
+			nb.setProgress(count, current, false);
 		}
 
-		if (progress < 100) {
-			nb.setContentText(mContext.getText(R.string.livemap_notification_message_downloading));
+		if (current < count) {
+			nb.setContentText(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
 		}
 
 		mNotificationManager.notify(NOTIFICATION_ID, nb.build());
 	}
 
-	protected void setNotificationHideAlarm() {
+	protected void updateNotificationHideAlarm() {
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
 
@@ -183,5 +188,34 @@ public class LiveMapNotificationManager {
 
 	public boolean isLiveMapEnabled() {
 		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);
+	}
+
+	public void addLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {
+		mLiveMapStateChangeListeners.add(liveMapStateChangeListener);
+
+		if (mLiveMapStateChangeListeners.size() == 1) {
+			mSharedPrefs.registerOnSharedPreferenceChangeListener(this);
+		}
+	}
+
+	public void removeLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {
+		mLiveMapStateChangeListeners.remove(liveMapStateChangeListener);
+
+		if (mLiveMapStateChangeListeners.size() == 0) {
+			mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this);
+		}
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if (PrefConstants.LIVE_MAP.equals(key)) {
+			for(LiveMapStateChangeListener listener : mLiveMapStateChangeListeners) {
+				listener.onLiveMapStateChange(sharedPreferences.getBoolean(key, false));
+			}
+		}
+	}
+
+	public static interface LiveMapStateChangeListener {
+		public void onLiveMapStateChange(boolean newState);
 	}
 }

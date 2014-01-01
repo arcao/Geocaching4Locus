@@ -1,9 +1,5 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-import java.util.Locale;
-
-import oauth.signpost.OAuth;
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -23,7 +19,6 @@ import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
@@ -31,6 +26,10 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.OAuthLoginTaskListener;
+import oauth.signpost.OAuth;
+
+import java.lang.ref.WeakReference;
+import java.util.Locale;
 
 public class OAuthLoginDialogFragment extends AbstractDialogFragment implements OAuthLoginTaskListener {
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
@@ -87,7 +86,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		super.onCancel(dialog);
 
 		if (mTask != null)
-			mTask.cancel(false);
+			mTask.cancel(true);
 
 		OnTaskFinishedListener listener = taskFinishedListenerRef.get();
 		if (listener != null) {

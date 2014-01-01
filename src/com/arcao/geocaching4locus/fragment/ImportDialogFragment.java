@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -9,10 +7,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.ImportTask;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
+
+import java.lang.ref.WeakReference;
 
 public final class ImportDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = ImportDialogFragment.class.getName();
@@ -74,7 +73,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	public void onDismiss(DialogInterface dialog) {
 		super.onDismiss(dialog);
 		if (mTask != null) {
-			mTask.cancel(false);
+			mTask.cancel(true);
 		}
 	}
 

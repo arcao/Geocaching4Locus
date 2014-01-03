@@ -48,9 +48,11 @@
 		<CheckBoxPreference android:key="filter_show_disabled" android:summary="@string/pref_show_disabled_summary" android:title="@string/pref_show_disabled" android:defaultValue="false"/>
 		<EditTextPreference android:key="filter_distance" android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_title_downloading">
-	    <CheckBoxPreference android:key="live_map" android:title="@string/pref_livemap" android:summary="@string/pref_livemap_summary" android:defaultValue="false"/>
+    <PreferenceCategory android:title="@string/pref_title_live_map">
+        <CheckBoxPreference android:key="live_map" android:title="@string/pref_livemap" android:summary="@string/pref_livemap_summary" android:defaultValue="false"/>
         <CheckBoxPreference android:key="show_live_map_disabled_notification" android:title="@string/pref_livemap_show_disabled_notification" android:summary="@string/pref_livemap_show_disabled_notification_summary" android:defaultValue="false"/>
+    </PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_title_downloading">
 	    <CheckBoxPreference android:key="simple_cache_data" android:title="@string/pref_download_basic" android:summary="@string/pref_download_basic_summary" android:defaultValue="true"/>
 	    <com.arcao.preference.ListPreference android:key="full_cache_data_on_show" android:title="@string/pref_download_on_show" android:summary="@string/pref_download_on_show_summary" android:entries="@array/pref_download_on_show_entries" android:entryValues="@array/pref_download_on_show_values" android:defaultValue="0"/>
 	    <com.hlidskialf.android.preference.SeekBarPreference android:key="downloading_count_of_logs" android:max="30" android:title="@string/pref_count_of_logs" android:text="@string/pref_count_of_logs_text" android:dialogMessage="@string/pref_count_of_logs_summary" android:defaultValue="5" android:summary="@string/pref_count_of_logs_summary"/>

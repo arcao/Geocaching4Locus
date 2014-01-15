@@ -26,7 +26,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	protected static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
 	protected static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
 	protected static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
-	protected static final long NOTIFICATION_TIMEOUT_MS = 5000;
+	protected static final long NOTIFICATION_TIMEOUT_MS = 1250;
 	protected static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
 
 	protected static boolean notificationShown = false;
@@ -99,6 +99,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 
 		if (current < count) {
+			nb.setSmallIcon(R.drawable.ic_stat_location_map_downloading_anim);
 			nb.setContentText(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
 		}
 
@@ -123,10 +124,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	protected void hideNotification() {
 		notificationShown = false;
 
-		// disable live map
-		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
-
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
 
@@ -137,16 +134,17 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	protected NotificationCompat.Builder createBaseNotification() {
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
 
-		nb.setSmallIcon(R.drawable.ic_launcher);
 		nb.setOngoing(true);
 		nb.setWhen(0); // this fix redraw issue while refreshing
 
 		nb.setContentTitle(mContext.getText(R.string.livemap_notification_title));
 
 		if (isLiveMapEnabled()) {
+			nb.setSmallIcon(R.drawable.ic_stat_location_map);
 			nb.setContentText(mContext.getText(R.string.livemap_notification_message_enabled));
 			nb.addAction(R.drawable.ic_stat_navigation_cancel, mContext.getText(R.string.livemap_notification_action_disable), createPendingIntent(ACTION_LIVE_MAP_DISABLE));
 		} else {
+			nb.setSmallIcon(R.drawable.ic_stat_location_map_disabled);
 			nb.setContentText(mContext.getText(R.string.livemap_notification_message_disabled));
 			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.livemap_notification_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
 		}

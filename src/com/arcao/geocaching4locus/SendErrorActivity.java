@@ -1,9 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import org.acra.ACRA;
-import org.acra.ErrorReporter;
-import org.acra.ErrorReporterEx;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -12,12 +8,9 @@ import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+import org.acra.ACRA;
+import org.acra.ErrorReporterEx;
 
 public class SendErrorActivity extends Activity {
 	public static final String ACTION_SEND_ERROR = "com.arcao.geocaching4locus.intent.action.SEND_ERROR";
@@ -95,7 +88,7 @@ public class SendErrorActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
-					ErrorReporter.getInstance().putCustomData("userName", Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name);
+					ACRA.getErrorReporter().putCustomData("userName", Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name);
 				}
 
 				// Retrieve user comment
@@ -119,7 +112,7 @@ public class SendErrorActivity extends Activity {
 					Toast.makeText(SendErrorActivity.this, toastId, Toast.LENGTH_LONG).show();
 				}
 
-				ErrorReporter.getInstance().handleSilentException(exception);
+				ACRA.getErrorReporter().handleSilentException(exception);
 				finish();
 			}
 		});

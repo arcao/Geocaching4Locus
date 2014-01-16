@@ -22,7 +22,6 @@ import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import org.acra.ACRA;
-import org.acra.ErrorReporter;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
@@ -72,13 +71,13 @@ public class Geocaching4LocusApplication extends android.app.Application {
 		authenticatorHelper.convertFromOldStorage();
 
 		if (authenticatorHelper.hasAccount()) {
-			ErrorReporter.getInstance().putCustomData("userName", authenticatorHelper.getAccount().name);
+			ACRA.getErrorReporter().putCustomData("userName", authenticatorHelper.getAccount().name);
 		}
 
 		PackageInfo pi = LocusUtils.getLocusPackageInfo(this);
 		if (pi != null) {
-			ErrorReporter.getInstance().putCustomData("LocusVersion", pi.versionName);
-			ErrorReporter.getInstance().putCustomData("LocusPackage", pi.packageName);
+			ACRA.getErrorReporter().putCustomData("LocusVersion", pi.versionName);
+			ACRA.getErrorReporter().putCustomData("LocusPackage", pi.packageName);
 		}
 
 		System.setProperty("debug", "1");

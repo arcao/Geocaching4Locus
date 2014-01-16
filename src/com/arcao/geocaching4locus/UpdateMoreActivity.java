@@ -1,20 +1,17 @@
 package com.arcao.geocaching4locus;
 
-import locus.api.android.utils.LocusUtils;
-
-import org.acra.ErrorReporter;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.UpdateMoreDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
+import locus.api.android.utils.LocusUtils;
+import org.acra.ACRA;
 
 public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
@@ -94,8 +91,8 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 			return;
 		}
 
-		ErrorReporter.getInstance().putCustomData("source", "update;");
-		ErrorReporter.getInstance().putCustomData("count", String.valueOf(pointIndexes.length));
+		ACRA.getErrorReporter().putCustomData("source", "update;");
+		ACRA.getErrorReporter().putCustomData("count", String.valueOf(pointIndexes.length));
 
 		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
 			return;

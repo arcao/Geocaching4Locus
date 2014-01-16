@@ -24,7 +24,7 @@ import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableDataOutputStream;
 import locus.api.utils.Utils;
-import org.acra.ErrorReporter;
+import org.acra.ACRA;
 
 import java.io.File;
 import java.io.IOException;
@@ -194,7 +194,7 @@ public class SearchGeocacheService extends AbstractService {
 		if (isCanceled())
 			return null;
 
-		ErrorReporter.getInstance().putCustomData("source", "search;" + latitude + ";" + longitude);
+		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = LiveGeocachingApiFactory.create();
 

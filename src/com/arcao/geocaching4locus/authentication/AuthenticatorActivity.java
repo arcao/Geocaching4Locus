@@ -1,9 +1,5 @@
 package com.arcao.geocaching4locus.authentication;
 
-import java.lang.ref.WeakReference;
-
-import org.acra.ErrorReporter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.text.Html;
-
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
@@ -23,6 +18,9 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinishedListener;
+import org.acra.ACRA;
+
+import java.lang.ref.WeakReference;
 
 public class AuthenticatorActivity extends FragmentActivity implements OnTaskFinishedListener {
 	protected static final String PARAM_SHOW_WIZARD = "SHOW_WIZARD";
@@ -38,7 +36,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		ErrorReporter.getInstance().putCustomData("source", "login");
+		ACRA.getErrorReporter().putCustomData("source", "login");
 
 		if (getSupportFragmentManager().findFragmentByTag(TAG_DIALOG) != null)
 			return;

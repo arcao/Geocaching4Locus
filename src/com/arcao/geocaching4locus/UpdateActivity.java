@@ -1,18 +1,11 @@
 package com.arcao.geocaching4locus;
 
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.objects.extra.Waypoint;
-
-import org.acra.ErrorReporter;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -20,6 +13,10 @@ import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragmen
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.objects.extra.Waypoint;
+import org.acra.ACRA;
 
 public class UpdateActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
@@ -142,7 +139,7 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 			return;
 		}
 
-		ErrorReporter.getInstance().putCustomData("source", "update;" + cacheId);
+		ACRA.getErrorReporter().putCustomData("source", "update;" + cacheId);
 
 		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG) != null)
 			return;

@@ -15,7 +15,9 @@ repositories {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
-    compile 'ch.acra:acra:4.2.3'
+    compile ('ch.acra:acra:4.5.0') {
+      exclude group: 'org.json', module: 'json' /* already in Android */
+    }
     compile 'org.apache.commons:commons-lang3:3.1'
     compile('com.arcao:geocaching-api:1.5.18') {
       exclude group: 'log4j', module: 'log4j' /* Not working in Android, log4j-over-slf4j used instead */

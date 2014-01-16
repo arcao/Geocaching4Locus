@@ -1,21 +1,19 @@
 package com.arcao.geocaching4locus;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.acra.ErrorReporter;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import org.acra.ACRA;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ImportActivity extends FragmentActivity implements OnTaskFinishedListener {
 	private final static String TAG = "G4L|ImportActivity";
@@ -92,7 +90,7 @@ public class ImportActivity extends FragmentActivity implements OnTaskFinishedLi
 
 		String cacheId = m.group(1);
 
-		ErrorReporter.getInstance().putCustomData("source", "import;" + cacheId);
+		ACRA.getErrorReporter().putCustomData("source", "import;" + cacheId);
 
 		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null)
 			return;

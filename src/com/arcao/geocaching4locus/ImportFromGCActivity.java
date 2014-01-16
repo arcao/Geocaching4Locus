@@ -1,12 +1,9 @@
 package com.arcao.geocaching4locus;
 
-import org.acra.ErrorReporter;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
@@ -16,6 +13,7 @@ import com.arcao.geocaching4locus.fragment.GCNumberInputDialogFragment.OnInputFi
 import com.arcao.geocaching4locus.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import org.acra.ACRA;
 
 public class ImportFromGCActivity extends FragmentActivity implements OnTaskFinishedListener, OnInputFinishedListener, OnFullCacheDownloadConfirmDialogListener {
 	private static final String TAG = ImportFromGCActivity.class.getName();
@@ -100,7 +98,7 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	}
 
 	protected void startImport(String cacheId) {
-		ErrorReporter.getInstance().putCustomData("source", "importFromGC;" + cacheId);
+		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
 
 		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null)
 			return;

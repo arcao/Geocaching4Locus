@@ -86,6 +86,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 	}
 
+	public boolean isForceUpdateRequiredInFuture() {
+		return !notificationShown;
+	}
+
 	public void setDownloadingProgress(int current, int count) {
 		if (!notificationShown)
 			return;

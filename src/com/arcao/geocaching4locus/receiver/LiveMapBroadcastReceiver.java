@@ -22,6 +22,8 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundpseak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
 
+	private static boolean forceUpdate = false;
+
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 		if (intent == null || intent.getAction() == null)
@@ -31,8 +33,10 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
 		final LiveMapNotificationManager liveMapNotificationManager = LiveMapNotificationManager.get(context);
 
-		if (liveMapNotificationManager.handleBroadcastIntent(intent))
+		if (liveMapNotificationManager.handleBroadcastIntent(intent)) {
+			forceUpdate = liveMapNotificationManager.isForceUpdateRequiredInFuture();
 			return;
+		}
 
 		if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false)) {
 			return;
@@ -73,8 +77,10 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				if (!update.isMapVisible())
 					return;
 
-				if (!update.isNewMapCenter() && !update.isNewZoomLevel())
+				if (!update.isNewMapCenter() && !update.isNewZoomLevel() && !forceUpdate)
 					return;
+
+				forceUpdate = false;
 
 				// When Live map is enabled, Locus sometimes send NaN when is starting
 				if (Double.isNaN(update.getMapTopLeft().getLatitude()) || Double.isNaN(update.getMapTopLeft().getLongitude())

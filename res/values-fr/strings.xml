@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Erreurs pendant le chargement des caches.&lt;br&gt;Description: %1$s</string>
+    <string name="error">Erreur pendant le chargement des caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Téléchargement des caches...</string>
     <string name="error_locus_not_found">Merci d\'installer Locus</string>
-    <string name="error_location">Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
+    <string name="error_location">Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
     <string name="acquiring_gps_location">En cours de localisation par GPS...</string>
     <string name="acquiring_network_location">En cours de localisation par le réseau </string>
     
@@ -24,7 +24,7 @@
     <string name="pref_imperial_units">Unités Impériales</string>
     <string name="pref_imperial_units_summary">Utiliser les miles au lieu des kilomètres</string>
     
-    <string name="error_credentials">Nom d\'utilisateur ou mot de passe invalide. Veuillez vérifier vos identifiants dans la section des préférences.</string>
+    <string name="error_credentials">Pseudo ou mot de passe invalide. Merci de vérifier vos identifiants dans les préférences.</string>
     <string name="error_title">Une erreur est survenue !</string>
     
     <string name="ok_button">Ok</string>
@@ -42,7 +42,7 @@
     
     <string name="update_cache_progress">Mise à jour de la cache</string>
     
-    <string name="pref_title_downloading">Chargement</string>
+    <string name="pref_title_downloading">Téléchargement</string>
     <string name="pref_count_of_logs">Nombre de logs</string>
     <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Nombre de logs à charger avec chaque cache</string>
@@ -184,5 +184,17 @@
     <string name="account_geocaching_live_message">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Pressez ici pour plus d\'information...</string>
     
     <string name="error_invalid_api_response">Geocaching Live a envoyé une réponse invalide:&lt;br>%s</string>
+
+    <string name="livemap_notification_title">Geocaching4Locus carte en direct</string>
+    <string name="livemap_notification_message_enabled">Carte en direct activée</string>
+    <string name="livemap_notification_message_disabled">Carte en direct désactivée.</string>
+    <string name="livemap_notification_message_downloading">Téléchargement des caches en direct: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Carte en direct activée</string>
+    <string name="livemap_notification_action_disable">Carte en direct désactivée</string>
+    <string name="livemap_error">Geocaching4Locus carte en direct: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Toujours montrer les notifications</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
+    <string name="pref_title_live_map">Carte en direct</string>
+    <string name="launcher_menu">Menu de Geocaching4Locus</string>
 </resources>
 

@@ -184,5 +184,17 @@
     <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації ...</string>
     
     <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:&lt;br>%s</string>
+
+    <string name="livemap_notification_title">Жива мапа Geocaching4Locus</string>
+    <string name="livemap_notification_message_enabled">Жива мапа увімкнена.</string>
+    <string name="livemap_notification_message_disabled">Жива мапа вимкнена.</string>
+    <string name="livemap_notification_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Увімкнути живу мапу</string>
+    <string name="livemap_notification_action_disable">Вимкнути живу мапу</string>
+    <string name="livemap_error">Жива мапа Geocaching4Locus: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Завжди показувати сповіщення</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Це працює тільки, якщо Locus запущений та періодичні оновлення дозволені у ньому.</string>
+    <string name="pref_title_live_map">Жива карта</string>
+    <string name="launcher_menu">Меню Geocaching4Locus</string>
 </resources>
 

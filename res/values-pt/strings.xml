@@ -184,5 +184,17 @@
     <string name="account_geocaching_live_message">Este add-on usa o Gecocaching Live para obter informações sobre Geocaches. Toque aqui para mais informação...</string>
     
     <string name="error_invalid_api_response">O Geocaching Live retornou uma resposta inválida:&lt;br>%s</string>
+
+    <string name="livemap_notification_title">Mapa ao vivo Geocaching4Locus</string>
+    <string name="livemap_notification_message_enabled">Mapa ao vivo está ativo.</string>
+    <string name="livemap_notification_message_disabled">Mapa ao vivo está desligado.</string>
+    <string name="livemap_notification_message_downloading">A descarregar caches pelo mapa ao vivo: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Ativar mapa ao vivo</string>
+    <string name="livemap_notification_action_disable">Desligar mapa ao vivo</string>
+    <string name="livemap_error">Mapa ao vivo Geocaching4Locus: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Mostrar notificação sempre</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Apenas funciona se o Locus está ligado e se o envio de atualizações periódicas está ativo.</string>
+    <string name="pref_title_live_map">Mapa ao vivo</string>
+    <string name="launcher_menu">Menu Geocaching4Locus</string>
 </resources>
 

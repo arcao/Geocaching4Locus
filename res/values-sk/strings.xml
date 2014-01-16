@@ -184,5 +184,17 @@
     <string name="account_geocaching_live_message">Toto rozšírenie využíva Geocaching Live na získavanie informácií o kešiach. Klepnite tu pre viac informácií…</string>
     
     <string name="error_invalid_api_response">Geocaching Live vrátil neplatnú odpoveď:&lt;br>%s</string>
+
+    <string name="livemap_notification_title">Aktívna mapa Geocaching4Locus</string>
+    <string name="livemap_notification_message_enabled">Aktívna mapa je povolená.</string>
+    <string name="livemap_notification_message_disabled">Aktívna mapa je zakázaná.</string>
+    <string name="livemap_notification_message_downloading">Sťahujem kiešky aktívne mapy: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Povoliť aktívnu mapu</string>
+    <string name="livemap_notification_action_disable">Zakázať aktívnu mapu</string>
+    <string name="livemap_error">Aktívna mapa Geocaching4Locus: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Vždy zobraziť notifikáciu</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locusu a Locus beží.</string>
+    <string name="pref_title_live_map">Aktívna mapa</string>
+    <string name="launcher_menu">Ponuka Geocaching4Locus</string>
 </resources>
 

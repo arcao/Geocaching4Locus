@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Wystąpił błąd przy pobieraniu skrzynek. Opis błędu:&lt;br>%1$s</string>
+    <string name="error">Wystąpił błąd przy pobieraniu skrzynek. Opis błędu:<br>%1$s</string>
     <string name="downloading">Pobieranie skrzynek...</string>
-    <string name="error_locus_not_found">Zainstaluj Locusa! </string>
+    <string name="error_locus_not_found">Zainstaluj program Locus!</string>
     <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
-    <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS</string>
+    <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS...</string>
     <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych...</string>
     
     <string name="preferences">Ustawienia</string>
@@ -143,22 +143,22 @@
     
     <string name="basic_member_warning_title">Dostęp standardowego użytkownika</string>
     <string name="premium_member_warning_title">Dostęp użytkownika "premium"</string>
-    <string name="basic_member_sign_on_warning_message">Jako posiadacz standardowego konta na Geocaching.com możesz pobrać szczegóły tylko &lt;b>%1$s co każde %2$s&lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.&lt;/i></string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów &lt;b>%1$s co każde %2$s&lt;/b>. Twój dzienny limit zostanie odnowiony o %3$s.&lt;br>
-&lt;br>
-&lt;i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Osiągnąłeś limit pobierania szczegółów &lt;b>6000 skrzynek na 24h&lt;/b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
+    <string name="basic_member_sign_on_warning_message">Jako posiadacz standardowego konta na Geocaching.com możesz pobrać szczegóły tylko <b>%1$s co każde %2$s</b>.<br>
+<br>
+<i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.</i></string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów <b>%1$s co każde %2$s</b>. Twój dzienny limit zostanie odnowiony o %3$s.<br>
+<br>
+<i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.</i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Osiągnąłeś limit pobierania szczegółów <b>6000 skrzynek na 24h</b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
     <string name="method_quota_exceeded_title">Hej, zwolnij!</string>
     <string name="method_quota_exceeded_message">Osiągnąłeś minutowy limit maksymalnej ilości akcji/połączeń.</string>
-    <string name="basic_member_full_geocache_warning_message">Jako posiadacz podstawowego konta na geocaching.com możesz pobrać szczegóły %1$s na każde %2$s.&lt;br>
-&lt;br>
-&lt;b>Możesz pobrać jeszcze %3$s. Limit zostanie odnowiony o %4$s&lt;/b>.&lt;br> 
-&lt;br>
-&lt;b>Kontynuować pobieranie?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź stronę Geocaching.com już teraz.&lt;/i></string>
+    <string name="basic_member_full_geocache_warning_message">Jako posiadacz podstawowego konta na geocaching.com możesz pobrać szczegóły %1$s na każde %2$s.<br>
+<br>
+<b>Możesz pobrać jeszcze %3$s. Limit zostanie odnowiony o %4$s</b>.<br> 
+<br>
+<b>Kontynuować pobieranie?</b>
+<br>
+<br><i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź stronę Geocaching.com już teraz.</i></string>
     <string name="button_yes">Tak</string>
     <string name="button_no">Nie</string>
     
@@ -183,6 +183,18 @@
     <string name="account_geocaching_live_title">Oparte na silniku Geocaching Live .</string>
     <string name="account_geocaching_live_message">Ten dodatek wykorzystuje silnik Geocaching Live do pobierania informacji o skrzynkach geocache. Kliknij tutaj, aby dowiedzieć się więcej...</string>
     
-    <string name="error_invalid_api_response">Usługa Geocaching Live zwraca niewłaściwą odpowiedź:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Usługa Geocaching Live zwraca niewłaściwą odpowiedź:<br>%s</string>
+
+    <string name="livemap_notification_title">Geocaching4Locus mapa "na żywo"</string>
+    <string name="livemap_notification_message_enabled">Mapa "na żywo" jest włączona.</string>
+    <string name="livemap_notification_message_disabled">Mapa "na żywo" jest wyłączona.</string>
+    <string name="livemap_notification_message_downloading">Pobieranie skrzynek "mapy na żywo": %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Włącz "mapę na żywo"</string>
+    <string name="livemap_notification_action_disable">Wyłącz "mapę na żywo"</string>
+    <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
+    <string name="pref_livemap_show_disabled_notification">Zawsze pokazuj powiadomienia.</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Ta funkcja działa jeśli okresowe aktalizacje są dostępne w Locusie i Locus jest uruchomiony.</string>
+    <string name="pref_title_live_map">Mapa "na żywo"</string>
+    <string name="launcher_menu">Menu Geocaching4Locus</string>
 </resources>
 

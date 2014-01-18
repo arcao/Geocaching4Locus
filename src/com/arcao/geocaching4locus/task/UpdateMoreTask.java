@@ -80,24 +80,26 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 		int current = 0;
 		int count = pointIndexes.length;
+		int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
 
 		try {
 			login(api);
 
-			current = 0;
 			while (current < count) {
+				long startTime = System.currentTimeMillis();
+
 				// prepare old cache data
-				List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, AppConstants.CACHES_PER_REQUEST);
+				List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, pointIndexes, current, cachesPerRequest);
 
 				if (oldPoints.size() == 0) {
 					// all are Waypoints without geocaching data
-					current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
+					current = current + Math.min(pointIndexes.length - current, cachesPerRequest);
 					publishProgress(current);
 					continue;
 				}
 
 				@SuppressWarnings({ "unchecked", "rawtypes" })
-				List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, AppConstants.CACHES_PER_REQUEST, logCount, 0, new Filter[] {
+				List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, cachesPerRequest, logCount, 0, new Filter[] {
 						new CacheCodeFilter(getCachesIds(oldPoints))
 				});
 
@@ -125,8 +127,11 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 				}
 
-				current = current + Math.min(pointIndexes.length - current, AppConstants.CACHES_PER_REQUEST);
+				current = current + Math.min(pointIndexes.length - current, cachesPerRequest);
 				publishProgress(current);
+
+				long requestDuration = System.currentTimeMillis() - startTime;
+				cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
 
 				// force memory clean
 				oldPoints = null;
@@ -238,5 +243,22 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		}
 
 		api.openSession(token);
+	}
+
+	private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
+		int cachesPerRequest = currentCachesPerRequest;
+
+		// keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
+		if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
+			cachesPerRequest+= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+
+		if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
+			cachesPerRequest-= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+
+		// keep the value in a range
+		cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
+		cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
+
+		return cachesPerRequest;
 	}
 }

@@ -34,4 +34,11 @@ public interface AppConstants {
 
 	/** Login dialog visible state */
 	static final String STATE_AUTHENTICATOR_ACTIVITY_VISIBLE = "AUTHENTICATOR_ACTIVITY_VISIBLE";
+
+	/* Adaptive downloading configuration */
+	static final int ADAPTIVE_DOWNLOADING_MIN_CACHES = CACHES_PER_REQUEST;
+	static final int ADAPTIVE_DOWNLOADING_MAX_CACHES = 50;
+	static final int ADAPTIVE_DOWNLOADING_STEP = 5;
+	static final int ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500;
+	static final int ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000;
 }

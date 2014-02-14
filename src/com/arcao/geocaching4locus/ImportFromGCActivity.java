@@ -16,7 +16,7 @@ import com.arcao.geocaching4locus.util.LocusTesting;
 import org.acra.ACRA;
 
 public class ImportFromGCActivity extends FragmentActivity implements OnTaskFinishedListener, OnInputFinishedListener, OnFullCacheDownloadConfirmDialogListener {
-	private static final String TAG = ImportFromGCActivity.class.getName();
+	private static final String TAG = "G4L|ImportFromGCActivity";
 
 	private static final int REQUEST_LOGIN = 1;
 	private boolean authenticatorActivityVisible = false;

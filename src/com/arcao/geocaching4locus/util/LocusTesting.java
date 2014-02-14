@@ -23,7 +23,7 @@ public class LocusTesting {
 	public static boolean isLocusInstalled(Context context) {
 		PackageInfo pi = LocusUtils.getLocusPackageInfo(context);
 
-		Version locusVersion = null;
+		Version locusVersion;
 		if (pi != null) {
 			locusVersion = Version.parseVersion(pi.versionName);
 		} else {

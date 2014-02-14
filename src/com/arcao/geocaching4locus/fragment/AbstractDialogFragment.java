@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+
+import java.lang.ref.WeakReference;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
@@ -61,7 +61,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	}
 
 	public void setOnCancelListener(CancellableDialog cancellableDialog) {
-		cancellableRef = new WeakReference<CancellableDialog>(cancellableDialog);
+		cancellableRef = new WeakReference<>(cancellableDialog);
 	}
 
 	public abstract static interface CancellableDialog {

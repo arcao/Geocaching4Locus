@@ -19,7 +19,7 @@ import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_BBOX_TOP_
 import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_CENTER;
 
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
-	// Limitation on Groundpseak side to 100000 meters
+	// Limitation on Groundspeak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
 
 	private static boolean forceUpdate = false;

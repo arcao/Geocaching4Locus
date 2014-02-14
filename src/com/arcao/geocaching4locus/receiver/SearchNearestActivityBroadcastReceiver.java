@@ -1,14 +1,11 @@
 package com.arcao.geocaching4locus.receiver;
 
-import java.lang.ref.WeakReference;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
@@ -17,14 +14,18 @@ import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDia
 import com.arcao.geocaching4locus.fragment.DownloadProgressDialogFragment;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 
+import java.lang.ref.WeakReference;
+
 public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
+	private static final String TAG = "G4L|SearchNearestActivityBroadcastReceiver";
+
 	protected WeakReference<SearchNearestActivity> activityRef;
 	protected DownloadProgressDialogFragment pd;
 
 	protected boolean registered;
 
 	public SearchNearestActivityBroadcastReceiver(SearchNearestActivity activity) {
-		activityRef = new WeakReference<SearchNearestActivity>(activity);
+		activityRef = new WeakReference<>(activity);
 
 		registered = false;
 	}
@@ -39,7 +40,7 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 		filter.addAction(ErrorActivity.ACTION_ERROR);
 
 		LocalBroadcastManager.getInstance(ctx).registerReceiver(this, filter);
-		Log.i(getClass().getName(), "Receiver registred.");
+		Log.i(TAG, "Receiver registered.");
 		registered = true;
 	}
 
@@ -52,7 +53,7 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 		if (pd != null)
 			pd.dismiss();
 
-		Log.i(getClass().getName(), "Receiver unregistred.");
+		Log.i(TAG, "Receiver unregistered.");
 		registered = false;
 	}
 
@@ -65,28 +66,35 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 		if (pd == null)
 			pd = (DownloadProgressDialogFragment) activity.getSupportFragmentManager().findFragmentByTag(DownloadProgressDialogFragment.TAG);
 
-		if (SearchGeocacheService.ACTION_PROGRESS_UPDATE.equals(intent.getAction())) {
-			if (pd == null || !pd.isShowing()) {
-				pd = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-				pd.setOnCancelListener(this);
-				pd.show(activity.getSupportFragmentManager(), DownloadProgressDialogFragment.TAG);
-				activity.getSupportFragmentManager().executePendingTransactions(); // show dialog before setting progress
-			}
-			pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
-		} else if (SearchGeocacheService.ACTION_PROGRESS_COMPLETE.equals(intent.getAction())) {
-			if (pd != null && pd.isShowing())
-				pd.dismiss();
+		switch(intent.getAction()) {
+			case SearchGeocacheService.ACTION_PROGRESS_UPDATE:
+				if (pd == null || !pd.isShowing()) {
+					pd = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
+					pd.setOnCancelListener(this);
+					pd.show(activity.getSupportFragmentManager(), DownloadProgressDialogFragment.TAG);
+					activity.getSupportFragmentManager().executePendingTransactions(); // show dialog before setting progress
+				}
 
-			if (intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 0) != 0 && !activity.isFinishing()) {
-				activity.finish();
-			}
-		} else if (ErrorActivity.ACTION_ERROR.equals(intent.getAction())) {
-			if (pd != null && pd.isShowing())
-				pd.dismiss();
+				pd.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
+				break;
 
-			Intent errorIntent = new Intent(intent);
-			errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-			activity.startActivity(errorIntent);
+			case SearchGeocacheService.ACTION_PROGRESS_COMPLETE:
+				if (pd != null && pd.isShowing())
+					pd.dismiss();
+
+				if (intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 0) != 0 && !activity.isFinishing()) {
+					activity.finish();
+				}
+				break;
+
+			case ErrorActivity.ACTION_ERROR:
+				if (pd != null && pd.isShowing())
+					pd.dismiss();
+
+				Intent errorIntent = new Intent(intent);
+				errorIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+				activity.startActivity(errorIntent);
+				break;
 		}
 	}
 

@@ -6,7 +6,6 @@ public interface PrefConstants {
 	static final String PREF_VERSION = "pref_version";
 	static final int CURRENT_PREF_VERSION = 1;
 
-	static final String IMPORT_CACHES  = "import_caches";
 	static final String LAST_LATITUDE  = "latitude";
 	static final String LAST_LONGITUDE = "longitude";
 
@@ -34,7 +33,6 @@ public interface PrefConstants {
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";
 	static final String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";
 	static final String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
-	static final String DOWNLOADING_COUNT_OF_TRACKABLES = "downloading_count_of_trackables";
 	static final String DOWNLOADING_CREATE_IMAGES_TAB = "downloading_create_images_tab";
 
 	static final String IMPERIAL_UNITS = "imperial_units";

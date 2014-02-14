@@ -51,7 +51,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<OnTaskFinishedListener>((OnTaskFinishedListener) activity);
+			taskFinishedListenerRef = new WeakReference<>((OnTaskFinishedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
 		}

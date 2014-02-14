@@ -1,11 +1,5 @@
 package com.arcao.geocaching4locus.task;
 
-import java.lang.ref.WeakReference;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,7 +16,6 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -30,6 +23,12 @@ import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
 import com.arcao.geocaching4locus.fragment.LocationUpdateProgressDialogFragment;
 import com.arcao.geocaching4locus.util.UserTask;
+
+import java.lang.ref.WeakReference;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, CancellableDialog {
 	private static final String TAG = LocationUpdateTask.class.getName();
@@ -50,7 +49,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	}
 
 	public void attach(FragmentActivity activity) {
-		activityRef = new WeakReference<FragmentActivity>(activity);
+		activityRef = new WeakReference<>(activity);
 	}
 
 	public void detach() {
@@ -70,7 +69,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		int source = LocationUpdateProgressDialogFragment.SOURCE_NETWORK;
 		bestLocation = getLastLocation();
 
-		if (activity != null && activity instanceof LocationUpdate) {
+		if (activity instanceof LocationUpdate) {
 			((LocationUpdate)activity).onLocationUpdate(bestLocation);
 		}
 
@@ -108,7 +107,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			location = networkLocation;
 		} else if (gpsLocation != null && networkLocation == null) {
 			location = gpsLocation;
-		} else if (gpsLocation != null && networkLocation != null) {
+		} else if (gpsLocation != null) {
 			location = (networkLocation.getTime() < gpsLocation.getTime()) ? gpsLocation : networkLocation;
 		} else {
 			location = new Location(PASSIVE_PROVIDER);

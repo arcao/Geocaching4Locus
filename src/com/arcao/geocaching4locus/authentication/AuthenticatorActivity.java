@@ -15,6 +15,7 @@ import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinishedListener;
@@ -138,7 +139,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 
-			activityRef = new WeakReference<AuthenticatorActivity>((AuthenticatorActivity) activity);
+			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
 		}
 
 		@Override
@@ -177,7 +178,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 
-			activityRef = new WeakReference<AuthenticatorActivity>((AuthenticatorActivity) activity);
+			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
 		}
 
 		@Override
@@ -188,11 +189,11 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 			int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
 			int period = (int) restrictions.getFullGeocacheLimitPeriod();
 
-			String periodString = null;
-			if (period < 60) {
+			String periodString;
+			if (period < AppConstants.SECONDS_PER_MINUTE) {
 				periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 			} else {
-				period = period / 60;
+				period = period / AppConstants.SECONDS_PER_MINUTE;
 				periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 			}
 

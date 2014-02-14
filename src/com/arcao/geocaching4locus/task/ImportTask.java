@@ -1,18 +1,10 @@
 package com.arcao.geocaching4locus.task;
 
-import java.lang.ref.WeakReference;
-
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -27,6 +19,13 @@ import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+
+import java.lang.ref.WeakReference;
 
 public class ImportTask extends UserTask<String, Void, Waypoint> {
 	private static final String TAG = ImportTask.class.getName();
@@ -39,7 +38,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	private WeakReference<OnTaskFinishedListener> onTaskFinishedListenerRef;
 
 	public void setOnTaskFinishedListener(OnTaskFinishedListener onTaskFinishedListener) {
-		this.onTaskFinishedListenerRef = new WeakReference<OnTaskFinishedListener>(onTaskFinishedListener);
+		this.onTaskFinishedListenerRef = new WeakReference<>(onTaskFinishedListener);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ public class SearchGeocacheService extends AbstractService {
 
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
+	public static final float MILES_PER_KILOMETER = 1.609344F;
 
 	private static SearchGeocacheService instance = null;
 
@@ -119,7 +120,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			// get kilometers from miles
-			distance = distance * 1.609344F;
+			distance = distance * MILES_PER_KILOMETER;
 		}
 
 		current = 0;
@@ -163,7 +164,7 @@ public class SearchGeocacheService extends AbstractService {
 	}
 
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
-		Vector<CacheType> filter = new Vector<CacheType>();
+		Vector<CacheType> filter = new Vector<>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
@@ -171,11 +172,11 @@ public class SearchGeocacheService extends AbstractService {
 			}
 		}
 
-		return filter.toArray(new CacheType[0]);
+		return filter.toArray(new CacheType[filter.size()]);
 	}
 
 	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
-		Vector<ContainerType> filter = new Vector<ContainerType>();
+		Vector<ContainerType> filter = new Vector<>();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
@@ -183,7 +184,7 @@ public class SearchGeocacheService extends AbstractService {
 			}
 		}
 
-		return filter.toArray(new ContainerType[0]);
+		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
 	@SuppressWarnings("resource")
@@ -213,7 +214,7 @@ public class SearchGeocacheService extends AbstractService {
 			sendProgressUpdate();
 
 			current = 0;
-			int perPage = AppConstants.CACHES_PER_REQUEST;
+			int perPage;
 
 			while (current < count) {
 				perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;

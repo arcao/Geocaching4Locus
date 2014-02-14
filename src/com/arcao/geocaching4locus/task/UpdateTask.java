@@ -1,23 +1,10 @@
 package com.arcao.geocaching4locus.task;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.ref.WeakReference;
-
-import locus.api.android.ActionTools;
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Waypoint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -29,6 +16,18 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.UserTask;
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Waypoint;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.ref.WeakReference;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 	private static final String TAG = UpdateTask.class.getName();
@@ -44,7 +43,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 	private WeakReference<OnTaskFinishedListener> onTaskFinishedListenerRef;
 
 	public void setOnTaskFinishedListener(OnTaskFinishedListener onTaskFinishedListener) {
-		this.onTaskFinishedListenerRef = new WeakReference<OnTaskFinishedListener>(onTaskFinishedListener);
+		this.onTaskFinishedListenerRef = new WeakReference<>(onTaskFinishedListener);
 	}
 
 	@Override

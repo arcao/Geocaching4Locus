@@ -41,4 +41,6 @@ public interface AppConstants {
 	static final int ADAPTIVE_DOWNLOADING_STEP = 5;
 	static final int ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500;
 	static final int ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000;
+
+	static final int SECONDS_PER_MINUTE = 60;
 }

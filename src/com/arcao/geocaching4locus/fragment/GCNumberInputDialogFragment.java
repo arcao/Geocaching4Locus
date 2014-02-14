@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,15 +9,17 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
+
+import java.lang.ref.WeakReference;
 
 
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
@@ -41,7 +41,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		super.onAttach(activity);
 
 		try {
-			inputFinishedListenerRef = new WeakReference<OnInputFinishedListener>((OnInputFinishedListener) activity);
+			inputFinishedListenerRef = new WeakReference<>((OnInputFinishedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnInputFinishedListener");
 		}
@@ -161,7 +161,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			if (GeocachingUtils.cacheCodeToCacheId(value) > 0) {
 				return true;
 			}
-		} catch (IllegalArgumentException e) {}
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG, e.getMessage(), e);
+		}
 
 		editText.setError(getString(R.string.error_input_gc));
 		return false;

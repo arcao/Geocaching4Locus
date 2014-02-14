@@ -40,7 +40,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	private WeakReference<OnTaskFinishedListener> onTaskFinishedListenerRef;
 
 	public void setOnTaskUpdateListener(OnTaskFinishedListener onTaskUpdateInterface) {
-		this.onTaskFinishedListenerRef = new WeakReference<OnTaskFinishedListener>(onTaskUpdateInterface);
+		this.onTaskFinishedListenerRef = new WeakReference<>(onTaskUpdateInterface);
 	}
 
 	@Override
@@ -142,12 +142,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 			Log.i(TAG, "updated caches: " + current);
 
-			if (current > 0) {
-				return true;
-			} else {
-				return false;
-			}
-
+			return current > 0;
 		} catch (InvalidSessionException e) {
 			Log.e(TAG, e.getMessage(), e);
 			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
@@ -156,7 +151,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		}
 	}
 
-	private Waypoint searchOldPointByGCCode(List<Waypoint> oldPoints, String gcCode) {
+	private Waypoint searchOldPointByGCCode(Iterable<Waypoint> oldPoints, String gcCode) {
 		if (gcCode == null || gcCode.length() == 0)
 			return null;
 
@@ -170,7 +165,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	}
 
 	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, long[] pointIndexes, int current, int cachesPerRequest) {
-		List<Waypoint> waypoints = new ArrayList<Waypoint>();
+		List<Waypoint> waypoints = new ArrayList<>();
 
 		int count = Math.min(pointIndexes.length - current, cachesPerRequest);
 

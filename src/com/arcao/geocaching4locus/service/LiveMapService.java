@@ -176,7 +176,7 @@ public class LiveMapService extends IntentService {
 			}
 		}
 
-		return filter.toArray(new CacheType[0]);
+		return filter.toArray(new CacheType[filter.size()]);
 	}
 
 	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
@@ -188,7 +188,7 @@ public class LiveMapService extends IntentService {
 			}
 		}
 
-		return filter.toArray(new ContainerType[0]);
+		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
 	protected void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
@@ -199,7 +199,7 @@ public class LiveMapService extends IntentService {
 		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 
 		int current = 0;
-		int perPage = CACHES_PER_REQUEST;
+		int perPage;
 
 		int requests = 0;
 

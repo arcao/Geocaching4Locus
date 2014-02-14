@@ -1,7 +1,5 @@
 package com.arcao.fragment.number_chooser;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,8 +15,9 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
 import com.arcao.geocaching4locus.R;
+
+import java.lang.ref.WeakReference;
 
 public class NumberChooserDialogFragment extends DialogFragment {
 	public static String PARAM_TITLE = "TITLE";
@@ -66,7 +65,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		super.onAttach(activity);
 
 		try {
-			onNumberChooserDialogClosedListenerRef = new WeakReference<OnNumberChooserDialogClosedListener>((OnNumberChooserDialogClosedListener) activity);
+			onNumberChooserDialogClosedListenerRef = new WeakReference<>((OnNumberChooserDialogClosedListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnNumberChooserDialogClosedListener");
 		}

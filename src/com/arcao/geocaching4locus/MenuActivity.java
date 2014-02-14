@@ -11,8 +11,6 @@ import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import locus.api.android.utils.LocusUtils;
 
 public class MenuActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
-	private final static String TAG = "G4L|MenuActivity";
-
 	private ToggleButton liveMapButton;
 	private LiveMapNotificationManager liveMapNotificationManager;
 

@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.exception;
 
+import com.arcao.geocaching4locus.constants.AppConstants;
 import oauth.signpost.exception.OAuthCommunicationException;
 import android.content.Context;
 import android.content.Intent;
@@ -62,11 +63,11 @@ public class ExceptionHandler {
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
 				int period = (int) restrictions.getFullGeocacheLimitPeriod();
 
-				String periodString = "";
-				if (period < 60) {
+				String periodString;
+				if (period < AppConstants.SECONDS_PER_MINUTE) {
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 				} else {
-					period = period / 60;
+					period = period / AppConstants.SECONDS_PER_MINUTE;
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 				}
 

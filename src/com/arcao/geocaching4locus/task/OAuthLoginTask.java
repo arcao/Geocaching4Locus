@@ -1,21 +1,8 @@
 package com.arcao.geocaching4locus.task;
 
-import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Date;
-
-import oauth.signpost.OAuth;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-
-import org.apache.http.impl.cookie.DateUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
@@ -26,6 +13,18 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.DeviceInfoFactory;
 import com.arcao.geocaching4locus.util.UserTask;
+import oauth.signpost.OAuth;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import org.apache.http.impl.cookie.DateParseException;
+import org.apache.http.impl.cookie.DateUtils;
+
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Date;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	private static final String TAG = OAuthLoginTask.class.getName();
@@ -39,7 +38,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	private WeakReference<OAuthLoginTaskListener> oAuthLoginTaskListenerRef;
 
 	public void setOAuthLoginTaskListener(OAuthLoginTaskListener oAuthLoginTaskListener) {
-		this.oAuthLoginTaskListenerRef = new WeakReference<OAuthLoginTaskListener>(oAuthLoginTaskListener);
+		this.oAuthLoginTaskListenerRef = new WeakReference<>(oAuthLoginTaskListener);
 	}
 
 	@Override
@@ -121,7 +120,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		}
 	}
 
-	private static Date getServerDate(String url) {
+	private static Date getServerDate(String url) throws NetworkException {
 		HttpURLConnection c = null;
 
 		try {
@@ -138,8 +137,8 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 					return DateUtils.parseDate(date);
 				}
 			}
-		} catch (Exception e) {
-			new NetworkException(e.getMessage(), e);
+		} catch (IOException | DateParseException e) {
+			throw new NetworkException(e.getMessage(), e);
 		} finally {
 			if (c != null)
 				c.disconnect();

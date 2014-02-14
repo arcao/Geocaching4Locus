@@ -23,16 +23,7 @@
 
 package com.arcao.geocaching4locus.util;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.os.Handler;
@@ -165,7 +156,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	private static final int KEEP_ALIVE = 10;
 
 	private static final BlockingQueue<Runnable> sWorkQueue =
-						new LinkedBlockingQueue<Runnable>(MAXIMUM_POOL_SIZE);
+						new LinkedBlockingQueue<>(MAXIMUM_POOL_SIZE);
 
 	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
 		private final AtomicInteger mCount = new AtomicInteger(1);
@@ -176,7 +167,7 @@ public abstract class UserTask<Params, Progress, Result> {
 		}
 	};
 
-	private static final ThreadPoolExecutor sExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE,
+	private static final Executor sExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE,
 						MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sWorkQueue, sThreadFactory);
 
 	private static final int MESSAGE_POST_RESULT = 0x1;
@@ -185,7 +176,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	private static final int MESSAGE_POST_EXCEPTION = 0x4;
 
 	@SuppressWarnings("rawtypes")
-	private static final InternalHandler sHandler = new InternalHandler();
+	private static final Handler sHandler = new InternalHandler();
 
 	private final WorkerRunnable<Params, Result> mWorker;
 	private final FutureTask<Result> mFuture;
@@ -237,12 +228,12 @@ public abstract class UserTask<Params, Progress, Result> {
 				} catch (ExecutionException e) {
 					android.util.Log.e(LOG_TAG, "An error occured while executing doInBackground()", e.getCause());
 					message = sHandler.obtainMessage(MESSAGE_POST_EXCEPTION,
-														new UserTaskResult<UserTask<Params, Progress, Result>, Result>(UserTask.this, e.getCause(), (Result[]) null));
+														new UserTaskResult<>(UserTask.this, e.getCause(), (Result[]) null));
 					message.sendToTarget();
 					return;
 				} catch (CancellationException e) {
 					message = sHandler.obtainMessage(MESSAGE_POST_CANCEL,
-														new UserTaskResult<UserTask<Params, Progress, Result>, Result>(UserTask.this, null, (Result[]) null));
+														new UserTaskResult<>(UserTask.this, null, (Result[]) null));
 					message.sendToTarget();
 					return;
 				} catch (Throwable t) {
@@ -251,7 +242,7 @@ public abstract class UserTask<Params, Progress, Result> {
 				}
 
 				message = sHandler.obtainMessage(MESSAGE_POST_RESULT,
-												new UserTaskResult<UserTask<Params, Progress, Result>, Result>(UserTask.this, null, result));
+												new UserTaskResult<>(UserTask.this, null, result));
 				message.sendToTarget();
 			}
 		};
@@ -279,15 +270,14 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *
 	 * @return A result, defined by the subclass of this task.
 	 *
-	 * @throws If
-	 *           error occurs in this method exceptions can be handled in
-	 *           {@link #onException(Exception)}.
+	 * @throws If error occurs in this method exceptions can be handled in
+	 *           {@link #onException(Throwable)}.
 	 *
 	 * @see #onPreExecute()
 	 * @see #onPostExecute(Object)
 	 * @see #onFinally()
 	 * @see #publishProgress(Object[])
-	 * @see #onException(Exception)
+	 * @see #onException(Throwable)
 	 */
 	protected abstract Result doInBackground(Params... params) throws Exception;
 
@@ -491,7 +481,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 */
 	protected final void publishProgress(Progress... values) {
 		sHandler.obtainMessage(MESSAGE_POST_PROGRESS,
-								new UserTaskResult<UserTask<Params, Progress, Result>, Progress>(this, null, values)).sendToTarget();
+								new UserTaskResult<>(this, null, values)).sendToTarget();
 	}
 
 	private void finish(Result result) {

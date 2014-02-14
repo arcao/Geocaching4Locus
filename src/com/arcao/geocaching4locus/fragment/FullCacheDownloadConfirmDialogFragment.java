@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.fragment;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,10 +8,12 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.format.DateFormat;
-
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
+import com.arcao.geocaching4locus.constants.AppConstants;
+
+import java.lang.ref.WeakReference;
 
 public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = FullCacheDownloadConfirmDialogFragment.class.getName();
@@ -40,7 +40,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 		super.onAttach(activity);
 
 		try {
-			fullCacheDownloadConfirmDialogListenerRef = new WeakReference<OnFullCacheDownloadConfirmDialogListener>((OnFullCacheDownloadConfirmDialogListener) activity);
+			fullCacheDownloadConfirmDialogListenerRef = new WeakReference<>((OnFullCacheDownloadConfirmDialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnFullCacheDownloadConfirmDialogListener");
 		}
@@ -56,11 +56,11 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 
 		int cachesLeft = (int) restrictions.getFullGeocacheLimitLeft();
 
-		String periodString = null;
-		if (period < 60) {
+		String periodString;
+		if (period < AppConstants.SECONDS_PER_MINUTE) {
 			periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 		} else {
-			period = period / 60;
+			period = period / AppConstants.SECONDS_PER_MINUTE;
 			periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 		}
 

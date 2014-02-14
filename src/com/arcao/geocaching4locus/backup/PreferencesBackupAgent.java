@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.backup;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgentHelper;
+import android.app.backup.BackupHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +18,7 @@ public class PreferencesBackupAgent extends BackupAgentHelper {
 
 	@Override
 	public void onCreate() {
-		SharedPreferencesBackupHelper helper = new SharedPreferencesBackupHelper(this, getDefaultSharedPreferencesName(this));
+		BackupHelper helper = new SharedPreferencesBackupHelper(this, getDefaultSharedPreferencesName(this));
 		addHelper(PREFS_BACKUP_KEY, helper);
 	}
 

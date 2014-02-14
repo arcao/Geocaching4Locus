@@ -17,11 +17,8 @@ public abstract class AbstractActionBarActivity extends FragmentActivity {
 
 	@Override
 	public final boolean onOptionsItemSelected(MenuItem item) {
-		if (onOptionsItemSelected(item.getItemId())) {
-			return true;
-		}
+		return onOptionsItemSelected(item.getItemId()) || super.onOptionsItemSelected(item);
 
-		return super.onOptionsItemSelected(item);
 	}
 
 	protected void applyMenuItemOnView(final int resMenuItem, int resView) {

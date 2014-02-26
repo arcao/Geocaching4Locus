@@ -46,7 +46,7 @@
 		<CheckBoxPreference android:key="filter_show_found" android:summary="@string/pref_show_found_summary" android:title="@string/pref_show_found" android:defaultValue="false"/>
 		<CheckBoxPreference android:key="filter_show_own" android:summary="@string/pref_show_own_summary" android:title="@string/pref_show_own" android:defaultValue="false"/>
 		<CheckBoxPreference android:key="filter_show_disabled" android:summary="@string/pref_show_disabled_summary" android:title="@string/pref_show_disabled" android:defaultValue="false"/>
-		<EditTextPreference android:key="filter_distance" android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="160.9344" android:numeric="decimal" />
+		<EditTextPreference android:key="filter_distance" android:title="@string/pref_distance" android:summary="@string/pref_distance_summary_km" android:dialogTitle="@string/pref_distance" android:dialogMessage="@string/pref_distance_summary_km" android:defaultValue="50.0" android:numeric="decimal" />
 	</PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_title_live_map">
         <CheckBoxPreference android:key="live_map" android:title="@string/pref_livemap" android:summary="@string/pref_livemap_summary" android:defaultValue="false"/>

@@ -106,9 +106,9 @@ public class SearchGeocacheService extends AbstractService {
 
 		String distanceString;
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
-			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "100");
+			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "50");
 		} else {
-			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "160.9344");
+			distanceString = prefs.getString(PrefConstants.FILTER_DISTANCE, "31.0685596");
 		}
 
 		try {
@@ -122,6 +122,9 @@ public class SearchGeocacheService extends AbstractService {
 			// get kilometers from miles
 			distance = distance * MILES_PER_KILOMETER;
 		}
+
+		// fix for min and max distance error in Geocaching Live API
+		distance = Math.max(Math.min(distance, 50), 0.1);
 
 		current = 0;
 		count = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);

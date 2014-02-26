@@ -155,7 +155,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 					distance = Float.parseFloat(filterDistancePreference.getText());
 				} catch (NumberFormatException e) {
 					Log.e(TAG, e.getMessage(), e);
-					distance = 100;
+					distance = 50;
 				}
 
 				if (((Boolean) newValue)) {

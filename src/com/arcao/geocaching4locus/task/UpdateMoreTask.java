@@ -124,7 +124,6 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 					// update new point data in Locus
 					ActionTools.updateLocusWaypoint(context, p, false);
-
 				}
 
 				current = current + Math.min(pointIndexes.length - current, cachesPerRequest);
@@ -132,12 +131,8 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 				long requestDuration = System.currentTimeMillis() - startTime;
 				cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
-
-				// force memory clean
-				oldPoints = null;
-				cachesToAdd = null;
-				points = null;
 			}
+
 			publishProgress(current);
 
 			Log.i(TAG, "updated caches: " + current);

@@ -22,6 +22,8 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundspeak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
 
+	public static final float DEFAULT_DISTANCE_LIMIT = 100F;
+
 	private static boolean forceUpdate = false;
 
 	@Override
@@ -111,7 +113,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		Location mapTopLeft = LocusUtils.getLocationFromIntent(i, VAR_LOC_MAP_BBOX_TOP_LEFT);
 
 		if (locMapCenter == null || mapTopLeft == null)
-			return 100F;
+			return DEFAULT_DISTANCE_LIMIT;
 
 		return mapTopLeft.distanceTo(locMapCenter) / 2.5F;
 	}

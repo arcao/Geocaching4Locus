@@ -1,20 +1,21 @@
 package com.arcao.geocaching4locus.authentication.helper;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
 import com.arcao.geocaching.api.data.CacheLimits;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.data.apilimits.CacheLimit;
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class AccountRestrictions {
+	protected static final int DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 365 * 24 * 3600;
+
 	protected final SharedPreferences mPrefs;
 
 	protected long maxFullGeocacheLimit;
@@ -43,7 +44,7 @@ public class AccountRestrictions {
 	protected void init() {
 		maxFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, Long.MAX_VALUE);
 		currentFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);
-		fullGeocacheLimitPeriod = mPrefs.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, 365*24*3600);
+		fullGeocacheLimitPeriod = mPrefs.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD);
 		renewFullGeocacheLimit = new Date(mPrefs.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0));
 		premiumMember = mPrefs.getBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, false);
 	}

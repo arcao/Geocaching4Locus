@@ -168,7 +168,7 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
-		Vector<CacheType> filter = new Vector<CacheType>();
+		List<CacheType> filter = new Vector<>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
@@ -180,7 +180,7 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
-		Vector<ContainerType> filter = new Vector<ContainerType>();
+		List<ContainerType> filter = new Vector<>();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {

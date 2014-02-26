@@ -53,7 +53,7 @@ public class LocusTesting {
 
 		if (list != null && list.size() > 0) {
 				for (int i = 0; i < list.size(); i++) {
-						if (list.get(i).activityInfo.packageName.startsWith("com.android.vending") == true) {
+						if (list.get(i).activityInfo.packageName.startsWith("com.android.vending")) {
 								return true;
 						}
 				}

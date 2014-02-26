@@ -1,12 +1,8 @@
 package com.arcao.geocaching4locus.exception;
 
-import com.arcao.geocaching4locus.constants.AppConstants;
-import oauth.signpost.exception.OAuthCommunicationException;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
-import android.util.Log;
-
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
@@ -15,7 +11,9 @@ import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+import oauth.signpost.exception.OAuthCommunicationException;
 
 public class ExceptionHandler {
 	protected final Context mContext;
@@ -75,8 +73,6 @@ public class ExceptionHandler {
 
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
 				String errorText = mContext.getString(resText, cacheString, periodString, renewTime);
-
-				Log.d("ddddd", errorText);
 
 				return ErrorActivity.createErrorIntent(mContext, resTitle, 0, errorText, false, null);
 

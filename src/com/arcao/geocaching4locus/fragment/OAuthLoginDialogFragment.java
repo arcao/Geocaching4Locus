@@ -11,11 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -159,7 +156,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		webView = createWebView(savedInstanceState);
 
-		FrameLayout webViewHolder = (FrameLayout) view.findViewById(R.id.webViewPlaceholder);
+		ViewManager webViewHolder = (ViewManager) view.findViewById(R.id.webViewPlaceholder);
 		webViewHolder.addView(webView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		return view;

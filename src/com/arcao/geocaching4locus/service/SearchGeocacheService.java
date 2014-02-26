@@ -269,11 +269,6 @@ public class SearchGeocacheService extends AbstractService {
 
 				current = current + cachesToAdd.size();
 
-				// force memory clean
-				cachesToAdd = null;
-				waypoints = null;
-				pw = null;
-
 				sendProgressUpdate();
 			}
 

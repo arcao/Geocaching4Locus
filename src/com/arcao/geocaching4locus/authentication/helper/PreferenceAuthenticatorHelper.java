@@ -70,7 +70,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 
 	@Override
 	public void setPassword(Account account, String password) {
-		return;
+		// do nothing
 	}
 
 	@Override

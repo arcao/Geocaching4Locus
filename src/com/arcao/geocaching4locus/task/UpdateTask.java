@@ -110,7 +110,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 
 		UpdateTaskData result = params[0];
 
-		GeocachingApi api = LiveGeocachingApiFactory.create();
+		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 
 		try {
 			login(api);

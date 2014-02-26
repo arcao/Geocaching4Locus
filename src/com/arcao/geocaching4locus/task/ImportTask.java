@@ -95,7 +95,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 				cacheId = wherigoService.getCacheCodeFromGuid(cacheId);
 		}
 
-		GeocachingApi api = LiveGeocachingApiFactory.create();
+		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 
 		try {
 			login(api);

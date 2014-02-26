@@ -43,8 +43,8 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 	@Override
 	protected String[] doInBackground(String... params) throws Exception {
-		OAuthConsumer consumer = Geocaching4LocusApplication.getOAuthConsumer();
-		OAuthProvider provider = Geocaching4LocusApplication.getOAuthProvider();
+		OAuthConsumer consumer = LiveGeocachingApiFactory.getOAuthConsumer();
+		OAuthProvider provider = LiveGeocachingApiFactory.getOAuthProvider();
 
 		// we use server time for OAuth timestamp because device can have wrong timezone or time
 		String timestamp = Long.toString(getServerDate(AppConstants.GEOCACHING_WEBSITE_URL).getTime() / 1000);
@@ -59,7 +59,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 				provider.retrieveAccessToken(consumer, params[0], OAuth.OAUTH_TIMESTAMP, timestamp);
 
 				// get account name
-				GeocachingApi api = LiveGeocachingApiFactory.create();
+				GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 				api.openSession(consumer.getToken());
 
 				UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());

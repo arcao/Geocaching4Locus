@@ -10,17 +10,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import com.arcao.geocaching.api.configuration.OAuthGeocachingApiConfiguration;
-import com.arcao.geocaching.api.configuration.resolver.GeocachingApiConfigurationResolver;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import locus.api.android.utils.LocusUtils;
 import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
@@ -46,23 +41,12 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	private static Context context;
 	private static AuthenticatorHelper authenticatorHelper;
 	private static String deviceId;
-	private static OAuthGeocachingApiConfiguration geocachingApiConfiguration;
-
-	private static OAuthConsumer oAuthConsumer;
-	private static OAuthProvider oAuthProvider;
-
 
 	@Override
 	public void onCreate() {
 		context = getApplicationContext();
 
 		disableConnectionReuseIfNecessary();
-
-		if (AppConstants.USE_PRODUCTION_CONFIGURATION) {
-			geocachingApiConfiguration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.PRODUCTION_CONFIGURATION);
-		} else {
-			geocachingApiConfiguration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.STAGGING_CONFIGURATION);
-		}
 
 		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
@@ -115,26 +99,6 @@ public class Geocaching4LocusApplication extends android.app.Application {
 			Log.e(TAG, e.getMessage(), e);
 			return "1.0";
 		}
-	}
-
-	public static OAuthGeocachingApiConfiguration getGeocachingApiConfiguration() {
-		return geocachingApiConfiguration;
-	}
-
-	public static OAuthConsumer getOAuthConsumer() {
-		if (oAuthConsumer == null)
-			oAuthConsumer = new CommonsHttpOAuthConsumer(geocachingApiConfiguration.getConsumerKey(), geocachingApiConfiguration.getConsumerSecret());
-
-		return oAuthConsumer;
-	}
-
-	public static OAuthProvider getOAuthProvider() {
-		if (oAuthProvider == null) {
-			oAuthProvider = new CommonsHttpOAuthProvider(geocachingApiConfiguration.getOAuthRequestUrl(), geocachingApiConfiguration.getOAuthAccessUrl(), geocachingApiConfiguration.getOAuthAuthorizeUrl());
-			// always use OAuth 1.0a
-			oAuthProvider.setOAuth10a(true);
-		}
-		return oAuthProvider;
 	}
 
 	/**

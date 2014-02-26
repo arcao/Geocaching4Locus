@@ -200,7 +200,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
 
-		GeocachingApi api = LiveGeocachingApiFactory.create();
+		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 
 		StoreableDataOutputStream sdos = null;
 

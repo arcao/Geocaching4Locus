@@ -195,7 +195,7 @@ public class LiveMapService extends IntentService {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		GeocachingApi api = LiveGeocachingApiFactory.create();
+		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 
 		int current = 0;

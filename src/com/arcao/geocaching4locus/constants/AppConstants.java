@@ -6,11 +6,8 @@ import android.net.Uri;
 
 public interface AppConstants {
 	static final boolean USE_PRODUCTION_CONFIGURATION = true;
-	static final String STAGGING_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.StaggingConfiguration";
-	static final String PRODUCTION_CONFIGURATION = "com.arcao.geocaching.api.configuration.impl.ProductionConfiguration";
-
-	static final String STAGGING_COMPRESSION_PROXY_SERVICE_URL = "http://wherigo-service.appspot.com/stagging_geocaching_proxy";
-	static final String COMPRESSION_PROXY_SERVICE_URL = "http://wherigo-service.appspot.com/geocaching_proxy";
+	static final String STAGGING_CONFIGURATION_CLASS = "com.arcao.geocaching.api.configuration.impl.StaggingConfiguration";
+	static final String PRODUCTION_CONFIGURATION_CLASS = "com.arcao.geocaching.api.configuration.impl.ProductionConfiguration";
 
 	static final String GEOCACHING_WEBSITE_URL = "http://www.geocaching.com/";
 	static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";

@@ -76,7 +76,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		GeocachingApi api = LiveGeocachingApiFactory.create();
+		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 
 		int current = 0;
 		int count = pointIndexes.length;

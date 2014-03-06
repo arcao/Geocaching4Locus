@@ -156,7 +156,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		webView = createWebView(savedInstanceState);
 
-		ViewManager webViewHolder = (ViewManager) view.findViewById(R.id.webViewPlaceholder);
+		FrameLayout webViewHolder = (FrameLayout) view.findViewById(R.id.webViewPlaceholder);
 		webViewHolder.addView(webView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		return view;

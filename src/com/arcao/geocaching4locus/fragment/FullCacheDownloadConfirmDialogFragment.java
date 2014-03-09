@@ -6,12 +6,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.format.DateFormat;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.util.SpannedFix;
 
 import java.lang.ref.WeakReference;
 
@@ -72,7 +72,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 
 		return new AlertDialog.Builder(getActivity())
 			.setTitle(R.string.basic_member_warning_title)
-			.setMessage(Html.fromHtml(message))
+			.setMessage(SpannedFix.fromHtml(message))
 			.setPositiveButton(R.string.button_yes, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

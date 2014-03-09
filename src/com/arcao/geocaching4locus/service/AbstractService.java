@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import java.util.Date;
-
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,7 +11,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -21,10 +18,12 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
-
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.util.SpannedFix;
+
+import java.util.Date;
 
 public abstract class AbstractService extends IntentService {
 	protected String TAG;
@@ -131,7 +130,7 @@ public abstract class AbstractService extends IntentService {
 		nb.setTicker(getText(R.string.error_title));
 		nb.setContentTitle(getText(R.string.error_title));
 		if (resErrorId != 0)
-			nb.setContentText(Html.fromHtml(getString(resErrorId, additionalMessage)));
+			nb.setContentText(SpannedFix.fromHtml(getString(resErrorId, additionalMessage)));
 
 		Intent intent = new Intent(errorIntent);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

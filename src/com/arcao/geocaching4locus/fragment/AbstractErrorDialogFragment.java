@@ -4,10 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.ContextThemeWrapper;
-
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.util.SpannedFix;
 
 public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_TITLE = "TITLE";
@@ -41,7 +40,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 		String message = getString(args.getInt(PARAM_ERROR_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE));
 
 		builder.setTitle(args.getInt(PARAM_TITLE));
-		builder.setMessage(Html.fromHtml(message));
+		builder.setMessage(SpannedFix.fromHtml(message));
 		builder.setPositiveButton(R.string.ok_button, getPositiveButtonOnClickListener());
 
 		return builder.create();

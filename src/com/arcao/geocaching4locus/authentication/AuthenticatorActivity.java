@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.text.Html;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
@@ -19,6 +18,7 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinishedListener;
+import com.arcao.geocaching4locus.util.SpannedFix;
 import org.acra.ACRA;
 
 import java.lang.ref.WeakReference;
@@ -203,7 +203,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 
 			return new AlertDialog.Builder(getActivity())
 				.setTitle(R.string.basic_member_warning_title)
-				.setMessage(Html.fromHtml(message))
+				.setMessage(SpannedFix.fromHtml(message))
 				.setPositiveButton(R.string.ok_button, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {

@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.*;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.text.Html;
 import android.text.Spanned;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
@@ -23,6 +22,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+import com.arcao.geocaching4locus.util.SpannedFix;
 import com.arcao.preference.ListPreference;
 import com.hlidskialf.android.preference.SeekBarPreference;
 
@@ -419,8 +419,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			summary = getText(resId).toString();
 
 		if (value != null && value.length() > 0)
-			return Html.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + summary);
-		return Html.fromHtml(summary);
+			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + summary);
+		return SpannedFix.fromHtml(summary);
 	}
 
 	protected Spanned prepareRequiredPreferenceSummary(CharSequence value, int resId, boolean addValue) {
@@ -429,10 +429,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			summary = getText(resId).toString();
 
 		if (value == null || value.length() == 0)
-			return Html.fromHtml("<font color=\"#FF0000\"><b>(" + getText(R.string.pref_not_filled) + ")</b></font> " + summary);
+			return SpannedFix.fromHtml("<font color=\"#FF0000\"><b>(" + getText(R.string.pref_not_filled) + ")</b></font> " + summary);
 		if (addValue)
 			return preparePreferenceSummary(value, resId);
-		return Html.fromHtml(summary);
+		return SpannedFix.fromHtml(summary);
 	}
 
 	protected Spanned prepareAccountSummary(CharSequence value, int resId) {
@@ -440,7 +440,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		if (resId != 0)
 			summary = getText(resId).toString();
 
-		return Html.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
+		return SpannedFix.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
 	}
 
 	protected Spanned prepareRatingSummary(CharSequence min, CharSequence max) {

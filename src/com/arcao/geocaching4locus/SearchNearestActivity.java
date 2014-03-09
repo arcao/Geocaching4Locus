@@ -1,9 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.objects.extra.Waypoint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +7,6 @@ import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
@@ -30,6 +24,11 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.util.SpannedFix;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
+import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.objects.extra.Waypoint;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
 	private static final String TAG = "G4L|MainActivity";
@@ -297,7 +296,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		String message = String.format(getString(errorResId), additionalMessage);
 
-		builder.setMessage(Html.fromHtml(message));
+		builder.setMessage(SpannedFix.fromHtml(message));
 		builder.setTitle(R.string.error_title);
 		builder.setPositiveButton(R.string.ok_button, null);
 		builder.show();

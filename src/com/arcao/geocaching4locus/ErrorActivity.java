@@ -8,10 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.text.Html;
 import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
+import com.arcao.geocaching4locus.util.SpannedFix;
 
 public class ErrorActivity extends FragmentActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
@@ -116,9 +116,9 @@ public class ErrorActivity extends FragmentActivity {
 				});
 
 			if (resTextId != 0) {
-				builder.setMessage(Html.fromHtml(String.format(getString(resTextId), additionalMessage)));
+				builder.setMessage(SpannedFix.fromHtml(String.format(getString(resTextId), additionalMessage)));
 			} else {
-				builder.setMessage(Html.fromHtml(additionalMessage));
+				builder.setMessage(SpannedFix.fromHtml(additionalMessage));
 			}
 
 			if (t != null) {

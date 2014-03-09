@@ -14,7 +14,8 @@ public interface AppConstants {
 
 	static final int CACHES_PER_REQUEST = 10;
 
-	static final String ERROR_FORM_KEY = "dFJfSDQzTlI2ZzhxaFJndm1MYjhkWHc6MQ";
+	static final String ERROR_SCRIPT_URL = "http://geocaching4locus.eu/sendcrash/send.php";
+	static final String ERROR_FORM_KEY = "";
 
 	static final Uri MANUAL_URI = Uri.parse("http://geocaching4locus.eu/manual/");
 	static final Uri WEBSITE_URI = Uri.parse("http://geocaching4locus.eu/");

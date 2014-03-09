@@ -23,7 +23,8 @@ import org.acra.annotation.ReportsCrashes;
 import java.util.UUID;
 
 @ReportsCrashes(
-		formKey = AppConstants.ERROR_FORM_KEY,
+		formKey =  AppConstants.ERROR_FORM_KEY,
+		formUri = AppConstants.ERROR_SCRIPT_URL,
 		mode = ReportingInteractionMode.NOTIFICATION,
 		resNotifTickerText = R.string.crash_notif_ticker_text,
 		resNotifTitle = R.string.crash_notif_title,

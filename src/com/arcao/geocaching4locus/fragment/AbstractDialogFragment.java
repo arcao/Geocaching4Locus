@@ -28,6 +28,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 				setArguments(new Bundle());
 
 			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
+			return;
 		}
 
 		try {

@@ -177,15 +177,15 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/foreground1</item>
         <item name="android:gravity">center|top</item>
-        <!-- <item name="android:layout_gravity">center</item> -->
         <item name="android:background">@drawable/item_background_holo_light</item>
         <item name="android:paddingLeft">4.0dip</item>
         <item name="android:paddingTop">10.0dip</item>
         <item name="android:paddingRight">4.0dip</item>
         <item name="android:paddingBottom">10.0dip</item>
         <item name="android:layout_width">0.0dip</item>
-        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1.0</item>
+        <item name="android:maxLines">1</item>
     </style>
     <style name="LoginMessageView" parent="android:Widget.TextView">
         <item name="android:layout_marginTop">10.0dip</item>

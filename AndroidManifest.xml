@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.5.4.1" android:versionCode="47"
+      android:versionName="1.5.4.2" android:versionCode="48"
       android:installLocation="auto">
     
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19"/>
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
@@ -21,8 +22,8 @@
         <meta-data android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
 
-        <service android:name=".service.SearchGeocacheService"></service>
-        <service android:name=".service.LiveMapService"></service>
+        <service android:name=".service.SearchGeocacheService"/>
+        <service android:name=".service.LiveMapService"/>
         
         <receiver android:name=".receiver.LiveMapBroadcastReceiver" android:exported="true">
             <intent-filter>

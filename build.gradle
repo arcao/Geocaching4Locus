@@ -27,7 +27,7 @@ dependencies {
     compile('net.sf.jtpl:jtpl:2.2') {
       exclude group: 'junit', module: 'junit' /* Not required */ 
     }
-    compile 'menion:locus-api-android:1.14.13'
+    compile 'menion:locus-api-android:1.16.14'
     compile('oauth.signpost:signpost-commonshttp4:1.2.1.2') {
       exclude group: 'org.apache.httpcomponents', module: 'httpclient' /* already in Android */ 
       exclude group: 'commons-codec', module: 'commons-codec' /* already in Android */

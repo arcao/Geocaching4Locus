@@ -1,7 +1,6 @@
 package locus.api.mapper;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import com.arcao.geocaching.api.data.*;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
@@ -9,18 +8,14 @@ import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
 import com.arcao.geocaching.api.data.type.*;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-import locus.api.android.ActionTools;
-import locus.api.android.utils.RequiredVersionMissingException;
 import locus.api.objects.extra.ExtraData;
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.*;
-import net.sf.jtpl.Template;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -128,9 +123,6 @@ public class LocusDataMapper {
 		if (cache instanceof Geocache) {
 			Geocache gc = (Geocache) cache;
 			updateCacheLocationByCorrectedCoordinates(context, p, gc.getUserWaypoints());
-			if (gc.getImages().size() > 0 && isCacheImagesTabAllowed(context)) {
-				generateImagesHtml(context, gc);
-			}
 		}
 
 		return p;
@@ -145,52 +137,6 @@ public class LocusDataMapper {
 
 		return i;
 	}
-
-	protected static boolean isCacheImagesTabAllowed(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PrefConstants.DOWNLOADING_CREATE_IMAGES_TAB, false);
-	}
-
-	protected static void generateImagesHtml(Context context, Geocache gc) {
-		try {
-			Template t = new Template(new InputStreamReader(context.getResources().openRawResource(R.raw.images), "UTF-8"));
-
-			for (ImageData image : gc.getImages()) {
-				t.parse("main.image", image);
-			}
-
-			t.parse("main", gc);
-
-			File imagesHtmlFile = new File(getCacheImageBasePath(context, gc), "images.html");
-			if (imagesHtmlFile.exists()) {
-				imagesHtmlFile.delete();
-			}
-
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(imagesHtmlFile), "UTF-8"));
-			bw.write(t.out());
-			bw.flush();
-			bw.close();
-
-		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
-		}
-	}
-
-	protected static File getCacheImageBasePath(Context context, Geocache cache) throws RequiredVersionMissingException {
-		if (locusGeocachingDataBasePath == null) {
-			File locusBasePath = new File(ActionTools.getLocusRootDirectory(context));
-
-			locusGeocachingDataBasePath = new File (locusBasePath, "data" + File.separator + "geocaching");
-		}
-
-		String cacheCode = cache.getCacheCode();
-
-		File cacheImageDir = new File(locusGeocachingDataBasePath, String.valueOf(cacheCode.charAt(cacheCode.length() - 1)) + File.separatorChar + cacheCode.charAt(cacheCode.length() - 2) + File.separatorChar + cacheCode);
-
-		cacheImageDir.mkdirs();
-
-		return cacheImageDir;
-	}
-
 
 	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, List<UserWaypoint> userWaypoints) {
 		UserWaypoint correctedCoordinateUserWaypoint = null;

@@ -1,7 +1,0 @@
-<!-- BEGIN: main -->
-<!DOCTYPE html><html><head><meta charset="utf-8" /><title>{CACHECODE} - {NAME}</title></head><body>
-<!-- BEGIN: image -->
-<h4>{NAME}</h4><img src="{URL}" /><hr />
-<!-- END: image -->
-</body></html>
-<!-- END: main -->

@@ -153,16 +153,11 @@ public class LocusDataMapper {
 		if (correctedCoordinateUserWaypoint == null)
 			return;
 
-		Location originalLocation = p.getLocation();
-
-		Location newLocation = new Location(correctedCoordinateUserWaypoint.getClass().getName());
-		newLocation.setLatitude(correctedCoordinateUserWaypoint.getLatitude());
-		newLocation.setLongitude(correctedCoordinateUserWaypoint.getLongitude());
-		p.getLocation().set(newLocation);
+		Location location = p.getLocation();
 
 		p.gcData.setComputed(true);
-		p.gcData.setLatOriginal(originalLocation.getLatitude());
-		p.gcData.setLonOriginal(originalLocation.getLongitude());
+		p.gcData.setLatOriginal(location.getLatitude());
+		p.gcData.setLonOriginal(location.getLongitude());
 
 		// store original location to waypoint
 		GeocachingWaypoint waypoint = getWaypointByNamePrefix(p, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
@@ -174,8 +169,14 @@ public class LocusDataMapper {
 		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.gcData.getCacheID().substring(2));
 		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
 		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
-		waypoint.setLat(originalLocation.getLatitude());
-		waypoint.setLon(originalLocation.getLongitude());
+		waypoint.setLat(location.getLatitude());
+		waypoint.setLon(location.getLongitude());
+
+		// update coordinates to new location
+		Location newLocation = new Location(correctedCoordinateUserWaypoint.getClass().getName());
+		newLocation.setLatitude(correctedCoordinateUserWaypoint.getLatitude());
+		newLocation.setLongitude(correctedCoordinateUserWaypoint.getLongitude());
+		location.set(newLocation);
 	}
 
 	protected static GeocachingWaypoint toLocusWaypoint(com.arcao.geocaching.api.data.Waypoint waypoint) {
@@ -492,11 +493,10 @@ public class LocusDataMapper {
 		if (!fromPoint.gcData.isComputed() || toPoint.gcData.isComputed())
 			return toPoint;
 
-		Location original = toPoint.getLocation();
+		Location location = toPoint.getLocation();
 
-		toPoint.getLocation().set(fromPoint.getLocation());
-		toPoint.gcData.setLatOriginal(original.getLatitude());
-		toPoint.gcData.setLonOriginal(original.getLongitude());
+		toPoint.gcData.setLatOriginal(location.getLatitude());
+		toPoint.gcData.setLonOriginal(location.getLongitude());
 		toPoint.gcData.setComputed(true);
 
 		// store original location to waypoint
@@ -509,10 +509,11 @@ public class LocusDataMapper {
 		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + toPoint.gcData.getCacheID().substring(2));
 		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
 		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
-		waypoint.setLat(original.getLatitude());
-		waypoint.setLon(original.getLongitude());
+		waypoint.setLat(location.getLatitude());
+		waypoint.setLon(location.getLongitude());
 
-
+		// update coordinates to new location
+		location.set(fromPoint.getLocation());
 		return toPoint;
 	}
 

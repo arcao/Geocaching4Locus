@@ -9,16 +9,16 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import locus.api.android.PeriodicUpdate;
-import locus.api.android.UpdateContainer;
+import locus.api.android.periodicUpdates.PeriodicUpdatesHandler;
+import locus.api.android.periodicUpdates.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.PeriodicUpdatesConst;
 import locus.api.objects.extra.Location;
 
-import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_BBOX_TOP_LEFT;
-import static locus.api.android.utils.PeriodicUpdatesConst.VAR_LOC_MAP_CENTER;
-
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
+	public static final String VAR_B_MAP_USER_TOUCHES = ("1306");
+	public static final String VAR_LOC_MAP_CENTER = ("1302");
+	public static final String VAR_LOC_MAP_BBOX_TOP_LEFT = ("1303");
+
 	// Limitation on Groundspeak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
 
@@ -53,7 +53,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		}
 
 		// ignore onTouch events
-		if (intent.getBooleanExtra(PeriodicUpdatesConst.VAR_B_MAP_USER_TOUCHES, false))
+		if (intent.getBooleanExtra(VAR_B_MAP_USER_TOUCHES, false))
 			return;
 
 		// temporary fix for NPE bug (locMapCenter can be null)
@@ -61,13 +61,13 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			return;
 
 		// get valid instance of PeriodicUpdate object
-		PeriodicUpdate pu = PeriodicUpdate.getInstance();
+		PeriodicUpdatesHandler pu = PeriodicUpdatesHandler.getInstance();
 
 		// set notification of new locations
 		pu.setLocNotificationLimit(computeNotificationLimit(intent));
 
 		// handle event
-		pu.onReceive(context, intent, new PeriodicUpdate.OnUpdate() {
+		pu.onReceive(context, intent, new PeriodicUpdatesHandler.OnUpdate() {
 
 			@Override
 			public void onIncorrectData() {

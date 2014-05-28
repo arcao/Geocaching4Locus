@@ -195,16 +195,19 @@ public class LocusDataMapper {
 	protected static GeocachingTrackable toLocusTrackable(Trackable trackable) {
 		GeocachingTrackable t = new GeocachingTrackable();
 
-		t.id = trackable.getId();
-		t.details = trackable.getDescription();
-		t.goal = trackable.getGoal();
-		t.imgUrl = trackable.getTrackableTypeImage();
-		t.name = trackable.getName();
-		if (trackable.getOwner() != null) {
-			t.currentOwner = trackable.getOwner().getUserName();
+		t.setId(trackable.getId());
+		t.setDetails(trackable.getDescription());
+		t.setGoal(trackable.getGoal());
+		t.setImgUrl(trackable.getTrackableTypeImage());
+		t.setName(trackable.getName());
+		if (trackable.getCurrentOwner() != null) {
+			t.setCurrentOwner(trackable.getCurrentOwner().getUserName());
 		}
-		t.released = trackable.getCreated().getTime();
-		t.srcDetails = String.format(TRACKABLE_URL, trackable.getTrackingNumber());
+		if (trackable.getOwner() != null) {
+			t.setOriginalOwner(trackable.getOwner().getUserName());
+		}
+		t.setReleased(trackable.getCreated().getTime());
+		t.setSrcDetails(trackable.getTrackablePage());
 		return t;
 	}
 

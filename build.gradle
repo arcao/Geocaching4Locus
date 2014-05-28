@@ -3,8 +3,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.10.+'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.10.+'
     }
 }
 apply plugin: 'android-sdk-manager'
@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
+    compile 'com.android.support:support-v4:19.+'
     compile ('ch.acra:acra:4.5.0') {
       exclude group: 'org.json', module: 'json' /* already in Android */
     }
@@ -24,7 +24,7 @@ dependencies {
     compile('com.arcao:geocaching-api:1.5.19') {
       exclude group: 'log4j', module: 'log4j' /* Not working in Android, log4j-over-slf4j used instead */
     }
-    compile 'menion:locus-api-android:1.17.15'
+    compile 'menion:locus-api-android:1.20.19'
     compile('oauth.signpost:signpost-commonshttp4:1.2.1.2') {
       exclude group: 'org.apache.httpcomponents', module: 'httpclient' /* already in Android */ 
       exclude group: 'commons-codec', module: 'commons-codec' /* already in Android */
@@ -37,7 +37,7 @@ dependencies {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7

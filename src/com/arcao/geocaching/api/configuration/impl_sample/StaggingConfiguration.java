@@ -1,9 +1,9 @@
 package com.arcao.geocaching.api.configuration.impl_sample;
 
 import com.arcao.geocaching.api.configuration.OAuthGeocachingApiConfiguration;
-import com.arcao.geocaching.api.configuration.impl.DefaultStaggingGeocachingApiConfiguration;
+import com.arcao.geocaching.api.configuration.impl.DefaultStagingGeocachingApiConfiguration;
 
-public class StaggingConfiguration extends DefaultStaggingGeocachingApiConfiguration implements OAuthGeocachingApiConfiguration {
+public class StaggingConfiguration extends DefaultStagingGeocachingApiConfiguration implements OAuthGeocachingApiConfiguration {
 	private static final String OAUTH_URL = "https://staging.geocaching.com/oauth/mobileoauth.ashx";
 
 	private static final String CONSUMER_KEY = "YOUR_OAUTH_KEY";

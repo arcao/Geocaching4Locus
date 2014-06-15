@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
@@ -10,17 +9,20 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import locus.api.android.utils.LocusUtils;
-import oauth.signpost.OAuthConsumer;
+
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import java.util.UUID;
+
+import locus.api.android.utils.LocusUtils;
+import oauth.signpost.OAuthConsumer;
 
 @ReportsCrashes(
 		formKey =  AppConstants.ERROR_FORM_KEY,
@@ -59,10 +61,10 @@ public class Geocaching4LocusApplication extends android.app.Application {
 			ACRA.getErrorReporter().putCustomData("userName", authenticatorHelper.getAccount().name);
 		}
 
-		PackageInfo pi = LocusUtils.getLocusPackageInfo(this);
-		if (pi != null) {
-			ACRA.getErrorReporter().putCustomData("LocusVersion", pi.versionName);
-			ACRA.getErrorReporter().putCustomData("LocusPackage", pi.packageName);
+		LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(this);
+		if (lv != null) {
+			ACRA.getErrorReporter().putCustomData("LocusVersion", lv.versionName);
+			ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
 		}
 
 		System.setProperty("debug", "1");

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -19,13 +20,14 @@ import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
 
 import java.lang.ref.WeakReference;
+
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
 
 public class ImportTask extends UserTask<String, Void, Waypoint> {
 	private static final String TAG = ImportTask.class.getName();

@@ -16,7 +16,7 @@ public class LiveGeocachingApiFactory {
 
 	public static LiveGeocachingApi getLiveGeocachingApi() throws GeocachingApiException {
 		if (liveGeocachingApi == null) {
-			liveGeocachingApi = new LiveGeocachingApi(getConfiguration());
+			liveGeocachingApi = new LiveGeocachingApi.Builder().setConfiguration(getConfiguration()).build();
 		}
 
 		return liveGeocachingApi;

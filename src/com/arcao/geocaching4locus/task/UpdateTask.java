@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -16,18 +17,19 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.UserTask;
-import locus.api.android.ActionTools;
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Waypoint;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.DataReaderBigEndian;
+import locus.api.utils.DataWriterBigEndian;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 	private static final String TAG = UpdateTask.class.getName();
@@ -61,6 +63,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		super.onPostExecute(result);
 
 		Context mContext = Geocaching4LocusApplication.getAppContext();
+		LocusUtils.LocusVersion locusVersion = LocusUtils.getActiveVersion(mContext);
 
 		if (result == null || result.newPoint == null) {
 			OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
@@ -81,7 +84,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		// if Waypoint is already in DB we must update it manually
 		if (result.oldWaypoint != null) {
 			try {
-				ActionTools.updateLocusWaypoint(mContext, result.newPoint, false);
+				ActionTools.updateLocusWaypoint(mContext, locusVersion, result.newPoint, false);
 			} catch (RequiredVersionMissingException e) {
 				Log.e(TAG, e.getMessage(), e);
 			}
@@ -179,30 +182,46 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 			out.defaultWriteObject();
 
+			DataWriterBigEndian writer = new DataWriterBigEndian();
+
 			if (oldWaypoint != null) {
-				out.writeBoolean(true);
-				oldWaypoint.write(new DataOutputStream(out));
+				oldWaypoint.write(writer);
+
+				out.writeInt(writer.size());
+				writer.writeTo(out);
 			} else {
-				out.writeBoolean(false);
+				out.writeInt(0);
 			}
 
+			writer.reset();
+
 			if (newPoint != null) {
-				out.writeBoolean(true);
-				newPoint.write(new DataOutputStream(out));
+				newPoint.write(writer);
+
+				out.writeInt(writer.size());
+				writer.writeTo(out);
 			} else {
-				out.writeBoolean(false);
+				out.writeInt(0);
 			}
 		}
 
 		private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 			in.defaultReadObject();
 
-			if (in.readBoolean()) {
-				oldWaypoint = new Waypoint(new DataInputStream(in));
+			int len = in.readInt();
+			if (len > 0) {
+				byte[] buffer = new byte[len];
+				in.read(buffer);
+
+				oldWaypoint = new Waypoint(new DataReaderBigEndian(buffer));
 			}
 
-			if (in.readBoolean()) {
-				newPoint = new Waypoint(new DataInputStream(in));
+			len = in.readInt();
+			if (len > 0) {
+				byte[] buffer = new byte[len];
+				in.read(buffer);
+
+				newPoint = new Waypoint(new DataReaderBigEndian(buffer));
 			}
 		}
 	}

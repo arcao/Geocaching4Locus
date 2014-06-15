@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -19,21 +20,32 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
-import locus.api.android.ActionDisplayPoints;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
 
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import locus.api.android.ActionDisplayPoints;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
 
 public class LiveMapService extends IntentService {
 	private static final String TAG = "G4L|LiveMapService";

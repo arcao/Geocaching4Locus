@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -11,25 +12,36 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableDataOutputStream;
-import locus.api.utils.Utils;
+
 import org.acra.ACRA;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
+
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableListFileOutput;
+import locus.api.utils.Utils;
 
 public class SearchGeocacheService extends AbstractService {
 	private static final String TAG = "G4L|SearchGeocacheService";
@@ -202,7 +214,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 
-		StoreableDataOutputStream sdos = null;
+		StoreableListFileOutput slfo = null;
 
 		try {
 			File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
@@ -211,8 +223,8 @@ public class SearchGeocacheService extends AbstractService {
 
 			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
 
-			sdos = new StoreableDataOutputStream(ActionDisplayPointsExtended.getCacheFileOutputStream(Geocaching4LocusApplication.getAppContext()));
-			sdos.beginList();
+			slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(Geocaching4LocusApplication.getAppContext()));
+			slfo.beginList();
 
 			sendProgressUpdate();
 
@@ -268,14 +280,14 @@ public class SearchGeocacheService extends AbstractService {
 					pw.addWaypoint(wpt);
 				}
 
-				sdos.write(pw);
+				slfo.write(pw);
 
 				current = current + cachesToAdd.size();
 
 				sendProgressUpdate();
 			}
 
-			sdos.endList();
+			slfo.endList();
 
 			Log.i(TAG, "found caches: " + current);
 
@@ -293,7 +305,7 @@ public class SearchGeocacheService extends AbstractService {
 			Log.e(TAG, e.getMessage(), e);
 			throw new GeocachingApiException(e.getMessage(), e);
 		} finally {
-			Utils.closeStream(sdos);
+			Utils.closeStream(slfo);
 		}
 	}
 

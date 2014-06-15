@@ -4,19 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.LocusConst;
-import locus.api.android.utils.RequiredVersionMissingException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.LocusConst;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	private static final String LOCUS_CACHE_FILENAME = "data.locus";
 
 	private static final String TAG = ActionDisplayPointsExtended.class.getName();
-	private static final int FILE_VERSION = 2;
 
 	public static boolean sendPack(Context context, PackWaypoints data, boolean callImport, boolean center, int intentFlags)
 			throws RequiredVersionMissingException {

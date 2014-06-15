@@ -2,26 +2,48 @@ package locus.api.mapper;
 
 import android.content.Context;
 import android.util.Log;
-import com.arcao.geocaching.api.data.*;
+
+import com.arcao.geocaching.api.data.CacheLog;
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.ImageData;
+import com.arcao.geocaching.api.data.SimpleGeocache;
+import com.arcao.geocaching.api.data.Trackable;
+import com.arcao.geocaching.api.data.User;
+import com.arcao.geocaching.api.data.UserWaypoint;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.*;
+import com.arcao.geocaching.api.data.type.AttributeType;
+import com.arcao.geocaching.api.data.type.CacheLogType;
+import com.arcao.geocaching.api.data.type.CacheType;
+import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.*;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.GeocachingAttribute;
+import locus.api.objects.geocaching.GeocachingData;
+import locus.api.objects.geocaching.GeocachingImage;
+import locus.api.objects.geocaching.GeocachingLog;
+import locus.api.objects.geocaching.GeocachingTrackable;
+import locus.api.objects.geocaching.GeocachingWaypoint;
 
 public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
@@ -51,7 +73,7 @@ public class LocusDataMapper {
 		if (cache == null)
 			return null;
 
-		Location loc = new Location(cache.getClass().getName());
+		Location loc = new Location(cache.getCacheCode());
 		loc.setLatitude(cache.getLatitude());
 		loc.setLongitude(cache.getLongitude());
 
@@ -83,8 +105,8 @@ public class LocusDataMapper {
 			d.setCountry(gc.getCountryName());
 			d.setState(gc.getStateName());
 
-			d.setShortDescription(gc.getShortDescription(), gc.isShortDescriptionHtml());
-			d.setLongDescription(gc.getLongDescription(), gc.isLongDescriptionHtml());
+			d.setDescriptions(gc.getShortDescription(), gc.isShortDescriptionHtml(),
+				gc.getLongDescription(), gc.isLongDescriptionHtml());
 			d.setEncodedHints(gc.getHint());
 			d.setNotes(gc.getPersonalNote());
 			d.setFavoritePoints(gc.getFavoritePoints());
@@ -173,7 +195,7 @@ public class LocusDataMapper {
 		waypoint.setLon(location.getLongitude());
 
 		// update coordinates to new location
-		Location newLocation = new Location(correctedCoordinateUserWaypoint.getClass().getName());
+		Location newLocation = new Location(location.getProvider());
 		newLocation.setLatitude(correctedCoordinateUserWaypoint.getLatitude());
 		newLocation.setLongitude(correctedCoordinateUserWaypoint.getLongitude());
 		location.set(newLocation);
@@ -269,6 +291,8 @@ public class LocusDataMapper {
 				return GeocachingData.CACHE_TYPE_WEBCAM;
 			case Wherigo:
 				return GeocachingData.CACHE_TYPE_WHERIGO;
+			case GigaEvent:
+				return GeocachingData.CACHE_TYPE_GIGA_EVENT;
 			default:
 				return GeocachingData.CACHE_TYPE_MYSTERY;
 		}
@@ -301,12 +325,12 @@ public class LocusDataMapper {
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_FINAL;
 			case ParkingArea:
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_PARKING;
-			case QuestionToAnswer:
-				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_QUESTION;
+			case VirtualStage:
+				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_VIRTUAL_STAGE;
 			case ReferencePoint:
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE;
-			case StagesOfAMulticache:
-				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_STAGES;
+			case PhysicalStage:
+				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_PHYSICAL_STAGE;
 			case Trailhead:
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_TRAILHEAD;
 			default:

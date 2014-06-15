@@ -74,7 +74,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 			}
 
 			@Override
-			public void onUpdate(UpdateContainer update) {
+			public void onUpdate(LocusUtils.LocusVersion locusVersion, UpdateContainer update) {
 				// sending data back to Locus based on events if has a new map center or zoom level and map is visible
 				if (!update.isMapVisible())
 					return;

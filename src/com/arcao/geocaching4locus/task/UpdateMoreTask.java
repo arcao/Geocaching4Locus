@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -18,19 +19,22 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
-import locus.api.android.ActionTools;
-import locus.api.android.utils.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	private static final String TAG = UpdateMoreTask.class.getName();
 
 	private int logCount;
+	private LocusUtils.LocusVersion locusVersion;
 
 	public interface OnTaskFinishedListener {
 		void onTaskFinished(boolean success);
@@ -71,6 +75,8 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	@Override
 	protected Boolean doInBackground(long[]... params) throws Exception {
 		Context context = Geocaching4LocusApplication.getAppContext();
+		locusVersion = LocusUtils.getActiveVersion(context);
+
 		long[] pointIndexes = params[0];
 
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
@@ -123,7 +129,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					p = LocusDataMapper.mergePoints(Geocaching4LocusApplication.getAppContext(), p, oldPoint);
 
 					// update new point data in Locus
-					ActionTools.updateLocusWaypoint(context, p, false);
+					ActionTools.updateLocusWaypoint(context, locusVersion, p, false);
 				}
 
 				current = current + Math.min(pointIndexes.length - current, cachesPerRequest);
@@ -167,7 +173,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		for (int i = 0; i < count; i++) {
 			try {
 				// get old waypoint from Locus
-				Waypoint wpt = ActionTools.getLocusWaypoint(context, pointIndexes[current + i]);
+				Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, pointIndexes[current + i]);
 				if (wpt.gcData == null || wpt.gcData.getCacheID() == null || wpt.gcData.getCacheID().length() == 0) {
 					Log.w(TAG, "Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
 					continue;

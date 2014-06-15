@@ -2,30 +2,32 @@ package com.arcao.geocaching4locus.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.LocusTestingErrorDialogFragment;
-import locus.api.android.utils.LocusUtils;
+
 import org.osgi.framework.Version;
 
 import java.util.List;
+
+import locus.api.android.utils.LocusUtils;
 
 public class LocusTesting {
 	private static final String TAG = LocusTesting.class.getName();
 
 	public static boolean isLocusInstalled(Context context) {
-		PackageInfo pi = LocusUtils.getLocusPackageInfo(context);
+		LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(context);
 
 		Version locusVersion;
-		if (pi != null) {
-			locusVersion = Version.parseVersion(pi.versionName);
+		if (lv != null) {
+			locusVersion = Version.parseVersion(lv.versionName);
 		} else {
 			locusVersion = Version.parseVersion(null);
 		}

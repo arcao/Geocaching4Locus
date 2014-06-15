@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
@@ -25,9 +26,10 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
-import locus.api.android.utils.RequiredVersionMissingException;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
@@ -104,10 +106,10 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			}
 		}
 		else if (LocusUtils.isIntentMainFunction(getIntent())) {
-			LocusUtils.handleIntentMainFunction(getIntent(), this);
+			LocusUtils.handleIntentMainFunction(this, getIntent(), this);
 		}
 		else if (LocusUtils.isIntentSearchList(getIntent())) {
-			LocusUtils.handleIntentSearchList(getIntent(), this);
+			LocusUtils.handleIntentSearchList(this, getIntent(), this);
 		}
 
 		if (savedInstanceState != null && savedInstanceState.getBoolean(STATE_HAS_COORDINATES)) {
@@ -121,9 +123,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 	}
 
-
 	@Override
-	public void onReceived(locus.api.objects.extra.Location locGps, locus.api.objects.extra.Location locMapCenter) {
+	public void onReceived(LocusUtils.LocusVersion lv, locus.api.objects.extra.Location locGps, locus.api.objects.extra.Location locMapCenter) {
 		latitude = locMapCenter.getLatitude();
 		longitude = locMapCenter.getLongitude();
 

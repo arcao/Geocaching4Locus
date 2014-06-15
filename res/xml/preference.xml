@@ -25,6 +25,7 @@
 			<CheckBoxPreference android:key="filter_15" android:title="Groundspeak HQ" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_16" android:title="Groundspeak Lost and Found Celebration" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_17" android:title="Groundspeak Block Party" android:defaultValue="true"/>
+            <CheckBoxPreference android:key="filter_18" android:title="Giga-Event Cache" android:defaultValue="true"/>
 		</PreferenceScreen>
 		<PreferenceScreen android:title="@string/pref_title_container_type_filter" android:key="container_type_filter_screen">
 			<CheckBoxPreference android:key="container_filter_0" android:title="Not chosen" android:defaultValue="true"/>

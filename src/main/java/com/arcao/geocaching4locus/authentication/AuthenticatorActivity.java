@@ -128,7 +128,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		return intent;
 	}
 
-	protected static class WizardDialogFragment extends AbstractDialogFragment {
+	public static class WizardDialogFragment extends AbstractDialogFragment {
 		protected WeakReference<AuthenticatorActivity> activityRef;
 
 		public WizardDialogFragment() {
@@ -167,7 +167,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 		}
 	}
 
-	protected static class BasicMemberLoginWarningDialogFragment extends AbstractDialogFragment {
+	public static class BasicMemberLoginWarningDialogFragment extends AbstractDialogFragment {
 		protected WeakReference<AuthenticatorActivity> activityRef;
 
 		public BasicMemberLoginWarningDialogFragment() {

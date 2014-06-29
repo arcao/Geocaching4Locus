@@ -203,7 +203,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		public abstract void onLocationUpdate(Location location);
 	}
 
-	protected static class NoLocationProviderDialogFragment extends AbstractDialogFragment {
+	public static class NoLocationProviderDialogFragment extends AbstractDialogFragment {
 		public static final String TAG = NoLocationProviderDialogFragment.class.getName();
 
 		public NoLocationProviderDialogFragment() {

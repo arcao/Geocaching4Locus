@@ -69,10 +69,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+        }
         release {
             signingConfig signingConfigs.release
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard.cfg'
         }
     }

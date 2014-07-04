@@ -283,7 +283,7 @@ public class LocusDataMapper {
 				return GeocachingData.CACHE_TYPE_PROJECT_APE;
 			case Traditional:
 				return GeocachingData.CACHE_TYPE_TRADITIONAL;
-			case Unknown:
+			case Mystery:
 				return GeocachingData.CACHE_TYPE_MYSTERY;
 			case Virtual:
 				return GeocachingData.CACHE_TYPE_VIRTUAL;

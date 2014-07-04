@@ -9,7 +9,7 @@
 		<PreferenceScreen android:title="@string/pref_title_cache_type_filter" android:key="cache_type_filter_screen">
 			<CheckBoxPreference android:key="filter_0" android:title="Traditional Cache" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_1" android:title="Multi-cache" android:defaultValue="true"/>
-			<CheckBoxPreference android:key="filter_2" android:title="Unknown Cache" android:defaultValue="true"/>
+			<CheckBoxPreference android:key="filter_2" android:title="Mystery Cache" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_3" android:title="Virtual Cache" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_4" android:title="Earthcache" android:defaultValue="true"/>
 			<CheckBoxPreference android:key="filter_5" android:title="Project APE Cache" android:defaultValue="true"/>

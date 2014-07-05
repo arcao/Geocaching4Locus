@@ -174,7 +174,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			try {
 				// get old waypoint from Locus
 				Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, pointIndexes[current + i]);
-				if (wpt.gcData == null || wpt.gcData.getCacheID() == null || wpt.gcData.getCacheID().length() == 0) {
+				if (wpt == null || wpt.gcData == null || wpt.gcData.getCacheID() == null || wpt.gcData.getCacheID().length() == 0) {
 					Log.w(TAG, "Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
 					continue;
 				}

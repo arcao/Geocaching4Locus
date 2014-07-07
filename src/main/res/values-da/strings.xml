@@ -137,7 +137,7 @@
     
     <string name="title_count_of_caches">Antal caches</string>
     
-    <string name="button_login_start">Log in</string>
+    <string name="button_login_start">Log-på</string>
     <string name="login_required_title">Log-in nødvendigt</string>
     <string name="login_required_message">For at forsætte, skal du være logget ind på din Geocaching.com konto.</string>
     
@@ -194,7 +194,8 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Show always notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="pref_title_live_map">Live map</string>
+    <string name="pref_title_live_map">Live kort</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
+    <string name="pref_cache_type_all">Alle</string>
 </resources>
 

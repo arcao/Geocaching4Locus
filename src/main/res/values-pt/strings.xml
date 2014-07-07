@@ -196,5 +196,6 @@
     <string name="pref_livemap_show_disabled_notification_summary">Apenas funciona se o Locus está ligado e se o envio de atualizações periódicas está ativo.</string>
     <string name="pref_title_live_map">Mapa ao vivo</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
+    <string name="pref_cache_type_all">Tudo</string>
 </resources>
 

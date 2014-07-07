@@ -196,5 +196,6 @@
     <string name="pref_livemap_show_disabled_notification_summary">Це працює тільки, якщо Locus запущений та періодичні оновлення дозволені у ньому.</string>
     <string name="pref_title_live_map">Жива карта</string>
     <string name="launcher_menu">Меню Geocaching4Locus</string>
+    <string name="pref_cache_type_all">Всі</string>
 </resources>
 

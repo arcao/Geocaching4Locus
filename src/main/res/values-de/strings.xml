@@ -164,9 +164,9 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="button_no">Nein</string>
     
     <plurals name="plurals_cache">
-        <item quantity="one">%d Cache</item>
-        <item quantity="few">%d Caches</item>
-        <item quantity="other">%d Caches</item>
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
     </plurals>
     
     <plurals name="plurals_hour">
@@ -197,5 +197,6 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_livemap_show_disabled_notification_summary">Funktioniert nur, wenn regelmäßige Updates in Locus erlaubt sind und Locus aktiv ist.</string>
     <string name="pref_title_live_map">Live Karte</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
+    <string name="pref_cache_type_all">Alle</string>
 </resources>
 

@@ -196,5 +196,6 @@
     <string name="pref_livemap_show_disabled_notification_summary">Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
     <string name="pref_title_live_map">Carte en direct</string>
     <string name="launcher_menu">Menu de Geocaching4Locus</string>
+    <string name="pref_cache_type_all">Tous</string>
 </resources>
 

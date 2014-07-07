@@ -165,19 +165,19 @@
     <plurals name="plurals_cache">
         <item quantity="one">%d skrzynka</item>
         <item quantity="few">%d skrzynki</item>
-        <item quantity="other">%d skrzynek</item>
+        <item quantity="other">%d skrzynki</item>
     </plurals>
     
     <plurals name="plurals_hour">
         <item quantity="one">%d godzina</item>
         <item quantity="few">%d godziny</item>
-        <item quantity="other">%d godzin</item>
+        <item quantity="other">%d godziny</item>
     </plurals>
     
     <plurals name="plurals_minute">
         <item quantity="one">%d minuta</item>
         <item quantity="few">%d minuty</item>
-        <item quantity="other">%d minut</item>
+        <item quantity="other">%d minuty</item>
     </plurals>
     
     <string name="account_geocaching_live_title">Oparte na silniku Geocaching Live .</string>
@@ -196,5 +196,6 @@
     <string name="pref_livemap_show_disabled_notification_summary">Ta funkcja działa jeśli okresowe aktalizacje są dostępne w Locusie i Locus jest uruchomiony.</string>
     <string name="pref_title_live_map">Mapa "na żywo"</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
+    <string name="pref_cache_type_all">Wszystkie</string>
 </resources>
 

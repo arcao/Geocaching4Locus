@@ -165,19 +165,19 @@
     <plurals name="plurals_cache">
         <item quantity="one">%d keš</item>
         <item quantity="few">%d keše</item>
-        <item quantity="other">%d keší</item>
+        <item quantity="other">%d keše</item>
     </plurals>
     
     <plurals name="plurals_hour">
         <item quantity="one">%d hodinu</item>
         <item quantity="few">%d hodiny</item>
-        <item quantity="other">%d hodin</item>
+        <item quantity="other">%d hodiny</item>
     </plurals>
     
     <plurals name="plurals_minute">
         <item quantity="one">%d minutu</item>
         <item quantity="few">%d minuty</item>
-        <item quantity="other">%d minut</item>
+        <item quantity="other">%d minuty</item>
     </plurals>
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
@@ -196,5 +196,6 @@
     <string name="pref_livemap_show_disabled_notification_summary">To funguje pouze v případě, že pravidelné aktualizace jsou povoleny v Locusu a Locus běží.</string>
     <string name="pref_title_live_map">Live mapa</string>
     <string name="launcher_menu">Nabídka Geocaching4Locus</string>
+    <string name="pref_cache_type_all">Vše</string>
 </resources>
 

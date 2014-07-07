@@ -185,6 +185,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		prepareAccountPreference();
 
+		cacheTypeFilterScreen.setSummary(prepareCacheTypeSummary());
+		containerTypeFilterScreen.setSummary(prepareContainerTypeSummary());
 
 		final ListPreference difficultyMinPreference = findPreference(FILTER_DIFFICULTY_MIN, ListPreference.class);
 		final ListPreference difficultyMaxPreference = findPreference(FILTER_DIFFICULTY_MAX, ListPreference.class);
@@ -219,6 +221,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 
+		final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
+		difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
+
 		final ListPreference terrainMinPreference = findPreference(FILTER_TERRAIN_MIN, ListPreference.class);
 		final ListPreference terrainMaxPreference = findPreference(FILTER_TERRAIN_MAX, ListPreference.class);
 
@@ -251,6 +256,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 				return true;
 			}
 		});
+
+		final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
+		terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
 
 		final CheckBoxPreference simpleCacheDataPreference = findPreference(DOWNLOADING_SIMPLE_CACHE_DATA, CheckBoxPreference.class);
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
@@ -449,6 +457,55 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 	protected Spanned prepareRatingSummary(CharSequence value) {
 		return preparePreferenceSummary(value, 0);
+	}
+
+	protected Spanned prepareCacheTypeSummary() {
+		StringBuffer sb = new StringBuffer();
+
+		boolean allChecked = true;
+		boolean noneChecked = true;
+
+		for (int i = 0; i < CacheType.values().length; i++) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
+				noneChecked = false;
+			} else {
+				allChecked = false;
+			}
+		}
+
+		if (allChecked || noneChecked) {
+			sb.append(getString(R.string.pref_cache_type_all));
+		} else {
+			for (int i = 0; i < CacheType.values().length; i++) {
+				if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
+					if (sb.length() != 0) sb.append(", ");
+					sb.append(shortCacheTypeName[i]);
+				}
+			}
+		}
+
+		return preparePreferenceSummary(sb.toString(), 0);
+	}
+
+	protected Spanned prepareContainerTypeSummary() {
+		StringBuffer sb = new StringBuffer();
+
+
+		for (int i = 0; i < ContainerType.values().length; i++) {
+			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
+				if (sb.length() != 0) sb.append(", ");
+				sb.append(shortContainerTypeName[i]);
+			}
+		}
+
+		if (sb.length() == 0) {
+			for (int i = 0; i < ContainerType.values().length; i++) {
+				if (sb.length() != 0) sb.append(", ");
+				sb.append(shortContainerTypeName[i]);
+			}
+		}
+
+		return preparePreferenceSummary(sb.toString(), 0);
 	}
 
 	protected void donatePaypal() {

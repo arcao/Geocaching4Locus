@@ -6,20 +6,22 @@ public interface PrefConstants {
 	static final String PREF_VERSION = "pref_version";
 	static final int CURRENT_PREF_VERSION = 1;
 
-	static final String LAST_LATITUDE  = "latitude";
+	static final String LAST_LATITUDE = "latitude";
 	static final String LAST_LONGITUDE = "longitude";
 
 	static final String USERNAME = "username";
 	static final String PASSWORD = "password";
-	static final String SESSION  = "session";
+	static final String SESSION = "session";
 
-	static final String OAUTH_TOKEN  = OAuth.OAUTH_TOKEN;
-	static final String OAUTH_TOKEN_SECRET  = OAuth.OAUTH_TOKEN_SECRET;
+	static final String OAUTH_TOKEN = OAuth.OAUTH_TOKEN;
+	static final String OAUTH_TOKEN_SECRET = OAuth.OAUTH_TOKEN_SECRET;
 
 	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";
 	static final String FILTER_CONTAINER_TYPE_PREFIX = "container_filter_";
+	static final String FILTER_DIFFICULTY = "difficulty_filter";
 	static final String FILTER_DIFFICULTY_MIN = "difficulty_filter_min";
 	static final String FILTER_DIFFICULTY_MAX = "difficulty_filter_max";
+	static final String FILTER_TERRAIN = "terrain_filter";
 	static final String FILTER_TERRAIN_MIN = "terrain_filter_min";
 	static final String FILTER_TERRAIN_MAX = "terrain_filter_max";
 	static final String FILTER_DISTANCE = "filter_distance";
@@ -48,7 +50,39 @@ public interface PrefConstants {
 	static final String RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit";
 
 
-	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE  = "0";
+	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2";
+
+	static final String[] shortCacheTypeName = {
+					"Tradi",
+					"Multi",
+					"Mystery",
+					"Virtual",
+					"Earth",
+					"APE",
+					"Letter",
+					"Wherigo",
+					"Event",
+					"M-Event",
+					"CITO",
+					"Advent",
+					"Webcam",
+					"Loc-less",
+					"L&F",
+					"GS HQ",
+					"GS L&F",
+					"GS Party",
+					"G-Event"
+	};
+
+	static final String[] shortContainerTypeName = {
+					"?",
+					"M",
+					"S",
+					"R",
+					"L",
+					"H",
+					"O"
+	};
 }

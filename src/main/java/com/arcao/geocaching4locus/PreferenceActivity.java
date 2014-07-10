@@ -8,15 +8,21 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.*;
+import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
+import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.text.Spanned;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -122,6 +128,31 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), R.string.pref_download_on_show_summary));
 		}
+
+		final boolean premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
+
+		if (premiumMember) {
+			switch (key) {
+				case FILTER_DIFFICULTY_MIN:
+				case FILTER_DIFFICULTY_MAX:
+					final ListPreference difficultyMinPreference = findPreference(FILTER_DIFFICULTY_MIN, ListPreference.class);
+					final ListPreference difficultyMaxPreference = findPreference(FILTER_DIFFICULTY_MAX, ListPreference.class);
+
+					final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
+					difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
+					((BaseAdapter)getPreferenceScreen().getRootAdapter()).notifyDataSetChanged();
+					break;
+				case FILTER_TERRAIN_MIN:
+				case FILTER_TERRAIN_MAX:
+					final ListPreference terrainMinPreference = findPreference(FILTER_TERRAIN_MIN, ListPreference.class);
+					final ListPreference terrainMaxPreference = findPreference(FILTER_TERRAIN_MAX, ListPreference.class);
+
+					final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
+					terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
+					((BaseAdapter)getPreferenceScreen().getRootAdapter()).notifyDataSetChanged();
+					break;
+			}
+		}
 	}
 
 	@Override
@@ -185,8 +216,12 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		prepareAccountPreference();
 
-		cacheTypeFilterScreen.setSummary(prepareCacheTypeSummary());
-		containerTypeFilterScreen.setSummary(prepareContainerTypeSummary());
+		final boolean premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
+
+		if (premiumMember) {
+			cacheTypeFilterScreen.setSummary(prepareCacheTypeSummary());
+			containerTypeFilterScreen.setSummary(prepareContainerTypeSummary());
+		}
 
 		final ListPreference difficultyMinPreference = findPreference(FILTER_DIFFICULTY_MIN, ListPreference.class);
 		final ListPreference difficultyMaxPreference = findPreference(FILTER_DIFFICULTY_MAX, ListPreference.class);
@@ -221,8 +256,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 
-		final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
-		difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
+		if (premiumMember) {
+			final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
+			difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
+		}
 
 		final ListPreference terrainMinPreference = findPreference(FILTER_TERRAIN_MIN, ListPreference.class);
 		final ListPreference terrainMaxPreference = findPreference(FILTER_TERRAIN_MAX, ListPreference.class);
@@ -257,8 +294,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			}
 		});
 
-		final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
-		terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
+		if (premiumMember) {
+			final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
+			terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
+		}
 
 		final CheckBoxPreference simpleCacheDataPreference = findPreference(DOWNLOADING_SIMPLE_CACHE_DATA, CheckBoxPreference.class);
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
@@ -273,7 +312,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		fullCacheDataOnShowPreference.setSummary(preparePreferenceSummary(fullCacheDataOnShowPreference.getEntry(), R.string.pref_download_on_show_summary));
 
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
-		versionPreference.setSummary(Geocaching4LocusApplication.getVersion());
+		versionPreference.setSummary(Geocaching4LocusApplication.getVersion() + " (" + BuildConfig.GIT_SHA + ")");
 
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));

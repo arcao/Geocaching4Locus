@@ -25,9 +25,11 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	public static String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
 	public static String PARAM_MIN_VALUE = "MIN_VALUE";
 	public static String PARAM_MAX_VALUE = "MAX_VALUE";
+	public static String PARAM_STEP = "STEP";
 
 	protected int mMinValue = 0;
 	protected int mMaxValue = 100;
+	protected int mStep = 1;
 	protected int mValue = mMinValue;
 	protected int mNewValue = mValue;
 
@@ -36,6 +38,10 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	protected WeakReference<OnNumberChooserDialogClosedListener> onNumberChooserDialogClosedListenerRef;
 
 	public static NumberChooserDialogFragment newInstance(int titleRes, int prefixQuantityRes, int minValue, int maxValue, int defaultValue) {
+		return newInstance(titleRes, prefixQuantityRes, minValue, maxValue, defaultValue, 1);
+	}
+
+	public static NumberChooserDialogFragment newInstance(int titleRes, int prefixQuantityRes, int minValue, int maxValue, int defaultValue, int step) {
 		NumberChooserDialogFragment fragment;
 
 		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
@@ -50,6 +56,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		args.putInt(PARAM_MIN_VALUE, minValue);
 		args.putInt(PARAM_MAX_VALUE, maxValue);
 		args.putInt(PARAM_DEFAULT_VALUE, defaultValue);
+		args.putInt(PARAM_STEP, step);
 		fragment.setArguments(args);
 		fragment.setCancelable(false);
 
@@ -82,7 +89,12 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mMinValue = getArguments().getInt(PARAM_MIN_VALUE, mMinValue);
 		mMaxValue = getArguments().getInt(PARAM_MAX_VALUE, mMaxValue);
+		mStep = getArguments().getInt(PARAM_STEP, mStep);
 		mValue = getArguments().getInt(PARAM_DEFAULT_VALUE, mValue);
+
+		if (mValue % mStep != 0) {
+			mValue = (mValue / mStep) * mStep;
+		}
 
 		if (mValue < mMinValue) {
 			mValue = mMinValue;
@@ -129,8 +141,8 @@ public class NumberChooserDialogFragment extends DialogFragment {
 
 		// SeekBar doesn't support minimal value, we must transpose values
 		SeekBar seekBar =	(SeekBar) view.findViewById(R.id.number_picker_dialog_seek_bar);
-		seekBar.setMax(mMaxValue - mMinValue);
-		seekBar.setProgress(mValue - mMinValue);
+		seekBar.setMax((mMaxValue - mMinValue) / mStep);
+		seekBar.setProgress((mValue - mMinValue) / mStep);
 		seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -140,7 +152,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				mValue = progress + mMinValue;
+				mValue = progress * mStep + mMinValue;
 				textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));
 			}
 		});

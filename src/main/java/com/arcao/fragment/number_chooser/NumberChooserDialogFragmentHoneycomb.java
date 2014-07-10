@@ -14,18 +14,31 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 	protected View prepareView() {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
 
+		String[] values = getNuberPickerValues(mMinValue, mMaxValue, mStep);
+
 		NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.number_picker_dialog_number_picker);
-		numberPicker.setMinValue(getArguments().getInt(PARAM_MIN_VALUE, 0));
-		numberPicker.setMaxValue(getArguments().getInt(PARAM_MAX_VALUE, 100));
-		numberPicker.setValue(mValue);
+		numberPicker.setMinValue(0);
+		numberPicker.setMaxValue(values.length - 1);
+		numberPicker.setValue(Math.max(0, (mValue - mMinValue) / mStep));
+		numberPicker.setDisplayedValues(values);
 
 		numberPicker.setOnValueChangedListener(new OnValueChangeListener() {
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-				mValue = newVal;
+				mValue = mMinValue + (newVal * mStep);
 			}
 		});
 
 		return view;
+	}
+
+	protected String[] getNuberPickerValues(int min, int max, int step) {
+		String[] values = new String[((max - min) / step) + 1];
+
+		for (int i = 0; i < values.length; i++) {
+			values[i] = String.valueOf(min + (i * step));
+		}
+
+		return values;
 	}
 }

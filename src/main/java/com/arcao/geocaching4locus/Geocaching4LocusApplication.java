@@ -61,10 +61,16 @@ public class Geocaching4LocusApplication extends android.app.Application {
 			ACRA.getErrorReporter().putCustomData("userName", authenticatorHelper.getAccount().name);
 		}
 
-		LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(this);
-		if (lv != null) {
-			ACRA.getErrorReporter().putCustomData("LocusVersion", lv.versionName);
-			ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
+		try {
+			LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(this);
+			if (lv != null) {
+				ACRA.getErrorReporter().putCustomData("LocusVersion", lv.versionName);
+				ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
+			}
+		} catch (Throwable t) {
+			Log.e(TAG, t.getMessage(), t);
+			ACRA.getErrorReporter().putCustomData("LocusVersion", "failed");
+			ACRA.getErrorReporter().putCustomData("LocusPackage", "failed");
 		}
 
 		System.setProperty("debug", "1");

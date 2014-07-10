@@ -23,7 +23,13 @@ public class LocusTesting {
 	private static final String TAG = LocusTesting.class.getName();
 
 	public static boolean isLocusInstalled(Context context) {
-		LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(context);
+		LocusUtils.LocusVersion lv = null;
+
+		try {
+			lv = LocusUtils.getActiveVersion(context);
+		} catch (Throwable t) {
+			Log.e(TAG, t.getMessage(), t);
+		}
 
 		Version locusVersion;
 		if (lv != null) {

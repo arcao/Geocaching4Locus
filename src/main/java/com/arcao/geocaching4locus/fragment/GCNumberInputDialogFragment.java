@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
@@ -116,6 +118,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+
+		getDialog().getWindow().clearFlags(
+			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
 		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
 		// More here: http://code.google.com/p/android/issues/detail?id=19173

@@ -3,6 +3,7 @@ package com.arcao.fragment.number_chooser;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 
@@ -30,6 +31,14 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 		});
 
 		return view;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		getDialog().getWindow().clearFlags(
+						WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 	}
 
 	protected String[] getNuberPickerValues(int min, int max, int step) {

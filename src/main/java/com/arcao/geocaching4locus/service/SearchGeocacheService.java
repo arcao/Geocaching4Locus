@@ -139,7 +139,7 @@ public class SearchGeocacheService extends AbstractService {
 		distance = Math.max(Math.min(distance, 50), 0.1);
 
 		current = 0;
-		count = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);
+		count = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 

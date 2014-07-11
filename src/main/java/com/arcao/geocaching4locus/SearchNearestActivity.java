@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
 import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
@@ -172,12 +173,20 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			}
 		});
 
-		countOfCachesEditText.setText(String.valueOf(prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20)));
+		int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+
+		if (countOfCaches % AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP != 0) {
+			countOfCaches = ((countOfCaches  / AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP) + 1) * AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP;
+			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+		}
+
+		countOfCachesEditText.setText(String.valueOf(prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
 		countOfCachesEditText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, 20);
-				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache, 1, 200, countOfCaches);
+				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache,
+								AppConstants.DOWNLOADING_COUNT_OF_CACHES_MIN, AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX, countOfCaches, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});

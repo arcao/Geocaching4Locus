@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.constants;
 
-import org.osgi.framework.Version;
-
 import android.net.Uri;
+
+import org.osgi.framework.Version;
 
 public interface AppConstants {
 	static final boolean USE_PRODUCTION_CONFIGURATION = true;
@@ -41,4 +41,11 @@ public interface AppConstants {
 	static final int ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000;
 
 	static final int SECONDS_PER_MINUTE = 60;
+
+  /* Search nearest cache count configuration */
+	static final int DOWNLOADING_COUNT_OF_CACHES_DEFAULT = 20;
+	static final int DOWNLOADING_COUNT_OF_CACHES_MIN = 10;
+	static final int DOWNLOADING_COUNT_OF_CACHES_MAX = 500;
+	static final int DOWNLOADING_COUNT_OF_CACHES_STEP = 10;
+
 }

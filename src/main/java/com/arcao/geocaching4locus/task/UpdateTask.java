@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
+import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		super.onPostExecute(result);
 
 		Context mContext = Geocaching4LocusApplication.getAppContext();
-		LocusUtils.LocusVersion locusVersion = LocusUtils.getActiveVersion(mContext);
+		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
 
 		if (result == null || result.newPoint == null) {
 			OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();

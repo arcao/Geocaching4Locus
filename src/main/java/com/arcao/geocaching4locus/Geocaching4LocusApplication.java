@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.LocusTesting;
 
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
@@ -62,7 +63,7 @@ public class Geocaching4LocusApplication extends android.app.Application {
 		}
 
 		try {
-			LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(this);
+			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
 			if (lv != null) {
 				ACRA.getErrorReporter().putCustomData("LocusVersion", lv.versionName);
 				ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);

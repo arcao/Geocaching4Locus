@@ -23,21 +23,9 @@ public class LocusTesting {
 	private static final String TAG = LocusTesting.class.getName();
 
 	public static boolean isLocusInstalled(Context context) {
-		LocusUtils.LocusVersion lv = null;
+		LocusUtils.LocusVersion lv = getActiveVersion(context);
 
-		try {
-			lv = LocusUtils.getActiveVersion(context);
-		} catch (Throwable t) {
-			Log.e(TAG, t.getMessage(), t);
-		}
-
-		Version locusVersion;
-		if (lv != null) {
-			locusVersion = Version.parseVersion(lv.versionName);
-		} else {
-			locusVersion = Version.parseVersion(null);
-		}
-
+		Version locusVersion = Version.parseVersion(lv != null ? lv.versionName : null);
 		Log.v(TAG, "Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
 
 		return locusVersion.compareTo(AppConstants.LOCUS_MIN_VERSION) >= 0;
@@ -67,5 +55,14 @@ public class LocusTesting {
 				}
 		 }
 		return false;
+	}
+
+	public static LocusUtils.LocusVersion getActiveVersion(Context context) {
+		try {
+			return LocusUtils.getActiveVersion(context);
+		} catch (Throwable t) {
+			Log.e(TAG, t.getMessage(), t);
+			return LocusUtils.createLocusVersion(context);
+		}
 	}
 }

@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
 
 import java.lang.ref.WeakReference;
@@ -75,7 +76,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	@Override
 	protected Boolean doInBackground(long[]... params) throws Exception {
 		Context context = Geocaching4LocusApplication.getAppContext();
-		locusVersion = LocusUtils.getActiveVersion(context);
+		locusVersion = LocusTesting.getActiveVersion(context);
 
 		long[] pointIndexes = params[0];
 

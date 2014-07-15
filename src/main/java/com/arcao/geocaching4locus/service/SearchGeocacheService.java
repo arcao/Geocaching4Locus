@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -12,36 +11,25 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-
-import org.acra.ACRA;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Vector;
-
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableListFileOutput;
 import locus.api.utils.Utils;
+import org.acra.ACRA;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 public class SearchGeocacheService extends AbstractService {
 	private static final String TAG = "G4L|SearchGeocacheService";
@@ -229,15 +217,15 @@ public class SearchGeocacheService extends AbstractService {
 			sendProgressUpdate();
 
 			current = 0;
-			int perPage;
+			int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
 
 			while (current < count) {
-				perPage = (count - current < AppConstants.CACHES_PER_REQUEST) ? count - current : AppConstants.CACHES_PER_REQUEST;
+				long startTime = System.currentTimeMillis();
 
 				List<SimpleGeocache> cachesToAdd;
 
 				if (current == 0) {
-					cachesToAdd = api.searchForGeocaches(simpleCacheData, perPage, logCount, 0, new Filter[] {
+					cachesToAdd = api.searchForGeocaches(simpleCacheData, cachesPerRequest, logCount, 0, new Filter[] {
 							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
@@ -249,7 +237,7 @@ public class SearchGeocacheService extends AbstractService {
 							new BookmarksExcludeFilter(excludeIgnoreList)
 					});
 				} else {
-					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, perPage, logCount, 0);
+					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, cachesPerRequest, logCount, 0);
 				}
 
 				if (!simpleCacheData)
@@ -282,9 +270,11 @@ public class SearchGeocacheService extends AbstractService {
 
 				slfo.write(pw);
 
-				current = current + cachesToAdd.size();
+				current += cachesToAdd.size();
 
 				sendProgressUpdate();
+				long requestDuration = System.currentTimeMillis() - startTime;
+				cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
 			}
 
 			slfo.endList();
@@ -343,5 +333,22 @@ public class SearchGeocacheService extends AbstractService {
 		}
 
 		api.openSession(token);
+	}
+
+	private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
+		int cachesPerRequest = currentCachesPerRequest;
+
+		// keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
+		if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
+			cachesPerRequest+= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+
+		if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
+			cachesPerRequest-= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+
+		// keep the value in a range
+		cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
+		cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
+
+		return cachesPerRequest;
 	}
 }

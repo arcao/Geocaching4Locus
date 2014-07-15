@@ -46,6 +46,8 @@ public interface AppConstants {
 	static final int DOWNLOADING_COUNT_OF_CACHES_DEFAULT = 20;
 	static final int DOWNLOADING_COUNT_OF_CACHES_MIN = 10;
 	static final int DOWNLOADING_COUNT_OF_CACHES_MAX = 500;
+	static final int DOWNLOADING_COUNT_OF_CACHES_MAX_LOW_MEMORY = 200;
 	static final int DOWNLOADING_COUNT_OF_CACHES_STEP = 10;
 
+	static final long LOW_MEMORY_THRESHOLD = 16777216;
 }

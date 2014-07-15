@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -174,6 +175,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		});
 
 		int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+		int max = getMaxCountOfCaches();
+
+		if (countOfCaches > max) {
+			countOfCaches = max;
+			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+		}
 
 		if (countOfCaches % AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP != 0) {
 			countOfCaches = ((countOfCaches  / AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP) + 1) * AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP;
@@ -186,7 +193,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			public void onClick(View v) {
 				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
 				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache,
-								AppConstants.DOWNLOADING_COUNT_OF_CACHES_MIN, AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX, countOfCaches, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP);
+								AppConstants.DOWNLOADING_COUNT_OF_CACHES_MIN, getMaxCountOfCaches(), countOfCaches, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});
@@ -375,5 +382,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			// do not call download method directly here, must be called in onResume method
 			startDownload = true;
 		}
+	}
+
+	protected int getMaxCountOfCaches() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB || Runtime.getRuntime().maxMemory() <= AppConstants.LOW_MEMORY_THRESHOLD)
+			return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX_LOW_MEMORY;
+
+		return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX;
 	}
 }

@@ -12,14 +12,17 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.arcao.geocaching4locus.MenuActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
-import locus.api.android.ActionTools;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusInfo;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 	protected static final String TAG = "LiveMapNM";
@@ -170,8 +173,9 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	public void setLiveMapEnabled(boolean enabled) {
 		boolean periodicUpdateEnabled = true;
 		try {
-			periodicUpdateEnabled = ActionTools.isPeriodicUpdatesEnabled(mContext);
-		} catch (Exception e) {
+			LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
+			periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
+		} catch (Throwable e) {
 			Log.e(TAG, "Unable to receive info about current state of periodic update events from Locus.", e);
 		}
 

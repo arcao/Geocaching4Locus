@@ -174,7 +174,9 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		boolean periodicUpdateEnabled = true;
 		try {
 			LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
-			periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
+			if (info != null) {
+				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
+			}
 		} catch (Throwable e) {
 			Log.e(TAG, "Unable to receive info about current state of periodic update events from Locus.", e);
 		}

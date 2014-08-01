@@ -77,16 +77,20 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			containerTypeFilterScreen.setIntent(intent);
 		}
 
-		switch (getIntent().getStringExtra(PARAM_SCREEN)) {
-			case PARAM_SCREEN__CACHE_TYPE:
-				setPreferenceScreen(cacheTypeFilterScreen);
-				return;
-			case PARAM_SCREEN__CONTAINER_TYPE:
-				setPreferenceScreen(containerTypeFilterScreen);
-				return;
-			case PARAM_SCREEN__FILTERS:
-				setPreferenceScreen(createScreenFromCategory("filter"));
-				break;
+		String paramScreen = getIntent().getStringExtra(PARAM_SCREEN);
+
+		if (paramScreen != null) {
+			switch (paramScreen) {
+				case PARAM_SCREEN__CACHE_TYPE:
+					setPreferenceScreen(cacheTypeFilterScreen);
+					return;
+				case PARAM_SCREEN__CONTAINER_TYPE:
+					setPreferenceScreen(containerTypeFilterScreen);
+					return;
+				case PARAM_SCREEN__FILTERS:
+					setPreferenceScreen(createScreenFromCategory("filter"));
+					break;
+			}
 		}
 	}
 
@@ -109,8 +113,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		liveMapNotificationManager.addLiveMapStateChangeListener(this);
 
-		if (!getIntent().getBooleanExtra("ShowCacheTypeFilterScreen", false)
-				&& !getIntent().getBooleanExtra("ShowContainerTypeFilterScreen", false)) {
+		String paramScreen = getIntent().getStringExtra(PARAM_SCREEN);
+		if (!PARAM_SCREEN__CACHE_TYPE.equals(paramScreen)
+				&& !PARAM_SCREEN__CONTAINER_TYPE.equals(paramScreen)) {
 			preparePreferences();
 		}
 	}

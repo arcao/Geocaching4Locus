@@ -271,6 +271,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		acquireCoordinates();
 	}
 
+	public void onClickFilter(View view) {
+		startActivity(new Intent(this, PreferenceActivity.class)
+						.putExtra(PreferenceActivity.PARAM_SCREEN, PreferenceActivity.PARAM_SCREEN__FILTERS));
+	}
+
 	public void onClickClose(View view) {
 		finish();
 	}

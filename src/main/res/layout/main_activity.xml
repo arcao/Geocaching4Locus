@@ -13,7 +13,8 @@
         style="@style/ScreenContainer"
         android:layout_height="0dip"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="false">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -62,11 +63,25 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/title_count_of_caches" />
 
-            <EditText
-                android:id="@+id/cacheCountEditText"
-                style="@style/SimpleEditTextButton" >
-            </EditText>
-            
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/cacheCountEditText"
+                    style="@style/SimpleEditTextButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </EditText>
+
+                <Button
+                    style="@style/SimpleButton.Filter"
+                    android:onClick="onClickFilter"
+                    android:text="@string/button_filter"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

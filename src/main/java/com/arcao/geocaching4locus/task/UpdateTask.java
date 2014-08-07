@@ -142,7 +142,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		try {
 			login(api);
 
-			publishProgress((Integer[])null);
+			publishProgress();
 
 			Geocache cache = api.getCache(result.cacheId, logCount, 0);
 			Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());

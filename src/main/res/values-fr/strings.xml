@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Erreur pendant le chargement des caches.&lt;br&gt;Description: %1$s</string>
+    <string name="error">Erreur pendant le téléchargement des caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Téléchargement des caches...</string>
     <string name="error_locus_not_found">Merci d\'installer Locus</string>
     <string name="error_location">Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
@@ -197,5 +197,8 @@
     <string name="pref_title_live_map">Carte en direct</string>
     <string name="launcher_menu">Menu de Geocaching4Locus</string>
     <string name="pref_cache_type_all">Tous</string>
+    <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
 </resources>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Dogodila se pogreška prilikom skidanja cachea s interneta. &lt;br&gt; Opis: %1$s</string>
     <string name="downloading">Skidam caheove...</string>
@@ -197,5 +197,8 @@
     <string name="pref_title_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Sve</string>
+    <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
 </resources>
 

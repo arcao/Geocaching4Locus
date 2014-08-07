@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
     <string name="app_name">Geocaching4Locus</string>
     <string name="error">Es ist ein Fehler während dem Cache-Download aufgetreten.&lt;br&gt;Fehlerbeschreibung: %1$s</string>
     <string name="downloading">Lade caches…</string>
@@ -181,7 +181,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
         <item quantity="other">%d Minuten</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
+    <string name="account_geocaching_live_title">Ermöglicht durch Geocaching Live</string>
     <string name="account_geocaching_live_message">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen...</string>
     
     <string name="error_invalid_api_response">Geocaching Live gibt eine ungültige Angabe zurück:&lt;br>%s</string>
@@ -198,5 +198,8 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_title_live_map">Live Karte</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
     <string name="pref_cache_type_all">Alle</string>
+    <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
 </resources>
 

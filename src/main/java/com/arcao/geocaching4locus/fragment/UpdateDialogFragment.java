@@ -7,28 +7,31 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.ContextThemeWrapper;
+
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.UpdateTask;
-import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
-import locus.api.objects.extra.Waypoint;
 
 import java.lang.ref.WeakReference;
 
-public final class UpdateDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
+import locus.api.objects.extra.Waypoint;
+
+public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.OnTaskListener {
 	public static final String TAG = UpdateDialogFragment.class.getName();
 
 	public static final String PARAM_UPDATE_DATA = "UPDATE_DATA";
 
 	protected UpdateTask mTask;
-	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
+	protected WeakReference<UpdateTask.OnTaskListener> taskFinishedListenerRef;
 
-	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint) {
+	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
 		UpdateDialogFragment fragment = new UpdateDialogFragment();
 
 		Bundle args = new Bundle();
-		args.putSerializable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint));
+		args.putSerializable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint, updateLogs));
 		fragment.setArguments(args);
 
 		return fragment;
@@ -44,7 +47,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		UpdateTaskData data = (UpdateTaskData) getArguments().getSerializable(PARAM_UPDATE_DATA);
 
 		mTask = new UpdateTask();
-		mTask.setOnTaskFinishedListener(this);
+		mTask.setOnTaskListener(this);
 		mTask.execute(data);
 	}
 
@@ -53,7 +56,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<>((OnTaskFinishedListener) activity);
+			taskFinishedListenerRef = new WeakReference<>((UpdateTask.OnTaskListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
 		}
@@ -66,7 +69,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
 		dismiss();
 
-		OnTaskFinishedListener taskFinishedListener = taskFinishedListenerRef.get();
+		UpdateTask.OnTaskListener taskFinishedListener = taskFinishedListenerRef.get();
 		if (taskFinishedListener != null) {
 			taskFinishedListener.onTaskFinished(intent);
 		}
@@ -80,6 +83,26 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		}
 	}
 
+	@Override
+	public void onUpdateState(State state, int progress) {
+		ProgressDialog dialog = (ProgressDialog) getDialog();
+		if (dialog != null) {
+			switch (state) {
+				case CACHE:
+					dialog.setIndeterminate(true);
+					dialog.setMessage(getText(R.string.update_cache_progress));
+					break;
+				case LOGS:
+					dialog.setIndeterminate(false);
+					dialog.setMessage(getText(R.string.download_logs_progress));
+					dialog.setMax(AppConstants.LOGS_TO_UPDATE_MAX);
+					dialog.setProgress(progress);
+					break;
+			}
+		}
+	}
+
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));

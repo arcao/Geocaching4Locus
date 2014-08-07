@@ -23,7 +23,6 @@ import com.arcao.geocaching4locus.util.ReverseListIterator;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,7 +48,6 @@ public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
 
 	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
-	protected static final String TRACKABLE_URL = "http://www.geocaching.com/track/details.aspx?tracker=%s";
 	protected static final String GSAK_USERNAME = "gsak";
 	protected static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
 	protected static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
@@ -57,8 +55,6 @@ public class LocusDataMapper {
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
-
-	protected static File locusGeocachingDataBasePath;
 
 	public static List<Waypoint> toLocusPoints(Context context, List<? extends SimpleGeocache> caches) {
 		List<Waypoint> points = new ArrayList<>();

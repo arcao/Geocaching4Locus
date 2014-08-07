@@ -7,12 +7,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
@@ -22,6 +24,7 @@ import com.arcao.geocaching4locus.util.UserTask;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
@@ -32,21 +35,27 @@ import locus.api.objects.extra.Waypoint;
 import locus.api.utils.DataReaderBigEndian;
 import locus.api.utils.DataWriterBigEndian;
 
-public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
+public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
 	private static final String TAG = UpdateTask.class.getName();
 
 	private int logCount;
 	private boolean replaceCache;
 
-	public interface OnTaskFinishedListener {
+	public interface OnTaskListener {
+		enum State {
+			CACHE,
+			LOGS
+		}
+
+		void onUpdateState(State state, int progress);
 		void onTaskFinished(Intent result);
 	}
 
 
-	private WeakReference<OnTaskFinishedListener> onTaskFinishedListenerRef;
+	private WeakReference<OnTaskListener> onTaskListenerRef;
 
-	public void setOnTaskFinishedListener(OnTaskFinishedListener onTaskFinishedListener) {
-		this.onTaskFinishedListenerRef = new WeakReference<>(onTaskFinishedListener);
+	public void setOnTaskListener(OnTaskListener onTaskFinishedListener) {
+		this.onTaskListenerRef = new WeakReference<>(onTaskFinishedListener);
 	}
 
 	@Override
@@ -67,7 +76,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
 
 		if (result == null || result.newPoint == null) {
-			OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+			OnTaskListener listener = onTaskListenerRef.get();
 			if (listener != null) {
 				listener.onTaskFinished(null);
 			}
@@ -91,9 +100,23 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 			}
 		}
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		OnTaskListener listener = onTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(LocusUtils.prepareResultExtraOnDisplayIntent(p, replaceCache));
+		}
+	}
+
+	@Override
+	protected void onProgressUpdate(Integer... values) {
+		super.onProgressUpdate(values);
+
+		OnTaskListener listener = onTaskListenerRef.get();
+		if (listener != null) {
+			if (values == null || values.length != 1) {
+				listener.onUpdateState(OnTaskListener.State.CACHE, 0);
+			} else {
+				listener.onUpdateState(OnTaskListener.State.LOGS, values[0]);
+			}
 		}
 	}
 
@@ -101,7 +124,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 	protected void onCancelled() {
 		super.onCancelled();
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		OnTaskListener listener = onTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(null);
 		}
@@ -119,8 +142,31 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		try {
 			login(api);
 
+			publishProgress(null);
+
 			Geocache cache = api.getCache(result.cacheId, logCount, 0);
 			Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
+
+			if (result.updateLogs) {
+				int startIndex = 0;
+				int maxLogs = AppConstants.LOGS_TO_UPDATE_MAX - logCount;
+
+				while (startIndex < maxLogs) {
+					publishProgress(startIndex + logCount);
+
+					int logsPerRequest = Math.min(maxLogs - startIndex, AppConstants.LOGS_PER_REQUEST);
+					List<CacheLog> retrievedLogs = api.getCacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);
+
+					if (retrievedLogs == null || retrievedLogs.isEmpty()) {
+						break;
+					}
+
+					cache.getCacheLogs().addAll(retrievedLogs);
+
+					startIndex += retrievedLogs.size();
+				}
+				publishProgress(AppConstants.LOGS_TO_UPDATE_MAX);
+			}
 
 			if (isCancelled())
 				return null;
@@ -149,7 +195,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		OnTaskListener listener = onTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(null);
 		}
@@ -173,10 +219,12 @@ public class UpdateTask extends UserTask<UpdateTaskData, Void, UpdateTaskData> {
 		protected final String cacheId;
 		protected transient Waypoint oldWaypoint;
 		protected transient Waypoint newPoint = null;
+		protected boolean updateLogs;
 
-		public UpdateTaskData(String cacheId, Waypoint waypoint) {
+		public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
 			this.cacheId = cacheId;
 			this.oldWaypoint = waypoint;
+			this.updateLogs = updateLogs;
 		}
 
 

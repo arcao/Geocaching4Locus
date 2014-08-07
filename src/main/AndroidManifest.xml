@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.arcao.geocaching4locus"
-      android:versionName="1.5.5"
+      android:versionName="1.5.6"
       android:installLocation="auto">
     
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -54,6 +54,14 @@
                 <data android:pathPrefix="menion.android.locus/point_geocache" />
             </intent-filter>
         </activity>
+        <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".UpdateActivity" android:exported="true">
+            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_cache_and_logs">
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="locus" />
+                <data android:pathPrefix="menion.android.locus/point_geocache" />
+            </intent-filter>
+        </activity-alias>
         <activity android:name="UpdateMoreActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_more_caches">
                 <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />

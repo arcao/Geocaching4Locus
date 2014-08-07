@@ -12,8 +12,6 @@ public interface AppConstants {
 	static final String GEOCACHING_WEBSITE_URL = "http://www.geocaching.com/";
 	static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
 
-	static final int CACHES_PER_REQUEST = 10;
-
 	static final String ERROR_SCRIPT_URL = "http://geocaching4locus.eu/sendcrash/send.php";
 	static final String ERROR_FORM_KEY = "";
 
@@ -34,6 +32,7 @@ public interface AppConstants {
 	static final String STATE_AUTHENTICATOR_ACTIVITY_VISIBLE = "AUTHENTICATOR_ACTIVITY_VISIBLE";
 
 	/* Adaptive downloading configuration */
+	static final int CACHES_PER_REQUEST = 10;
 	static final int ADAPTIVE_DOWNLOADING_MIN_CACHES = CACHES_PER_REQUEST;
 	static final int ADAPTIVE_DOWNLOADING_MAX_CACHES = 50;
 	static final int ADAPTIVE_DOWNLOADING_STEP = 5;
@@ -50,4 +49,8 @@ public interface AppConstants {
 	static final int DOWNLOADING_COUNT_OF_CACHES_STEP = 10;
 
 	static final long LOW_MEMORY_THRESHOLD = 16777216;
+
+	static final String UPDATE_WITH_LOGS_COMPONENT = "com.arcao.geocaching4locus.UpdateWithLogsActivity";
+	static final int LOGS_PER_REQUEST = 50;
+	static final int LOGS_TO_UPDATE_MAX = 100;
 }

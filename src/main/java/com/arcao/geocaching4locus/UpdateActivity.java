@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
 import com.arcao.geocaching4locus.fragment.UpdateDialogFragment;
-import com.arcao.geocaching4locus.task.UpdateTask.OnTaskFinishedListener;
+import com.arcao.geocaching4locus.task.UpdateTask;
 
 import org.acra.ACRA;
 
@@ -21,7 +21,7 @@ import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
 
-public class UpdateActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
+public class UpdateActivity extends FragmentActivity implements UpdateTask.OnTaskListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
 
 	public static String PARAM_CACHE_ID = "cacheId";
@@ -142,12 +142,14 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 			return;
 		}
 
+		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
+
 		ACRA.getErrorReporter().putCustomData("source", "update;" + cacheId);
 
 		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.TAG) != null)
 			return;
 
-		UpdateDialogFragment.newInstance(cacheId, oldPoint).show(getSupportFragmentManager(), UpdateDialogFragment.TAG);
+		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getSupportFragmentManager(), UpdateDialogFragment.TAG);
 	}
 
 	@Override
@@ -155,6 +157,11 @@ public class UpdateActivity extends FragmentActivity implements OnTaskFinishedLi
 		Log.d(TAG, "onTaskFinished result: " + result);
 		setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
 		finish();
+	}
+
+	@Override
+	public void onUpdateState(State state, int progress) {
+		// nothing here
 	}
 
 	@Override

@@ -198,5 +198,7 @@
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">All</string>
     <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
 </resources>
 

@@ -89,14 +89,13 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		if (dialog != null) {
 			switch (state) {
 				case CACHE:
-					dialog.setIndeterminate(true);
-					dialog.setMessage(getText(R.string.update_cache_progress));
 					break;
 				case LOGS:
-					dialog.setIndeterminate(false);
+					dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 					dialog.setMessage(getText(R.string.download_logs_progress));
 					dialog.setMax(AppConstants.LOGS_TO_UPDATE_MAX);
 					dialog.setProgress(progress);
+					dialog.setIndeterminate(false);
 					break;
 			}
 		}
@@ -106,7 +105,6 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
-		dialog.setIndeterminate(true);
 		dialog.setMessage(getText(R.string.update_cache_progress));
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
 		return dialog;

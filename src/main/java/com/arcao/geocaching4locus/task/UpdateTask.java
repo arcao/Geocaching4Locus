@@ -148,11 +148,11 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
 
 			if (result.updateLogs) {
-				int startIndex = 0;
+				int startIndex = logCount;
 				int maxLogs = AppConstants.LOGS_TO_UPDATE_MAX - logCount;
 
 				while (startIndex < maxLogs) {
-					publishProgress(startIndex + logCount);
+					publishProgress(startIndex);
 
 					int logsPerRequest = Math.min(maxLogs - startIndex, AppConstants.LOGS_PER_REQUEST);
 					List<CacheLog> retrievedLogs = api.getCacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);

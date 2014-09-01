@@ -31,6 +31,7 @@ public interface PrefConstants {
 
 	static final String LIVE_MAP = "live_map";
 	static final String SHOW_LIVE_MAP_DISABLED_NOTIFICATION = "show_live_map_disabled_notification";
+	static final String SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION = "show_live_map_visible_only_notification";
 	static final String DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";
 	static final String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";

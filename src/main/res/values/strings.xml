@@ -192,13 +192,16 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Show always notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">This works only if the periodic updates are allowed in Locus and Locus is running.</string>
+    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
     <string name="pref_title_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">All</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Downloading logs…</string>
     <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
+
+    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
+    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
 </resources>
 

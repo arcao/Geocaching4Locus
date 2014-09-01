@@ -25,6 +25,8 @@ import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
+	public static final String VAR_B_MAP_VISIBLE = ("1300");
+
 	protected static final String TAG = "LiveMapNM";
 	protected static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
 	protected static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
@@ -39,6 +41,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	protected NotificationManager mNotificationManager;
 	protected SharedPreferences mSharedPrefs;
 	protected boolean showLiveMapDisabledNotification;
+	protected boolean showLiveMapVisibleOnlyNotification;
 
 	protected final Set<LiveMapStateChangeListener> mLiveMapStateChangeListeners = new HashSet<>();
 
@@ -53,6 +56,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
 		showLiveMapDisabledNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION, false);
+		showLiveMapVisibleOnlyNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION, false);
 	}
 
 	public boolean handleBroadcastIntent(Intent intent) {
@@ -80,6 +84,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 					return false;
 				}
 
+				if (!isMapVisible(intent) && showLiveMapVisibleOnlyNotification) {
+					return false;
+				}
+
 				if (!notificationShown || lastLiveMapState != isLiveMapEnabled()) {
 					showNotification();
 					lastLiveMapState = isLiveMapEnabled();
@@ -87,6 +95,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 				updateNotificationHideAlarm();
 				return false;
 		}
+	}
+
+	private boolean isMapVisible(Intent intent) {
+		return intent.getBooleanExtra(VAR_B_MAP_VISIBLE, false);
 	}
 
 	public boolean isForceUpdateRequiredInFuture() {

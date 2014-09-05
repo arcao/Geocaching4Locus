@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
@@ -20,12 +19,6 @@ import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
-
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.ref.WeakReference;
-import java.util.List;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -35,11 +28,17 @@ import locus.api.objects.extra.Waypoint;
 import locus.api.utils.DataReaderBigEndian;
 import locus.api.utils.DataWriterBigEndian;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.ref.WeakReference;
+import java.util.List;
+
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
 	private static final String TAG = UpdateTask.class.getName();
 
 	private int logCount;
 	private boolean replaceCache;
+	private boolean downloadLogsUpdateCache;
 
 	public interface OnTaskListener {
 		enum State {
@@ -66,6 +65,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 		replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
+		downloadLogsUpdateCache = prefs.getBoolean(PrefConstants.DOWNLOAD_LOGS_UPDATE_CACHE, true);
 	}
 
 	@Override

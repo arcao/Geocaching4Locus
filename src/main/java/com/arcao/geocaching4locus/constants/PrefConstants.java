@@ -36,6 +36,7 @@ public interface PrefConstants {
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";
 	static final String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";
 	static final String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
+	static final String DOWNLOAD_LOGS_UPDATE_CACHE = "download_logs_update_cache";
 
 	static final String IMPERIAL_UNITS = "imperial_units";
 

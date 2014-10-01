@@ -87,16 +87,25 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	public void onUpdateState(State state, int progress) {
 		ProgressDialog dialog = (ProgressDialog) getDialog();
 		if (dialog != null) {
-			switch (state) {
-				case CACHE:
-					break;
-				case LOGS:
-					dialog.setMessage(getText(R.string.download_logs_progress));
-					dialog.setMax(AppConstants.LOGS_TO_UPDATE_MAX);
-					dialog.setProgress(progress);
-					dialog.setIndeterminate(progress == 0);
-					break;
-			}
+			updateDialog(state, progress, dialog);
+		}
+	}
+
+	private void updateDialog(State state, int progress, ProgressDialog dialog) {
+		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
+		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+		switch (state) {
+			case CACHE:
+				dialog.setMessage(getText(R.string.update_cache_progress));
+				dialog.setIndeterminate(true);
+				break;
+			case LOGS:
+				dialog.setMessage(getText(R.string.download_logs_progress));
+				dialog.setMax(AppConstants.LOGS_TO_UPDATE_MAX);
+				dialog.setProgress(progress);
+				dialog.setIndeterminate(progress == 0);
+				break;
 		}
 	}
 
@@ -104,10 +113,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
-		dialog.setMessage(getText(R.string.update_cache_progress));
-		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
-		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setIndeterminate(true);
+		updateDialog(State.CACHE, 0, dialog);
 		return dialog;
 	}
 }

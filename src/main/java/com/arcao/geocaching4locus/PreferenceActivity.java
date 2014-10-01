@@ -140,6 +140,9 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		} else if (DOWNLOADING_COUNT_OF_LOGS.equals(key)) {
 			final SeekBarPreference p = findPreference(key, SeekBarPreference.class);
 			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_logs_summary));
+		} else if (DOWNLOADING_COUNT_OF_CACHES_STEP.equals(key)) {
+			final ListPreference p = findPreference(key, ListPreference.class);
+			p.setSummary(preparePreferenceSummary(p.getEntry(), 0));
 		} else if (FILTER_DIFFICULTY_MIN.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), 0));
@@ -409,6 +412,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
 		final SeekBarPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SeekBarPreference.class);
+		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
 
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
@@ -422,6 +426,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 
 		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()),
 						R.string.pref_count_of_logs_summary));
+
+		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), 0));
 	}
 
 	private void prepareAboutPreferences() {

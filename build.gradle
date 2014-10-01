@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
+        classpath 'com.android.tools.build:gradle:0.13.0'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
     }
 }
@@ -24,7 +24,7 @@ dependencies {
     compile('com.arcao:geocaching-api:1.5.24') {
       exclude group: 'log4j', module: 'log4j' /* Not working in Android, log4j-over-slf4j used instead */
     }
-    compile 'menion:locus-api-android:1.23.22'
+    compile 'menion:locus-api-android:1.26.28'
     compile('oauth.signpost:signpost-commonshttp4:1.2.1.2') {
       exclude group: 'org.apache.httpcomponents', module: 'httpclient' /* already in Android */ 
       exclude group: 'commons-codec', module: 'commons-codec' /* already in Android */

@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import locus.api.android.periodicUpdates.PeriodicUpdatesHandler;
-import locus.api.android.periodicUpdates.UpdateContainer;
+
+import locus.api.android.features.periodicUpdates.PeriodicUpdatesHandler;
+import locus.api.android.features.periodicUpdates.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Location;
 

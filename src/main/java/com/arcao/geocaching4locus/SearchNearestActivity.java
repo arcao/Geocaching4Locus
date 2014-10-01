@@ -27,6 +27,7 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.SpannedFix;
 
 import locus.api.android.utils.LocusUtils;
@@ -175,6 +176,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		});
 
 		int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+		final int countOfCachesStep = PreferenceUtil.getParsedInt(prefs, PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP_DEFAULT);
+
 		int max = getMaxCountOfCaches();
 
 		if (countOfCaches > max) {
@@ -182,8 +185,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
 		}
 
-		if (countOfCaches % AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP != 0) {
-			countOfCaches = ((countOfCaches  / AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP) + 1) * AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP;
+		if (countOfCaches % countOfCachesStep != 0) {
+			countOfCaches = ((countOfCaches  / countOfCachesStep) + 1) * countOfCachesStep;
 			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
 		}
 
@@ -193,7 +196,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			public void onClick(View v) {
 				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
 				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache,
-								AppConstants.DOWNLOADING_COUNT_OF_CACHES_MIN, getMaxCountOfCaches(), countOfCaches, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP);
+								countOfCachesStep, getMaxCountOfCaches(), countOfCaches, countOfCachesStep);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
 		});

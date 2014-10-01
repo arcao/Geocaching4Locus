@@ -205,5 +205,6 @@
     <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
     <string name="pref_download_logs_update_cache_sumarry">Action "Download logs" also update geocache data</string>
+    <string name="pref_downloading_count_of_caches_step">Cache count step</string>
 </resources>
 

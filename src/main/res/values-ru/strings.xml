@@ -146,9 +146,9 @@
     <string name="basic_member_sign_on_warning_message">Как базовый пользователь geocaching.com вы можете скачать полную информацию &lt;b>%1$s за %2$s &lt;/b>.&lt;br>
 &lt;br>
 &lt;i>Обновите свой ​​профиль на geocaching.com до премиум сегодня, чтобы скачивать полную информацию до 6000 кэшей в день и иметь доступ ко многим другим преимуществам. Посетите geocaching.com для обновления.&lt;/i></string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Вы достигли ограничения для загрузки полной информации &lt;b>%1$s за %2$s &lt;/b>.  Ваша ежедневная квота будет обнулена на %3$s.&lt;br>
+    <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
 &lt;br>
-&lt;i>Обновите свой ​​профиль на geocaching.com до премиум сегодня, чтобы скачивать полную информацию до 6000 кэшей в день и иметь доступ ко многим другим преимуществам. Посетите geocaching.com для обновления.&lt;/i></string>
+&lt;i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Вы достигли ограничения для загрузки полной информации &lt;b>6000 кэшей за 24 часа&lt;/b>.  Ваша ежедневная квота будет обнулена на %3$s.</string>
     <string name="method_quota_exceeded_title">Эй, помедленнее!</string>
     <string name="method_quota_exceeded_message">Вы достигли максимального количества действий/звонков в минуту.</string>
@@ -192,13 +192,19 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Show always notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">This works only if the periodic updates are allowed in Locus and Locus is running.</string>
+    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
     <string name="pref_title_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Все</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Update cache and 100 logs</string>
-</resources>
+    <string name="launcher_download_logs">Download logs</string>
 
+    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
+    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
+    <string name="pref_download_logs_update_cache">Download logs update cache</string>
+    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
+    <string name="pref_downloading_count_of_caches_step">Step for Count of caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Change a step for Count of caches choose dialog</string>
+</resources>

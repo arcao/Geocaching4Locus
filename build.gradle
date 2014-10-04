@@ -92,7 +92,7 @@ android {
         exclude 'org/apache/http/version.properties'
         exclude 'templates/release-notes.vm'
     }
-    lintOptions { abortOnError false }
+//    lintOptions { abortOnError false }
 }
 
 if (project.hasProperty('storeFile') &&

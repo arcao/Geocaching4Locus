@@ -66,7 +66,7 @@
     <string name="pref_title_difficulty_filter">Difficulté (Membre Premium)</string>
     <string name="pref_title_terrain_filter">Terrain (Membre Premium)</string>
     <string name="pref_difficulty_min">Min. difficulté</string>
-    <string name="pref_difficulty_max">Max. difficulté</string>
+    <string name="pref_difficulty_max">Difficulté Max.</string>
     <string name="pref_terrain_min">Min. terrain</string>
     <string name="pref_terrain_max">Max terrain</string>
     
@@ -192,13 +192,19 @@
     <string name="livemap_notification_action_enable">Carte en direct activée</string>
     <string name="livemap_notification_action_disable">Carte en direct désactivée</string>
     <string name="livemap_error">Geocaching4Locus carte en direct: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Toujours montrer les notifications</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
+    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Montrer les notifications quand la carte active est désactivée. Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
     <string name="pref_title_live_map">Carte en direct</string>
     <string name="launcher_menu">Menu de Geocaching4Locus</string>
     <string name="pref_cache_type_all">Tous</string>
-    <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Update cache and 100 logs</string>
-</resources>
+    <string name="button_filter">Tous</string>
+    <string name="download_logs_progress">Téléchargements des logs</string>
+    <string name="launcher_download_logs">Download logs</string>
 
+    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
+    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
+    <string name="pref_download_logs_update_cache">Download logs update cache</string>
+    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
+    <string name="pref_downloading_count_of_caches_step">Step for Count of caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Change a step for Count of caches choose dialog</string>
+</resources>

@@ -192,13 +192,19 @@
     <string name="livemap_notification_action_enable">Włącz "mapę na żywo"</string>
     <string name="livemap_notification_action_disable">Wyłącz "mapę na żywo"</string>
     <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
-    <string name="pref_livemap_show_disabled_notification">Zawsze pokazuj powiadomienia.</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Ta funkcja działa jeśli okresowe aktalizacje są dostępne w Locusie i Locus jest uruchomiony.</string>
+    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
     <string name="pref_title_live_map">Mapa "na żywo"</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
     <string name="pref_cache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Update cache and 100 logs</string>
-</resources>
+    <string name="download_logs_progress">Pobieranie logów...</string>
+    <string name="launcher_download_logs">Download logs</string>
 
+    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
+    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
+    <string name="pref_download_logs_update_cache">Download logs update cache</string>
+    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
+    <string name="pref_downloading_count_of_caches_step">Step for Count of caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Change a step for Count of caches choose dialog</string>
+</resources>

@@ -193,13 +193,19 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="livemap_notification_action_enable">Schalte Live Karte ein</string>
     <string name="livemap_notification_action_disable">Schalte Live Karte aus</string>
     <string name="livemap_error">Geocaching4Locus Live Karte: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Show always notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Funktioniert nur, wenn regelmäßige Updates in Locus erlaubt sind und Locus aktiv ist.</string>
+    <string name="pref_livemap_show_disabled_notification">Benachrichtigung ausschalten</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung wenn "Live map" ausgeschaltet ist. Das funktioniert nur wenn wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
     <string name="pref_title_live_map">Live Karte</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Update cache and 100 logs</string>
-</resources>
+    <string name="download_logs_progress">Logs werden heruntergeladen</string>
+    <string name="launcher_download_logs">Loggs herunterladen</string>
 
+    <string name="pref_livemap_visible_only_notification">Benachrichtigung wenn Karte sichtbar</string>
+    <string name="pref_livemap_visible_only_notification_summary">Zeigt die Benachrichtigung nur, wenn in Locus eine Karte angezeigt wird</string>
+    <string name="pref_download_logs_update_cache">Loggs werden runtergeladen und der Cache wird aktualisiert</string>
+    <string name="pref_download_logs_update_cache_summary">Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
+    <string name="pref_downloading_count_of_caches_step">Step for Count of caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Change a step for Count of caches choose dialog</string>
+</resources>

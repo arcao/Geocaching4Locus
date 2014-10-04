@@ -192,13 +192,19 @@
     <string name="livemap_notification_action_enable">Povolit Live mapu</string>
     <string name="livemap_notification_action_disable">Zakázat Live mapu</string>
     <string name="livemap_error">Live mapa Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Vždy zobrazit notifikaci</string>
-    <string name="pref_livemap_show_disabled_notification_summary">To funguje pouze v případě, že pravidelné aktualizace jsou povoleny v Locusu a Locus běží.</string>
+    <string name="pref_livemap_show_disabled_notification">Notifikace zakázáno</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Zobrazit notifikaci, když je Live mapa zakázána. Toto funguje jen, pokud periodické aktualizace jsou povoleny v Locusu a Locus běží.</string>
     <string name="pref_title_live_map">Live mapa</string>
     <string name="launcher_menu">Nabídka Geocaching4Locus</string>
     <string name="pref_cache_type_all">Vše</string>
     <string name="button_filter">Filtr</string>
     <string name="download_logs_progress">Stahuji logy…</string>
-    <string name="launcher_download_logs">Aktualizovat keš a 100 logů</string>
-</resources>
+    <string name="launcher_download_logs">Stáhnout logy</string>
 
+    <string name="pref_livemap_visible_only_notification">Notifikace jen při viditelné mapě</string>
+    <string name="pref_livemap_visible_only_notification_summary">Zobrazit notifikaci, jen když je mapa v Locusu viditelná</string>
+    <string name="pref_download_logs_update_cache">Stáhnout logy aktualizuje keš</string>
+    <string name="pref_download_logs_update_cache_summary">Akce "Stáhnout logy" také aktualizuje data keše</string>
+    <string name="pref_downloading_count_of_caches_step">Krok pro počet keší</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Změní krok u dialogu na vybrání počtu keší</string>
+</resources>

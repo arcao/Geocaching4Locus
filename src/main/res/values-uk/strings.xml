@@ -199,6 +199,6 @@
     <string name="pref_cache_type_all">Всі</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_update_cache_and_logs">Update cache and 100 logs</string>
+    <string name="launcher_download_logs">Update cache and 100 logs</string>
 </resources>
 

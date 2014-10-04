@@ -199,6 +199,6 @@
     <string name="pref_cache_type_all">Všetko</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Stiahnuť logy…</string>
-    <string name="launcher_update_cache_and_logs">Aktualizovať kešku a 100 logov</string>
+    <string name="launcher_download_logs">Aktualizovať kešku a 100 logov</string>
 </resources>
 

@@ -199,7 +199,7 @@
     <string name="pref_cache_type_all">All</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_update_cache_and_logs">Download logs</string>
+    <string name="launcher_download_logs">Download logs</string>
 
     <string name="pref_livemap_visible_only_notification">Map visible notification</string>
     <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>

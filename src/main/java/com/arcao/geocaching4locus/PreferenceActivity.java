@@ -142,7 +142,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 			p.setSummary(preparePreferenceSummary(String.valueOf(p.getProgress()), R.string.pref_count_of_logs_summary));
 		} else if (DOWNLOADING_COUNT_OF_CACHES_STEP.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
-			p.setSummary(preparePreferenceSummary(p.getEntry(), 0));
+			p.setSummary(preparePreferenceSummary(p.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
 		} else if (FILTER_DIFFICULTY_MIN.equals(key)) {
 			final ListPreference p = findPreference(key, ListPreference.class);
 			p.setSummary(preparePreferenceSummary(p.getEntry(), 0));
@@ -427,7 +427,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
 		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()),
 						R.string.pref_count_of_logs_summary));
 
-		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), 0));
+		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
 	}
 
 	private void prepareAboutPreferences() {

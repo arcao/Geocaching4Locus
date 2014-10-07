@@ -205,6 +205,6 @@
     <string name="pref_livemap_visible_only_notification_summary">Zobrazit notifikaci, jen když je mapa v Locusu viditelná</string>
     <string name="pref_download_logs_update_cache">Stáhnout logy aktualizuje keš</string>
     <string name="pref_download_logs_update_cache_summary">Akce "Stáhnout logy" také aktualizuje data keše</string>
-    <string name="pref_downloading_count_of_caches_step">Krok pro počet keší</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Změní krok u dialogu na vybrání počtu keší</string>
+    <string name="pref_downloading_count_of_caches_step">Velikost kroku pro počet keší</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Změní velikost kroku u dialogu na vybrání počtu keší</string>
 </resources>

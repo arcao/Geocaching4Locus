@@ -1,5 +1,11 @@
 package com.arcao.wherigoservice.api;
 
+import android.util.Log;
+import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
+import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
+import com.google.gson.stream.MalformedJsonException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,14 +14,6 @@ import java.net.URL;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-
-import android.util.Log;
-
-import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
-import com.arcao.geocaching.api.util.DisconnectableInputStream;
-import com.arcao.shade.gson.stream.MalformedJsonException;
-import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
-import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 
 public class WherigoServiceImpl implements WherigoService {
 	private static final String TAG = "Geocaching4Locus|WherigoServiceImpl";
@@ -139,7 +137,7 @@ public class WherigoServiceImpl implements WherigoService {
 				throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, sb.toString());
 			}
 
-			isr = new InputStreamReader(new DisconnectableInputStream(is, con), "UTF-8");
+			isr = new InputStreamReader(is, "UTF-8");
 			return new JsonReader(isr);
 		} catch (Exception e) {
 			Log.e(TAG, e.toString(), e);

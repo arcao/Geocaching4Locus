@@ -127,10 +127,10 @@ android.applicationVariants.all { variant ->
         return;
 
     // create task name
-    String jarJarTaskName = "jarJar${variant.name.capitalize()}";
+    def jarJarTaskName = "jarJar${variant.name.capitalize()}";
 
     // prepare variables
-    def workingDir = new File('build/intermediates/jarjar');
+    def workingDir = new File(project.rootDir, 'build/intermediates/jarjar');
     // proguard generate one jar file. This jar file is in Dex.inputFiles
     // (see sources com/android/build/gradle/BasePlugin.groovy)
     def inputLibrary = variant.dex.inputFiles[0];

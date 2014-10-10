@@ -26,6 +26,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.arcao.geocaching4locus.R;
@@ -272,7 +273,7 @@ public class ListPreference extends DialogPreference {
 		}
 
 		@Override
-		public void writeToParcel(Parcel dest, int flags) {
+		public void writeToParcel(@NonNull Parcel dest, int flags) {
 			super.writeToParcel(dest, flags);
 			dest.writeString(value);
 		}

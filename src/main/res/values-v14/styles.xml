@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="G4LTheme" parent="@android:style/Theme.Holo">
     </style>
-    <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Holo.Dialog.NoActionBar"></style>
+    <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Holo.Dialog.NoActionBar"/>
     <style name="G4LTheme.Light" parent="@android:style/Theme.Holo.Light">
         <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
         <item name="buttonBarStyle">?android:attr/buttonBarStyle</item>

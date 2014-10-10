@@ -13,7 +13,7 @@ public class WherigoServiceException extends IOException {
 	public static final int ERROR_API_ERROR = 500;
 	public static final int ERROR_CONNECTION_ERROR = 501;
 
-	protected int code;
+	protected final int code;
 
 	public WherigoServiceException(int code, String message) {
 		this(code, message, null);

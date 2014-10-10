@@ -6,7 +6,7 @@ public class Coordinates {
 	}
 
 	public static String convertDoubleToDeg(double source, boolean isLon, int precision) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (source < 0) {
 			sb.append((!isLon) ? 'S' : 'W');
 			source = -source;
@@ -35,11 +35,11 @@ public class Coordinates {
 		String tmp = source.trim().replace(',', '.');
 
 		int index = 0;
-		int end = 0;
+		int end;
 
-		char ch = ' ';
+		char ch;
 
-		double deg = 0D;
+		double deg;
 		double min = 0D;
 		double sec = 0D;
 
@@ -72,7 +72,6 @@ public class Coordinates {
 				if (index < tmp.length()) {
 					end = getDoubleNumberEnd(tmp, index);
 					sec = Double.parseDouble(tmp.substring(index, end));
-					index = end;
 				}
 			}
 
@@ -110,7 +109,7 @@ public class Coordinates {
 		String val = Double.toString(rounded);
 		int dot = val.indexOf('.');
 		if (dot == -1) {
-			StringBuffer sb = new StringBuffer(val);
+			StringBuilder sb = new StringBuilder(val);
 			sb.append('.');
 			for (int i = 0; i < decimals; i++)
 				sb.append('0');
@@ -119,7 +118,7 @@ public class Coordinates {
 			if (val.length() - (dot + decimals) > 0) {
 				return val.substring(0, dot + decimals + 1);
 			}
-			StringBuffer sb = new StringBuffer(val);
+			StringBuilder sb = new StringBuilder(val);
 			for (int i = val.length(); i <= dot + decimals; i++)
 				sb.append('0');
 			return sb.toString();

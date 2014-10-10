@@ -24,9 +24,9 @@ import locus.api.objects.extra.Waypoint;
 public class UpdateActivity extends FragmentActivity implements UpdateTask.OnTaskListener, OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
 
-	public static String PARAM_CACHE_ID = "cacheId";
-	public static String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
-	public static String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
+	public static final String PARAM_CACHE_ID = "cacheId";
+	public static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
+	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 
 	private static final int REQUEST_LOGIN = 1;
 

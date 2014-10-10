@@ -226,7 +226,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		protected final String cacheId;
 		protected transient Waypoint oldWaypoint;
 		protected transient Waypoint newPoint = null;
-		protected boolean updateLogs;
+		protected final boolean updateLogs;
 
 		public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
 			this.cacheId = cacheId;
@@ -267,17 +267,17 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			int len = in.readInt();
 			if (len > 0) {
 				byte[] buffer = new byte[len];
-				in.read(buffer);
-
-				oldWaypoint = new Waypoint(new DataReaderBigEndian(buffer));
+				if (in.read(buffer) > 0) {
+					oldWaypoint = new Waypoint(new DataReaderBigEndian(buffer));
+				}
 			}
 
 			len = in.readInt();
 			if (len > 0) {
 				byte[] buffer = new byte[len];
-				in.read(buffer);
-
-				newPoint = new Waypoint(new DataReaderBigEndian(buffer));
+				if (in.read(buffer) > 0) {
+					newPoint = new Waypoint(new DataReaderBigEndian(buffer));
+				}
 			}
 		}
 	}

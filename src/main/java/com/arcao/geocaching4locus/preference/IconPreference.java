@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ public class IconPreference extends Preference {
 	}
 
 	@Override
-	public void onBindView(View view) {
+	public void onBindView(@NonNull View view) {
 		super.onBindView(view);
 
 		ImageView imageView = (ImageView) view.findViewById(R.id.icon);

@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.service;
 
-import android.accounts.OperationCanceledException;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -278,10 +277,6 @@ public class LiveMapService extends IntentService {
 			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
 
 			throw e;
-		} catch (OperationCanceledException e) {
-			Log.e(TAG, e.getMessage(), e);
-
-			throw new InvalidCredentialsException("Log in operation cancelled");
 		} finally {
 			Log.i(TAG, "Count of caches sent to Locus: " + current);
 		}
@@ -295,7 +290,7 @@ public class LiveMapService extends IntentService {
 		}
 	}
 
-	private void login(GeocachingApi api) throws GeocachingApiException, OperationCanceledException {
+	private void login(GeocachingApi api) throws GeocachingApiException {
 		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
 		if (token == null) {
 			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();

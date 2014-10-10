@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <EditText
-        android:id="@+id/gc_number_input_edit_text"
+        android:id="@+id/gc_code_input_edit_text"
         style="@style/SimpleEditText"
         android:inputType="textCapCharacters" >
 

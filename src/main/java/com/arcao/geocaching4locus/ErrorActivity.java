@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
 
@@ -91,6 +92,7 @@ public class ErrorActivity extends FragmentActivity {
 			return fragment;
 		}
 
+		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final int resTitleId = getArguments().getInt(PARAM_RESOURCE_TITLE);

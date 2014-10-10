@@ -47,12 +47,12 @@ public class LocusTesting {
 		PackageManager manager = context.getPackageManager();
 		List<ResolveInfo> list = manager.queryIntentActivities(market, 0);
 
-		if (list != null && list.size() > 0) {
-				for (int i = 0; i < list.size(); i++) {
-						if (list.get(i).activityInfo.packageName.startsWith("com.android.vending")) {
-								return true;
-						}
+		if (list != null) {
+			for (ResolveInfo info : list) {
+				if (info.activityInfo.packageName.startsWith("com.android.vending")) {
+					return true;
 				}
+			}
 		 }
 		return false;
 	}

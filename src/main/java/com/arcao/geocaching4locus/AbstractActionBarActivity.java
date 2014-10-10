@@ -13,7 +13,7 @@ public abstract class AbstractActionBarActivity extends FragmentActivity {
 
 	@Override
 	public abstract boolean onCreateOptionsMenu(Menu menu);
-	public abstract boolean onOptionsItemSelected(int itemId);
+	protected abstract boolean onOptionsItemSelected(int itemId);
 
 	@Override
 	public final boolean onOptionsItemSelected(MenuItem item) {

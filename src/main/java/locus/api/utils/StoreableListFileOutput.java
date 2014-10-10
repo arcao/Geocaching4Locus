@@ -12,8 +12,8 @@ public class StoreableListFileOutput implements Closeable {
 	protected int count = 0;
 	protected int counterPosition = 0;
 
-	protected FileOutputStream out;
-	protected DataFileWriterBigEndian writer;
+	protected final FileOutputStream out;
+	protected final DataFileWriterBigEndian writer;
 
 	public StoreableListFileOutput(FileOutputStream out) {
 		this.out = out;

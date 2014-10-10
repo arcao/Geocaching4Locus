@@ -39,9 +39,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	private static final String TAG = "G4L|MainActivity";
 	private static final boolean HONEYCOMB = android.os.Build.VERSION.SDK_INT >= 11;
 
-	private static String STATE_LATITUDE = "latitude";
-	private static String STATE_LONGITUDE = "longitude";
-	private static String STATE_HAS_COORDINATES = "has_coordinates";
+	private static final String STATE_LATITUDE = "latitude";
+	private static final String STATE_LONGITUDE = "longitude";
+	private static final String STATE_HAS_COORDINATES = "has_coordinates";
 
 	private static final int REQUEST_LOGIN = 1;
 

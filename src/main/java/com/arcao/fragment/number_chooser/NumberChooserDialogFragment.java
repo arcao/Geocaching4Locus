@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,12 +21,12 @@ import com.arcao.geocaching4locus.R;
 import java.lang.ref.WeakReference;
 
 public class NumberChooserDialogFragment extends DialogFragment {
-	public static String PARAM_TITLE = "TITLE";
-	public static String PARAM_PREFIX_TEXT = "PREFIX_TEXT";
-	public static String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
-	public static String PARAM_MIN_VALUE = "MIN_VALUE";
-	public static String PARAM_MAX_VALUE = "MAX_VALUE";
-	public static String PARAM_STEP = "STEP";
+	public static final String PARAM_TITLE = "TITLE";
+	public static final String PARAM_PREFIX_TEXT = "PREFIX_TEXT";
+	public static final String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
+	public static final String PARAM_MIN_VALUE = "MIN_VALUE";
+	public static final String PARAM_MAX_VALUE = "MAX_VALUE";
+	public static final String PARAM_STEP = "STEP";
 
 	protected int mMinValue = 0;
 	protected int mMaxValue = 100;
@@ -85,6 +86,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		}
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		mMinValue = getArguments().getInt(PARAM_MIN_VALUE, mMinValue);

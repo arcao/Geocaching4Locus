@@ -48,9 +48,8 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	 * Get a path including file name to save data for Locus
 	 * @param context	Context
 	 * @return	path to file
-	 * @throws IOException If external storage isn't available or writable
 	 */
-	public static File getCacheFileName(Context context) throws IOException {
+	public static File getCacheFileName(Context context) {
 		File cacheFile = context.getFileStreamPath(LOCUS_CACHE_FILENAME);
 		Log.d(TAG, "Cache file for Locus: " + cacheFile.toString());
 
@@ -70,7 +69,9 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 			File file = getCacheFileName(context);
 			FileOutputStream fos = new FileOutputStream(file);
 			fos.flush(); // create empty file
-			file.setReadable(true, false); // file has to be readable for Locus
+			if (!file.setReadable(true, false)) { // file has to be readable for Locus
+				Log.e(TAG, "Unable to set readable all for: " + file);
+			}
 
 			return fos;
 		}

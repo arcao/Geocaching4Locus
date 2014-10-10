@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
@@ -39,7 +40,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	protected LocationUpdateProgressDialogFragment pd;
 
 	protected WeakReference<FragmentActivity> activityRef;
-	protected LocationManager locationManager;
+	protected final LocationManager locationManager;
 	protected Location bestLocation;
 
 	public LocationUpdateTask(FragmentActivity activity) {
@@ -214,6 +215,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			return new NoLocationProviderDialogFragment();
 		}
 
+		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

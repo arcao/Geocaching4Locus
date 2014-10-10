@@ -26,7 +26,7 @@ import com.arcao.geocaching4locus.util.SpannedFix;
 import java.util.Date;
 
 public abstract class AbstractService extends IntentService {
-	protected String TAG;
+	protected final String TAG;
 
 	public static final String ACTION_PROGRESS_UPDATE = "com.arcao.geocaching4locus.intent.action.PROGRESS_UPDATE";
 	public static final String ACTION_PROGRESS_COMPLETE = "com.arcao.geocaching4locus.intent.action.PROGRESS_COMPLETE";
@@ -38,8 +38,8 @@ public abstract class AbstractService extends IntentService {
 
 	protected NotificationManager notificationManager;
 
-	protected int notificationId;
-	protected int actionTextId;
+	protected final int notificationId;
+	protected final int actionTextId;
 
 	public AbstractService(String tag, int notificationId, int actionTextId) {
 		super(tag);

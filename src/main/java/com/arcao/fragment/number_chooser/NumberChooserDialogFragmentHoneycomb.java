@@ -15,7 +15,7 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 	protected View prepareView() {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
 
-		String[] values = getNuberPickerValues(mMinValue, mMaxValue, mStep);
+		String[] values = getNumberPickerValues(mMinValue, mMaxValue, mStep);
 
 		NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.number_picker_dialog_number_picker);
 		numberPicker.setMinValue(0);
@@ -41,7 +41,7 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 						WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 	}
 
-	protected String[] getNuberPickerValues(int min, int max, int step) {
+	protected String[] getNumberPickerValues(int min, int max, int step) {
 		String[] values = new String[((max - min) / step) + 1];
 
 		for (int i = 0; i < values.length; i++) {

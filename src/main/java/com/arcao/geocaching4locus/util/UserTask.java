@@ -23,12 +23,23 @@
 
 package com.arcao.geocaching4locus.util;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+import android.support.annotation.NonNull;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>
@@ -162,7 +173,7 @@ public abstract class UserTask<Params, Progress, Result> {
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		@Override
-		public Thread newThread(Runnable r) {
+		public Thread newThread(@NonNull Runnable r) {
 			return new Thread(r, "UserTask #" + mCount.getAndIncrement());
 		}
 	};
@@ -207,6 +218,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 */
 	public UserTask() {
 		mWorker = new WorkerRunnable<Params, Result>() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public Result call() throws Exception {
 				Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
@@ -270,7 +282,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *
 	 * @return A result, defined by the subclass of this task.
 	 *
-	 * @throws If error occurs in this method exceptions can be handled in
+	 * @throws java.lang.Exception If error occurs in this method exceptions can be handled in
 	 *           {@link #onException(Throwable)}.
 	 *
 	 * @see #onPreExecute()

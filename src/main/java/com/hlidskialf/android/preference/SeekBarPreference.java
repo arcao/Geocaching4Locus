@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -22,7 +23,7 @@ public class SeekBarPreference extends DialogPreference implements
 		SeekBar.OnSeekBarChangeListener {
 
 	private SeekBar mSeekBar;
-	private TextView mSplashText, mValueText;
+	private TextView mValueText;
 	private final Context mContext;
 
 	private final CharSequence mDialogMessage, mSuffix;
@@ -52,7 +53,7 @@ public class SeekBarPreference extends DialogPreference implements
 		layout.setOrientation(LinearLayout.VERTICAL);
 		layout.setPadding(6, 6, 6, 6);
 
-		mSplashText = new TextView(mContext);
+		TextView mSplashText = new TextView(mContext);
 		if (mDialogMessage != null)
 			mSplashText.setText(mDialogMessage);
 		layout.addView(mSplashText);
@@ -80,7 +81,7 @@ public class SeekBarPreference extends DialogPreference implements
 	}
 
 	@Override
-	protected void onBindDialogView(View v) {
+	protected void onBindDialogView(@NonNull View v) {
 		super.onBindDialogView(v);
 		mSeekBar.setMax(mMax);
 		mSeekBar.setProgress(mValue);
@@ -108,7 +109,7 @@ public class SeekBarPreference extends DialogPreference implements
 
 			if (shouldPersist())
 				persistInt(mValue);
-			callChangeListener(Integer.valueOf(mValue));
+			callChangeListener(mValue);
 		}
 		super.onClick(dialog, which);
 	}

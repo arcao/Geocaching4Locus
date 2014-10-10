@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 
@@ -41,6 +42,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 			pd.setProgress(progress);
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle arguments = getArguments();

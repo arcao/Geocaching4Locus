@@ -37,11 +37,11 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	protected static boolean notificationShown = false;
 	protected static boolean lastLiveMapState = false;
 
-	protected Context mContext;
-	protected NotificationManager mNotificationManager;
-	protected SharedPreferences mSharedPrefs;
-	protected boolean showLiveMapDisabledNotification;
-	protected boolean showLiveMapVisibleOnlyNotification;
+	protected final Context mContext;
+	protected final NotificationManager mNotificationManager;
+	protected final SharedPreferences mSharedPrefs;
+	protected final boolean showLiveMapDisabledNotification;
+	protected final boolean showLiveMapVisibleOnlyNotification;
 
 	protected final Set<LiveMapStateChangeListener> mLiveMapStateChangeListeners = new HashSet<>();
 

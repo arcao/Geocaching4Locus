@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
@@ -29,7 +30,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 
 	protected boolean showBasicMemberWarning = false;
 
-	protected Handler handler = new Handler();
+	protected final Handler handler = new Handler();
 	protected boolean paused = false;
 
 
@@ -142,6 +143,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
 		}
 
+		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return new AlertDialog.Builder(getActivity())
@@ -181,6 +183,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OnTaskFin
 			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
 		}
 
+		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();

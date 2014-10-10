@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference;
 public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
 	private static final String TAG = "G4L|SearchNearestActivityBroadcastReceiver";
 
-	protected WeakReference<SearchNearestActivity> activityRef;
+	protected final WeakReference<SearchNearestActivity> activityRef;
 	protected DownloadProgressDialogFragment pd;
 
 	protected boolean registered;

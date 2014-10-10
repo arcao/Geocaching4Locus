@@ -67,7 +67,7 @@ public class WherigoServiceImpl implements WherigoService {
 
 	// -------------------- Helper methods ----------------------------------------
 
-	protected void checkError(JsonReader r) throws WherigoServiceException, IOException {
+	protected void checkError(JsonReader r) throws IOException {
 		if ("Status".equals(r.nextName())) {
 			Result status = WherigoJsonResultParser.parse(r);
 
@@ -83,8 +83,8 @@ public class WherigoServiceImpl implements WherigoService {
 	}
 
 	protected JsonReader callGet(String function) throws WherigoServiceException {
-		InputStream is = null;
-		InputStreamReader isr = null;
+		InputStream is;
+		InputStreamReader isr;
 
 		Log.i(TAG, "Getting " + maskParameterValues(function));
 
@@ -125,7 +125,7 @@ public class WherigoServiceImpl implements WherigoService {
 
 				StringBuilder sb = new StringBuilder();
 				char buffer[] = new char[1024];
-				int len = 0;
+				int len;
 
 				while ((len = isr.read(buffer)) != -1) {
 					sb.append(buffer, 0, len);

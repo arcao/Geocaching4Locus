@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
@@ -33,6 +34,7 @@ public final class LocationUpdateProgressDialogFragment extends AbstractDialogFr
 		setCancelable(false);
 	}
 
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog pd = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));

@@ -16,6 +16,8 @@
 
 package org.osgi.framework;
 
+import android.support.annotation.NonNull;
+
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -116,7 +118,7 @@ public class Version implements Comparable {
 	 *         formatted.
 	 */
 	public Version(String version) {
-		int maj = 0;
+		int maj;
 		int min = 0;
 		int mic = 0;
 		String qual = ""; //$NON-NLS-1$
@@ -172,8 +174,7 @@ public class Version implements Comparable {
 			throw new IllegalArgumentException("negative micro"); //$NON-NLS-1$
 		}
 		char[] chars = qualifier.toCharArray();
-		for (int i = 0, length = chars.length; i < length; i++) {
-	        char ch = chars[i];
+		for (char ch : chars) {
 			if (('A' <= ch) && (ch <= 'Z')) {
 				continue;
 			}
@@ -187,7 +188,7 @@ public class Version implements Comparable {
 				continue;
 			}
 			throw new IllegalArgumentException(
-					"invalid qualifier: " + qualifier); //$NON-NLS-1$
+							"invalid qualifier: " + qualifier); //$NON-NLS-1$
 		}
 	}
 
@@ -268,7 +269,7 @@ public class Version implements Comparable {
 	@Override
 	public String toString() {
 		int q = qualifier.length();
-		StringBuffer result = new StringBuffer(20 + q);
+		StringBuilder result = new StringBuilder(20 + q);
 		result.append(major);
 		result.append(SEPARATOR);
 		result.append(minor);
@@ -346,7 +347,7 @@ public class Version implements Comparable {
 	 *         <code>Version</code>.
 	 */
 	@Override
-	public int compareTo(Object object) {
+	public int compareTo(@NonNull Object object) {
 		if (object == this) { // quicktest
 			return 0;
 		}

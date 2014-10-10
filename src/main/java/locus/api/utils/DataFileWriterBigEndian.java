@@ -10,8 +10,8 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	protected int count = 0;
 	protected long storedPosition = 0;
 
-	protected OutputStream out;
-	protected FileChannel channel;
+	protected final OutputStream out;
+	protected final FileChannel channel;
 
 	public DataFileWriterBigEndian(FileOutputStream out) {
 		super(0);

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.2'
+        classpath 'com.android.tools.build:gradle:0.14.0'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
     }
 }
@@ -46,7 +46,7 @@ def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion "21.1"
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -77,7 +77,8 @@ android {
         }
         release {
             signingConfig signingConfigs.release
-            runProguard true
+            minifyEnabled true
+            shrinkResources true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard.cfg'
         }
@@ -120,12 +121,8 @@ dependencies {
 
 // for all variants
 android.applicationVariants.all { variant ->
-    // only for release
-    if (variant.name != 'release')
-        return;
-
     // this works only when proguard is enabled
-    if (!variant.buildType.runProguard)
+    if (!variant.buildType.minifyEnabled)
         return;
 
     // create task name

@@ -8,16 +8,13 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.LocusTestingErrorDialogFragment;
-
+import com.arcao.geocaching4locus.fragment.dialog.LocusTestingErrorDialogFragment;
+import locus.api.android.utils.LocusUtils;
 import org.osgi.framework.Version;
 
 import java.util.List;
-
-import locus.api.android.utils.LocusUtils;
 
 public class LocusTesting {
 	private static final String TAG = LocusTesting.class.getName();

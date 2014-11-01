@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.ImportDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import org.acra.ACRA;

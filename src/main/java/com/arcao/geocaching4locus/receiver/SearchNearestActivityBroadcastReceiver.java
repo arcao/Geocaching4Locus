@@ -9,14 +9,13 @@ import android.util.Log;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
-import com.arcao.geocaching4locus.fragment.DownloadProgressDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.DownloadProgressDialogFragment;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 
 import java.lang.ref.WeakReference;
 
-public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements CancellableDialog {
+public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements AbstractDialogFragment.CancellableDialog {
 	private static final String TAG = "G4L|SearchNearestActivityBroadcastReceiver";
 
 	protected final WeakReference<SearchNearestActivity> activityRef;

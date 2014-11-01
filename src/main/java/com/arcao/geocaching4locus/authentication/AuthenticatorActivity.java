@@ -16,15 +16,14 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
-import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment;
-import com.arcao.geocaching4locus.fragment.OAuthLoginDialogFragment.OnTaskFinishedListener;
+import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.OAuthLoginDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import org.acra.ACRA;
 
 import java.lang.ref.WeakReference;
 
-public class AuthenticatorActivity extends FragmentActivity implements OnTaskFinishedListener {
+public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginDialogFragment.OnTaskFinishedListener {
 	protected static final String PARAM_SHOW_WIZARD = "SHOW_WIZARD";
 	protected static final String TAG_DIALOG = "dialog";
 

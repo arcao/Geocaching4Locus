@@ -6,14 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment;
-import com.arcao.geocaching4locus.fragment.FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener;
-import com.arcao.geocaching4locus.fragment.UpdateMoreDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
 import locus.api.android.utils.LocusUtils;
 import org.acra.ACRA;
 
-public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener, OnFullCacheDownloadConfirmDialogListener {
+public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener, FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener {
 	private final static String TAG = "G4L|UpdateActivity";
 
 	private static final int REQUEST_LOGIN = 1;

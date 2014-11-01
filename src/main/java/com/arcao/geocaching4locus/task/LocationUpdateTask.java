@@ -20,9 +20,8 @@ import android.util.Log;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment.CancellableDialog;
-import com.arcao.geocaching4locus.fragment.LocationUpdateProgressDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.LocationUpdateProgressDialogFragment;
 import com.arcao.geocaching4locus.util.UserTask;
 
 import java.lang.ref.WeakReference;
@@ -31,7 +30,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, CancellableDialog {
+public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, AbstractDialogFragment.CancellableDialog {
 	private static final String TAG = LocationUpdateTask.class.getName();
 	private static final int TIMEOUT = 120; // in sec
 	private static final String PASSIVE_PROVIDER = "passive";

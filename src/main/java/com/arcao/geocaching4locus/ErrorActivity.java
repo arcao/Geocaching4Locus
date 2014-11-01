@@ -10,8 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
-
-import com.arcao.geocaching4locus.fragment.AbstractDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 
 public class ErrorActivity extends FragmentActivity {

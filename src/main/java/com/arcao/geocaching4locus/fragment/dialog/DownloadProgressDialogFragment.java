@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.fragment;
+package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;

@@ -14,11 +14,11 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com legitimationsoplysninger</string>
     
-    <string name="pref_title_filter">Filter</string>
+    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Afstand</string>
     <string name="pref_distance_summary_km">Afstand i Km</string>
     <string name="pref_distance_summary_miles">Afstand i miles</string>
-    <string name="pref_title_advanced">Avanceret</string>
+    <string name="prefs_cat_advanced">Avanceret</string>
     <string name="pref_use_compression">Brug kompression </string>
     <string name="pref_use_compression_summary">Brug HTTP kompression (eksperimentel)</string>
     <string name="pref_imperial_units">Engelske mål</string>
@@ -42,7 +42,7 @@
     
     <string name="update_cache_progress">Updatere cache...</string>
     
-    <string name="pref_title_downloading">Downloader</string>
+    <string name="prefs_cat_downloading">Downloader</string>
     <string name="pref_count_of_logs">Antal af Logninger</string>
     <string name="pref_count_of_logs_text">Logninger</string>
     <string name="pref_count_of_logs_summary">Antal logs som hentes med cachen</string>
@@ -54,7 +54,7 @@
     
     <string name="import_cache_progress">Henter cache ned...</string>
     
-    <string name="pref_title_about">Om programmet</string>
+    <string name="prefs_cat_about">Om programmet</string>
     <string name="pref_version">Version</string>
     <string name="pref_author">Forfatter</string>
     <string name="pref_website">Hjemside, fora, osv.</string>
@@ -194,7 +194,7 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="pref_title_live_map">Live kort</string>
+    <string name="prefs_cat_live_map">Live kort</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>

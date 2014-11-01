@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com credentials</string>
     
-    <string name="pref_title_filter">Filter</string>
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance in km</string>
     <string name="pref_distance_summary_miles">Distance in miles</string>
-    <string name="pref_title_advanced">Advanced</string>
     <string name="pref_use_compression">Use compression</string>
     <string name="pref_use_compression_summary">Use HTTP compression (experimental)</string>
     <string name="pref_imperial_units">Imperial units</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Updating cache…</string>
     
-    <string name="pref_title_downloading">Downloading</string>
     <string name="pref_count_of_logs">Count of logs</string>
     <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Count of logs to download with cache</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Downloading cache…</string>
     
-    <string name="pref_title_about">About</string>
     <string name="pref_version">Version</string>
     <string name="pref_author">Author</string>
     <string name="pref_website">Website, forum, etc.</string>
@@ -194,7 +190,6 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="pref_title_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">All</string>
     <string name="button_filter">Filter</string>
@@ -207,4 +202,12 @@
     <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+
+    <string name="prefs_cat_accounts">Accounts</string>
+    <string name="prefs_cat_filter">Filter</string>
+    <string name="prefs_cat_live_map">Live map</string>
+    <string name="prefs_cat_downloading">Downloading</string>
+    <string name="prefs_cat_advanced">Advanced</string>
+    <string name="prefs_cat_about">About</string>
+
 </resources>

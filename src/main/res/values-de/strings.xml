@@ -14,11 +14,11 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com Benutzerdaten</string>
     
-    <string name="pref_title_filter">Filter</string>
+    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Entfernung</string>
     <string name="pref_distance_summary_km">Entfernung in Kilometern</string>
     <string name="pref_distance_summary_miles">Entfernung in Meilen</string>
-    <string name="pref_title_advanced">Erweitert</string>
+    <string name="prefs_cat_advanced">Erweitert</string>
     <string name="pref_use_compression">Komprimierung benutzen</string>
     <string name="pref_use_compression_summary">HTTP Komprimierung benutzen (experimentell)</string>
     <string name="pref_imperial_units">Britische Maßeinheiten</string>
@@ -42,7 +42,7 @@
     
     <string name="update_cache_progress">Aktualisiere Cache…</string>
     
-    <string name="pref_title_downloading">Empfange Daten</string>
+    <string name="prefs_cat_downloading">Empfange Daten</string>
     <string name="pref_count_of_logs">Anzahl der Logs</string>
     <string name="pref_count_of_logs_text">Logs</string>
     <string name="pref_count_of_logs_summary">Anzahl der mit dem Cache herunterzuladenden Logs</string>
@@ -54,7 +54,7 @@
     
     <string name="import_cache_progress">Lade caches...</string>
     
-    <string name="pref_title_about">Über</string>
+    <string name="prefs_cat_about">Über</string>
     <string name="pref_version">Version</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Webseite, Forum, etc.</string>
@@ -195,7 +195,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="livemap_error">Geocaching4Locus Live Karte: %s</string>
     <string name="pref_livemap_show_disabled_notification">Benachrichtigung ausgeschaltet</string>
     <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung wenn "Live map" ausgeschaltet ist. Das funktioniert nur wenn wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
-    <string name="pref_title_live_map">Live Karte</string>
+    <string name="prefs_cat_live_map">Live Karte</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>

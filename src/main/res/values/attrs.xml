@@ -16,7 +16,11 @@
     </declare-styleable>
     
     <declare-styleable name="IconPreference">
-         <attr name="icon" format="reference" />
+         <attr name="icon" />
+    </declare-styleable>
+
+    <declare-styleable name="FragmentPreference">
+        <attr name="fragmentName" format="string" />
     </declare-styleable>
 
     <!-- Base attributes available to ListPreference. -->

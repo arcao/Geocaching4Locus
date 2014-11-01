@@ -21,6 +21,7 @@ import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberCho
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.task.LocationUpdateTask;
@@ -275,8 +276,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	public void onClickFilter(View view) {
-		startActivity(new Intent(this, PreferenceActivity.class)
-						.putExtra(PreferenceActivity.PARAM_SCREEN, PreferenceActivity.PARAM_SCREEN__FILTERS));
+		startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment.class));
 	}
 
 	public void onClickClose(View view) {
@@ -284,7 +284,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	public void onClickSettings(View view) {
-		startActivity(new Intent(this, PreferenceActivity.class));
+		startActivity(SettingsActivity.createIntent(this));
 	}
 
 	protected void download() {
@@ -372,7 +372,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	public boolean onOptionsItemSelected(int itemId) {
 		switch (itemId) {
 			case R.id.main_activity_option_menu_preferences:
-				startActivity(new Intent(this, PreferenceActivity.class));
+				startActivity(SettingsActivity.createIntent(this));
 				return true;
 			case R.id.main_activity_option_menu_close:
 			case android.R.id.home:

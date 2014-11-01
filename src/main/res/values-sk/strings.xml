@@ -14,11 +14,11 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com prihlasovacie údaje</string>
     
-    <string name="pref_title_filter">Filter</string>
+    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Vzdialenosť</string>
     <string name="pref_distance_summary_km">Vzdialenosť v km</string>
     <string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
-    <string name="pref_title_advanced">Pokročilé</string>
+    <string name="prefs_cat_advanced">Pokročilé</string>
     <string name="pref_use_compression">Použiť kompresiu</string>
     <string name="pref_use_compression_summary">Použitie kompresie HTTP (experimentálne)</string>
     <string name="pref_imperial_units">Imperiálne jednotky</string>
@@ -42,7 +42,7 @@
     
     <string name="update_cache_progress">Aktualizujem kešku…</string>
     
-    <string name="pref_title_downloading">Sťahovanie</string>
+    <string name="prefs_cat_downloading">Sťahovanie</string>
     <string name="pref_count_of_logs">Počet logov</string>
     <string name="pref_count_of_logs_text">logov</string>
     <string name="pref_count_of_logs_summary">Počet logov, ktoré sa majú stiahnuť s keší</string>
@@ -54,7 +54,7 @@
     
     <string name="import_cache_progress">Sťahujem kešku…</string>
     
-    <string name="pref_title_about">O aplikácii</string>
+    <string name="prefs_cat_about">O aplikácii</string>
     <string name="pref_version">Verzia</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Stránky, diskusné fórum, atď</string>
@@ -194,7 +194,7 @@
     <string name="livemap_error">Aktívna mapa Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Notifikácia zakázané</string>
     <string name="pref_livemap_show_disabled_notification_summary">Zobraziť notifikáciu, keď je Live mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locusu a Locus beží.</string>
-    <string name="pref_title_live_map">Aktívna mapa</string>
+    <string name="prefs_cat_live_map">Aktívna mapa</string>
     <string name="launcher_menu">Ponuka Geocaching4Locus</string>
     <string name="pref_cache_type_all">Všetko</string>
     <string name="button_filter">Filter</string>

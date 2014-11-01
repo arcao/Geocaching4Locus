@@ -18,12 +18,14 @@ repositories {
 dependencies {
     // from Android local maven repository
     compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:20.0.0'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.5.25') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12' /* Not working in Android, slf4j-android used instead */
     }
     compile 'menion:locus-api-android:1.26.28'
+    compile 'com.android.support:support-v4-preferencefragment:1.0.0-1@aar'
 
     // from Maven central repository
     compile ('ch.acra:acra:4.5.0') {

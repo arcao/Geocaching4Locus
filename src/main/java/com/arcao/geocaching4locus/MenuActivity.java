@@ -80,7 +80,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	}
 
 	public void onClickPreferences(View view) {
-		startActivity(new Intent(this, PreferenceActivity.class));
+		startActivity(SettingsActivity.createIntent(this));
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	public boolean onOptionsItemSelected(int itemId) {
 		switch (itemId) {
 			case R.id.main_activity_option_menu_preferences:
-				startActivity(new Intent(this, PreferenceActivity.class));
+				startActivity(SettingsActivity.createIntent(this));
 				return true;
 			case R.id.main_activity_option_menu_close:
 			case android.R.id.home:

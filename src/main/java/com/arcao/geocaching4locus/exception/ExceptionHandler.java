@@ -12,6 +12,7 @@ import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
 import oauth.signpost.exception.OAuthCommunicationException;
 
@@ -30,22 +31,23 @@ public class ExceptionHandler {
 				return intent;
 		}
 
+		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 
 		if (t instanceof InvalidCredentialsException) {
-			return ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, true, null);
+			return builder.setText(R.string.error_credentials).setPreferenceFragment(AccountsPreferenceFragment.class).build();
 		} else if (t instanceof InvalidResponseException) {
-			return ErrorActivity.createErrorIntent(mContext, R.string.error_invalid_api_response, t.getMessage(), false, t);
+			return builder.setText(R.string.error_invalid_api_response).setAdditionalMessage(t.getMessage()).setException(t).build();
 		} else if (t instanceof CacheNotFoundException) {
-			return ErrorActivity.createErrorIntent(mContext, R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode(), false, null);
+			return builder.setText(R.string.error_cache_not_found).setAdditionalMessage(((CacheNotFoundException) t).getCacheCode()).build();
 		} else if (t instanceof NetworkException || t instanceof OAuthCommunicationException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			return ErrorActivity.createErrorIntent(mContext, R.string.error_network, null, false, null);
+			return builder.setText(R.string.error_network).build();
 		} else {
 			String message = t.getMessage();
 			if (message == null)
 				message = "";
 
-			return ErrorActivity.createErrorIntent(mContext, 0, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()), false, t);
+			return builder.setAdditionalMessage(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName())).setException(t).build();
 		}
 	}
 
@@ -74,10 +76,10 @@ public class ExceptionHandler {
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
 				String errorText = mContext.getString(resText, cacheString, periodString, renewTime);
 
-				return ErrorActivity.createErrorIntent(mContext, resTitle, 0, errorText, false, null);
+				return new ErrorActivity.IntentBuilder(mContext).setTitle(resTitle).setAdditionalMessage(errorText).build();
 
 			case NumberOfCallsExceded: // 140: too many method calls per minute
-				return ErrorActivity.createErrorIntent(mContext, R.string.method_quota_exceeded_title, R.string.method_quota_exceeded_message, null, false, null);
+				return new ErrorActivity.IntentBuilder(mContext).setTitle(R.string.method_quota_exceeded_title).setText(R.string.method_quota_exceeded_message).build();
 
 			default:
 				return null;

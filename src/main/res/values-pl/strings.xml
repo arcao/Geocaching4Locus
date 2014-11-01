@@ -14,11 +14,11 @@
     
     <string name="pref_title_geocaching_credentials">Dane logowania do Geocaching.com</string>
     
-    <string name="pref_title_filter">Filtr</string>
+    <string name="prefs_cat_filter">Filtr</string>
     <string name="pref_distance">Odległość</string>
     <string name="pref_distance_summary_km">Odległość w km</string>
     <string name="pref_distance_summary_miles">Odległość w milach</string>
-    <string name="pref_title_advanced">Zaawansowane</string>
+    <string name="prefs_cat_advanced">Zaawansowane</string>
     <string name="pref_use_compression">Używaj kompresji</string>
     <string name="pref_use_compression_summary">Używaj kompresji HTTP (funkcja eksperymentalna)</string>
     <string name="pref_imperial_units">Jednostki imperialne</string>
@@ -42,7 +42,7 @@
     
     <string name="update_cache_progress">Aktualizowanie skrzynki...</string>
     
-    <string name="pref_title_downloading">Pobieranie</string>
+    <string name="prefs_cat_downloading">Pobieranie</string>
     <string name="pref_count_of_logs">Ilość logów</string>
     <string name="pref_count_of_logs_text">logi</string>
     <string name="pref_count_of_logs_summary">Ilość wpisów do pobrania wraz ze skrzynką</string>
@@ -54,7 +54,7 @@
     
     <string name="import_cache_progress">Pobieranie skrzynki...</string>
     
-    <string name="pref_title_about">O programie</string>
+    <string name="prefs_cat_about">O programie</string>
     <string name="pref_version">Wersja</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Strona WWW, forum, itp.</string>
@@ -194,7 +194,7 @@
     <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
     <string name="pref_livemap_show_disabled_notification">Wyłączone powiadomienie</string>
     <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
-    <string name="pref_title_live_map">Mapa "na żywo"</string>
+    <string name="prefs_cat_live_map">Mapa "na żywo"</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
     <string name="pref_cache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>

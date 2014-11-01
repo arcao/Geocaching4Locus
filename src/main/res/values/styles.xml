@@ -34,7 +34,7 @@
     <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog.NoTitle">
     </style>
 
-    <style name="G4LTheme.Settings" />
+    <style name="G4LTheme.Settings" parent="Theme.AppCompat.Light" />
     <style name="SimpleHeader" parent="@android:style/Widget.TextView">
         <item name="android:background">@drawable/dark_header_dither</item>
         <item name="android:layout_width">fill_parent</item>

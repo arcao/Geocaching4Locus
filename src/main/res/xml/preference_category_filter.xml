@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/prefs_cat_filter">
+    <PreferenceScreen
+        android:key="cache_type_filter"
+        android:title="@string/pref_title_cache_type_filter">
+        <CheckBoxPreference
+            android:key="filter_0"
+            android:title="Traditional Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_1"
+            android:title="Multi-cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_2"
+            android:title="Mystery Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_3"
+            android:title="Virtual Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_4"
+            android:title="Earthcache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_5"
+            android:title="Project APE Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_6"
+            android:title="Letterbox Hybrid"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_7"
+            android:title="Wherigo Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_8"
+            android:title="Event Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_9"
+            android:title="Mega-Event Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_10"
+            android:title="Cache In Trash Out Event"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_11"
+            android:title="GPS Adventures Exhibit"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_12"
+            android:title="Webcam Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_13"
+            android:title="Locationless (Reverse) Cache"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_14"
+            android:title="Lost and Found Event"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_15"
+            android:title="Groundspeak HQ"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_16"
+            android:title="Groundspeak Lost and Found Celebration"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_17"
+            android:title="Groundspeak Block Party"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="filter_18"
+            android:title="Giga-Event Cache"
+            android:defaultValue="true" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="container_type_filter"
+        android:title="@string/pref_title_container_type_filter">
+        <CheckBoxPreference
+            android:key="container_filter_0"
+            android:title="Not chosen"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_1"
+            android:title="Micro"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_2"
+            android:title="Small"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_3"
+            android:title="Regular"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_4"
+            android:title="Large"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_5"
+            android:title="Huge"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="container_filter_6"
+            android:title="Other"
+            android:defaultValue="true" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="difficulty_filter"
+        android:title="@string/pref_title_difficulty_filter">
+        <com.arcao.preference.ListPreference
+            android:key="difficulty_filter_min"
+            android:title="@string/pref_difficulty_min"
+            android:entries="@array/rating"
+            android:entryValues="@array/rating"
+            android:defaultValue="1" />
+        <com.arcao.preference.ListPreference
+            android:key="difficulty_filter_max"
+            android:title="@string/pref_difficulty_max"
+            android:entries="@array/rating"
+            android:entryValues="@array/rating"
+            android:defaultValue="5" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="terrain_filter"
+        android:title="@string/pref_title_terrain_filter">
+        <com.arcao.preference.ListPreference
+            android:key="terrain_filter_min"
+            android:title="@string/pref_terrain_min"
+            android:entries="@array/rating"
+            android:entryValues="@array/rating"
+            android:defaultValue="1" />
+        <com.arcao.preference.ListPreference
+            android:key="terrain_filter_max"
+            android:title="@string/pref_terrain_max"
+            android:entries="@array/rating"
+            android:entryValues="@array/rating"
+            android:defaultValue="5" />
+    </PreferenceScreen>
+    <CheckBoxPreference
+        android:key="filter_show_found"
+        android:title="@string/pref_show_found"
+        android:summary="@string/pref_show_found_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="filter_show_own"
+        android:title="@string/pref_show_own"
+        android:summary="@string/pref_show_own_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="filter_show_disabled"
+        android:title="@string/pref_show_disabled"
+        android:summary="@string/pref_show_disabled_summary"
+        android:defaultValue="false" />
+    <EditTextPreference
+        android:key="filter_distance"
+        android:title="@string/pref_distance"
+        android:summary="@string/pref_distance_summary_km"
+        android:dialogTitle="@string/pref_distance"
+        android:dialogMessage="@string/pref_distance_summary_km"
+        android:defaultValue="50.0"
+        android:numeric="decimal" />
+</PreferenceScreen>

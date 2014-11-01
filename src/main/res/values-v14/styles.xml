@@ -36,8 +36,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="G4LTheme.Settings" parent="@android:style/Theme.Holo.Light" />
-    
+
     <style name="CustomButtonPanelStyle">
         <item name="android:minHeight">48dip</item>
         <item name="android:divider">?android:attr/dividerHorizontal</item>

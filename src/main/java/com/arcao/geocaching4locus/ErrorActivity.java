@@ -8,10 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.ContextThemeWrapper;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import org.apache.commons.lang3.builder.Builder;
 
 public class ErrorActivity extends FragmentActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
@@ -19,7 +21,7 @@ public class ErrorActivity extends FragmentActivity {
 	public static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
 	public static final String PARAM_RESOURCE_TEXT = "RESOURCE_TEXT";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
-	public static final String PARAM_OPEN_PREFERENCE = "OPEN_PREFERENCE";
+	public static final String PARAM_PREFERENCE_FRAGMENT = "PREFERENCE_FRAGMENT";
 	public static final String PARAM_EXCEPTION = "EXCEPTION";
 
 
@@ -42,47 +44,30 @@ public class ErrorActivity extends FragmentActivity {
 	protected void showErrorDialog () {
 		final int resTitleId = getIntent().getIntExtra(PARAM_RESOURCE_TITLE, 0);
 		final int resTextId = getIntent().getIntExtra(PARAM_RESOURCE_TEXT, 0);
-		final boolean openPreference = getIntent().getBooleanExtra(PARAM_OPEN_PREFERENCE, false);
+		final Class<?> preferenceFragment = (Class<?>) getIntent().getSerializableExtra(PARAM_PREFERENCE_FRAGMENT);
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 
-		if (getSupportFragmentManager().findFragmentByTag(CustomErrorDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(ErrorDialogFragment.TAG) != null)
 			return;
 
-		CustomErrorDialogFragment.newInstance(resTitleId, resTextId, openPreference, additionalMessage, t)
-			.show(getSupportFragmentManager(), CustomErrorDialogFragment.TAG);
+		ErrorDialogFragment.newInstance(resTitleId, resTextId, preferenceFragment, additionalMessage, t)
+			.show(getSupportFragmentManager(), ErrorDialogFragment.TAG);
 	}
 
-	public static Intent createErrorIntent(Context ctx, int resErrorText, String errorText, boolean openPreference, Throwable exception) {
-		return createErrorIntent(ctx, 0, resErrorText, errorText, openPreference, exception);
-	}
 
-	public static Intent createErrorIntent(Context ctx, int resErrorTitle, int resErrorText, String errorText, boolean openPreference, Throwable exception) {
-		Intent intent = new Intent(ctx, ErrorActivity.class);
-		intent.setAction(ErrorActivity.ACTION_ERROR);
-		intent.putExtra(ErrorActivity.PARAM_RESOURCE_TITLE, resErrorTitle);
-		intent.putExtra(ErrorActivity.PARAM_RESOURCE_TEXT, resErrorText);
-		intent.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, errorText);
-		intent.putExtra(ErrorActivity.PARAM_OPEN_PREFERENCE, openPreference);
-
-		if (exception != null)
-			intent.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
-
-		return intent;
-	}
-
-	public static class CustomErrorDialogFragment extends AbstractDialogFragment {
-		public static final String TAG = CustomErrorDialogFragment.class.getName();
+	public static class ErrorDialogFragment extends AbstractDialogFragment {
+		public static final String TAG = ErrorDialogFragment.class.getName();
 
 
-		public static CustomErrorDialogFragment newInstance(int resTitleId, int resTextId, boolean openPreference, String additionalMessage, Throwable t) {
-			CustomErrorDialogFragment fragment = new CustomErrorDialogFragment();
+		public static DialogFragment newInstance(int resTitleId, int resTextId, Class<?> preferenceFragment, String additionalMessage, Throwable t) {
+			ErrorDialogFragment fragment = new ErrorDialogFragment();
 			fragment.setCancelable(false);
 
 			Bundle args = new Bundle();
 			args.putInt(PARAM_RESOURCE_TITLE, resTitleId == 0 ? R.string.error_title : resTitleId);
 			args.putInt(PARAM_RESOURCE_TEXT, resTextId);
-			args.putBoolean(PARAM_OPEN_PREFERENCE, openPreference);
+			args.putSerializable(PARAM_PREFERENCE_FRAGMENT, preferenceFragment);
 			args.putString(PARAM_ADDITIONAL_MESSAGE, additionalMessage);
 			args.putSerializable(PARAM_EXCEPTION, t);
 
@@ -96,7 +81,7 @@ public class ErrorActivity extends FragmentActivity {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final int resTitleId = getArguments().getInt(PARAM_RESOURCE_TITLE);
 			final int resTextId = getArguments().getInt(PARAM_RESOURCE_TEXT);
-			final boolean openPreference = getArguments().getBoolean(PARAM_OPEN_PREFERENCE);
+			final Class<?> preferenceFragment = (Class<?>) getArguments().getSerializable(PARAM_PREFERENCE_FRAGMENT);
 			final String additionalMessage = getArguments().getString(PARAM_ADDITIONAL_MESSAGE);
 			final Throwable t = (Throwable) getArguments().getSerializable(PARAM_EXCEPTION);
 
@@ -107,8 +92,8 @@ public class ErrorActivity extends FragmentActivity {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 
-						if (openPreference) {
-							Intent intent = new Intent(getActivity(), PreferenceActivity.class);
+						if (preferenceFragment != null) {
+							Intent intent = SettingsActivity.createIntent(getActivity(), preferenceFragment);
 							intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							startActivity(intent);
 						}
@@ -138,6 +123,57 @@ public class ErrorActivity extends FragmentActivity {
 			}
 
 			return builder.create();
+		}
+	}
+
+	public static class IntentBuilder implements Builder<Intent> {
+		private final Context context;
+		private int title = 0;
+		private int text = 0;
+		private String additionalMessage;
+		private Class<?> preferenceFragment;
+		private Throwable exception;
+
+
+		public IntentBuilder(Context context) {
+			this.context = context;
+		}
+
+		public IntentBuilder setTitle(int resTitle) {
+			this.title = resTitle;
+			return this;
+		}
+
+		public IntentBuilder setText(int text) {
+			this.text = text;
+			return this;
+		}
+
+		public IntentBuilder setAdditionalMessage(String additionalMessage) {
+			this.additionalMessage = additionalMessage;
+			return this;
+		}
+
+		public IntentBuilder setPreferenceFragment(Class<?> preferenceFragment) {
+			this.preferenceFragment = preferenceFragment;
+			return this;
+		}
+
+		public IntentBuilder setException(Throwable exception) {
+			this.exception = exception;
+			return this;
+		}
+
+		@Override
+		public Intent build() {
+			return new Intent(context, ErrorActivity.class)
+							.setAction(ErrorActivity.ACTION_ERROR)
+							.putExtra(ErrorActivity.PARAM_RESOURCE_TITLE, title)
+							.putExtra(ErrorActivity.PARAM_RESOURCE_TEXT, text)
+							.putExtra(ErrorActivity.PARAM_ADDITIONAL_MESSAGE, additionalMessage)
+							.putExtra(ErrorActivity.PARAM_PREFERENCE_FRAGMENT, preferenceFragment)
+							.putExtra(ErrorActivity.PARAM_EXCEPTION, exception);
+
 		}
 	}
 }

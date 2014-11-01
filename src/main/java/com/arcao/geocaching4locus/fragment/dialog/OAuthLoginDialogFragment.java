@@ -19,7 +19,6 @@ import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
@@ -27,11 +26,10 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.OAuthLoginTaskListener;
+import oauth.signpost.OAuth;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
-
-import oauth.signpost.OAuth;
 
 public class OAuthLoginDialogFragment extends AbstractDialogFragment implements OAuthLoginTaskListener {
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
@@ -230,7 +228,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 			super.onReceivedError(view, errorCode, description, failingUrl);
 
 			if (getActivity() != null)
-				onTaskError(ErrorActivity.createErrorIntent(getActivity(), 0, description, false, null));
+				onTaskError(new ErrorActivity.IntentBuilder(getActivity()).setAdditionalMessage(description).build());
 		}
 
 		@Override

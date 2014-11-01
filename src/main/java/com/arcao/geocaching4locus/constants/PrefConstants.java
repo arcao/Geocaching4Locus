@@ -16,7 +16,9 @@ public interface PrefConstants {
 	static final String OAUTH_TOKEN = OAuth.OAUTH_TOKEN;
 	static final String OAUTH_TOKEN_SECRET = OAuth.OAUTH_TOKEN_SECRET;
 
+	static final String FILTER_CACHE_TYPE = "cache_type_filter";
 	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";
+	static final String FILTER_CONTAINER_TYPE = "container_type_filter";
 	static final String FILTER_CONTAINER_TYPE_PREFIX = "container_filter_";
 	static final String FILTER_DIFFICULTY = "difficulty_filter";
 	static final String FILTER_DIFFICULTY_MIN = "difficulty_filter_min";
@@ -56,6 +58,9 @@ public interface PrefConstants {
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1";
 	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2";
+
+	static final String UNIT_KM = "km";
+	static final String UNIT_MILES = "mi";
 
 	static final String[] shortCacheTypeName = {
 					"Tradi",

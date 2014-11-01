@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/prefs_cat_live_map">
+    <CheckBoxPreference
+        android:key="show_live_map_disabled_notification"
+        android:title="@string/pref_livemap_show_disabled_notification"
+        android:summary="@string/pref_livemap_show_disabled_notification_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="show_live_map_visible_only_notification"
+        android:title="@string/pref_livemap_visible_only_notification"
+        android:summary="@string/pref_livemap_visible_only_notification_summary"
+        android:defaultValue="false" />
+</PreferenceScreen>

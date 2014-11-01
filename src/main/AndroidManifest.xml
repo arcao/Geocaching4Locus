@@ -44,7 +44,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="PreferenceActivity" android:label="@string/preferences" android:theme="@style/G4LTheme.Settings"/>
+        <activity android:name=".SettingsActivity" android:label="@string/preferences" android:theme="@style/G4LTheme.Settings"/>
         <activity android:name="ErrorActivity" android:theme="@style/G4LTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="UpdateActivity" android:theme="@style/G4LTheme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_cache">

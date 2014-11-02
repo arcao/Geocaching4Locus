@@ -5,13 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import com.arcao.geocaching4locus.fragment.preference.HeaderPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SettingsActivity extends ActionBarActivity {
-	private static final String TAG = SettingsActivity.class.getName();
 	public static final String PARAM_FRAGMENT = "fragment";
+
+	private static final FragmentCache FRAGMENT_CACHE = new FragmentCache();
+	static {
+		FRAGMENT_CACHE.add(new HeaderPreferenceFragment());
+		FRAGMENT_CACHE.add(new AccountsPreferenceFragment());
+		FRAGMENT_CACHE.add(new FilterPreferenceFragment());
+		FRAGMENT_CACHE.add(new LiveMapPreferenceFragment());
+		FRAGMENT_CACHE.add(new DownloadingPreferenceFragment());
+		FRAGMENT_CACHE.add(new AdvancedPreferenceFragment());
+		FRAGMENT_CACHE.add(new AboutPreferenceFragment());
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -19,15 +31,11 @@ public class SettingsActivity extends ActionBarActivity {
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		try {
-			String fragmentName = getIntent().getStringExtra(PARAM_FRAGMENT);
-			if (fragmentName != null) {
-				// Display the fragment as the main content.
-				getSupportFragmentManager().beginTransaction().replace(android.R.id.content, (Fragment) Class.forName(fragmentName).newInstance()).commit();
-				return;
-			}
-		} catch (Throwable e) {
-			Log.e(TAG, e.getMessage(), e);
+		String fragmentName = getIntent().getStringExtra(PARAM_FRAGMENT);
+		if (fragmentName != null) {
+			// Display the fragment as the main content.
+			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, FRAGMENT_CACHE.get(fragmentName)).commit();
+			return;
 		}
 
 		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new HeaderPreferenceFragment()).commit();
@@ -51,5 +59,17 @@ public class SettingsActivity extends ActionBarActivity {
 
 	public static Intent createIntent(Context context, Class<?> preferenceFragment) {
 		return createIntent(context).putExtra(SettingsActivity.PARAM_FRAGMENT, preferenceFragment.getName());
+	}
+
+	private static class FragmentCache {
+		private Map<String, Fragment> cache = new HashMap<>();
+
+		public void add(Fragment fragment) {
+			cache.put(((Object)fragment).getClass().getName(), fragment);
+		}
+
+		public Fragment get(String key) {
+			return cache.get(key);
+		}
 	}
 }

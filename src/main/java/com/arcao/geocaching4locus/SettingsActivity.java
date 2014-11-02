@@ -6,7 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import com.arcao.geocaching4locus.fragment.preference.*;
+
+import com.arcao.geocaching4locus.fragment.preference.AboutPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.AdvancedPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.DownloadingPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.HeaderPreferenceFragment;
+import com.arcao.geocaching4locus.fragment.preference.LiveMapPreferenceFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,9 +63,12 @@ public class SettingsActivity extends ActionBarActivity {
 		return new Intent(context, SettingsActivity.class);
 	}
 
+	public static Intent createIntent(Context context, String preferenceFragment) {
+		return createIntent(context).putExtra(SettingsActivity.PARAM_FRAGMENT, preferenceFragment);
+	}
 
 	public static Intent createIntent(Context context, Class<?> preferenceFragment) {
-		return createIntent(context).putExtra(SettingsActivity.PARAM_FRAGMENT, preferenceFragment.getName());
+		return createIntent(context, preferenceFragment.getName());
 	}
 
 	private static class FragmentCache {

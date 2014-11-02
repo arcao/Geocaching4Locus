@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.preference.FragmentPreference;
@@ -32,9 +32,7 @@ public class HeaderPreferenceFragment extends AbstractPreferenceFragment {
 			preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
-					Intent intent = new Intent(getActivity(), SettingsActivity.class);
-					intent.putExtra(SettingsActivity.PARAM_FRAGMENT, fragment);
-					getActivity().startActivity(intent);
+					startActivity(SettingsActivity.createIntent(getActivity(), fragment));
 					return true;
 				}
 			});

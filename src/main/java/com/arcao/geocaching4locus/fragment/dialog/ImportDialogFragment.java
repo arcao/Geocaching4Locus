@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference;
 public final class ImportDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
 	public static final String TAG = ImportDialogFragment.class.getName();
 
-	public static final String PARAM_CACHE_ID = "CACHE_ID";
+	private static final String PARAM_CACHE_ID = "CACHE_ID";
 
 	protected ImportTask mTask;
 	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;

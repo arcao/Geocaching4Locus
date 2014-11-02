@@ -1,5 +1,6 @@
 package com.arcao.fragment.number_chooser;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,12 +22,12 @@ import com.arcao.geocaching4locus.R;
 import java.lang.ref.WeakReference;
 
 public class NumberChooserDialogFragment extends DialogFragment {
-	public static final String PARAM_TITLE = "TITLE";
-	public static final String PARAM_PREFIX_TEXT = "PREFIX_TEXT";
-	public static final String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
-	public static final String PARAM_MIN_VALUE = "MIN_VALUE";
-	public static final String PARAM_MAX_VALUE = "MAX_VALUE";
-	public static final String PARAM_STEP = "STEP";
+	private static final String PARAM_TITLE = "TITLE";
+	private static final String PARAM_PREFIX_TEXT = "PREFIX_TEXT";
+	private static final String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
+	private static final String PARAM_MIN_VALUE = "MIN_VALUE";
+	private static final String PARAM_MAX_VALUE = "MAX_VALUE";
+	private static final String PARAM_STEP = "STEP";
 
 	protected int mMinValue = 0;
 	protected int mMaxValue = 100;
@@ -136,6 +137,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 	}
 
 	protected View prepareView() {
+		@SuppressLint("InflateParams")
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
 
 		final TextView textView = (TextView) view.findViewById(R.id.number_picker_dialog_prefix_text);

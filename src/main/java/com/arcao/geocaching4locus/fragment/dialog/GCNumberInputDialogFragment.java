@@ -28,8 +28,8 @@ import java.lang.ref.WeakReference;
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = GCNumberInputDialogFragment.class.getName();
 
-	protected static final String PARAM_INPUT = "INPUT";
-	protected static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
+	private static final String PARAM_INPUT = "INPUT";
+	private static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
 
 	protected WeakReference<OnInputFinishedListener> inputFinishedListenerRef;
 	protected EditText editText;

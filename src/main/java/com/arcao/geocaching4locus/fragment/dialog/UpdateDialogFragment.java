@@ -22,7 +22,7 @@ import locus.api.objects.extra.Waypoint;
 public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.OnTaskListener {
 	public static final String TAG = UpdateDialogFragment.class.getName();
 
-	public static final String PARAM_UPDATE_DATA = "UPDATE_DATA";
+	private static final String PARAM_UPDATE_DATA = "UPDATE_DATA";
 
 	protected UpdateTask mTask;
 	protected WeakReference<UpdateTask.OnTaskListener> taskFinishedListenerRef;

@@ -1,5 +1,6 @@
 package com.arcao.fragment.number_chooser;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.arcao.geocaching4locus.R;
 public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFragment {
 	@Override
 	protected View prepareView() {
+		@SuppressLint("InflateParams")
 		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
 
 		String[] values = getNumberPickerValues(mMinValue, mMaxValue, mStep);

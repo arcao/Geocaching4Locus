@@ -13,9 +13,9 @@ import com.arcao.geocaching4locus.R;
 public final class DownloadProgressDialogFragment extends AbstractDialogFragment {
 	public static final String TAG = DownloadProgressDialogFragment.class.getName();
 
-	protected static final String PARAM_MESSAGE_ID = "MESSAGE_ID";
-	protected static final String PARAM_COUNT = "COUNT";
-	protected static final String PARAM_CURRENT = "CURRENT";
+	private static final String PARAM_MESSAGE_ID = "MESSAGE_ID";
+	private static final String PARAM_COUNT = "COUNT";
+	private static final String PARAM_CURRENT = "CURRENT";
 
 	public static DownloadProgressDialogFragment newInstance(int messageId, int count, int current) {
 		DownloadProgressDialogFragment fragment = new DownloadProgressDialogFragment();

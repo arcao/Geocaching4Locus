@@ -80,7 +80,7 @@ android {
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            shrinkResources true
+            // shrinkResources true // too aggressive
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard.cfg'
         }
@@ -97,7 +97,7 @@ android {
         exclude 'org/apache/http/version.properties'
         exclude 'templates/release-notes.vm'
     }
-//    lintOptions { abortOnError false }
+    lintOptions { abortOnError false }
 }
 
 if (project.hasProperty('storeFile') &&

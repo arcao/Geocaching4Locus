@@ -3,7 +3,7 @@ Geocaching4Locus - Android application
 
 Geocaching4Locus is a Locus add-on allows you to download and import caches directly from Geocaching.com site.
 
-The latest stable release is under `v1.x` branch. The `master` branch contanins changes for upcomming version 2.0.
+The latest stable release is under `v1.x` branch. The `master` branch contains changes for upcoming version 2.0.
 
 How to compile
 ==============

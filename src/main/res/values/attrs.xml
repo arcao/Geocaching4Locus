@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="buttonPanelStyle" format="reference" />
-    <attr name="buttonBarStyle" format="reference" />
-    <attr name="buttonBarButtonStyle" format="reference" />
-    
+
     <attr name="normalWindow" format="reference" />
     
     <declare-styleable name="SeekBarPreference">

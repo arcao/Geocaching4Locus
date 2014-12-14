@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="@dimen/title_height"
-    android:background="@drawable/var_panel_top"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:id="@+id/header" >
-
-    <TextView
-        style="@style/TitleBarTitle"
-        android:text="@string/app_name" />
-
-    <ImageView
-        android:id="@+id/image_view_separator_setting"
-        style="@style/TitleBarSeparator" />
-
-    <ImageButton
-        android:id="@+id/header_preferences"
-        style="@style/TitleBarButton"
-        android:contentDescription="@string/preferences"
-        android:src="@drawable/ic_action_preferences" />
-
-    <ImageView
-        android:id="@+id/image_view_separator_close"
-        style="@style/TitleBarSeparator" />
-
-    <ImageButton
-        android:id="@+id/header_close"
-        style="@style/TitleBarButton"
-        android:contentDescription="@string/close"
-        android:src="@drawable/ic_action_close" />
-</LinearLayout>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

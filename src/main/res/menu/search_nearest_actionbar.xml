@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/main_activity_option_menu_preferences"
         android:icon="@drawable/ic_settings_default"
         android:title="@string/preferences"
-        android:showAsAction="never"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/main_activity_option_menu_close"
         android:icon="@drawable/ic_cancel_default"
         android:title="@string/close"
-        android:showAsAction="never"/>
+        app:showAsAction="always"/>
 </menu>

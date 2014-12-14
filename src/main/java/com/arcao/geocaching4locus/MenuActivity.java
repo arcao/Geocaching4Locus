@@ -2,12 +2,16 @@ package com.arcao.geocaching4locus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ToggleButton;
+
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+
 import locus.api.android.utils.LocusUtils;
 
 public class MenuActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
@@ -20,11 +24,8 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 
 		setContentView(R.layout.activity_dashboard);
 
-		findViewById(R.id.image_view_separator_setting).setVisibility(View.GONE);
-		findViewById(R.id.header_preferences).setVisibility(View.GONE);
-
-		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
-		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+		getSupportActionBar().setTitle(getTitle());
 
 		liveMapNotificationManager = LiveMapNotificationManager.get(this);
 		liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
@@ -40,9 +41,9 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 
 	@Override
 	protected void onPause() {
-		super.onPause();
-
 		liveMapNotificationManager.removeLiveMapStateChangeListener(this);
+
+		super.onPause();
 	}
 
 	public void onClickImportFromGC(View view) {
@@ -91,8 +92,8 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(int itemId) {
-		switch (itemId) {
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
 			case R.id.main_activity_option_menu_preferences:
 				startActivity(SettingsActivity.createIntent(this));
 				return true;
@@ -101,7 +102,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 				finish();
 				return true;
 			default:
-				return false;
+				return super.onOptionsItemSelected(item);
 		}
 	}
 

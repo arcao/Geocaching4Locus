@@ -4,10 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <include
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_height"
-        layout="@layout/toolbar" />
+    <include layout="@layout/toolbar" />
 
     <ScrollView
         style="@style/ScreenContainer"

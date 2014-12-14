@@ -8,9 +8,11 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -72,14 +74,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 		setContentView(R.layout.activity_search_nearest);
 
-		// hide close button in normal view
-		if (!isFloatingWindow()) {
-			findViewById(R.id.image_view_separator_close).setVisibility(View.GONE);
-			findViewById(R.id.header_close).setVisibility(View.GONE);
-		}
-
-		applyMenuItemOnView(R.id.main_activity_option_menu_close, R.id.header_close);
-		applyMenuItemOnView(R.id.main_activity_option_menu_preferences, R.id.header_preferences);
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+		getSupportActionBar().setTitle(getTitle());
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
@@ -279,14 +275,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment.class));
 	}
 
-	public void onClickClose(View view) {
-		finish();
-	}
-
-	public void onClickSettings(View view) {
-		startActivity(SettingsActivity.createIntent(this));
-	}
-
 	protected void download() {
 		// test if user is logged in
 		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
@@ -337,6 +325,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	private void updateCoordinateTextView() {
 		if (latitudeEditText != null)
 			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+
 		if (longitudeEditText != null)
 			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
 	}
@@ -356,9 +345,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	protected void requestProgressUpdate() {
-        if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
+		if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
 			SearchGeocacheService.getInstance().sendProgressUpdate();
-        }
+		}
 	}
 
 	@Override
@@ -369,8 +358,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(int itemId) {
-		switch (itemId) {
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
 			case R.id.main_activity_option_menu_preferences:
 				startActivity(SettingsActivity.createIntent(this));
 				return true;
@@ -379,7 +368,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				finish();
 				return true;
 			default:
-				return false;
+				return super.onOptionsItemSelected(item);
 		}
 	}
 

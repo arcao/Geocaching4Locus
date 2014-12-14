@@ -138,7 +138,7 @@ public class NumberChooserDialogFragment extends DialogFragment {
 
 	protected View prepareView() {
 		@SuppressLint("InflateParams")
-		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
+		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_number_picker, null);
 
 		final TextView textView = (TextView) view.findViewById(R.id.number_picker_dialog_prefix_text);
 		textView.setText(getResources().getQuantityString(mPrefixTextRes, mValue, mValue));

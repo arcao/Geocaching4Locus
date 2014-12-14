@@ -70,7 +70,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		broadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
 		hasCoordinates = false;
 
-		setContentView(R.layout.main_activity);
+		setContentView(R.layout.activity_search_nearest);
 
 		// hide close button in normal view
 		if (!isFloatingWindow()) {
@@ -364,7 +364,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_activity_option_menu, menu);
+		inflater.inflate(R.menu.search_nearest_actionbar, menu);
 		return true;
 	}
 

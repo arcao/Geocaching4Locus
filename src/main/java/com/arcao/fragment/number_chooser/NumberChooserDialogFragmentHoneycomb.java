@@ -15,7 +15,7 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 	@Override
 	protected View prepareView() {
 		@SuppressLint("InflateParams")
-		View view = getActivity().getLayoutInflater().inflate(R.layout.number_picker_dialog, null);
+		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_number_picker, null);
 
 		String[] values = getNumberPickerValues(mMinValue, mMaxValue, mStep);
 

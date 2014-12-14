@@ -86,7 +86,7 @@ public abstract class AbstractService extends IntentService {
 			// extract colors and text sizes for notification
 			extractColors();
 
-			RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.notification_download);
+			RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.view_notification_download);
 			contentView.setTextViewText(R.id.progress_title, getText(actionTextId));
 
 			// correct size and color

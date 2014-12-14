@@ -18,7 +18,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.menu_dialog);
+		setContentView(R.layout.activity_dashboard);
 
 		findViewById(R.id.image_view_separator_setting).setVisibility(View.GONE);
 		findViewById(R.id.header_preferences).setVisibility(View.GONE);
@@ -86,7 +86,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main_activity_option_menu, menu);
+		inflater.inflate(R.menu.search_nearest_actionbar, menu);
 		return true;
 	}
 

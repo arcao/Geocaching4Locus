@@ -151,7 +151,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		View view = inflater.inflate(R.layout.dialog_login, container);
+		View view = inflater.inflate(R.layout.fragment_dialog_login, container);
 		progressHolder = view.findViewById(R.id.progressHolder);
 		progressHolder.setVisibility(View.VISIBLE);
 

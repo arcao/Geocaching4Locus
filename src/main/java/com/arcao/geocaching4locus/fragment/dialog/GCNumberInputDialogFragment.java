@@ -77,7 +77,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Context context = getActivity();
 
-		View view = LayoutInflater.from(context).inflate(R.layout.gc_number_input_dialog, null);
+		View view = LayoutInflater.from(context).inflate(R.layout.dialog_gc_number_input, null);
 
 		editText = (EditText) view.findViewById(R.id.gc_code_input_edit_text);
 		editText.setText("GC");

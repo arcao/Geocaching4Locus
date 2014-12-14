@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.ContextThemeWrapper;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
@@ -91,7 +91,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
 
-		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
+		ProgressDialog dialog = new ProgressDialog(getActivity());
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		dialog.setMax(pointIndexes.length);
 		dialog.setMessage(getText(R.string.update_caches_progress));

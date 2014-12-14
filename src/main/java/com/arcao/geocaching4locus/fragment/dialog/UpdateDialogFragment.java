@@ -8,7 +8,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -112,7 +111,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		ProgressDialog dialog = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
+		ProgressDialog dialog = new ProgressDialog(getActivity());
 		updateDialog(State.CACHE, 0, dialog);
 		return dialog;
 	}

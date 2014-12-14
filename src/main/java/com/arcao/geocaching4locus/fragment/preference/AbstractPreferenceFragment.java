@@ -63,9 +63,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	}
 
 	protected Intent createSubScreenIntent(String subScreenKey) {
-		return new Intent(getActivity(), SettingsActivity.class)
-						.putExtra(SettingsActivity.PARAM_FRAGMENT, ((Object) this).getClass().getName())
-						.putExtra(PARAM_SCREEN, subScreenKey);
+		return SettingsActivity.createIntent(getActivity(), getClass()).putExtra(PARAM_SCREEN, subScreenKey);
 	}
 
 	protected String getSubScreenKey() {

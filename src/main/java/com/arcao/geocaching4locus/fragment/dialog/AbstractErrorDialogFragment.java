@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.ContextThemeWrapper;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.SpannedFix;
 
@@ -36,7 +36,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 		Bundle args = getArguments();
 		String message = getString(args.getInt(PARAM_ERROR_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE));

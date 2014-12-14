@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.ContextThemeWrapper;
+
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
 import org.apache.commons.lang3.builder.Builder;
 
 public class ErrorActivity extends FragmentActivity {
@@ -85,7 +86,7 @@ public class ErrorActivity extends FragmentActivity {
 			final String additionalMessage = getArguments().getString(PARAM_ADDITIONAL_MESSAGE);
 			final Throwable t = (Throwable) getArguments().getSerializable(PARAM_EXCEPTION);
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog))
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
 				.setTitle(resTitleId)
 				.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
 					@Override

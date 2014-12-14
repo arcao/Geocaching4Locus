@@ -37,7 +37,10 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 		premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
 		imperialUnits = prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
+	}
 
+	@Override
+	protected void preparePreference() {
 		subScreenKey = getSubScreenKey();
 		if (subScreenKey != null) {
 			switch (subScreenKey) {
@@ -65,10 +68,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 				getActivity().setTitle(title);
 			}
 		}
-	}
 
-	@Override
-	protected void preparePreference() {
 		final PreferenceScreen cacheTypeFilterScreen = findPreference(FILTER_CACHE_TYPE, PreferenceScreen.class);
 		if (cacheTypeFilterScreen != null) {
 			prepareCacheTypePreference(cacheTypeFilterScreen);

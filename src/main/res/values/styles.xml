@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="G4LTheme" parent="@android:style/Theme">
-    </style>
-    <style name="G4LTheme.NoTitle" parent="@android:style/Theme.Dialog">
-    </style>
-	<style name="G4LTheme.Invisible" parent="@android:style/Theme.Translucent.NoTitleBar">
-	</style>
-	<style name="G4LTheme.Light" parent="@android:style/Theme.Light">
-    </style>
-    <style name="G4LTheme.Light.NoTitle">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/accent_dark</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
-    <style name="G4LTheme.Dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@drawable/var_dialog_bg</item>
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
+    <style name="AppBaseTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/accent_dark</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+	<style name="AppTheme.Invisible">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Note that we use the base animation style here (that is no
+             animations) because we really have no idea how this kind of
+             activity will be used. -->
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        
+    </style>
+
+    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog">
         <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
         <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
         <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item> 
     </style>
-    <style name="G4LTheme.Dialog.NoTitle">
+    <style name="AppTheme.Dialog.NoTitle">
         <item name="android:windowNoTitle">true</item>
     </style>
 
-    <style name="G4LTheme.SearchNearestActivity" parent="G4LTheme.Light.NoTitle">
-    </style>
-    <style name="G4LTheme.SearchNearestActivity.Dialog" parent="G4LTheme.Dialog.NoTitle">
-        <item name="normalWindow">@style/G4LTheme.SearchNearestActivity</item>
-    </style>
-    <style name="G4LTheme.MenuActivity" parent="G4LTheme.Dialog.NoTitle">
+    <style name="AppTheme.Settings" parent="AppBaseTheme">
+        <item name="windowActionBar">true</item>
     </style>
 
-    <style name="G4LTheme.Settings" parent="Theme.AppCompat.Light" />
     <style name="SimpleHeader" parent="@android:style/Widget.TextView">
         <item name="android:background">@drawable/dark_header_dither</item>
         <item name="android:layout_width">fill_parent</item>

@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -76,7 +75,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		Context context = new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog);
+		Context context = getActivity();
 
 		View view = LayoutInflater.from(context).inflate(R.layout.gc_number_input_dialog, null);
 

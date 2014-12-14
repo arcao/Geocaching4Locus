@@ -4,4 +4,10 @@
     <color name="title_separator_dark">#40000000</color>
     <color name="btn_disabled">#80aaaaaa</color>
     <color name="foreground1">#ff355689</color>
+
+    <color name="primary">#607d8b</color> <!-- 500 -->
+    <color name="primary_dark">#455a64</color> <!-- 700 -->
+    <color name="primary_light">#90a4ae</color> <!-- 300 -->
+    <color name="accent">#b2ff59</color> <!-- A200 -->
+    <color name="accent_dark">#64dd17</color> <!-- A700 -->
 </resources>

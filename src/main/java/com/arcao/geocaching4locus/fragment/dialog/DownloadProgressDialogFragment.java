@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 
 import com.arcao.geocaching4locus.R;
 
@@ -47,7 +46,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle arguments = getArguments();
 
-		ProgressDialog pd = new ProgressDialog(new ContextThemeWrapper(getActivity(), R.style.G4LTheme_Dialog));
+		ProgressDialog pd = new ProgressDialog(getActivity());
 
 		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
 			@Override

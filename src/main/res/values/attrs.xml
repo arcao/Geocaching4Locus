@@ -3,6 +3,7 @@
     <attr name="buttonPanelStyle" format="reference" />
 
     <attr name="normalWindow" format="reference" />
+    <attr name="textAppearanceListItemSecondary" format="reference" />
     
     <declare-styleable name="SeekBarPreference">
         <attr name="android:max" />

@@ -7,6 +7,8 @@
         <item name="colorControlActivated">@color/accent_dark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
+        <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
     </style>
 
     <style name="AppBaseTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
@@ -16,6 +18,8 @@
         <item name="colorControlActivated">@color/accent_dark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
+        <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
@@ -35,7 +39,7 @@
     <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog">
         <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
         <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
-        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item> 
+        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
     </style>
     <style name="AppTheme.Dialog.NoTitle">
         <item name="android:windowNoTitle">true</item>

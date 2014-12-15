@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/iconpref"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="vertical"
-    android:paddingBottom="6dip"
-    android:paddingLeft="8dip"
-    android:paddingRight="?android:attr/scrollbarSize"
-    android:paddingTop="6dip" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/iconpref"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="?android:attr/listPreferredItemHeight"
+              android:orientation="vertical"
+              android:paddingBottom="16dp"
+              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
+              android:paddingStart="?attr/listPreferredItemPaddingLeft"
+              android:paddingRight="?attr/listPreferredItemPaddingRight"
+              android:paddingEnd="?attr/listPreferredItemPaddingRight"
+              android:paddingTop="16dp">
 
     <TextView
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="6dip"
         android:ellipsize="marquee"
-        android:fadingEdge="horizontal"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="false" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        tools:text="@string/account_geocaching_live_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="6dip" >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="6dip" />
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            tools:src="@drawable/geocaching_live_icon"/>
 
         <TextView
             android:id="@android:id/summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
+            android:textAppearance="?attr/textAppearanceListItemSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="@string/account_geocaching_live_message"/>
     </LinearLayout>
 
 </LinearLayout>

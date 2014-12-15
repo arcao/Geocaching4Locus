@@ -8,7 +8,7 @@ public class GeocachingLiveApiConfiguration {
 	protected final AccountRestrictions restrictions;
 
 	public GeocachingLiveApiConfiguration(Context context) {
-		preferences = context.getSharedPreferences(GeocachingLiveApiProvider.PROVIDER_ID);
+		preferences = context.getSharedPreferences(GeocachingLiveApiProvider.PROVIDER_ID, Context.MODE_PRIVATE);
 		restrictions = new AccountRestrictions(preferences);
 	}
 

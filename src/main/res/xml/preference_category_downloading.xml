@@ -13,12 +13,11 @@
         android:entries="@array/pref_download_on_show_entries"
         android:entryValues="@array/pref_download_on_show_values"
         android:defaultValue="0"/>
-    <com.hlidskialf.android.preference.SeekBarPreference
+    <com.arcao.geocaching4locus.preference.SeekBarPreference
         android:key="downloading_count_of_logs"
         android:title="@string/pref_count_of_logs"
         android:summary="@string/pref_count_of_logs_summary"
         android:dialogMessage="@string/pref_count_of_logs_summary"
-        android:text="@string/pref_count_of_logs_text"
         android:max="30"
         android:defaultValue="5" />
     <CheckBoxPreference

@@ -7,7 +7,7 @@ import android.preference.Preference;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.preference.ListPreference;
-import com.hlidskialf.android.preference.SeekBarPreference;
+import com.arcao.geocaching4locus.preference.SeekBarPreference;
 
 public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 	private boolean premiumMember;

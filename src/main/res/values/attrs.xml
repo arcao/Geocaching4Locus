@@ -7,7 +7,6 @@
     
     <declare-styleable name="SeekBarPreference">
         <attr name="android:max" />
-        <attr name="android:text" />
         <attr name="android:defaultValue" />
         <attr name="android:title" />
         <attr name="android:dialogMessage" />

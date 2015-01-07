@@ -94,6 +94,10 @@ public class NumberChooserDialogFragment extends DialogFragment {
 		mStep = getArguments().getInt(PARAM_STEP, mStep);
 		mValue = getArguments().getInt(PARAM_DEFAULT_VALUE, mValue);
 
+		if (savedInstanceState != null ) {
+			mValue = savedInstanceState.getInt(PARAM_DEFAULT_VALUE, mValue);
+		}
+
 		if (mValue % mStep != 0) {
 			mValue = (mValue / mStep) * mStep;
 		}
@@ -102,13 +106,13 @@ public class NumberChooserDialogFragment extends DialogFragment {
 			mValue = mMinValue;
 		}
 
+		if (mValue > mMaxValue) {
+			mValue = mMaxValue;
+		}
+
 		mPrefixTextRes = getArguments().getInt(PARAM_PREFIX_TEXT, mPrefixTextRes);
 
 		mNewValue = mValue;
-
-		if (savedInstanceState != null ) {
-			mValue = savedInstanceState.getInt(PARAM_DEFAULT_VALUE, mValue);
-		}
 
 		return new AlertDialog.Builder(getActivity())
 			.setTitle(getArguments().getInt(PARAM_TITLE))

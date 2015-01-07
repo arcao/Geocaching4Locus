@@ -2,6 +2,8 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import java.lang.ref.WeakReference;
 
@@ -9,6 +11,28 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
 
 	protected WeakReference<CancellableDialog> cancellableRef;
+
+	// This is work around for the situation when method show is called after saving
+	// state even if you do all right. Especially when show is called after click on
+	// a button.
+	@Override
+	public int show(FragmentTransaction transaction, String tag) {
+		try {
+			return super.show(transaction, tag);
+		} catch (IllegalStateException e) {
+			// ignore
+			return 0;
+		}
+	}
+
+	@Override
+	public void show(FragmentManager manager, String tag) {
+		try {
+			super.show(manager, tag);
+		} catch (IllegalStateException e) {
+			// ignore
+		}
+	}
 
 	// This is to work around what is apparently a bug. If you don't have it
 	// here the dialog will be dismissed on rotation, so tell it not to dismiss.

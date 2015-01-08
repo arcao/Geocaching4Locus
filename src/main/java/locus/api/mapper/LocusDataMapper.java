@@ -2,47 +2,25 @@ package locus.api.mapper;
 
 import android.content.Context;
 import android.util.Log;
-
-import com.arcao.geocaching.api.data.CacheLog;
-import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.data.ImageData;
-import com.arcao.geocaching.api.data.SimpleGeocache;
-import com.arcao.geocaching.api.data.Trackable;
-import com.arcao.geocaching.api.data.User;
-import com.arcao.geocaching.api.data.UserWaypoint;
+import com.arcao.geocaching.api.data.*;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.AttributeType;
-import com.arcao.geocaching.api.data.type.CacheLogType;
-import com.arcao.geocaching.api.data.type.CacheType;
-import com.arcao.geocaching.api.data.type.ContainerType;
-import com.arcao.geocaching.api.data.type.WaypointType;
+import com.arcao.geocaching.api.data.type.*;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.GeocachingAttribute;
-import locus.api.objects.geocaching.GeocachingData;
-import locus.api.objects.geocaching.GeocachingImage;
-import locus.api.objects.geocaching.GeocachingLog;
-import locus.api.objects.geocaching.GeocachingTrackable;
-import locus.api.objects.geocaching.GeocachingWaypoint;
 
 public class LocusDataMapper {
 	private static final String TAG = "LocusDataMapper";
@@ -107,6 +85,8 @@ public class LocusDataMapper {
 			d.setNotes(gc.getPersonalNote());
 			d.setFavoritePoints(gc.getFavoritePoints());
 
+			sortCacheLogsByCreateDate(gc.getCacheLogs());
+
 			for (CacheLog log : gc.getCacheLogs()) {
 				d.logs.add(toLocusCacheLog(log));
 			}
@@ -145,6 +125,16 @@ public class LocusDataMapper {
 
 		return p;
 	}
+
+	private static void sortCacheLogsByCreateDate(List<CacheLog> cacheLogs) {
+		Collections.sort(cacheLogs, new Comparator<CacheLog>() {
+			@Override
+			public int compare(CacheLog lhs, CacheLog rhs) {
+				return lhs.getCreated().compareTo(rhs.getCreated());
+			}
+		});
+	}
+
 
 	protected static GeocachingImage toLocusImage(ImageData image) {
 		GeocachingImage i = new GeocachingImage();

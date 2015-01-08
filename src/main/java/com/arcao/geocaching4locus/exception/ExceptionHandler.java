@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.exception;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
+import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
@@ -52,9 +53,10 @@ public class ExceptionHandler {
 	}
 
 	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t) {
+		AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
+
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
-				AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
 
 				int resTitle = (restrictions.isPremiumMember()) ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
 				int resText = (restrictions.isPremiumMember()) ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
@@ -80,6 +82,18 @@ public class ExceptionHandler {
 
 			case NumberOfCallsExceded: // 140: too many method calls per minute
 				return new ErrorActivity.IntentBuilder(mContext).setTitle(R.string.method_quota_exceeded_title).setText(R.string.method_quota_exceeded_message).build();
+
+			case PremiumMembershipRequiredForBookmarksExcludeFilter:
+			case PremiumMembershipRequiredForDifficultyFilter:
+			case PremiumMembershipRequiredForFavoritePointsFilter:
+			case PremiumMembershipRequiredForGeocacheContainerSizeFilter:
+			case PremiumMembershipRequiredForGeocacheNameFilter:
+			case PremiumMembershipRequiredForHiddenByUserFilter:
+			case PremiumMembershipRequiredForNotHiddenByUserFilter:
+			case PremiumMembershipRequiredForTerrainFilter:
+			case PremiumMembershipRequiredForTrackableCountFilter:
+				restrictions.updateMemberType(MemberType.Basic);
+				return ErrorActivity.createErrorIntent(mContext, R.string.premium_member_warning_title, R.string.premium_member_for_filter_required, null, false, null);
 
 			default:
 				return null;

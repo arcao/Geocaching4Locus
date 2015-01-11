@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.text.Spanned;
+
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.SpannedFix;
@@ -21,7 +21,7 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 
 	@Override
 	protected void preparePreference() {
-		final Preference accountPreference = findPreference(ACCOUNT, EditTextPreference.class);
+		final Preference accountPreference = findPreference(ACCOUNT, Preference.class);
 
 		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override

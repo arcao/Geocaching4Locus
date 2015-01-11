@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.data.provider;
+package com.arcao.geocaching4locus.data.provider.exception;
 
 public class ProviderException extends Exception {
 	private final ProviderExceptionCategory exceptionCategory;

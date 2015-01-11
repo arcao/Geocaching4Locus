@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.data.provider;
+package com.arcao.geocaching4locus.data.provider.exception;
 
 /**
  * Created by msloup on 4.11.2014.

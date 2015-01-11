@@ -18,11 +18,10 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.arcao.fragment.number_chooser.NumberChooserDialogFragment;
-import com.arcao.fragment.number_chooser.NumberChooserDialogFragment.OnNumberChooserDialogClosedListener;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
 import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
@@ -38,7 +37,7 @@ import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
 
-public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, OnNumberChooserDialogClosedListener {
+public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.SliderDialogListener {
 	private static final String TAG = "G4L|MainActivity";
 	private static final boolean HONEYCOMB = android.os.Build.VERSION.SDK_INT >= 11;
 
@@ -192,7 +191,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			@Override
 			public void onClick(View v) {
 				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
-				NumberChooserDialogFragment fragment = NumberChooserDialogFragment.newInstance(R.string.dialog_count_of_caches_title, R.plurals.plurals_cache,
+				SliderDialogFragment fragment = SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
 								countOfCachesStep, getMaxCountOfCaches(), countOfCaches, countOfCachesStep);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
 			}
@@ -227,7 +226,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	@Override
-	public void onNumberChooserDialogClosed(NumberChooserDialogFragment fragment) {
+	public void onDialogClosed(SliderDialogFragment fragment) {
 		int value = fragment.getValue();
 
 		countOfCachesEditText.setText(String.valueOf(value));

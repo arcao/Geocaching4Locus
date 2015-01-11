@@ -203,7 +203,7 @@
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
 
-    <string name="prefs_cat_accounts">Accounts</string>
+    <string name="prefs_cat_account">Account</string>
     <string name="prefs_cat_filter">Filter</string>
     <string name="prefs_cat_live_map">Live map</string>
     <string name="prefs_cat_downloading">Downloading</string>

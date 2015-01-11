@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.arcao.preference.FragmentPreference
-        android:title="@string/prefs_cat_accounts"
+        android:title="@string/prefs_cat_account"
         app:fragmentName="com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment" />
     <com.arcao.preference.FragmentPreference
         android:title="@string/prefs_cat_filter"

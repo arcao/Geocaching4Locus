@@ -87,7 +87,7 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.search_nearest_actionbar, menu);
+		inflater.inflate(R.menu.dashboard, menu);
 		return true;
 	}
 

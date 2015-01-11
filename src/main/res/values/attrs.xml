@@ -4,7 +4,9 @@
 
     <attr name="normalWindow" format="reference" />
     <attr name="textAppearanceListItemSecondary" format="reference" />
-    
+    <attr name="listPreferredItemPaddingTop" format="dimension" />
+    <attr name="listPreferredItemPaddingBottom" format="dimension" />
+
     <declare-styleable name="SeekBarPreference">
         <attr name="android:max" />
         <attr name="android:defaultValue" />

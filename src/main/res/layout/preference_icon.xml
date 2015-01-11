@@ -6,12 +6,12 @@
               android:layout_height="wrap_content"
               android:minHeight="?android:attr/listPreferredItemHeight"
               android:orientation="vertical"
-              android:paddingBottom="16dp"
+              android:paddingBottom="?attr/listPreferredItemPaddingBottom"
               android:paddingLeft="?attr/listPreferredItemPaddingLeft"
               android:paddingStart="?attr/listPreferredItemPaddingLeft"
               android:paddingRight="?attr/listPreferredItemPaddingRight"
               android:paddingEnd="?attr/listPreferredItemPaddingRight"
-              android:paddingTop="16dp">
+              android:paddingTop="?attr/listPreferredItemPaddingTop">
 
     <TextView
         android:id="@android:id/title"

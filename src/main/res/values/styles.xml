@@ -25,6 +25,10 @@
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
+        <item name="listPreferredItemPaddingTop">8dp</item>
+        <item name="listPreferredItemPaddingBottom">8dp</item>
     </style>
 	<style name="AppTheme.Invisible">
         <item name="android:windowBackground">@android:color/transparent</item>

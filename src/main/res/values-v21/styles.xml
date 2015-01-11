@@ -6,6 +6,9 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+
+        <item name="listPreferredItemPaddingTop">16dp</item>
+        <item name="listPreferredItemPaddingBottom">16dp</item>
     </style>
     <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog">
         <item name="android:windowContentTransitions">true</item>

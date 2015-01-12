@@ -93,7 +93,7 @@ public class ExceptionHandler {
 			case PremiumMembershipRequiredForTerrainFilter:
 			case PremiumMembershipRequiredForTrackableCountFilter:
 				restrictions.updateMemberType(MemberType.Basic);
-				return ErrorActivity.createErrorIntent(mContext, R.string.premium_member_warning_title, R.string.premium_member_for_filter_required, null, false, null);
+				return new ErrorActivity.IntentBuilder(mContext).setTitle(R.string.premium_member_warning_title).setText(R.string.premium_member_for_filter_required).build();
 
 			default:
 				return null;

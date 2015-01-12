@@ -74,9 +74,11 @@ public abstract class AbstractService extends IntentService {
 
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
 
-		nb.setSmallIcon(R.drawable.ic_launcher);
+		nb.setSmallIcon(android.R.drawable.stat_sys_download);
 		nb.setOngoing(true);
 		nb.setWhen(0); // this fix redraw issue while refreshing
+		nb.setLocalOnly(true);
+		nb.setCategory(NotificationCompat.CATEGORY_PROGRESS);
 
 		int percent = 0;
 		if (count > 0)

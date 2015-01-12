@@ -155,6 +155,8 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 		nb.setOngoing(true);
 		nb.setWhen(0); // this fix redraw issue while refreshing
+		nb.setLocalOnly(true);
+		nb.setCategory(NotificationCompat.CATEGORY_SERVICE);
 
 		nb.setContentTitle(mContext.getText(R.string.livemap_notification_title));
 

@@ -85,7 +85,7 @@ public class LocusDataMapper {
 			d.setNotes(gc.getPersonalNote());
 			d.setFavoritePoints(gc.getFavoritePoints());
 
-			sortCacheLogsByCreateDate(gc.getCacheLogs());
+			sortCacheLogsByCreated(gc.getCacheLogs());
 
 			for (CacheLog log : gc.getCacheLogs()) {
 				d.logs.add(toLocusCacheLog(log));
@@ -126,7 +126,7 @@ public class LocusDataMapper {
 		return p;
 	}
 
-	private static void sortCacheLogsByCreateDate(List<CacheLog> cacheLogs) {
+	private static void sortCacheLogsByCreated(List<CacheLog> cacheLogs) {
 		Collections.sort(cacheLogs, new Comparator<CacheLog>() {
 			@Override
 			public int compare(CacheLog lhs, CacheLog rhs) {

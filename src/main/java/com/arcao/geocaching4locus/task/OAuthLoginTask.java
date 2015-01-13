@@ -47,7 +47,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		OAuthProvider provider = LiveGeocachingApiFactory.getOAuthProvider();
 
 		// we use server time for OAuth timestamp because device can have wrong timezone or time
-		String timestamp = Long.toString(getServerDate(AppConstants.GEOCACHING_WEBSITE_URL).getTime() / 1000);
+		String timestamp = Long.toString(getServerDate("https://api.groundspeak.com/").getTime() / 1000);
 
 		try {
 			if (params.length == 0) {

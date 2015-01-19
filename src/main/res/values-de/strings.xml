@@ -194,7 +194,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="livemap_notification_action_disable">Schalte Live Karte aus</string>
     <string name="livemap_error">Geocaching4Locus Live Karte: %s</string>
     <string name="pref_livemap_show_disabled_notification">Benachrichtigung ausgeschaltet</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung wenn "Live map" ausgeschaltet ist. Das funktioniert nur wenn wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung, wenn "Live map" ausgeschaltet ist. Das funktioniert nur, wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
     <string name="pref_title_live_map">Live Karte</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
     <string name="pref_cache_type_all">Alle</string>
@@ -208,4 +208,5 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_download_logs_update_cache_summary">Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
     <string name="pref_downloading_count_of_caches_step">Cache in 1-er oder 10-er Schritten herunterladen</string>
     <string name="pref_downloading_count_of_caches_step_summary">Auswahlmenü: Anzahl der heruntergeladenen Cache in 1-er oder 10-er Schritten</string>
+    <string name="premium_member_for_filter_required">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basis-Mitgliedschaft. Bitte noch einmal versuchen.</string>
 </resources>

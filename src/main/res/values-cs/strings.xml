@@ -207,4 +207,5 @@
     <string name="pref_download_logs_update_cache_summary">Akce "Stáhnout logy" také aktualizuje data keše</string>
     <string name="pref_downloading_count_of_caches_step">Velikost kroku pro počet keší</string>
     <string name="pref_downloading_count_of_caches_step_summary">Změní velikost kroku u dialogu na vybrání počtu keší</string>
+    <string name="premium_member_for_filter_required">Některé filtry vyžadují prémiový účet, který nemáte. Aplikace se přepne do režimu pro základní účet. Prosím, zkuste to znovu.</string>
 </resources>

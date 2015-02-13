@@ -9,21 +9,19 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LocusTesting;
-
+import locus.api.android.utils.LocusUtils;
+import oauth.signpost.OAuthConsumer;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import timber.log.Timber;
 
 import java.util.UUID;
-
-import locus.api.android.utils.LocusUtils;
-import oauth.signpost.OAuthConsumer;
 
 @ReportsCrashes(
 		formKey =  AppConstants.ERROR_FORM_KEY,
@@ -48,6 +46,8 @@ public class Geocaching4LocusApplication extends android.app.Application {
 
 	@Override
 	public void onCreate() {
+		Timber.plant(new Timber.DebugTree());
+
 		context = getApplicationContext();
 
 		disableConnectionReuseIfNecessary();

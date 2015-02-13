@@ -3,12 +3,11 @@ package com.arcao.geocaching4locus.data.provider.impl.geocaching_live_api;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v4.preference.PreferenceFragment;
-import android.util.Log;
-
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.data.provider.Provider;
 import com.arcao.geocaching4locus.data.provider.ProviderService;
 import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
+import timber.log.Timber;
 
 public final class GeocachingLiveApiProvider implements Provider {
 	static final String PROVIDER_ID = "GEOCACHING_LIVE_API";
@@ -34,7 +33,7 @@ public final class GeocachingLiveApiProvider implements Provider {
 		try {
 			return GeocachingUtils.cacheCodeToCacheId(cacheCode) > 0;
 		} catch (IllegalArgumentException e) {
-			Log.e("", e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			return false;
 		}
 	}

@@ -12,19 +12,20 @@ import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
-	protected final SharedPreferences pref;
+	protected final SharedPreferences mPrefs;
 	protected final Context mContext;
 	protected final AccountRestrictions restrictions;
 
-	public PreferenceAuthenticatorHelper(Context ctx) {
+	public PreferenceAuthenticatorHelper(Context appContext) {
 		// Do not store username, password and hash in default shared preferences
 		// Default shared preferences are sent by ACRA in error report
 		// Also PreferencesBackupAgent backup default shared preferences to Google Backup Service
-		pref = ctx.getSharedPreferences("ACCOUNT", 3);
+		mPrefs = appContext.getSharedPreferences("ACCOUNT", 3);
 
-		mContext = ctx;
+		mContext = appContext;
+		restrictions = new AccountRestrictions(appContext);
 
-		restrictions = new AccountRestrictions(ctx);
+		upgradeStorage();
 	}
 
 	@Override
@@ -37,12 +38,12 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		if (!hasAccount())
 			return null;
 
-		return pref.getString(PrefConstants.SESSION, null);
+		return mPrefs.getString(PrefConstants.SESSION, null);
 	}
 
 	@Override
 	public Account getAccount() {
-		String username = pref.getString(PrefConstants.USERNAME, null);
+		String username = mPrefs.getString(PrefConstants.USERNAME, null);
 
 		if (username == null)
 			return null;
@@ -60,17 +61,12 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		if (account == null || hasAccount())
 			return false;
 
-		Editor editor = pref.edit();
-		editor.putString(PrefConstants.USERNAME, account.name);
-		editor.remove(PrefConstants.SESSION);
-		editor.commit();
+		mPrefs.edit()
+			.putString(PrefConstants.USERNAME, account.name)
+			.remove(PrefConstants.SESSION)
+			.apply();
 
 		return true;
-	}
-
-	@Override
-	public void setPassword(Account account, String password) {
-		// do nothing
 	}
 
 	@Override
@@ -78,57 +74,56 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		if (!hasAccount())
 			return;
 
-		Editor editor = pref.edit();
+		Editor editor = mPrefs.edit();
 		if (authToken != null) {
 			editor.putString(PrefConstants.SESSION, authToken);
 		} else {
 			editor.remove(PrefConstants.SESSION);
 		}
-		editor.commit();
+		editor.apply();
 	}
 
 	@Override
 	public boolean hasAccount() {
-		return pref.getString(PrefConstants.USERNAME, null) != null;
+		return mPrefs.getString(PrefConstants.USERNAME, null) != null;
 	}
 
 	@Override
 	public void removeAccount() {
-		Editor editor = pref.edit();
-		editor.remove(PrefConstants.USERNAME);
-		editor.remove(PrefConstants.PASSWORD);
-		editor.remove(PrefConstants.SESSION);
-		editor.commit();
+		mPrefs.edit()
+			.remove(PrefConstants.USERNAME)
+			.remove(PrefConstants.PASSWORD)
+			.remove(PrefConstants.SESSION)
+			.apply();
 
 		restrictions.remove();
 	}
 
 	@Override
 	public void invalidateAuthToken() {
-		Editor editor = pref.edit();
-		editor.remove(PrefConstants.SESSION);
-		editor.commit();
+		mPrefs.edit()
+			.remove(PrefConstants.SESSION)
+			.apply();
 	}
 
-	@Override
-	public void convertFromOldStorage() {
+	private void upgradeStorage() {
 		// remove username, password and session from old storage
 		SharedPreferences defaultPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-		Editor editor = defaultPref.edit();
-		editor.remove(PrefConstants.USERNAME);
-		editor.remove(PrefConstants.PASSWORD);
-		editor.remove(PrefConstants.SESSION);
-		editor.commit();
+		defaultPref.edit()
+			.remove(PrefConstants.USERNAME)
+			.remove(PrefConstants.PASSWORD)
+			.remove(PrefConstants.SESSION)
+			.apply();
 
-		int prefVersion = pref.getInt(PrefConstants.PREF_VERSION, 0);
+		int prefVersion = mPrefs.getInt(PrefConstants.PREF_VERSION, 0);
 
 		// remove account when password is set
 		// remove old accounts with not set premium account property
-		if (pref.contains(PrefConstants.PASSWORD) || prefVersion < 1) {
+		if (mPrefs.contains(PrefConstants.PASSWORD) || prefVersion < 1) {
 			removeAccount();
 		}
 
-		pref.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).commit();
+		mPrefs.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).apply();
 	}
 }

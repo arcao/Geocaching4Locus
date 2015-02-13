@@ -27,18 +27,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.support.annotation.NonNull;
+import timber.log.Timber;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -160,8 +151,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * </ul>
  */
 public abstract class UserTask<Params, Progress, Result> {
-	private static final String LOG_TAG = "UserTask";
-
 	private static final int CORE_POOL_SIZE = 1;
 	private static final int MAXIMUM_POOL_SIZE = 10;
 	private static final int KEEP_ALIVE = 10;
@@ -236,9 +225,9 @@ public abstract class UserTask<Params, Progress, Result> {
 				try {
 					result = get();
 				} catch (InterruptedException e) {
-					android.util.Log.w(LOG_TAG, e);
+					Timber.w(e.getMessage(), e);
 				} catch (ExecutionException e) {
-					android.util.Log.e(LOG_TAG, "An error occured while executing doInBackground()", e.getCause());
+					Timber.e("An error occured while executing doInBackground()", e.getCause());
 					message = sHandler.obtainMessage(MESSAGE_POST_EXCEPTION,
 														new UserTaskResult<>(UserTask.this, e.getCause(), (Result[]) null));
 					message.sendToTarget();

@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,33 +18,32 @@ import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ErrorActivity;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
-import com.arcao.geocaching4locus.task.OAuthLoginTask.OAuthLoginTaskListener;
+import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
+import oauth.signpost.OAuth;
+import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
-import oauth.signpost.OAuth;
-
-public class OAuthLoginDialogFragment extends AbstractDialogFragment implements OAuthLoginTaskListener {
+public class OAuthLoginDialogFragment extends AbstractDialogFragment implements TaskListener {
+	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
-	public static final String TAG = UpdateDialogFragment.class.getName();
 
-	public interface OnTaskFinishedListener {
-		void onTaskFinished(Intent errorIntent);
+	public interface DialogListener {
+		void onLoginFinished(Intent errorIntent);
 	}
 
-	protected OAuthLoginTask mTask;
-	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
-	protected WebView webView = null;
-	protected View progressHolder = null;
-	protected Bundle lastInstanceState;
+	private OAuthLoginTask mTask;
+	private WeakReference<DialogListener> mDialogListenerRef;
+	private WebView mWebView = null;
+	private View mProgressHolder = null;
+	private Bundle mLastInstanceState;
 
 	public static OAuthLoginDialogFragment newInstance() {
 		return new OAuthLoginDialogFragment();
@@ -58,10 +56,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		setRetainInstance(true);
 
 		// clear geocaching.com cookies
-		Geocaching4LocusApplication.clearGeocachingCookies();
+		App.clearGeocachingCookies();
 
-		mTask = new OAuthLoginTask();
-		mTask.setOAuthLoginTaskListener(this);
+		mTask = new OAuthLoginTask(getActivity(), this);
 		mTask.execute();
 	}
 
@@ -70,7 +67,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<>((OnTaskFinishedListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
 		}
@@ -78,8 +75,8 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 	@Override
 	public void onLoginUrlAvailable(String url) {
-		if (webView != null) {
-			webView.loadUrl(url);
+		if (mWebView != null) {
+			mWebView.loadUrl(url);
 		}
 	}
 
@@ -90,9 +87,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		if (mTask != null)
 			mTask.cancel(true);
 
-		OnTaskFinishedListener listener = taskFinishedListenerRef.get();
+		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
-			listener.onTaskFinished(null);
+			listener.onLoginFinished(null);
 		}
 	}
 
@@ -100,7 +97,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 	public void onOAuthTaskFinished(String userName, String token) {
 		dismiss();
 
-		final AuthenticatorHelper helper = Geocaching4LocusApplication.getAuthenticatorHelper();
+		final AuthenticatorHelper helper = App.get(getActivity()).getAuthenticatorHelper();
 
 		if (helper.hasAccount()) {
 			helper.removeAccount();
@@ -111,9 +108,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		helper.addAccountExplicitly(account, null);
 		helper.setAuthToken(account, AuthenticatorHelper.ACCOUNT_TYPE, token);
 
-		OnTaskFinishedListener listener = taskFinishedListenerRef.get();
+		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
-			listener.onTaskFinished(null);
+			listener.onLoginFinished(null);
 		}
 	}
 
@@ -121,9 +118,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 	public void onTaskError(Intent errorIntent) {
 		dismiss();
 
-		OnTaskFinishedListener listener = taskFinishedListenerRef.get();
+		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
-			listener.onTaskFinished(errorIntent);
+			listener.onLoginFinished(errorIntent);
 		}
 	}
 
@@ -131,39 +128,39 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		if (webView != null) {
-			webView.saveState(outState);
+		if (mWebView != null) {
+			mWebView.saveState(outState);
 		}
 
-		if (progressHolder != null) {
-			outState.putInt(STATE_PROGRESS_VISIBLE, progressHolder.getVisibility());
-			Log.d(TAG, "setVisibility: " + progressHolder.getVisibility());
+		if (mProgressHolder != null) {
+			outState.putInt(STATE_PROGRESS_VISIBLE, mProgressHolder.getVisibility());
+			Timber.d("setVisibility: " + mProgressHolder.getVisibility());
 		}
 
-		lastInstanceState = outState;
+		mLastInstanceState = outState;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// FIX savedInstanceState is null after rotation change
-		if (savedInstanceState == null)
-			savedInstanceState = lastInstanceState;
+		if (savedInstanceState != null)
+			mLastInstanceState = savedInstanceState;
 
 		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		View view = inflater.inflate(R.layout.fragment_dialog_login, container);
-		progressHolder = view.findViewById(R.id.progressHolder);
-		progressHolder.setVisibility(View.VISIBLE);
+		mProgressHolder = view.findViewById(R.id.progressHolder);
+		mProgressHolder.setVisibility(View.VISIBLE);
 
-		if (savedInstanceState != null) {
+		if (mLastInstanceState != null) {
 			//noinspection ResourceType
-			progressHolder.setVisibility(savedInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
+			mProgressHolder.setVisibility(mLastInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
 		}
 
-		webView = createWebView(savedInstanceState);
+		mWebView = createWebView(mLastInstanceState);
 
 		FrameLayout webViewHolder = (FrameLayout) view.findViewById(R.id.webViewPlaceholder);
-		webViewHolder.addView(webView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		webViewHolder.addView(mWebView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
 		return view;
 	}
@@ -172,11 +169,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 	public WebView createWebView(Bundle savedInstanceState) {
 		WebView webView = new FixedWebView(getActivity());
 
-		//webView.setVerticalScrollBarEnabled(false);
 		webView.setHorizontalScrollBarEnabled(false);
 		webView.setWebViewClient(new DialogWebViewClient());
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.getSettings().setSavePassword(false);
 
 		if (savedInstanceState != null)
 			webView.restoreState(savedInstanceState);
@@ -190,25 +185,24 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 			if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
 				Uri uri = Uri.parse(url);
 
-				if (progressHolder != null) {
-					progressHolder.setVisibility(View.VISIBLE);
+				if (mProgressHolder != null) {
+					mProgressHolder.setVisibility(View.VISIBLE);
 				}
 
-				mTask = new OAuthLoginTask();
-				mTask.setOAuthLoginTaskListener(OAuthLoginDialogFragment.this);
+				mTask = new OAuthLoginTask(getActivity(), OAuthLoginDialogFragment.this);
 				mTask.execute(uri.getQueryParameter(OAuth.OAUTH_VERIFIER));
 
 				return true;
 			}
 
 			if (!isOAuthUrl(url)) {
-				Log.d(TAG, "External URL: " + url);
+				Timber.d("External URL: " + url);
 
 				// launch external URLs in a full browser
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				
-				Geocaching4LocusApplication.getAppContext().startActivity(intent);
+				getActivity().startActivity(intent);
 				return true;
 			}
 
@@ -216,13 +210,13 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		}
 
 		protected boolean isOAuthUrl(String url) {
-			url = url.toLowerCase(Locale.US);
+			String urlLowerCase = url.toLowerCase(Locale.US);
 
-			return url.contains("/oauth/") ||
-					url.contains("/mobileoauth/") ||
-					url.contains("/mobilesignin/") ||
-					url.contains("/mobilecontent/") ||
-					url.contains("//m.facebook");
+			return urlLowerCase.contains("/oauth/") ||
+							urlLowerCase.contains("/mobileoauth/") ||
+							urlLowerCase.contains("/mobilesignin/") ||
+							urlLowerCase.contains("/mobilecontent/") ||
+							urlLowerCase.contains("//m.facebook");
 		}
 
 		@Override
@@ -236,8 +230,8 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
-			if (progressHolder != null) {
-				progressHolder.setVisibility(View.VISIBLE);
+			if (mProgressHolder != null) {
+				mProgressHolder.setVisibility(View.VISIBLE);
 			}
 		}
 
@@ -245,8 +239,8 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
 
-			if (progressHolder != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
-				progressHolder.setVisibility(View.GONE);
+			if (mProgressHolder != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
+				mProgressHolder.setVisibility(View.GONE);
 			}
 		}
 	}

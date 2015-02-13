@@ -10,17 +10,21 @@ import android.support.annotation.NonNull;
 
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.ImportTask;
-import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
+import com.arcao.geocaching4locus.task.ImportTask.TaskListener;
 
 import java.lang.ref.WeakReference;
 
-public final class ImportDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
-	public static final String TAG = ImportDialogFragment.class.getName();
+public final class ImportDialogFragment extends AbstractDialogFragment implements TaskListener {
+	public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
 
 	private static final String PARAM_CACHE_ID = "CACHE_ID";
 
-	protected ImportTask mTask;
-	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
+	public interface DialogListener {
+		void onImportFinished(boolean success);
+	}
+
+	private ImportTask mTask;
+	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static ImportDialogFragment newInstance(String cacheId) {
 		ImportDialogFragment fragment = new ImportDialogFragment();
@@ -42,8 +46,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 
 		String cacheId = getArguments().getString(PARAM_CACHE_ID);
 
-		mTask = new ImportTask();
-		mTask.setOnTaskFinishedListener(this);
+		mTask = new ImportTask(getActivity(), this);
 		mTask.execute(cacheId);
 	}
 
@@ -52,7 +55,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<>((OnTaskFinishedListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
 		}
@@ -64,9 +67,9 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 
 		dismiss();
 
-		OnTaskFinishedListener taskFinishedListener = taskFinishedListenerRef.get();
-		if (taskFinishedListener != null) {
-			taskFinishedListener.onTaskFinished(success);
+		DialogListener listener = mDialogListenerRef.get();
+		if (listener != null) {
+			listener.onImportFinished(success);
 		}
 	}
 

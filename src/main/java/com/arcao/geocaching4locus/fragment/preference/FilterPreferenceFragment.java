@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;
@@ -24,9 +24,9 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	public static final String PARAM_SCREEN__DIFFICULTY = "DIFFICULTY";
 	public static final String PARAM_SCREEN__TERRAIN = "TERRAIN";
 
-	private boolean premiumMember;
-	private boolean imperialUnits;
-	private String subScreenKey;
+	private boolean mPremiumMember;
+	private boolean mImperialUnits;
+	private String mSubScreenKey;
 
 	@Override
 	public void onCreate(Bundle paramBundle) {
@@ -35,15 +35,15 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_filter);
 
-		premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
-		imperialUnits = prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
+		mPremiumMember = App.get(getActivity()).getAuthenticatorHelper().getRestrictions().isPremiumMember();
+		mImperialUnits = mPrefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
 	}
 
 	@Override
 	protected void preparePreference() {
-		subScreenKey = getSubScreenKey();
-		if (subScreenKey != null) {
-			switch (subScreenKey) {
+		mSubScreenKey = getSubScreenKey();
+		if (mSubScreenKey != null) {
+			switch (mSubScreenKey) {
 				case PARAM_SCREEN__CACHE_TYPE:
 					setHasOptionsMenu(true);
 					setPreferenceScreen(findPreference(FILTER_CACHE_TYPE, PreferenceScreen.class));
@@ -97,7 +97,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (PARAM_SCREEN__CACHE_TYPE.equals(subScreenKey) || PARAM_SCREEN__CONTAINER_TYPE.equals(subScreenKey)) {
+		if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey) || PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
 			inflater.inflate(R.menu.select_deselect_acttionbar, menu);
 		}
 		super.onCreateOptionsMenu(menu, inflater);
@@ -112,22 +112,22 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 				return true;
 
 			case R.id.selectAll:
-				if (PARAM_SCREEN__CACHE_TYPE.equals(subScreenKey)) {
+				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
 					for (int i = 0; i < CacheType.values().length; i++)
 						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
 				}
-				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(subScreenKey)) {
+				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
 					for (int i = 0; i < ContainerType.values().length; i++)
 						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
 				}
 				return true;
 
 			case R.id.deselectAll:
-				if (PARAM_SCREEN__CACHE_TYPE.equals(subScreenKey)) {
+				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
 					for (int i = 0; i < CacheType.values().length; i++)
 						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
 				}
-				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(subScreenKey)) {
+				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
 					for (int i = 0; i < ContainerType.values().length; i++)
 						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
 				}
@@ -148,7 +148,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		switch (key) {
 			case FILTER_DISTANCE:
 				final EditTextPreference distancePreference = findPreference(key, EditTextPreference.class);
-				if (imperialUnits) {
+				if (mImperialUnits) {
 					distancePreference.setSummary(preparePreferenceSummary(distancePreference.getText() + UNIT_MILES, R.string.pref_distance_summary_miles));
 				} else {
 					distancePreference.setSummary(preparePreferenceSummary(distancePreference.getText() + UNIT_KM, R.string.pref_distance_summary_km));
@@ -167,17 +167,17 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 	private void prepareCacheTypePreference(PreferenceScreen cacheTypeFilterScreen) {
 		cacheTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CACHE_TYPE));
-		cacheTypeFilterScreen.setEnabled(premiumMember);
+		cacheTypeFilterScreen.setEnabled(mPremiumMember);
 
-		if (premiumMember)
+		if (mPremiumMember)
 			cacheTypeFilterScreen.setSummary(prepareCacheTypeSummary());
 	}
 
 	private void prepareContainerTypePreference(PreferenceScreen containerTypeFilterScreen) {
 		containerTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CONTAINER_TYPE));
-		containerTypeFilterScreen.setEnabled(premiumMember);
+		containerTypeFilterScreen.setEnabled(mPremiumMember);
 
-		if (premiumMember)
+		if (mPremiumMember)
 			containerTypeFilterScreen.setSummary(prepareContainerTypeSummary());
 	}
 
@@ -186,7 +186,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		final ListPreference difficultyMaxPreference = findPreference(FILTER_DIFFICULTY_MAX, ListPreference.class);
 
 		difficultyPreference.setIntent(createSubScreenIntent(PARAM_SCREEN__DIFFICULTY));
-		difficultyPreference.setEnabled(premiumMember);
+		difficultyPreference.setEnabled(mPremiumMember);
 
 		difficultyMinPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue()));
 		difficultyMinPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -218,7 +218,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 			}
 		});
 
-		if (premiumMember)
+		if (mPremiumMember)
 			difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
 	}
 
@@ -227,7 +227,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		final ListPreference terrainMaxPreference = findPreference(FILTER_TERRAIN_MAX, ListPreference.class);
 
 		terrainPreference.setIntent(createSubScreenIntent(PARAM_SCREEN__TERRAIN));
-		terrainPreference.setEnabled(premiumMember);
+		terrainPreference.setEnabled(mPremiumMember);
 
 		terrainMinPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue()));
 		terrainMinPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -259,7 +259,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 			}
 		});
 
-		if (premiumMember)
+		if (mPremiumMember)
 			terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
 	}
 
@@ -268,7 +268,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		filterDistanceEditText.setKeyListener(DigitsKeyListener.getInstance(false, true));
 
 		// set summary text
-		if (!imperialUnits) {
+		if (!mImperialUnits) {
 			distancePreference.setSummary(preparePreferenceSummary(distancePreference.getText() + UNIT_KM, R.string.pref_distance_summary_km));
 		} else {
 			distancePreference.setDialogMessage(R.string.pref_distance_summary_miles);
@@ -291,7 +291,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		boolean noneChecked = true;
 
 		for (int i = 0; i < CacheType.values().length; i++) {
-			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
+			if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				noneChecked = false;
 			} else {
 				allChecked = false;
@@ -302,7 +302,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 			sb.append(getString(R.string.pref_cache_type_all));
 		} else {
 			for (int i = 0; i < CacheType.values().length; i++) {
-				if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
+				if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 					if (sb.length() != 0) sb.append(", ");
 					sb.append(shortCacheTypeName[i]);
 				}
@@ -316,7 +316,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
-			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
+			if (mPrefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
 				if (sb.length() != 0) sb.append(", ");
 				sb.append(shortContainerTypeName[i]);
 			}

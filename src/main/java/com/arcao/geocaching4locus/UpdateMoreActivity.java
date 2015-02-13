@@ -3,35 +3,32 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
-import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
 import locus.api.android.utils.LocusUtils;
 import org.acra.ACRA;
+import timber.log.Timber;
 
-public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinishedListener, FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener {
-	private final static String TAG = "G4L|UpdateActivity";
-
+public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
 
-	private boolean authenticatorActivityVisible = false;
-	private boolean showUpdateMoreDialog = false;
+	private boolean mAuthenticatorActivityVisible = false;
+	private boolean mShowUpdateMoreDialog = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// test if user is logged in
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
 			if (savedInstanceState != null)
-				authenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
+				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
 
-			if (!authenticatorActivityVisible) {
+			if (!mAuthenticatorActivityVisible) {
 				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				authenticatorActivityVisible = true;
+				mAuthenticatorActivityVisible = true;
 			}
 
 			return;
@@ -40,7 +37,7 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		if (showBasicMemeberWarningDialog())
 			return;
 
-		showUpdateMoreDialog = true;
+		mShowUpdateMoreDialog = true;
 	}
 
 	@Override
@@ -48,9 +45,9 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		super.onResumeFragments();
 
 		// play with fragments here
-		if (showUpdateMoreDialog) {
+		if (mShowUpdateMoreDialog) {
 			showUpdateMoreDialog();
-			showUpdateMoreDialog = false;
+			mShowUpdateMoreDialog = false;
 		}
 	}
 
@@ -58,21 +55,21 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible);
+		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
 	protected boolean showBasicMemeberWarningDialog() {
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
+		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
 			return false;
 
 		// check next dialog fragment
-		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
 			return false;
 
-		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
 			return true;
 
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 		return true;
 	}
 
@@ -84,7 +81,7 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		}
 
 		if (pointIndexes == null || pointIndexes.length == 0) {
-			Log.e(TAG, "No caches received");
+			Timber.e("No caches received");
 			setResult(RESULT_CANCELED);
 			finish();
 			return;
@@ -93,22 +90,17 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		ACRA.getErrorReporter().putCustomData("source", "update;");
 		ACRA.getErrorReporter().putCustomData("count", String.valueOf(pointIndexes.length));
 
-		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getSupportFragmentManager(), UpdateMoreDialogFragment.TAG);
+		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getSupportFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
-	public void onTaskFinished(boolean success) {
-		Log.d(TAG, "onTaskFinished result: " + success);
+	public void onUpdateFinished(boolean success) {
+		Timber.d("onUpdateFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
-	}
-
-	@Override
-	public void onProgressUpdate(int count) {
-		// unused
 	}
 
 	@Override
@@ -116,7 +108,7 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 		if (success) {
 			showUpdateMoreDialog();
 		} else {
-			onTaskFinished(false);
+			onUpdateFinished(false);
 		}
 	}
 
@@ -124,12 +116,12 @@ public class UpdateMoreActivity extends FragmentActivity implements OnTaskFinish
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
-			authenticatorActivityVisible = false;
+			mAuthenticatorActivityVisible = false;
 
 			if (resultCode == RESULT_OK) {
-				showUpdateMoreDialog = true;
+				mShowUpdateMoreDialog = true;
 			} else {
-				onTaskFinished(false);
+				onUpdateFinished(false);
 			}
 		}
 	}

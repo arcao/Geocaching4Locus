@@ -1,8 +1,8 @@
 package org.acra;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 
 /**
  * Extension class for ACRA ErrorReporter class.
@@ -27,13 +27,13 @@ public class ErrorReporterEx {
 	 * @param userEmail
 	 *          user e-mail
 	 */
-	public static void storeUserEmail(String userEmail) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Geocaching4LocusApplication.getAppContext());
+	public static void storeUserEmail(Context context, String userEmail) {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 		if (userEmail != null && userEmail.length() > 0) {
-			prefs.edit().putString("acra.user.email", userEmail).commit();
+			prefs.edit().putString("acra.user.email", userEmail).apply();
 		} else {
-			prefs.edit().remove("acra.user.email").commit();
+			prefs.edit().remove("acra.user.email").apply();
 		}
 	}
 }

@@ -8,7 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -17,13 +17,13 @@ import com.arcao.geocaching4locus.util.SpannedFix;
 import java.lang.ref.WeakReference;
 
 public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragment {
-	public static final String TAG = FullCacheDownloadConfirmDialogFragment.class.getName();
+	public static final String FRAGMENT_TAG = FullCacheDownloadConfirmDialogFragment.class.getName();
 
-	public interface OnFullCacheDownloadConfirmDialogListener {
+	public interface DialogListener {
 		void onFullCacheDownloadConfirmDialogFinished(boolean success);
 	}
 
-	protected WeakReference<OnFullCacheDownloadConfirmDialogListener> fullCacheDownloadConfirmDialogListenerRef;
+	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static FullCacheDownloadConfirmDialogFragment newInstance() {
 		return new FullCacheDownloadConfirmDialogFragment();
@@ -41,7 +41,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 		super.onAttach(activity);
 
 		try {
-			fullCacheDownloadConfirmDialogListenerRef = new WeakReference<>((OnFullCacheDownloadConfirmDialogListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnFullCacheDownloadConfirmDialogListener");
 		}
@@ -50,7 +50,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
+		AccountRestrictions restrictions = App.get(getActivity()).getAuthenticatorHelper().getRestrictions();
 
 		// apply format on a text
 		int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
@@ -62,7 +62,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 		if (period < AppConstants.SECONDS_PER_MINUTE) {
 			periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 		} else {
-			period = period / AppConstants.SECONDS_PER_MINUTE;
+			period /= AppConstants.SECONDS_PER_MINUTE;
 			periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 		}
 
@@ -78,7 +78,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 			.setPositiveButton(R.string.button_yes, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					OnFullCacheDownloadConfirmDialogListener listener = fullCacheDownloadConfirmDialogListenerRef.get();
+					DialogListener listener = mDialogListenerRef.get();
 					if (listener != null) {
 						listener.onFullCacheDownloadConfirmDialogFinished(true);
 					}
@@ -87,7 +87,7 @@ public class FullCacheDownloadConfirmDialogFragment extends AbstractDialogFragme
 			.setNegativeButton(R.string.button_no, new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					OnFullCacheDownloadConfirmDialogListener listener = fullCacheDownloadConfirmDialogListenerRef.get();
+					DialogListener listener = mDialogListenerRef.get();
 					if (listener != null) {
 						listener.onFullCacheDownloadConfirmDialogFinished(false);
 					}

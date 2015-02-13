@@ -3,20 +3,17 @@ package locus.api.android;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.android.utils.LocusConst;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.LocusConst;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	private static final String LOCUS_CACHE_FILENAME = "data.locus";
-
-	private static final String TAG = ActionDisplayPointsExtended.class.getName();
 
 	public static boolean sendPack(Context context, PackWaypoints data, boolean callImport, boolean center, int intentFlags)
 			throws RequiredVersionMissingException {
@@ -51,7 +48,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	 */
 	public static File getCacheFileName(Context context) {
 		File cacheFile = context.getFileStreamPath(LOCUS_CACHE_FILENAME);
-		Log.d(TAG, "Cache file for Locus: " + cacheFile.toString());
+		Timber.d("Cache file for Locus: " + cacheFile.toString());
 
 		return cacheFile;
 	}
@@ -70,7 +67,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 			FileOutputStream fos = new FileOutputStream(file);
 			fos.flush(); // create empty file
 			if (!file.setReadable(true, false)) { // file has to be readable for Locus
-				Log.e(TAG, "Unable to set readable all for: " + file);
+				Timber.e("Unable to set readable all for: " + file);
 			}
 
 			return fos;

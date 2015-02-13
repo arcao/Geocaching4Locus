@@ -1,10 +1,10 @@
 package com.arcao.wherigoservice.api;
 
-import android.util.Log;
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 import com.google.gson.stream.MalformedJsonException;
+import timber.log.Timber;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +16,6 @@ import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
 
 public class WherigoServiceImpl implements WherigoService {
-	private static final String TAG = "Geocaching4Locus|WherigoServiceImpl";
-
 	private static final String BASE_URL = "http://wherigo-service.appspot.com/api/";
 
 	@Override
@@ -52,9 +50,9 @@ public class WherigoServiceImpl implements WherigoService {
 			}
 			r.endObject();
 			r.close();
-			Log.i(TAG, "Cache code: " + cacheCode);
+			Timber.i("Cache code: " + cacheCode);
 		} catch (IOException e) {
-			Log.e(TAG, e.toString(), e);
+			Timber.e(e.toString(), e);
 			if (!isGsonException(e)) {
 				throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
 			}
@@ -86,7 +84,7 @@ public class WherigoServiceImpl implements WherigoService {
 		InputStream is;
 		InputStreamReader isr;
 
-		Log.i(TAG, "Getting " + maskParameterValues(function));
+		Timber.i("Getting " + maskParameterValues(function));
 
 		try {
 			URL url = new URL(BASE_URL + function);
@@ -111,13 +109,13 @@ public class WherigoServiceImpl implements WherigoService {
 			final String encoding = con.getContentEncoding();
 
 			if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
-				Log.i(TAG, "callGet(): GZIP OK");
+				Timber.i("callGet(): GZIP OK");
 				is = new GZIPInputStream(is);
 			} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
-				Log.i(TAG, "callGet(): DEFLATE OK");
+				Timber.i("callGet(): DEFLATE OK");
 				is = new InflaterInputStream(is, new Inflater(true));
 			} else {
-				Log.i(TAG, "callGet(): WITHOUT COMPRESSION");
+				Timber.i("callGet(): WITHOUT COMPRESSION");
 			}
 
 			if (con.getResponseCode() >= 400) {
@@ -140,7 +138,7 @@ public class WherigoServiceImpl implements WherigoService {
 			isr = new InputStreamReader(is, "UTF-8");
 			return new JsonReader(isr);
 		} catch (Exception e) {
-			Log.e(TAG, e.toString(), e);
+			Timber.e(e.toString(), e);
 			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getClass().getSimpleName(), e);
 		}
 	}

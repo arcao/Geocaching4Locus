@@ -33,7 +33,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_MAX = "MAX_VALUE";
 	private static final String PARAM_STEP = "STEP";
 
-	public interface SliderDialogListener {
+	public interface DialogListener {
 		public void onDialogClosed(SliderDialogFragment fragment);
 	}
 
@@ -46,7 +46,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 	private int mValue = mMin;
 	private int mNewValue = mValue;
 
-	protected WeakReference<SliderDialogListener> seekBarDialogListenerRef;
+	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static SliderDialogFragment newInstance(@StringRes int title, @StringRes int message, int min, int max, int defaultValue) {
 		return newInstance(title, message, min, max, defaultValue, 1);
@@ -78,14 +78,14 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 		super.onAttach(activity);
 
 		try {
-			seekBarDialogListenerRef = new WeakReference<>((SliderDialogListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement SeekBarDialogListener");
 		}
 	}
 
 	protected void fireDialogClose() {
-		SliderDialogListener listener = seekBarDialogListenerRef.get();
+		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onDialogClosed(this);
 		}

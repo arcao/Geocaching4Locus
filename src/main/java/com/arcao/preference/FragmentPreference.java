@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import com.arcao.geocaching4locus.R;
 
 public class FragmentPreference extends Preference {
-	private String fragmentName;
+	private String mFragmentName;
 
 	public FragmentPreference(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
@@ -18,11 +18,11 @@ public class FragmentPreference extends Preference {
 
 		TypedArray a = context.obtainStyledAttributes(attrs,
 						R.styleable.FragmentPreference, defStyle, 0);
-		fragmentName = a.getString(R.styleable.FragmentPreference_fragmentName);
+		mFragmentName = a.getString(R.styleable.FragmentPreference_fragmentName);
 		a.recycle();
 	}
 
 	public String getFragmentName() {
-		return fragmentName;
+		return mFragmentName;
 	}
 }

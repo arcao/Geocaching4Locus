@@ -2,8 +2,6 @@ package com.arcao.geocaching4locus.service;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -12,43 +10,33 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.UpdateActivity;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-
-import org.acra.ACRA;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Vector;
-
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableListFileOutput;
 import locus.api.utils.Utils;
+import org.acra.ACRA;
+import timber.log.Timber;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 public class SearchGeocacheService extends AbstractService {
-	private static final String TAG = "G4L|SearchGeocacheService";
-
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
 	public static final float MILES_PER_KILOMETER = 1.609344F;
+	private static final String PACK_WAYPOINT = "SearchGeocacheService";
 
 	private static SearchGeocacheService instance = null;
 
@@ -70,7 +58,7 @@ public class SearchGeocacheService extends AbstractService {
 	private Boolean excludeIgnoreList;
 
 	public SearchGeocacheService() {
-		super(TAG, R.string.downloading, R.string.downloading);
+		super("SearchGeocacheService", R.string.downloading, R.string.downloading);
 	}
 
 	public static SearchGeocacheService getInstance() {
@@ -126,13 +114,13 @@ public class SearchGeocacheService extends AbstractService {
 		try {
 			distance = Float.parseFloat(distanceString);
 		} catch (NumberFormatException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			distance = 100;
 		}
 
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			// get kilometers from miles
-			distance = distance * MILES_PER_KILOMETER;
+			distance *= MILES_PER_KILOMETER;
 		}
 
 		// fix for min and max distance error in Geocaching Live API
@@ -150,12 +138,8 @@ public class SearchGeocacheService extends AbstractService {
 		terrainMin = 1;
 		terrainMax = 5;
 
-		cacheTypes = null;
-		containerTypes = null;
-		excludeIgnoreList = null;
-
 		// Premium member feature?
-		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
+		if (App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
 			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
 
@@ -174,7 +158,7 @@ public class SearchGeocacheService extends AbstractService {
 				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "callLocus()", e);
+			Timber.e("callLocus()", e);
 		}
 	}
 
@@ -204,7 +188,8 @@ public class SearchGeocacheService extends AbstractService {
 
 	@SuppressWarnings("resource")
 	protected File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
+		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
+		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		if (isCanceled())
@@ -217,13 +202,13 @@ public class SearchGeocacheService extends AbstractService {
 		StoreableListFileOutput slfo = null;
 
 		try {
-			File dataFile = ActionDisplayPointsExtended.getCacheFileName(Geocaching4LocusApplication.getAppContext());
+			File dataFile = ActionDisplayPointsExtended.getCacheFileName(this);
 
 			login(api);
 
-			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+			String username = authenticatorHelper.getAccount().name;
 
-			slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(Geocaching4LocusApplication.getAppContext()));
+			slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(this));
 			slfo.beginList();
 
 			sendProgressUpdate();
@@ -253,7 +238,7 @@ public class SearchGeocacheService extends AbstractService {
 				}
 
 				if (!simpleCacheData)
-					Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
+					authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 
 				if (isCanceled())
 					return null;
@@ -269,8 +254,8 @@ public class SearchGeocacheService extends AbstractService {
 						break;
 				}
 
-				PackWaypoints pw = new PackWaypoints(TAG);
-				List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(Geocaching4LocusApplication.getAppContext(), cachesToAdd);
+				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT);
+				List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(this, cachesToAdd);
 
 				for (Waypoint wpt : waypoints) {
 					if (simpleCacheData) {
@@ -291,7 +276,7 @@ public class SearchGeocacheService extends AbstractService {
 
 			slfo.endList();
 
-			Log.i(TAG, "found caches: " + current);
+			Timber.i("found caches: " + current);
 
 			if (current > 0) {
 				return dataFile;
@@ -299,12 +284,12 @@ public class SearchGeocacheService extends AbstractService {
 				return null;
 			}
 		} catch (InvalidSessionException e) {
-			Log.e(TAG, e.getMessage(), e);
-			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			Timber.e(e.getMessage(), e);
+			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
 		} catch (IOException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			throw new GeocachingApiException(e.getMessage(), e);
 		} finally {
 			Utils.closeStream(slfo);
@@ -317,7 +302,7 @@ public class SearchGeocacheService extends AbstractService {
 			double distance = computeDistance(latitude, longitude, cache);
 
 			if (distance > maxDistance) {
-				Log.i(TAG, "Cache " + cache.getCacheCode() + " is over distance.");
+				Timber.i("Cache " + cache.getCacheCode() + " is over distance.");
 				caches.remove(cache);
 			} else {
 				return;
@@ -338,9 +323,11 @@ public class SearchGeocacheService extends AbstractService {
 	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {
-		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
+		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
+
+		String token = authenticatorHelper.getAuthToken();
 		if (token == null) {
-			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
 		}
 

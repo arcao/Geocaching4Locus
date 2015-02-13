@@ -19,11 +19,11 @@ import org.apache.commons.lang3.builder.Builder;
 public class ErrorActivity extends FragmentActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
 
-	public static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
+	private static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
 	public static final String PARAM_RESOURCE_TEXT = "RESOURCE_TEXT";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
-	public static final String PARAM_PREFERENCE_FRAGMENT = "PREFERENCE_FRAGMENT";
-	public static final String PARAM_EXCEPTION = "EXCEPTION";
+	private static final String PARAM_PREFERENCE_FRAGMENT = "PREFERENCE_FRAGMENT";
+	private static final String PARAM_EXCEPTION = "EXCEPTION";
 
 
 	@Override
@@ -49,16 +49,16 @@ public class ErrorActivity extends FragmentActivity {
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 
-		if (getSupportFragmentManager().findFragmentByTag(ErrorDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(ErrorDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		ErrorDialogFragment.newInstance(resTitleId, resTextId, preferenceFragment, additionalMessage, t)
-			.show(getSupportFragmentManager(), ErrorDialogFragment.TAG);
+			.show(getSupportFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
 	}
 
 
 	public static class ErrorDialogFragment extends AbstractDialogFragment {
-		public static final String TAG = ErrorDialogFragment.class.getName();
+		public static final String FRAGMENT_TAG = ErrorDialogFragment.class.getName();
 
 
 		public static DialogFragment newInstance(int resTitleId, int resTextId, Class<?> preferenceFragment, String additionalMessage, Throwable t) {

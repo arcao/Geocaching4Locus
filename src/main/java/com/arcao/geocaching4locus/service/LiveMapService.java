@@ -7,9 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
@@ -19,36 +17,25 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
-
-import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
+import timber.log.Timber;
+
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiveMapService extends IntentService {
-	private static final String TAG = "G4L|LiveMapService";
-
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
 	public static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
@@ -59,6 +46,9 @@ public class LiveMapService extends IntentService {
 	private static final int REQUESTS = 5;
 	private static final int CACHES_PER_REQUEST = 50;
 	private static final int CACHES_COUNT = REQUESTS * CACHES_PER_REQUEST;
+
+	private static final String PACK_WAYPOINT_PREFIX = "LiveMap|";
+	private static final int LIVEMAP_DISTANCE = 60000;
 
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 
@@ -76,7 +66,7 @@ public class LiveMapService extends IntentService {
 	protected SharedPreferences prefs;
 
 	public LiveMapService() {
-		super(TAG);
+		super("LiveMapService");
 	}
 
 	@Override
@@ -90,7 +80,7 @@ public class LiveMapService extends IntentService {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// increase count of jobs
 		countOfJobs.incrementAndGet();
-		Log.d(TAG, "New job, count=" + countOfJobs.get());
+		Timber.d("New job, count=" + countOfJobs.get());
 
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -98,22 +88,11 @@ public class LiveMapService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		int jobId = countOfJobs.get();
-		Log.d(TAG, "Handling job, count=" + jobId);
+		Timber.d("Handling job, count=" + jobId);
 
 		// we skip all jobs before last one
 		if (countOfJobs.getAndDecrement() > 1)
 			return;
-
-		// wait 1100 ms, next job could come
-		/*try {
-			Thread.sleep(1100);
-		} catch(InterruptedException e) {}
-
-		// if so skip this job
-		if (countOfJobs.get() > 0) {
-			Log.d(TAG, "New job found, skipped...");
-			return;
-		}*/
 
 		loadConfiguration(prefs);
 
@@ -127,24 +106,24 @@ public class LiveMapService extends IntentService {
 		try {
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (RequiredVersionMissingException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			showMessage("Error: " + e.getMessage());
 
 			// disable live map
-			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (InvalidCredentialsException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			showMessage(getString(R.string.error_credentials));
 
 			// disable live map
-			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).commit();
+			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (NetworkException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			showMessage(getString(R.string.error_network));
 		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 		} finally {
-			Log.d(TAG, "Job finished.");
+			Timber.d("Job finished.");
 		}
 	}
 
@@ -160,12 +139,8 @@ public class LiveMapService extends IntentService {
 		terrainMin = 1;
 		terrainMax = 5;
 
-		cacheTypes = null;
-		containerTypes = null;
-		excludeIgnoreList = null;
-
 		// Premium member feature?
-		if (Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
+		if (App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
 			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
 
@@ -203,7 +178,9 @@ public class LiveMapService extends IntentService {
 	}
 
 	protected void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
+		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
+
+		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
@@ -217,7 +194,7 @@ public class LiveMapService extends IntentService {
 		try {
 			login(api);
 
-			String username = Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name;
+			String username = authenticatorHelper.getAccount().name;
 
 			notificationManager.setDownloadingProgress(0, CACHES_COUNT);
 
@@ -225,7 +202,7 @@ public class LiveMapService extends IntentService {
 				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
 
 				if (countOfJobs.get() > 0) {
-					Log.d(TAG, "New job found, skipped downloading next caches ...");
+					Timber.d("New job found, skipped downloading next caches ...");
 					break;
 				}
 
@@ -233,7 +210,7 @@ public class LiveMapService extends IntentService {
 
 				if (current == 0) {
 					caches = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
-							new PointRadiusFilter(latitude, longitude, 60000),
+							new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
 							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
@@ -254,11 +231,11 @@ public class LiveMapService extends IntentService {
 				if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false))
 					break;
 
-				current = current + caches.size();
+				current += caches.size();
 
 				requests++;
 
-				PackWaypoints pw = new PackWaypoints(TAG + "|" + requests);
+				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + requests);
 				for (SimpleGeocache cache : caches) {
 					Waypoint wpt = LocusDataMapper.toLocusPoint(getApplicationContext(), cache);
 					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
@@ -273,27 +250,29 @@ public class LiveMapService extends IntentService {
 					break;
 			}
 		} catch (InvalidSessionException e) {
-			Log.e(TAG, e.getMessage(), e);
-			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			Timber.e(e.getMessage(), e);
+			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
 		} finally {
-			Log.i(TAG, "Count of caches sent to Locus: " + current);
+			Timber.i("Count of caches sent to Locus: " + current);
 		}
 
 		notificationManager.setDownloadingProgress(CACHES_COUNT, CACHES_COUNT);
 
 		// HACK we must remove old PackWaypoints from the map
 		for (int i = requests + 1; i < REQUESTS; i++) {
-			PackWaypoints pw = new PackWaypoints(TAG + "|" + i);
+			PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
 			ActionDisplayPoints.sendPackSilent(this, pw, false);
 		}
 	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {
-		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
+		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
+
+		String token = authenticatorHelper.getAuthToken();
 		if (token == null) {
-			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
 		}
 

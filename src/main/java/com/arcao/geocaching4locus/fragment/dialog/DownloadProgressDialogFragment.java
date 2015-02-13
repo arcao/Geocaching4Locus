@@ -5,12 +5,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
 import com.arcao.geocaching4locus.R;
+import timber.log.Timber;
 
 public final class DownloadProgressDialogFragment extends AbstractDialogFragment {
-	public static final String TAG = DownloadProgressDialogFragment.class.getName();
+	public static final String FRAGMENT_TAG = DownloadProgressDialogFragment.class.getName();
 
 	private static final String PARAM_MESSAGE_ID = "MESSAGE_ID";
 	private static final String PARAM_COUNT = "COUNT";
@@ -67,7 +66,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 		}
 		pd.setMessage(getText(arguments.getInt(PARAM_MESSAGE_ID)));
 
-		Log.d(TAG, "Creating ProgressDialog; count:" + count + "; current:" + current);
+		Timber.d("Creating ProgressDialog; count:" + count + "; current:" + current);
 
 		return pd;
 	}

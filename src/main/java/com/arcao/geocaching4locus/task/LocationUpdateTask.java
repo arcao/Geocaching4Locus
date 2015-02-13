@@ -16,13 +16,12 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.LocationUpdateProgressDialogFragment;
 import com.arcao.geocaching4locus.util.UserTask;
+import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.BrokenBarrierException;
@@ -31,35 +30,29 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class LocationUpdateTask extends UserTask<Void, Void, Location> implements LocationListener, AbstractDialogFragment.CancellableDialog {
-	private static final String TAG = LocationUpdateTask.class.getName();
 	private static final int TIMEOUT = 120; // in sec
 	private static final String PASSIVE_PROVIDER = "passive";
 
-	protected final CyclicBarrier barrier = new CyclicBarrier(2); // task + location update callback
-	protected LocationUpdateProgressDialogFragment pd;
-
-	protected WeakReference<FragmentActivity> activityRef;
-	protected final LocationManager locationManager;
-	protected Location bestLocation;
+	protected final CyclicBarrier mBarrier = new CyclicBarrier(2); // task + location update callback
+	protected final WeakReference<FragmentActivity> mActivityRef;
+	protected final Context mContext;
+	protected final LocationManager mLocationManager;
+	protected LocationUpdateProgressDialogFragment mDialog;
+	protected Location mBestLocation;
 
 	public LocationUpdateTask(FragmentActivity activity) {
-		attach(activity);
-
-		locationManager = (LocationManager) Geocaching4LocusApplication.getAppContext().getSystemService(Context.LOCATION_SERVICE);
-	}
-
-	public void attach(FragmentActivity activity) {
-		activityRef = new WeakReference<>(activity);
+		mActivityRef = new WeakReference<>(activity);
+		mContext = activity.getApplicationContext();
+		mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 	}
 
 	public void detach() {
 		cancel();
 	}
 
-
 	@Override
 	protected void onPreExecute() {
-		FragmentActivity activity = activityRef.get();
+		FragmentActivity activity = mActivityRef.get();
 
 		if (activity == null) {
 			cancel();
@@ -67,23 +60,23 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		}
 
 		int source = LocationUpdateProgressDialogFragment.SOURCE_NETWORK;
-		bestLocation = getLastLocation();
+		mBestLocation = getLastLocation();
 
 		if (activity instanceof LocationUpdate) {
-			((LocationUpdate)activity).onLocationUpdate(bestLocation);
+			((LocationUpdate)activity).onLocationUpdate(mBestLocation);
 		}
 
-		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			Log.i(TAG, "Searching location via " + LocationManager.GPS_PROVIDER);
+		if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			Timber.i("Searching location via " + LocationManager.GPS_PROVIDER);
 
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 			source = LocationUpdateProgressDialogFragment.SOURCE_GPS;
-		} else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-			Log.i(TAG, "Searching location via " + LocationManager.NETWORK_PROVIDER);
+		} else if (mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			Timber.i("Searching location via " + LocationManager.NETWORK_PROVIDER);
 
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		} else {
-			Log.i(TAG, "No location providers found, used last location.");
+			Timber.i("No location providers found, used last location.");
 
 			cancel();
 
@@ -91,16 +84,16 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			return;
 		}
 
-		pd = LocationUpdateProgressDialogFragment.newInstance(source);
-		pd.show(activity.getSupportFragmentManager(), LocationUpdateProgressDialogFragment.TAG);
+		mDialog = LocationUpdateProgressDialogFragment.newInstance(source);
+		mDialog.show(activity.getSupportFragmentManager(), LocationUpdateProgressDialogFragment.FRAGMENT_TAG);
 	}
 
 	protected Location getLastLocation() {
 		// use last available location
-		Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		Location networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		Location gpsLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location networkLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Geocaching4LocusApplication.getAppContext());
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
 		Location location;
 		if (gpsLocation == null && networkLocation != null) {
@@ -115,7 +108,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			location.setLongitude(prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0));
 		}
 
-		Log.i(TAG, "Last location found for: " + location.toString());
+		Timber.i("Last location found for: " + location.toString());
 
 		return location;
 	}
@@ -124,35 +117,35 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	@Override
 	protected Location doInBackground(Void... params) throws Exception {
 		try {
-			barrier.await(TIMEOUT, TimeUnit.SECONDS);
+			mBarrier.await(TIMEOUT, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
-			Log.i(TAG, "Barrier timeouted");
+			Timber.i("Barrier timeouted");
 		} catch (BrokenBarrierException e) {
-			Log.i(TAG, "Barrier cancelled");
+			Timber.i("Barrier cancelled");
 		} finally {
-			Log.i(TAG, "Location listener removed.");
-			locationManager.removeUpdates(this);
+			Timber.i("Location listener removed.");
+			mLocationManager.removeUpdates(this);
 		}
-		return bestLocation;
+		return mBestLocation;
 	}
 
 	@Override
 	protected void onPostExecute(Location result) {
-		Activity activity = activityRef.get();
+		Activity activity = mActivityRef.get();
 		if (activity != null && activity instanceof LocationUpdate) {
-			((LocationUpdate)activity).onLocationUpdate(bestLocation);
+			((LocationUpdate)activity).onLocationUpdate(mBestLocation);
 		}
 	}
 
 	@Override
 	protected void onFinally() {
-		if (pd != null && pd.isShowing())
-			pd.dismiss();
+		if (mDialog != null && mDialog.isShowing())
+			mDialog.dismiss();
 	}
 
 	public void cancel() {
 		cancel(false);
-		barrier.reset();
+		mBarrier.reset();
 	}
 
 	@Override
@@ -163,28 +156,28 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
 	@Override
 	public void onLocationChanged(Location location) {
-		Log.i(TAG, "New location found for: " + location.toString());
+		Timber.i("New location found for: " + location.toString());
 
-		bestLocation = location;
+		mBestLocation = location;
 		try {
-			barrier.await(0, TimeUnit.MILLISECONDS);
+			mBarrier.await(0, TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 		}
 	}
 
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		Log.i(TAG, "Location provider " + provider + " disabled.");
+		Timber.i("Location provider " + provider + " disabled.");
 
-		locationManager.removeUpdates(this);
-		Log.i(TAG, "Location listener removed.");
+		mLocationManager.removeUpdates(this);
+		Timber.i("Location listener removed.");
 
-		if (LocationManager.GPS_PROVIDER.equals(provider) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-			Log.i(TAG, "Switching to " + LocationManager.NETWORK_PROVIDER + " provider.");
+		if (LocationManager.GPS_PROVIDER.equals(provider) && mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			Timber.i("Switching to " + LocationManager.NETWORK_PROVIDER + " provider.");
 
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		} else {
 			cancel();
 		}

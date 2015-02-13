@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import com.arcao.geocaching4locus.BuildConfig;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
@@ -28,7 +28,7 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
 
-		versionPreference.setSummary(Geocaching4LocusApplication.getVersion() + " (" + BuildConfig.GIT_SHA + ")");
+		versionPreference.setSummary(App.get(getActivity()).getVersion() + " (" + BuildConfig.GIT_SHA + ")");
 
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
 		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());

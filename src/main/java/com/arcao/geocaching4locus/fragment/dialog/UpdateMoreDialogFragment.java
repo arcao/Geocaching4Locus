@@ -7,20 +7,23 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
-import com.arcao.geocaching4locus.task.UpdateMoreTask.OnTaskFinishedListener;
+import com.arcao.geocaching4locus.task.UpdateMoreTask.TaskListener;
 
 import java.lang.ref.WeakReference;
 
-public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements OnTaskFinishedListener {
-	public static final String TAG = UpdateMoreDialogFragment.class.getName();
+public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements TaskListener {
+	public static final String FRAGMENT_TAG = UpdateMoreDialogFragment.class.getName();
 
 	public static final String PARAM_POINT_INDEXES = "POINT_INDEXES";
 
+	public interface DialogListener {
+		void onUpdateFinished(boolean success);
+	}
+
 	protected UpdateMoreTask mTask;
-	protected WeakReference<OnTaskFinishedListener> taskFinishedListenerRef;
+	protected WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {
 		UpdateMoreDialogFragment fragment = new UpdateMoreDialogFragment();
@@ -41,8 +44,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 
 		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
 
-		mTask = new UpdateMoreTask();
-		mTask.setOnTaskUpdateListener(this);
+		mTask = new UpdateMoreTask(getActivity(), this);
 		mTask.execute(pointIndexes);
 	}
 
@@ -51,7 +53,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<>((OnTaskFinishedListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
 		}
@@ -63,9 +65,9 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 
 		dismiss();
 
-		OnTaskFinishedListener taskFinishedListener = taskFinishedListenerRef.get();
-		if (taskFinishedListener != null) {
-			taskFinishedListener.onTaskFinished(success);
+		DialogListener listener = mDialogListenerRef.get();
+		if (listener != null) {
+			listener.onUpdateFinished(success);
 		}
 	}
 

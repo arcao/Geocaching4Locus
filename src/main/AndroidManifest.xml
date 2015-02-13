@@ -17,7 +17,7 @@
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:backupAgent=".backup.PreferencesBackupAgent" android:name="Geocaching4LocusApplication" android:allowBackup="true" android:largeHeap="true" android:hardwareAccelerated="true">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:backupAgent=".backup.PreferencesBackupAgent" android:name=".App" android:allowBackup="true" android:largeHeap="true" android:hardwareAccelerated="true">
         <meta-data android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
 

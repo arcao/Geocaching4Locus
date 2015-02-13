@@ -1,56 +1,32 @@
 package locus.api.mapper;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.arcao.geocaching.api.data.CacheLog;
-import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.data.ImageData;
-import com.arcao.geocaching.api.data.SimpleGeocache;
-import com.arcao.geocaching.api.data.Trackable;
-import com.arcao.geocaching.api.data.User;
-import com.arcao.geocaching.api.data.UserWaypoint;
+import com.arcao.geocaching.api.data.*;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.AttributeType;
-import com.arcao.geocaching.api.data.type.CacheLogType;
-import com.arcao.geocaching.api.data.type.CacheType;
-import com.arcao.geocaching.api.data.type.ContainerType;
-import com.arcao.geocaching.api.data.type.WaypointType;
+import com.arcao.geocaching.api.data.type.*;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.*;
 import org.apache.commons.lang3.StringUtils;
+import timber.log.Timber;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.GeocachingAttribute;
-import locus.api.objects.geocaching.GeocachingData;
-import locus.api.objects.geocaching.GeocachingImage;
-import locus.api.objects.geocaching.GeocachingLog;
-import locus.api.objects.geocaching.GeocachingTrackable;
-import locus.api.objects.geocaching.GeocachingWaypoint;
-
 public class LocusDataMapper {
-	private static final String TAG = "LocusDataMapper";
-
-	protected static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
-	protected static final String GSAK_USERNAME = "gsak";
-	protected static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
-	protected static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
+	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+	private static final String GSAK_USERNAME = "gsak";
+	private static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
+	private static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -156,7 +132,7 @@ public class LocusDataMapper {
 		return i;
 	}
 
-	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, List<UserWaypoint> userWaypoints) {
+	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, Iterable<UserWaypoint> userWaypoints) {
 		UserWaypoint correctedCoordinateUserWaypoint = null;
 
 		// find corrected coordinate user waypoint
@@ -429,10 +405,10 @@ public class LocusDataMapper {
 
 				namePrefix = "";
 			} catch (ParseException e) {
-				Log.w(TAG, e.getMessage());
+				Timber.w(e.getMessage());
 
 				// fix for "S1: N 49 ..."
-				namePrefix = namePrefix + note.substring(0, matcher.start() + 1);
+				namePrefix += note.substring(0, matcher.start() + 1);
 			}
 
 			note = note.substring(matcher.start() + 1);

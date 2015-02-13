@@ -3,22 +3,19 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
-import com.arcao.geocaching4locus.task.ImportTask.OnTaskFinishedListener;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import org.acra.ACRA;
+import timber.log.Timber;
 
-public class ImportFromGCActivity extends FragmentActivity implements OnTaskFinishedListener, GCNumberInputDialogFragment.OnInputFinishedListener, FullCacheDownloadConfirmDialogFragment.OnFullCacheDownloadConfirmDialogListener {
-	private static final String TAG = "G4L|ImportFromGCActivity";
-
+public class ImportFromGCActivity extends FragmentActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
-	private boolean authenticatorActivityVisible = false;
-	private boolean showGCNumberInputDialog = false;
+	private boolean mAuthenticatorActivityVisible = false;
+	private boolean mShowGCNumberInputDialog = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +27,28 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		}
 
 		// if import task is running, show the import task progress dialog
-		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null) {
-			showGCNumberInputDialog = false;
+		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null) {
+			mShowGCNumberInputDialog = false;
 			return;
 		}
 
 		// test if user is logged in
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
 			if (savedInstanceState != null)
-				authenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
+				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
 
-			if (!authenticatorActivityVisible) {
+			if (!mAuthenticatorActivityVisible) {
 				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				authenticatorActivityVisible = true;
+				mAuthenticatorActivityVisible = true;
 			}
 
 			return;
 		}
 
-		if (showBasicMemeberWarningDialog())
+		if (showBasicMemberWarningDialog())
 			return;
 
-		showGCNumberInputDialog = true;
+		mShowGCNumberInputDialog = true;
 	}
 
 	@Override
@@ -59,9 +56,9 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		super.onResumeFragments();
 
 		// play with fragments here
-		if (showGCNumberInputDialog) {
+		if (mShowGCNumberInputDialog) {
 			showGCNumberInputDialog();
-			showGCNumberInputDialog = false;
+			mShowGCNumberInputDialog = false;
 		}
 	}
 
@@ -69,28 +66,28 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, authenticatorActivityVisible);
+		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
 	protected void showGCNumberInputDialog() {
-		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		GCNumberInputDialogFragment.newInstance().show(getSupportFragmentManager(), GCNumberInputDialogFragment.TAG);
+		GCNumberInputDialogFragment.newInstance().show(getSupportFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
-	protected boolean showBasicMemeberWarningDialog() {
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
+	protected boolean showBasicMemberWarningDialog() {
+		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
 			return false;
 
 		// check next dialog fragment
-		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
 			return false;
 
-		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
 			return true;
 
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 
 		return true;
 	}
@@ -98,10 +95,10 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	protected void startImport(String cacheId) {
 		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
 
-		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.TAG) != null)
+		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.TAG);
+		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
@@ -109,24 +106,24 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 		if (input != null) {
 			startImport(input);
 		} else {
-			onTaskFinished(false);
+			onImportFinished(false);
 		}
 	}
 
 	@Override
-	public void onTaskFinished(boolean success) {
-		Log.d(TAG, "onTaskFinished result: " + success);
+	public void onImportFinished(boolean success) {
+		Timber.d("onImportFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
 
 	@Override
 	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
-		Log.d(TAG, "onFullCacheDownloadConfirmDialogFinished result: " + success);
+		Timber.d("onFullCacheDownloadConfirmDialogFinished result: " + success);
 		if (success) {
 			showGCNumberInputDialog();
 		} else {
-			onTaskFinished(false);
+			onImportFinished(false);
 		}
 	}
 
@@ -134,13 +131,13 @@ public class ImportFromGCActivity extends FragmentActivity implements OnTaskFini
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
-			authenticatorActivityVisible = false;
+			mAuthenticatorActivityVisible = false;
 
 			if (resultCode == RESULT_OK) {
 				// we can't show dialog here, we'll do it in onPostResume
-				showGCNumberInputDialog = true;
+				mShowGCNumberInputDialog = true;
 			} else {
-				onTaskFinished(false);
+				onImportFinished(false);
 			}
 		}
 	}

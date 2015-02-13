@@ -1,21 +1,24 @@
 package com.arcao.geocaching4locus.util;
 
+import android.content.Context;
 import android.os.Build;
 
 import com.arcao.geocaching.api.data.DeviceInfo;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 
 public final class DeviceInfoFactory {
-	public static DeviceInfo create() {
+	public static DeviceInfo create(Context context) {
+		App app = App.get(context);
+
 		return new DeviceInfo(
 				0,
 				0,
-				Geocaching4LocusApplication.getVersion(),
+				app.getVersion(),
 				Build.MANUFACTURER,
 				Build.MODEL,
 				Build.VERSION.RELEASE,
 				0,
-				Geocaching4LocusApplication.getDeviceId(),
+				app.getDeviceId(),
 				null,
 				null
 		);

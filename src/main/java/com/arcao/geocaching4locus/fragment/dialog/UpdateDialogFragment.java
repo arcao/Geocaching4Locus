@@ -8,23 +8,25 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.UpdateTask;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
+import locus.api.objects.extra.Waypoint;
 
 import java.lang.ref.WeakReference;
 
-import locus.api.objects.extra.Waypoint;
-
-public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.OnTaskListener {
-	public static final String TAG = UpdateDialogFragment.class.getName();
+public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.TaskListener {
+	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
 
 	private static final String PARAM_UPDATE_DATA = "UPDATE_DATA";
 
+	public interface DialogListener {
+		void onUpdateFinished(Intent result);
+	}
+
 	protected UpdateTask mTask;
-	protected WeakReference<UpdateTask.OnTaskListener> taskFinishedListenerRef;
+	protected WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
 		UpdateDialogFragment fragment = new UpdateDialogFragment();
@@ -45,8 +47,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
 		UpdateTaskData data = (UpdateTaskData) getArguments().getSerializable(PARAM_UPDATE_DATA);
 
-		mTask = new UpdateTask();
-		mTask.setOnTaskListener(this);
+		mTask = new UpdateTask(getActivity(), this);
 		mTask.execute(data);
 	}
 
@@ -55,7 +56,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		super.onAttach(activity);
 
 		try {
-			taskFinishedListenerRef = new WeakReference<>((UpdateTask.OnTaskListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
 		}
@@ -68,9 +69,9 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
 		dismiss();
 
-		UpdateTask.OnTaskListener taskFinishedListener = taskFinishedListenerRef.get();
-		if (taskFinishedListener != null) {
-			taskFinishedListener.onTaskFinished(intent);
+		DialogListener listener = mDialogListenerRef.get();
+		if (listener != null) {
+			listener.onUpdateFinished(intent);
 		}
 	}
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.*;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import org.acra.ACRA;
 import org.acra.ErrorReporterEx;
 
@@ -87,8 +88,9 @@ public class SendErrorActivity extends Activity {
 		yes.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
-					ACRA.getErrorReporter().putCustomData("userName", Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name);
+				AuthenticatorHelper authenticatorHelper = App.get(SendErrorActivity.this).getAuthenticatorHelper();
+				if (authenticatorHelper.hasAccount()) {
+					ACRA.getErrorReporter().putCustomData("userName", authenticatorHelper.getAccount().name);
 				}
 
 				// Retrieve user comment
@@ -103,7 +105,7 @@ public class SendErrorActivity extends Activity {
 					prefEditor.putString(ACRA.PREF_USER_EMAIL_ADDRESS, usrEmail);
 					prefEditor.commit();
 
-					ErrorReporterEx.storeUserEmail(usrEmail);
+					ErrorReporterEx.storeUserEmail(getApplicationContext(), usrEmail);
 				}
 
 				// Optional Toast to thank the user

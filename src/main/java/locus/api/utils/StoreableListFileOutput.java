@@ -1,35 +1,33 @@
 package locus.api.utils;
 
+import locus.api.objects.Storable;
+
 import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 
-import locus.api.objects.Storable;
-
 public class StoreableListFileOutput implements Closeable {
-	protected boolean listOpened = false;
-	protected int count = 0;
-	protected int counterPosition = 0;
+	private boolean mListOpened = false;
+	private int mCount = 0;
+	private int mCounterPosition = 0;
 
-	protected final FileOutputStream out;
-	protected final DataFileWriterBigEndian writer;
+	private final DataFileWriterBigEndian mWriter;
 
 	public StoreableListFileOutput(FileOutputStream out) {
-		this.out = out;
-		this.writer = new DataFileWriterBigEndian(out);
+		this.mWriter = new DataFileWriterBigEndian(out);
 	}
 
 	public synchronized void beginList() throws IOException {
 		try {
-			if (listOpened)
+			if (mListOpened)
 				return;
 
-			listOpened = true;
-			count = 0;
+			mListOpened = true;
+			mCount = 0;
 
-			counterPosition = writer.getPosition();
-			writer.writeInt(count);
+			mCounterPosition = mWriter.getPosition();
+			mWriter.writeInt(mCount);
 		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
 			throw e.getCause();
 		}
@@ -37,17 +35,17 @@ public class StoreableListFileOutput implements Closeable {
 
 	public synchronized void endList() throws IOException {
 		try {
-			if (!listOpened)
+			if (!mListOpened)
 				throw new IOException("List file structure is not prepared. Call beginList method first.");
 
-			int lastPosition = writer.getPosition();
+			int lastPosition = mWriter.getPosition();
 
-			writer.moveTo(counterPosition);
-			writer.writeInt(count);
-			writer.moveTo(lastPosition);
+			mWriter.moveTo(mCounterPosition);
+			mWriter.writeInt(mCount);
+			mWriter.moveTo(lastPosition);
 
-			count = 0;
-			listOpened = false;
+			mCount = 0;
+			mListOpened = false;
 		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
 			throw e.getCause();
 		}
@@ -55,8 +53,8 @@ public class StoreableListFileOutput implements Closeable {
 
 	public synchronized void write(Storable obj) throws IOException {
 		try {
-			obj.write(writer);
-			count++;
+			obj.write(mWriter);
+			mCount++;
 		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
 			throw e.getCause();
 		}
@@ -71,11 +69,11 @@ public class StoreableListFileOutput implements Closeable {
 	@Override
 	public void close() throws IOException {
 		try {
-			if (listOpened)
+			if (mListOpened)
 				endList();
 
-			writer.flush();
-			writer.close();
+			mWriter.flush();
+			mWriter.close();
 		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
 			throw e.getCause();
 		}

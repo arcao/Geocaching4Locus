@@ -10,29 +10,32 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
+import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 
 
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
-	public static final String TAG = GCNumberInputDialogFragment.class.getName();
+	public static final String FRAGMENT_TAG = GCNumberInputDialogFragment.class.getName();
 
 	private static final String PARAM_INPUT = "INPUT";
 	private static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
 
-	protected WeakReference<OnInputFinishedListener> inputFinishedListenerRef;
-	protected EditText editText;
-	protected CharSequence errorMessage = null;
+	public interface DialogListener {
+		void onInputFinished(String input);
+	}
+
+	private WeakReference<DialogListener> mDialogListenerRef;
+	private EditText mEditText;
+	private CharSequence mErrorMessage = null;
 
 	public static GCNumberInputDialogFragment newInstance() {
 		return new GCNumberInputDialogFragment();
@@ -43,7 +46,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		super.onAttach(activity);
 
 		try {
-			inputFinishedListenerRef = new WeakReference<>((OnInputFinishedListener) activity);
+			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString() + " must implement OnInputFinishedListener");
 		}
@@ -53,14 +56,14 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		if (editText != null && isShowing()) {
-			outState.putCharSequence(PARAM_INPUT, editText.getText());
-			outState.putCharSequence(PARAM_ERROR_MESSAGE, editText.getError());
+		if (mEditText != null && isShowing()) {
+			outState.putCharSequence(PARAM_INPUT, mEditText.getText());
+			outState.putCharSequence(PARAM_ERROR_MESSAGE, mEditText.getError());
 		}
 	}
 
 	protected void fireOnInputFinished(String input) {
-		OnInputFinishedListener listener = inputFinishedListenerRef.get();
+		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onInputFinished(input);
 		}
@@ -79,28 +82,32 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 		View view = LayoutInflater.from(context).inflate(R.layout.dialog_gc_number_input, null);
 
-		editText = (EditText) view.findViewById(R.id.gc_code_input_edit_text);
-		editText.setText("GC");
-		editText.addTextChangedListener(new TextWatcher() {
-	    @Override
-			public void afterTextChanged(Editable s) {}
-	    @Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-	    @Override
-			public void onTextChanged(CharSequence s, int start, int before, int count){
-	        if(s != null && s.length() > 0 && editText.getError() != null) {
-	            editText.setError(null);
-	        }
-	    }
+		mEditText = (EditText) view.findViewById(R.id.gc_code_input_edit_text);
+		mEditText.setText("GC");
+		mEditText.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (s != null && s.length() > 0 && mEditText.getError() != null) {
+					mEditText.setError(null);
+				}
+			}
 		});
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
-			editText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
-			errorMessage = savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE);
+			mEditText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
+			mErrorMessage = savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE);
 		}
 
 		// move caret on a last position
-		editText.setSelection(editText.getText().length());
+		mEditText.setSelection(mEditText.getText().length());
 
 		return new AlertDialog.Builder(context)
 			.setTitle(R.string.dialog_gc_number_input_title)
@@ -125,9 +132,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
 		// More here: http://code.google.com/p/android/issues/detail?id=19173
-		if (errorMessage != null) {
-			editText.setError(errorMessage);
-			errorMessage = null;
+		if (mErrorMessage != null) {
+			mEditText.setError(mErrorMessage);
+			mErrorMessage = null;
 		}
 	}
 
@@ -147,8 +154,8 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			@Override
 			public void onClick(View v)
 			{
-				if (validateInput(editText)) {
-					fireOnInputFinished(editText.getText().toString());
+				if (validateInput(mEditText)) {
+					fireOnInputFinished(mEditText.getText().toString());
 					alertDialog.dismiss();
 				}
 			}
@@ -168,14 +175,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 				return true;
 			}
 		} catch (IllegalArgumentException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 		}
 
 		editText.setError(getString(R.string.error_input_gc));
 		return false;
-	}
-
-	public interface OnInputFinishedListener {
-		void onInputFinished(String input);
 	}
 }

@@ -15,8 +15,8 @@ import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import locus.api.android.utils.LocusUtils;
 
 public class MenuActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
-	private ToggleButton liveMapButton;
-	private LiveMapNotificationManager liveMapNotificationManager;
+	private ToggleButton mLiveMapButton;
+	private LiveMapNotificationManager mLiveMapNotificationManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,21 +27,21 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setTitle(getTitle());
 
-		liveMapNotificationManager = LiveMapNotificationManager.get(this);
-		liveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
+		mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
+		mLiveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		liveMapButton.setChecked(liveMapNotificationManager.isLiveMapEnabled());
-		liveMapNotificationManager.addLiveMapStateChangeListener(this);
+		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
+		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
 	}
 
 	@Override
 	protected void onPause() {
-		liveMapNotificationManager.removeLiveMapStateChangeListener(this);
+		mLiveMapNotificationManager.removeLiveMapStateChangeListener(this);
 
 		super.onPause();
 	}
@@ -51,8 +51,8 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 	}
 
 	public void onClickLiveMap(View view) {
-		liveMapNotificationManager.setLiveMapEnabled(!liveMapNotificationManager.isLiveMapEnabled());
-		liveMapButton.setChecked(liveMapNotificationManager.isLiveMapEnabled());
+		mLiveMapNotificationManager.setLiveMapEnabled(!mLiveMapNotificationManager.isLiveMapEnabled());
+		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 
 		// hide dialog only when was started from Locus
 		if (LocusUtils.isIntentMainFunction(getIntent())) {
@@ -115,6 +115,6 @@ public class MenuActivity extends AbstractActionBarActivity implements LiveMapNo
 
 	@Override
 	public void onLiveMapStateChange(boolean newState) {
-		liveMapButton.setChecked(newState);
+		mLiveMapButton.setChecked(newState);
 	}
 }

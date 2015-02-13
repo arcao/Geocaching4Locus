@@ -2,13 +2,13 @@ package com.arcao.geocaching4locus.task;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.DeviceInfoFactory;
@@ -19,6 +19,7 @@ import oauth.signpost.OAuthProvider;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
+import timber.log.Timber;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -27,24 +28,26 @@ import java.net.URL;
 import java.util.Date;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
-	private static final String TAG = OAuthLoginTask.class.getName();
-
-	public interface OAuthLoginTaskListener {
+	public interface TaskListener {
 		void onLoginUrlAvailable(String url);
 		void onOAuthTaskFinished(String userName, String token);
 		void onTaskError(Intent errorIntent);
 	}
 
-	private WeakReference<OAuthLoginTaskListener> oAuthLoginTaskListenerRef;
+	private final Context mContext;
+	private final WeakReference<TaskListener> mTaskListenerRef;
 
-	public void setOAuthLoginTaskListener(OAuthLoginTaskListener oAuthLoginTaskListener) {
-		this.oAuthLoginTaskListenerRef = new WeakReference<>(oAuthLoginTaskListener);
+	public OAuthLoginTask(Context context, TaskListener listener) {
+		mContext = context.getApplicationContext();
+		mTaskListenerRef = new WeakReference<>(listener);
 	}
 
 	@Override
 	protected String[] doInBackground(String... params) throws Exception {
 		OAuthConsumer consumer = LiveGeocachingApiFactory.getOAuthConsumer();
 		OAuthProvider provider = LiveGeocachingApiFactory.getOAuthProvider();
+		App app = App.get(mContext);
+		AccountRestrictions accountRestrictions = app.getAuthenticatorHelper().getRestrictions();
 
 		// we use server time for OAuth timestamp because device can have wrong timezone or time
 		String timestamp = Long.toString(getServerDate(AppConstants.GEOCACHING_WEBSITE_URL).getTime() / 1000);
@@ -52,22 +55,22 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		try {
 			if (params.length == 0) {
 				String authUrl = provider.retrieveRequestToken(consumer, AppConstants.OAUTH_CALLBACK_URL, OAuth.OAUTH_TIMESTAMP, timestamp);
-				Geocaching4LocusApplication.storeRequestTokens(consumer);
+				app.storeRequestTokens(consumer);
 				return new String[] { authUrl };
 			} else {
-				Geocaching4LocusApplication.loadRequestTokensIfNecessary(consumer);
+				app.loadRequestTokensIfNecessary(consumer);
 				provider.retrieveAccessToken(consumer, params[0], OAuth.OAUTH_TIMESTAMP, timestamp);
 
 				// get account name
 				GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
 				api.openSession(consumer.getToken());
 
-				UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create());
+				UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
 				ApiLimits apiLimits = api.getApiLimits();
 
 				// update member type and restrictions
-				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateMemberType(userProfile.getUser().getMemberType());
-				Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(apiLimits);
+				accountRestrictions.updateMemberType(userProfile.getUser().getMemberType());
+				accountRestrictions.updateLimits(apiLimits);
 
 				return new String[] {
 						userProfile.getUser().getUserName(),
@@ -86,7 +89,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 	@Override
 	protected void onPostExecute(String[] result) {
-		OAuthLoginTaskListener listener = oAuthLoginTaskListenerRef.get();
+		TaskListener listener = mTaskListenerRef.get();
 
 		if (result.length == 1) {
 
@@ -107,14 +110,12 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		if (isCancelled())
 			return;
 
-		Log.e(TAG, t.getMessage(), t);
-
-		Context mContext = Geocaching4LocusApplication.getAppContext();
+		Timber.e(t.getMessage(), t);
 
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		OAuthLoginTaskListener listener = oAuthLoginTaskListenerRef.get();
+		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskError(intent);
 		}
@@ -124,7 +125,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		HttpURLConnection c = null;
 
 		try {
-			Log.i(TAG, "Getting server time from url: " + url);
+			Timber.i("Getting server time from url: " + url);
 			c = (HttpURLConnection) new URL(url).openConnection();
 			c.setRequestMethod("HEAD");
 			c.setDoInput(false);
@@ -133,7 +134,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 			if (c.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String date = c.getHeaderField("Date");
 				if (date != null) {
-					Log.i(TAG, "We got time: " + date);
+					Timber.i("We got time: " + date);
 					return DateUtils.parseDate(date);
 				}
 			}
@@ -144,7 +145,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 				c.disconnect();
 		}
 
-		Log.e(TAG, "No Date header found in a response, used device time instead.");
+		Timber.e("No Date header found in a response, used device time instead.");
 		return new Date();
 	}
 }

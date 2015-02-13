@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.util.SpannedFix;
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
 	private static final String PARAM_SCREEN = "screen";
 
-	protected SharedPreferences prefs;
+	protected SharedPreferences mPrefs;
 
 	protected <P extends Preference> P findPreference(String key) {
 		return (P)super.findPreference(key);
@@ -32,7 +32,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	@Override
 	public void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
-		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 	}
 
 	@Override

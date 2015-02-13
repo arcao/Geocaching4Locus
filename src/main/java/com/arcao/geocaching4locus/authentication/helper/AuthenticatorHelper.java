@@ -10,12 +10,10 @@ public interface AuthenticatorHelper {
 	Account getAccount();
 	void addAccount(Activity activity);
 	boolean addAccountExplicitly(Account account, String password);
-	void setPassword(Account account, String password);
 	void setAuthToken(Account account, final String authTokenType, final String authToken);
 	boolean hasAccount();
 	void removeAccount();
 	void invalidateAuthToken();
-	void convertFromOldStorage();
 
 	AccountRestrictions getRestrictions();
 }

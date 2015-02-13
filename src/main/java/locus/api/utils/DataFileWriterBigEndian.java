@@ -7,22 +7,21 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 public class DataFileWriterBigEndian extends DataWriterBigEndian {
-	protected int count = 0;
-	protected long storedPosition = 0;
+	private long mStoredPosition = 0;
 
-	protected final OutputStream out;
-	protected final FileChannel channel;
+	private final OutputStream mOut;
+	private final FileChannel mChannel;
 
 	public DataFileWriterBigEndian(FileOutputStream out) {
 		super(0);
-		this.out = new BufferedOutputStream(out);
-		channel = out.getChannel();
+		this.mOut = new BufferedOutputStream(out);
+		mChannel = out.getChannel();
 	}
 
 	@Override
 	public synchronized void write(int b) {
 		try {
-			out.write(b);
+			mOut.write(b);
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -31,7 +30,7 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	@Override
 	public synchronized void write(byte[] b, int off, int len) {
 		try {
-			out.write(b, off, len);
+			mOut.write(b, off, len);
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -40,8 +39,8 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	@Override
 	public void storePosition() {
 		try {
-			out.flush();
-			storedPosition = channel.position();
+			mOut.flush();
+			mStoredPosition = mChannel.position();
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -50,8 +49,8 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	@Override
 	public void restorePosition() {
 		try {
-			out.flush();
-			channel.position(storedPosition);
+			mOut.flush();
+			mChannel.position(mStoredPosition);
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -60,15 +59,15 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	@Override
 	public void moveTo(int index) {
 		try {
-			out.flush();
+			mOut.flush();
 
 			// check index
-			if (index < 0 || index > channel.size()) {
+			if (index < 0 || index > mChannel.size()) {
 				throw new IllegalArgumentException(
-								"Invalid move index:" + index + ", count:" + channel.size());
+								"Invalid move index:" + index + ", count:" + mChannel.size());
 			}
 
-			channel.position(index);
+			mChannel.position(index);
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -87,8 +86,8 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	@Override
 	public synchronized int size() {
 		try {
-			out.flush();
-			return (int) channel.size();
+			mOut.flush();
+			return (int) mChannel.size();
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
@@ -96,19 +95,19 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 
 	public synchronized int getPosition() {
 		try {
-			out.flush();
-			return (int) channel.position();
+			mOut.flush();
+			return (int) mChannel.position();
 		} catch (IOException e) {
 			throw new DataFileWriterException(e);
 		}
 	}
 
 	public synchronized void flush() throws IOException {
-		out.flush();
+		mOut.flush();
 	}
 
 	public synchronized void close() throws IOException {
-		out.close();
+		mOut.close();
 	}
 
 	public static class DataFileWriterException extends RuntimeException {

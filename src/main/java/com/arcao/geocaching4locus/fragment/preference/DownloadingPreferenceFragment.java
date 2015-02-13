@@ -4,20 +4,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
-import com.arcao.preference.ListPreference;
 import com.arcao.geocaching4locus.preference.SeekBarPreference;
+import com.arcao.preference.ListPreference;
 
 public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
-	private boolean premiumMember;
-
 	@Override
 	public void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 
-		premiumMember = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().isPremiumMember();
-		
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_downloading);
 	}
@@ -28,6 +24,8 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
 		final SeekBarPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SeekBarPreference.class);
 		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
+
+		boolean premiumMember = App.get(getActivity()).getAuthenticatorHelper().getRestrictions().isPremiumMember();
 
 		if (!premiumMember)
 			simpleCacheDataPreference.setChecked(true);

@@ -3,21 +3,17 @@ package com.arcao.geocaching4locus;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -31,57 +27,54 @@ import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.SpannedFix;
-
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
+import timber.log.Timber;
 
-public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.SliderDialogListener {
-	private static final String TAG = "G4L|MainActivity";
-	private static final boolean HONEYCOMB = android.os.Build.VERSION.SDK_INT >= 11;
-
+public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.DialogListener {
 	private static final String STATE_LATITUDE = "latitude";
 	private static final String STATE_LONGITUDE = "longitude";
 	private static final String STATE_HAS_COORDINATES = "has_coordinates";
 
 	private static final int REQUEST_LOGIN = 1;
 
-	private double latitude = Double.NaN;
-	private double longitude = Double.NaN;
-	private boolean hasCoordinates = false;
+	private double mLatitude = Double.NaN;
+	private double mLongitude = Double.NaN;
+	private boolean mHasCoordinates = false;
 
-	private SharedPreferences prefs;
+	private SharedPreferences mPrefs;
 
-	private EditText latitudeEditText;
-	private EditText longitudeEditText;
-	private EditText countOfCachesEditText;
-	private boolean locusInstalled = false;
+	private EditText mLatitudeEditText;
+	private EditText mLongitudeEditText;
+	private EditText mCountOfCachesEditText;
+	private boolean mLocusInstalled = false;
 
-	private SearchNearestActivityBroadcastReceiver broadcastReceiver;
-	private LocationUpdateTask locationUpdateTask;
+	private SearchNearestActivityBroadcastReceiver mBroadcastReceiver;
+	private LocationUpdateTask mTask;
 
-	private boolean startDownload = false;
+	private boolean mStartDownload = false;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		broadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
-		hasCoordinates = false;
+		mBroadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
+		mHasCoordinates = false;
 
 		setContentView(R.layout.activity_search_nearest);
 
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setTitle(getTitle());
 
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		latitude = prefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
-		longitude = prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		mLatitude = mPrefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
+		mLongitude = mPrefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 
 		if (!LocusTesting.isLocusInstalled(this)) {
-			locusInstalled = false;
+			mLocusInstalled = false;
 			return; // skip retrieving Waypoint, it can crash because of old Locus API
 		}
 
@@ -91,17 +84,17 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			try {
 				p = LocusUtils.handleIntentPointTools(this, getIntent());
 			} catch (RequiredVersionMissingException e) {
-				Log.e(TAG, e.getMessage(), e);
+				Timber.e(e.getMessage(), e);
 			}
 
 			if (p == null) {
 				Toast.makeText(this, "Wrong INTENT - no point!", Toast.LENGTH_SHORT).show();
 			} else {
-				latitude = p.getLocation().getLatitude();
-				longitude = p.getLocation().getLongitude();
-				Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
+				mLatitude = p.getLocation().getLatitude();
+				mLongitude = p.getLocation().getLongitude();
+				Timber.i("Called from Locus: lat=" + mLatitude + "; lon=" + mLongitude);
 
-				hasCoordinates = true;
+				mHasCoordinates = true;
 			}
 		}
 		else if (LocusUtils.isIntentMainFunction(getIntent())) {
@@ -112,24 +105,24 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 
 		if (savedInstanceState != null && savedInstanceState.getBoolean(STATE_HAS_COORDINATES)) {
-			latitude = savedInstanceState.getDouble(STATE_LATITUDE);
-			longitude = savedInstanceState.getDouble(STATE_LONGITUDE);
-			hasCoordinates = true;
+			mLatitude = savedInstanceState.getDouble(STATE_LATITUDE);
+			mLongitude = savedInstanceState.getDouble(STATE_LONGITUDE);
+			mHasCoordinates = true;
 		}
 
 		if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
-			hasCoordinates = true;
+			mHasCoordinates = true;
 		}
 	}
 
 	@Override
 	public void onReceived(LocusUtils.LocusVersion lv, locus.api.objects.extra.Location locGps, locus.api.objects.extra.Location locMapCenter) {
-		latitude = locMapCenter.getLatitude();
-		longitude = locMapCenter.getLongitude();
+		mLatitude = locMapCenter.getLatitude();
+		mLongitude = locMapCenter.getLongitude();
 
-		Log.i(TAG, "Called from Locus: lat=" + latitude + "; lon=" + longitude);
+		Timber.i("Called from Locus: lat=" + mLatitude + "; lon=" + mLongitude);
 
-		hasCoordinates = true;
+		mHasCoordinates = true;
 	}
 
 	@Override
@@ -139,58 +132,58 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	protected void onResume() {
 		super.onResume();
 
-		latitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
-		longitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
-		countOfCachesEditText = (EditText) findViewById(R.id.cacheCountEditText);
+		mLatitudeEditText = (EditText) findViewById(R.id.latitudeEditText);
+		mLongitudeEditText = (EditText) findViewById(R.id.logitudeEditText);
+		mCountOfCachesEditText = (EditText) findViewById(R.id.cacheCountEditText);
 
-		latitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		mLatitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					double deg = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
+					double deg = Coordinates.convertDegToDouble(mLatitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						((EditText)v).setText("N/A");
+						((EditText) v).setText("N/A");
 					} else {
-						((EditText)v).setText(Coordinates.convertDoubleToDeg(deg, false));
+						((EditText) v).setText(Coordinates.convertDoubleToDeg(deg, false));
 					}
 				}
 			}
 		});
 
-		longitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		mLongitudeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (!hasFocus) {
-					double deg = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
+					double deg = Coordinates.convertDegToDouble(mLongitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						((EditText)v).setText("N/A");
+						((EditText) v).setText("N/A");
 					} else {
-						((EditText)v).setText(Coordinates.convertDoubleToDeg(deg, true));
+						((EditText) v).setText(Coordinates.convertDoubleToDeg(deg, true));
 					}
 				}
 			}
 		});
 
-		int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
-		final int countOfCachesStep = PreferenceUtil.getParsedInt(prefs, PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP_DEFAULT);
+		int countOfCaches = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+		final int countOfCachesStep = PreferenceUtil.getParsedInt(mPrefs, PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP, AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP_DEFAULT);
 
 		int max = getMaxCountOfCaches();
 
 		if (countOfCaches > max) {
 			countOfCaches = max;
-			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
 		}
 
 		if (countOfCaches % countOfCachesStep != 0) {
 			countOfCaches = ((countOfCaches  / countOfCachesStep) + 1) * countOfCachesStep;
-			prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
 		}
 
-		countOfCachesEditText.setText(String.valueOf(prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
-		countOfCachesEditText.setOnClickListener(new OnClickListener() {
+		mCountOfCachesEditText.setText(String.valueOf(mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
+		mCountOfCachesEditText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				int countOfCaches = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+				int countOfCaches = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
 				SliderDialogFragment fragment = SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
 								countOfCachesStep, getMaxCountOfCaches(), countOfCaches, countOfCachesStep);
 				fragment.show(getSupportFragmentManager(), "countOfCaches");
@@ -203,20 +196,20 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		super.onResumeFragments();
 
 		// play with fragments here
-		broadcastReceiver.register(this);
+		mBroadcastReceiver.register(this);
 
-		if (!locusInstalled && !LocusTesting.isLocusInstalled(this)) {
-			locusInstalled = false;
+		if (!mLocusInstalled && !LocusTesting.isLocusInstalled(this)) {
+			mLocusInstalled = false;
 			LocusTesting.showLocusMissingError(this);
 			return;
 		}
 
-		locusInstalled = true;
+		mLocusInstalled = true;
 
-		if (startDownload) {
-			startDownload = false;
+		if (mStartDownload) {
+			mStartDownload = false;
 			download();
-		} else if (!hasCoordinates) {
+		} else if (!mHasCoordinates) {
 			acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
@@ -229,36 +222,34 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	public void onDialogClosed(SliderDialogFragment fragment) {
 		int value = fragment.getValue();
 
-		countOfCachesEditText.setText(String.valueOf(value));
-		prefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).commit();
+		mCountOfCachesEditText.setText(String.valueOf(value));
+		mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).apply();
 	}
 
 	@Override
 	protected void onPause() {
-		if (locationUpdateTask != null)
-			locationUpdateTask.detach();
+		if (mTask != null)
+			mTask.detach();
 
-		broadcastReceiver.unregister(this);
+		mBroadcastReceiver.unregister(this);
 
 		super.onPause();
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// Fragments can't be used after onSaveInstanceState on Honeycomb+
-		if (HONEYCOMB) {
-			if (locationUpdateTask != null)
-				locationUpdateTask.detach();
+		// Fragments can't be used after onSaveInstanceState
+		if (mTask != null)
+			mTask.detach();
 
-			broadcastReceiver.unregister(this);
-		}
+		mBroadcastReceiver.unregister(this);
 
 		super.onSaveInstanceState(outState);
 
-		outState.putBoolean(STATE_HAS_COORDINATES, hasCoordinates);
-		if (hasCoordinates) {
-			outState.putDouble(STATE_LATITUDE, latitude);
-			outState.putDouble(STATE_LONGITUDE, longitude);
+		outState.putBoolean(STATE_HAS_COORDINATES, mHasCoordinates);
+		if (mHasCoordinates) {
+			outState.putDouble(STATE_LATITUDE, mLatitude);
+			outState.putDouble(STATE_LONGITUDE, mLongitude);
 		}
 	}
 
@@ -276,28 +267,28 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	protected void download() {
 		// test if user is logged in
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
 			startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
 			return;
 		}
 
-		Log.i(TAG, "Lat: " + latitudeEditText.getText().toString() + "; Lon: " + longitudeEditText.getText().toString());
+		Timber.i("Lat: " + mLatitudeEditText.getText().toString() + "; Lon: " + mLongitudeEditText.getText().toString());
 
-		latitude = Coordinates.convertDegToDouble(latitudeEditText.getText().toString());
-		longitude = Coordinates.convertDegToDouble(longitudeEditText.getText().toString());
+		mLatitude = Coordinates.convertDegToDouble(mLatitudeEditText.getText().toString());
+		mLongitude = Coordinates.convertDegToDouble(mLongitudeEditText.getText().toString());
 
-		if (Double.isNaN(latitude) || Double.isNaN(longitude)) {
+		if (Double.isNaN(mLatitude) || Double.isNaN(mLongitude)) {
 			showError(R.string.wrong_coordinates, null);
 		}
 
-		Editor editor = prefs.edit();
-		editor.putFloat(PrefConstants.LAST_LATITUDE, (float) latitude);
-		editor.putFloat(PrefConstants.LAST_LONGITUDE, (float) longitude);
-		editor.commit();
+		mPrefs.edit()
+			.putFloat(PrefConstants.LAST_LATITUDE, (float) mLatitude)
+			.putFloat(PrefConstants.LAST_LONGITUDE, (float) mLongitude)
+			.apply();
 
 		Intent intent = new Intent(this, SearchGeocacheService.class);
-		intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, latitude);
-		intent.putExtra(SearchGeocacheService.PARAM_LONGITUDE, longitude);
+		intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, mLatitude);
+		intent.putExtra(SearchGeocacheService.PARAM_LONGITUDE, mLongitude);
 		startService(intent);
 	}
 
@@ -317,42 +308,43 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	protected void acquireCoordinates() {
 		// search location
 		// Acquire a reference to the system Location Manager
-		locationUpdateTask = new LocationUpdateTask(this);
-		locationUpdateTask.execute();
+		mTask = new LocationUpdateTask(this);
+		mTask.execute();
 	}
 
 	private void updateCoordinateTextView() {
-		if (latitudeEditText != null)
-			latitudeEditText.setText(Coordinates.convertDoubleToDeg(latitude, false));
+		if (mLatitudeEditText != null)
+			mLatitudeEditText.setText(Coordinates.convertDoubleToDeg(mLatitude, false));
 
-		if (longitudeEditText != null)
-			longitudeEditText.setText(Coordinates.convertDoubleToDeg(longitude, true));
+		if (mLongitudeEditText != null)
+			mLongitudeEditText.setText(Coordinates.convertDoubleToDeg(mLongitude, true));
 	}
 
 	@Override
 	public void onLocationUpdate(Location location) {
-		latitude = location.getLatitude();
-		longitude = location.getLongitude();
-		hasCoordinates = true;
+		mLatitude = location.getLatitude();
+		mLongitude = location.getLongitude();
+		mHasCoordinates = true;
 
 		updateCoordinateTextView();
 
-		Editor editor = prefs.edit();
-		editor.putFloat(PrefConstants.LAST_LATITUDE, (float) latitude);
-		editor.putFloat(PrefConstants.LAST_LONGITUDE, (float) longitude);
-		editor.commit();
+		mPrefs.edit()
+			.putFloat(PrefConstants.LAST_LATITUDE, (float) mLatitude)
+			.putFloat(PrefConstants.LAST_LONGITUDE, (float) mLongitude)
+			.apply();
 	}
 
 	protected void requestProgressUpdate() {
-		if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
-			SearchGeocacheService.getInstance().sendProgressUpdate();
+		SearchGeocacheService service = SearchGeocacheService.getInstance();
+
+		if (service != null && !service.isCanceled()) {
+			service.sendProgressUpdate();
 		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.search_nearest_actionbar, menu);
+		getMenuInflater().inflate(R.menu.search_nearest_actionbar, menu);
 		return true;
 	}
 
@@ -376,7 +368,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		// restart download process after log in
 		if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
 			// do not call download method directly here, must be called in onResume method
-			startDownload = true;
+			mStartDownload = true;
 		}
 	}
 

@@ -3,12 +3,8 @@ package com.arcao.geocaching4locus;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -37,29 +33,21 @@ import java.util.UUID;
 		resDialogCommentPrompt = R.string.crash_dialog_comment_prompt, // optional. when defined, adds a user text field input with this text resource as a label
 		resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
 )
-public class Geocaching4LocusApplication extends android.app.Application {
-	private static final String TAG = "G4L|Geocaching4LocusApplication";
-
-	private static Context context;
-	private static AuthenticatorHelper authenticatorHelper;
-	private static String deviceId;
+public class App extends android.app.Application {
+	private AuthenticatorHelper mAuthenticatorHelper;
+	private String mDeviceId;
 
 	@Override
 	public void onCreate() {
+		super.onCreate();
+
 		Timber.plant(new Timber.DebugTree());
-
-		context = getApplicationContext();
-
-		disableConnectionReuseIfNecessary();
-
-		// The following line triggers the initialization of ACRA
 		ACRA.init(this);
 
-	 	authenticatorHelper = new PreferenceAuthenticatorHelper(this);
-		authenticatorHelper.convertFromOldStorage();
+	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
 
-		if (authenticatorHelper.hasAccount()) {
-			ACRA.getErrorReporter().putCustomData("userName", authenticatorHelper.getAccount().name);
+		if (mAuthenticatorHelper.hasAccount()) {
+			ACRA.getErrorReporter().putCustomData("userName", mAuthenticatorHelper.getAccount().name);
 		}
 
 		try {
@@ -69,44 +57,42 @@ public class Geocaching4LocusApplication extends android.app.Application {
 				ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
 			}
 		} catch (Throwable t) {
-			Log.e(TAG, t.getMessage(), t);
+			Timber.e(t.getMessage(), t);
 			ACRA.getErrorReporter().putCustomData("LocusVersion", "failed");
 			ACRA.getErrorReporter().putCustomData("LocusPackage", "failed");
 		}
 
 		System.setProperty("debug", "1");
-
-		super.onCreate();
 	}
 
-	public static Context getAppContext() {
-		return context;
+	public static App get(Context context) {
+		return (App) context.getApplicationContext();
 	}
 
-	public static AuthenticatorHelper getAuthenticatorHelper() {
-		return authenticatorHelper;
+	public AuthenticatorHelper getAuthenticatorHelper() {
+		return mAuthenticatorHelper;
 	}
 
-	public static String getDeviceId() {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+	public String getDeviceId() {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if (deviceId == null) {
-			deviceId = pref.getString("device_id", null);
+		if (mDeviceId == null) {
+			mDeviceId = pref.getString("device_id", null);
 		}
 
-		if (deviceId == null) {
-			deviceId = UUID.randomUUID().toString();
-			pref.edit().putString("device_id", deviceId).commit();
+		if (mDeviceId == null) {
+			mDeviceId = UUID.randomUUID().toString();
+			pref.edit().putString("device_id", mDeviceId).apply();
 		}
 
-		return deviceId;
+		return mDeviceId;
 	}
 
-	public static String getVersion() {
+	public String getVersion() {
 		try {
-			return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+			return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
-			Log.e(TAG, e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			return "1.0";
 		}
 	}
@@ -115,27 +101,27 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	 * Some lowend phones can kill the app so if is necessary we must temporary store Token and Token secret
 	 * @param consumer consumer object with valid Token and Token secret
 	 */
-	public static void storeRequestTokens(OAuthConsumer consumer) {
+	public void storeRequestTokens(OAuthConsumer consumer) {
 		if (consumer.getToken() == null || consumer.getTokenSecret() == null)
 			return;
 
-		SharedPreferences pref = context.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+		SharedPreferences pref = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
 
 		pref.edit()
 			.putString(PrefConstants.OAUTH_TOKEN, consumer.getToken())
 			.putString(PrefConstants.OAUTH_TOKEN_SECRET, consumer.getTokenSecret())
-			.commit();
+			.apply();
 	}
 
 	/**
 	 * Some lowend phones can kill the app so if is necessary we must load temporary saved tokens back to consumer
 	 * @param consumer consumer object where will be Token and Token secret stored
 	 */
-	public static void loadRequestTokensIfNecessary(OAuthConsumer consumer) {
+	public void loadRequestTokensIfNecessary(OAuthConsumer consumer) {
 		if (consumer.getToken() != null && consumer.getTokenSecret() != null)
 			return;
 
-		SharedPreferences pref = context.getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+		SharedPreferences pref = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
 		consumer.setTokenWithSecret(
 				pref.getString(PrefConstants.OAUTH_TOKEN, null),
 				pref.getString(PrefConstants.OAUTH_TOKEN_SECRET, null)
@@ -145,20 +131,14 @@ public class Geocaching4LocusApplication extends android.app.Application {
 	public static void clearGeocachingCookies() {
 		// setCookie acts differently when trying to expire cookies between builds of Android that are using
 		// Chromium HTTP stack and those that are not. Using both of these domains to ensure it works on both.
-		clearCookiesForDomain(context, "geocaching.com");
-		clearCookiesForDomain(context, ".geocaching.com");
-		clearCookiesForDomain(context, "https://geocaching.com");
-		clearCookiesForDomain(context, "https://.geocaching.com");
+		clearCookiesForDomain("geocaching.com");
+		clearCookiesForDomain(".geocaching.com");
+		clearCookiesForDomain("https://geocaching.com");
+		clearCookiesForDomain("https://.geocaching.com");
 	}
 
-	private static void clearCookiesForDomain(Context context, String domain) {
-		// This is to work around a bug where CookieManager may fail to instantiate if CookieSyncManager
-		// has never been created.
-		CookieSyncManager syncManager = CookieSyncManager.createInstance(context);
-		syncManager.sync();
-
+	private static void clearCookiesForDomain(String domain) {
 		CookieManager cookieManager = CookieManager.getInstance();
-
 		String cookies = cookieManager.getCookie(domain);
 		if (cookies == null) {
 			return;
@@ -171,14 +151,6 @@ public class Geocaching4LocusApplication extends android.app.Application {
 				String newCookie = cookieParts[0].trim() + "=;expires=Sat, 1 Jan 2000 00:00:01 UTC;";
 				cookieManager.setCookie(domain, newCookie);
 			}
-		}
-		cookieManager.removeExpiredCookie();
-	}
-
-	private static void disableConnectionReuseIfNecessary() {
-		// HTTP connection reuse which was buggy pre-froyo
-		if (VERSION.SDK_INT < VERSION_CODES.FROYO) {
-			System.setProperty("http.keepAlive", "false");
 		}
 	}
 }

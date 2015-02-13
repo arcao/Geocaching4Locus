@@ -4,52 +4,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ImportActivity;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
-
-import java.lang.ref.WeakReference;
-
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
+import timber.log.Timber;
+
+import java.lang.ref.WeakReference;
 
 public class ImportTask extends UserTask<String, Void, Waypoint> {
-	private static final String TAG = ImportTask.class.getName();
-	private int logCount;
-
-	public interface OnTaskFinishedListener {
+	public interface TaskListener {
 		void onTaskFinished(boolean success);
 	}
 
-	private WeakReference<OnTaskFinishedListener> onTaskFinishedListenerRef;
+	private final Context mContext;
+	private final WeakReference<TaskListener> mTaskListenerRef;
 
-	public void setOnTaskFinishedListener(OnTaskFinishedListener onTaskFinishedListener) {
-		this.onTaskFinishedListenerRef = new WeakReference<>(onTaskFinishedListener);
-	}
-
-	@Override
-	protected void onPreExecute() {
-		super.onPreExecute();
-
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Geocaching4LocusApplication.getAppContext());
-
-		logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+	public ImportTask(Context context, TaskListener listener) {
+		this.mTaskListenerRef = new WeakReference<>(listener);
+		mContext = context.getApplicationContext();
 	}
 
 	@Override
@@ -61,13 +50,13 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			pack.addWaypoint(result);
 
 			try {
-				ActionDisplayPointsExtended.sendPack(Geocaching4LocusApplication.getAppContext(), pack, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
+				ActionDisplayPointsExtended.sendPack(mContext, pack, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			} catch (RequiredVersionMissingException e) {
-				Log.e(TAG, e.getMessage(), e);
+				Timber.e(e.getMessage(), e);
 			}
 		}
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(result != null);
 		}
@@ -77,7 +66,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	protected void onCancelled() {
 		super.onCancelled();
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(false);
 		}
@@ -85,7 +74,11 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 
 	@Override
 	protected Waypoint doInBackground(String... params) throws Exception {
-		if (!Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount())
+		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+
+		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
 		WherigoService wherigoService = new WherigoServiceImpl();
@@ -103,7 +96,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			login(api);
 
 			Geocache cache = api.getCache(cacheId, logCount, 0);
-			Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions().updateLimits(api.getLastCacheLimits());
+			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 
 			if (isCancelled())
 				return null;
@@ -111,10 +104,10 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			if (cache == null)
 				throw new CacheNotFoundException(cacheId);
 
-			return LocusDataMapper.toLocusPoint(Geocaching4LocusApplication.getAppContext(), cache);
+			return LocusDataMapper.toLocusPoint(mContext, cache);
 		} catch (InvalidSessionException e) {
-			Log.e(TAG, e.getMessage(), e);
-			Geocaching4LocusApplication.getAuthenticatorHelper().invalidateAuthToken();
+			Timber.e(e.getMessage(), e);
+			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
 		}
@@ -128,14 +121,12 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		if (isCancelled())
 			return;
 
-		Log.e(TAG, t.getMessage(), t);
-
-		Context mContext = Geocaching4LocusApplication.getAppContext();
+		Timber.e(t.getMessage(), t);
 
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		OnTaskFinishedListener listener = onTaskFinishedListenerRef.get();
+		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
 			listener.onTaskFinished(false);
 		}
@@ -144,9 +135,11 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {
-		String token = Geocaching4LocusApplication.getAuthenticatorHelper().getAuthToken();
+		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
+
+		String token = authenticatorHelper.getAuthToken();
 		if (token == null) {
-			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
 		}
 

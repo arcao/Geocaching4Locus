@@ -9,7 +9,7 @@ import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
 import com.arcao.geocaching4locus.ErrorActivity;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -53,7 +53,7 @@ public class ExceptionHandler {
 	}
 
 	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t) {
-		AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
+		AccountRestrictions restrictions = App.get(mContext).getAuthenticatorHelper().getRestrictions();
 
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
@@ -69,7 +69,7 @@ public class ExceptionHandler {
 				if (period < AppConstants.SECONDS_PER_MINUTE) {
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 				} else {
-					period = period / AppConstants.SECONDS_PER_MINUTE;
+					period /= AppConstants.SECONDS_PER_MINUTE;
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 				}
 

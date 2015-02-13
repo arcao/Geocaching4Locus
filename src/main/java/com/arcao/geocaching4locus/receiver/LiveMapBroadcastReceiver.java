@@ -17,16 +17,15 @@ import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Location;
 
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
-	public static final String VAR_B_MAP_USER_TOUCHES = ("1306");
-	public static final String VAR_LOC_MAP_CENTER = ("1302");
-	public static final String VAR_LOC_MAP_BBOX_TOP_LEFT = ("1303");
+	private static final String VAR_B_MAP_USER_TOUCHES = ("1306");
+	private static final String VAR_LOC_MAP_CENTER = ("1302");
+	private static final String VAR_LOC_MAP_BBOX_TOP_LEFT = ("1303");
 
 	// Limitation on Groundspeak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
+	private static final float DEFAULT_DISTANCE_LIMIT = 100F;
 
-	public static final float DEFAULT_DISTANCE_LIMIT = 100F;
-
-	private static boolean forceUpdate = false;
+	private static boolean mForceUpdate = false;
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
@@ -38,7 +37,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		final LiveMapNotificationManager liveMapNotificationManager = LiveMapNotificationManager.get(context);
 
 		if (liveMapNotificationManager.handleBroadcastIntent(intent)) {
-			forceUpdate = liveMapNotificationManager.isForceUpdateRequiredInFuture();
+			mForceUpdate = liveMapNotificationManager.isForceUpdateRequiredInFuture();
 			return;
 		}
 
@@ -81,10 +80,10 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				if (!update.isMapVisible())
 					return;
 
-				if (!update.isNewMapCenter() && !update.isNewZoomLevel() && !forceUpdate)
+				if (!update.isNewMapCenter() && !update.isNewZoomLevel() && !mForceUpdate)
 					return;
 
-				forceUpdate = false;
+				mForceUpdate = false;
 
 				// When Live map is enabled, Locus sometimes send NaN when is starting
 				if (Double.isNaN(update.getMapTopLeft().getLatitude()) || Double.isNaN(update.getMapTopLeft().getLongitude())

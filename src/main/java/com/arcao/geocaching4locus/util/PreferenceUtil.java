@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.util;
 
 import android.content.SharedPreferences;
-import android.util.Log;
+import timber.log.Timber;
 
 public class PreferenceUtil {
 	public static int getParsedInt(SharedPreferences preferences, String key, int defaultValue) {
@@ -12,7 +12,7 @@ public class PreferenceUtil {
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException e) {
-			Log.e(PreferenceUtil.class.getSimpleName(), e.getMessage(), e);
+			Timber.e(e.getMessage(), e);
 			return defaultValue;
 		}
 	}

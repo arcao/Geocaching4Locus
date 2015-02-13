@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.text.Spanned;
 
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.util.SpannedFix;
 
 public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
@@ -22,25 +23,26 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 	@Override
 	protected void preparePreference() {
 		final Preference accountPreference = findPreference(ACCOUNT, Preference.class);
+		final AuthenticatorHelper authenticatorHelper = App.get(getActivity()).getAuthenticatorHelper();
 
 		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
-					Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+				if (authenticatorHelper.hasAccount()) {
+					authenticatorHelper.removeAccount();
 					accountPreference.setTitle(R.string.pref_account_login);
 					accountPreference.setSummary(R.string.pref_account_login_summary);
 				} else {
-					Geocaching4LocusApplication.getAuthenticatorHelper().addAccount(getActivity());
+					authenticatorHelper.addAccount(getActivity());
 				}
 
 				return true;
 			}
 		});
 
-		if (Geocaching4LocusApplication.getAuthenticatorHelper().hasAccount()) {
+		if (authenticatorHelper.hasAccount()) {
 			accountPreference.setTitle(R.string.pref_account_logout);
-			accountPreference.setSummary(prepareAccountSummary(Geocaching4LocusApplication.getAuthenticatorHelper().getAccount().name, R.string.pref_account_logout_summary));
+			accountPreference.setSummary(prepareAccountSummary(authenticatorHelper.getAccount().name, R.string.pref_account_logout_summary));
 		} else {
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);

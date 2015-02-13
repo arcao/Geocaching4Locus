@@ -10,40 +10,37 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.MenuActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
+import timber.log.Timber;
+
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
-	public static final String VAR_B_MAP_VISIBLE = ("1300");
+	private static final String VAR_B_MAP_VISIBLE = ("1300");
 
-	protected static final String TAG = "LiveMapNM";
-	protected static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
-	protected static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
-	protected static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
-	protected static final long NOTIFICATION_TIMEOUT_MS = 1250;
-	protected static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
+	private static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
+	private static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
+	private static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
+	private static final long NOTIFICATION_TIMEOUT_MS = 1250;
+	private static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
 
-	protected static boolean notificationShown = false;
-	protected static boolean lastLiveMapState = false;
+	private static boolean mNotificationShown = false;
+	private static boolean mLastLiveMapState = false;
 
 	protected final Context mContext;
 	protected final NotificationManager mNotificationManager;
 	protected final SharedPreferences mSharedPrefs;
-	protected final boolean showLiveMapDisabledNotification;
-	protected final boolean showLiveMapVisibleOnlyNotification;
+	protected final boolean mShowLiveMapDisabledNotification;
+	protected final boolean mShowLiveMapVisibleOnlyNotification;
 
-	protected final Set<LiveMapStateChangeListener> mLiveMapStateChangeListeners = new HashSet<>();
+	protected final Set<LiveMapStateChangeListener> mStateChangeListeners = new CopyOnWriteArraySet<>();
 
 	public static LiveMapNotificationManager get(Context context) {
 		return new LiveMapNotificationManager(context);
@@ -55,8 +52,8 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-		showLiveMapDisabledNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION, false);
-		showLiveMapVisibleOnlyNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION, false);
+		mShowLiveMapDisabledNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION, false);
+		mShowLiveMapVisibleOnlyNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION, false);
 	}
 
 	public boolean handleBroadcastIntent(Intent intent) {
@@ -73,24 +70,24 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 				return true;
 			case ACTION_LIVE_MAP_DISABLE:
 				setLiveMapEnabled(false);
-				if (showLiveMapDisabledNotification) {
+				if (mShowLiveMapDisabledNotification) {
 					showNotification();
 				} else {
 					hideNotification();
 				}
 				return true;
 			default:
-				if (!isLiveMapEnabled() && !showLiveMapDisabledNotification) {
+				if (!isLiveMapEnabled() && !mShowLiveMapDisabledNotification) {
 					return false;
 				}
 
-				if (!isMapVisible(intent) && showLiveMapVisibleOnlyNotification) {
+				if (!isMapVisible(intent) && mShowLiveMapVisibleOnlyNotification) {
 					return false;
 				}
 
-				if (!notificationShown || lastLiveMapState != isLiveMapEnabled()) {
+				if (!mNotificationShown || mLastLiveMapState != isLiveMapEnabled()) {
 					showNotification();
-					lastLiveMapState = isLiveMapEnabled();
+					mLastLiveMapState = isLiveMapEnabled();
 				}
 				updateNotificationHideAlarm();
 				return false;
@@ -102,11 +99,11 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	public boolean isForceUpdateRequiredInFuture() {
-		return !notificationShown;
+		return !mNotificationShown;
 	}
 
 	public void setDownloadingProgress(int current, int count) {
-		if (!notificationShown)
+		if (!mNotificationShown)
 			return;
 
 		NotificationCompat.Builder nb = createBaseNotification();
@@ -134,14 +131,14 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	protected void showNotification() {
-		notificationShown = true;
+		mNotificationShown = true;
 
 		NotificationCompat.Builder builder = createBaseNotification();
 		mNotificationManager.notify(NOTIFICATION_ID, builder.build());
 	}
 
 	protected void hideNotification() {
-		notificationShown = false;
+		mNotificationShown = false;
 
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
@@ -192,7 +189,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
 			}
 		} catch (Throwable e) {
-			Log.e(TAG, "Unable to receive info about current state of periodic update events from Locus.", e);
+			Timber.e("Unable to receive info about current state of periodic update events from Locus.", e);
 		}
 
 		if (enabled && !periodicUpdateEnabled) {
@@ -205,7 +202,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			Toast.makeText(mContext, mContext.getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
 		}
 
-		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).commit();
+		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
 	}
 
 	public boolean isLiveMapEnabled() {
@@ -213,17 +210,17 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	public void addLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {
-		mLiveMapStateChangeListeners.add(liveMapStateChangeListener);
+		mStateChangeListeners.add(liveMapStateChangeListener);
 
-		if (mLiveMapStateChangeListeners.size() == 1) {
+		if (mStateChangeListeners.size() == 1) {
 			mSharedPrefs.registerOnSharedPreferenceChangeListener(this);
 		}
 	}
 
 	public void removeLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {
-		mLiveMapStateChangeListeners.remove(liveMapStateChangeListener);
+		mStateChangeListeners.remove(liveMapStateChangeListener);
 
-		if (mLiveMapStateChangeListeners.size() == 0) {
+		if (mStateChangeListeners.size() == 0) {
 			mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this);
 		}
 	}
@@ -231,7 +228,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if (PrefConstants.LIVE_MAP.equals(key)) {
-			for(LiveMapStateChangeListener listener : mLiveMapStateChangeListeners) {
+			for(LiveMapStateChangeListener listener : mStateChangeListeners) {
 				listener.onLiveMapStateChange(sharedPreferences.getBoolean(key, false));
 			}
 		}

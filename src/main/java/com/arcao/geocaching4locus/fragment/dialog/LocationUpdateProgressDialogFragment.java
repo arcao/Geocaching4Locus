@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import com.arcao.geocaching4locus.R;
 
 public final class LocationUpdateProgressDialogFragment extends AbstractDialogFragment {
-	public static final String TAG = LocationUpdateProgressDialogFragment.class.getName();
+	public static final String FRAGMENT_TAG = LocationUpdateProgressDialogFragment.class.getName();
 
 	private static final String PARAM_SOURCE = "SOURCE";
 

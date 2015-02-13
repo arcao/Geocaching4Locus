@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import com.arcao.geocaching4locus.Geocaching4LocusApplication;
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
@@ -23,7 +23,7 @@ import org.acra.ACRA;
 
 import java.lang.ref.WeakReference;
 
-public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginDialogFragment.OnTaskFinishedListener {
+public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginDialogFragment.DialogListener {
 	protected static final String PARAM_SHOW_WIZARD = "SHOW_WIZARD";
 	protected static final String TAG_DIALOG = "dialog";
 
@@ -92,12 +92,12 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 	}
 
 	@Override
-	public void onTaskFinished(Intent errorIntent) {
+	public void onLoginFinished(Intent errorIntent) {
 		if (errorIntent != null) {
 			startActivity(errorIntent);
 		}
 
-		AuthenticatorHelper helper = Geocaching4LocusApplication.getAuthenticatorHelper();
+		AuthenticatorHelper helper = App.get(this).getAuthenticatorHelper();
 
 		boolean hasAccount = helper.hasAccount();
 
@@ -161,7 +161,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 					public void onClick(DialogInterface dialog, int which) {
 						AuthenticatorActivity activity = activityRef.get();
 						if (activity != null)
-							activity.onTaskFinished(null);
+							activity.onLoginFinished(null);
 					}
 				})
 				.create();
@@ -185,7 +185,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			AccountRestrictions restrictions = Geocaching4LocusApplication.getAuthenticatorHelper().getRestrictions();
+			AccountRestrictions restrictions = App.get(getActivity()).getAuthenticatorHelper().getRestrictions();
 
 			// apply format on a text
 			int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();

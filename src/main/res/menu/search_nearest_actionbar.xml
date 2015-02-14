@@ -7,9 +7,4 @@
         android:icon="@drawable/ic_settings_default"
         android:title="@string/preferences"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/main_activity_option_menu_close"
-        android:icon="@drawable/ic_cancel_default"
-        android:title="@string/close"
-        app:showAsAction="always"/>
 </menu>

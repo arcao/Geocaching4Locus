@@ -354,7 +354,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			case R.id.main_activity_option_menu_preferences:
 				startActivity(SettingsActivity.createIntent(this));
 				return true;
-			case R.id.main_activity_option_menu_close:
 			case android.R.id.home:
 				finish();
 				return true;

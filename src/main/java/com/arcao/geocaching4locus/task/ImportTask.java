@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ImportActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
@@ -90,7 +90,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 				cacheId = wherigoService.getCacheCodeFromGuid(cacheId);
 		}
 
-		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
+		GeocachingApi api = GeocachingApiFactory.create();
 
 		try {
 			login(api);

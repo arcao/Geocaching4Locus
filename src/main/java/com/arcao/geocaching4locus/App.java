@@ -5,16 +5,17 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import locus.api.android.utils.LocusUtils;
-import oauth.signpost.OAuthConsumer;
 import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+import org.scribe.model.Token;
 import timber.log.Timber;
 
 import java.util.UUID;
@@ -97,44 +98,39 @@ public class App extends android.app.Application {
 		}
 	}
 
-	/**
-	 * Some lowend phones can kill the app so if is necessary we must temporary store Token and Token secret
-	 * @param consumer consumer object with valid Token and Token secret
-	 */
-	public void storeRequestTokens(OAuthConsumer consumer) {
-		if (consumer.getToken() == null || consumer.getTokenSecret() == null)
+	public void storeOAuthToken(Token token) {
+		if (token == null || token.isEmpty())
 			return;
 
 		SharedPreferences pref = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
 
 		pref.edit()
-			.putString(PrefConstants.OAUTH_TOKEN, consumer.getToken())
-			.putString(PrefConstants.OAUTH_TOKEN_SECRET, consumer.getTokenSecret())
+			.putString(PrefConstants.OAUTH_TOKEN, token.getToken())
+			.putString(PrefConstants.OAUTH_TOKEN_SECRET, token.getSecret())
 			.apply();
 	}
 
-	/**
-	 * Some lowend phones can kill the app so if is necessary we must load temporary saved tokens back to consumer
-	 * @param consumer consumer object where will be Token and Token secret stored
-	 */
-	public void loadRequestTokensIfNecessary(OAuthConsumer consumer) {
-		if (consumer.getToken() != null && consumer.getTokenSecret() != null)
-			return;
+	public Token getOAuthToken() {
 
-		SharedPreferences pref = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
-		consumer.setTokenWithSecret(
-				pref.getString(PrefConstants.OAUTH_TOKEN, null),
-				pref.getString(PrefConstants.OAUTH_TOKEN_SECRET, null)
+		SharedPreferences prefs = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
+		return new Token(
+			prefs.getString(PrefConstants.OAUTH_TOKEN, ""),
+			prefs.getString(PrefConstants.OAUTH_TOKEN_SECRET, "")
 		);
 	}
 
-	public static void clearGeocachingCookies() {
+	public void clearGeocachingCookies() {
+		// required to call
+		CookieSyncManager.createInstance(this).sync();
+
 		// setCookie acts differently when trying to expire cookies between builds of Android that are using
 		// Chromium HTTP stack and those that are not. Using both of these domains to ensure it works on both.
 		clearCookiesForDomain("geocaching.com");
 		clearCookiesForDomain(".geocaching.com");
 		clearCookiesForDomain("https://geocaching.com");
 		clearCookiesForDomain("https://.geocaching.com");
+
+		CookieSyncManager.createInstance(this).sync();
 	}
 
 	private static void clearCookiesForDomain(String domain) {

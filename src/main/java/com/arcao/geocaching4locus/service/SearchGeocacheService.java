@@ -3,13 +3,13 @@ package com.arcao.geocaching4locus.service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
@@ -197,7 +197,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
 
-		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
+		GeocachingApi api = GeocachingApiFactory.create();
 
 		StoreableListFileOutput slfo = null;
 

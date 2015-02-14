@@ -3,9 +3,9 @@ package com.arcao.geocaching4locus.data.provider.impl.geocaching_live_api;
 import android.content.Context;
 
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching4locus.data.provider.ProviderService;
 import com.arcao.geocaching4locus.data.provider.callback.CallbackListener;
 import com.arcao.geocaching4locus.data.provider.callback.DataReceivedCallback;
@@ -29,7 +29,7 @@ public class GeocachingLiveApiProviderService implements ProviderService, Geocac
 
 	private GeocachingApi createApi() throws ProviderException {
 		try {
-			GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
+			GeocachingApi api = GeocachingApiFactory.create();
 
 			String token = configuration.getToken();
 			if (token == null) {

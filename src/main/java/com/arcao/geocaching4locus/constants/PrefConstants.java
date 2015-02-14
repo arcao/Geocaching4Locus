@@ -1,7 +1,5 @@
 package com.arcao.geocaching4locus.constants;
 
-import oauth.signpost.OAuth;
-
 public interface PrefConstants {
 	static final String PREF_VERSION = "pref_version";
 	static final int CURRENT_PREF_VERSION = 1;
@@ -13,8 +11,8 @@ public interface PrefConstants {
 	static final String PASSWORD = "password";
 	static final String SESSION = "session";
 
-	static final String OAUTH_TOKEN = OAuth.OAUTH_TOKEN;
-	static final String OAUTH_TOKEN_SECRET = OAuth.OAUTH_TOKEN_SECRET;
+	static final String OAUTH_TOKEN = "OAUTH_TOKEN";
+	static final String OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET";
 
 	static final String FILTER_CACHE_TYPE = "cache_type_filter";
 	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";

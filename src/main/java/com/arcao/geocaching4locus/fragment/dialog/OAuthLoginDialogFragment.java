@@ -25,7 +25,6 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
-import oauth.signpost.OAuth;
 import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
@@ -34,6 +33,7 @@ import java.util.Locale;
 public class OAuthLoginDialogFragment extends AbstractDialogFragment implements TaskListener {
 	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
+	private static final String OAUTH_VERIFIER = "oauth_verifier";
 
 	public interface DialogListener {
 		void onLoginFinished(Intent errorIntent);
@@ -56,7 +56,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		setRetainInstance(true);
 
 		// clear geocaching.com cookies
-		App.clearGeocachingCookies();
+		App.get(getActivity()).clearGeocachingCookies();
 
 		mTask = new OAuthLoginTask(getActivity(), this);
 		mTask.execute();
@@ -190,7 +190,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 				}
 
 				mTask = new OAuthLoginTask(getActivity(), OAuthLoginDialogFragment.this);
-				mTask.execute(uri.getQueryParameter(OAuth.OAUTH_VERIFIER));
+				mTask.execute(uri.getQueryParameter(OAUTH_VERIFIER));
 
 				return true;
 			}

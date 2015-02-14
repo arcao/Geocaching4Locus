@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.SimpleGeocache;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
@@ -16,7 +17,6 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
@@ -183,7 +183,7 @@ public class LiveMapService extends IntentService {
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
+		GeocachingApi api = GeocachingApiFactory.create();
 		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 
 		int current = 0;

@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.arcao.geocaching.api.GeocachingApi;
+import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.LiveGeocachingApiFactory;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -137,7 +137,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		UpdateTaskData result = params[0];
 
-		GeocachingApi api = LiveGeocachingApiFactory.getLiveGeocachingApi();
+		GeocachingApi api = GeocachingApiFactory.create();
 
 		try {
 			login(api);

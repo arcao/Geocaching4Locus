@@ -8,14 +8,14 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
-import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
-import oauth.signpost.exception.OAuthCommunicationException;
+import org.scribe.exceptions.OAuthConnectionException;
 
 public class ExceptionHandler {
 	protected final Context mContext;
@@ -40,7 +40,7 @@ public class ExceptionHandler {
 			return builder.setText(R.string.error_invalid_api_response).setAdditionalMessage(t.getMessage()).setException(t).build();
 		} else if (t instanceof CacheNotFoundException) {
 			return builder.setText(R.string.error_cache_not_found).setAdditionalMessage(((CacheNotFoundException) t).getCacheCode()).build();
-		} else if (t instanceof NetworkException || t instanceof OAuthCommunicationException ||
+		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			return builder.setText(R.string.error_network).build();
 		} else {

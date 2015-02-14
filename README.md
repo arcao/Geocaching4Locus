@@ -20,21 +20,24 @@ AssembleRelease task will try to sign APK with a private key. To sign it, create
 
 The key name in a keystore must be `geocaching4locus` (or modify application `build.gradle` script). **If the configuration for signing is missing, Gradle build script use ADK debug private key for signing.**
 
-**The created APKs will not work, because for sign in to Geocaching Live API you need OAuth key and secret. The Geocaching Live API license agreement doesn't allow distribute OAuth key and secret with sources.**
+The created APKs will use **Geocaching Live Staging server** (OAuth key and secret are placed in `build.gradle` file). This is OK for a **testing purposes only** (server is really slow and has old database). For production use it must be switched to production server creating `gradle.properties` file in a project root with bellow content:
 
-But if you get them, simply copy `ProductionConfiguration` and `StaggingConfiguration` classes from `com.arcao.geocaching.api.configuration.impl_sample` package to `com.arcao.geocaching.api.configuration.impl` and change `YOUR_OAUTH_KEY` and `YOUR_OAUTH_SECRET` with your OAuth key and secret. The `StaggingConfiguration` class is for a test server provided by Grounspeak. OAuth key and secret for this server is different than for production server. Which of these configuration will be used, you can select with constant `AppConstants.USE_PRODUCTION_CONFIGURATION`.
+    geocachingApiKey=<production_api_key>
+    geocachingApiSecret=<production_api_secret>
+    geocachingApiStaging=false
 
-The configuration instances of these classes are automatically resolved in `GeocachingApiConfigurationResolver` on application start, see `Geocaching4LocusApplication` class.
+The `<production_api_key>` and `<production_api_secret>` is provided via [Groundspeak's Geocaching Live Service program](http://www.geocaching.com/mobile/apidevelopers/) 
 
 Dependencies
 ============
 
-* [ACRA][07]
+* [ACRA][07] - Error reporting library
 * [Apache Commons Lang][02]
+* [Apache Commons IO][08]
 * [Geocaching API for Java][01]
 * [Jtpl][04]
 * [Locus API Library][06]
-* [OAuth Signpost][03]
+* [Scrible][03] - OAuth library
 * [Simple Logging Facade for Java (SLF4J)][05]
 
 
@@ -79,8 +82,9 @@ License
 
  [01]: https://github.com/arcao/geocaching-api
  [02]: http://commons.apache.org/lang/
- [03]: http://code.google.com/p/oauth-signpost/
+ [03]: https://github.com/fernandezpablo85/scribe-java
  [04]: http://jtpl.sourceforge.net/
  [05]: http://www.slf4j.org/
  [06]: http://code.google.com/p/android-locus-map/
  [07]: http://code.google.com/p/acra/
+ [08]: http://commons.apache.org/io/

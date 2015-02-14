@@ -30,7 +30,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:icon="@drawable/ic_launcher_nearest" android:label="@string/launcher_nearest_caches" android:theme="@style/AppBaseTheme.Dialog" android:name="com.arcao.geocaching4locus.SearchNearestActivity" android:exported="true">
+        <activity android:icon="@drawable/ic_launcher_nearest" android:label="@string/launcher_nearest_caches" android:theme="@style/AppTheme.DialogWhenLarge" android:name="com.arcao.geocaching4locus.SearchNearestActivity" android:exported="true">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />

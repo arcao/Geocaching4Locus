@@ -10,6 +10,11 @@
         <item name="windowActionBar">false</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+
+        <item name="listPreferredItemPaddingLeft">8dp</item>
+        <item name="listPreferredItemPaddingRight">8dp</item>
+        <item name="listPreferredItemPaddingTop">8dp</item>
+        <item name="listPreferredItemPaddingBottom">8dp</item>
     </style>
 
     <style name="AppBaseTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
@@ -22,13 +27,29 @@
         <item name="windowActionBar">false</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+
+        <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
+        <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
+        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
+    </style>
+
+    <style name="AppBaseTheme.DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge">
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorPrimary">@color/material_blue_grey_900</item>
+        <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
+        <item name="colorAccent">@color/material_deep_teal_500</item>
+        <item name="colorControlActivated">@color/material_deep_teal_500</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+
+        <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+
+        <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
+        <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
+        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="listPreferredItemPaddingLeft">8dp</item>
-        <item name="listPreferredItemPaddingRight">8dp</item>
-        <item name="listPreferredItemPaddingTop">8dp</item>
-        <item name="listPreferredItemPaddingBottom">8dp</item>
     </style>
 	<style name="AppTheme.Invisible">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -41,16 +62,13 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-
     <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog">
-        <item name="buttonPanelStyle">@style/CustomButtonPanelStyle</item>
-        <item name="buttonBarStyle">@style/CustomButtonBarStyle</item>
-        <item name="buttonBarButtonStyle">@style/CustomButtonBarButtonStyle</item>
+    </style>
+    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge">
     </style>
     <style name="AppTheme.Dialog.NoTitle">
         <item name="android:windowNoTitle">true</item>
     </style>
-
     <style name="AppTheme.Settings">
         <item name="windowActionBar">true</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium.Primary</item>

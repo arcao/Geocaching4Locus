@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
-import com.arcao.geocaching.api.data.SimpleGeocache;
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -29,6 +30,7 @@ import timber.log.Timber;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -198,6 +200,7 @@ public class SearchGeocacheService extends AbstractService {
 		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = GeocachingApiFactory.create();
+		GeocachingApi.ResultQuality resultQuality = simpleCacheData ? GeocachingApi.ResultQuality.LITE : GeocachingApi.ResultQuality.FULL;
 
 		StoreableListFileOutput slfo = null;
 
@@ -219,10 +222,10 @@ public class SearchGeocacheService extends AbstractService {
 			while (current < count) {
 				long startTime = System.currentTimeMillis();
 
-				List<SimpleGeocache> cachesToAdd;
+				List<Geocache> cachesToAdd;
 
 				if (current == 0) {
-					cachesToAdd = api.searchForGeocaches(simpleCacheData, Math.min(cachesPerRequest, count - current), logCount, 0, new Filter[] {
+					cachesToAdd = api.searchForGeocaches(resultQuality, Math.min(cachesPerRequest, count - current), logCount, 0, Arrays.asList(
 							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
@@ -232,9 +235,9 @@ public class SearchGeocacheService extends AbstractService {
 							new DifficultyFilter(difficultyMin, difficultyMax),
 							new TerrainFilter(terrainMin, terrainMax),
 							new BookmarksExcludeFilter(excludeIgnoreList)
-					});
+					), null);
 				} else {
-					cachesToAdd = api.getMoreGeocaches(simpleCacheData, current, Math.min(cachesPerRequest, count - current), logCount, 0);
+					cachesToAdd = api.getMoreGeocaches(resultQuality, current, Math.min(cachesPerRequest, count - current), logCount, 0);
 				}
 
 				if (!simpleCacheData)
@@ -296,13 +299,13 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	protected void removeCachesOverDistance(List<SimpleGeocache> caches, double latitude, double longitude, double maxDistance) {
+	protected void removeCachesOverDistance(List<Geocache> caches, double latitude, double longitude, double maxDistance) {
 		while (caches.size() > 0) {
-			SimpleGeocache cache = caches.get(caches.size() - 1);
+			Geocache cache = caches.get(caches.size() - 1);
 			double distance = computeDistance(latitude, longitude, cache);
 
 			if (distance > maxDistance) {
-				Timber.i("Cache " + cache.getCacheCode() + " is over distance.");
+				Timber.i("Cache " + cache.getCode() + " is over distance.");
 				caches.remove(cache);
 			} else {
 				return;
@@ -310,16 +313,8 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	protected double computeDistance(double latitude, double longitude, SimpleGeocache cache) {
-		final double r = 6366.707;
-
-		// convert to radians
-		double latitudeFrom = Math.toRadians(latitude);
-		double longitudeFrom = Math.toRadians(longitude);
-		double latitudeTo = Math.toRadians(cache.getLatitude());
-		double longitudeTo = Math.toRadians(cache.getLongitude());
-
-		return Math.acos(Math.sin(latitudeFrom) * Math.sin(latitudeTo) + Math.cos(latitudeFrom) * Math.cos(latitudeTo) * Math.cos(longitudeTo - longitudeFrom)) * r;
+	protected double computeDistance(double latitude, double longitude, Geocache cache) {
+		return cache.getCoordinates().distanceTo(new Coordinates(latitude, longitude));
 	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {

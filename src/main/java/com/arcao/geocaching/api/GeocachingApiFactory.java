@@ -7,9 +7,9 @@ import com.arcao.geocaching4locus.BuildConfig;
 public class GeocachingApiFactory {
 	public static GeocachingApi create() {
 		if (BuildConfig.GEOCACHING_API_STAGING) {
-			return new LiveGeocachingApi.Builder().setConfiguration(new DefaultStagingGeocachingApiConfiguration()).build();
+			return LiveGeocachingApi.Builder.liveGeocachingApi().withConfiguration(new DefaultStagingGeocachingApiConfiguration()).build();
 		} else {
-			return new LiveGeocachingApi.Builder().build();
+			return LiveGeocachingApi.Builder.liveGeocachingApi().build();
 		}
 	}
 }

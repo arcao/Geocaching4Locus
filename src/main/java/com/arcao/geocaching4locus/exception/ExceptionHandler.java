@@ -80,7 +80,7 @@ public class ExceptionHandler {
 
 				return new ErrorActivity.IntentBuilder(mContext).setTitle(resTitle).setAdditionalMessage(errorText).build();
 
-			case NumberOfCallsExceded: // 140: too many method calls per minute
+			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				return new ErrorActivity.IntentBuilder(mContext).setTitle(R.string.method_quota_exceeded_title).setText(R.string.method_quota_exceeded_message).build();
 
 			case PremiumMembershipRequiredForBookmarksExcludeFilter:

@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
-import com.arcao.geocaching.api.data.SimpleGeocache;
+import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -31,6 +31,7 @@ import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -206,10 +207,10 @@ public class LiveMapService extends IntentService {
 					break;
 				}
 
-				List<SimpleGeocache> caches;
+				List<Geocache> caches;
 
 				if (current == 0) {
-					caches = api.searchForGeocaches(true, perPage, 0, 0, new Filter[] {
+					caches = api.searchForGeocaches(GeocachingApi.ResultQuality.LITE, perPage, 0, 0, Arrays.asList(
 							new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
@@ -220,9 +221,9 @@ public class LiveMapService extends IntentService {
 							new TerrainFilter(terrainMin, terrainMax),
 							new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude),
 							new BookmarksExcludeFilter(excludeIgnoreList)
-					});
+					), null);
 				} else {
-					caches = api.getMoreGeocaches(true, current, perPage, 0, 0);
+					caches = api.getMoreGeocaches(GeocachingApi.ResultQuality.LITE, current, perPage, 0, 0);
 				}
 
 				if (caches.size() == 0)
@@ -236,9 +237,9 @@ public class LiveMapService extends IntentService {
 				requests++;
 
 				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + requests);
-				for (SimpleGeocache cache : caches) {
+				for (Geocache cache : caches) {
 					Waypoint wpt = LocusDataMapper.toLocusPoint(getApplicationContext(), cache);
-					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCacheCode());
+					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCode());
 					pw.addWaypoint(wpt);
 				}
 

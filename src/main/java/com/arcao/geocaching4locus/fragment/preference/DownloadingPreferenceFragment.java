@@ -27,10 +27,10 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 
 		boolean premiumMember = App.get(getActivity()).getAuthenticatorHelper().getRestrictions().isPremiumMember();
 
-		if (!premiumMember)
-			simpleCacheDataPreference.setChecked(true);
+//		if (!premiumMember)
+//			simpleCacheDataPreference.setChecked(true);
 
-		simpleCacheDataPreference.setEnabled(premiumMember);
+		//simpleCacheDataPreference.setEnabled(premiumMember);
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {

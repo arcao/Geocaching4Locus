@@ -95,7 +95,13 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		try {
 			login(api);
 
-			Geocache cache = api.getCache(cacheId, logCount, 0);
+			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+			if (authenticatorHelper.getRestrictions().isPremiumMember()) {
+				resultQuality = GeocachingApi.ResultQuality.SUMMARY;
+				logCount = 0;
+			}
+
+			Geocache cache = api.getCache(resultQuality, cacheId, logCount, 0);
 			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 
 			if (isCancelled())

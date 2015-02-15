@@ -188,7 +188,6 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
-	@SuppressWarnings("resource")
 	protected File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 		if (!authenticatorHelper.hasAccount())
@@ -200,7 +199,14 @@ public class SearchGeocacheService extends AbstractService {
 		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
 
 		GeocachingApi api = GeocachingApiFactory.create();
-		GeocachingApi.ResultQuality resultQuality = simpleCacheData ? GeocachingApi.ResultQuality.LITE : GeocachingApi.ResultQuality.FULL;
+
+
+		GeocachingApi.ResultQuality resultQuality = authenticatorHelper.getRestrictions().isPremiumMember() ?
+						GeocachingApi.ResultQuality.FULL : GeocachingApi.ResultQuality.SUMMARY;
+		if (simpleCacheData) {
+			resultQuality = GeocachingApi.ResultQuality.LITE;
+			logCount = 0;
+		}
 
 		StoreableListFileOutput slfo = null;
 
@@ -314,7 +320,7 @@ public class SearchGeocacheService extends AbstractService {
 	}
 
 	protected double computeDistance(double latitude, double longitude, Geocache cache) {
-		return cache.getCoordinates().distanceTo(new Coordinates(latitude, longitude));
+		return cache.getCoordinates().distanceTo(new Coordinates(latitude, longitude)) / 1000;
 	}
 
 	private void login(GeocachingApi api) throws GeocachingApiException {

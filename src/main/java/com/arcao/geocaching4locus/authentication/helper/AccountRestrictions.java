@@ -116,7 +116,7 @@ public class AccountRestrictions {
 		}
 
 		// this is some type of HACK, there is no other way how to detect change of Member type
-		editor.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, maxFullGeocacheLimit > 1000);
+		//editor.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, maxFullGeocacheLimit == 6000);
 		editor.apply();
 	}
 

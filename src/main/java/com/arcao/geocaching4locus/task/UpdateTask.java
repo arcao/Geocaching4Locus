@@ -144,12 +144,24 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 			publishProgress();
 
-			Geocache cache = api.getCache(result.cacheId, logCount, 0);
+			int originalLogCount = logCount;
+
+			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+			if (authenticatorHelper.getRestrictions().isPremiumMember()) {
+				resultQuality = GeocachingApi.ResultQuality.SUMMARY;
+				logCount = 0;
+			}
+
+			Geocache cache = api.getCache(resultQuality, result.cacheId, logCount, 0);
 			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 
-			if (result.updateLogs) {
+			if (result.updateLogs || resultQuality == GeocachingApi.ResultQuality.SUMMARY) {
 				int startIndex = logCount;
 				int maxLogs = AppConstants.LOGS_TO_UPDATE_MAX - logCount;
+
+				if (!result.updateLogs) {
+					maxLogs = originalLogCount;
+				}
 
 				while (startIndex < maxLogs) {
 					publishProgress(startIndex);

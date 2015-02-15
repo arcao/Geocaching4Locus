@@ -34,8 +34,8 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 			return;
 		}
 
-		if (showBasicMemeberWarningDialog())
-			return;
+		//if (showBasicMemeberWarningDialog())
+		//	return;
 
 		mShowUpdateMoreDialog = true;
 	}

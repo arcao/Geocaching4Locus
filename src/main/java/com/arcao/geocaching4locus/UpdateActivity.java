@@ -47,12 +47,18 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 			return;
 		}
 
+		boolean simpleCacheData = mPrefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
 		String repeatUpdate = mPrefs.getString(
 			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
-			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
+			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY);
 
-		if (!PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate) && showBasicMemeberWarningDialog())
+		if (simpleCacheData && !PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
+			onUpdateFinished(null);
 			return;
+		}
+
+		//if (showBasicMemeberWarningDialog())
+		//	return;
 
 		mShowUpdateDialog = true;
 	}

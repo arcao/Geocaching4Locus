@@ -45,8 +45,8 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 			return;
 		}
 
-		if (showBasicMemberWarningDialog())
-			return;
+		//if (showBasicMemberWarningDialog())
+		//	return;
 
 		mShowGCNumberInputDialog = true;
 	}

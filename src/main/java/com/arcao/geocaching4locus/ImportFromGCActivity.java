@@ -73,7 +73,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		GCNumberInputDialogFragment.newInstance().show(getSupportFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
+		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
 	protected boolean showBasicMemberWarningDialog() {
@@ -87,7 +87,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
 			return true;
 
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 
 		return true;
 	}
@@ -98,7 +98,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override

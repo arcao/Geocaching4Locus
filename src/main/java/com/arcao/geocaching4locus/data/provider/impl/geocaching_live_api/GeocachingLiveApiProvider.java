@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.data.provider.impl.geocaching_live_api;
 
 import android.content.Context;
+import android.preference.PreferenceFragment;
 import android.support.annotation.StringRes;
-import android.support.v4.preference.PreferenceFragment;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.data.provider.Provider;
 import com.arcao.geocaching4locus.data.provider.ProviderService;

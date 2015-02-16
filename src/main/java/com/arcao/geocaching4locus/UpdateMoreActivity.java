@@ -69,7 +69,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
 			return true;
 
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 		return true;
 	}
 
@@ -93,7 +93,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getSupportFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
+		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override

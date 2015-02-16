@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
-import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
@@ -36,7 +36,7 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 		donatePaypalPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				new DonatePaypalDialogFragment().show(getActivity().getSupportFragmentManager(), DonatePaypalDialogFragment.TAG);
+				new DonatePaypalDialogFragment().show(getActivity().getFragmentManager(), DonatePaypalDialogFragment.TAG);
 				return true;
 			}
 		});

@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.data.provider;
 
 import android.content.Context;
+import android.preference.PreferenceFragment;
 import android.support.annotation.StringRes;
-import android.support.v4.preference.PreferenceFragment;
 
 public interface Provider {
 	public String getId();

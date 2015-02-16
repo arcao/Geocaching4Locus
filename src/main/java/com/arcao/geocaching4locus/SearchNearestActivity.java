@@ -186,7 +186,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				int countOfCaches = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
 				SliderDialogFragment fragment = SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
 								countOfCachesStep, getMaxCountOfCaches(), countOfCaches, countOfCachesStep);
-				fragment.show(getSupportFragmentManager(), "countOfCaches");
+				fragment.show(getFragmentManager(), "countOfCaches");
 			}
 		});
 	}

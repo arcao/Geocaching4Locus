@@ -79,7 +79,7 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
 			return true;
 
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getSupportFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
+		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 		return true;
 	}
 
@@ -140,7 +140,7 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getSupportFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
+		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override

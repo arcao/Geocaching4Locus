@@ -24,7 +24,7 @@ public class LocusTesting {
 		if (activity.getSupportFragmentManager().findFragmentByTag(LocusTestingErrorDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		LocusTestingErrorDialogFragment.newInstance(activity).show(activity.getSupportFragmentManager(), LocusTestingErrorDialogFragment.FRAGMENT_TAG);
+		LocusTestingErrorDialogFragment.newInstance(activity).show(activity.getFragmentManager(), LocusTestingErrorDialogFragment.FRAGMENT_TAG);
 	}
 
 	public static void showLocusTooOldToast(final Context context) {

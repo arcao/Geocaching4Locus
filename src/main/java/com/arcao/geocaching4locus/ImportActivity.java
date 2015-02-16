@@ -93,7 +93,7 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
-		ImportDialogFragment.newInstance(cacheId).show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override

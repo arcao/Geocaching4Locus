@@ -80,12 +80,12 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
 			cancel();
 
-			NoLocationProviderDialogFragment.newInstance().show(activity.getSupportFragmentManager(), NoLocationProviderDialogFragment.TAG);
+			NoLocationProviderDialogFragment.newInstance().show(activity.getFragmentManager(), NoLocationProviderDialogFragment.TAG);
 			return;
 		}
 
 		mDialog = LocationUpdateProgressDialogFragment.newInstance(source);
-		mDialog.show(activity.getSupportFragmentManager(), LocationUpdateProgressDialogFragment.FRAGMENT_TAG);
+		mDialog.show(activity.getFragmentManager(), LocationUpdateProgressDialogFragment.FRAGMENT_TAG);
 	}
 
 	protected Location getLastLocation() {

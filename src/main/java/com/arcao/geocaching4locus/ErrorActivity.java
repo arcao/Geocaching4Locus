@@ -1,22 +1,16 @@
 package com.arcao.geocaching4locus;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.NotificationManager;
+import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
-
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
-
 import org.apache.commons.lang3.builder.Builder;
 
-public class ErrorActivity extends FragmentActivity {
+public class ErrorActivity extends Activity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
 
 	private static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
@@ -35,10 +29,9 @@ public class ErrorActivity extends FragmentActivity {
 	}
 
 	@Override
-	protected void onResumeFragments() {
-		super.onResumeFragments();
+	protected void onPostResume() {
+		super.onPostResume();
 
-		// play with fragments here
 		showErrorDialog();
 	}
 
@@ -49,11 +42,11 @@ public class ErrorActivity extends FragmentActivity {
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
 
-		if (getSupportFragmentManager().findFragmentByTag(ErrorDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(ErrorDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		ErrorDialogFragment.newInstance(resTitleId, resTextId, preferenceFragment, additionalMessage, t)
-			.show(getSupportFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
+			.show(getFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
 	}
 
 

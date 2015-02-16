@@ -49,14 +49,14 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 			return;
 
 		if (mDialog == null)
-			mDialog = (DownloadProgressDialogFragment) activity.getSupportFragmentManager().findFragmentByTag(DownloadProgressDialogFragment.FRAGMENT_TAG);
+			mDialog = (DownloadProgressDialogFragment) activity.getFragmentManager().findFragmentByTag(DownloadProgressDialogFragment.FRAGMENT_TAG);
 
 		switch(intent.getAction()) {
 			case SearchGeocacheService.ACTION_PROGRESS_UPDATE:
 				if (mDialog == null || !mDialog.isShowing()) {
 					mDialog = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 					mDialog.setOnCancelListener(this);
-					mDialog.show(activity.getSupportFragmentManager(), DownloadProgressDialogFragment.FRAGMENT_TAG);
+					mDialog.show(activity.getFragmentManager(), DownloadProgressDialogFragment.FRAGMENT_TAG);
 					activity.getSupportFragmentManager().executePendingTransactions(); // show dialog before setting progress
 				}
 

@@ -71,24 +71,24 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 
 	public void showLoginDialog() {
 		// remove previous dialog
-		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
+		AbstractDialogFragment fragment = (AbstractDialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
 			fragment.dismiss();
 
-		OAuthLoginDialogFragment.newInstance().show(getSupportFragmentManager(), TAG_DIALOG);
+		OAuthLoginDialogFragment.newInstance().show(getFragmentManager(), TAG_DIALOG);
 	}
 
 	public void showWizardDialog() {
-		new WizardDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
+		new WizardDialogFragment().show(getFragmentManager(), TAG_DIALOG);
 	}
 
 	public void showBasicMemberWarning() {
 		// remove previous dialog
-		AbstractDialogFragment fragment = (AbstractDialogFragment) getSupportFragmentManager().findFragmentByTag(TAG_DIALOG);
+		AbstractDialogFragment fragment = (AbstractDialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
 			fragment.dismiss();
 
-		new BasicMemberLoginWarningDialogFragment().show(getSupportFragmentManager(), TAG_DIALOG);
+		new BasicMemberLoginWarningDialogFragment().show(getFragmentManager(), TAG_DIALOG);
 	}
 
 	@Override

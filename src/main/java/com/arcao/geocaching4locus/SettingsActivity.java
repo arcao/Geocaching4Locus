@@ -1,31 +1,31 @@
 package com.arcao.geocaching4locus;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
-import com.arcao.geocaching4locus.fragment.preference.HeaderPreferenceFragment;
+import java.util.List;
 
-public class SettingsActivity extends ActionBarActivity {
-	public static final String PARAM_FRAGMENT = "fragment";
-
+public class SettingsActivity extends PreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-		String fragmentName = getIntent().getStringExtra(PARAM_FRAGMENT);
-		if (fragmentName != null) {
-			// Display the fragment as the main content.
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, Fragment.instantiate(this, fragmentName)).commit();
-			return;
+		ActionBar actionBar = getActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+	}
 
-		getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new HeaderPreferenceFragment()).commit();
+	/**
+	 * Populate the activity with the top-level headers.
+	 */
+	@Override
+	public void onBuildHeaders(List<Header> target) {
+		loadHeadersFromResource(R.xml.preference_header, target);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class SettingsActivity extends ActionBarActivity {
 	}
 
 	public static Intent createIntent(Context context, String preferenceFragment) {
-		return createIntent(context).putExtra(SettingsActivity.PARAM_FRAGMENT, preferenceFragment);
+		return createIntent(context).putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, preferenceFragment);
 	}
 
 	public static Intent createIntent(Context context, Class<?> preferenceFragment) {

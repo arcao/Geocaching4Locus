@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -40,6 +41,12 @@ public class SettingsActivity extends PreferenceActivity {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+		mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem menuItem) {
+				return getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, menuItem);
 			}
 		});
 	}

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.v7.internal.view.SupportMenuInflater;
+import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -15,6 +17,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	private static final String PARAM_SCREEN = "screen";
 
 	protected SharedPreferences mPrefs;
+	protected boolean mHasOptionsMenu = false;
 
 	protected <P extends Preference> P findPreference(String key) {
 		return (P)super.findPreference(key);
@@ -40,6 +43,13 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		preparePreference();
+
+		if (mHasOptionsMenu) {
+			Toolbar toolbar = ((SettingsActivity)getActivity()).getToolBar();
+			onCreateOptionsMenu(toolbar.getMenu(), new SupportMenuInflater(getActivity()));
+			onPrepareOptionsMenu(toolbar.getMenu());
+
+		}
 	}
 
 	@Override
@@ -56,6 +66,12 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		if (title != null) {
 			getActivity().setTitle(title);
 		}
+	}
+
+	@Override
+	public void setHasOptionsMenu(boolean hasMenu) {
+		super.setHasOptionsMenu(hasMenu);
+		mHasOptionsMenu = hasMenu;
 	}
 
 	protected void preparePreference() {

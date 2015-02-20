@@ -13,7 +13,6 @@ public interface AppConstants {
 	static final String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
 
 	static final String ERROR_SCRIPT_URL = "http://geocaching4locus.eu/sendcrash/send.php";
-	static final String ERROR_FORM_KEY = "";
 
 	static final Uri MANUAL_URI = Uri.parse("http://geocaching4locus.eu/manual/");
 	static final Uri WEBSITE_URI = Uri.parse("http://geocaching4locus.eu/");

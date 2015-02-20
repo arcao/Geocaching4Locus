@@ -21,7 +21,7 @@ import timber.log.Timber;
 import java.util.UUID;
 
 @ReportsCrashes(
-		formKey =  AppConstants.ERROR_FORM_KEY,
+		buildConfigClass = BuildConfig.class,
 		formUri = AppConstants.ERROR_SCRIPT_URL,
 		mode = ReportingInteractionMode.NOTIFICATION,
 		resNotifTickerText = R.string.crash_notif_ticker_text,

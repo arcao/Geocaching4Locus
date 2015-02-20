@@ -70,7 +70,7 @@
         <item name="android:windowNoTitle">true</item>
     </style>
     <style name="AppTheme.Settings">
-        <item name="windowActionBar">true</item>
+        <item name="windowActionBar">false</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium.Primary</item>
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
     </style>
@@ -80,24 +80,29 @@
     </style>
 
 
-    <style name="SimpleHeader" parent="@android:style/Widget.TextView">
-        <item name="android:background">@drawable/dark_header_dither</item>
+    <style name="SimpleHeader" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:background">@drawable/list_section_divider_holo_light</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:textAllCaps">true</item>
+
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
     </style>
     <style name="SimpleEditText" parent="@android:style/Widget.EditText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:inputType">text</item>
     </style>
@@ -106,15 +111,18 @@
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">false</item>
         <item name="android:inputType">none</item>
-        
-        <item name="android:background">@android:drawable/btn_dropdown</item>
+
+        <item name="android:background">@drawable/spinner_background_holo_light</item>
         <item name="android:gravity">left|center_vertical</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
     </style>
-    <style name="SimpleButton" parent="@android:style/Widget.Button">
+    <style name="SimpleButton" parent="@android:style/Widget.Holo.Light.Button">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">fill_parent</item>
         <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
     </style>
     <style name="SimpleButton.GPS">
         <item name="android:layout_width">wrap_content</item>
@@ -127,8 +135,10 @@
         <item name="android:layout_marginLeft">0dp</item>
     </style>
     <style name="CustomButtonPanelStyle">
-        <item name="android:minHeight">54dp</item>
-        <item name="android:background">#A9A9A9</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:divider">?android:attr/dividerHorizontal</item>
+        <item name="android:showDividers">beginning</item>
+        <item name="android:dividerPadding">0dip</item>
     </style>
     <style name="CustomButtonBarStyle">
         <item name="android:paddingTop">5dp</item>
@@ -137,6 +147,7 @@
     </style>
     <style name="CustomButtonBarButtonStyle">
     </style>
+
 
 	<!-- Old Notification Styles -->
     <style name="TextAppearance">

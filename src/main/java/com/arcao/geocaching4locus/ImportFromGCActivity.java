@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
@@ -33,15 +32,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		}
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
-			if (savedInstanceState != null)
-				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
-
-			if (!mAuthenticatorActivityVisible) {
-				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				mAuthenticatorActivityVisible = true;
-			}
-
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
 

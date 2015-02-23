@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
-import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import org.acra.ACRA;
@@ -20,7 +18,6 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 
 	private static final int REQUEST_LOGIN = 1;
 
-	private boolean mAuthenticatorActivityVisible = false;
 	private boolean mShowImportDialog = false;
 
 	@Override
@@ -33,15 +30,7 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 		}
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
-			if (savedInstanceState != null)
-				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
-
-			if (!mAuthenticatorActivityVisible) {
-				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				mAuthenticatorActivityVisible = true;
-			}
-
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
 
@@ -57,13 +46,6 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 			showImportDialog();
 			mShowImportDialog = false;
 		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
 	protected void showImportDialog() {
@@ -107,7 +89,6 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
-			mAuthenticatorActivityVisible = false;
 			if (resultCode == RESULT_OK) {
 				// we can't show dialog here, we'll do it in onResumeFragments
 				mShowImportDialog = true;

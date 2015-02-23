@@ -1,8 +1,6 @@
 package com.arcao.geocaching4locus.authentication;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.*;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -17,74 +15,52 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
-import com.arcao.geocaching4locus.fragment.dialog.OAuthLoginDialogFragment;
+import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import org.acra.ACRA;
 
 import java.lang.ref.WeakReference;
 
-public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginDialogFragment.DialogListener {
-	protected static final String PARAM_SHOW_WIZARD = "SHOW_WIZARD";
-	protected static final String TAG_DIALOG = "dialog";
-
-	protected boolean showBasicMemberWarning = false;
+public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginFragment.DialogListener {
+	private static final String TAG_DIALOG = "DIALOG";
 
 	protected final Handler handler = new Handler();
-	protected boolean paused = false;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		ACRA.getErrorReporter().putCustomData("source", "login");
+	}
 
-		if (getSupportFragmentManager().findFragmentByTag(TAG_DIALOG) != null)
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (getFragmentManager().findFragmentByTag(TAG_DIALOG) != null)
 			return;
 
-		if (getIntent().getBooleanExtra(PARAM_SHOW_WIZARD, false)) {
-			showWizardDialog();
-			return;
-		}
-
-		showLoginDialog();
+		showLoginFragment();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-
-		paused = true;
 	}
 
-	@Override
-	protected void onResumeFragments() {
-		super.onResumeFragments();
-
-		paused = false;
-
-		if (showBasicMemberWarning) {
-			showBasicMemberWarning = false;
-			showBasicMemberWarning();
-		}
-	}
-
-	public void showLoginDialog() {
+	public void showLoginFragment() {
 		// remove previous dialog
-		AbstractDialogFragment fragment = (AbstractDialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
-		if (fragment != null)
-			fragment.dismiss();
-
-		OAuthLoginDialogFragment.newInstance().show(getFragmentManager(), TAG_DIALOG);
-	}
-
-	public void showWizardDialog() {
-		new WizardDialogFragment().show(getFragmentManager(), TAG_DIALOG);
+		Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
+		if (!(fragment instanceof OAuthLoginFragment)) {
+			getFragmentManager().beginTransaction()
+							.replace(android.R.id.content, OAuthLoginFragment.newInstance())
+							.commit();
+		}
 	}
 
 	public void showBasicMemberWarning() {
 		// remove previous dialog
-		AbstractDialogFragment fragment = (AbstractDialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
+		DialogFragment fragment = (DialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)
 			fragment.dismiss();
 
@@ -106,11 +82,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					if (!paused) {
-						showBasicMemberWarning();
-					} else {
-						showBasicMemberWarning = true;
-					}
+					showBasicMemberWarning();
 				}
 			});
 			return;
@@ -120,56 +92,12 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 		finish();
 	}
 
-
-	public static Intent createIntent(Context mContext, boolean mShowWizard) {
-		Intent intent = new Intent(mContext, AuthenticatorActivity.class);
-		intent.putExtra(PARAM_SHOW_WIZARD, mShowWizard);
-
-		return intent;
-	}
-
-	public static class WizardDialogFragment extends AbstractDialogFragment {
-		protected WeakReference<AuthenticatorActivity> activityRef;
-
-		public WizardDialogFragment() {
-			setCancelable(false);
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-
-			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
-		}
-
-		@NonNull
-		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			return new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.login_required_title)
-				.setMessage(R.string.login_required_message)
-				.setPositiveButton(R.string.button_login_start, new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						AuthenticatorActivity activity = activityRef.get();
-						if (activity != null)
-							activity.showLoginDialog();
-					}
-				})
-				.setNegativeButton(R.string.cancel_button, new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						AuthenticatorActivity activity = activityRef.get();
-						if (activity != null)
-							activity.onLoginFinished(null);
-					}
-				})
-				.create();
-		}
+	public static Intent createIntent(Context mContext) {
+		return new Intent(mContext, AuthenticatorActivity.class);
 	}
 
 	public static class BasicMemberLoginWarningDialogFragment extends AbstractDialogFragment {
-		protected WeakReference<AuthenticatorActivity> activityRef;
+		protected WeakReference<Activity> activityRef;
 
 		public BasicMemberLoginWarningDialogFragment() {
 			setCancelable(false);
@@ -179,7 +107,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
 
-			activityRef = new WeakReference<>((AuthenticatorActivity) activity);
+			activityRef = new WeakReference<>(activity);
 		}
 
 		@NonNull
@@ -195,7 +123,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 			if (period < AppConstants.SECONDS_PER_MINUTE) {
 				periodString = getResources().getQuantityString(R.plurals.plurals_minute, period, period);
 			} else {
-				period = period / AppConstants.SECONDS_PER_MINUTE;
+				period /= AppConstants.SECONDS_PER_MINUTE;
 				periodString = getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 			}
 
@@ -209,7 +137,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 				.setPositiveButton(R.string.ok_button, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						AuthenticatorActivity activity = activityRef.get();
+						Activity activity = activityRef.get();
 						if (activity != null) {
 							activity.setResult(RESULT_OK);
 							activity.finish();

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
@@ -25,7 +24,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 
 	private SharedPreferences mPrefs;
 
-	private boolean mAuthenticatorActivityVisible = false;
 	private boolean mShowUpdateDialog = false;
 
 	@Override
@@ -35,15 +33,7 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
-			if (savedInstanceState != null)
-				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
-
-			if (!mAuthenticatorActivityVisible) {
-				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				mAuthenticatorActivityVisible = true;
-			}
-
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
 
@@ -81,13 +71,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 
 		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
 		return true;
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
 	public void showUpdateDialog() {
@@ -163,7 +146,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
-			mAuthenticatorActivityVisible = false;
 			if (resultCode == RESULT_OK) {
 				// we can't show dialog here, we'll do it in onPostResume
 				mShowUpdateDialog = true;

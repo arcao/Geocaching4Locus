@@ -1,8 +1,9 @@
-package com.arcao.geocaching4locus.fragment.dialog;
+package com.arcao.geocaching4locus.fragment;
 
 import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
 import timber.log.Timber;
@@ -30,7 +31,7 @@ import timber.log.Timber;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
-public class OAuthLoginDialogFragment extends AbstractDialogFragment implements TaskListener {
+public class OAuthLoginFragment extends Fragment implements TaskListener {
 	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
 	private static final String OAUTH_VERIFIER = "oauth_verifier";
@@ -45,8 +46,8 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 	private View mProgressHolder = null;
 	private Bundle mLastInstanceState;
 
-	public static OAuthLoginDialogFragment newInstance() {
-		return new OAuthLoginDialogFragment();
+	public static OAuthLoginFragment newInstance() {
+		return new OAuthLoginFragment();
 	}
 
 	@Override
@@ -80,9 +81,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		}
 	}
 
-	@Override
 	public void onCancel(DialogInterface dialog) {
-		super.onCancel(dialog);
 
 		if (mTask != null)
 			mTask.cancel(true);
@@ -95,7 +94,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 	@Override
 	public void onOAuthTaskFinished(String userName, String token) {
-		dismiss();
+		//dismiss();
 
 		final AuthenticatorHelper helper = App.get(getActivity()).getAuthenticatorHelper();
 
@@ -116,7 +115,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 
 	@Override
 	public void onTaskError(Intent errorIntent) {
-		dismiss();
+		//dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
@@ -146,9 +145,9 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 		if (savedInstanceState != null)
 			mLastInstanceState = savedInstanceState;
 
-		getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		View view = inflater.inflate(R.layout.fragment_dialog_login, container);
+		View view = inflater.inflate(R.layout.fragment_login_oauth, container, false);
 		mProgressHolder = view.findViewById(R.id.progressHolder);
 		mProgressHolder.setVisibility(View.VISIBLE);
 
@@ -189,7 +188,7 @@ public class OAuthLoginDialogFragment extends AbstractDialogFragment implements 
 					mProgressHolder.setVisibility(View.VISIBLE);
 				}
 
-				mTask = new OAuthLoginTask(getActivity(), OAuthLoginDialogFragment.this);
+				mTask = new OAuthLoginTask(getActivity(), OAuthLoginFragment.this);
 				mTask.execute(uri.getQueryParameter(OAUTH_VERIFIER));
 
 				return true;

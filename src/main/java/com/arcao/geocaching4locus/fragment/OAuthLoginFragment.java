@@ -1,11 +1,9 @@
 package com.arcao.geocaching4locus.fragment;
 
-import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -21,7 +19,6 @@ import android.widget.FrameLayout;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
@@ -75,48 +72,22 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		if (mTask != null)
+			mTask.cancel(true);
+	}
+
+	@Override
 	public void onLoginUrlAvailable(String url) {
 		if (mWebView != null) {
 			mWebView.loadUrl(url);
 		}
 	}
 
-	public void onCancel(DialogInterface dialog) {
-
-		if (mTask != null)
-			mTask.cancel(true);
-
-		DialogListener listener = mDialogListenerRef.get();
-		if (listener != null) {
-			listener.onLoginFinished(null);
-		}
-	}
-
 	@Override
-	public void onOAuthTaskFinished(String userName, String token) {
-		//dismiss();
-
-		final AuthenticatorHelper helper = App.get(getActivity()).getAuthenticatorHelper();
-
-		if (helper.hasAccount()) {
-			helper.removeAccount();
-		}
-
-		final Account account = new Account(userName, AuthenticatorHelper.ACCOUNT_TYPE);
-
-		helper.addAccountExplicitly(account, null);
-		helper.setAuthToken(account, AuthenticatorHelper.ACCOUNT_TYPE, token);
-
-		DialogListener listener = mDialogListenerRef.get();
-		if (listener != null) {
-			listener.onLoginFinished(null);
-		}
-	}
-
-	@Override
-	public void onTaskError(Intent errorIntent) {
-		//dismiss();
-
+	public void onTaskFinished(Intent errorIntent) {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onLoginFinished(errorIntent);
@@ -223,7 +194,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 
 			if (getActivity() != null)
-				onTaskError(new ErrorActivity.IntentBuilder(getActivity()).setAdditionalMessage(description).build());
+				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).setAdditionalMessage(description).build());
 		}
 
 		@Override

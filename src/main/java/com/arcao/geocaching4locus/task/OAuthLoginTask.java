@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.task;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import com.arcao.geocaching.api.GeocachingApi;
@@ -10,6 +11,7 @@ import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
+import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.DeviceInfoFactory;
@@ -25,8 +27,8 @@ import java.lang.ref.WeakReference;
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	public interface TaskListener {
 		void onLoginUrlAvailable(String url);
-		void onOAuthTaskFinished(String userName, String token);
-		void onTaskError(Intent errorIntent);
+
+		void onTaskFinished(Intent errorIntent);
 	}
 
 	private final Context mContext;
@@ -39,10 +41,10 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 	private OAuthService createOAuthService() {
 		ServiceBuilder serviceBuilder = new ServiceBuilder()
-			.apiKey(BuildConfig.GEOCACHING_API_KEY)
-			.apiSecret(BuildConfig.GEOCACHING_API_SECRET)
-			.callback(AppConstants.OAUTH_CALLBACK_URL)
-			.debug();
+						.apiKey(BuildConfig.GEOCACHING_API_KEY)
+						.apiSecret(BuildConfig.GEOCACHING_API_SECRET)
+						.callback(AppConstants.OAUTH_CALLBACK_URL)
+						.debug();
 
 		if (BuildConfig.GEOCACHING_API_STAGING) {
 			serviceBuilder.provider(GeocachingOAuthProvider.Staging.class);
@@ -57,14 +59,15 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	protected String[] doInBackground(String... params) throws Exception {
 		OAuthService service = createOAuthService();
 		App app = App.get(mContext);
-		AccountRestrictions accountRestrictions = app.getAuthenticatorHelper().getRestrictions();
+		AuthenticatorHelper helper = app.getAuthenticatorHelper();
+		AccountRestrictions accountRestrictions = helper.getRestrictions();
 
 		if (params.length == 0) {
 			Token requestToken = service.getRequestToken();
 			app.storeOAuthToken(requestToken);
 			String authUrl = service.getAuthorizationUrl(requestToken);
 			Timber.i("AuthorizationUrl: " + authUrl);
-			return new String[] { authUrl };
+			return new String[]{authUrl};
 		} else {
 			Token requestToken = app.getOAuthToken();
 			Token accessToken = service.getAccessToken(requestToken, new Verifier(params[0]));
@@ -76,14 +79,20 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 			UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
 			ApiLimits apiLimits = api.getApiLimits();
 
+			// add account
+			if (helper.hasAccount()) {
+				helper.removeAccount();
+			}
+
+			Account account = new Account(userProfile.getUser().getUserName(), AuthenticatorHelper.ACCOUNT_TYPE);
+			helper.addAccountExplicitly(account, null);
+			helper.setAuthToken(account, AuthenticatorHelper.ACCOUNT_TYPE, api.getSession());
+
 			// update member type and restrictions
 			accountRestrictions.updateMemberType(userProfile.getUser().getMemberType());
 			accountRestrictions.updateLimits(apiLimits);
 
-			return new String[] {
-					userProfile.getUser().getUserName(),
-					api.getSession()
-			};
+			return null;
 		}
 	}
 
@@ -91,15 +100,14 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	protected void onPostExecute(String[] result) {
 		TaskListener listener = mTaskListenerRef.get();
 
-		if (result.length == 1) {
+		if (listener == null)
+			return;
 
-			if (listener != null) {
-				listener.onLoginUrlAvailable(result[0]);
-			}
-		} else if (result.length == 2) {
-			if (listener != null) {
-				listener.onOAuthTaskFinished(result[0], result[1]);
-			}
+		if (result != null && result.length == 1) {
+			listener.onLoginUrlAvailable(result[0]);
+		}
+		else {
+			listener.onTaskFinished(null);
 		}
 	}
 
@@ -117,7 +125,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
-			listener.onTaskError(intent);
+			listener.onTaskFinished(intent);
 		}
 	}
 }

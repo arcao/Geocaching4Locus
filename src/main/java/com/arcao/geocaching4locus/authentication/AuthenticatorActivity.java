@@ -8,20 +8,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import com.arcao.geocaching4locus.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
+import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import org.acra.ACRA;
 
 import java.lang.ref.WeakReference;
 
-public class AuthenticatorActivity extends FragmentActivity implements OAuthLoginFragment.DialogListener {
+public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
 	private static final String TAG_DIALOG = "DIALOG";
 
 	protected final Handler handler = new Handler();
@@ -29,6 +31,12 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_login);
+
+		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+		getSupportActionBar().setTitle(getTitle());
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		ACRA.getErrorReporter().putCustomData("source", "login");
 	}
@@ -44,8 +52,14 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			// Respond to the action bar's Up/Home button
+			case android.R.id.home:
+				finish();
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	public void showLoginFragment() {
@@ -53,7 +67,7 @@ public class AuthenticatorActivity extends FragmentActivity implements OAuthLogi
 		Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
 		if (!(fragment instanceof OAuthLoginFragment)) {
 			getFragmentManager().beginTransaction()
-							.replace(android.R.id.content, OAuthLoginFragment.newInstance())
+							.replace(R.id.fragment, OAuthLoginFragment.newInstance())
 							.commit();
 		}
 	}

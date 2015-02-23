@@ -132,11 +132,7 @@
     <string name="launcher_import_from_gc">Import from GC code</string>
     
     <string name="title_count_of_caches">Count of caches</string>
-    
-    <string name="button_login_start">Sign in</string>
-    <string name="login_required_title">Sign-in required</string>
-    <string name="login_required_message">To continue, you must sign in to your Geocaching.com account.</string>
-    
+        
     <string name="basic_member_warning_title">Basic member access</string>
     <string name="premium_member_warning_title">Premium member access</string>
     <string name="basic_member_sign_on_warning_message">As a basic member of geocaching.com you can download full details of &lt;b>%1$s per %2$s period&lt;/b>.&lt;br>
@@ -210,5 +206,6 @@
     <string name="prefs_cat_downloading">Downloading</string>
     <string name="prefs_cat_advanced">Advanced</string>
     <string name="prefs_cat_about">About</string>
+    <string name="login_title">Sign in</string>
 
 </resources>

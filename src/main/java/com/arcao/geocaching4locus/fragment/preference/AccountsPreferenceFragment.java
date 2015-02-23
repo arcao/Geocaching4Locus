@@ -1,12 +1,13 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.text.Spanned;
-
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
 
 public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
@@ -48,6 +49,14 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 			accountPreference.setSummary(R.string.pref_account_login_summary);
 		}
 
+		final Preference geocachingLivePreference = findPreference(ACCOUNT_GEOCACHING_LIVE, Preference.class);
+		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.GEOCACHING_LIVE_URI));
+				return true;
+			}
+		});
 	}
 
 	protected Spanned prepareAccountSummary(CharSequence value, int resId) {

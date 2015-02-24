@@ -118,7 +118,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		if (isCancelled())
 			return;
 
-		Timber.e(t.getMessage(), t);
+		Timber.e(t, t.getMessage());
 
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

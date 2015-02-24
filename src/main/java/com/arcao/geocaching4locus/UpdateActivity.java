@@ -86,7 +86,7 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 			try {
 				p = LocusUtils.handleIntentPointTools(this, getIntent());
 			} catch (RequiredVersionMissingException e) {
-				Timber.e(e.getMessage(), e);
+				Timber.e(e, e.getMessage());
 			}
 
 			if (p != null && p.getGeocachingData() != null) {

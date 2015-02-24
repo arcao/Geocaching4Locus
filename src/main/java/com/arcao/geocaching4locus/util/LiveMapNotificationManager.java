@@ -189,7 +189,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
 			}
 		} catch (Throwable e) {
-			Timber.e("Unable to receive info about current state of periodic update events from Locus.", e);
+			Timber.e(e, "Unable to receive info about current state of periodic update events from Locus.");
 		}
 
 		if (enabled && !periodicUpdateEnabled) {

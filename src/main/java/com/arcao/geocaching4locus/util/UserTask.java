@@ -225,9 +225,9 @@ public abstract class UserTask<Params, Progress, Result> {
 				try {
 					result = get();
 				} catch (InterruptedException e) {
-					Timber.w(e.getMessage(), e);
+					Timber.w(e, e.getMessage());
 				} catch (ExecutionException e) {
-					Timber.e("An error occured while executing doInBackground()", e.getCause());
+					Timber.e(e.getCause(), "An error occured while executing doInBackground()");
 					message = sHandler.obtainMessage(MESSAGE_POST_EXCEPTION,
 														new UserTaskResult<>(UserTask.this, e.getCause(), (Result[]) null));
 					message.sendToTarget();

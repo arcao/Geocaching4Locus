@@ -52,7 +52,7 @@ public class WherigoServiceImpl implements WherigoService {
 			r.close();
 			Timber.i("Cache code: " + cacheCode);
 		} catch (IOException e) {
-			Timber.e(e.toString(), e);
+			Timber.e(e, e.toString());
 			if (!isGsonException(e)) {
 				throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
 			}
@@ -138,7 +138,7 @@ public class WherigoServiceImpl implements WherigoService {
 			isr = new InputStreamReader(is, "UTF-8");
 			return new JsonReader(isr);
 		} catch (Exception e) {
-			Timber.e(e.toString(), e);
+			Timber.e(e, e.toString());
 			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getClass().getSimpleName(), e);
 		}
 	}

@@ -406,7 +406,7 @@ public class LocusDataMapper {
 
 				namePrefix = "";
 			} catch (ParseException e) {
-				Timber.w(e.getMessage());
+				Timber.w(e, e.getMessage());
 
 				// fix for "S1: N 49 ..."
 				namePrefix += note.substring(0, matcher.start() + 1);

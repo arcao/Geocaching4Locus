@@ -175,7 +175,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 				return true;
 			}
 		} catch (IllegalArgumentException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 		}
 
 		editText.setError(getString(R.string.error_input_gc));

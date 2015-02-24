@@ -58,7 +58,7 @@ public class App extends android.app.Application {
 				ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
 			}
 		} catch (Throwable t) {
-			Timber.e(t.getMessage(), t);
+			Timber.e(t, t.getMessage());
 			ACRA.getErrorReporter().putCustomData("LocusVersion", "failed");
 			ACRA.getErrorReporter().putCustomData("LocusPackage", "failed");
 		}
@@ -93,7 +93,7 @@ public class App extends android.app.Application {
 		try {
 			return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			return "1.0";
 		}
 	}

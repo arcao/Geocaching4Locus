@@ -137,7 +137,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 			return current > 0;
 		} catch (InvalidSessionException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
@@ -173,7 +173,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 				waypoints.add(wpt);
 			} catch (RequiredVersionMissingException e) {
-				Timber.e(e.getMessage(), e);
+				Timber.e(e, e.getMessage());
 			}
 		}
 
@@ -209,7 +209,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		if (isCancelled())
 			return;
 
-		Timber.e(t.getMessage(), t);
+		Timber.e(t, t.getMessage());
 
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

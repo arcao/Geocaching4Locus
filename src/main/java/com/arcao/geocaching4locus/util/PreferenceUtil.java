@@ -12,7 +12,7 @@ public class PreferenceUtil {
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			return defaultValue;
 		}
 	}

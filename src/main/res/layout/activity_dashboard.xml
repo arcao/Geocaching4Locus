@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.arcao.geocaching4locus.MenuActivity">
+    tools:context="com.arcao.geocaching4locus.DashboardActivity">
 
     <include layout="@layout/toolbar" />
 

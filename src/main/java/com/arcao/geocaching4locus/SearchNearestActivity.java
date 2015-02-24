@@ -342,7 +342,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.search_nearest_actionbar, menu);
+		getMenuInflater().inflate(R.menu.toolbar_search_nearest, menu);
 		return true;
 	}
 

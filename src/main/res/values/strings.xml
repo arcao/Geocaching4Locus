@@ -132,7 +132,7 @@
     <string name="launcher_import_from_gc">Import from GC code</string>
     
     <string name="title_count_of_caches">Count of caches</string>
-        
+
     <string name="basic_member_warning_title">Basic member access</string>
     <string name="premium_member_warning_title">Premium member access</string>
     <string name="basic_member_sign_on_warning_message">As a basic member of geocaching.com you can download full details of &lt;b>%1$s per %2$s period&lt;/b>.&lt;br>

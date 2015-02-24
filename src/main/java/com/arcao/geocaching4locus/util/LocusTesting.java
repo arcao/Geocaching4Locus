@@ -35,7 +35,7 @@ public class LocusTesting {
 		try {
 			return LocusUtils.getActiveVersion(context);
 		} catch (Throwable t) {
-			Timber.e(t.getMessage(), t);
+			Timber.e(t, t.getMessage());
 			return LocusUtils.createLocusVersion(context);
 		}
 	}

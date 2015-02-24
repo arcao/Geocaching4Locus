@@ -98,7 +98,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey) || PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
-			inflater.inflate(R.menu.select_deselect_acttionbar, menu);
+			inflater.inflate(R.menu.toolbar_select_deselect, menu);
 		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}

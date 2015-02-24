@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.util.LocusTesting;
-
 import locus.api.android.features.periodicUpdates.PeriodicUpdatesHandler;
 import locus.api.android.features.periodicUpdates.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
@@ -91,7 +89,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 					return;
 
 				if (update.getMapTopLeft().distanceTo(update.getMapBottomRight()) >= MAX_DIAGONAL_DISTANCE)
-					return;
+					return; // Zoom is too low
 
 				Location l = update.getLocMapCenter();
 

@@ -67,13 +67,13 @@ public class LocusDataMapper {
 		d.setPremiumOnly(cache.isPremium());
 
 		if (cache.getPlaceDate() != null)
-			d.setHidden(cache.getPlaceDate().getTime());
+			d.setDateHidden(cache.getPlaceDate().getTime());
 
-		if (cache.getCreateDate() != null)
-			d.setDateCreated(cache.getCreateDate().getTime());
+		if (cache.getPublishDate() != null)
+			d.setDatePublished(cache.getPublishDate().getTime());
 
 		if (cache.getLastUpdateDate() != null)
-  	  d.setLastUpdated(cache.getLastUpdateDate().getTime());
+  	  d.setDateUpdated(cache.getLastUpdateDate().getTime());
 
 		d.setContainer(toLocusContainerType(cache.getContainerType()));
 		d.setFound(cache.isFoundByUser());
@@ -213,7 +213,8 @@ public class LocusDataMapper {
 		User author = log.getAuthor();
 		if (author != null) {
 			l.setFinder(author.getUserName());
-			l.setFinderFound(author.getFindCount());
+			l.setFindersFound(author.getFindCount());
+			l.setFindersId(author.getId());
 		}
 		l.setLogText(log.getText());
 		l.setType(toLocusLogType(log.getLogType()));
@@ -405,7 +406,7 @@ public class LocusDataMapper {
 
 				namePrefix = "";
 			} catch (ParseException e) {
-				Timber.w(e.getMessage());
+				Timber.w(e, e.getMessage());
 
 				// fix for "S1: N 49 ..."
 				namePrefix += note.substring(0, matcher.start() + 1);

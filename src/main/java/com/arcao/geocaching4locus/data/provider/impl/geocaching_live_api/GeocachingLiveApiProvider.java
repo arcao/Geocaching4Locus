@@ -33,7 +33,7 @@ public final class GeocachingLiveApiProvider implements Provider {
 		try {
 			return GeocachingUtils.cacheCodeToCacheId(cacheCode) > 0;
 		} catch (IllegalArgumentException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			return false;
 		}
 	}

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
@@ -84,7 +83,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			try {
 				p = LocusUtils.handleIntentPointTools(this, getIntent());
 			} catch (RequiredVersionMissingException e) {
-				Timber.e(e.getMessage(), e);
+				Timber.e(e, e.getMessage());
 			}
 
 			if (p == null) {
@@ -267,8 +266,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	protected void download() {
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
-			startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
 
@@ -344,7 +342,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.search_nearest_actionbar, menu);
+		getMenuInflater().inflate(R.menu.toolbar_search_nearest, menu);
 		return true;
 	}
 

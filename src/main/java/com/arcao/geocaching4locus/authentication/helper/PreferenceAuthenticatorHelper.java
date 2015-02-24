@@ -126,4 +126,13 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 
 		mPrefs.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).apply();
 	}
+
+	@Override
+	public boolean isLoggedIn(Activity activity, int requestCode) {
+		if (hasAccount())
+			return true;
+
+		activity.startActivityForResult(AuthenticatorActivity.createIntent(activity), requestCode);
+		return false;
+	}
 }

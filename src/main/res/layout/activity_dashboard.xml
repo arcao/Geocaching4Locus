@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context="com.arcao.geocaching4locus.MenuActivity">
+    tools:context="com.arcao.geocaching4locus.DashboardActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -19,7 +19,7 @@
             <ToggleButton
                 android:id="@+id/btn_menu_live_map"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_live_map"
+                android:drawableTop="@drawable/ic_dashboard_live_map"
                 android:onClick="onClickLiveMap"
                 android:textOff="@string/menu_live_map"
                 android:textOn="@string/menu_live_map" />
@@ -28,7 +28,7 @@
 
             <Button
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_gc_input"
+                android:drawableTop="@drawable/ic_dashboard_gc_input"
                 android:onClick="onClickImportFromGC"
                 android:text="@string/menu_import_from_gc" />
 
@@ -36,7 +36,7 @@
 
             <Button
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_nearest"
+                android:drawableTop="@drawable/ic_dashboard_search"
                 android:onClick="onClickNearest"
                 android:text="@string/menu_nearest" />
         </LinearLayout>
@@ -49,7 +49,7 @@
 
             <Button
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_preferences"
+                android:drawableTop="@drawable/ic_dashboard_settings"
                 android:onClick="onClickPreferences"
                 android:text="@string/menu_preferences" />
 
@@ -57,7 +57,7 @@
 
             <Button
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_menu_manual"
+                android:drawableTop="@drawable/ic_dashboard_help"
                 android:onClick="onClickManual"
                 android:text="@string/menu_manual" />
 

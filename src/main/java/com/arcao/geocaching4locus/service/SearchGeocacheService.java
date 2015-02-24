@@ -116,7 +116,7 @@ public class SearchGeocacheService extends AbstractService {
 		try {
 			distance = Float.parseFloat(distanceString);
 		} catch (NumberFormatException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			distance = 100;
 		}
 
@@ -160,7 +160,7 @@ public class SearchGeocacheService extends AbstractService {
 				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
 		} catch (Exception e) {
-			Timber.e("callLocus()", e);
+			Timber.e(e, "callLocus()");
 		}
 	}
 
@@ -293,12 +293,12 @@ public class SearchGeocacheService extends AbstractService {
 				return null;
 			}
 		} catch (InvalidSessionException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
 		} catch (IOException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			throw new GeocachingApiException(e.getMessage(), e);
 		} finally {
 			Utils.closeStream(slfo);

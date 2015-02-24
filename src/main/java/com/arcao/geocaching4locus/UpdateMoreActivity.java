@@ -3,8 +3,6 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import locus.api.android.utils.LocusUtils;
@@ -14,7 +12,6 @@ import timber.log.Timber;
 public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
 
-	private boolean mAuthenticatorActivityVisible = false;
 	private boolean mShowUpdateMoreDialog = false;
 
 	@Override
@@ -22,15 +19,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		super.onCreate(savedInstanceState);
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().hasAccount()) {
-			if (savedInstanceState != null)
-				mAuthenticatorActivityVisible = savedInstanceState.getBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, false);
-
-			if (!mAuthenticatorActivityVisible) {
-				startActivityForResult(AuthenticatorActivity.createIntent(this, true), REQUEST_LOGIN);
-				mAuthenticatorActivityVisible = true;
-			}
-
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
 
@@ -49,13 +38,6 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 			showUpdateMoreDialog();
 			mShowUpdateMoreDialog = false;
 		}
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
 	protected boolean showBasicMemeberWarningDialog() {
@@ -116,8 +98,6 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
-			mAuthenticatorActivityVisible = false;
-
 			if (resultCode == RESULT_OK) {
 				mShowUpdateMoreDialog = true;
 			} else {

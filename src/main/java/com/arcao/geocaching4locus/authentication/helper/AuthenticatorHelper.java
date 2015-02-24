@@ -16,4 +16,5 @@ public interface AuthenticatorHelper {
 	void invalidateAuthToken();
 
 	AccountRestrictions getRestrictions();
+	boolean isLoggedIn(Activity activity, int requestCode);
 }

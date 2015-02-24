@@ -52,7 +52,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			try {
 				ActionDisplayPointsExtended.sendPack(mContext, pack, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			} catch (RequiredVersionMissingException e) {
-				Timber.e(e.getMessage(), e);
+				Timber.e(e, e.getMessage());
 			}
 		}
 
@@ -112,7 +112,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 
 			return LocusDataMapper.toLocusPoint(mContext, cache);
 		} catch (InvalidSessionException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			authenticatorHelper.invalidateAuthToken();
 
 			throw e;
@@ -127,7 +127,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 		if (isCancelled())
 			return;
 
-		Timber.e(t.getMessage(), t);
+		Timber.e(t, t.getMessage());
 
 		Intent intent = new ExceptionHandler(mContext).handle(t);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

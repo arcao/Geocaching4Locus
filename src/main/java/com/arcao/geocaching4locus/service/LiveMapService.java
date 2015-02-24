@@ -107,22 +107,22 @@ public class LiveMapService extends IntentService {
 		try {
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (RequiredVersionMissingException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			showMessage("Error: " + e.getMessage());
 
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (InvalidCredentialsException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			showMessage(getString(R.string.error_credentials));
 
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (NetworkException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			showMessage(getString(R.string.error_network));
 		} catch (Exception e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 		} finally {
 			Timber.d("Job finished.");
 		}
@@ -251,7 +251,7 @@ public class LiveMapService extends IntentService {
 					break;
 			}
 		} catch (InvalidSessionException e) {
-			Timber.e(e.getMessage(), e);
+			Timber.e(e, e.getMessage());
 			authenticatorHelper.invalidateAuthToken();
 
 			throw e;

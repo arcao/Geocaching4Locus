@@ -63,6 +63,7 @@ public class LiveMapService extends IntentService {
 	private CacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
 	private Boolean excludeIgnoreList;
+	private boolean liveMapDownloadHints;
 
 	protected SharedPreferences prefs;
 
@@ -132,6 +133,7 @@ public class LiveMapService extends IntentService {
 		showFound = prefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
 		showOwn = prefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
 		showDisabled = prefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
+		liveMapDownloadHints = prefs.getBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false);
 
 		// default values for basic member
 		difficultyMin = 1;
@@ -207,10 +209,12 @@ public class LiveMapService extends IntentService {
 					break;
 				}
 
+				GeocachingApi.ResultQuality resultQuality = (liveMapDownloadHints) ? GeocachingApi.ResultQuality.SUMMARY : GeocachingApi.ResultQuality.LITE;
+
 				List<Geocache> caches;
 
 				if (current == 0) {
-					caches = api.searchForGeocaches(GeocachingApi.ResultQuality.LITE, perPage, 0, 0, Arrays.asList(
+					caches = api.searchForGeocaches(resultQuality, perPage, 0, 0, Arrays.asList(
 							new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
@@ -223,7 +227,7 @@ public class LiveMapService extends IntentService {
 							new BookmarksExcludeFilter(excludeIgnoreList)
 					), null);
 				} else {
-					caches = api.getMoreGeocaches(GeocachingApi.ResultQuality.LITE, current, perPage, 0, 0);
+					caches = api.getMoreGeocaches(resultQuality, current, perPage, 0, 0);
 				}
 
 				if (caches.size() == 0)

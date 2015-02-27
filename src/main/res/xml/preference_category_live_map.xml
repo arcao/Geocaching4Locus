@@ -11,4 +11,9 @@
         android:title="@string/pref_livemap_visible_only_notification"
         android:summary="@string/pref_livemap_visible_only_notification_summary"
         android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="live_map_download_hints"
+        android:title="@string/pref_live_map_download_hints"
+        android:summary="@string/pref_live_map_download_hints_summary"
+        android:defaultValue="false" />
 </PreferenceScreen>

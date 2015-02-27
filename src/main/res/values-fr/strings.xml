@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Connexion à Geocaching.com</string>
     
-    <string name="prefs_cat_filter">Filtrer</string>
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance en Km</string>
     <string name="pref_distance_summary_miles">Distance en Miles</string>
-    <string name="prefs_cat_advanced">Avancé</string>
     <string name="pref_use_compression">Utiliser la compression</string>
     <string name="pref_use_compression_summary">Utiliser la compression HTTP (expérimental)</string>
     <string name="pref_imperial_units">Unités Impériales</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Mise à jour de la cache</string>
     
-    <string name="prefs_cat_downloading">Téléchargement</string>
     <string name="pref_count_of_logs">Nombre de logs</string>
     <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Nombre de logs à charger avec chaque cache</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Téléchargement de la cache...</string>
     
-    <string name="prefs_cat_about">A propos</string>
     <string name="pref_version">Version</string>
     <string name="pref_author">Auteur</string>
     <string name="pref_website">Site internet, forum, etc...</string>
@@ -136,11 +132,7 @@
     <string name="launcher_import_from_gc">Importer depuis un code GC</string>
     
     <string name="title_count_of_caches">Nombre de caches</string>
-    
-    <string name="button_login_start">Connexion</string>
-    <string name="login_required_title">Connexion requise</string>
-    <string name="login_required_message">Pour continuer, connectez-vous avec votre compte Geocaching.com</string>
-    
+
     <string name="basic_member_warning_title">Accès pour membre basic</string>
     <string name="premium_member_warning_title">Accès pour membre Premium</string>
     <string name="basic_member_sign_on_warning_message">En tant que membre basique de geocaching.com, vous pouvez télécharger les détails de &lt;b>%1$s par %2$s periode &lt;/b>.&lt;br>
@@ -192,19 +184,30 @@
     <string name="livemap_notification_action_enable">Carte en direct activée</string>
     <string name="livemap_notification_action_disable">Carte en direct désactivée</string>
     <string name="livemap_error">Geocaching4Locus carte en direct: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
+    <string name="pref_livemap_show_disabled_notification">Notifications désactivées</string>
     <string name="pref_livemap_show_disabled_notification_summary">Montrer les notifications quand la carte active est désactivée. Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
-    <string name="prefs_cat_live_map">Carte en direct</string>
     <string name="launcher_menu">Menu de Geocaching4Locus</string>
     <string name="pref_cache_type_all">Tous</string>
     <string name="button_filter">Tous</string>
     <string name="download_logs_progress">Téléchargements des logs</string>
-    <string name="launcher_download_logs">Download logs</string>
+    <string name="launcher_download_logs">Télécharger les logs</string>
 
     <string name="pref_livemap_visible_only_notification">Map visible notification</string>
-    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
+    <string name="pref_livemap_visible_only_notification_summary">Montrer le notifications seulement quand la carte est visible dans Locus</string>
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
+    <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+    <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez...</string>
+
+    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_filter">Filtrer</string>
+    <string name="prefs_cat_live_map">Carte en live</string>
+    <string name="prefs_cat_downloading">Téléchargement</string>
+    <string name="prefs_cat_advanced">Avancé</string>
+    <string name="prefs_cat_about">A propos</string>
+    <string name="login_title">S\'identifier</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+
 </resources>

@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Dane logowania do Geocaching.com</string>
     
-    <string name="prefs_cat_filter">Filtr</string>
     <string name="pref_distance">Odległość</string>
     <string name="pref_distance_summary_km">Odległość w km</string>
     <string name="pref_distance_summary_miles">Odległość w milach</string>
-    <string name="prefs_cat_advanced">Zaawansowane</string>
     <string name="pref_use_compression">Używaj kompresji</string>
     <string name="pref_use_compression_summary">Używaj kompresji HTTP (funkcja eksperymentalna)</string>
     <string name="pref_imperial_units">Jednostki imperialne</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Aktualizowanie skrzynki...</string>
     
-    <string name="prefs_cat_downloading">Pobieranie</string>
     <string name="pref_count_of_logs">Ilość logów</string>
     <string name="pref_count_of_logs_text">logi</string>
     <string name="pref_count_of_logs_summary">Ilość wpisów do pobrania wraz ze skrzynką</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Pobieranie skrzynki...</string>
     
-    <string name="prefs_cat_about">O programie</string>
     <string name="pref_version">Wersja</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Strona WWW, forum, itp.</string>
@@ -136,11 +132,7 @@
     <string name="launcher_import_from_gc">Importuj według kodu GC</string>
     
     <string name="title_count_of_caches">Liczba skrzynek</string>
-    
-    <string name="button_login_start">Zaloguj się</string>
-    <string name="login_required_title">Wymagane logowanie</string>
-    <string name="login_required_message">Aby kontynuować, zaloguj się do konta Geocaching.com .</string>
-    
+
     <string name="basic_member_warning_title">Dostęp standardowego użytkownika</string>
     <string name="premium_member_warning_title">Dostęp użytkownika "premium"</string>
     <string name="basic_member_sign_on_warning_message">Jako posiadacz standardowego konta na Geocaching.com możesz pobrać szczegóły tylko &lt;b>%1$s co każde %2$s&lt;/b>.&lt;br>
@@ -194,7 +186,6 @@
     <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
     <string name="pref_livemap_show_disabled_notification">Wyłączone powiadomienie</string>
     <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
-    <string name="prefs_cat_live_map">Mapa "na żywo"</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
     <string name="pref_cache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>
@@ -207,4 +198,16 @@
     <string name="pref_download_logs_update_cache_summary">Akcja "Pobierz wpisy" równocześnie aktualizuje skrzynkę geocache</string>
     <string name="pref_downloading_count_of_caches_step">Rozmiar pakietu pobierania skrytek</string>
     <string name="pref_downloading_count_of_caches_step_summary">Okno dialogowe zmieniy rozmiaru pakietu pobierania skrytek</string>
+    <string name="premium_member_for_filter_required">Niektóre filtry wymagają konta "premium", którego nie posiadasz. Aplikacja zostanie przełączona w tryb dla standardowych użytkowników. Proszę spróbuj ponownie.</string>
+
+    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_filter">Filtr</string>
+    <string name="prefs_cat_live_map">Mapa "na żywo"</string>
+    <string name="prefs_cat_downloading">Pobieranie</string>
+    <string name="prefs_cat_advanced">Zaawansowane</string>
+    <string name="prefs_cat_about">O programie</string>
+    <string name="login_title">Zaloguj się</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+
 </resources>

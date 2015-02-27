@@ -87,6 +87,7 @@ public class LocusDataMapper {
 		d.setNotes(cache.getPersonalNote());
 		d.setFavoritePoints(cache.getFavoritePoints());
 
+		sortCacheLogsByCreated(cache.getCacheLogs());
 		for (CacheLog log : cache.getCacheLogs()) {
 			d.logs.add(toLocusCacheLog(log));
 		}
@@ -121,6 +122,16 @@ public class LocusDataMapper {
 
 		return p;
 	}
+
+	private static void sortCacheLogsByCreated(List<CacheLog> cacheLogs) {
+		Collections.sort(cacheLogs, new Comparator<CacheLog>() {
+			@Override
+			public int compare(CacheLog lhs, CacheLog rhs) {
+				return lhs.getCreated().compareTo(rhs.getCreated());
+			}
+		});
+	}
+
 
 	protected static GeocachingImage toLocusImage(ImageData image) {
 		GeocachingImage i = new GeocachingImage();

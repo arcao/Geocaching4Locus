@@ -92,7 +92,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 		boolean hasAccount = helper.hasAccount();
 
 		// for basic member show warning dialog about limits
-		if (hasAccount && !helper.getRestrictions().isPremiumMember()) {
+		/*if (hasAccount && !helper.getRestrictions().isPremiumMember()) {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
@@ -100,7 +100,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 				}
 			});
 			return;
-		}
+		}*/
 
 		setResult(hasAccount ? RESULT_OK : RESULT_CANCELED);
 		finish();

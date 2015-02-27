@@ -207,5 +207,7 @@
     <string name="prefs_cat_advanced">Advanced</string>
     <string name="prefs_cat_about">About</string>
     <string name="login_title">Sign in</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
 
 </resources>

@@ -87,7 +87,7 @@ public class LocusDataMapper {
 		d.setNotes(cache.getPersonalNote());
 		d.setFavoritePoints(cache.getFavoritePoints());
 
-		sortCacheLogsByCreated(gc.getCacheLogs());
+		sortCacheLogsByCreated(cache.getCacheLogs());
 		for (CacheLog log : cache.getCacheLogs()) {
 			d.logs.add(toLocusCacheLog(log));
 		}

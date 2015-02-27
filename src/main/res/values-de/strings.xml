@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com Benutzerdaten</string>
     
-    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Entfernung</string>
     <string name="pref_distance_summary_km">Entfernung in Kilometern</string>
     <string name="pref_distance_summary_miles">Entfernung in Meilen</string>
-    <string name="prefs_cat_advanced">Erweitert</string>
     <string name="pref_use_compression">Komprimierung benutzen</string>
     <string name="pref_use_compression_summary">HTTP Komprimierung benutzen (experimentell)</string>
     <string name="pref_imperial_units">Britische Maßeinheiten</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Aktualisiere Cache…</string>
     
-    <string name="prefs_cat_downloading">Empfange Daten</string>
     <string name="pref_count_of_logs">Anzahl der Logs</string>
     <string name="pref_count_of_logs_text">Logs</string>
     <string name="pref_count_of_logs_summary">Anzahl der mit dem Cache herunterzuladenden Logs</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Lade caches...</string>
     
-    <string name="prefs_cat_about">Über</string>
     <string name="pref_version">Version</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Webseite, Forum, etc.</string>
@@ -137,11 +133,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="launcher_import_from_gc">Import via GC code</string>
     
     <string name="title_count_of_caches">Anzahl der Caches</string>
-    
-    <string name="button_login_start">Anmelden</string>
-    <string name="login_required_title">Anmeldung erforderlich</string>
-    <string name="login_required_message">Um fortzufahren, bitte bei Ihrem Geocaching.com-Konto anmelden</string>
-    
+
     <string name="basic_member_warning_title">Zugang für Basis Mitglieder</string>
     <string name="premium_member_warning_title">Zugang für Premium Mitglieder</string>
     <string name="basic_member_sign_on_warning_message">Als Basic Member von geocaching.com können Sie nur die kompletten Informationen von &lt;b>%1$s pro %2$s Periode&lt;/b>.&lt;br>
@@ -194,8 +186,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="livemap_notification_action_disable">Schalte Live Karte aus</string>
     <string name="livemap_error">Geocaching4Locus Live Karte: %s</string>
     <string name="pref_livemap_show_disabled_notification">Benachrichtigung ausgeschaltet</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung wenn "Live map" ausgeschaltet ist. Das funktioniert nur wenn wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
-    <string name="prefs_cat_live_map">Live Karte</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Zeigt die Benachrichtigung, wenn "Live map" ausgeschaltet ist. Das funktioniert nur, wenn in Locus "periodische Updates" erlaubt sind und Locus eingeschaltet ist.</string>
     <string name="launcher_menu">Geocaching4Locus Menü</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
@@ -208,4 +199,16 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_download_logs_update_cache_summary">Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
     <string name="pref_downloading_count_of_caches_step">Cache in 1-er oder 10-er Schritten herunterladen</string>
     <string name="pref_downloading_count_of_caches_step_summary">Auswahlmenü: Anzahl der heruntergeladenen Cache in 1-er oder 10-er Schritten</string>
+    <string name="premium_member_for_filter_required">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basis-Mitgliedschaft. Bitte noch einmal versuchen.</string>
+
+    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_filter">Filter</string>
+    <string name="prefs_cat_live_map">Live Karte</string>
+    <string name="prefs_cat_downloading">Empfange Daten</string>
+    <string name="prefs_cat_advanced">Erweitert</string>
+    <string name="prefs_cat_about">Über</string>
+    <string name="login_title">Anmelden</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+
 </resources>

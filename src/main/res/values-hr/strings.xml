@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Uvjerenja geocaching.com</string>
     
-    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Udaljenost</string>
     <string name="pref_distance_summary_km">Udaljenost u km</string>
     <string name="pref_distance_summary_miles">Udaljenost u miljama</string>
-    <string name="prefs_cat_advanced">Napredno</string>
     <string name="pref_use_compression">Koristi kompresiju</string>
     <string name="pref_use_compression_summary">Koristi HTTP kompresiju (eksperimentalno)</string>
     <string name="pref_imperial_units">Imperijske jedinice</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Ažuriram cache...</string>
     
-    <string name="prefs_cat_downloading">Preuzimam...</string>
     <string name="pref_count_of_logs">Broj zapisnika: </string>
     <string name="pref_count_of_logs_text">zapisnik/a</string>
     <string name="pref_count_of_logs_summary">Broj zapisnika za skidanje s cacheom.</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Skidam cache...</string>
     
-    <string name="prefs_cat_about">O</string>
     <string name="pref_version">Verzija</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Website, forum, itd.</string>
@@ -136,11 +132,7 @@
     <string name="launcher_import_from_gc">Uvezi iz GC koda</string>
     
     <string name="title_count_of_caches">Broj cacheova</string>
-    
-    <string name="button_login_start">Prijavi se.</string>
-    <string name="login_required_title">Potrebna prijava.</string>
-    <string name="login_required_message">Kako bi nastavili, morate se prijaviti u Vaš geocaching.com račun.</string>
-    
+
     <string name="basic_member_warning_title">Pristup Basic korisnik.</string>
     <string name="premium_member_warning_title">Pristup Premium korisnik.</string>
     <string name="basic_member_sign_on_warning_message">Kao Basic član geocaching.com možete skinuti cjelovite detalje od &lt;b>%1$s  po %2$s&lt;/b>.&lt;br>
@@ -194,7 +186,6 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="prefs_cat_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Sve</string>
     <string name="button_filter">Filter</string>
@@ -207,4 +198,16 @@
     <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+
+    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_filter">Filter</string>
+    <string name="prefs_cat_live_map">Živa mapa</string>
+    <string name="prefs_cat_downloading">Preuzimam...</string>
+    <string name="prefs_cat_advanced">Napredno</string>
+    <string name="prefs_cat_about">O</string>
+    <string name="login_title">Prijavi se.</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+
 </resources>

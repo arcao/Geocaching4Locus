@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">данные пользователя Geocaching.com </string>
     
-    <string name="prefs_cat_filter">Фильтр</string>
     <string name="pref_distance">Дистанция</string>
     <string name="pref_distance_summary_km">Дистанция в км</string>
     <string name="pref_distance_summary_miles">Дистанция в милях</string>
-    <string name="prefs_cat_advanced">Дополнительно</string>
     <string name="pref_use_compression">Использовать сжатие</string>
     <string name="pref_use_compression_summary">Использовать сжатие HTTP  (экспериментально)</string>
     <string name="pref_imperial_units">Британские единицы</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Обновление кэша…</string>
     
-    <string name="prefs_cat_downloading">Скачивание</string>
     <string name="pref_count_of_logs">Количество записей</string>
     <string name="pref_count_of_logs_text">записи</string>
     <string name="pref_count_of_logs_summary">Количество записей для скачивания с кэшем</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Завантаження кешу…</string>
     
-    <string name="prefs_cat_about">О приложении</string>
     <string name="pref_version">Версия</string>
     <string name="pref_author">Автор</string>
     <string name="pref_website">Сайт, форум, итд.</string>
@@ -136,11 +132,7 @@
     <string name="launcher_import_from_gc">Импортировать из GC кода</string>
     
     <string name="title_count_of_caches">Количество кэшей</string>
-    
-    <string name="button_login_start">Вход</string>
-    <string name="login_required_title">Необходима авторизация</string>
-    <string name="login_required_message">Для продолжения необходима аторизация аккаунта Geocaching.com</string>
-    
+
     <string name="basic_member_warning_title">Доступ базового пользователя</string>
     <string name="premium_member_warning_title">Доступ премиум пользователя</string>
     <string name="basic_member_sign_on_warning_message">Как базовый пользователь geocaching.com вы можете скачать полную информацию &lt;b>%1$s за %2$s &lt;/b>.&lt;br>
@@ -194,10 +186,9 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="prefs_cat_live_map">Live map</string>
     <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Все</string>
-    <string name="button_filter">Filter</string>
+    <string name="button_filter">Фильтр</string>
     <string name="download_logs_progress">Downloading logs…</string>
     <string name="launcher_download_logs">Download logs</string>
 
@@ -207,4 +198,16 @@
     <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+
+    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_filter">Фільтр</string>
+    <string name="prefs_cat_live_map">Жива карта</string>
+    <string name="prefs_cat_downloading">Завантаження…</string>
+    <string name="prefs_cat_advanced">Додатково</string>
+    <string name="prefs_cat_about">Про</string>
+    <string name="login_title">Вход</string>
+    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+
 </resources>

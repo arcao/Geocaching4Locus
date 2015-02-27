@@ -14,11 +14,9 @@
     
     <string name="pref_title_geocaching_credentials">Geocaching.com prihlasovacie údaje</string>
     
-    <string name="prefs_cat_filter">Filter</string>
     <string name="pref_distance">Vzdialenosť</string>
     <string name="pref_distance_summary_km">Vzdialenosť v km</string>
     <string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
-    <string name="prefs_cat_advanced">Pokročilé</string>
     <string name="pref_use_compression">Použiť kompresiu</string>
     <string name="pref_use_compression_summary">Použitie kompresie HTTP (experimentálne)</string>
     <string name="pref_imperial_units">Imperiálne jednotky</string>
@@ -42,7 +40,6 @@
     
     <string name="update_cache_progress">Aktualizujem kešku…</string>
     
-    <string name="prefs_cat_downloading">Sťahovanie</string>
     <string name="pref_count_of_logs">Počet logov</string>
     <string name="pref_count_of_logs_text">logov</string>
     <string name="pref_count_of_logs_summary">Počet logov, ktoré sa majú stiahnuť s keší</string>
@@ -54,7 +51,6 @@
     
     <string name="import_cache_progress">Sťahujem kešku…</string>
     
-    <string name="prefs_cat_about">O aplikácii</string>
     <string name="pref_version">Verzia</string>
     <string name="pref_author">Autor</string>
     <string name="pref_website">Stránky, diskusné fórum, atď</string>
@@ -136,11 +132,7 @@
     <string name="launcher_import_from_gc">Importovať z GC kódu</string>
     
     <string name="title_count_of_caches">Počet kešiek</string>
-    
-    <string name="button_login_start">Prihlásiť</string>
-    <string name="login_required_title">Je nutné prihlásenie</string>
-    <string name="login_required_message">Pre pokračovanie je potrebné sa prihlásiť k vášmu Geocaching.com účtu.</string>
-    
+
     <string name="basic_member_warning_title">Prístup pre bežných užívateľov</string>
     <string name="premium_member_warning_title">Prístup pre prémiové užívateľa</string>
     <string name="basic_member_sign_on_warning_message">Ako základný užívateľ (Basic member) na geocaching.com môžeš stiahnuť plné detaily pre &lt;b>%1$s za %2$s&lt;/b>.&lt;br>
@@ -194,7 +186,6 @@
     <string name="livemap_error">Aktívna mapa Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Notifikácia zakázané</string>
     <string name="pref_livemap_show_disabled_notification_summary">Zobraziť notifikáciu, keď je Live mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locusu a Locus beží.</string>
-    <string name="prefs_cat_live_map">Aktívna mapa</string>
     <string name="launcher_menu">Ponuka Geocaching4Locus</string>
     <string name="pref_cache_type_all">Všetko</string>
     <string name="button_filter">Filter</string>
@@ -207,4 +198,16 @@
     <string name="pref_download_logs_update_cache_summary">Akcia "Stiahnuť logy" tiež aktualizuje dáta kešky</string>
     <string name="pref_downloading_count_of_caches_step">Veľkosť kroku pre počet kešiek</string>
     <string name="pref_downloading_count_of_caches_step_summary">Zmení veľkosť kroku u dialógu na vybranie počtu kešiek</string>
+    <string name="premium_member_for_filter_required">Niektoré filtre vyžadujú prémiový účet, ktorý nemáte. Aplikácia sa prepne do režimu pre základný účet. Prosím, skúste to znova.</string>
+
+    <string name="prefs_cat_account">Účet</string>
+    <string name="prefs_cat_filter">Filter</string>
+    <string name="prefs_cat_live_map">Aktívna mapa</string>
+    <string name="prefs_cat_downloading">Sťahovanie</string>
+    <string name="prefs_cat_advanced">Pokročilé</string>
+    <string name="prefs_cat_about">O aplikácii</string>
+    <string name="login_title">Prihlásiť</string>
+    <string name="pref_live_map_download_hints">Stiahnuť nápovedu</string>
+    <string name="pref_live_map_download_hints_summary">Pomalší načítanie a náročnejšie na využitie dát</string>
+
 </resources>

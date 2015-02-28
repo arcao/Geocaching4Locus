@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -15,7 +14,7 @@ import locus.api.objects.extra.Waypoint;
 import org.acra.ACRA;
 import timber.log.Timber;
 
-public class UpdateActivity extends FragmentActivity implements UpdateDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
+public class UpdateActivity extends FragmentActivity implements UpdateDialogFragment.DialogListener {
 	public static final String PARAM_CACHE_ID = "cacheId";
 	public static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
@@ -47,9 +46,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 			return;
 		}
 
-		//if (showBasicMemeberWarningDialog())
-		//	return;
-
 		mShowUpdateDialog = true;
 	}
 
@@ -62,21 +58,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 			showUpdateDialog();
 			mShowUpdateDialog = false;
 		}
-	}
-
-	protected boolean showBasicMemeberWarningDialog() {
-		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
-			return false;
-
-		// check next dialog fragment
-		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
-			return false;
-
-		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
-			return true;
-
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
-		return true;
 	}
 
 	public void showUpdateDialog() {
@@ -137,15 +118,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 		Timber.d("onUpdateFinished result: " + result);
 		setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
 		finish();
-	}
-
-	@Override
-	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
-		if (success) {
-			showUpdateDialog();
-		} else {
-			onUpdateFinished(null);
-		}
 	}
 
 	@Override

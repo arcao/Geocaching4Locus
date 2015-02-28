@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import org.acra.ACRA;
 import timber.log.Timber;
 
-public class ImportFromGCActivity extends FragmentActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
+public class ImportFromGCActivity extends FragmentActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
 	private static final int REQUEST_LOGIN = 1;
 	private boolean mAuthenticatorActivityVisible = false;
 	private boolean mShowGCNumberInputDialog = false;
@@ -35,9 +34,6 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
 		}
-
-		//if (showBasicMemberWarningDialog())
-		//	return;
 
 		mShowGCNumberInputDialog = true;
 	}
@@ -67,22 +63,6 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
-	protected boolean showBasicMemberWarningDialog() {
-		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
-			return false;
-
-		// check next dialog fragment
-		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
-			return false;
-
-		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
-			return true;
-
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
-
-		return true;
-	}
-
 	protected void startImport(String cacheId) {
 		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
 
@@ -106,16 +86,6 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		Timber.d("onImportFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
-	}
-
-	@Override
-	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
-		Timber.d("onFullCacheDownloadConfirmDialogFinished result: " + success);
-		if (success) {
-			showGCNumberInputDialog();
-		} else {
-			onImportFinished(false);
-		}
 	}
 
 	@Override

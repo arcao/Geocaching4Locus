@@ -3,13 +3,12 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import com.arcao.geocaching4locus.fragment.dialog.FullCacheDownloadConfirmDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import locus.api.android.utils.LocusUtils;
 import org.acra.ACRA;
 import timber.log.Timber;
 
-public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
+public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
 
 	private boolean mShowUpdateMoreDialog = false;
@@ -23,9 +22,6 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 			return;
 		}
 
-		//if (showBasicMemeberWarningDialog())
-		//	return;
-
 		mShowUpdateMoreDialog = true;
 	}
 
@@ -38,21 +34,6 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 			showUpdateMoreDialog();
 			mShowUpdateMoreDialog = false;
 		}
-	}
-
-	protected boolean showBasicMemeberWarningDialog() {
-		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
-			return false;
-
-		// check next dialog fragment
-		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
-			return false;
-
-		if (getSupportFragmentManager().findFragmentByTag(FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG) != null)
-			return true;
-
-		FullCacheDownloadConfirmDialogFragment.newInstance().show(getFragmentManager(), FullCacheDownloadConfirmDialogFragment.FRAGMENT_TAG);
-		return true;
 	}
 
 	protected void showUpdateMoreDialog() {
@@ -83,15 +64,6 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		Timber.d("onUpdateFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
-	}
-
-	@Override
-	public void onFullCacheDownloadConfirmDialogFinished(boolean success) {
-		if (success) {
-			showUpdateMoreDialog();
-		} else {
-			onUpdateFinished(false);
-		}
 	}
 
 	@Override

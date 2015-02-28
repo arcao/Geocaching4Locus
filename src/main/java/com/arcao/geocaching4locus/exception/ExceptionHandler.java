@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
 import org.scribe.exceptions.OAuthConnectionException;
+import timber.log.Timber;
 
 public class ExceptionHandler {
 	protected final Context mContext;
@@ -25,6 +26,8 @@ public class ExceptionHandler {
 	}
 
 	public Intent handle(Throwable t) {
+		Timber.e(t.getMessage(), t);
+
 		// special handling for some API exceptions
 		if (t instanceof LiveGeocachingApiException) {
 			Intent intent = handleLiveGeocachingApiExceptions((LiveGeocachingApiException) t);

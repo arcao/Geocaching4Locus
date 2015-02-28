@@ -28,6 +28,7 @@ import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
@@ -75,6 +76,12 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 		GeocachingApi api = GeocachingApiFactory.create();
 
+		GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+		if (authenticatorHelper.getRestrictions().isPremiumMember()) {
+			resultQuality = GeocachingApi.ResultQuality.SUMMARY;
+			logCount = 0;
+		}
+
 		int current = 0;
 		int count = pointIndexes.length;
 		int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
@@ -95,10 +102,9 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					continue;
 				}
 
-				@SuppressWarnings({ "unchecked", "rawtypes" })
-				List<Geocache> cachesToAdd = (List) api.searchForGeocaches(false, cachesPerRequest, logCount, 0, new Filter[] {
-						new CacheCodeFilter(getCachesIds(oldPoints))
-				});
+				List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Arrays.asList(
+								(Filter) new CacheCodeFilter(getCachesIds(oldPoints))
+				), null);
 
 				authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 

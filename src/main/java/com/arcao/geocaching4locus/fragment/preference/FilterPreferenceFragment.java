@@ -168,17 +168,13 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	private void prepareCacheTypePreference(PreferenceScreen cacheTypeFilterScreen) {
 		cacheTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CACHE_TYPE));
 		cacheTypeFilterScreen.setEnabled(mPremiumMember);
-
-		if (mPremiumMember)
-			cacheTypeFilterScreen.setSummary(prepareCacheTypeSummary());
+		cacheTypeFilterScreen.setSummary(mPremiumMember ? prepareCacheTypeSummary() : prepareCacheTypeSummaryBasicMember());
 	}
 
 	private void prepareContainerTypePreference(PreferenceScreen containerTypeFilterScreen) {
 		containerTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CONTAINER_TYPE));
 		containerTypeFilterScreen.setEnabled(mPremiumMember);
-
-		if (mPremiumMember)
-			containerTypeFilterScreen.setSummary(prepareContainerTypeSummary());
+		containerTypeFilterScreen.setSummary(mPremiumMember ? prepareContainerTypeSummary() : prepareContainerTypeSummaryBasicMember());
 	}
 
 	private void prepareDifficultyPreference(Preference difficultyPreference) {
@@ -218,8 +214,11 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 			}
 		});
 
-		if (mPremiumMember)
+		if (mPremiumMember) {
 			difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
+		} else {
+			difficultyPreference.setSummary(prepareRatingSummary("1", "5"));
+		}
 	}
 
 	private void prepareTerrainPreference(Preference terrainPreference) {
@@ -259,8 +258,11 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 			}
 		});
 
-		if (mPremiumMember)
+		if (mPremiumMember) {
 			terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
+		} else {
+			terrainPreference.setSummary(prepareRatingSummary("1", "5"));
+		}
 	}
 
 	private void prepareDistancePreference(EditTextPreference distancePreference) {
@@ -312,6 +314,10 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		return preparePreferenceSummary(sb.toString(), 0);
 	}
 
+	private CharSequence prepareCacheTypeSummaryBasicMember() {
+		return preparePreferenceSummary(shortCacheTypeName[0], 0);
+	}
+
 	private CharSequence prepareContainerTypeSummary() {
 		StringBuilder sb = new StringBuilder();
 
@@ -331,4 +337,16 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 		return preparePreferenceSummary(sb.toString(), 0);
 	}
+
+	private CharSequence prepareContainerTypeSummaryBasicMember() {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < ContainerType.values().length; i++) {
+			if (sb.length() != 0) sb.append(", ");
+			sb.append(shortContainerTypeName[i]);
+		}
+
+		return preparePreferenceSummary(sb.toString(), 0);
+	}
+
 }

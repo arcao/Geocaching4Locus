@@ -5,7 +5,6 @@ import locus.api.objects.Storable;
 import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collection;
 
 public class StoreableListFileOutput implements Closeable {
 	private boolean mListOpened = false;
@@ -60,7 +59,7 @@ public class StoreableListFileOutput implements Closeable {
 		}
 	}
 
-	public synchronized void writeCollection(final Collection<? extends Storable> objs) throws IOException {
+	public synchronized void writeCollection(final Iterable<? extends Storable> objs) throws IOException {
 		for(Storable obj : objs) {
 			write(obj);
 		}

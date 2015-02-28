@@ -136,7 +136,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
-	public WebView createWebView(Bundle savedInstanceState) {
+	private WebView createWebView(Bundle savedInstanceState) {
 		WebView webView = new FixedWebView(getActivity());
 
 		webView.setHorizontalScrollBarEnabled(false);
@@ -179,7 +179,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 			return false;
 		}
 
-		protected boolean isOAuthUrl(String url) {
+		private boolean isOAuthUrl(String url) {
 			String urlLowerCase = url.toLowerCase(Locale.US);
 
 			return urlLowerCase.contains("/oauth/") ||

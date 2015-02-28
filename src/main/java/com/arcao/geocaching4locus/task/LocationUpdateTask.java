@@ -33,12 +33,12 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	private static final int TIMEOUT = 120; // in sec
 	private static final String PASSIVE_PROVIDER = "passive";
 
-	protected final CyclicBarrier mBarrier = new CyclicBarrier(2); // task + location update callback
-	protected final WeakReference<FragmentActivity> mActivityRef;
-	protected final Context mContext;
-	protected final LocationManager mLocationManager;
-	protected LocationUpdateProgressDialogFragment mDialog;
-	protected Location mBestLocation;
+	private final CyclicBarrier mBarrier = new CyclicBarrier(2); // task + location update callback
+	private final WeakReference<FragmentActivity> mActivityRef;
+	private final Context mContext;
+	private final LocationManager mLocationManager;
+	private LocationUpdateProgressDialogFragment mDialog;
+	private Location mBestLocation;
 
 	public LocationUpdateTask(FragmentActivity activity) {
 		mActivityRef = new WeakReference<>(activity);
@@ -88,7 +88,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		mDialog.show(activity.getFragmentManager(), LocationUpdateProgressDialogFragment.FRAGMENT_TAG);
 	}
 
-	protected Location getLastLocation() {
+	private Location getLastLocation() {
 		// use last available location
 		Location gpsLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		Location networkLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -143,7 +143,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 			mDialog.dismiss();
 	}
 
-	public void cancel() {
+	private void cancel() {
 		cancel(false);
 		mBarrier.reset();
 	}

@@ -19,10 +19,10 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.preference.ListPreference;
 
 public class FilterPreferenceFragment extends AbstractPreferenceFragment {
-	public static final String PARAM_SCREEN__CACHE_TYPE = "CACHE_TYPE";
-	public static final String PARAM_SCREEN__CONTAINER_TYPE = "CONTAINER_TYPE";
-	public static final String PARAM_SCREEN__DIFFICULTY = "DIFFICULTY";
-	public static final String PARAM_SCREEN__TERRAIN = "TERRAIN";
+	private static final String PARAM_SCREEN__CACHE_TYPE = "CACHE_TYPE";
+	private static final String PARAM_SCREEN__CONTAINER_TYPE = "CONTAINER_TYPE";
+	private static final String PARAM_SCREEN__DIFFICULTY = "DIFFICULTY";
+	private static final String PARAM_SCREEN__TERRAIN = "TERRAIN";
 
 	private boolean mPremiumMember;
 	private boolean mImperialUnits;
@@ -238,7 +238,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 				if (min > max) {
 					terrainMaxPreference.setValue((String) newValue);
-					terrainMaxPreference.setSummary(prepareRatingSummary((String) newValue));
+					terrainMaxPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
 				}
 				return true;
 			}
@@ -253,7 +253,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 				if (min > max) {
 					terrainMinPreference.setValue((String) newValue);
-					terrainMinPreference.setSummary(prepareRatingSummary((String) newValue));
+					terrainMinPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
 				}
 				return true;
 			}

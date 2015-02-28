@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -141,9 +142,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(mLatitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						((EditText) v).setText("N/A");
+						((TextView) v).setText("N/A");
 					} else {
-						((EditText) v).setText(Coordinates.convertDoubleToDeg(deg, false));
+						((TextView) v).setText(Coordinates.convertDoubleToDeg(deg, false));
 					}
 				}
 			}
@@ -155,9 +156,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				if (!hasFocus) {
 					double deg = Coordinates.convertDegToDouble(mLongitudeEditText.getText().toString());
 					if (Double.isNaN(deg)) {
-						((EditText) v).setText("N/A");
+						((TextView) v).setText("N/A");
 					} else {
-						((EditText) v).setText(Coordinates.convertDoubleToDeg(deg, true));
+						((TextView) v).setText(Coordinates.convertDoubleToDeg(deg, true));
 					}
 				}
 			}
@@ -170,12 +171,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 		if (countOfCaches > max) {
 			countOfCaches = max;
-			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).apply();
 		}
 
 		if (countOfCaches % countOfCachesStep != 0) {
 			countOfCaches = ((countOfCaches  / countOfCachesStep) + 1) * countOfCachesStep;
-			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).commit();
+			mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).apply();
 		}
 
 		mCountOfCachesEditText.setText(String.valueOf(mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
@@ -264,7 +265,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment.class));
 	}
 
-	protected void download() {
+	private void download() {
 		// test if user is logged in
 		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
 			return;
@@ -290,7 +291,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		startService(intent);
 	}
 
-	protected void showError(int errorResId, String additionalMessage) {
+	private void showError(int errorResId, String additionalMessage) {
 		if (isFinishing())
 			return;
 
@@ -303,7 +304,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		builder.show();
 	}
 
-	protected void acquireCoordinates() {
+	private void acquireCoordinates() {
 		// search location
 		// Acquire a reference to the system Location Manager
 		mTask = new LocationUpdateTask(this);
@@ -332,7 +333,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			.apply();
 	}
 
-	protected void requestProgressUpdate() {
+	private void requestProgressUpdate() {
 		SearchGeocacheService service = SearchGeocacheService.getInstance();
 
 		if (service != null && !service.isCanceled()) {
@@ -369,7 +370,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 	}
 
-	protected int getMaxCountOfCaches() {
+	private int getMaxCountOfCaches() {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB || Runtime.getRuntime().maxMemory() <= AppConstants.LOW_MEMORY_THRESHOLD)
 			return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX_LOW_MEMORY;
 

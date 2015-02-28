@@ -20,7 +20,7 @@ public class CustomTokenExtractorImpl extends TokenExtractorImpl {
 		return super.extract(response);
 	}
 
-	private static void checkError(String response) {
+	private static void checkError(CharSequence response) {
 		Matcher matcher = ERROR_MESSAGE_REGEX.matcher(response);
 		if (matcher.find() && matcher.groupCount() >= 1)
 		{

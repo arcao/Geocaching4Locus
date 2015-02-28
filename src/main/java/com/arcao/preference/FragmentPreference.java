@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import com.arcao.geocaching4locus.R;
 
 public class FragmentPreference extends Preference {
-	private String mFragmentName;
+	private final String mFragmentName;
 
 	public FragmentPreference(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);

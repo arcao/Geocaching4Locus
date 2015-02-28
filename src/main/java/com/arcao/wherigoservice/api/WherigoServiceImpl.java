@@ -65,7 +65,7 @@ public class WherigoServiceImpl implements WherigoService {
 
 	// -------------------- Helper methods ----------------------------------------
 
-	protected void checkError(JsonReader r) throws IOException {
+	private void checkError(JsonReader r) throws IOException {
 		if ("Status".equals(r.nextName())) {
 			Result status = WherigoJsonResultParser.parse(r);
 
@@ -80,7 +80,7 @@ public class WherigoServiceImpl implements WherigoService {
 		}
 	}
 
-	protected JsonReader callGet(String function) throws WherigoServiceException {
+	private JsonReader callGet(String function) throws WherigoServiceException {
 		InputStream is;
 		InputStreamReader isr;
 
@@ -143,13 +143,13 @@ public class WherigoServiceImpl implements WherigoService {
 		}
 	}
 
-	protected String maskParameterValues(String function) {
+	private String maskParameterValues(String function) {
 		// do nothing
 		//function = function.replaceAll("([Aa]ccess[Tt]oken=)([^&]+)", "$1******");
 		return function;
 	}
 
-	protected boolean isGsonException(Throwable t) {
+	private boolean isGsonException(Throwable t) {
 		return IOException.class.equals(t.getClass()) || t instanceof MalformedJsonException || t instanceof IllegalStateException || t instanceof NumberFormatException;
 	}
 }

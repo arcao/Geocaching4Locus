@@ -4,19 +4,20 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
 
-	protected WeakReference<CancellableDialog> cancellableRef;
+	private WeakReference<CancellableDialog> cancellableRef;
 
 	// This is work around for the situation when method show is called after saving
 	// state even if you do all right. Especially when show is called after click on
 	// a button.
 	@Override
-	public int show(FragmentTransaction transaction, String tag) {
+	public int show(@NonNull FragmentTransaction transaction, String tag) {
 		try {
 			return super.show(transaction, tag);
 		} catch (IllegalStateException e) {
@@ -26,7 +27,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	}
 
 	@Override
-	public void show(FragmentManager manager, String tag) {
+	public void show(@NonNull FragmentManager manager, String tag) {
 		try {
 			super.show(manager, tag);
 		} catch (IllegalStateException e) {
@@ -75,7 +76,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 		return getDialog() != null && getDialog().isShowing();
 	}
 
-	public void callOnCancelListener(AbstractDialogFragment dialogFragment) {
+	protected void callOnCancelListener(AbstractDialogFragment dialogFragment) {
 		if (cancellableRef == null)
 			return;
 

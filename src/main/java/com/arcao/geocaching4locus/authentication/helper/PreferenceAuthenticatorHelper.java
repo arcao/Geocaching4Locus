@@ -12,9 +12,9 @@ import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
-	protected final SharedPreferences mPrefs;
-	protected final Context mContext;
-	protected final AccountRestrictions restrictions;
+	private final SharedPreferences mPrefs;
+	private final Context mContext;
+	private final AccountRestrictions restrictions;
 
 	public PreferenceAuthenticatorHelper(Context appContext) {
 		// Do not store username, password and hash in default shared preferences

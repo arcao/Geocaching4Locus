@@ -16,14 +16,14 @@ import java.lang.ref.WeakReference;
 public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements TaskListener {
 	public static final String FRAGMENT_TAG = UpdateMoreDialogFragment.class.getName();
 
-	public static final String PARAM_POINT_INDEXES = "POINT_INDEXES";
+	private static final String PARAM_POINT_INDEXES = "POINT_INDEXES";
 
 	public interface DialogListener {
 		void onUpdateFinished(boolean success);
 	}
 
-	protected UpdateMoreTask mTask;
-	protected WeakReference<DialogListener> mDialogListenerRef;
+	private UpdateMoreTask mTask;
+	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {
 		UpdateMoreDialogFragment fragment = new UpdateMoreDialogFragment();

@@ -32,7 +32,7 @@ public class LocusDataMapper {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
 
-	public static List<Waypoint> toLocusPoints(Context context, List<Geocache> caches) {
+	public static List<Waypoint> toLocusPoints(Context context, Iterable<Geocache> caches) {
 		List<Waypoint> points = new ArrayList<>();
 		for (Geocache cache : caches) {
 			points.add(toLocusPoint(context, cache));
@@ -133,7 +133,7 @@ public class LocusDataMapper {
 	}
 
 
-	protected static GeocachingImage toLocusImage(ImageData image) {
+	private static GeocachingImage toLocusImage(ImageData image) {
 		GeocachingImage i = new GeocachingImage();
 		i.setName(image.getName());
 		i.setDescription(image.getDescription());
@@ -143,7 +143,7 @@ public class LocusDataMapper {
 		return i;
 	}
 
-	protected static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, Iterable<UserWaypoint> userWaypoints) {
+	private static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, Iterable<UserWaypoint> userWaypoints) {
 		UserWaypoint correctedCoordinateUserWaypoint = null;
 
 		// find corrected coordinate user waypoint
@@ -184,7 +184,7 @@ public class LocusDataMapper {
 		location.set(newLocation);
 	}
 
-	protected static GeocachingWaypoint toLocusWaypoint(com.arcao.geocaching.api.data.Waypoint waypoint) {
+	private static GeocachingWaypoint toLocusWaypoint(com.arcao.geocaching.api.data.Waypoint waypoint) {
 		GeocachingWaypoint w = new GeocachingWaypoint();
 
 		w.setCode(waypoint.getWaypointCode());
@@ -197,7 +197,7 @@ public class LocusDataMapper {
 		return w;
 	}
 
-	protected static GeocachingTrackable toLocusTrackable(Trackable trackable) {
+	private static GeocachingTrackable toLocusTrackable(Trackable trackable) {
 		GeocachingTrackable t = new GeocachingTrackable();
 
 		t.setId(trackable.getId());
@@ -216,7 +216,7 @@ public class LocusDataMapper {
 		return t;
 	}
 
-	protected static GeocachingLog toLocusCacheLog(CacheLog log) {
+	private static GeocachingLog toLocusCacheLog(CacheLog log) {
 		GeocachingLog l = new GeocachingLog();
 
 		l.setId(log.getId());
@@ -237,7 +237,7 @@ public class LocusDataMapper {
 		return l;
 	}
 
-	protected static int toLocusCacheType(CacheType cacheType) {
+	private static int toLocusCacheType(CacheType cacheType) {
 		switch (cacheType) {
 			case CacheInTrashOutEvent:
 				return GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT;
@@ -282,7 +282,7 @@ public class LocusDataMapper {
 		}
 	}
 
-	protected static int toLocusContainerType(ContainerType containerType) {
+	private static int toLocusContainerType(ContainerType containerType) {
 		switch(containerType) {
 			case Huge:
 				return GeocachingData.CACHE_SIZE_HUGE;
@@ -303,7 +303,7 @@ public class LocusDataMapper {
 		}
 	}
 
-	protected static String toLocusWaypointType(WaypointType waypointType) {
+	private static String toLocusWaypointType(WaypointType waypointType) {
 		switch (waypointType) {
 			case FinalLocation:
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_FINAL;
@@ -322,7 +322,7 @@ public class LocusDataMapper {
 		}
 	}
 
-	protected static int toLocusLogType(CacheLogType logType) {
+	private static int toLocusLogType(CacheLogType logType) {
 		switch (logType) {
 			case Announcement:
 				return GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT;
@@ -367,7 +367,7 @@ public class LocusDataMapper {
 		}
 	}
 
-	public static List<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromNote(Context context, String note, String cacheCode) {
+	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromNote(Context context, String note, String cacheCode) {
 		List<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
 		if (StringUtils.isBlank(note)) {
@@ -429,7 +429,7 @@ public class LocusDataMapper {
 		return res;
 	}
 
-	public static List<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromUserWaypoints(Context context, List<UserWaypoint> userWaypoints, String cacheCode) {
+	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromUserWaypoints(Context context, Collection<UserWaypoint> userWaypoints, String cacheCode) {
 		List<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
 		if (userWaypoints == null || userWaypoints.size() == 0)
@@ -468,7 +468,7 @@ public class LocusDataMapper {
 		return toPoint;
 	}
 
-	public static void clearExtraOnDisplayCallback(Waypoint p) {
+	private static void clearExtraOnDisplayCallback(Waypoint p) {
 		p.addParameter(ExtraData.PAR_INTENT_EXTRA_ON_DISPLAY, "clear");
 	}
 
@@ -488,7 +488,7 @@ public class LocusDataMapper {
 	}
 
 	// issue #13: Use old coordinates when cache is archived after update
-	public static Waypoint fixArchivedCacheLocation(Waypoint toPoint, Waypoint fromPoint) {
+	private static Waypoint fixArchivedCacheLocation(Waypoint toPoint, Waypoint fromPoint) {
 		if (!toPoint.gcData.isArchived() || (fromPoint.getLocation().getLatitude() == 0 && fromPoint.getLocation().getLongitude() == 0)
 			|| Double.isNaN(fromPoint.getLocation().getLatitude()) || Double.isNaN(fromPoint.getLocation().getLongitude())
 			|| fromPoint.gcData.isComputed())
@@ -500,7 +500,7 @@ public class LocusDataMapper {
 		return toPoint;
 	}
 
-	public static Waypoint fixComputedCoordinates(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
+	private static Waypoint fixComputedCoordinates(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
 		if (!fromPoint.gcData.isComputed() || toPoint.gcData.isComputed())
 			return toPoint;
 
@@ -528,7 +528,7 @@ public class LocusDataMapper {
 		return toPoint;
 	}
 
-	public static Waypoint copyWaypointId(Waypoint toPoint, Waypoint fromPoint) {
+	private static Waypoint copyWaypointId(Waypoint toPoint, Waypoint fromPoint) {
 		if (fromPoint.id == 0)
 			return toPoint;
 
@@ -538,7 +538,7 @@ public class LocusDataMapper {
 	}
 
 
-	protected static GeocachingWaypoint getWaypointByNamePrefix(Waypoint fromPoint, String prefix) {
+	private static GeocachingWaypoint getWaypointByNamePrefix(Waypoint fromPoint, String prefix) {
 		if (fromPoint.gcData == null)
 			return null;
 
@@ -551,7 +551,7 @@ public class LocusDataMapper {
 		return null;
 	}
 
-	protected static Waypoint copyGcVote(Waypoint toPoint, Waypoint fromPoint) {
+	private static Waypoint copyGcVote(Waypoint toPoint, Waypoint fromPoint) {
 		if (fromPoint.gcData == null)
 			return toPoint;
 
@@ -562,7 +562,7 @@ public class LocusDataMapper {
 		return toPoint;
 	}
 
-	protected static Waypoint fixEditedWaypoints(Waypoint toPoint, Waypoint fromPoint) {
+	private static Waypoint fixEditedWaypoints(Waypoint toPoint, Waypoint fromPoint) {
 		if (fromPoint.gcData.waypoints == null || fromPoint.gcData.waypoints.size() == 0
 			|| toPoint.gcData == null || toPoint.gcData.waypoints.size() == 0)
 			return toPoint;

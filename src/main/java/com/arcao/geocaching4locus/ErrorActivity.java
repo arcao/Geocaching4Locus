@@ -35,7 +35,7 @@ public class ErrorActivity extends Activity {
 		showErrorDialog();
 	}
 
-	protected void showErrorDialog () {
+	private void showErrorDialog () {
 		final int resTitleId = getIntent().getIntExtra(PARAM_RESOURCE_TITLE, 0);
 		final int resTextId = getIntent().getIntExtra(PARAM_RESOURCE_TEXT, 0);
 		final Class<?> preferenceFragment = (Class<?>) getIntent().getSerializableExtra(PARAM_PREFERENCE_FRAGMENT);

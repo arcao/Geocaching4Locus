@@ -84,7 +84,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 		}
 	}
 
-	protected void fireDialogClose() {
+	private void fireDialogClose() {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onDialogClosed(this);
@@ -133,12 +133,12 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		outState.putInt(PARAM_DEFAULT_VALUE, mValue);
 		super.onSaveInstanceState(outState);
 	}
 
-	protected View prepareView() {
+	private View prepareView() {
 		@SuppressLint("InflateParams")
 		View view = LayoutInflater.from(getActivity()).inflate(R.layout.seek_bar_dialog, null, false);
 

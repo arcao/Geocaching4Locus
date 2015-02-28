@@ -40,7 +40,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		}
 	}
 
-	protected boolean showBasicMemeberWarningDialog() {
+	private boolean showBasicMemeberWarningDialog() {
 		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
 			return false;
 
@@ -55,7 +55,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		return true;
 	}
 
-	protected void showUpdateMoreDialog() {
+	private void showUpdateMoreDialog() {
 		long[] pointIndexes = null;
 
 		if (LocusUtils.isIntentPointsScreenTools(getIntent())) {

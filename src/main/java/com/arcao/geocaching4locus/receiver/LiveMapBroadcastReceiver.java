@@ -107,7 +107,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		});
 	}
 
-	protected static float computeNotificationLimit(Intent i) {
+	private static float computeNotificationLimit(Intent i) {
 		Location locMapCenter = LocusUtils.getLocationFromIntent(i, VAR_LOC_MAP_CENTER);
 		Location mapTopLeft = LocusUtils.getLocationFromIntent(i, VAR_LOC_MAP_BBOX_TOP_LEFT);
 

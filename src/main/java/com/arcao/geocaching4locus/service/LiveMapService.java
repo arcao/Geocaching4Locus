@@ -37,12 +37,12 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiveMapService extends IntentService {
-	public static final String PARAM_LATITUDE = "LATITUDE";
-	public static final String PARAM_LONGITUDE = "LONGITUDE";
-	public static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
-	public static final String PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE";
-	public static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
-	public static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
+	private static final String PARAM_LATITUDE = "LATITUDE";
+	private static final String PARAM_LONGITUDE = "LONGITUDE";
+	private static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
+	private static final String PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE";
+	private static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
+	private static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
 
 	private static final int REQUESTS = 5;
 	private static final int CACHES_PER_REQUEST = 50;
@@ -65,7 +65,7 @@ public class LiveMapService extends IntentService {
 	private Boolean excludeIgnoreList;
 	private boolean liveMapDownloadHints;
 
-	protected SharedPreferences prefs;
+	private SharedPreferences prefs;
 
 	public LiveMapService() {
 		super("LiveMapService");
@@ -129,7 +129,7 @@ public class LiveMapService extends IntentService {
 		}
 	}
 
-	protected void loadConfiguration(SharedPreferences prefs) {
+	private void loadConfiguration(SharedPreferences prefs) {
 		showFound = prefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
 		showOwn = prefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
 		showDisabled = prefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
@@ -156,7 +156,7 @@ public class LiveMapService extends IntentService {
 		}
 	}
 
-	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
+	private CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
 		List<CacheType> filter = new Vector<>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
@@ -168,7 +168,7 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new CacheType[filter.size()]);
 	}
 
-	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+	private ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
 		List<ContainerType> filter = new Vector<>();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
@@ -180,7 +180,7 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
-	protected void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
+	private void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 
 		if (!authenticatorHelper.hasAccount())
@@ -297,7 +297,7 @@ public class LiveMapService extends IntentService {
 		return i;
 	}
 
-	protected void showMessage(final String message) {
+	private void showMessage(final String message) {
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
 			public void run() {

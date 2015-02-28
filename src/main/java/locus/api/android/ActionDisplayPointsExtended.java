@@ -1,5 +1,6 @@
 package locus.api.android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -59,8 +60,10 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
 	 * @throws IOException If I/O error occurs
 	 */
+	@SuppressLint("WorldReadableFiles")
 	public static FileOutputStream getCacheFileOutputStream(Context context) throws IOException {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			//noinspection deprecation
 			return context.openFileOutput(LOCUS_CACHE_FILENAME, Context.MODE_WORLD_READABLE); // file has to be readable for Locus
 		} else {
 			File file = getCacheFileName(context);

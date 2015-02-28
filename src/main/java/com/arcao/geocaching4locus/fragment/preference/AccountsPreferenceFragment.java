@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.fragment.preference;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.text.Spanned;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
@@ -59,7 +58,7 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		});
 	}
 
-	protected Spanned prepareAccountSummary(CharSequence value, int resId) {
+	private CharSequence prepareAccountSummary(CharSequence value, int resId) {
 		String summary = "%s";
 		if (resId != 0)
 			summary = getText(resId).toString();

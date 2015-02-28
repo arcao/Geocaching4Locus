@@ -14,7 +14,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
 	private static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
 
-	public void prepareDialog(int resTitle, int resErrorMessage, String additionalMessage) {
+	protected void prepareDialog(int resTitle, int resErrorMessage, String additionalMessage) {
 		Bundle args = new Bundle();
 		args.putInt(PARAM_TITLE, resTitle);
 		args.putInt(PARAM_ERROR_MESSAGE, resErrorMessage);
@@ -29,7 +29,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 		setCancelable(false);
 	}
 
-	public DialogInterface.OnClickListener getPositiveButtonOnClickListener() {
+	protected DialogInterface.OnClickListener getPositiveButtonOnClickListener() {
 		return null;
 	}
 

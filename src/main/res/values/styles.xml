@@ -2,10 +2,10 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorPrimary">@color/material_blue_grey_900</item>
-        <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
-        <item name="colorControlActivated">@color/material_deep_teal_500</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/accent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
@@ -19,10 +19,10 @@
 
     <style name="AppBaseTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorPrimary">@color/material_blue_grey_900</item>
-        <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
-        <item name="colorControlActivated">@color/material_deep_teal_500</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/accent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
@@ -35,10 +35,10 @@
 
     <style name="AppBaseTheme.DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge">
         <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorPrimary">@color/material_blue_grey_900</item>
-        <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
-        <item name="colorAccent">@color/material_deep_teal_500</item>
-        <item name="colorControlActivated">@color/material_deep_teal_500</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlActivated">@color/accent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
@@ -146,39 +146,6 @@
         <item name="android:paddingRight">4dp</item>
     </style>
     <style name="CustomButtonBarButtonStyle">
-    </style>
-
-
-	<!-- Old Notification Styles -->
-    <style name="TextAppearance">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textColorHighlight">#FFFF9200</item>
-        <item name="android:textColorHint">?android:attr/textColorHint</item>
-        <item name="android:textColorLink">#5C5CFF</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-    <style name="TextAppearance.StatusBar">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-    <style name="TextAppearance.StatusBar.Ticker">
-    </style>
-    <style name="TextAppearance.StatusBar.Title">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearance.StatusBar.Icon">
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="TextAppearance.StatusBar.EventContent">
-        <item name="android:textColor">#ff6b6b6b</item>
-    </style>
-    <style name="TextAppearance.StatusBar.EventContent.Title">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
     </style>
 
     <!-- Dashboard styles -->

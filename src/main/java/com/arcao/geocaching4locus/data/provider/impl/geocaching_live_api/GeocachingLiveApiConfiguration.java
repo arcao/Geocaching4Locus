@@ -7,7 +7,7 @@ import com.arcao.geocaching.api.data.type.MemberType;
 
 public class GeocachingLiveApiConfiguration implements GeocachingLiveApiKeys {
 	private final SharedPreferences preferences;
-	protected final AccountRestrictions restrictions;
+	private final AccountRestrictions restrictions;
 
 	public GeocachingLiveApiConfiguration(Context context) {
 		preferences = context.getSharedPreferences(GeocachingLiveApiProvider.PROVIDER_ID, Context.MODE_PRIVATE);
@@ -26,7 +26,7 @@ public class GeocachingLiveApiConfiguration implements GeocachingLiveApiKeys {
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.remove(PREF_USERNAME);
 		editor.remove(PREF_TOKEN);
-		editor.commit();
+		editor.apply();
 
 		restrictions.remove();
 	}
@@ -35,7 +35,7 @@ public class GeocachingLiveApiConfiguration implements GeocachingLiveApiKeys {
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString(PREF_USERNAME, username);
 		editor.putString(PREF_TOKEN, token);
-		editor.commit();
+		editor.apply();
 
 		restrictions.updateMemberType(memberType);
 	}

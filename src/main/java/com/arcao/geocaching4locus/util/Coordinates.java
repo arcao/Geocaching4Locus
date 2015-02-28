@@ -81,7 +81,7 @@ public class Coordinates {
 		}
 	}
 
-	private static int getDoubleNumberEnd(String source, int start) {
+	private static int getDoubleNumberEnd(CharSequence source, int start) {
 		for (int i = start; i < source.length(); i++) {
 			if (!Character.isDigit(source.charAt(i)) && source.charAt(i) != '.') {
 				return i;

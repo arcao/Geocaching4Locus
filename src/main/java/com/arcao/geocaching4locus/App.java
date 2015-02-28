@@ -119,6 +119,7 @@ public class App extends android.app.Application {
 		);
 	}
 
+	@SuppressWarnings("deprecation")
 	public void clearGeocachingCookies() {
 		// required to call
 		CookieSyncManager.createInstance(this).sync();

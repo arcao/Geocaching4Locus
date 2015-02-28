@@ -15,6 +15,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.arcao.geocaching4locus.R;
+import timber.log.Timber;
 
 public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
 
@@ -61,7 +62,9 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 				int value = 0;
 				try {
 					value = Integer.parseInt(s.toString());
-				} catch (NumberFormatException e) {}
+				} catch (NumberFormatException e) {
+					Timber.e(e, e.getMessage());
+				}
 
 				if (value > mMax) {
 					value = mMax;
@@ -75,7 +78,9 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 				int value = 0;
 				try {
 					value = Integer.parseInt(s.toString());
-				} catch (NumberFormatException e) {}
+				} catch (NumberFormatException e) {
+					Timber.e(e, e.getMessage());
+				}
 
 				if (value > mMax) {
 					value = mMax;

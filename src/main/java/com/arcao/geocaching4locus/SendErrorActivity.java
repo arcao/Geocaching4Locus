@@ -21,7 +21,7 @@ public class SendErrorActivity extends Activity {
 	private EditText userComment = null;
 	private EditText userEmail = null;
 
-	protected Throwable exception;
+	private Throwable exception;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class SendErrorActivity extends Activity {
 					String usrEmail = userEmail.getText().toString();
 					Editor prefEditor = prefs.edit();
 					prefEditor.putString(ACRA.PREF_USER_EMAIL_ADDRESS, usrEmail);
-					prefEditor.commit();
+					prefEditor.apply();
 
 					ErrorReporterEx.storeUserEmail(getApplicationContext(), usrEmail);
 				}

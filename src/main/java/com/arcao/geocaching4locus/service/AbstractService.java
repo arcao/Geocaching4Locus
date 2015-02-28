@@ -131,7 +131,7 @@ public abstract class AbstractService extends IntentService {
 
 	protected abstract void loadConfiguration(SharedPreferences prefs);
 
-	public void sendProgressUpdate(int current, int count) {
+	protected void sendProgressUpdate(int current, int count) {
 		if (mCanceled)
 			return;
 

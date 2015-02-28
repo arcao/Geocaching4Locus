@@ -60,14 +60,14 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		outState.putBoolean(AppConstants.STATE_AUTHENTICATOR_ACTIVITY_VISIBLE, mAuthenticatorActivityVisible);
 	}
 
-	protected void showGCNumberInputDialog() {
+	private void showGCNumberInputDialog() {
 		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
-	protected boolean showBasicMemberWarningDialog() {
+	private boolean showBasicMemberWarningDialog() {
 		if (!App.get(this).getAuthenticatorHelper().getRestrictions().isFullGeocachesLimitWarningRequired())
 			return false;
 
@@ -83,7 +83,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		return true;
 	}
 
-	protected void startImport(String cacheId) {
+	private void startImport(String cacheId) {
 		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
 
 		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)

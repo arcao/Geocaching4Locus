@@ -38,7 +38,6 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 	private final Context mContext;
 	private final WeakReference<TaskListener> mTaskListenerRef;
-	private LocusUtils.LocusVersion mLocusVersion;
 
 	public UpdateMoreTask(Context context, TaskListener listener) {
 		mContext = context.getApplicationContext();
@@ -181,7 +180,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		return waypoints;
 	}
 
-	protected String[] getCachesIds(List<Waypoint> caches) {
+	private String[] getCachesIds(List<Waypoint> caches) {
 		int count = caches.size();
 
 		String[] ret = new String[count];

@@ -16,8 +16,8 @@ import timber.log.Timber;
 import java.lang.ref.WeakReference;
 
 public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements AbstractDialogFragment.CancellableDialog {
-	protected final WeakReference<SearchNearestActivity> mActivityRef;
-	protected DownloadProgressDialogFragment mDialog;
+	private final WeakReference<SearchNearestActivity> mActivityRef;
+	private DownloadProgressDialogFragment mDialog;
 
 	public SearchNearestActivityBroadcastReceiver(SearchNearestActivity activity) {
 		mActivityRef = new WeakReference<>(activity);

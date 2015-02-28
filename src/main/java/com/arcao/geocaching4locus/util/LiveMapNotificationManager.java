@@ -19,7 +19,7 @@ import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import timber.log.Timber;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -34,13 +34,13 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static boolean mNotificationShown = false;
 	private static boolean mLastLiveMapState = false;
 
-	protected final Context mContext;
-	protected final NotificationManager mNotificationManager;
-	protected final SharedPreferences mSharedPrefs;
-	protected final boolean mShowLiveMapDisabledNotification;
-	protected final boolean mShowLiveMapVisibleOnlyNotification;
+	private final Context mContext;
+	private final NotificationManager mNotificationManager;
+	private final SharedPreferences mSharedPrefs;
+	private final boolean mShowLiveMapDisabledNotification;
+	private final boolean mShowLiveMapVisibleOnlyNotification;
 
-	protected final Set<LiveMapStateChangeListener> mStateChangeListeners = new CopyOnWriteArraySet<>();
+	private final Collection<LiveMapStateChangeListener> mStateChangeListeners = new CopyOnWriteArraySet<>();
 
 	public static LiveMapNotificationManager get(Context context) {
 		return new LiveMapNotificationManager(context);
@@ -122,7 +122,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mNotificationManager.notify(NOTIFICATION_ID, nb.build());
 	}
 
-	protected void updateNotificationHideAlarm() {
+	private void updateNotificationHideAlarm() {
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
 
@@ -130,14 +130,14 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + NOTIFICATION_TIMEOUT_MS, pendingIntent);
 	}
 
-	protected void showNotification() {
+	private void showNotification() {
 		mNotificationShown = true;
 
 		NotificationCompat.Builder builder = createBaseNotification();
 		mNotificationManager.notify(NOTIFICATION_ID, builder.build());
 	}
 
-	protected void hideNotification() {
+	private void hideNotification() {
 		mNotificationShown = false;
 
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -147,7 +147,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mNotificationManager.cancel(NOTIFICATION_ID);
 	}
 
-	protected NotificationCompat.Builder createBaseNotification() {
+	private NotificationCompat.Builder createBaseNotification() {
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
 
 		nb.setOngoing(true);
@@ -176,7 +176,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		return nb;
 	}
 
-	protected PendingIntent createPendingIntent(String action) {
+	private PendingIntent createPendingIntent(String action) {
 		Intent intent = new Intent(action, null, mContext, LiveMapBroadcastReceiver.class);
 		return PendingIntent.getBroadcast(mContext, 0, intent, 0);
 	}

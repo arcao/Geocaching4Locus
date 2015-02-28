@@ -16,13 +16,13 @@ import java.util.List;
 public class AccountRestrictions {
 	private static final int DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 365 * 24 * 3600;
 
-	protected final SharedPreferences mPreferences;
+	private final SharedPreferences mPreferences;
 
-	protected long maxFullGeocacheLimit;
-	protected long currentFullGeocacheLimit;
-	protected long fullGeocacheLimitPeriod;
-	protected Date renewFullGeocacheLimit;
-	protected boolean premiumMember;
+	private long maxFullGeocacheLimit;
+	private long currentFullGeocacheLimit;
+	private long fullGeocacheLimitPeriod;
+	private Date renewFullGeocacheLimit;
+	private boolean premiumMember;
 
 	public AccountRestrictions(SharedPreferences preferences) {
 		mPreferences = preferences;
@@ -36,7 +36,7 @@ public class AccountRestrictions {
 		editor.remove(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD);
 		editor.remove(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT);
 		editor.remove(PrefConstants.RESTRICTION__PREMIUM_MEMBER);
-		editor.commit();
+		editor.apply();
 
 		init();
 	}
@@ -62,7 +62,7 @@ public class AccountRestrictions {
 
 		Editor editor = mPreferences.edit();
 		editor.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, premiumMember);
-		editor.commit();
+		editor.apply();
 	}
 
 	public void updateLimits(ApiLimits apiLimits) {
@@ -81,7 +81,7 @@ public class AccountRestrictions {
 		Editor editor = mPreferences.edit();
 		editor.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit);
 		editor.putLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, fullGeocacheLimitPeriod);
-		editor.commit();
+		editor.apply();
 	}
 
 	public void updateLimits(CacheLimits cacheLimits) {
@@ -116,7 +116,7 @@ public class AccountRestrictions {
 
 		// this is some type of HACK, there is no other way how to detect change of Member type
 		editor.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, maxFullGeocacheLimit > 1000);
-		editor.commit();
+		editor.apply();
 	}
 
 	public boolean isPremiumMember() {

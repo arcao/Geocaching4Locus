@@ -37,7 +37,6 @@ import java.util.Vector;
 public class SearchGeocacheService extends AbstractService {
 	public static final String PARAM_LATITUDE = "LATITUDE";
 	public static final String PARAM_LONGITUDE = "LONGITUDE";
-	public static final float MILES_PER_KILOMETER = 1.609344F;
 	private static final String PACK_WAYPOINT = "SearchGeocacheService";
 
 	private static SearchGeocacheService instance = null;
@@ -122,7 +121,7 @@ public class SearchGeocacheService extends AbstractService {
 
 		if (prefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false)) {
 			// get kilometers from miles
-			distance *= MILES_PER_KILOMETER;
+			distance *= AppConstants.MILES_PER_KILOMETER;
 		}
 
 		// fix for min and max distance error in Geocaching Live API
@@ -164,7 +163,7 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	protected CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
+	private CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
 		Vector<CacheType> filter = new Vector<>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
@@ -176,7 +175,7 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new CacheType[filter.size()]);
 	}
 
-	protected ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+	private ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
 		Vector<ContainerType> filter = new Vector<>();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
@@ -189,7 +188,7 @@ public class SearchGeocacheService extends AbstractService {
 	}
 
 	@SuppressWarnings("resource")
-	protected File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
+	private File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -299,7 +298,7 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	protected void removeCachesOverDistance(List<Geocache> caches, double latitude, double longitude, double maxDistance) {
+	private void removeCachesOverDistance(List<Geocache> caches, double latitude, double longitude, double maxDistance) {
 		while (caches.size() > 0) {
 			Geocache cache = caches.get(caches.size() - 1);
 			double distance = computeDistance(latitude, longitude, cache);
@@ -313,7 +312,7 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	protected double computeDistance(double latitude, double longitude, Geocache cache) {
+	private double computeDistance(double latitude, double longitude, Geocache cache) {
 		return cache.getCoordinates().distanceTo(new Coordinates(latitude, longitude));
 	}
 

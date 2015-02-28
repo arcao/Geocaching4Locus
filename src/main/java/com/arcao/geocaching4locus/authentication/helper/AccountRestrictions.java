@@ -17,13 +17,13 @@ import java.util.concurrent.TimeUnit;
 public class AccountRestrictions {
 	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = TimeUnit.DAYS.toSeconds(365);
 
-	protected final SharedPreferences mPrefs;
+	private final SharedPreferences mPrefs;
 
-	protected long maxFullGeocacheLimit;
-	protected long currentFullGeocacheLimit;
-	protected long fullGeocacheLimitPeriod;
-	protected Date renewFullGeocacheLimit;
-	protected boolean premiumMember;
+	private long maxFullGeocacheLimit;
+	private long currentFullGeocacheLimit;
+	private long fullGeocacheLimitPeriod;
+	private Date renewFullGeocacheLimit;
+	private boolean premiumMember;
 
 	public AccountRestrictions(Context mContext) {
 		mPrefs = mContext.getSharedPreferences("RESTRICTION", 0);

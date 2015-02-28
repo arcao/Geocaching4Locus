@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
 	private static final String TAG_DIALOG = "DIALOG";
 
-	protected final Handler handler = new Handler();
+	private final Handler handler = new Handler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void showLoginFragment() {
+	private void showLoginFragment() {
 		// remove previous dialog
 		Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
 		if (!(fragment instanceof OAuthLoginFragment)) {
@@ -72,7 +72,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 		}
 	}
 
-	public void showBasicMemberWarning() {
+	private void showBasicMemberWarning() {
 		// remove previous dialog
 		DialogFragment fragment = (DialogFragment) getFragmentManager().findFragmentByTag(TAG_DIALOG);
 		if (fragment != null)

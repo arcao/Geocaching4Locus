@@ -46,8 +46,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 	}
 
 
-	private WeakReference<TaskListener> mTaskListenerRef;
-	private Context mContext;
+	private final WeakReference<TaskListener> mTaskListenerRef;
+	private final Context mContext;
 
 	public UpdateTask(Context context, TaskListener listener) {
 		mContext = context.getApplicationContext();

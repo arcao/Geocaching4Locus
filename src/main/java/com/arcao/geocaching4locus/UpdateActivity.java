@@ -16,8 +16,8 @@ import org.acra.ACRA;
 import timber.log.Timber;
 
 public class UpdateActivity extends FragmentActivity implements UpdateDialogFragment.DialogListener, FullCacheDownloadConfirmDialogFragment.DialogListener {
-	public static final String PARAM_CACHE_ID = "cacheId";
-	public static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
+	private static final String PARAM_CACHE_ID = "cacheId";
+	private static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 
 	private static final int REQUEST_LOGIN = 1;

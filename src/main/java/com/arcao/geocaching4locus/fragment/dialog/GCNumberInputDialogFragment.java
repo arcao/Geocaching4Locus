@@ -53,7 +53,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		if (mEditText != null && isShowing()) {
@@ -62,7 +62,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		}
 	}
 
-	protected void fireOnInputFinished(String input) {
+	private void fireOnInputFinished(String input) {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onInputFinished(input);
@@ -162,7 +162,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		});
 	}
 
-	protected boolean validateInput(EditText editText) {
+	private boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 
 		if (value.length() == 0) {

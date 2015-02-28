@@ -1,8 +1,5 @@
 package com.arcao.geocaching4locus.data.provider.impl.geocaching_live_api;
 
-/**
- * Created by Arcao on 11. 1. 2015.
- */
 public interface GeocachingLiveApiKeys {
 	/* Preference keys */
 	static final String PREF_USERNAME = "username";

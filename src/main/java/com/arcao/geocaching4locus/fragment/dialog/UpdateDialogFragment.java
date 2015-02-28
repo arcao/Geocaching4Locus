@@ -25,8 +25,8 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		void onUpdateFinished(Intent result);
 	}
 
-	protected UpdateTask mTask;
-	protected WeakReference<DialogListener> mDialogListenerRef;
+	private UpdateTask mTask;
+	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
 		UpdateDialogFragment fragment = new UpdateDialogFragment();

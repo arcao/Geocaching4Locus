@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Erreur pendant le téléchargement des caches.&lt;br&gt;Description: %1$s</string>
     <string name="downloading">Téléchargement des caches...</string>
     <string name="error_locus_not_found">Merci d\'installer Locus</string>
     <string name="error_location">Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
@@ -17,8 +16,6 @@
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance en Km</string>
     <string name="pref_distance_summary_miles">Distance en Miles</string>
-    <string name="pref_use_compression">Utiliser la compression</string>
-    <string name="pref_use_compression_summary">Utiliser la compression HTTP (expérimental)</string>
     <string name="pref_imperial_units">Unités Impériales</string>
     <string name="pref_imperial_units_summary">Utiliser les miles au lieu des kilomètres</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">Mise à jour de la cache</string>
     
     <string name="pref_count_of_logs">Nombre de logs</string>
-    <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Nombre de logs à charger avec chaque cache</string>
-    <string name="pref_not_filled">non rempli</string>
     <string name="gps">GPS</string>
-    <string name="close">Fermer</string>
     <string name="pref_show_disabled">Montrer les caches désactivées</string>
     <string name="pref_show_disabled_summary">Montrer les caches temporairement désactivées</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Charger vers Locus</string>
     
-    <string name="pref_download_basic">Seulement infos de base (Membre Premium)</string>
+    <string name="pref_download_basic">Seulement infos de base</string>
     <string name="pref_download_basic_summary">Télécharger seulement les informations de base</string>
     <string name="pref_download_on_show">Télécharger le reste des infos à la consultation</string>
     <string name="pref_download_on_show_summary">Télécharger le reste des infos quand la cache est visualisée dans Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Plus proches</string>
     <string name="menu_manual">Manuel</string>
     <string name="menu_preferences">Paramètres</string>
-    
-    <string name="pref_livemap">Carte en direct</string>
-    <string name="pref_livemap_summary">Chargement des caches sur la carte en live ( Cocher sur Locus: Paramètres->Divers->Mises à jour périodiques )</string>
     
     <string name="user_waypoint_name">Waypoint de l\'utilisateur %1$d</string>
     <string name="final_location_name">Localisation finale %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">Mise à jour des caches...</string>
     <string name="original_coordinates_name">Coordonnées d\'origine</string>
     <string name="pref_title_container_type_filter">Taille de la cache (Membre Premium)</string>
-    <string name="pref_create_images_tab">Créer un onglet pour les images</string>
-    <string name="pref_create_images_tab_summary"> Créer un onglet pour les images dans la fenêtre de la cache</string>
-    
+
     <string name="livemap_activated">Carte en direct activée. Déplacer la carte pour voir les caches.</string>
     <string name="livemap_deactivated">Carte en direct désactivée.</string>
     <string name="livemap_disabled">Vous n\'avez pas autorisé la mise à jour périodique dans Locus. Commencez par l\'autoriser dans Locus: Paramètres->Divers->Mises à jour périodiques</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Accès pour membre basic</string>
     <string name="premium_member_warning_title">Accès pour membre Premium</string>
-    <string name="basic_member_sign_on_warning_message">En tant que membre basique de geocaching.com, vous pouvez télécharger les détails de &lt;b>%1$s par %2$s periode &lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Passez votre compte en membre Premium de geocaching.com pour pouvoir télécharger les détails de 6000 caches par jour et d\'obtenir d\'autres avantages. Visitez geocaching.com pour passer en premium.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Vous avez atteind la limite de téléchargement de &lt;b>%1$s per %2$s period&lt;/b>. Votre quota sera remis à zéro à %3$s.&lt;br>
 &lt;br>
 &lt;i>Upgradez pour devenir membre Premium et télécharger les détails de plus de 6000 caches par jour et d\'autres avantages. Visitez geocaching.com pour  upgrader.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Vous avez atteint la limite de téléchargement des &lt;b>6000 caches par 24 heures&lt;/b>. Votre quota sera remis à zéro à %3$s.</string>
     <string name="method_quota_exceeded_title">Ho, ralentissez !</string>
     <string name="method_quota_exceeded_message">Vous avez atteins la limite maximale d\'actions/demandes par minute</string>
-    <string name="basic_member_full_geocache_warning_message">En tant que membre basic de geocaching.com, vous pouvez télécharger les détails de %1$s par %2$s période &lt;br>
-&lt;br>
-&lt;b>Vous pouvez télécharger %3$s jusqu\'à %4$s où le quota sera remis à zérot&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Souhaitez-vous continuer en téléchargeant?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>L\'upgrade vers membre Premium de geocaching.com permet de télécharger les détails de plus de 6000 caches par jour et d\'obtenir d\'autres avantages. Visitez geocaching.com pour upgrader.&lt;/i></string>
     <string name="button_yes">Oui</string>
     <string name="button_no">Non</string>
     
@@ -194,7 +173,7 @@
 
     <string name="pref_livemap_visible_only_notification">Map visible notification</string>
     <string name="pref_livemap_visible_only_notification_summary">Montrer le notifications seulement quand la carte est visible dans Locus</string>
-    <string name="pref_download_logs_update_cache">Download logs update cache</string>
+    <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
     <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
@@ -207,7 +186,7 @@
     <string name="prefs_cat_advanced">Avancé</string>
     <string name="prefs_cat_about">A propos</string>
     <string name="login_title">S\'identifier</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
+    <string name="pref_live_map_download_hints">Télécharger les hints</string>
     <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
 
 </resources>

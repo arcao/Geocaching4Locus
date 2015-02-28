@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Er is een fout opgetreden bij downloaden van caches.&lt;br&gt;Omschrijving: %1$s</string>
     <string name="downloading">Bezig met downloaden van caches…</string>
     <string name="error_locus_not_found">Installeer Locus aub!</string>
     <string name="error_location">Sta de WIFI of GPS-locatie dienst toe in \'Instellingen\'.</string>
@@ -17,8 +16,6 @@
     <string name="pref_distance">Afstand</string>
     <string name="pref_distance_summary_km">Afstand in km</string>
     <string name="pref_distance_summary_miles">Afstand in miles</string>
-    <string name="pref_use_compression">Gebruik compressie</string>
-    <string name="pref_use_compression_summary">Gebruik HTTP compressie (experimenteel)</string>
     <string name="pref_imperial_units">Imperiale eenheden</string>
     <string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">Bezig met updaten van cache…</string>
     
     <string name="pref_count_of_logs">Aantal logs</string>
-    <string name="pref_count_of_logs_text">logs</string>
     <string name="pref_count_of_logs_summary">Aantal logs om te downloaden met cache</string>
-    <string name="pref_not_filled">niet gevuld</string>
     <string name="gps">GPS</string>
-    <string name="close">Sluit</string>
     <string name="pref_show_disabled">Toon uitgeschakelde</string>
     <string name="pref_show_disabled_summary">Toon tijdelijk uitgeschakelde caches</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Downloaden naar Locus</string>
     
-    <string name="pref_download_basic">Alleen basis info (Premium lid)</string>
+    <string name="pref_download_basic">Alleen basis info</string>
     <string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
     <string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
     <string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Dichtsbijzijnde</string>
     <string name="menu_manual">Handmatig</string>
     <string name="menu_preferences">Voorkeuren</string>
-    
-    <string name="pref_livemap">Live kaart</string>
-    <string name="pref_livemap_summary">Live laden van caches op map (inschakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen)</string>
     
     <string name="user_waypoint_name">Gebruikers via punt %1$d</string>
     <string name="final_location_name">Eindbestemming %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">Bezig met updaten van caches...</string>
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
     <string name="pref_title_container_type_filter">Grootte van container (Premium lid)</string>
-    <string name="pref_create_images_tab">Maak afbeeldingen tab</string>
-    <string name="pref_create_images_tab_summary">Maak afbeeldingen tab in cache venster</string>
-    
+
     <string name="livemap_activated">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
     <string name="livemap_deactivated">Live kaart gedeactiveerd</string>
     <string name="livemap_disabled">   Je hebt het sturen van periodieke updates door Locus niet toegelaten. Gelieve het eerst in te schakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen.</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Basis lid toegang</string>
     <string name="premium_member_warning_title">Premium lid toegang</string>
-    <string name="basic_member_sign_on_warning_message">Als basis lid van geocaching.com kan je alle details downloaden van &lt;b>%1$s per %2$s periode&lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Je hebt de limiet om alle details te dowloaden van &lt;b>%1$s per %2$s periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.&lt;br>
 &lt;br>
 &lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Je hebt de limiet om het downloaden van alle details van &lt;b>6000 caches per 24 uur periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
     <string name="method_quota_exceeded_title">Hey, kalm aan!</string>
     <string name="method_quota_exceeded_message">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
-    <string name="basic_member_full_geocache_warning_message">Als basis lid van geocaching.com kan je alle details downloaden van &lt;b>%1$s per %2$s periode&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Je mag %3$s downloaden tot %4$s dan zal de limiet gereset worden&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Wilt u doorgaan met downloaden?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
     <string name="button_yes">Ja</string>
     <string name="button_no">Nee</string>
     

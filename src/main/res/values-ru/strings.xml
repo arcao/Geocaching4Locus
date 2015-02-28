@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Трапилася помилка при завантаженні кешу.&lt;br&gt;Опис: %1$s</string>
     <string name="downloading">Скачивание кэшей…</string>
     <string name="error_locus_not_found">Пожалуйста, установите Locus!</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
-    <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
-    <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
+    <string name="acquiring_gps_location">Местоположение определяется по GPS...</string>
+    <string name="acquiring_network_location">Местоположение определяется через беспроводную сеть...</string>
     
     <string name="preferences">Настройки</string>
     <string name="wrong_coordinates">Неправильный формат координат!</string>
@@ -17,15 +16,13 @@
     <string name="pref_distance">Дистанция</string>
     <string name="pref_distance_summary_km">Дистанция в км</string>
     <string name="pref_distance_summary_miles">Дистанция в милях</string>
-    <string name="pref_use_compression">Использовать сжатие</string>
-    <string name="pref_use_compression_summary">Использовать сжатие HTTP  (экспериментально)</string>
     <string name="pref_imperial_units">Британские единицы</string>
     <string name="pref_imperial_units_summary">Использовать мили вместо километров</string>
     
     <string name="error_credentials">Неверный логин или пароль. Пожалуйста проверьте состояние логина в настройках.</string>
     <string name="error_title">Произошла ошибка!</string>
     
-    <string name="ok_button">Ок</string>
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">Обновление кэша…</string>
     
     <string name="pref_count_of_logs">Количество записей</string>
-    <string name="pref_count_of_logs_text">записи</string>
     <string name="pref_count_of_logs_summary">Количество записей для скачивания с кэшем</string>
-    <string name="pref_not_filled">не заполненно</string>
     <string name="gps">GPS</string>
-    <string name="close">Закрыть</string>
     <string name="pref_show_disabled">Показать неактивные</string>
     <string name="pref_show_disabled_summary">Показать временно неактивные кэши</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Скачать на Locus</string>
     
-    <string name="pref_download_basic">Только основная информация (Премиум)</string>
+    <string name="pref_download_basic">Только основная информация</string>
     <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
     <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
     <string name="pref_download_on_show_summary">Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Ближайшие</string>
     <string name="menu_manual">Руководство</string>
     <string name="menu_preferences">Настройки</string>
-    
-    <string name="pref_livemap">Live карта</string>
-    <string name="pref_livemap_summary">Онлайн скачивание кэшей на карту (активировать в Locus: Настройки → Другое → Включить периодическое обновление)</string>
     
     <string name="user_waypoint_name">Точка нахождения пользователя %1$d</string>
     <string name="final_location_name">Точка назначения %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">Оновлення кешу…</string>
     <string name="original_coordinates_name">Оригинальные координаты</string>
     <string name="pref_title_container_type_filter">Размер контейнера (Премиум)</string>
-    <string name="pref_create_images_tab">Создать images tab</string>
-    <string name="pref_create_images_tab_summary">Создать images tab в диалоговом окне кэша</string>
-    
+
     <string name="livemap_activated">Онлайн карта активирована. Теперь отправляйтесь с картой на поиск кэшей.</string>
     <string name="livemap_deactivated">Онлайн карта деактивирована.</string>
     <string name="livemap_disabled">Вы не разрешили отправку периодического обновления Locus. Пожалуйста, включите это сначала в Locus: Настройки → Разное → Включить периодическое обновление.</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Доступ базового пользователя</string>
     <string name="premium_member_warning_title">Доступ премиум пользователя</string>
-    <string name="basic_member_sign_on_warning_message">Как базовый пользователь geocaching.com вы можете скачать полную информацию &lt;b>%1$s за %2$s &lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Обновите свой ​​профиль на geocaching.com до премиум сегодня, чтобы скачивать полную информацию до 6000 кэшей в день и иметь доступ ко многим другим преимуществам. Посетите geocaching.com для обновления.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
 &lt;br>
 &lt;i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Вы достигли ограничения для загрузки полной информации &lt;b>6000 кэшей за 24 часа&lt;/b>.  Ваша ежедневная квота будет обнулена на %3$s.</string>
     <string name="method_quota_exceeded_title">Эй, помедленнее!</string>
     <string name="method_quota_exceeded_message">Вы достигли максимального количества действий/звонков в минуту.</string>
-    <string name="basic_member_full_geocache_warning_message">В качестве базового пользователя geocaching.com вы можете скачивать полную информацию %1$s за %2$s .&lt;br>
-&lt;br>
-&lt;b>Вы можете скачать %3$s до %4$s пока не обнулится счетчик&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Вы хотите продолжить загрузку?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Обновитесь на geocaching.com до премиум пользователя сегодня, чтобы скачивать полную информацию до 6000 кэшей в день и иметь доступ ко многим другим преимуществам. Посетите geocaching.com для обновления.&lt;/i></string>
     <string name="button_yes">Да</string>
     <string name="button_no">Нет</string>
     
@@ -184,27 +163,27 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
-    <string name="launcher_menu">Geocaching4Locus menu</string>
+    <string name="pref_livemap_show_disabled_notification">Уведомление об отключении</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Показывать уведомление, когда Живая карта отключена. Это работает, только если в Locus разрешены периодические обновления и Locus запущен.</string>
+    <string name="launcher_menu">Меню Geocaching4Locus</string>
     <string name="pref_cache_type_all">Все</string>
     <string name="button_filter">Фильтр</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Download logs</string>
+    <string name="download_logs_progress">Загрузка логов…</string>
+    <string name="launcher_download_logs">Загрузить логи</string>
 
-    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
-    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
+    <string name="pref_livemap_visible_only_notification">Уведомление видимости карты</string>
+    <string name="pref_livemap_visible_only_notification_summary">Показывать уведомление только когда карта видна в Locus</string>
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
     <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
-    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+    <string name="premium_member_for_filter_required">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
 
-    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_account">Учетная запись</string>
     <string name="prefs_cat_filter">Фільтр</string>
-    <string name="prefs_cat_live_map">Жива карта</string>
-    <string name="prefs_cat_downloading">Завантаження…</string>
-    <string name="prefs_cat_advanced">Додатково</string>
+    <string name="prefs_cat_live_map">Живая карта</string>
+    <string name="prefs_cat_downloading">Загрузка</string>
+    <string name="prefs_cat_advanced">Дополнительно</string>
     <string name="prefs_cat_about">Про</string>
     <string name="login_title">Вход</string>
     <string name="pref_live_map_download_hints">Download hints</string>

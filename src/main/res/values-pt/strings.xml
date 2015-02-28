@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Erros a descarregar as caches.ches.&lt;br&gt;Descrição: %1$s</string>
     <string name="downloading">A descarregar caches…</string>
     <string name="error_locus_not_found">Por favor instale o Locus!</string>
     <string name="error_location">Por favor ative a localização através de Wireless ou GPS nas definições.</string>
@@ -17,8 +16,6 @@
     <string name="pref_distance">Distância</string>
     <string name="pref_distance_summary_km">Distância em km</string>
     <string name="pref_distance_summary_miles">Distância em milhas</string>
-    <string name="pref_use_compression">Usar compressão</string>
-    <string name="pref_use_compression_summary">Usar compressão HTTP (Experimental)</string>
     <string name="pref_imperial_units">Unidades Imperiais</string>
     <string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">A atualizar cache…</string>
     
     <string name="pref_count_of_logs">Número de registos</string>
-    <string name="pref_count_of_logs_text">registos</string>
     <string name="pref_count_of_logs_summary">Número de registos a descarregar com a cache</string>
-    <string name="pref_not_filled">Não preenchido</string>
     <string name="gps">GPS</string>
-    <string name="close">Fechar</string>
     <string name="pref_show_disabled">Mostrar inativos</string>
     <string name="pref_show_disabled_summary">Mostrar caches temporariamente inativas</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Download para o Locus</string>
     
-    <string name="pref_download_basic">Apenas Informação Básica (Membros Premium)</string>
+    <string name="pref_download_basic">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show">Descarregar o restante da informação apenas na visualização</string>
     <string name="pref_download_on_show_summary">Descarregar o restante da informação apenas quando o conteudo for visualizado no Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Mais perto</string>
     <string name="menu_manual">Manual</string>
     <string name="menu_preferences">Configuração</string>
-    
-    <string name="pref_livemap">Mapa ao vivo</string>
-    <string name="pref_livemap_summary">Carregamento, ao vivo, de caches no mapa (ativar no Locus: Definições  → Vários → Ativar atualizações periódicas)</string>
     
     <string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
     <string name="final_location_name">Local final %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">A actualizar caches...</string>
     <string name="original_coordinates_name">Coordenadas originais</string>
     <string name="pref_title_container_type_filter">Tamanho (Membros Premium)</string>
-    <string name="pref_create_images_tab">Criar separador de imagens</string>
-    <string name="pref_create_images_tab_summary">Criar separador de imagens num caixa de diálogo</string>
-    
+
     <string name="livemap_activated">Mapa ao vivo ativo. Movimente-se no mapa para ver as caches.</string>
     <string name="livemap_deactivated">Mapa ao viva inativo.</string>
     <string name="livemap_disabled">Não ativou o envio de atualizações periódicas no Locus. Por favor ative em: Definições  → Vários → Ativar atualizações periódicas.</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Acesso de membros básicos</string>
     <string name="premium_member_warning_title">Acesso de membros Premium</string>
-    <string name="basic_member_sign_on_warning_message">Como membro básico apenas pode descarregar detalhes completos de &lt;b>%1$s por %2$s período&lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Atingiu o limite para descarregar detalhes completos das caches de  &lt;b>%1$s por %2$s período&lt;/b>. A sua quota diária voltará a 0 às %3$s.&lt;br>
 &lt;br>
 &lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Atingiu o limite para descarregar detalhes completos de  &lt;b>6000 caches por período de 24 horas&lt;/b>. A sua quota diária voltará a 0 às %3$s.</string>
     <string name="method_quota_exceeded_title">Alto, devagar!</string>
     <string name="method_quota_exceeded_message">Atingiu o máximo de ações/chamadas por minuto.</string>
-    <string name="basic_member_full_geocache_warning_message">Como membro básico apenas pode descarregar detalhes completos de %1$s por %2$s período.&lt;br>
-&lt;br>
-&lt;b>Pode descarregar %3$s até %4$s quando a quota voltar a 0&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Pretende continuar a descarregar?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Atualize a conta em geocaching.com para Membro Premium  hoje para poder descarregar os detalhes completos de até  6000 caches por dia e usufruir de mais benefícios. Visite geocaching.com para atualizar a conta.&lt;/i></string>
     <string name="button_yes">Sim</string>
     <string name="button_no">Não</string>
     
@@ -184,30 +163,30 @@
     <string name="livemap_notification_action_enable">Ativar mapa ao vivo</string>
     <string name="livemap_notification_action_disable">Desligar mapa ao vivo</string>
     <string name="livemap_error">Mapa ao vivo Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
+    <string name="pref_livemap_show_disabled_notification">Notificação Inativa</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Mostrar notificação quando o mapa ao vivo está desligado. Apenas funciona se o Locus está ligado e se o envio de atualizações periódicas está ativo.</string>
     <string name="launcher_menu">Menu Geocaching4Locus</string>
     <string name="pref_cache_type_all">Tudo</string>
-    <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Download logs</string>
+    <string name="button_filter">Filtro</string>
+    <string name="download_logs_progress">A descarregar logs....</string>
+    <string name="launcher_download_logs">Descarregar logs</string>
 
-    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
-    <string name="pref_livemap_visible_only_notification_summary">Show notification only when map in Locus is visible</string>
-    <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
-    <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
-    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+    <string name="pref_livemap_visible_only_notification">Notificação de mapa visível</string>
+    <string name="pref_livemap_visible_only_notification_summary">Mostrar notificação apenas quando o mapa do Locus estiver visível</string>
+    <string name="pref_download_logs_update_cache">Descarregar logs de atualização da cache</string>
+    <string name="pref_download_logs_update_cache_summary">Ação "Descarregar logs" também atualiza os dados da cache</string>
+    <string name="pref_downloading_count_of_caches_step">Dimensão da escala na contagem de caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Janela de configuração da escala de contagem de caches</string>
+    <string name="premium_member_for_filter_required">Alguns filtros requerem uma subscrição Premium que não está disponível. A aplicação foi alterada para o modo Subscrição Básica. Por favor tente de novo.</string>
 
-    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_account">Conta</string>
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mapa ao vivo</string>
     <string name="prefs_cat_downloading">A descarregar</string>
     <string name="prefs_cat_advanced">Avançado</string>
     <string name="prefs_cat_about">Sobre</string>
     <string name="login_title">Entrar</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
-    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+    <string name="pref_live_map_download_hints">Descarregar dicas</string>
+    <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
 
 </resources>

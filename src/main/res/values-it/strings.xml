@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Si sono verificati degli errori scaricando le caches.&lt;br&gt;Descrizione: %1$s</string>
     <string name="downloading">Scaricamento caches...</string>
     <string name="error_locus_not_found">Si prega di installare Locus!</string>
     <string name="error_location">Permetti servizio posizione Wireless o GPS in \'Impostazioni\'.</string>
@@ -17,8 +16,6 @@
     <string name="pref_distance">Distanza</string>
     <string name="pref_distance_summary_km">Distanza in km</string>
     <string name="pref_distance_summary_miles">Distanza in miglia</string>
-    <string name="pref_use_compression">Usa compressione</string>
-    <string name="pref_use_compression_summary">Usa compressione HTTP (sperimentale)</string>
     <string name="pref_imperial_units">Misure imperiali</string>
     <string name="pref_imperial_units_summary">Utilizza le miglia al posto dei chilometri</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">Aggiornamento cache...</string>
     
     <string name="pref_count_of_logs">Conteggio dei log</string>
-    <string name="pref_count_of_logs_text">Logs</string>
     <string name="pref_count_of_logs_summary">Conteggio dei log da scaricare con cache</string>
-    <string name="pref_not_filled">Non riempito</string>
     <string name="gps">GPS</string>
-    <string name="close">Chiudi</string>
     <string name="pref_show_disabled">Mostra disabilitato</string>
     <string name="pref_show_disabled_summary">Mostra caches temporaneamente disabilitate</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Scarica in Locus</string>
     
-    <string name="pref_download_basic">Solo info di base (utente Premium)</string>
+    <string name="pref_download_basic">Solo info di base</string>
     <string name="pref_download_basic_summary">Scarica nella cache solo informazioni di base</string>
     <string name="pref_download_on_show">Scarica info rest in mostra</string>
     <string name="pref_download_on_show_summary">Scarica info rest sulla cache quando il contenuto cache è mostrato in Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Il più vicino</string>
     <string name="menu_manual">Manuale</string>
     <string name="menu_preferences">Preferenze</string>
-    
-    <string name="pref_livemap">Mappa dal vivo</string>
-    <string name="pref_livemap_summary">Caricamento dal vivo delle caches nella mappa (abilita in Locus: Impostazioni → Varie → Abilita aggiornamenti periodici)</string>
     
     <string name="user_waypoint_name">Waypoint utente %1$d</string>
     <string name="final_location_name">Posizione finale %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">Aggiornando la cache...</string>
     <string name="original_coordinates_name">Coordinate originali</string>
     <string name="pref_title_container_type_filter">Dimensioni contenitore (utente Premium)</string>
-    <string name="pref_create_images_tab">Crea tab immagini</string>
-    <string name="pref_create_images_tab_summary">Crea tab immagini in una finestra cache</string>
-    
+
     <string name="livemap_activated">Mappa dal vivo attivata. Ora muoviti con la mappa per vedere le cache.</string>
     <string name="livemap_deactivated">Mappa dal vivo disattivata.</string>
     <string name="livemap_disabled">Non hai permesso l\'invio di aggiornamenti periodici da Locus. Per favore, prima abilitalo in Locus: Impostazioni → Varie → Abilita aggiornamenti periodici</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Accesso utente semplice</string>
     <string name="premium_member_warning_title">Accesso utente Premium</string>
-    <string name="basic_member_sign_on_warning_message">Come utente base di geocaching.com puoi scaricare tutti i dettagli di &lt;b>%1$s per il periodo di %2$s &lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Diventa oggi utente Premium di geocaching.com per scaricare i dettagli completi per oltre 6000 caches al giorno e accedere a molti altri vantaggi. Visita geocaching.com per fare l\'upgrade.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Hai raggiunto il limite di scaricamento dei dettagli completi nel periodo di &lt;b>%1$s per %2$s &lt;/b>. La tua quota giornaliera sarà azzerata alle %3$s.&lt;br>
 &lt;br>
 &lt;i>Diventa oggi utente Premium di geocaching.com per scaricare i dettagli completi per oltre 6000 caches al giorno e accedere a molti altri vantaggi. Visita geocaching.com per fare l\'upgrade.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Hai raggiunto il limite di scaricamento dei dettagli completi nel periodo di &lt;b>6000 caches per 24 ore &lt;/b>. La tua quota giornaliera sarà azzerata alle %3$s.</string>
     <string name="method_quota_exceeded_title">Ehi, rallenta!</string>
     <string name="method_quota_exceeded_message">Hai raggiunto il limite del periodo massimo di azioni/chiamate per minuto.</string>
-    <string name="basic_member_full_geocache_warning_message">Come utente di base di geocaching.com puoi scaricare dettagli completi per il periodo di %1$s per %2$s .&lt;br>
-&lt;br>
-&lt;b>Puoi scaricare %3$s fino alle %4$s quando la quota sarà azzerata&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Vuoi continuare con lo scaricamento?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Diventa oggi utente Premium di geocaching.com per scaricare i dettagli completi per oltre 6000 caches al giorno e accedere a molti altri vantaggi. Visita geocaching.com per fare l\'upgrade.&lt;/i></string>
     <string name="button_yes">Sì</string>
     <string name="button_no">No</string>
     

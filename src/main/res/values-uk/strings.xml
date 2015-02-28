@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Geocaching4Locus</string>
-    <string name="error">Трапилася помилка при завантаженні кешу.&lt;br&gt;Опис: %1$s</string>
     <string name="downloading">Завантаження кешу…</string>
     <string name="error_locus_not_found">Будь ласка, встановіть Locus!</string>
     <string name="error_location">Будь ласка, дозвольте Послугу визначення місця знаходження на основі мобільної мережі та GPS у \'Налаштуваннях\'.</string>
@@ -17,8 +16,6 @@
     <string name="pref_distance">Відстань</string>
     <string name="pref_distance_summary_km">Відстань у км</string>
     <string name="pref_distance_summary_miles">Відстань у милях</string>
-    <string name="pref_use_compression">Використовувати стиснення</string>
-    <string name="pref_use_compression_summary">Використовувати HTTP стискання (експериментально)</string>
     <string name="pref_imperial_units">Імперські одиниці</string>
     <string name="pref_imperial_units_summary">Використовувати милі замість кілометрів</string>
     
@@ -41,11 +38,8 @@
     <string name="update_cache_progress">Оновлення кешу…</string>
     
     <string name="pref_count_of_logs">Кількість журналів</string>
-    <string name="pref_count_of_logs_text">журнали</string>
     <string name="pref_count_of_logs_summary">Кількість журналів для завантаження з кешем</string>
-    <string name="pref_not_filled">не заповнено</string>
     <string name="gps">GPS</string>
-    <string name="close">Закрити</string>
     <string name="pref_show_disabled">Показати вимкнене</string>
     <string name="pref_show_disabled_summary">Показати тимчасово вимкнений кеш</string>
     
@@ -68,7 +62,7 @@
     
     <string name="download_button">Завантажити до Locus</string>
     
-    <string name="pref_download_basic">Лише основна інформація (преміум користувач)</string>
+    <string name="pref_download_basic">Лише основна інформація</string>
     <string name="pref_download_basic_summary">Завантажувати лише основну інформацію про кеш</string>
     <string name="pref_download_on_show">Завантажувати решту інформації при показі</string>
     <string name="pref_download_on_show_summary">Завантажувати решту інформації про кеш, коли зміст кешу показано у Locus</string>
@@ -82,9 +76,6 @@
     <string name="menu_nearest">Найближче</string>
     <string name="menu_manual">Вручну</string>
     <string name="menu_preferences">Параметри</string>
-    
-    <string name="pref_livemap">Жива карта</string>
-    <string name="pref_livemap_summary">Вживу завантажувати кеш на карту (увімкніть у Locus: Параметри → Інші → Увімкнути періодичні оновлення)</string>
     
     <string name="user_waypoint_name">Дорожня точка %1$d</string>
     <string name="final_location_name">Кінцеве розташування %1$d</string>
@@ -110,9 +101,7 @@
     <string name="update_caches_progress">Оновлення кешу…</string>
     <string name="original_coordinates_name">Початкові координати</string>
     <string name="pref_title_container_type_filter">Розмір контейнера (преміум користувач)</string>
-    <string name="pref_create_images_tab">Створити вкладку зображень</string>
-    <string name="pref_create_images_tab_summary">Створити вкладку зображень у діалоговому вікні кешу</string>
-    
+
     <string name="livemap_activated">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
     <string name="livemap_deactivated">Жива карта деактивована.</string>
     <string name="livemap_disabled">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
@@ -135,22 +124,12 @@
 
     <string name="basic_member_warning_title">Доступ базового користувача</string>
     <string name="premium_member_warning_title">Доступ преміум користувача</string>
-    <string name="basic_member_sign_on_warning_message">Як базовий користувач geocaching.com ви можете завантажити повну інформацію &lt;b>%1$s  за %2$s &lt;/b>.&lt;br>
-&lt;br>
-&lt;i>Оновіть свій профіль на geocaching.com до преміуму сьогодні, щоб завантажувати повну інформацію до 6000 кешів на день і мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення.&lt;/i></string>
     <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
 &lt;br>
 &lt;i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Ви досягнули обмеження для завантаження повної інформації &lt;b>6000 кешів за 24 години&lt;/b> Ваша щоденна квота буде обнулена о %3$s.</string>
     <string name="method_quota_exceeded_title">Гей, повільніше!</string>
     <string name="method_quota_exceeded_message">Ви досягнули обмеження на максимальну кількість дій/дзвінків за хвилину.</string>
-    <string name="basic_member_full_geocache_warning_message">В якості базового користувача geocaching.com ви можете завантажити повну інформацію %1$s за %2$s.&lt;br>
-&lt;br>
-&lt;b> Ви можете завантажити %3$s до %4$s, доки лічильник буде обнулений&lt;/b>.&lt;br>
-&lt;br>
-&lt;b>Ви хочете продовжити завантаження?&lt;/b>
-&lt;br>
-&lt;br>&lt;i>Оновіться на geocaching.com до преміум користувача сьогодні, щоб завантажувати повну інформацію  до 6000 кешів за день і мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
     <string name="button_yes">Так</string>
     <string name="button_no">Ні</string>
     

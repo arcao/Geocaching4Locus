@@ -45,6 +45,7 @@ public interface PrefConstants {
 
 	static final String ABOUT_VERSION = "about_version";
 	static final String ABOUT_WEBSITE = "about_website";
+	static final String ABOUT_FEEDBACK = "about_feedback";
 	static final String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
 	static final String ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live";
 

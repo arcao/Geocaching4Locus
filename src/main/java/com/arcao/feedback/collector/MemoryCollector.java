@@ -1,7 +1,7 @@
-package com.arcao.geocaching4locus.util.feedback.collector;
+package com.arcao.feedback.collector;
 
-import android.util.Log;
 import org.acra.ACRAConstants;
+import timber.log.Timber;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +17,8 @@ public class MemoryCollector extends Collector {
 	}
 
 	@Override
-	public String collect() {
-		final StringBuilder meminfo = new StringBuilder();
+	protected String collect() {
+		final StringBuilder memInfo = new StringBuilder();
 
 		try {
 			final List<String> commandLine = new ArrayList<String>();
@@ -34,15 +34,15 @@ public class MemoryCollector extends Collector {
 				if (line == null) {
 					break;
 				}
-				meminfo.append(line);
-				meminfo.append("\n");
+				memInfo.append(line);
+				memInfo.append("\n");
 			}
 
 		} catch (IOException e) {
-			Log.e("", "MemoryCollector could not retrieve data", e);
+			Timber.e(e, "MemoryCollector could not retrieve data");
 		}
 
-		return meminfo.toString();
+		return memInfo.toString();
 
 	}
 }

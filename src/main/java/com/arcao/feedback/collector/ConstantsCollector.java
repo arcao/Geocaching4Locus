@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.util.feedback.collector;
+package com.arcao.feedback.collector;
 
 import java.lang.reflect.Field;
 
@@ -17,7 +17,7 @@ public class ConstantsCollector extends Collector {
 	}
 
 	@Override
-	public String collect() {
+	protected String collect() {
 		final StringBuilder result = new StringBuilder();
 
 		final Field[] fields = source.getFields();

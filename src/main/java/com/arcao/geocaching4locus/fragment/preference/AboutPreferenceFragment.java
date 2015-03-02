@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import com.arcao.feedback.FeedbackHelper;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.R;
@@ -25,13 +26,22 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 	@Override
 	protected void preparePreference() {
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
-		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
+		final Preference feedbackPreference = findPreference(ABOUT_FEEDBACK, Preference.class);
+		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 
 		versionPreference.setSummary(App.get(getActivity()).getVersion() + " (" + BuildConfig.GIT_SHA + ")");
 
 		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
 		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());
+
+		feedbackPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				FeedbackHelper.sendFeedback(getActivity(), R.string.feedback_email, R.string.feedback_subject, R.string.feedback_body);
+				return true;
+			}
+		});
 
 		donatePaypalPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override

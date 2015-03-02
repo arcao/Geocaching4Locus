@@ -1,16 +1,14 @@
-package com.arcao.geocaching4locus.util.feedback.collector;
+package com.arcao.feedback.collector;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
 import android.util.SparseArray;
+import timber.log.Timber;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.acra.ACRA.LOG_TAG;
 
 public class ConfigurationCollector extends Collector {
 	private static final String SUFFIX_MASK = "_MASK";
@@ -76,7 +74,7 @@ public class ConfigurationCollector extends Collector {
 						mUiModeValues.put(f.getInt(null), fieldName);
 					}
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					Log.w(LOG_TAG, "Error while inspecting device configuration: ", e);
+					Timber.w(e, "Error while inspecting device configuration: ");
 				}
 			}
 		}
@@ -95,12 +93,12 @@ public class ConfigurationCollector extends Collector {
 
 
 	@Override
-	public String collect() {
+	protected String collect() {
 		try {
 			final Configuration crashConf = context.getResources().getConfiguration();
 			return ConfigurationCollector.toString(crashConf);
 		} catch (RuntimeException e) {
-			Log.w(LOG_TAG, "Couldn't retrieve ConfigurationCollector for : " + context.getPackageName(), e);
+			Timber.w(e, "Couldn't retrieve ConfigurationCollector for : " + context.getPackageName());
 			return "Couldn't retrieve crash config";
 		}
 	}
@@ -129,7 +127,7 @@ public class ConfigurationCollector extends Collector {
 					result.append('\n');
 				}
 			} catch (IllegalArgumentException | IllegalAccessException e) {
-				Log.e(LOG_TAG, "Error while inspecting device configuration: ", e);
+				Timber.e(e, "Error while inspecting device configuration: ");
 			}
 		}
 		return result.toString();

@@ -1,8 +1,8 @@
-package com.arcao.geocaching4locus.util.feedback.collector;
+package com.arcao.feedback.collector;
 
 public abstract class Collector {
 	public abstract String getName();
-	public abstract String collect();
+	protected abstract String collect();
 
 	@Override
 	public String toString() {

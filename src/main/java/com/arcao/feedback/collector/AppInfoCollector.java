@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.util.feedback.collector;
+package com.arcao.feedback.collector;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -20,7 +20,7 @@ public class AppInfoCollector extends Collector {
 	}
 
 	@Override
-	public String collect() {
+	protected String collect() {
 		final StringBuilder sb = new StringBuilder();
 
 		final PackageManagerWrapper pm = new PackageManagerWrapper(context);

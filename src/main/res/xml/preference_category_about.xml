@@ -5,11 +5,11 @@
         android:key="about_version"
         android:title="@string/pref_version" />
     <Preference
-        android:title="@string/pref_author"
-        android:summary="Arcao" />
-    <Preference
         android:key="about_website"
         android:title="@string/pref_website" />
+    <Preference
+        android:key="about_feedback"
+        android:title="@string/pref_feedback" />
     <Preference
         android:key="about_donate_paypal"
         android:title="@string/pref_donate_paypal"

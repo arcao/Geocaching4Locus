@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import org.acra.util.PackageManagerWrapper;
 
-/**
- * Created by msloup on 13.1.2015.
- */
 public class AppInfoCollector extends Collector {
 	private Context context;
 

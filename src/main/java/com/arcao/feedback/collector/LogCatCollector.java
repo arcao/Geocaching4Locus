@@ -3,7 +3,6 @@ package com.arcao.feedback.collector;
 import android.Manifest;
 import android.content.Context;
 import android.os.Build;
-import org.acra.ACRAConstants;
 import org.acra.util.PackageManagerWrapper;
 import org.apache.commons.io.IOUtils;
 import timber.log.Timber;
@@ -16,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogCatCollector extends Collector {
+	private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
+
 	private final Context context;
 	private final String bufferName = null;
 
@@ -67,7 +68,7 @@ public class LogCatCollector extends Collector {
 				public void run() {
 					InputStream stderr = process.getErrorStream();
 					try {
-						byte[] dummy = new byte[ACRAConstants.DEFAULT_BUFFER_SIZE_IN_BYTES];
+						byte[] dummy = new byte[DEFAULT_BUFFER_SIZE_IN_BYTES];
 						while (stderr.read(dummy) >= 0);
 					} catch (IOException e) {
 						// fall trough

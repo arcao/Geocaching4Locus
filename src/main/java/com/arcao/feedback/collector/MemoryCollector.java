@@ -1,6 +1,5 @@
 package com.arcao.feedback.collector;
 
-import org.acra.ACRAConstants;
 import timber.log.Timber;
 
 import java.io.BufferedReader;
@@ -21,13 +20,13 @@ public class MemoryCollector extends Collector {
 		final StringBuilder memInfo = new StringBuilder();
 
 		try {
-			final List<String> commandLine = new ArrayList<String>();
+			final List<String> commandLine = new ArrayList<>();
 			commandLine.add("dumpsys");
 			commandLine.add("meminfo");
 			commandLine.add(Integer.toString(android.os.Process.myPid()));
 
 			final Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[commandLine.size()]));
-			final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()), ACRAConstants.DEFAULT_BUFFER_SIZE_IN_BYTES);
+			final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
 			while (true) {
 				final String line = bufferedReader.readLine();

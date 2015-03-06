@@ -10,7 +10,10 @@ import android.os.Parcelable;
 import com.arcao.feedback.collector.*;
 import timber.log.Timber;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -70,11 +73,14 @@ public class FeedbackHelper {
 		Collection<Collector> collectors = new ArrayList<>();
 
 		collectors.add(new AppInfoCollector(context));
+		collectors.add(new BuildConfigCollector());
 		collectors.add(new ConfigurationCollector(context));
 		collectors.add(new ConstantsCollector(Build.class, "BUILD"));
 		collectors.add(new ConstantsCollector(Build.VERSION.class, "VERSION"));
 		collectors.add(new MemoryCollector());
 		collectors.add(new LogCatCollector(context));
+		collectors.add(new SharedPreferencesCollector(context));
+		collectors.add(new DisplayManagerCollector(context));
 
 		return collectors;
 	}

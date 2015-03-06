@@ -188,5 +188,5 @@
     <string name="login_title">Entrar</string>
     <string name="pref_live_map_download_hints">Descarregar dicas</string>
     <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
-
+    <string name="pref_feedback">Send Feedback</string>
 </resources>

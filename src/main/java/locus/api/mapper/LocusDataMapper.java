@@ -81,8 +81,8 @@ public class LocusDataMapper {
 		d.setCountry(cache.getCountryName());
 		d.setState(cache.getStateName());
 
-		d.setDescriptions(cache.getShortDescription(), cache.isShortDescriptionHtml(),
-			cache.getLongDescription(), cache.isLongDescriptionHtml());
+		d.setDescriptions(BadBBCodeFixer.fix(cache.getShortDescription()), cache.isShortDescriptionHtml(),
+			BadBBCodeFixer.fix(cache.getLongDescription()), cache.isLongDescriptionHtml());
 		d.setEncodedHints(cache.getHint());
 		d.setNotes(cache.getPersonalNote());
 		d.setFavoritePoints(cache.getFavoritePoints());

@@ -26,7 +26,7 @@ public class AccountRestrictions {
 	private boolean premiumMember;
 
 	public AccountRestrictions(Context mContext) {
-		mPrefs = mContext.getSharedPreferences("RESTRICTION", 0);
+		mPrefs = mContext.getSharedPreferences(PrefConstants.RESTRICTION_STORAGE_NAME, Context.MODE_PRIVATE);
 		init();
 	}
 

@@ -20,7 +20,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		// Do not store username, password and hash in default shared preferences
 		// Default shared preferences are sent by ACRA in error report
 		// Also PreferencesBackupAgent backup default shared preferences to Google Backup Service
-		mPrefs = appContext.getSharedPreferences("ACCOUNT", 3);
+		mPrefs = appContext.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE);
 
 		mContext = appContext;
 		restrictions = new AccountRestrictions(appContext);

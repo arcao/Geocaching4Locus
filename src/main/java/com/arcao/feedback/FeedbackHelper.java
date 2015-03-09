@@ -81,6 +81,7 @@ public class FeedbackHelper {
 		collectors.add(new LogCatCollector(context));
 		collectors.add(new SharedPreferencesCollector(context));
 		collectors.add(new DisplayManagerCollector(context));
+		collectors.add(new AccountInfoCollector(context));
 
 		return collectors;
 	}

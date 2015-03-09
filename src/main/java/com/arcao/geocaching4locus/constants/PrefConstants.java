@@ -1,6 +1,9 @@
 package com.arcao.geocaching4locus.constants;
 
 public interface PrefConstants {
+	static final String ACCOUNT_STORAGE_NAME = "ACCOUNT";
+	static final String RESTRICTION_STORAGE_NAME = "RESTRICTION";
+
 	static final String PREF_VERSION = "pref_version";
 	static final int CURRENT_PREF_VERSION = 1;
 

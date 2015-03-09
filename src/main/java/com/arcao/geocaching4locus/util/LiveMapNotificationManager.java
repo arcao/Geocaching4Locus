@@ -47,7 +47,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private LiveMapNotificationManager(Context context) {
-		mContext = context;
+		mContext = context.getApplicationContext();
 
 		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);

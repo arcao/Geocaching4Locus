@@ -19,6 +19,7 @@ import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.NoResultFoundException;
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
@@ -187,7 +188,7 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
-	private File downloadCaches(double latitude, double longitude) throws GeocachingApiException {
+	private File downloadCaches(double latitude, double longitude) throws GeocachingApiException, NoResultFoundException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -289,7 +290,7 @@ public class SearchGeocacheService extends AbstractService {
 			if (current > 0) {
 				return dataFile;
 			} else {
-				return null;
+				throw new NoResultFoundException();
 			}
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());

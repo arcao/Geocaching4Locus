@@ -26,7 +26,7 @@ public class ExceptionHandler {
 	}
 
 	public Intent handle(Throwable t) {
-		Timber.e(t.getMessage(), t);
+		Timber.e(t, t.getMessage());
 
 		// special handling for some API exceptions
 		if (t instanceof LiveGeocachingApiException) {
@@ -46,6 +46,8 @@ public class ExceptionHandler {
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			return builder.setText(R.string.error_network).build();
+		} else if (t instanceof NoResultFoundException) {
+			return builder.setText(R.string.error_no_result).build();
 		} else {
 			String message = t.getMessage();
 			if (message == null)

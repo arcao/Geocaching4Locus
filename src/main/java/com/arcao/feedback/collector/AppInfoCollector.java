@@ -8,7 +8,7 @@ public class AppInfoCollector extends Collector {
 	private Context context;
 
 	public AppInfoCollector(Context context) {
-		this.context = context;
+		this.context = context.getApplicationContext();
 	}
 
 	@Override

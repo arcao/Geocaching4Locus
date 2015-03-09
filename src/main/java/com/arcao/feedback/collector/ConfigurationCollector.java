@@ -80,10 +80,10 @@ public class ConfigurationCollector extends Collector {
 		}
 	}
 
-	private final Context context;
+	private final Context mContext;
 
 	public ConfigurationCollector(Context context) {
-		this.context = context;
+		this.mContext = context.getApplicationContext();
 	}
 
 	@Override
@@ -95,10 +95,10 @@ public class ConfigurationCollector extends Collector {
 	@Override
 	protected String collect() {
 		try {
-			final Configuration crashConf = context.getResources().getConfiguration();
+			final Configuration crashConf = mContext.getResources().getConfiguration();
 			return ConfigurationCollector.toString(crashConf);
 		} catch (RuntimeException e) {
-			Timber.w(e, "Couldn't retrieve ConfigurationCollector for : " + context.getPackageName());
+			Timber.w(e, "Couldn't retrieve ConfigurationCollector for : " + mContext.getPackageName());
 			return "Couldn't retrieve crash config";
 		}
 	}

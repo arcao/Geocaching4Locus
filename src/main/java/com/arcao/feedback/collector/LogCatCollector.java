@@ -17,11 +17,11 @@ import java.util.List;
 public class LogCatCollector extends Collector {
 	private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
 
-	private final Context context;
+	private final Context mContext;
 	private final String bufferName = null;
 
 	public LogCatCollector(Context context) {
-		this.context = context;
+		this.mContext = context.getApplicationContext();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class LogCatCollector extends Collector {
 
 	@Override
 	protected String collect() {
-		final PackageManagerWrapper pm = new PackageManagerWrapper(context);
+		final PackageManagerWrapper pm = new PackageManagerWrapper(mContext);
 
 		if (!pm.hasPermission(Manifest.permission.READ_LOGS) && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 			return "N/A";

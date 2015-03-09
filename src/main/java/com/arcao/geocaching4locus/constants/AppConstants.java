@@ -14,7 +14,7 @@ public interface AppConstants {
 	static final Uri GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live");
 	static final String DONATE_PAYPAL_URI = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=arcao%%40arcao%%2ecom&lc=CZ&item_name=Geocaching4Locus&item_number=g4l&currency_code=%s&bn=PP%%2dDonationsBF%%3abtn_donateCC_LG%%2egif%%3aNonHosted";
 
-	static final Version LOCUS_MIN_VERSION = Version.parseVersion("3.0.0");
+	static final Version LOCUS_MIN_VERSION = Version.parseVersion("3.7.0");
 
 	/** Login dialog visible state */
 	static final String STATE_AUTHENTICATOR_ACTIVITY_VISIBLE = "AUTHENTICATOR_ACTIVITY_VISIBLE";

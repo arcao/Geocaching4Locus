@@ -53,7 +53,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 
 		mShowLiveMapDisabledNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION, false);
-		mShowLiveMapVisibleOnlyNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION, false);
+		mShowLiveMapVisibleOnlyNotification = true;
 	}
 
 	public boolean handleBroadcastIntent(Intent intent) {

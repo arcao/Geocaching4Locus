@@ -192,8 +192,8 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 
-	public abstract static interface LocationUpdate {
-		public abstract void onLocationUpdate(Location location);
+	public interface LocationUpdate {
+		void onLocationUpdate(Location location);
 	}
 
 	public static class NoLocationProviderDialogFragment extends AbstractDialogFragment {

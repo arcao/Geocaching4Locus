@@ -1,72 +1,72 @@
 package com.arcao.geocaching4locus.constants;
 
 public interface PrefConstants {
-	static final String ACCOUNT_STORAGE_NAME = "ACCOUNT";
-	static final String RESTRICTION_STORAGE_NAME = "RESTRICTION";
+	String ACCOUNT_STORAGE_NAME = "ACCOUNT";
+	String RESTRICTION_STORAGE_NAME = "RESTRICTION";
 
-	static final String PREF_VERSION = "pref_version";
-	static final int CURRENT_PREF_VERSION = 1;
+	String PREF_VERSION = "pref_version";
+	int CURRENT_PREF_VERSION = 1;
 
-	static final String LAST_LATITUDE = "latitude";
-	static final String LAST_LONGITUDE = "longitude";
+	String LAST_LATITUDE = "latitude";
+	String LAST_LONGITUDE = "longitude";
 
-	static final String USERNAME = "username";
-	static final String PASSWORD = "password";
-	static final String SESSION = "session";
+	String USERNAME = "username";
+	String PASSWORD = "password";
+	String SESSION = "session";
 
-	static final String OAUTH_TOKEN = "OAUTH_TOKEN";
-	static final String OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET";
+	String OAUTH_TOKEN = "OAUTH_TOKEN";
+	String OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET";
 
-	static final String FILTER_CACHE_TYPE = "cache_type_filter";
-	static final String FILTER_CACHE_TYPE_PREFIX = "filter_";
-	static final String FILTER_CONTAINER_TYPE = "container_type_filter";
-	static final String FILTER_CONTAINER_TYPE_PREFIX = "container_filter_";
-	static final String FILTER_DIFFICULTY = "difficulty_filter";
-	static final String FILTER_DIFFICULTY_MIN = "difficulty_filter_min";
-	static final String FILTER_DIFFICULTY_MAX = "difficulty_filter_max";
-	static final String FILTER_TERRAIN = "terrain_filter";
-	static final String FILTER_TERRAIN_MIN = "terrain_filter_min";
-	static final String FILTER_TERRAIN_MAX = "terrain_filter_max";
-	static final String FILTER_DISTANCE = "filter_distance";
-	static final String FILTER_SHOW_FOUND = "filter_show_found";
-	static final String FILTER_SHOW_OWN = "filter_show_own";
-	static final String FILTER_SHOW_DISABLED = "filter_show_disabled";
+	String FILTER_CACHE_TYPE = "cache_type_filter";
+	String FILTER_CACHE_TYPE_PREFIX = "filter_";
+	String FILTER_CONTAINER_TYPE = "container_type_filter";
+	String FILTER_CONTAINER_TYPE_PREFIX = "container_filter_";
+	String FILTER_DIFFICULTY = "difficulty_filter";
+	String FILTER_DIFFICULTY_MIN = "difficulty_filter_min";
+	String FILTER_DIFFICULTY_MAX = "difficulty_filter_max";
+	String FILTER_TERRAIN = "terrain_filter";
+	String FILTER_TERRAIN_MIN = "terrain_filter_min";
+	String FILTER_TERRAIN_MAX = "terrain_filter_max";
+	String FILTER_DISTANCE = "filter_distance";
+	String FILTER_SHOW_FOUND = "filter_show_found";
+	String FILTER_SHOW_OWN = "filter_show_own";
+	String FILTER_SHOW_DISABLED = "filter_show_disabled";
 
-	static final String LIVE_MAP = "live_map";
-	static final String SHOW_LIVE_MAP_DISABLED_NOTIFICATION = "show_live_map_disabled_notification";
-	static final String SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION = "show_live_map_visible_only_notification";
-	static final String LIVE_MAP_DOWNLOAD_HINTS = "live_map_download_hints";
+	String LIVE_MAP = "live_map";
+	String SHOW_LIVE_MAP_DISABLED_NOTIFICATION = "show_live_map_disabled_notification";
+	String SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION = "show_live_map_visible_only_notification";
+	String LIVE_MAP_DOWNLOAD_HINTS = "live_map_download_hints";
 
-	static final String DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data";
-	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";
-	static final String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";
-	static final String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
-	static final String DOWNLOADING_COUNT_OF_CACHES_STEP = "downloading_count_of_caches_step";
-	static final String DOWNLOAD_LOGS_UPDATE_CACHE = "download_logs_update_cache";
+	String DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data";
+	String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show";
+	String DOWNLOADING_COUNT_OF_CACHES = "filter_count_of_caches";
+	String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
+	String DOWNLOADING_COUNT_OF_CACHES_STEP = "downloading_count_of_caches_step";
+	String DOWNLOAD_LOGS_UPDATE_CACHE = "download_logs_update_cache";
 
-	static final String IMPERIAL_UNITS = "imperial_units";
+	String IMPERIAL_UNITS = "imperial_units";
 
-	static final String ABOUT_VERSION = "about_version";
-	static final String ABOUT_WEBSITE = "about_website";
-	static final String ABOUT_FEEDBACK = "about_feedback";
-	static final String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
-	static final String ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live";
+	String ABOUT_VERSION = "about_version";
+	String ABOUT_WEBSITE = "about_website";
+	String ABOUT_FEEDBACK = "about_feedback";
+	String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
+	String ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live";
 
-	static final String RESTRICTION__PREMIUM_MEMBER = "premium_account";
-	static final String RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit";
-	static final String RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD = "full_geocache_limit_period";
-	static final String RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit";
-	static final String RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit";
+	String RESTRICTION__PREMIUM_MEMBER = "premium_account";
+	String RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit";
+	String RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD = "full_geocache_limit_period";
+	String RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit";
+	String RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit";
 
 
-	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0";
-	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1";
-	static final String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2";
+	String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0";
+	String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1";
+	String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2";
 
-	static final String UNIT_KM = "km";
-	static final String UNIT_MILES = "mi";
+	String UNIT_KM = "km";
+	String UNIT_MILES = "mi";
 
-	static final String[] shortCacheTypeName = {
+	String[] shortCacheTypeName = {
 					"Tradi",
 					"Multi",
 					"Mystery",
@@ -88,7 +88,7 @@ public interface PrefConstants {
 					"G-Event"
 	};
 
-	static final String[] shortContainerTypeName = {
+	String[] shortContainerTypeName = {
 					"?",
 					"M",
 					"S",

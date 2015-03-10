@@ -234,7 +234,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 	}
 
-	public static interface LiveMapStateChangeListener {
-		public void onLiveMapStateChange(boolean newState);
+	public interface LiveMapStateChangeListener {
+		void onLiveMapStateChange(boolean newState);
 	}
 }

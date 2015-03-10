@@ -28,7 +28,7 @@ import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
@@ -102,7 +102,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					continue;
 				}
 
-				List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Arrays.asList(
+				List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Collections.singletonList(
 								(Filter) new CacheCodeFilter(getCachesIds(oldPoints))
 				), null);
 

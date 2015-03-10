@@ -4,7 +4,7 @@ import android.accounts.Account;
 import android.app.Activity;
 
 public interface AuthenticatorHelper {
-	public static final String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
+	String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
 
 	String getAuthToken();
 	Account getAccount();

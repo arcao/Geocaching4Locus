@@ -18,7 +18,6 @@ public class LogCatCollector extends Collector {
 	private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
 
 	private final Context mContext;
-	private final String bufferName = null;
 
 	public LogCatCollector(Context context) {
 		this.mContext = context.getApplicationContext();
@@ -47,10 +46,6 @@ public class LogCatCollector extends Collector {
 
 		final List<String> commandLine = new ArrayList<>();
 		commandLine.add("logcat");
-		if (bufferName != null) {
-			commandLine.add("-b");
-			commandLine.add(bufferName);
-		}
 		commandLine.add("-t");
 		commandLine.add("1000");
 		commandLine.add("-v");

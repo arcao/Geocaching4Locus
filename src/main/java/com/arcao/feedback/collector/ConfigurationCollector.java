@@ -150,25 +150,27 @@ public class ConfigurationCollector extends Collector {
 	 */
 	private static String getFieldValueName(Configuration conf, Field f) throws IllegalAccessException {
 		final String fieldName = f.getName();
-		if (fieldName.equals(FIELD_MCC) || fieldName.equals(FIELD_MNC)) {
-			return Integer.toString(f.getInt(conf));
-		} else if (fieldName.equals(FIELD_UIMODE)) {
-			return activeFlags(mValueArrays.get(PREFIX_UI_MODE), f.getInt(conf));
-		} else if (fieldName.equals(FIELD_SCREENLAYOUT)) {
-			return activeFlags(mValueArrays.get(PREFIX_SCREENLAYOUT), f.getInt(conf));
-		} else {
-			final SparseArray<String> values = mValueArrays.get(fieldName.toUpperCase() + '_');
-			if (values == null) {
-				// Unknown field, return the raw int as String
+		switch (fieldName) {
+			case FIELD_MCC:
+			case FIELD_MNC:
 				return Integer.toString(f.getInt(conf));
-			}
+			case FIELD_UIMODE:
+				return activeFlags(mValueArrays.get(PREFIX_UI_MODE), f.getInt(conf));
+			case FIELD_SCREENLAYOUT:
+				return activeFlags(mValueArrays.get(PREFIX_SCREENLAYOUT), f.getInt(conf));
+			default:
+				final SparseArray<String> values = mValueArrays.get(fieldName.toUpperCase() + '_');
+				if (values == null) {
+					// Unknown field, return the raw int as String
+					return Integer.toString(f.getInt(conf));
+				}
 
-			final String value = values.get(f.getInt(conf));
-			if (value == null) {
-				// Unknown value, return the raw int as String
-				return Integer.toString(f.getInt(conf));
-			}
-			return value;
+				final String value = values.get(f.getInt(conf));
+				if (value == null) {
+					// Unknown value, return the raw int as String
+					return Integer.toString(f.getInt(conf));
+				}
+				return value;
 		}
 	}
 

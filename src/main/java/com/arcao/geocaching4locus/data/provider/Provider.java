@@ -5,10 +5,10 @@ import android.preference.PreferenceFragment;
 import android.support.annotation.StringRes;
 
 public interface Provider {
-	public String getId();
+	String getId();
 	@StringRes
-	public int getName();
-	public Class<? extends PreferenceFragment> getFilterPreference();
-	public boolean canHandleCacheCode(String cacheCode);
-	public ProviderService createService(Context context);
+	int getName();
+	Class<? extends PreferenceFragment> getFilterPreference();
+	boolean canHandleCacheCode(String cacheCode);
+	ProviderService createService(Context context);
 }

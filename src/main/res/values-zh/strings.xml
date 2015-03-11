@@ -151,7 +151,7 @@
     <string name="account_geocaching_live_title">由Geocaching Live提供服务</string>
     <string name="account_geocaching_live_message">这个插件使用Geocaching Live来提供藏点信息，更多信息请点击这里……</string>
     
-    <string name="error_invalid_api_response">Geocaching Live的应答无效：<br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live的应答无效：&lt;br>%s</string>
 
     <string name="livemap_notification_title">Geocaching4Locus 在线地图</string>
     <string name="livemap_notification_message_enabled">在线地图已启用。</string>

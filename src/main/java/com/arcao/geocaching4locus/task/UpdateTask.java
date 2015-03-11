@@ -147,7 +147,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			int originalLogCount = logCount;
 
 			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
-			if (authenticatorHelper.getRestrictions().isPremiumMember()) {
+			if (!authenticatorHelper.getRestrictions().isPremiumMember()) {
 				resultQuality = GeocachingApi.ResultQuality.SUMMARY;
 				logCount = 0;
 			}

@@ -36,16 +36,6 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 			return;
 		}
 
-		boolean simpleCacheData = mPrefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
-		String repeatUpdate = mPrefs.getString(
-			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
-			PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY);
-
-		if (simpleCacheData && !PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
-			onUpdateFinished(null);
-			return;
-		}
-
 		mShowUpdateDialog = true;
 	}
 
@@ -90,16 +80,14 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 
 			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
 				Timber.i("Updating simple cache on dispaying is not allowed!");
-				setResult(RESULT_CANCELED);
-				finish();
+				onUpdateFinished(null);
 				return;
 			}
 		}
 
 		if (cacheId == null || PARAM_CACHE_ID__DO_NOTHING.equals(cacheId)) {
 			Timber.e("cacheId/simpleCacheId not found");
-			setResult(RESULT_CANCELED);
-			finish();
+			onUpdateFinished(null);
 			return;
 		}
 

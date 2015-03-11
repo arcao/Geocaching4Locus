@@ -41,7 +41,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			LOGS
 		}
 
-		void onUpdateState(State state, int progress);
+		void onUpdateState(State state, int progress, int max);
 		void onTaskFinished(Intent result);
 	}
 
@@ -106,10 +106,10 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
-			if (values == null || values.length != 1) {
-				listener.onUpdateState(TaskListener.State.CACHE, 0);
+			if (values == null || values.length != 2) {
+				listener.onUpdateState(TaskListener.State.CACHE, 0, 0);
 			} else {
-				listener.onUpdateState(TaskListener.State.LOGS, values[0]);
+				listener.onUpdateState(TaskListener.State.LOGS, values[0], values[1]);
 			}
 		}
 	}
@@ -164,7 +164,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 				}
 
 				while (startIndex < maxLogs) {
-					publishProgress(startIndex);
+					publishProgress(startIndex, maxLogs);
 
 					int logsPerRequest = Math.min(maxLogs - startIndex, AppConstants.LOGS_PER_REQUEST);
 					List<CacheLog> retrievedLogs = api.getCacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);
@@ -177,7 +177,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 					startIndex += retrievedLogs.size();
 				}
-				publishProgress(AppConstants.LOGS_TO_UPDATE_MAX);
+				publishProgress(maxLogs, maxLogs);
 			}
 
 			if (isCancelled())

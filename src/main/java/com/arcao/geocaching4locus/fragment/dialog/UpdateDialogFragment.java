@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.UpdateTask;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import locus.api.objects.extra.Waypoint;
@@ -84,25 +83,26 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	}
 
 	@Override
-	public void onUpdateState(State state, int progress) {
+	public void onUpdateState(State state, int progress, int max) {
 		ProgressDialog dialog = (ProgressDialog) getDialog();
 		if (dialog != null) {
-			updateDialog(state, progress, dialog);
+			updateDialog(state, progress, max, dialog);
 		}
 	}
 
-	private void updateDialog(State state, int progress, ProgressDialog dialog) {
+	private void updateDialog(State state, int progress, int max, ProgressDialog dialog) {
 		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
 		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
 		switch (state) {
 			case CACHE:
 				dialog.setMessage(getText(R.string.update_cache_progress));
+				dialog.setMax(1);
 				dialog.setIndeterminate(true);
 				break;
 			case LOGS:
 				dialog.setMessage(getText(R.string.download_logs_progress));
-				dialog.setMax(AppConstants.LOGS_TO_UPDATE_MAX);
+				dialog.setMax(max);
 				dialog.setProgress(progress);
 				dialog.setIndeterminate(progress == 0);
 				break;
@@ -113,7 +113,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		ProgressDialog dialog = new ProgressDialog(getActivity());
-		updateDialog(State.CACHE, 0, dialog);
+		updateDialog(State.CACHE, 0, 0, dialog);
 		return dialog;
 	}
 }

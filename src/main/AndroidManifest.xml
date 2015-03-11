@@ -55,7 +55,7 @@
             </intent-filter>
         </activity>
         <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".UpdateActivity" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_download_logs">
+            <intent-filter android:icon="@drawable/ic_launcher_download_logs" android:label="@string/launcher_download_logs">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" />

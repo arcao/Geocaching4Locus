@@ -46,7 +46,6 @@
     <string name="import_cache_progress">Завантаження кешу…</string>
     
     <string name="pref_version">Версия</string>
-    <string name="pref_author">Автор</string>
     <string name="pref_website">Сайт, форум, итд.</string>
     <string name="pref_donate_paypal">Пожетвовать через Paypal</string>
     <string name="pref_donate_paypal_summary">Поддержать дальнейшую разработку</string>
@@ -130,9 +129,7 @@
     <string name="premium_member_full_geocaching_quota_exceeded_message">Вы достигли ограничения для загрузки полной информации &lt;b>6000 кэшей за 24 часа&lt;/b>.  Ваша ежедневная квота будет обнулена на %3$s.</string>
     <string name="method_quota_exceeded_title">Эй, помедленнее!</string>
     <string name="method_quota_exceeded_message">Вы достигли максимального количества действий/звонков в минуту.</string>
-    <string name="button_yes">Да</string>
-    <string name="button_no">Нет</string>
-    
+
     <plurals name="plurals_cache">
         <item quantity="one">%d кэш</item>
         <item quantity="few">%d кэши</item>
@@ -165,14 +162,11 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Уведомление об отключении</string>
     <string name="pref_livemap_show_disabled_notification_summary">Показывать уведомление, когда Живая карта отключена. Это работает, только если в Locus разрешены периодические обновления и Locus запущен.</string>
-    <string name="launcher_menu">Меню Geocaching4Locus</string>
     <string name="pref_cache_type_all">Все</string>
     <string name="button_filter">Фильтр</string>
     <string name="download_logs_progress">Загрузка логов…</string>
     <string name="launcher_download_logs">Загрузить логи</string>
 
-    <string name="pref_livemap_visible_only_notification">Уведомление видимости карты</string>
-    <string name="pref_livemap_visible_only_notification_summary">Показывать уведомление только когда карта видна в Locus</string>
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
     <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
@@ -188,5 +182,6 @@
     <string name="login_title">Вход</string>
     <string name="pref_live_map_download_hints">Download hints</string>
     <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
-    <string name="pref_feedback">Send Feedback</string>
+    <string name="pref_feedback">Отправить отзыв</string>
+    <string name="error_no_result">Не удалось найти кэшей, соответствующих параметрам поиска.</string>
 </resources>

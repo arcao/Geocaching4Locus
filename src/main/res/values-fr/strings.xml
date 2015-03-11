@@ -46,7 +46,6 @@
     <string name="import_cache_progress">Téléchargement de la cache...</string>
     
     <string name="pref_version">Version</string>
-    <string name="pref_author">Auteur</string>
     <string name="pref_website">Site internet, forum, etc...</string>
     <string name="pref_donate_paypal">Faire un don par Paypal</string>
     <string name="pref_donate_paypal_summary">Encourager les futures évolutions...</string>
@@ -130,9 +129,7 @@
     <string name="premium_member_full_geocaching_quota_exceeded_message">Vous avez atteint la limite de téléchargement des &lt;b>6000 caches par 24 heures&lt;/b>. Votre quota sera remis à zéro à %3$s.</string>
     <string name="method_quota_exceeded_title">Ho, ralentissez !</string>
     <string name="method_quota_exceeded_message">Vous avez atteins la limite maximale d\'actions/demandes par minute</string>
-    <string name="button_yes">Oui</string>
-    <string name="button_no">Non</string>
-    
+
     <plurals name="plurals_cache">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -165,21 +162,18 @@
     <string name="livemap_error">Geocaching4Locus carte en direct: %s</string>
     <string name="pref_livemap_show_disabled_notification">Notifications désactivées</string>
     <string name="pref_livemap_show_disabled_notification_summary">Montrer les notifications quand la carte active est désactivée. Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
-    <string name="launcher_menu">Menu de Geocaching4Locus</string>
     <string name="pref_cache_type_all">Tous</string>
     <string name="button_filter">Tous</string>
     <string name="download_logs_progress">Téléchargements des logs</string>
     <string name="launcher_download_logs">Télécharger les logs</string>
 
-    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
-    <string name="pref_livemap_visible_only_notification_summary">Montrer le notifications seulement quand la carte est visible dans Locus</string>
     <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
     <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
     <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez...</string>
 
-    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_account">Compte</string>
     <string name="prefs_cat_filter">Filtrer</string>
     <string name="prefs_cat_live_map">Carte en live</string>
     <string name="prefs_cat_downloading">Téléchargement</string>
@@ -187,6 +181,7 @@
     <string name="prefs_cat_about">A propos</string>
     <string name="login_title">S\'identifier</string>
     <string name="pref_live_map_download_hints">Télécharger les hints</string>
-    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
-    <string name="pref_feedback">Send Feedback</string>
+    <string name="pref_live_map_download_hints_summary">Chargement plus long et quantité de données augmentée</string>
+    <string name="pref_feedback">Donnez votre avis</string>
+    <string name="error_no_result">Impossible de trouver des caches correspondantes à vos critères</string>
 </resources>

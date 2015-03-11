@@ -46,7 +46,6 @@
     <string name="import_cache_progress">Pobieranie skrzynki...</string>
     
     <string name="pref_version">Wersja</string>
-    <string name="pref_author">Autor</string>
     <string name="pref_website">Strona WWW, forum, itp.</string>
     <string name="pref_donate_paypal">Przekaż datek poprzez PayPal</string>
     <string name="pref_donate_paypal_summary">Wspomóż dalszy proces tworzenia...</string>
@@ -130,9 +129,7 @@
     <string name="premium_member_full_geocaching_quota_exceeded_message">Osiągnąłeś limit pobierania szczegółów &lt;b>6000 skrzynek na 24h&lt;/b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
     <string name="method_quota_exceeded_title">Hej, zwolnij!</string>
     <string name="method_quota_exceeded_message">Osiągnąłeś minutowy limit maksymalnej ilości akcji/połączeń.</string>
-    <string name="button_yes">Tak</string>
-    <string name="button_no">Nie</string>
-    
+
     <plurals name="plurals_cache">
         <item quantity="one">%d skrzynka</item>
         <item quantity="few">%d skrzynki</item>
@@ -165,14 +162,11 @@
     <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
     <string name="pref_livemap_show_disabled_notification">Wyłączone powiadomienie</string>
     <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
-    <string name="launcher_menu">Menu Geocaching4Locus</string>
     <string name="pref_cache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>
     <string name="download_logs_progress">Pobieranie wpisów...</string>
     <string name="launcher_download_logs">Pobierz wpisy</string>
 
-    <string name="pref_livemap_visible_only_notification">Powiadomienia widocznej mapy</string>
-    <string name="pref_livemap_visible_only_notification_summary">Pokazuj powiadomienia jedynie kiedy mapa w Locusie jest widoczna.</string>
     <string name="pref_download_logs_update_cache">Aktualizacja skrzynki przy pobieraniu wpisów</string>
     <string name="pref_download_logs_update_cache_summary">Akcja "Pobierz wpisy" równocześnie aktualizuje skrzynkę geocache</string>
     <string name="pref_downloading_count_of_caches_step">Rozmiar pakietu pobierania skrytek</string>
@@ -188,5 +182,6 @@
     <string name="login_title">Zaloguj się</string>
     <string name="pref_live_map_download_hints">Pobierz podpowiedzi</string>
     <string name="pref_live_map_download_hints_summary">Wolniejsze ładowanie oraz bardziej wymagające pod względem wykorzystania danych</string>
-    <string name="pref_feedback">Send Feedback</string>
+    <string name="pref_feedback">Wyślij opinię</string>
+    <string name="error_no_result">Nie znaleziono skrzynek geocache spełniających kryteria wyszukiwania.</string>
 </resources>

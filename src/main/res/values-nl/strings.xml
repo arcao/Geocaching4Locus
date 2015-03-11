@@ -46,7 +46,6 @@
     <string name="import_cache_progress">Bezig met downloaden van cache…</string>
     
     <string name="pref_version">Versie</string>
-    <string name="pref_author">Auteur</string>
     <string name="pref_website">Website, forum, enz.</string>
     <string name="pref_donate_paypal">Doneer via Paypal</string>
     <string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
@@ -130,9 +129,7 @@
     <string name="premium_member_full_geocaching_quota_exceeded_message">Je hebt de limiet om het downloaden van alle details van &lt;b>6000 caches per 24 uur periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
     <string name="method_quota_exceeded_title">Hey, kalm aan!</string>
     <string name="method_quota_exceeded_message">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
-    <string name="button_yes">Ja</string>
-    <string name="button_no">Nee</string>
-    
+
     <plurals name="plurals_cache">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
@@ -165,14 +162,11 @@
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Gedeactiveerde melding</string>
     <string name="pref_livemap_show_disabled_notification_summary">Toon een melding wanneer Live map gedeactiveerd is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus en Locus actief is.</string>
-    <string name="launcher_menu">Geocaching4Locus menu</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Bezig met downloaden van logs...</string>
     <string name="launcher_download_logs">Download logs</string>
 
-    <string name="pref_livemap_visible_only_notification">Map visible notification</string>
-    <string name="pref_livemap_visible_only_notification_summary">Toon alleen een melding wanneer de kaart zichtbaar is in Locus</string>
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
     <string name="pref_download_logs_update_cache_summary">Actie "Download logs" update ook geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
@@ -189,4 +183,5 @@
     <string name="pref_live_map_download_hints">Download hints</string>
     <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
     <string name="pref_feedback">Send Feedback</string>
+    <string name="error_no_result">Could not find any geocaches that match your search.</string>
 </resources>

@@ -46,7 +46,6 @@
     <string name="import_cache_progress">Sťahujem kešku…</string>
     
     <string name="pref_version">Verzia</string>
-    <string name="pref_author">Autor</string>
     <string name="pref_website">Stránky, diskusné fórum, atď</string>
     <string name="pref_donate_paypal">Prispieť pomocou PayPal</string>
     <string name="pref_donate_paypal_summary">Podpora ďalšieho vývoja…</string>
@@ -130,9 +129,7 @@
     <string name="premium_member_full_geocaching_quota_exceeded_message">Dosiahol ste limitu stiahnutie plných detailov pre &lt;b>6000 kešiek za 24  hodin&lt;/b>. Vaše denie kvóta bude obnovená v %3$s.</string>
     <string name="method_quota_exceeded_title">Hej, spomaľ!</string>
     <string name="method_quota_exceeded_message">Dosiahol si limitu počtu vykonaných akcií/volanie za minútu.</string>
-    <string name="button_yes">Áno</string>
-    <string name="button_no">Nie</string>
-    
+
     <plurals name="plurals_cache">
         <item quantity="one">%d keška</item>
         <item quantity="few">%d kešky</item>
@@ -165,14 +162,11 @@
     <string name="livemap_error">Aktívna mapa Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Notifikácia zakázané</string>
     <string name="pref_livemap_show_disabled_notification_summary">Zobraziť notifikáciu, keď je Live mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locusu a Locus beží.</string>
-    <string name="launcher_menu">Ponuka Geocaching4Locus</string>
     <string name="pref_cache_type_all">Všetko</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Stiahnuť logy…</string>
     <string name="launcher_download_logs">Stiahnuť logy</string>
 
-    <string name="pref_livemap_visible_only_notification">Notifikácia len pri viditeľnej mape</string>
-    <string name="pref_livemap_visible_only_notification_summary">Zobraziť notifikáciu, len keď je mapa v Locusu viditeľná</string>
     <string name="pref_download_logs_update_cache">Stiahnuť logy aktualizuje kešku</string>
     <string name="pref_download_logs_update_cache_summary">Akcia "Stiahnuť logy" tiež aktualizuje dáta kešky</string>
     <string name="pref_downloading_count_of_caches_step">Veľkosť kroku pre počet kešiek</string>
@@ -189,4 +183,5 @@
     <string name="pref_live_map_download_hints">Stiahnuť nápovedu</string>
     <string name="pref_live_map_download_hints_summary">Pomalší načítanie a náročnejšie na využitie dát</string>
     <string name="pref_feedback">Odoslať spätnú väzbu</string>
+    <string name="error_no_result">Nepodarilo sa nájsť žiadne kešky zodpovedajúce zadaným parametrom.</string>
 </resources>

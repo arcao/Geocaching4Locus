@@ -99,6 +99,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		}
 		else if (LocusUtils.isIntentMainFunction(getIntent())) {
 			LocusUtils.handleIntentMainFunction(this, getIntent(), this);
+		}	else if (LocusUtils.isIntentMainFunctionGc(getIntent())) {
+			LocusUtils.handleIntentMainFunctionGc(this, getIntent(), this);
 		}
 		else if (LocusUtils.isIntentSearchList(getIntent())) {
 			LocusUtils.handleIntentSearchList(this, getIntent(), this);

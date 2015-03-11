@@ -55,7 +55,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 
 		// hide dialog only when was started from Locus
-		if (LocusUtils.isIntentMainFunction(getIntent())) {
+		if (LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent())) {
 			finish();
 		}
 	}
@@ -69,7 +69,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 		// copy intent data from Locus
 		// FIX Android 2.3.3 can't start activity second time
-		if (LocusUtils.isIntentMainFunction(getIntent())) {
+		if (LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent())) {
 			intent = new Intent(getIntent());
 			intent.setClass(this, SearchNearestActivity.class);
 		} else {

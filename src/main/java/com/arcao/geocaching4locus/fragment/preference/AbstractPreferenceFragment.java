@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
 	private static final String PARAM_SCREEN = "screen";
@@ -87,7 +88,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 			summary = getText(resId).toString();
 
 		if (value != null && value.length() > 0)
-			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + summary);
-		return SpannedFix.fromHtml(summary);
+			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
+		return SpannedFix.fromHtml(StringUtils.defaultString(summary));
 	}
 }

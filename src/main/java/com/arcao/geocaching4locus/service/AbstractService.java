@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -97,7 +98,7 @@ public abstract class AbstractService extends IntentService {
 		nb.setTicker(getText(R.string.error_title));
 		nb.setContentTitle(getText(R.string.error_title));
 		if (resErrorId != 0)
-			nb.setContentText(SpannedFix.fromHtml(getString(resErrorId, additionalMessage)));
+			nb.setContentText(SpannedFix.fromHtml(getString(resErrorId, StringUtils.defaultString(additionalMessage))));
 
 		Intent intent = new Intent(errorIntent);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

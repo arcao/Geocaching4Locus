@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
 
 public class ErrorActivity extends Activity {
@@ -96,9 +97,9 @@ public class ErrorActivity extends Activity {
 				});
 
 			if (resTextId != 0) {
-				builder.setMessage(SpannedFix.fromHtml(String.format(getString(resTextId), additionalMessage)));
+				builder.setMessage(SpannedFix.fromHtml(String.format(getString(resTextId), StringUtils.defaultString(additionalMessage))));
 			} else {
-				builder.setMessage(SpannedFix.fromHtml(additionalMessage));
+				builder.setMessage(SpannedFix.fromHtml(StringUtils.defaultString(additionalMessage)));
 			}
 
 			if (t != null) {

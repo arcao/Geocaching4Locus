@@ -31,6 +31,7 @@ import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.DialogListener {
@@ -298,7 +299,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			return;
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String message = String.format(getString(errorResId), additionalMessage);
+		String message = String.format(getString(errorResId), StringUtils.defaultString(additionalMessage));
 
 		builder.setMessage(SpannedFix.fromHtml(message));
 		builder.setTitle(R.string.error_title);

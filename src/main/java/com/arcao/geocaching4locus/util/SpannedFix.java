@@ -1,17 +1,18 @@
 package com.arcao.geocaching4locus.util;
 
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
 
 public class SpannedFix {
-	public static Spanned fromHtml(String source) {
+	public static Spanned fromHtml(@NonNull String source) {
 		return applyFix(Html.fromHtml(source));
 	}
 
-	public static Spanned applyFix(Spanned spanned) {
+	public static Spanned applyFix(@NonNull Spanned spanned) {
 		// this will fix crash only on API v16, other API versions are safe
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN)
 			return spanned;
@@ -37,7 +38,7 @@ public class SpannedFix {
 		return builder;
 	}
 
-	private static boolean isNotSpace(CharSequence text, int where) {
+	private static boolean isNotSpace(@NonNull CharSequence text, int where) {
 		char ch = text.charAt(where);
 		return ch != ' ' && ch != '\n' && ch != '\t';
 	}

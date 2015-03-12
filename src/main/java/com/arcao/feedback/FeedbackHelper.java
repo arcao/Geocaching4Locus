@@ -6,8 +6,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Parcelable;
 import com.arcao.feedback.collector.*;
+import org.apache.commons.io.IOUtils;
 import timber.log.Timber;
 
 import java.io.File;
@@ -19,7 +21,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class FeedbackHelper {
-	private static final String REPORT_FILE = "report.zip";
+	private static final String REPORT_FILE = "%s-report.zip";
 
 	public static void sendFeedback(Context context, int resEmail, int resSubject, int resMessageText) {
 		String subject = context.getString(resSubject, getApplicationName(context), getVersion(context));
@@ -44,15 +46,32 @@ public class FeedbackHelper {
 	private static File createReportFile(Context context) throws IOException {
 		ZipOutputStream zos = null;
 
+		File reportFile = getReportFile(context);
+
+		if (reportFile.exists()) {
+			Timber.d("Report file " + reportFile + " already exist.");
+			if (reportFile.delete()) {
+				Timber.d("Report file removed.");
+			}
+		}
+
+		Timber.d("Creating report to " + reportFile);
 		try {
-			zos = new ZipOutputStream(getCacheFileOutputStream(context, REPORT_FILE));
+			zos = new ZipOutputStream(new FileOutputStream(reportFile));
 			writeCollectors(zos, context);
 		}
 		finally {
-			if (zos != null) zos.close();
+			IOUtils.closeQuietly(zos);
 		}
 
-		return getCacheFileName(context, REPORT_FILE);
+		Timber.d("Report created.");
+
+		return reportFile;
+	}
+
+	private static File getReportFile(Context context) {
+		String reportFilename = String.format(REPORT_FILE, getApplicationName(context));
+		return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), reportFilename);
 	}
 
 	private static void writeCollectors(ZipOutputStream zos, Context context) throws IOException {
@@ -84,34 +103,6 @@ public class FeedbackHelper {
 		collectors.add(new AccountInfoCollector(context));
 
 		return collectors;
-	}
-
-	/**
-	 * Get a path including file name to save data
-	 * @param context	Context
-	 * @return	path to file
-	 * @throws java.io.IOException If external storage isn't available or writable
-	 */
-	private static File getCacheFileName(Context context, String filename) throws IOException {
-		File cacheFile = context.getFileStreamPath(filename);
-		Timber.d("Cache file for Feedback: " + cacheFile.toString());
-
-		return cacheFile;
-	}
-
-	/**
-	 * Get a OutputFileStream to save data
-	 * @param context Context
-	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
-	 * @throws IOException If I/O error occurs
-	 */
-	private static FileOutputStream getCacheFileOutputStream(Context context, String filename) throws IOException {
-		File file = getCacheFileName(context, filename);
-		FileOutputStream fos = new FileOutputStream(file);
-		fos.flush(); // create empty file
-		file.setReadable(true, false); // file has to be readable for external APP
-
-		return fos;
 	}
 
 	private static String getApplicationName(Context context) {

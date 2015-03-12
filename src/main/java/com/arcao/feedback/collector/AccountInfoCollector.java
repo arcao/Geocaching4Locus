@@ -24,7 +24,7 @@ public class AccountInfoCollector extends Collector {
 		AuthenticatorHelper helper = App.get(mContext).getAuthenticatorHelper();
 
 		if (!helper.hasAccount()) {
-			sb.append("No Account").append(helper.getAccount().name).append("\n");
+			sb.append("No Account").append("\n");
 		} else {
 			sb.append("NAME=").append(helper.getAccount().name).append("\n");
 

@@ -1,12 +1,12 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.view.View;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.feedback.FeedbackHelper;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
@@ -57,20 +57,20 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			return new AlertDialog.Builder(getActivity())
-							.setTitle(R.string.pref_donate_paypal_choose_currency)
-							.setSingleChoiceItems(R.array.currency, -1, new DialogInterface.OnClickListener() {
+			return new MaterialDialog.Builder(getActivity())
+							.title(R.string.pref_donate_paypal_choose_currency)
+							.items(R.array.currency)
+							.itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
 								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									dialog.dismiss();
+								public void onSelection(MaterialDialog materialDialog, View view, int which, CharSequence charSequence) {
 									startActivity(new Intent(
 													Intent.ACTION_VIEW,
 													Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which]))
 									));
 								}
 							})
-							.setCancelable(true)
-							.create();
+							.cancelable(true)
+							.build();
 		}
 	}
 }

@@ -1,23 +1,17 @@
 package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.util.EmptyDialogOnClickListener;
 import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
@@ -78,9 +72,30 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		Context context = getActivity();
+		MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+						.title(R.string.dialog_gc_number_input_title)
+						.positiveText(R.string.ok_button)
+						.negativeText(R.string.cancel_button)
+						.customView(R.layout.dialog_gc_number_input, false)
+						.autoDismiss(false)
+						.callback(new MaterialDialog.ButtonCallback() {
+							@Override
+							public void onPositive(MaterialDialog dialog) {
+								if (validateInput(mEditText)) {
+									fireOnInputFinished(mEditText.getText().toString());
+									dialog.dismiss();
+								}
+							}
 
-		View view = LayoutInflater.from(context).inflate(R.layout.dialog_gc_number_input, null);
+							@Override
+							public void onNegative(MaterialDialog dialog) {
+								fireOnInputFinished(null);
+								dialog.dismiss();
+							}
+						})
+						.build();
+
+		View view = dialog.getCustomView();
 
 		mEditText = (EditText) view.findViewById(R.id.gc_code_input_edit_text);
 		mEditText.setText("GC");
@@ -109,26 +124,15 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		// move caret on a last position
 		mEditText.setSelection(mEditText.getText().length());
 
-		return new AlertDialog.Builder(context)
-			.setTitle(R.string.dialog_gc_number_input_title)
-			.setView(view)
-			// Beware listener can't be null!
-			.setPositiveButton(R.string.ok_button, new EmptyDialogOnClickListener())
-			.setNegativeButton(R.string.cancel_button, new OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					fireOnInputFinished(null);
-				}
-			})
-			.create();
+		return dialog;
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
 
-		getDialog().getWindow().clearFlags(
-			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+//		getDialog().getWindow().clearFlags(
+//			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
 		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
 		// More here: http://code.google.com/p/android/issues/detail?id=19173
@@ -137,31 +141,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			mErrorMessage = null;
 		}
 	}
-
-
-	@Override
-	public void onResume() {
-		super.onResume();
-
-		// this is a little bit tricky to prevent auto dismiss
-		// source: http://stackoverflow.com/questions/2620444/how-to-prevent-a-dialog-from-closing-when-a-button-is-clicked
-		final AlertDialog alertDialog = (AlertDialog) getDialog();
-		if (alertDialog == null)
-			return;
-
-		Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-		button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v)
-			{
-				if (validateInput(mEditText)) {
-					fireOnInputFinished(mEditText.getText().toString());
-					alertDialog.dismiss();
-				}
-			}
-		});
-	}
-
+	
 	private boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 

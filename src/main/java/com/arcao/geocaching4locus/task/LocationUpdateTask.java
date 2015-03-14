@@ -1,11 +1,8 @@
 package com.arcao.geocaching4locus.task;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -16,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
@@ -210,17 +208,17 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setMessage(R.string.error_location);
-			builder.setTitle(R.string.error_location_title);
-			builder.setPositiveButton(R.string.ok_button, null);
-			builder.setNeutralButton(R.string.error_location_settings_button, new OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-				}
-			});
-			return builder.create();
+			return new MaterialDialog.Builder(getActivity())
+							.title(R.string.error_location_title)
+							.content(R.string.error_location)
+							.positiveText(R.string.ok_button)
+							.neutralText(R.string.error_location_settings_button)
+							.callback(new MaterialDialog.ButtonCallback() {
+								@Override
+								public void onNeutral(MaterialDialog dialog) {
+									getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+								}
+							}).build();
 		}
 	}
 }

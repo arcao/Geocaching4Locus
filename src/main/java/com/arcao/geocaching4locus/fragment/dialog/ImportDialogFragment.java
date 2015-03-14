@@ -2,12 +2,10 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.ImportTask;
 import com.arcao.geocaching4locus.task.ImportTask.TaskListener;
@@ -84,10 +82,10 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		ProgressDialog dialog = new ProgressDialog(getActivity());
-		dialog.setIndeterminate(true);
-		dialog.setMessage(getText(R.string.import_cache_progress));
-		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
-		return dialog;
+		return new MaterialDialog.Builder(getActivity())
+						.content(R.string.import_cache_progress)
+						.negativeText(R.string.cancel_button)
+						.progress(true, 0)
+						.build();
 	}
 }

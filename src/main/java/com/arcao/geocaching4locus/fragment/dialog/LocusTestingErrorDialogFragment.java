@@ -1,8 +1,6 @@
 package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import locus.api.android.utils.LocusUtils;
@@ -19,12 +17,7 @@ public final class LocusTestingErrorDialogFragment extends AbstractErrorDialogFr
 
 
 	@Override
-	public OnClickListener getPositiveButtonOnClickListener() {
-		return new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				LocusUtils.callInstallLocus(getActivity());
-			}
-		};
+	public void onPositiveButtonClick() {
+		LocusUtils.callInstallLocus(getActivity());
 	}
 }

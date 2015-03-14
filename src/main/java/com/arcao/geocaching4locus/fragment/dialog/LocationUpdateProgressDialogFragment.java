@@ -1,11 +1,9 @@
 package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 
 public final class LocationUpdateProgressDialogFragment extends AbstractDialogFragment {
@@ -36,23 +34,18 @@ public final class LocationUpdateProgressDialogFragment extends AbstractDialogFr
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		ProgressDialog pd = new ProgressDialog(getActivity());
+		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+						.progress(true, 0)
+						.negativeText(R.string.cancel_button);
 
 		switch (getArguments().getInt(PARAM_SOURCE, SOURCE_NETWORK)) {
 			case SOURCE_GPS:
-				pd.setMessage(getText(R.string.acquiring_gps_location));
+				builder.content(getText(R.string.acquiring_gps_location));
 				break;
 			default:
-				pd.setMessage(getText(R.string.acquiring_network_location));
+				builder.content(getText(R.string.acquiring_network_location));
 		}
 
-		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				callOnCancelListener(LocationUpdateProgressDialogFragment.this);
-			}
-		});
-
-		return pd;
+		return builder.build();
 	}
 }

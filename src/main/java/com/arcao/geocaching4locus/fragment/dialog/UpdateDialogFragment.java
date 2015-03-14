@@ -2,12 +2,11 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateTask;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
@@ -84,27 +83,23 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
 	@Override
 	public void onUpdateState(State state, int progress, int max) {
-		ProgressDialog dialog = (ProgressDialog) getDialog();
+		MaterialDialog dialog = (MaterialDialog) getDialog();
 		if (dialog != null) {
 			updateDialog(state, progress, max, dialog);
 		}
 	}
 
-	private void updateDialog(State state, int progress, int max, ProgressDialog dialog) {
-		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
-		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
+	private void updateDialog(State state, int progress, int max, MaterialDialog dialog) {
 		switch (state) {
 			case CACHE:
-				dialog.setMessage(getText(R.string.update_cache_progress));
-				dialog.setMax(1);
-				dialog.setIndeterminate(true);
+				dialog.setContent(getText(R.string.update_cache_progress));
+				dialog.setProgress(-1);
+				dialog.setMaxProgress(1);
 				break;
 			case LOGS:
-				dialog.setMessage(getText(R.string.download_logs_progress));
-				dialog.setMax(max);
+				dialog.setContent(getText(R.string.download_logs_progress));
+				dialog.setMaxProgress(max);
 				dialog.setProgress(progress);
-				dialog.setIndeterminate(progress == 0);
 				break;
 		}
 	}
@@ -112,7 +107,10 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		ProgressDialog dialog = new ProgressDialog(getActivity());
+		MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+						.progress(false, 1)
+						.negativeText(R.string.cancel_button)
+						.build();
 		updateDialog(State.CACHE, 0, 0, dialog);
 		return dialog;
 	}

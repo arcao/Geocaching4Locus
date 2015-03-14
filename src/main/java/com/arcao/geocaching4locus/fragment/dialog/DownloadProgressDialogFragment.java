@@ -1,10 +1,9 @@
 package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import timber.log.Timber;
 
@@ -35,7 +34,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	}
 
 	public void setProgress(int progress) {
-		ProgressDialog pd = (ProgressDialog) getDialog();
+		MaterialDialog pd = (MaterialDialog) getDialog();
 		if (pd != null)
 			pd.setProgress(progress);
 	}
@@ -45,26 +44,25 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle arguments = getArguments();
 
-		ProgressDialog pd = new ProgressDialog(getActivity());
-
-		pd.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				callOnCancelListener(DownloadProgressDialogFragment.this);
-			}
-		});
-
 		int count = arguments.getInt(PARAM_COUNT);
 		int current = arguments.getInt(PARAM_CURRENT);
 
-		if (count < 0) {
-			pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		} else {
-			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			pd.setMax(count);
+		MaterialDialog pd = new MaterialDialog.Builder(getActivity())
+						.content(getText(arguments.getInt(PARAM_MESSAGE_ID)))
+						.negativeText(R.string.cancel_button)
+						.callback(new MaterialDialog.ButtonCallback() {
+							@Override
+							public void onNegative(MaterialDialog dialog) {
+								callOnCancelListener(DownloadProgressDialogFragment.this);
+							}
+						})
+						.progress(count < 0, count)
+						.build();
+
+
+		if (count >= 0) {
 			pd.setProgress(current);
 		}
-		pd.setMessage(getText(arguments.getInt(PARAM_MESSAGE_ID)));
 
 		Timber.d("Creating ProgressDialog; count:" + count + "; current:" + current);
 

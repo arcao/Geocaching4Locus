@@ -2,11 +2,10 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.TaskListener;
@@ -73,7 +72,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 
 	@Override
 	public void onProgressUpdate(int count) {
-		ProgressDialog dialog = (ProgressDialog) getDialog();
+		MaterialDialog dialog = (MaterialDialog) getDialog();
 		if (dialog != null) {
 			dialog.setProgress(count);
 		}
@@ -93,11 +92,10 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
 
-		ProgressDialog dialog = new ProgressDialog(getActivity());
-		dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-		dialog.setMax(pointIndexes.length);
-		dialog.setMessage(getText(R.string.update_caches_progress));
-		dialog.setButton(ProgressDialog.BUTTON_NEGATIVE, getText(R.string.cancel_button), (OnClickListener) null);
-		return dialog;
+		return new MaterialDialog.Builder(getActivity())
+						.content(R.string.update_caches_progress)
+						.negativeText(R.string.cancel_button)
+						.progress(false, pointIndexes.length)
+						.build();
 	}
 }

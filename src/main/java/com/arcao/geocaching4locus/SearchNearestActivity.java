@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -15,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
@@ -298,13 +298,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		if (isFinishing())
 			return;
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String message = String.format(getString(errorResId), StringUtils.defaultString(additionalMessage));
-
-		builder.setMessage(SpannedFix.fromHtml(message));
-		builder.setTitle(R.string.error_title);
-		builder.setPositiveButton(R.string.ok_button, null);
-		builder.show();
+		new MaterialDialog.Builder(this)
+						.title(R.string.error_title)
+						.content(SpannedFix.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
+						.positiveText(R.string.ok_button)
+						.show();
 	}
 
 	private void acquireCoordinates() {

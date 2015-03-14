@@ -2,25 +2,18 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.text.*;
 import android.text.method.NumberKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 
 import java.lang.ref.WeakReference;
@@ -113,23 +106,23 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 			mValue = savedInstanceState.getInt(PARAM_DEFAULT_VALUE, mValue);
 		}
 
-		return new AlertDialog.Builder(getActivity())
-						.setTitle(getArguments().getInt(PARAM_TITLE))
-						.setView(prepareView())
-						.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+		return new MaterialDialog.Builder(getActivity())
+						.title(getArguments().getInt(PARAM_TITLE))
+						.customView(prepareView(), false)
+						.positiveText(R.string.ok_button)
+						.negativeText(R.string.cancel_button)
+						.callback(new MaterialDialog.ButtonCallback() {
 							@Override
-							public void onClick(DialogInterface dialog, int which) {
+							public void onPositive(MaterialDialog dialog) {
 								mNewValue = mValue;
 								fireDialogClose();
 							}
-						})
-						.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() {
+
 							@Override
-							public void onClick(DialogInterface dialog, int which) {
+							public void onNegative(MaterialDialog dialog) {
 								fireDialogClose();
 							}
-						})
-						.create();
+						}).build();
 	}
 
 	@Override

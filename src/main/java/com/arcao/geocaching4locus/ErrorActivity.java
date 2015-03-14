@@ -1,11 +1,14 @@
 package com.arcao.geocaching4locus;
 
-import android.app.*;
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.NotificationManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import org.apache.commons.lang3.StringUtils;
@@ -80,44 +83,42 @@ public class ErrorActivity extends Activity {
 			final String additionalMessage = getArguments().getString(PARAM_ADDITIONAL_MESSAGE);
 			final Throwable t = (Throwable) getArguments().getSerializable(PARAM_EXCEPTION);
 
-			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-				.setTitle(resTitleId)
-				.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-
-						if (preferenceFragment != null) {
-							Intent intent = SettingsActivity.createIntent(getActivity(), preferenceFragment);
-							intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							startActivity(intent);
-						}
-						getActivity().finish();
-					}
-				});
+			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+							.title(resTitleId)
+							.positiveText(R.string.ok_button);
 
 			if (resTextId != 0) {
-				builder.setMessage(SpannedFix.fromHtml(String.format(getString(resTextId), StringUtils.defaultString(additionalMessage))));
+				builder.content(SpannedFix.fromHtml(String.format(getString(resTextId), StringUtils.defaultString(additionalMessage))));
 			} else {
-				builder.setMessage(SpannedFix.fromHtml(StringUtils.defaultString(additionalMessage)));
+				builder.content(SpannedFix.fromHtml(StringUtils.defaultString(additionalMessage)));
 			}
 
 			if (t != null) {
-				builder.setNeutralButton(R.string.error_report_error, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-
-						Intent intent = new Intent(getActivity(), SendErrorActivity.class);
-						intent.setAction(SendErrorActivity.ACTION_SEND_ERROR);
-						intent.putExtra(SendErrorActivity.PARAM_EXCEPTION, t);
-						startActivity(intent);
-						getActivity().finish();
-					}
-				});
+				builder.neutralText(R.string.error_report_error);
 			}
 
-			return builder.create();
+			builder.callback(new MaterialDialog.ButtonCallback() {
+				@Override
+				public void onPositive(MaterialDialog dialog) {
+					if (preferenceFragment != null) {
+						Intent intent = SettingsActivity.createIntent(getActivity(), preferenceFragment);
+						intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(intent);
+					}
+					getActivity().finish();
+				}
+
+				@Override
+				public void onNeutral(MaterialDialog dialog) {
+					Intent intent = new Intent(getActivity(), SendErrorActivity.class);
+					intent.setAction(SendErrorActivity.ACTION_SEND_ERROR);
+					intent.putExtra(SendErrorActivity.PARAM_EXCEPTION, t);
+					startActivity(intent);
+					getActivity().finish();
+				}
+			});
+
+			return builder.build();
 		}
 	}
 

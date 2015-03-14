@@ -57,7 +57,7 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 					mDialog = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 					mDialog.setOnCancelListener(this);
 					mDialog.show(activity.getFragmentManager(), DownloadProgressDialogFragment.FRAGMENT_TAG);
-					activity.getSupportFragmentManager().executePendingTransactions(); // show dialog before setting progress
+					activity.getFragmentManager().executePendingTransactions(); // show dialog before setting progress
 				}
 
 				mDialog.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));

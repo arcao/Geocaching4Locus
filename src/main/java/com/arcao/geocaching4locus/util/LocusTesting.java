@@ -21,7 +21,7 @@ public class LocusTesting {
 	}
 
 	public static void showLocusMissingError(final FragmentActivity activity) {
-		if (activity.getSupportFragmentManager().findFragmentByTag(LocusTestingErrorDialogFragment.FRAGMENT_TAG) != null)
+		if (activity.getFragmentManager().findFragmentByTag(LocusTestingErrorDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		LocusTestingErrorDialogFragment.newInstance(activity).show(activity.getFragmentManager(), LocusTestingErrorDialogFragment.FRAGMENT_TAG);

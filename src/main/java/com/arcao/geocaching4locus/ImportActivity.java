@@ -72,7 +72,7 @@ public class ImportActivity extends FragmentActivity implements ImportDialogFrag
 
 		ACRA.getErrorReporter().putCustomData("source", "import;" + cacheId);
 
-		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);

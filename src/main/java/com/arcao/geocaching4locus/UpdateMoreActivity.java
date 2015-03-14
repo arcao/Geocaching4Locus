@@ -53,7 +53,7 @@ public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDi
 		ACRA.getErrorReporter().putCustomData("source", "update;");
 		ACRA.getErrorReporter().putCustomData("count", String.valueOf(pointIndexes.length));
 
-		if (getSupportFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);

@@ -25,7 +25,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 		}
 
 		// if import task is running, show the import task progress dialog
-		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null) {
+		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null) {
 			mShowGCNumberInputDialog = false;
 			return;
 		}
@@ -57,7 +57,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 	}
 
 	private void showGCNumberInputDialog() {
-		if (getSupportFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(GCNumberInputDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
@@ -66,7 +66,7 @@ public class ImportFromGCActivity extends FragmentActivity implements ImportDial
 	private void startImport(String cacheId) {
 		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
 
-		if (getSupportFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);

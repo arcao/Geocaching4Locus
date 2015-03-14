@@ -95,7 +95,7 @@ public class UpdateActivity extends FragmentActivity implements UpdateDialogFrag
 
 		ACRA.getErrorReporter().putCustomData("source", "update;" + cacheId);
 
-		if (getSupportFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
+		if (getFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
 			return;
 
 		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);

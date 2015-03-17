@@ -173,7 +173,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="MainMenuButton">
+    <style name="MainMenuButton" parent="android:Widget.Button">
         <item name="android:textSize">@dimen/text_size_tiny</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/foreground1</item>
@@ -186,6 +186,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:minWidth">96dp</item>
         <item name="android:maxLines">1</item>
     </style>
 </resources>

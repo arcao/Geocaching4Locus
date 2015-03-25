@@ -51,6 +51,6 @@ public interface AppConstants {
 	static final long LOW_MEMORY_THRESHOLD = 16777216;
 
 	static final String UPDATE_WITH_LOGS_COMPONENT = "com.arcao.geocaching4locus.UpdateWithLogsActivity";
-	static final int LOGS_PER_REQUEST = 50;
+	static final int LOGS_PER_REQUEST = 30;
 	static final int LOGS_TO_UPDATE_MAX = 100;
 }

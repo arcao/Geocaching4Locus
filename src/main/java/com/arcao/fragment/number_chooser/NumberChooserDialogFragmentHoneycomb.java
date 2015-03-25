@@ -20,7 +20,7 @@ public class NumberChooserDialogFragmentHoneycomb extends NumberChooserDialogFra
 		NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.number_picker_dialog_number_picker);
 		numberPicker.setMinValue(0);
 		numberPicker.setMaxValue(values.length - 1);
-		numberPicker.setValue(Math.max(0, (mValue - mMinValue) / mStep));
+		numberPicker.setValue(Math.min(Math.max(numberPicker.getMinValue(), (mValue - mMinValue) / mStep), numberPicker.getMaxValue()));
 		numberPicker.setDisplayedValues(values);
 
 		numberPicker.setOnValueChangedListener(new OnValueChangeListener() {

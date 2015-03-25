@@ -17,16 +17,19 @@ import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.exception.OAuthExpectationFailedException;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Date;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
+	private static final URI TIMESTAMP_URI = URI.create("http://www.geocaching.com/robots.txt");
 	private static final String TAG = OAuthLoginTask.class.getName();
 
 	public interface OAuthLoginTaskListener {
@@ -47,7 +50,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		OAuthProvider provider = LiveGeocachingApiFactory.getOAuthProvider();
 
 		// we use server time for OAuth timestamp because device can have wrong timezone or time
-		String timestamp = Long.toString(getServerDate("https://api.groundspeak.com/").getTime() / 1000);
+		String timestamp = Long.toString(getServerDate(TIMESTAMP_URI).getTime() / 1000);
 
 		try {
 			if (params.length == 0) {
@@ -120,18 +123,17 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		}
 	}
 
-	private static Date getServerDate(String url) throws NetworkException {
-		HttpURLConnection c = null;
-
+	private static Date getServerDate(URI uri) throws NetworkException {
+		InputStream is = null;
 		try {
-			Log.i(TAG, "Getting server time from url: " + url);
-			c = (HttpURLConnection) new URL(url).openConnection();
-			c.setRequestMethod("HEAD");
-			c.setDoInput(false);
-			c.setDoOutput(false);
+			Log.i(TAG, "Getting server time from url: " + uri);
+			HttpURLConnection c = (HttpURLConnection) uri.toURL().openConnection();
+			c.setRequestMethod("GET");
 			c.connect();
 			if (c.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				String date = c.getHeaderField("Date");
+				is = c.getInputStream();
+				Log.i(TAG, "Response: " + IOUtils.toString(is));
 				if (date != null) {
 					Log.i(TAG, "We got time: " + date);
 					return DateUtils.parseDate(date);
@@ -140,10 +142,8 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		} catch (IOException | DateParseException e) {
 			throw new NetworkException(e.getMessage(), e);
 		} finally {
-			if (c != null)
-				c.disconnect();
+			IOUtils.closeQuietly(is);
 		}
-
 		Log.e(TAG, "No Date header found in a response, used device time instead.");
 		return new Date();
 	}

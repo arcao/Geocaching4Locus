@@ -60,13 +60,14 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 			return new MaterialDialog.Builder(getActivity())
 							.title(R.string.pref_donate_paypal_choose_currency)
 							.items(R.array.currency)
-							.itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallback() {
+							.itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
 								@Override
-								public void onSelection(MaterialDialog materialDialog, View view, int which, CharSequence charSequence) {
+								public boolean onSelection(MaterialDialog materialDialog, View view, int which, CharSequence charSequence) {
 									startActivity(new Intent(
 													Intent.ACTION_VIEW,
 													Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which]))
 									));
+									return true;
 								}
 							})
 							.cancelable(true)

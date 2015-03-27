@@ -39,7 +39,7 @@ dependencies {
     }
 
     // from JCenter repository
-    compile 'com.afollestad:material-dialogs:0.6.4.0'
+    compile 'com.afollestad:material-dialogs:0.6.6.1'
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
@@ -92,7 +92,6 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
         }
         release {

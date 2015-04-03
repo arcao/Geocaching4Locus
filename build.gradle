@@ -39,7 +39,7 @@ dependencies {
     }
 
     // from JCenter repository
-    compile 'com.afollestad:material-dialogs:0.6.6.1'
+    compile 'com.afollestad:material-dialogs:0.6.7.1'
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()

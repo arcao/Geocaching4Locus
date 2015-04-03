@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 
+import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 
 public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
@@ -69,7 +70,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 		// copy intent data from Locus
 		// FIX Android 2.3.3 can't start activity second time
-		if (LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent())) {
+		if (getIntent().hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)) {
 			intent = new Intent(getIntent());
 			intent.setClass(this, SearchNearestActivity.class);
 		} else {

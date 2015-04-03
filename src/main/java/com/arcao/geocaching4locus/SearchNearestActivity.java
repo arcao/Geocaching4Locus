@@ -27,6 +27,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -98,10 +99,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 				mHasCoordinates = true;
 			}
 		}
-		else if (LocusUtils.isIntentMainFunction(getIntent())) {
-			LocusUtils.handleIntentMainFunction(this, getIntent(), this);
-		}	else if (LocusUtils.isIntentMainFunctionGc(getIntent())) {
-			LocusUtils.handleIntentMainFunctionGc(this, getIntent(), this);
+		else if (getIntent().hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)) {
+			onReceived(
+							LocusUtils.createLocusVersion(this, getIntent()),
+							LocusUtils.getLocationFromIntent(getIntent(), LocusConst.INTENT_EXTRA_LOCATION_GPS),
+							LocusUtils.getLocationFromIntent(getIntent(), LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+			);
 		}
 		else if (LocusUtils.isIntentSearchList(getIntent())) {
 			LocusUtils.handleIntentSearchList(this, getIntent(), this);

@@ -52,13 +52,13 @@ def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 // set Geocaching API staging key and secret if production key and secret is not set
 // Note: Staging server is slow and not for production use!!!!
 if (!project.hasProperty('geocachingApiKey')) {
-    project.setProperty('geocachingApiKey', '9C7552E1-3C04-4D04-A395-230D8931E494')
+    ext.geocachingApiKey = '9C7552E1-3C04-4D04-A395-230D8931E494'
 }
 if (!project.hasProperty('geocachingApiSecret')) {
-    project.setProperty('geocachingApiSecret', 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685')
+    ext.geocachingApiSecret = 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685'
 }
 if (!project.hasProperty('geocachingApiStaging')) {
-    project.setProperty('geocachingApiStaging', true)
+    ext.geocachingApiStaging = true
 }
 
 android {

@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:1.2.3'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
     }
 }
@@ -18,8 +18,8 @@ repositories {
 
 dependencies {
     // from Android local maven repository
-    compile 'com.android.support:support-v4:22.0.0'
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.6.1') {
@@ -28,7 +28,7 @@ dependencies {
     compile 'menion:locus-api-android:1.31.34'
 
     // from Maven central repository
-    compile 'com.arcao:slf4j-timber:1.5'
+    compile 'com.arcao:slf4j-timber:2.0'
     compile ('ch.acra:acra:4.6.0') {
       exclude group: 'org.json', module: 'json' // already in Android
     }
@@ -39,7 +39,7 @@ dependencies {
     }
 
     // from JCenter repository
-    compile 'com.afollestad:material-dialogs:0.6.7.1'
+    compile 'com.afollestad:material-dialogs:0.7.5.2'
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()

@@ -2,9 +2,12 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
+
 import timber.log.Timber;
 
 public final class DownloadProgressDialogFragment extends AbstractDialogFragment {
@@ -44,10 +47,10 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle arguments = getArguments();
 
-		int count = arguments.getInt(PARAM_COUNT);
-		int current = arguments.getInt(PARAM_CURRENT);
+		final int count = arguments.getInt(PARAM_COUNT);
+		final int current = arguments.getInt(PARAM_CURRENT);
 
-		MaterialDialog pd = new MaterialDialog.Builder(getActivity())
+		final MaterialDialog pd = new MaterialDialog.Builder(getActivity())
 						.content(getText(arguments.getInt(PARAM_MESSAGE_ID)))
 						.negativeText(R.string.cancel_button)
 						.callback(new MaterialDialog.ButtonCallback() {
@@ -60,9 +63,15 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 						.build();
 
 
-		if (count >= 0) {
-			pd.setProgress(current);
-		}
+		// fix for NPE
+		new Handler().post(new Runnable() {
+			@Override
+			public void run() {
+				if (count >= 0) {
+					pd.setProgress(current);
+				}
+			}
+		});
 
 		Timber.d("Creating ProgressDialog; count:" + count + "; current:" + current);
 

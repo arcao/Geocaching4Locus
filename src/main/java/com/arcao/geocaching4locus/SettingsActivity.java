@@ -3,56 +3,16 @@ package com.arcao.geocaching4locus;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
-public class SettingsActivity extends PreferenceActivity {
-	private Toolbar mToolBar;
-
+public class SettingsActivity extends AppCompatPreferenceActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		prepareLayout();
-	}
-
-	@Override
-	protected void onTitleChanged(CharSequence title, int color) {
-		super.onTitleChanged(title, color);
-		if (mToolBar != null) {
-			mToolBar.setTitle(title);
-		}
-	}
-
-	private void prepareLayout() {
-		LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-		mToolBar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
-		root.addView(mToolBar, 0); // insert at top
-		mToolBar.setTitle(getTitle());
-		mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-		mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-		mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(MenuItem menuItem) {
-				return getWindow().getCallback().onMenuItemSelected(Window.FEATURE_OPTIONS_PANEL, menuItem);
-			}
-		});
-	}
-
-	public Toolbar getToolBar() {
-		return mToolBar;
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

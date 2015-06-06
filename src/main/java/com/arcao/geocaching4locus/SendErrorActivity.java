@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -13,7 +14,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import org.acra.ACRA;
 import org.acra.ErrorReporterEx;
 
-public class SendErrorActivity extends Activity {
+public class SendErrorActivity extends AppCompatActivity {
 	public static final String ACTION_SEND_ERROR = "com.arcao.geocaching4locus.intent.action.SEND_ERROR";
 	public static final String PARAM_EXCEPTION = "EXCEPTION";
 

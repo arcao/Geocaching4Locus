@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v7.internal.view.SupportMenuInflater;
-import android.support.v7.widget.Toolbar;
+
 import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
@@ -39,13 +39,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		super.onResume();
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		preparePreference();
-
-		if (mHasOptionsMenu) {
-			Toolbar toolbar = ((SettingsActivity)getActivity()).getToolBar();
-			onCreateOptionsMenu(toolbar.getMenu(), new SupportMenuInflater(getActivity()));
-			onPrepareOptionsMenu(toolbar.getMenu());
-
-		}
 	}
 
 	@Override

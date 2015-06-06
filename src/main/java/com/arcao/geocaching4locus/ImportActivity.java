@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
@@ -12,7 +13,7 @@ import timber.log.Timber;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ImportActivity extends FragmentActivity implements ImportDialogFragment.DialogListener {
+public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 	private final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 

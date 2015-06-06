@@ -2,15 +2,18 @@ package com.arcao.geocaching4locus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
+
 import org.acra.ACRA;
+
 import timber.log.Timber;
 
-public class ImportFromGCActivity extends FragmentActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
+public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
 	private static final int REQUEST_LOGIN = 1;
 	private boolean mAuthenticatorActivityVisible = false;
 	private boolean mShowGCNumberInputDialog = false;

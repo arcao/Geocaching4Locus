@@ -3,12 +3,14 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import locus.api.android.utils.LocusUtils;
 import org.acra.ACRA;
 import timber.log.Timber;
 
-public class UpdateMoreActivity extends FragmentActivity implements UpdateMoreDialogFragment.DialogListener {
+public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
 
 	private boolean mShowUpdateMoreDialog = false;

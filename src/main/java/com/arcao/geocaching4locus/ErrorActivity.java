@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.NotificationManager;
@@ -8,13 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
 
-public class ErrorActivity extends Activity {
+public class ErrorActivity extends AppCompatActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
 
 	private static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";

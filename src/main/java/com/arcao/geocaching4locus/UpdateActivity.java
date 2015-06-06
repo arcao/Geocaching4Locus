@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
@@ -14,7 +16,7 @@ import locus.api.objects.extra.Waypoint;
 import org.acra.ACRA;
 import timber.log.Timber;
 
-public class UpdateActivity extends FragmentActivity implements UpdateDialogFragment.DialogListener {
+public class UpdateActivity extends AppCompatActivity implements UpdateDialogFragment.DialogListener {
 	private static final String PARAM_CACHE_ID = "cacheId";
 	private static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";

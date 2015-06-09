@@ -276,7 +276,8 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 			mEditText.post(new Runnable() {
 				@Override
 				public void run() {
-					mEditText.setSelection(start, stop);
+					int len = mEditText.getText().length();
+					mEditText.setSelection(Math.min(start, len), Math.min(stop, len));
 				}
 			});
 		}

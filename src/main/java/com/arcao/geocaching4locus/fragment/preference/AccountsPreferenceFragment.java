@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -8,6 +9,8 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
+import timber.log.Timber;
 
 public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 	private static final String ACCOUNT = "account";
@@ -52,7 +55,11 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.GEOCACHING_LIVE_URI));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.GEOCACHING_LIVE_URI));
+				} catch (ActivityNotFoundException e) {
+					Timber.e(e, e.getMessage());
+				}
 				return true;
 			}
 		});

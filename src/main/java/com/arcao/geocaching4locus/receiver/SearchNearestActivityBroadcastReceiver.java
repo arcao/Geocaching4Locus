@@ -5,15 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.DownloadProgressDialogFragment;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
-import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
+
+import timber.log.Timber;
 
 public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver implements AbstractDialogFragment.CancellableDialog {
 	private final WeakReference<SearchNearestActivity> mActivityRef;
@@ -57,10 +59,9 @@ public class SearchNearestActivityBroadcastReceiver extends BroadcastReceiver im
 					mDialog = DownloadProgressDialogFragment.newInstance(R.string.downloading, intent.getIntExtra(SearchGeocacheService.PARAM_COUNT, 1), intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 					mDialog.setOnCancelListener(this);
 					mDialog.show(activity.getFragmentManager(), DownloadProgressDialogFragment.FRAGMENT_TAG);
-					activity.getFragmentManager().executePendingTransactions(); // show dialog before setting progress
+				} else {
+					mDialog.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 				}
-
-				mDialog.setProgress(intent.getIntExtra(SearchGeocacheService.PARAM_CURRENT, 0));
 				break;
 
 			case SearchGeocacheService.ACTION_PROGRESS_COMPLETE:

@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -62,16 +61,9 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 						.progress(count < 0, count)
 						.build();
 
-
-		// fix for NPE
-		new Handler().post(new Runnable() {
-			@Override
-			public void run() {
-				if (count >= 0) {
-					pd.setProgress(current);
-				}
-			}
-		});
+		if (count >= 0) {
+			pd.setProgress(current);
+		}
 
 		Timber.d("Creating ProgressDialog; count:" + count + "; current:" + current);
 

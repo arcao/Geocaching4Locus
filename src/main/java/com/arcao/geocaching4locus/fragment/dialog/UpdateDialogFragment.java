@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -115,13 +114,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 						.negativeText(R.string.cancel_button)
 						.build();
 
-		// fix for NPE
-		new Handler().post(new Runnable() {
-			@Override
-			public void run() {
-				updateDialog(State.CACHE, 0, 0, dialog);
-			}
-		});
+		updateDialog(State.CACHE, 0, 0, dialog);
 		return dialog;
 	}
 }

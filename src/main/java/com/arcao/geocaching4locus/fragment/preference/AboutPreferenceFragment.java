@@ -1,11 +1,11 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.view.View;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.feedback.FeedbackHelper;
 import com.arcao.geocaching4locus.App;
@@ -13,6 +13,7 @@ import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
+import com.arcao.geocaching4locus.util.IntentUtil;
 
 public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 	@Override
@@ -32,8 +33,14 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
 		versionPreference.setSummary(App.get(getActivity()).getVersion() + " (" + BuildConfig.GIT_SHA + ")");
 
-		websitePreference.setIntent(new Intent(Intent.ACTION_VIEW, AppConstants.WEBSITE_URI));
 		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());
+		websitePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				IntentUtil.showWebPage(getActivity(), AppConstants.WEBSITE_URI);
+				return true;
+			}
+		});
 
 		feedbackPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
@@ -63,10 +70,7 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 							.itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
 								@Override
 								public boolean onSelection(MaterialDialog materialDialog, View view, int which, CharSequence charSequence) {
-									startActivity(new Intent(
-													Intent.ACTION_VIEW,
-													Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which]))
-									));
+									IntentUtil.showWebPage(getActivity(), Uri.parse(String.format(AppConstants.DONATE_PAYPAL_URI, getResources().getStringArray(R.array.currency)[which])));
 									return true;
 								}
 							})

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ToggleButton;
 
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.util.IntentUtil;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 
 import locus.api.android.utils.LocusConst;
@@ -62,7 +63,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	}
 
 	public void onClickManual(View view) {
-		startActivity(new Intent(Intent.ACTION_VIEW, AppConstants.MANUAL_URI));
+		IntentUtil.showWebPage(this, AppConstants.MANUAL_URI);
 	}
 
 	public void onClickNearest(View view) {

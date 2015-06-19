@@ -3,9 +3,9 @@ package com.arcao.feedback.collector;
 import android.Manifest;
 import android.content.Context;
 import android.os.Build;
+
 import org.acra.util.PackageManagerWrapper;
 import org.apache.commons.io.IOUtils;
-import timber.log.Timber;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class LogCatCollector extends Collector {
 	private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
@@ -64,7 +66,9 @@ public class LogCatCollector extends Collector {
 					InputStream stderr = process.getErrorStream();
 					try {
 						byte[] dummy = new byte[DEFAULT_BUFFER_SIZE_IN_BYTES];
-						while (stderr.read(dummy) >= 0);
+						while (stderr.read(dummy) >= 0) {
+							// discard all data
+						}
 					} catch (IOException e) {
 						// fall trough
 					} finally {

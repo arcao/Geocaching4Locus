@@ -2,16 +2,27 @@ package com.arcao.geocaching4locus.service;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
+import com.arcao.geocaching.api.data.coordinates.CoordinatesFormatter;
 import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.SearchNearestActivity;
@@ -20,20 +31,22 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableListFileOutput;
-import locus.api.utils.Utils;
+
 import org.acra.ACRA;
-import timber.log.Timber;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
+
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableListFileOutput;
+import locus.api.utils.Utils;
+import timber.log.Timber;
 
 public class SearchGeocacheService extends AbstractService {
 	public static final String PARAM_LATITUDE = "LATITUDE";
@@ -92,7 +105,7 @@ public class SearchGeocacheService extends AbstractService {
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 
 		sendProgressUpdate();
-		File file = downloadCaches(latitude, longitude);
+		File file = downloadCaches(new Coordinates(latitude, longitude));
 		if (file != null) {
 			sendProgressComplete(count);
 			callLocus(file);
@@ -164,7 +177,7 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	private CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
+	private CacheType[] getCacheTypeFilterResult(@NonNull SharedPreferences prefs) {
 		Vector<CacheType> filter = new Vector<>();
 
 		for (int i = 0; i < CacheType.values().length; i++) {
@@ -176,7 +189,7 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new CacheType[filter.size()]);
 	}
 
-	private ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+	private ContainerType[] getContainerTypeFilterResult(@NonNull SharedPreferences prefs) {
 		Vector<ContainerType> filter = new Vector<>();
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
@@ -188,7 +201,7 @@ public class SearchGeocacheService extends AbstractService {
 		return filter.toArray(new ContainerType[filter.size()]);
 	}
 
-	private File downloadCaches(double latitude, double longitude) throws GeocachingApiException, NoResultFoundException {
+	private File downloadCaches(@NonNull Coordinates coordinates) throws GeocachingApiException, NoResultFoundException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -196,7 +209,7 @@ public class SearchGeocacheService extends AbstractService {
 		if (isCanceled())
 			return null;
 
-		ACRA.getErrorReporter().putCustomData("source", "search;" + latitude + ";" + longitude);
+		ACRA.getErrorReporter().putCustomData("source", "search;" + coordinates.toString(CoordinatesFormatter.LAT_LON_DECDEGREE_COMMA));
 
 		GeocachingApi api = GeocachingApiFactory.create();
 
@@ -232,7 +245,7 @@ public class SearchGeocacheService extends AbstractService {
 
 				if (current == 0) {
 					cachesToAdd = api.searchForGeocaches(resultQuality, Math.min(cachesPerRequest, count - current), logCount, 0, Arrays.asList(
-							new PointRadiusFilter(latitude, longitude, (long) (distance * 1000)),
+							new PointRadiusFilter(coordinates, (long) (distance * 1000)),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
 							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
@@ -256,8 +269,8 @@ public class SearchGeocacheService extends AbstractService {
 					break;
 
 				// FIX for not working distance filter
-				if (computeDistance(latitude, longitude, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
-					removeCachesOverDistance(cachesToAdd, latitude, longitude, distance);
+				if (computeDistance(coordinates, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
+					removeCachesOverDistance(cachesToAdd, coordinates, distance);
 
 					if (cachesToAdd.size() == 0)
 						break;
@@ -305,10 +318,10 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	private void removeCachesOverDistance(List<Geocache> caches, double latitude, double longitude, double maxDistance) {
+	private void removeCachesOverDistance(@NonNull List<Geocache> caches, @NonNull Coordinates coordinates, double maxDistance) {
 		while (caches.size() > 0) {
 			Geocache cache = caches.get(caches.size() - 1);
-			double distance = computeDistance(latitude, longitude, cache);
+			double distance = computeDistance(coordinates, cache);
 
 			if (distance > maxDistance) {
 				Timber.i("Cache " + cache.getCode() + " is over distance.");
@@ -319,11 +332,11 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	private double computeDistance(double latitude, double longitude, Geocache cache) {
-		return cache.getCoordinates().distanceTo(new Coordinates(latitude, longitude)) / 1000;
+	private double computeDistance(@NonNull Coordinates coordinates, @NonNull Geocache cache) {
+		return cache.getCoordinates().distanceTo(coordinates) / 1000;
 	}
 
-	private void login(GeocachingApi api) throws GeocachingApiException {
+	private void login(@NonNull GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 
 		String token = authenticatorHelper.getAuthToken();

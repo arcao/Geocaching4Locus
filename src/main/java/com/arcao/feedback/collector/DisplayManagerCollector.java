@@ -10,11 +10,12 @@ import android.util.SparseArray;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
-import timber.log.Timber;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import timber.log.Timber;
 
 public class DisplayManagerCollector extends Collector {
 	private final Context mContext;
@@ -63,23 +64,20 @@ public class DisplayManagerCollector extends Collector {
 		final DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);
 
-		final StringBuilder result = new StringBuilder();
-		result.append(collectCurrentSizeRange(display));
-		result.append(collectFlags(display));
-		result.append(display.getDisplayId()).append(".height=").append(display.getHeight()).append('\n');
-		result.append(collectMetrics(display, "getMetrics"));
-		result.append(collectName(display));
-		result.append(display.getDisplayId()).append(".orientation=").append(display.getRotation()).append('\n');
-		result.append(collectMetrics(display, "getRealMetrics"));
-		result.append(collectSize(display, "getRealSize"));
-		result.append(collectRectSize(display));
-		result.append(display.getDisplayId()).append(".refreshRate=").append(display.getRefreshRate()).append('\n');
-		result.append(collectRotation(display));
-		result.append(collectSize(display, "getSize"));
-		result.append(display.getDisplayId()).append(".width=").append(display.getWidth()).append('\n');
-		result.append(collectIsValid(display));
-
-		return result.toString();
+		return collectCurrentSizeRange(display) +
+						collectFlags(display) +
+						display.getDisplayId() + ".height=" + display.getHeight() + '\n' +
+						collectMetrics(display, "getMetrics") +
+						collectName(display) +
+						display.getDisplayId() + ".orientation=" + display.getRotation() + '\n' +
+						collectMetrics(display, "getRealMetrics") +
+						collectSize(display, "getRealSize") +
+						collectRectSize(display) +
+						display.getDisplayId() + ".refreshRate=" + display.getRefreshRate() + '\n' +
+						collectRotation(display) +
+						collectSize(display, "getSize") +
+						display.getDisplayId() + ".width=" + display.getWidth() + '\n' +
+						collectIsValid(display);
 	}
 
 	private static String collectIsValid(Display display) {

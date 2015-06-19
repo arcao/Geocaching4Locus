@@ -34,7 +34,6 @@ public interface PrefConstants {
 
 	String LIVE_MAP = "live_map";
 	String SHOW_LIVE_MAP_DISABLED_NOTIFICATION = "show_live_map_disabled_notification";
-	String SHOW_LIVE_MAP_VISIBLE_ONLY_NOTIFICATION = "show_live_map_visible_only_notification";
 	String LIVE_MAP_DOWNLOAD_HINTS = "live_map_download_hints";
 
 	String DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data";

@@ -90,7 +90,7 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 		cancellableRef = new WeakReference<>(cancellableDialog);
 	}
 
-	public abstract static interface CancellableDialog {
-		abstract void onCancel(AbstractDialogFragment dialogFragment);
+	public interface CancellableDialog {
+		void onCancel(AbstractDialogFragment dialogFragment);
 	}
 }

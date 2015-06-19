@@ -16,20 +16,20 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
-import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
-import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 public class OAuthLoginFragment extends Fragment implements TaskListener {
-	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
 	private static final String OAUTH_VERIFIER = "oauth_verifier";
 

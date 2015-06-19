@@ -17,7 +17,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	private static final String PARAM_SCREEN = "screen";
 
 	protected SharedPreferences mPrefs;
-	private boolean mHasOptionsMenu = false;
 
 	protected <P extends Preference> P findPreference(String key, Class<P> clazz) {
 		return (P)super.findPreference(key);
@@ -55,12 +54,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		if (title != null) {
 			getActivity().setTitle(title);
 		}
-	}
-
-	@Override
-	public void setHasOptionsMenu(boolean hasMenu) {
-		super.setHasOptionsMenu(hasMenu);
-		mHasOptionsMenu = hasMenu;
 	}
 
 	protected void preparePreference() {

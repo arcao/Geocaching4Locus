@@ -3,12 +3,13 @@ package com.arcao.feedback.collector;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.SparseArray;
-import timber.log.Timber;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+
+import timber.log.Timber;
 
 public class ConfigurationCollector extends Collector {
 	private static final String SUFFIX_MASK = "_MASK";
@@ -26,15 +27,15 @@ public class ConfigurationCollector extends Collector {
 	private static final String PREFIX_KEYBOARD = "KEYBOARD_";
 	private static final String PREFIX_HARDKEYBOARDHIDDEN = "HARDKEYBOARDHIDDEN_";
 
-	private static SparseArray<String> mHardKeyboardHiddenValues = new SparseArray<>();
-	private static SparseArray<String> mKeyboardValues = new SparseArray<>();
-	private static SparseArray<String> mKeyboardHiddenValues = new SparseArray<>();
-	private static SparseArray<String> mNavigationValues = new SparseArray<>();
-	private static SparseArray<String> mNavigationHiddenValues = new SparseArray<>();
-	private static SparseArray<String> mOrientationValues = new SparseArray<>();
-	private static SparseArray<String> mScreenLayoutValues = new SparseArray<>();
-	private static SparseArray<String> mTouchScreenValues = new SparseArray<>();
-	private static SparseArray<String> mUiModeValues = new SparseArray<>();
+	private static final SparseArray<String> mHardKeyboardHiddenValues = new SparseArray<>();
+	private static final SparseArray<String> mKeyboardValues = new SparseArray<>();
+	private static final SparseArray<String> mKeyboardHiddenValues = new SparseArray<>();
+	private static final SparseArray<String> mNavigationValues = new SparseArray<>();
+	private static final SparseArray<String> mNavigationHiddenValues = new SparseArray<>();
+	private static final SparseArray<String> mOrientationValues = new SparseArray<>();
+	private static final SparseArray<String> mScreenLayoutValues = new SparseArray<>();
+	private static final SparseArray<String> mTouchScreenValues = new SparseArray<>();
+	private static final SparseArray<String> mUiModeValues = new SparseArray<>();
 
 	private static final Map<String, SparseArray<String>> mValueArrays = new HashMap<>();
 

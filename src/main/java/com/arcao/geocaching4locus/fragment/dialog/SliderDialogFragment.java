@@ -27,7 +27,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_STEP = "STEP";
 
 	public interface DialogListener {
-		public void onDialogClosed(SliderDialogFragment fragment);
+		void onDialogClosed(SliderDialogFragment fragment);
 	}
 
 	private SeekBar mSeekBar;

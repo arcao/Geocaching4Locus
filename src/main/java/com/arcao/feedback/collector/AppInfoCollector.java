@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import org.acra.util.PackageManagerWrapper;
 
 public class AppInfoCollector extends Collector {
-	private Context context;
+	private final Context context;
 
 	public AppInfoCollector(Context context) {
 		this.context = context.getApplicationContext();

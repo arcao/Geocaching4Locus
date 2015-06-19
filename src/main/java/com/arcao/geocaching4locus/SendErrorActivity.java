@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;

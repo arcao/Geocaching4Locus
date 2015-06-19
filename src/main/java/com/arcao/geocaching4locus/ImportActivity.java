@@ -2,16 +2,18 @@ package com.arcao.geocaching4locus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
+
 import org.acra.ACRA;
-import timber.log.Timber;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.CacheLog;
@@ -19,20 +20,20 @@ import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
-import locus.api.android.ActionTools;
-import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Waypoint;
-import locus.api.utils.DataReaderBigEndian;
-import locus.api.utils.DataWriterBigEndian;
-import timber.log.Timber;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusUtils;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.DataReaderBigEndian;
+import locus.api.utils.DataWriterBigEndian;
+import timber.log.Timber;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
 	public interface TaskListener {
@@ -81,7 +82,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 			if (replaceCache) {
 				//ActionDisplayPointsExtended.storeGeocacheToCache(mContext, p);
-				p.addParameter(ExtraData.PAR_INTENT_EXTRA_ON_DISPLAY, "clear;;;;;");
+				p.removeExtraOnDisplay();
 			}
 		}
 

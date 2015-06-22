@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -19,16 +20,21 @@ import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableListFileOutput;
+import locus.api.utils.Utils;
 import timber.log.Timber;
 
-import java.lang.ref.WeakReference;
-
-public class ImportTask extends UserTask<String, Void, Waypoint> {
+public class ImportTask extends UserTask<String, Void, Boolean> {
 	public interface TaskListener {
 		void onTaskFinished(boolean success);
 	}
@@ -42,23 +48,12 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	}
 
 	@Override
-	protected void onPostExecute(Waypoint result) {
+	protected void onPostExecute(Boolean result) {
 		super.onPostExecute(result);
-
-		if (result != null) {
-			PackWaypoints pack = new PackWaypoints("import");
-			pack.addWaypoint(result);
-
-			try {
-				ActionDisplayPointsExtended.sendPack(mContext, pack, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
-			} catch (RequiredVersionMissingException e) {
-				Timber.e(e, e.getMessage());
-			}
-		}
 
 		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
-			listener.onTaskFinished(result != null);
+			listener.onTaskFinished(result != null ? result : false);
 		}
 	}
 
@@ -73,7 +68,7 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 	}
 
 	@Override
-	protected Waypoint doInBackground(String... params) throws Exception {
+	protected Boolean doInBackground(String... params) throws Exception {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
@@ -105,12 +100,38 @@ public class ImportTask extends UserTask<String, Void, Waypoint> {
 			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
 
 			if (isCancelled())
-				return null;
+				return false;
 
 			if (cache == null)
 				throw new CacheNotFoundException(cacheId);
 
-			return LocusDataMapper.toLocusPoint(mContext, cache);
+			File dataFile = ActionDisplayPointsExtended.getCacheFileName(mContext);
+			StoreableListFileOutput slfo = null;
+
+			try {
+				slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
+
+				Waypoint waypoint = LocusDataMapper.toLocusPoint(mContext, cache);
+				PackWaypoints pack = new PackWaypoints("import");
+				pack.addWaypoint(waypoint);
+
+				slfo.beginList();
+				slfo.write(pack);
+				slfo.endList();
+			} catch (IOException e) {
+				Timber.e(e, e.getMessage());
+				throw new GeocachingApiException(e.getMessage(), e);
+			} finally {
+				Utils.closeStream(slfo);
+			}
+
+			try {
+				return ActionDisplayPointsExtended.sendPacksFile(mContext, dataFile, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
+			} catch (RequiredVersionMissingException e) {
+				Timber.e(e, e.getMessage());
+				return false;
+			}
+
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
 			authenticatorHelper.invalidateAuthToken();

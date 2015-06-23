@@ -51,6 +51,7 @@ public class LocusDataMapper {
 	private static final String GSAK_USERNAME = "gsak";
 	private static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
 	private static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
+	private static final String GEOCACHE_GUID_LINK_PREFIX = "http://www.geocaching.com/seek/cache_details.aspx?guid=";
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -89,6 +90,9 @@ public class LocusDataMapper {
 		d.setAvailable(cache.isAvailable());
 		d.setArchived(cache.isArchived());
 		d.setPremiumOnly(cache.isPremium());
+		if (cache.getGuid() != null) {
+			d.setCacheUrl(GEOCACHE_GUID_LINK_PREFIX + cache.getGuid());
+		}
 
 		if (cache.getPlaceDate() != null)
 			d.setDateHidden(cache.getPlaceDate().getTime());

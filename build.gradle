@@ -22,7 +22,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 
     // from maven.arcao.com repository
-    compile('com.arcao:geocaching-api:1.6.1') {
+    compile('com.arcao:geocaching-api:1.6.2') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12' // Not working in Android, slf4j-timber used instead
     }
     compile 'menion:locus-api-android:1.33.36'

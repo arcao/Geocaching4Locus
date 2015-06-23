@@ -1,26 +1,50 @@
 package locus.api.mapper;
 
 import android.content.Context;
-import com.arcao.geocaching.api.data.*;
+
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.GeocacheLog;
+import com.arcao.geocaching.api.data.ImageData;
+import com.arcao.geocaching.api.data.Trackable;
+import com.arcao.geocaching.api.data.User;
+import com.arcao.geocaching.api.data.UserWaypoint;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.*;
+import com.arcao.geocaching.api.data.type.AttributeType;
+import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheLogType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
+import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.*;
+
 import org.apache.commons.lang3.StringUtils;
-import timber.log.Timber;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import locus.api.objects.extra.ExtraData;
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.GeocachingAttribute;
+import locus.api.objects.geocaching.GeocachingData;
+import locus.api.objects.geocaching.GeocachingImage;
+import locus.api.objects.geocaching.GeocachingLog;
+import locus.api.objects.geocaching.GeocachingTrackable;
+import locus.api.objects.geocaching.GeocachingWaypoint;
+import timber.log.Timber;
 
 public class LocusDataMapper {
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
@@ -55,7 +79,7 @@ public class LocusDataMapper {
 		d.setCacheID(cache.getCode());
 		d.setId(cache.getId());
 		d.setName(cache.getName());
-		d.setType(toLocusCacheType(cache.getCacheType()));
+		d.setType(toLocusCacheType(cache.getGeocacheType()));
 		d.setDifficulty(cache.getDifficulty());
 		d.setTerrain(cache.getTerrain());
 		if (cache.getOwner() != null) {
@@ -87,8 +111,8 @@ public class LocusDataMapper {
 		d.setNotes(cache.getPersonalNote());
 		d.setFavoritePoints(cache.getFavoritePoints());
 
-		sortCacheLogsByCreated(cache.getCacheLogs());
-		for (CacheLog log : cache.getCacheLogs()) {
+		sortCacheLogsByCreated(cache.getGeocacheLogs());
+		for (GeocacheLog log : cache.getGeocacheLogs()) {
 			d.logs.add(toLocusCacheLog(log));
 		}
 
@@ -123,10 +147,10 @@ public class LocusDataMapper {
 		return p;
 	}
 
-	private static void sortCacheLogsByCreated(List<CacheLog> cacheLogs) {
-		Collections.sort(cacheLogs, new Comparator<CacheLog>() {
+	private static void sortCacheLogsByCreated(List<GeocacheLog> cacheLogs) {
+		Collections.sort(cacheLogs, new Comparator<GeocacheLog>() {
 			@Override
-			public int compare(CacheLog lhs, CacheLog rhs) {
+			public int compare(GeocacheLog lhs, GeocacheLog rhs) {
 				return lhs.getCreated().compareTo(rhs.getCreated());
 			}
 		});
@@ -202,21 +226,21 @@ public class LocusDataMapper {
 
 		t.setId(trackable.getId());
 		t.setDetails(trackable.getDescription());
-		t.setGoal(trackable.getGoal());
+		//t.setGoal(trackable.getGoal());
 		t.setImgUrl(trackable.getTrackableTypeImage());
 		t.setName(trackable.getName());
-		if (trackable.getCurrentOwner() != null) {
+		/*if (trackable.getCurrentOwner() != null) {
 			t.setCurrentOwner(trackable.getCurrentOwner().getUserName());
 		}
 		if (trackable.getOwner() != null) {
 			t.setOriginalOwner(trackable.getOwner().getUserName());
-		}
-		t.setReleased(trackable.getCreated().getTime());
-		t.setSrcDetails(trackable.getTrackablePage());
+		}*/
+		//t.setReleased(trackable.getCreated().getTime());
+		//t.setSrcDetails(trackable.getTrackablePage());
 		return t;
 	}
 
-	private static GeocachingLog toLocusCacheLog(CacheLog log) {
+	private static GeocachingLog toLocusCacheLog(GeocacheLog log) {
 		GeocachingLog l = new GeocachingLog();
 
 		l.setId(log.getId());
@@ -237,7 +261,7 @@ public class LocusDataMapper {
 		return l;
 	}
 
-	private static int toLocusCacheType(CacheType cacheType) {
+	private static int toLocusCacheType(GeocacheType cacheType) {
 		switch (cacheType) {
 			case CacheInTrashOutEvent:
 				return GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT;
@@ -322,7 +346,7 @@ public class LocusDataMapper {
 		}
 	}
 
-	private static int toLocusLogType(CacheLogType logType) {
+	private static int toLocusLogType(GeocacheLogType logType) {
 		switch (logType) {
 			case Announcement:
 				return GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT;

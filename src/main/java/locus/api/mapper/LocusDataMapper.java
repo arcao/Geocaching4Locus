@@ -120,8 +120,9 @@ public class LocusDataMapper {
 			d.logs.add(toLocusCacheLog(log));
 		}
 
+		boolean trackableLightData = cache.getTrackables().size() > 100;
 		for (Trackable trackable : cache.getTrackables()) {
-			d.trackables.add(toLocusTrackable(trackable));
+			d.trackables.add(toLocusTrackable(trackable, trackableLightData));
 		}
 
 		for (com.arcao.geocaching.api.data.Waypoint waypoint : cache.getWaypoints()) {
@@ -225,22 +226,25 @@ public class LocusDataMapper {
 		return w;
 	}
 
-	private static GeocachingTrackable toLocusTrackable(Trackable trackable) {
+	private static GeocachingTrackable toLocusTrackable(Trackable trackable, boolean trackableLightData) {
 		GeocachingTrackable t = new GeocachingTrackable();
 
 		t.setId(trackable.getId());
-		t.setDetails(trackable.getDescription());
-		//t.setGoal(trackable.getGoal());
 		t.setImgUrl(trackable.getTrackableTypeImage());
 		t.setName(trackable.getName());
-		/*if (trackable.getCurrentOwner() != null) {
+		if (trackable.getCurrentOwner() != null) {
 			t.setCurrentOwner(trackable.getCurrentOwner().getUserName());
 		}
 		if (trackable.getOwner() != null) {
 			t.setOriginalOwner(trackable.getOwner().getUserName());
-		}*/
-		//t.setReleased(trackable.getCreated().getTime());
-		//t.setSrcDetails(trackable.getTrackablePage());
+		}
+		t.setSrcDetails(trackable.getTrackablePage());
+		t.setReleased(trackable.getCreated().getTime());
+
+		if (!trackableLightData) {
+			t.setDetails(trackable.getDescription());
+			t.setGoal(trackable.getGoal());
+		}
 		return t;
 	}
 

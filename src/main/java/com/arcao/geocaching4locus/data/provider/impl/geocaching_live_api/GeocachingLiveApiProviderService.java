@@ -54,7 +54,7 @@ public class GeocachingLiveApiProviderService implements ProviderService, Geocac
 		GeocachingApi api = createApi();
 
 		try {
-			Geocache cache = api.getCache(gcCode, configuration.getGeocacheLogCount(), 0);
+			Geocache cache = api.getGeocache(GeocachingApi.ResultQuality.FULL, gcCode, configuration.getGeocacheLogCount(), 0);
 			listener.onCallback(new DataReceivedCallback(new Waypoint[]{LocusDataMapper.toLocusPoint(context, cache)}));
 		} catch (GeocachingApiException e) {
 			throw mapException(e);

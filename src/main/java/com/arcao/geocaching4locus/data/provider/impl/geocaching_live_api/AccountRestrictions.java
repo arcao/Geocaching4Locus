@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.data.provider.impl.geocaching_live_api;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.arcao.geocaching.api.data.CacheLimits;
+import com.arcao.geocaching.api.data.GeocacheLimits;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.data.apilimits.CacheLimit;
 import com.arcao.geocaching.api.data.type.MemberType;
@@ -84,18 +84,18 @@ public class AccountRestrictions {
 		editor.apply();
 	}
 
-	public void updateLimits(CacheLimits cacheLimits) {
+	public void updateLimits(GeocacheLimits cacheLimits) {
 		if (cacheLimits == null)
 			return;
 
-		maxFullGeocacheLimit = cacheLimits.getMaxCacheCount();
+		maxFullGeocacheLimit = cacheLimits.getMaxGeocacheCount();
 
 		Editor editor = mPreferences.edit();
 
 		// cache limit was renew
-		if (currentFullGeocacheLimit > cacheLimits.getCurrentCacheCount()
-				|| (currentFullGeocacheLimit == 0 && cacheLimits.getCurrentCacheCount() > 0)) {
-			currentFullGeocacheLimit = cacheLimits.getCurrentCacheCount();
+		if (currentFullGeocacheLimit > cacheLimits.getCurrentGeocacheCount()
+				|| (currentFullGeocacheLimit == 0 && cacheLimits.getCurrentGeocacheCount() > 0)) {
+			currentFullGeocacheLimit = cacheLimits.getCurrentGeocacheCount();
 
 			Calendar c = Calendar.getInstance();
 			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
@@ -107,7 +107,7 @@ public class AccountRestrictions {
 			editor.putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit);
 			editor.putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.getTime());
 		} else {
-			currentFullGeocacheLimit = cacheLimits.getCurrentCacheCount();
+			currentFullGeocacheLimit = cacheLimits.getCurrentGeocacheCount();
 
 			// store it to preferences
 			editor.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit);

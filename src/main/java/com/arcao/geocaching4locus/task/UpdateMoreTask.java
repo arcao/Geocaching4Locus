@@ -108,7 +108,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 								(Filter) new CacheCodeFilter(getCachesIds(oldPoints))
 				), null);
 
-				authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
+				authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
 				if (isCancelled())
 					return false;

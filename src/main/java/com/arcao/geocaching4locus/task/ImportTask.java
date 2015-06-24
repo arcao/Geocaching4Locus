@@ -96,8 +96,8 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 				logCount = 0;
 			}
 
-			Geocache cache = api.getCache(resultQuality, cacheId, logCount, 0);
-			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
+			Geocache cache = api.getGeocache(resultQuality, cacheId, logCount, 0);
+			authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
 			if (isCancelled())
 				return false;

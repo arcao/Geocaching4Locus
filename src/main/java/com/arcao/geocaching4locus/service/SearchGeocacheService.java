@@ -9,8 +9,8 @@ import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesFormatter;
-import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
@@ -68,7 +68,7 @@ public class SearchGeocacheService extends AbstractService {
 	private boolean simpleCacheData;
 	private double distance;
 	private int logCount;
-	private CacheType[] cacheTypes;
+	private GeocacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
 	private Boolean excludeIgnoreList;
 
@@ -177,16 +177,16 @@ public class SearchGeocacheService extends AbstractService {
 		}
 	}
 
-	private CacheType[] getCacheTypeFilterResult(@NonNull SharedPreferences prefs) {
-		Vector<CacheType> filter = new Vector<>();
+	private GeocacheType[] getCacheTypeFilterResult(@NonNull SharedPreferences prefs) {
+		Vector<GeocacheType> filter = new Vector<>();
 
-		for (int i = 0; i < CacheType.values().length; i++) {
+		for (int i = 0; i < GeocacheType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
-				filter.add(CacheType.values()[i]);
+				filter.add(GeocacheType.values()[i]);
 			}
 		}
 
-		return filter.toArray(new CacheType[filter.size()]);
+		return filter.toArray(new GeocacheType[filter.size()]);
 	}
 
 	private ContainerType[] getContainerTypeFilterResult(@NonNull SharedPreferences prefs) {
@@ -260,7 +260,7 @@ public class SearchGeocacheService extends AbstractService {
 				}
 
 				if (!simpleCacheData)
-					authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
+					authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
 				if (isCanceled())
 					return null;

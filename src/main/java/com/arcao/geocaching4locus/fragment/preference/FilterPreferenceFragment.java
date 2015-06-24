@@ -11,8 +11,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
-import com.arcao.geocaching.api.data.type.CacheType;
+
 import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -113,7 +114,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 			case R.id.selectAll:
 				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < CacheType.values().length; i++)
+					for (int i = 0; i < GeocacheType.values().length; i++)
 						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
 				}
 				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
@@ -124,7 +125,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 			case R.id.deselectAll:
 				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < CacheType.values().length; i++)
+					for (int i = 0; i < GeocacheType.values().length; i++)
 						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
 				}
 				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
@@ -292,7 +293,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		boolean allChecked = true;
 		boolean noneChecked = true;
 
-		for (int i = 0; i < CacheType.values().length; i++) {
+		for (int i = 0; i < GeocacheType.values().length; i++) {
 			if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				noneChecked = false;
 			} else {
@@ -303,7 +304,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		if (allChecked || noneChecked) {
 			sb.append(getString(R.string.pref_cache_type_all));
 		} else {
-			for (int i = 0; i < CacheType.values().length; i++) {
+			for (int i = 0; i < GeocacheType.values().length; i++) {
 				if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 					if (sb.length() != 0) sb.append(", ");
 					sb.append(shortCacheTypeName[i]);

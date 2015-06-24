@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
-import com.arcao.geocaching.api.data.CacheLog;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
@@ -153,8 +153,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 				logCount = 0;
 			}
 
-			Geocache cache = api.getCache(resultQuality, result.cacheId, logCount, 0);
-			authenticatorHelper.getRestrictions().updateLimits(api.getLastCacheLimits());
+			Geocache cache = api.getGeocache(resultQuality, result.cacheId, logCount, 0);
+			authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
 			if (result.updateLogs || resultQuality == GeocachingApi.ResultQuality.SUMMARY) {
 				int startIndex = logCount;
@@ -168,13 +168,13 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 					publishProgress(startIndex, maxLogs);
 
 					int logsPerRequest = Math.min(maxLogs - startIndex, AppConstants.LOGS_PER_REQUEST);
-					List<CacheLog> retrievedLogs = api.getCacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);
+					List<GeocacheLog> retrievedLogs = api.getGeocacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);
 
 					if (retrievedLogs == null || retrievedLogs.isEmpty()) {
 						break;
 					}
 
-					cache.getCacheLogs().addAll(retrievedLogs);
+					cache.getGeocacheLogs().addAll(retrievedLogs);
 
 					startIndex += retrievedLogs.size();
 				}

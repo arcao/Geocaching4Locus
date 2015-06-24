@@ -8,33 +8,44 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.data.type.CacheType;
 import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class LiveMapService extends IntentService {
 	private static final String PARAM_LATITUDE = "LATITUDE";
@@ -60,7 +71,7 @@ public class LiveMapService extends IntentService {
 	private float difficultyMax;
 	private float terrainMin;
 	private float terrainMax;
-	private CacheType[] cacheTypes;
+	private GeocacheType[] cacheTypes;
 	private ContainerType[] containerTypes;
 	private Boolean excludeIgnoreList;
 	private boolean liveMapDownloadHints;
@@ -156,16 +167,16 @@ public class LiveMapService extends IntentService {
 		}
 	}
 
-	private CacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
-		List<CacheType> filter = new Vector<>();
+	private GeocacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
+		List<GeocacheType> filter = new Vector<>();
 
-		for (int i = 0; i < CacheType.values().length; i++) {
+		for (int i = 0; i < GeocacheType.values().length; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
-				filter.add(CacheType.values()[i]);
+				filter.add(GeocacheType.values()[i]);
 			}
 		}
 
-		return filter.toArray(new CacheType[filter.size()]);
+		return filter.toArray(new GeocacheType[filter.size()]);
 	}
 
 	private ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {

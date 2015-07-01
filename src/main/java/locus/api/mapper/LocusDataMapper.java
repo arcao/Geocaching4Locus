@@ -248,6 +248,17 @@ public class LocusDataMapper {
 		return t;
 	}
 
+	public static Waypoint addCacheLogs(Waypoint to, Collection<GeocacheLog> logs) {
+		if (to == null || to.gcData == null)
+			return to;
+
+		for (GeocacheLog log : logs) {
+			to.gcData.logs.add(toLocusCacheLog(log));
+		}
+
+		return to;
+	}
+
 	private static GeocachingLog toLocusCacheLog(GeocacheLog log) {
 		GeocachingLog l = new GeocachingLog();
 

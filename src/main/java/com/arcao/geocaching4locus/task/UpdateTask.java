@@ -156,6 +156,12 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			Geocache cache = api.getGeocache(resultQuality, result.cacheId, logCount, 0);
 			authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
+			if (isCancelled())
+				return null;
+
+			result.newPoint = LocusDataMapper.toLocusPoint(mContext, cache);
+
+
 			if (result.updateLogs || resultQuality == GeocachingApi.ResultQuality.SUMMARY) {
 				int startIndex = logCount;
 				int maxLogs = AppConstants.LOGS_TO_UPDATE_MAX - logCount;
@@ -174,7 +180,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 						break;
 					}
 
-					cache.getGeocacheLogs().addAll(retrievedLogs);
+					LocusDataMapper.addCacheLogs(result.newPoint, retrievedLogs);
 
 					startIndex += retrievedLogs.size();
 				}
@@ -184,7 +190,6 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			if (isCancelled())
 				return null;
 
-			result.newPoint = LocusDataMapper.toLocusPoint(mContext, cache);
 			return result;
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());

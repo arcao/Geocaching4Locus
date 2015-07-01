@@ -40,12 +40,6 @@ public class LogCatCollector extends Collector {
 
 		final StringBuilder buffer = new StringBuilder();
 
-		final int pid = android.os.Process.myPid();
-		String pidPattern = null;
-		if (pid > 0) {
-			pidPattern = Integer.toString(pid) + "):";
-		}
-
 		final List<String> commandLine = new ArrayList<>();
 		commandLine.add("logcat");
 		commandLine.add("-t");
@@ -79,9 +73,7 @@ public class LogCatCollector extends Collector {
 
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				if (pidPattern == null || line.contains(pidPattern)) {
-					buffer.append(line).append("\n");
-				}
+				buffer.append(line).append("\n");
 			}
 
 		} catch (IOException e) {

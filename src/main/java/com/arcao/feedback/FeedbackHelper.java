@@ -3,50 +3,58 @@ package com.arcao.feedback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.os.Parcelable;
-import com.arcao.feedback.collector.*;
+
+import com.arcao.feedback.collector.AccountInfoCollector;
+import com.arcao.feedback.collector.AppInfoCollector;
+import com.arcao.feedback.collector.BuildConfigCollector;
+import com.arcao.feedback.collector.Collector;
+import com.arcao.feedback.collector.ConfigurationCollector;
+import com.arcao.feedback.collector.ConstantsCollector;
+import com.arcao.feedback.collector.DisplayManagerCollector;
+import com.arcao.feedback.collector.LogCatCollector;
+import com.arcao.feedback.collector.MemoryCollector;
+import com.arcao.feedback.collector.SharedPreferencesCollector;
+
 import org.apache.commons.io.IOUtils;
-import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class FeedbackHelper {
-	private static final String REPORT_FILE = "%s-report.zip";
+import timber.log.Timber;
 
+public class FeedbackHelper {
 	public static void sendFeedback(Context context, int resEmail, int resSubject, int resMessageText) {
 		String subject = context.getString(resSubject, getApplicationName(context), getVersion(context));
 
 		String email = context.getString(resEmail);
 
-		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.setType("*/*");
+		Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")); // only e-mail apps
+
 		intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		intent.putExtra(Intent.EXTRA_TEXT, context.getString(resMessageText));
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
 		try {
-			intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(createReportFile(context)));
+			createReport(context, FeedbackFileProvider.getReportFile(context));
+			intent.putExtra(Intent.EXTRA_STREAM, FeedbackFileProvider.getReportFileUri());
 		} catch (IOException e) {
 			Timber.e(e, e.getMessage());
 		}
 
-		context.startActivity(createEmailOnlyChooserIntent(context, intent, null));
+		context.startActivity(Intent.createChooser(intent, null));
 	}
 
-	private static File createReportFile(Context context) throws IOException {
+	private static void createReport(Context context, File reportFile) throws IOException {
 		ZipOutputStream zos = null;
-
-		File reportFile = getReportFile(context);
 
 		if (reportFile.exists()) {
 			Timber.d("Report file " + reportFile + " already exist.");
@@ -65,13 +73,6 @@ public class FeedbackHelper {
 		}
 
 		Timber.d("Report created.");
-
-		return reportFile;
-	}
-
-	private static File getReportFile(Context context) {
-		String reportFilename = String.format(REPORT_FILE, getApplicationName(context));
-		return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), reportFilename);
 	}
 
 	private static void writeCollectors(ZipOutputStream zos, Context context) throws IOException {
@@ -116,27 +117,6 @@ public class FeedbackHelper {
 		} catch (PackageManager.NameNotFoundException e) {
 			Timber.e(e, e.getMessage());
 			return "0.0";
-		}
-	}
-
-	private static Intent createEmailOnlyChooserIntent(Context context, Intent source, CharSequence chooserTitle) {
-		Vector<Intent> intents = new Stack<>();
-		Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:info@domain.com"));
-		List<ResolveInfo> activities = context.getPackageManager().queryIntentActivities(i, 0);
-
-		for(ResolveInfo ri : activities) {
-			Intent target = new Intent(source);
-			target.setPackage(ri.activityInfo.packageName);
-			intents.add(target);
-		}
-
-		if(!intents.isEmpty()) {
-			Intent chooserIntent = Intent.createChooser(intents.remove(0), chooserTitle);
-			chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toArray(new Parcelable[intents.size()]));
-
-			return chooserIntent;
-		} else {
-			return Intent.createChooser(source, chooserTitle);
 		}
 	}
 }

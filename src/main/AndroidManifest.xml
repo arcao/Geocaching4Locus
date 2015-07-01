@@ -21,6 +21,13 @@
         <meta-data android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
 
+        <provider
+            android:name="com.arcao.feedback.FeedbackFileProvider"
+            android:authorities="${applicationId}.provider.feedback"
+            android:exported="true"
+            android:enabled="true"
+            android:grantUriPermissions="true"/>
+
         <service android:name=".service.SearchGeocacheService"/>
         <service android:name=".service.LiveMapService"/>
         

@@ -57,16 +57,14 @@
             <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_cache">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="locus" />
-                <data android:pathPrefix="menion.android.locus/point_geocache" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
         <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".UpdateActivity" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher_download_logs" android:label="@string/launcher_download_logs">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="locus" />
-                <data android:pathPrefix="menion.android.locus/point_geocache" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity-alias>
         <activity android:name="UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">

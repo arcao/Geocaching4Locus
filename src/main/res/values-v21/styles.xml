@@ -25,6 +25,9 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
     <style name="AppTheme.Settings">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>

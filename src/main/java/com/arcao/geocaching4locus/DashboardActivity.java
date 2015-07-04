@@ -118,4 +118,9 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	public void onLiveMapStateChange(boolean newState) {
 		mLiveMapButton.setChecked(newState);
 	}
+
+	public void onClickImportFromBookmark(View view) {
+		startActivity(new Intent(this, ImportBookmarkActivity.class));
+		finish();
+	}
 }

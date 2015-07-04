@@ -52,7 +52,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 
 	private void showLoginFragment() {
 		// remove previous dialog
-		Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
+		Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
 		if (!(fragment instanceof OAuthLoginFragment)) {
 			getFragmentManager().beginTransaction()
 							.replace(R.id.fragment, OAuthLoginFragment.newInstance())

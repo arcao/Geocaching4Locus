@@ -185,4 +185,6 @@
     <string name="pref_feedback">Send Feedback</string>
     <string name="error_no_result">Could not find any geocaches that match your search.</string>
     <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <string name="launcher_import_from_bookmark">Import from bookmark</string>
+    <string name="menu_import_from_bookmark">Import from bookmark</string>
 </resources>

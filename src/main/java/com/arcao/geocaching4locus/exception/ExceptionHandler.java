@@ -9,6 +9,7 @@ import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
+import com.arcao.geocaching.api.impl.live_geocaching_api.StatusCode;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ErrorActivity;
@@ -43,7 +44,8 @@ public class ExceptionHandler {
 
 		if (t instanceof InvalidCredentialsException) {
 			return builder.setText(R.string.error_credentials).setPreferenceFragment(AccountsPreferenceFragment.class).build();
-		} else if (t instanceof InvalidSessionException) {
+		} else if (t instanceof InvalidSessionException ||
+						(t instanceof LiveGeocachingApiException && ((LiveGeocachingApiException) t).getStatusCode() == StatusCode.NotAuthorized)) {
 			App.get(mContext).getAuthenticatorHelper().removeAccount();
 			return builder.setText(R.string.error_session_expired).setPreferenceFragment(AccountsPreferenceFragment.class).build();
 		} else if (t instanceof InvalidResponseException) {

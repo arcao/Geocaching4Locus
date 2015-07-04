@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string translatable="false" name="app_name">Geocaching4Locus</string>
     <string translatable="false" name="feedback_email">arcao@arcao.com</string>
     <string translatable="false" name="feedback_subject">Feedback for %1$s, version %2$s</string>
-    <string translatable="false" name="feedback_body">Write here your feedback…</string>
+    <string translatable="false" name="feedback_body">Your text (english or czech if possible)…</string>
 </resources>

@@ -3,9 +3,11 @@ package com.arcao.geocaching4locus.exception;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
+
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
+import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
 import com.arcao.geocaching4locus.App;
@@ -15,7 +17,9 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+
 import org.scribe.exceptions.OAuthConnectionException;
+
 import timber.log.Timber;
 
 public class ExceptionHandler {
@@ -39,6 +43,9 @@ public class ExceptionHandler {
 
 		if (t instanceof InvalidCredentialsException) {
 			return builder.setText(R.string.error_credentials).setPreferenceFragment(AccountsPreferenceFragment.class).build();
+		} else if (t instanceof InvalidSessionException) {
+			App.get(mContext).getAuthenticatorHelper().removeAccount();
+			return builder.setText(R.string.error_session_expired).setPreferenceFragment(AccountsPreferenceFragment.class).build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder.setText(R.string.error_invalid_api_response).setAdditionalMessage(t.getMessage()).setException(t).build();
 		} else if (t instanceof CacheNotFoundException) {

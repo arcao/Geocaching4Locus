@@ -17,6 +17,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
@@ -28,7 +29,6 @@ import java.util.List;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.DataReaderBigEndian;
@@ -63,7 +63,12 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		boolean replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
 		boolean downloadLogsUpdateCache = prefs.getBoolean(PrefConstants.DOWNLOAD_LOGS_UPDATE_CACHE, true);
 
-		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
+		LocusUtils.LocusVersion locusVersion;
+		try {
+			locusVersion = LocusTesting.getActiveVersion(mContext);
+		} catch (Throwable t) {
+			throw new LocusMapRuntimeException(t);
+		}
 
 		if (result == null || result.newPoint == null) {
 			TaskListener listener = mTaskListenerRef.get();
@@ -90,8 +95,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		if (result.oldPoint != null) {
 			try {
 				ActionTools.updateLocusWaypoint(mContext, locusVersion, result.newPoint, false);
-			} catch (RequiredVersionMissingException e) {
-				Timber.e(e, e.getMessage());
+			} catch (Throwable t) {
+				throw new LocusMapRuntimeException(t);
 			}
 		}
 

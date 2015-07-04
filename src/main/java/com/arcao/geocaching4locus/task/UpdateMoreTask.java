@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
 
@@ -28,7 +29,6 @@ import java.util.List;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
@@ -69,7 +69,12 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 
 		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
+		LocusUtils.LocusVersion locusVersion;
+		try {
+			locusVersion = LocusTesting.getActiveVersion(mContext);
+		} catch (Throwable t) {
+			throw new LocusMapRuntimeException(t);
+		}
 
 		long[] pointIndexes = params[0];
 
@@ -179,8 +184,8 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				}
 
 				waypoints.add(wpt);
-			} catch (RequiredVersionMissingException e) {
-				Timber.e(e, e.getMessage());
+			} catch (Throwable t) {
+				throw new LocusMapRuntimeException(t);
 			}
 		}
 

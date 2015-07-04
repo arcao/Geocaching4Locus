@@ -17,6 +17,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.util.UserTask;
 import com.arcao.wherigoservice.api.WherigoService;
 import com.arcao.wherigoservice.api.WherigoServiceImpl;
@@ -27,7 +28,6 @@ import java.lang.ref.WeakReference;
 
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableListFileOutput;
@@ -127,9 +127,8 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 
 			try {
 				return ActionDisplayPointsExtended.sendPacksFile(mContext, dataFile, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
-			} catch (RequiredVersionMissingException e) {
-				Timber.e(e, e.getMessage());
-				return false;
+			} catch (Throwable t) {
+				throw new LocusMapRuntimeException(t);
 			}
 
 		} catch (InvalidSessionException e) {

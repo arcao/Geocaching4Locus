@@ -30,6 +30,7 @@ import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
 
 import org.acra.ACRA;
@@ -172,8 +173,8 @@ public class SearchGeocacheService extends AbstractService {
 			if (file != null) {
 				ActionDisplayPointsExtended.sendPacksFile(getApplication(), file, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
 			}
-		} catch (Exception e) {
-			Timber.e(e, "callLocus()");
+		} catch (Throwable t) {
+			throw new LocusMapRuntimeException(t);
 		}
 	}
 

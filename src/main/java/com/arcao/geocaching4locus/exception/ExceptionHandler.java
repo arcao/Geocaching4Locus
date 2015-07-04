@@ -55,6 +55,13 @@ public class ExceptionHandler {
 			return builder.setText(R.string.error_network).build();
 		} else if (t instanceof NoResultFoundException) {
 			return builder.setText(R.string.error_no_result).build();
+		} else if (t instanceof LocusMapRuntimeException) {
+			t = t.getCause();
+			String message = t.getMessage();
+			if (message == null)
+				message = "";
+
+			return builder.setAdditionalMessage(String.format("Locus Map Error: %s<br>Exception: %s", message, t.getClass().getSimpleName())).setException(t).build();
 		} else {
 			String message = t.getMessage();
 			if (message == null)

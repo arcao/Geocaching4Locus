@@ -33,6 +33,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 
 import java.util.Arrays;
@@ -118,9 +119,9 @@ public class LiveMapService extends IntentService {
 
 		try {
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
-		} catch (RequiredVersionMissingException e) {
+		} catch (LocusMapRuntimeException e) {
 			Timber.e(e, e.getMessage());
-			showMessage("Error: " + e.getMessage());
+			showMessage("Locus Map Error: " + e.getMessage());
 
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
@@ -258,7 +259,11 @@ public class LiveMapService extends IntentService {
 					pw.addWaypoint(wpt);
 				}
 
-				ActionDisplayPoints.sendPackSilent(this, pw, false);
+				try {
+					ActionDisplayPoints.sendPackSilent(this, pw, false);
+				} catch (Throwable t) {
+					throw new LocusMapRuntimeException(t);
+				}
 
 				notificationManager.setDownloadingProgress(current, CACHES_COUNT);
 

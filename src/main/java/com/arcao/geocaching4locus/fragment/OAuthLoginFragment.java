@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
+import com.arcao.geocaching4locus.util.IntentUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
@@ -169,10 +170,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 				Timber.d("External URL: " + url);
 
 				// launch external URLs in a full browser
-				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				
-				getActivity().startActivity(intent);
+				IntentUtil.showWebPage(getActivity(), Uri.parse(url));
 				return true;
 			}
 

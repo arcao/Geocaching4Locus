@@ -7,6 +7,9 @@ import android.widget.Toast;
 
 public class IntentUtil {
 	public static void showWebPage(Activity activity, Uri uri) {
+		if (activity != null)
+			return;
+
 		final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
 		//noinspection deprecation

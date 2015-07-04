@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">Lade caches…</string>
     <string name="error_locus_not_found">Bitte Locus installieren!</string>
     <string name="error_location">Positionsbestimmung via WiFi, mobile Netzwerke oder GPS erlauben:  \'Settings\'.</string>
@@ -43,7 +43,7 @@
     <string name="pref_show_disabled">Zeige deaktivierte</string>
     <string name="pref_show_disabled_summary">Zeige vorübergehend deaktivierte Caches</string>
     
-    <string name="import_cache_progress">Lade caches...</string>
+    <string name="import_cache_progress">Lade Geocache...</string>
     
     <string name="pref_version">Version</string>
     <string name="pref_website">Webseite, Forum, etc.</string>
@@ -185,4 +185,5 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_live_map_download_hints_summary">Langsameres Laden und höherer Datenverbrauch</string>
     <string name="pref_feedback">Feedback senden</string>
     <string name="error_no_result">Keine der Suche entsprechenden Geocaches gefunden.</string>
+    <string name="error_session_expired">Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden sie automatisch abgemeldet. Bitte melden sie sich erneut an.</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">A descarregar caches…</string>
     <string name="error_locus_not_found">Por favor instale o Locus!</string>
     <string name="error_location">Por favor ative a localização através de Wireless ou GPS nas definições.</string>
@@ -184,4 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
     <string name="pref_feedback">Send Feedback</string>
     <string name="error_no_result">Could not find any geocaches that match your search.</string>
+    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">Pobieranie skrzynek...</string>
     <string name="error_locus_not_found">Zainstaluj program Locus!</string>
     <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
@@ -103,7 +103,7 @@
 
     <string name="livemap_activated">Mapa "na żywo" została aktywowana. Przesuwaj widok, aby przeglądać skrzynki.</string>
     <string name="livemap_deactivated">Mapa "na żywo" została dezaktywowana.</string>
-    <string name="livemap_disabled">Nie zezwoliłeś na wysyłanie okresowych aktualizacji z programu Locus (włącz w programie Locus: Settings → Miscellaneous → Enable periodic updates).</string>
+    <string name="livemap_disabled">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus (włącz w programie Locus: Ustawienia → Różne → Włącz okresowe uaktualnienia).</string>
     <string name="error_location_title">Brak dostępu do usług lokalizacji.</string>
     <string name="error_location_settings_button">Ustawienia</string>
     
@@ -184,4 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Wolniejsze ładowanie oraz bardziej wymagające pod względem wykorzystania danych</string>
     <string name="pref_feedback">Wyślij opinię</string>
     <string name="error_no_result">Nie znaleziono skrzynek geocache spełniających kryteria wyszukiwania.</string>
+    <string name="error_session_expired">Z powodu długiego braku aktywności (ponad 90 dni) zostałeś wylogowany. Proszę zaloguj się ponownie.</string>
 </resources>

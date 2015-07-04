@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">Skidam caheove...</string>
     <string name="error_locus_not_found">Molimo Vas instalirajte Locus!</string>
     <string name="error_location">Molimo Vas, aktivirajte Wi-Fi ili GPS u Postavkama.</string>
@@ -184,4 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
     <string name="pref_feedback">Send Feedback</string>
     <string name="error_no_result">Could not find any geocaches that match your search.</string>
+    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
 </resources>

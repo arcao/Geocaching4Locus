@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">Скачивание кэшей…</string>
     <string name="error_locus_not_found">Пожалуйста, установите Locus!</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
@@ -184,4 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
     <string name="pref_feedback">Отправить отзыв</string>
     <string name="error_no_result">Не удалось найти кэшей, соответствующих параметрам поиска.</string>
+    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Geocaching4Locus</string>
+<resources xmlns:tools="http://schemas.android.com/tools"
+           tools:locale="en">
     <string name="downloading">Stahuji keše…</string>
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
@@ -184,4 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Pomalejší načítání a náročnější na využití dat</string>
     <string name="pref_feedback">Odeslat zpětnou vazbu</string>
     <string name="error_no_result">Nepovedlo se najít žádné keše odpovídající zadaným parametrům.</string>
+    <string name="error_session_expired">Vzhledem k dlouhé nečinnosti (přes 90 dní) jste byl odhlášen. Prosím, přihlaste se znovu.</string>
 </resources>

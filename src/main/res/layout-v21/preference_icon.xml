@@ -6,11 +6,10 @@
               android:minHeight="?android:attr/listPreferredItemHeight"
               android:orientation="vertical"
               android:paddingBottom="?attr/listPreferredItemPaddingBottom"
-              android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-              android:paddingStart="?attr/listPreferredItemPaddingLeft"
-              android:paddingRight="?attr/listPreferredItemPaddingRight"
-              android:paddingEnd="?attr/listPreferredItemPaddingRight"
-              android:paddingTop="?attr/listPreferredItemPaddingTop">
+              android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+              android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+              android:paddingTop="?attr/listPreferredItemPaddingTop"
+              android:clipToPadding="false">
 
     <TextView
         android:id="@android:id/title"
@@ -30,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="8dp"
             android:layout_marginEnd="8dp"
             tools:src="@drawable/geocaching_live_icon"/>
 

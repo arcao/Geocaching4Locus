@@ -38,7 +38,7 @@ import timber.log.Timber;
 public class FeedbackFileProvider extends ContentProvider {
 	private static final String[] COLUMNS = { OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE };
 	private static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".provider.feedback";
-	private static final String REPORT_FILE_NAME = "report-" + BuildConfig.APPLICATION_ID + ".zip";
+	private static final String REPORT_FILE_NAME = "logs.zip";
 	private static final int REPORT_FILE_ID = 1;
 
 	// UriMatcher used to match against incoming requests

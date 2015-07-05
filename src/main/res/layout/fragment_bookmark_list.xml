@@ -26,9 +26,7 @@
             android:layout_height="match_parent"
             android:id="@+id/list"
             android:scrollbars="vertical"
-            android:scrollbarStyle="outsideOverlay"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"/>
+            android:scrollbarStyle="outsideOverlay"/>
 
         <TextView android:id="@+id/textEmpty"
                   android:layout_width="match_parent"

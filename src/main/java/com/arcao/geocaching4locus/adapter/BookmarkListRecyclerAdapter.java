@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
     public void bind(final BookmarkList bookmarkList) {
       title.setText(bookmarkList.getName());
       description.setText(bookmarkList.getDescription());
+			description.setVisibility(StringUtils.isEmpty(bookmarkList.getDescription()) ? View.GONE : View.VISIBLE);
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override

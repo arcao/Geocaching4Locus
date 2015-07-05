@@ -50,9 +50,9 @@
 
             <com.arcao.geocaching4locus.widget.DashboardButton
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_dashboard_settings"
+                android:drawableTop="@drawable/ic_dashboard_import_bookmark"
                 android:onClick="onClickImportFromBookmark"
-                android:text="@string/menu_import_from_bookmark" />
+                android:text="@string/menu_import_bookmark" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 

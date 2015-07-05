@@ -10,9 +10,12 @@ import android.view.MenuItem;
 
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.fragment.BookmarkListFragment;
+import com.arcao.geocaching4locus.fragment.dialog.BookmarkImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener {
+import timber.log.Timber;
+
+public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
 
 	@Override
@@ -52,7 +55,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
 	@Override
 	public void onBookmarkSelected(BookmarkList bookmarkList) {
-
+		BookmarkImportDialogFragment.newInstance(bookmarkList.getGuid()).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
@@ -75,6 +78,17 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 			if (resultCode == RESULT_OK) {
 				showBookmarkList();
 			}
+		}
+	}
+
+	@Override
+	public void onImportFinished(Intent errorIntent) {
+		Timber.d("onImportFinished result: " + errorIntent);
+		setResult(errorIntent == null ? RESULT_OK : RESULT_CANCELED);
+		finish();
+
+		if (errorIntent != null) {
+			startActivity(errorIntent);
 		}
 	}
 }

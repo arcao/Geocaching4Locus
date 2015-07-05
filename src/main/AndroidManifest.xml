@@ -102,8 +102,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportBookmarkActivity" android:theme="@style/AppTheme.DialogWhenLarge" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/launcher_import_from_bookmark">
+        <activity android:name=".ImportBookmarkActivity" android:theme="@style/AppTheme" android:exported="true" android:icon="@drawable/ic_launcher_import_bookmark" android:label="@string/launcher_import_bookmark">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

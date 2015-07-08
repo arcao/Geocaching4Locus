@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.arcao.feedback.collector.AccountInfoCollector;
 import com.arcao.feedback.collector.AppInfoCollector;
@@ -31,13 +33,13 @@ import java.util.zip.ZipOutputStream;
 import timber.log.Timber;
 
 public class FeedbackHelper {
-	public static void sendFeedback(Context context, int resEmail, int resSubject, int resMessageText) {
+	public static void sendFeedback(@NonNull Context context, @StringRes int resEmail, @StringRes int resSubject, @StringRes int resMessageText) {
 		String subject = context.getString(resSubject, getApplicationName(context), getVersion(context));
 
 		String email = context.getString(resEmail);
 
-		Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")); // only e-mail apps
-
+		Intent intent = new Intent(Intent.ACTION_SEND_MULTIPLE); // only e-mail apps
+		intent.setType("plain/text");
 		intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		intent.putExtra(Intent.EXTRA_TEXT, context.getString(resMessageText));
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
@@ -46,7 +48,7 @@ public class FeedbackHelper {
 		try {
 			createReport(context, FeedbackFileProvider.getReportFile(context));
 
-			ArrayList<Uri> uris = new ArrayList<Uri>();
+			ArrayList<Uri> uris = new ArrayList<>();
 			uris.add(FeedbackFileProvider.getReportFileUri());
 
 			intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);

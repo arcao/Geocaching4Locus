@@ -183,6 +183,6 @@
     <string name="pref_live_map_download_hints">Download hints</string>
     <string name="pref_live_map_download_hints_summary">Laadt trager en verbruikt meer data</string>
     <string name="pref_feedback">Verzend feedback</string>
-    <string name="error_no_result">Geen geocaches gevonden die aan je zoektermen voldoen.</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <string name="error_no_result">Geen geocaches gevonden die aan jouw zoektermen voldoen.</string>
+    <string name="error_session_expired">Vanwege langdurige inactiviteit (meer dan 90 dagen) ben je afgemeld. AUB opnieuw aanmelden.</string>
 </resources>

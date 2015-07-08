@@ -184,5 +184,5 @@
     <string name="pref_live_map_download_hints_summary">Chargement plus long et quantité de données augmentée</string>
     <string name="pref_feedback">Donnez votre avis</string>
     <string name="error_no_result">Impossible de trouver des caches correspondantes à vos critères</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <string name="error_session_expired">A cause d\'une longue inactivité (plus de 90 jours) vous avez été déconnecté. Merci de vous identifier à nouveau.</string>
 </resources>

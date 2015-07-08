@@ -19,7 +19,7 @@
     <string name="pref_imperial_units">Імперські одиниці</string>
     <string name="pref_imperial_units_summary">Використовувати милі замість кілометрів</string>
     
-    <string name="error_credentials">Невірне ім\'я користувача або пароль. Будь ласка, перевірте Ваш стан входу  в параметрах.</string>
+    <string name="error_credentials">Невірне псевдо користувача або ж гасло. Будь ласка, спробуйте ще раз.</string>
     <string name="error_title">Трапилася помилка!</string>
     
     <string name="ok_button">Гаразд</string>
@@ -160,29 +160,29 @@
     <string name="livemap_notification_action_enable">Увімкнути живу мапу</string>
     <string name="livemap_notification_action_disable">Вимкнути живу мапу</string>
     <string name="livemap_error">Жива мапа Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
+    <string name="pref_livemap_show_disabled_notification">Сповіщення вимкнено</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
     <string name="pref_cache_type_all">Всі</string>
-    <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Download logs</string>
+    <string name="button_filter">Фільтр</string>
+    <string name="download_logs_progress">Стягування журналів змін...</string>
+    <string name="launcher_download_logs">Завантажити журнали змін</string>
 
-    <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
-    <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
-    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+    <string name="pref_download_logs_update_cache">Завантажити журнали змін оновленого кешу</string>
+    <string name="pref_download_logs_update_cache_summary">Дія "Завантажити журнали" також оновлює кеш даних</string>
+    <string name="pref_downloading_count_of_caches_step">Розмір числа пакету кешів</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Змінити розмір кешу обраного діялоґу</string>
+    <string name="premium_member_for_filter_required">Деякі фільтри потребують преміюм-акаунт, який Ви не маєте. Застосунок перемикається на основний режим. Будь ласка, спробуйте ще раз.</string>
 
-    <string name="prefs_cat_account">Account</string>
+    <string name="prefs_cat_account">Акаунт</string>
     <string name="prefs_cat_filter">Фільтр</string>
     <string name="prefs_cat_live_map">Жива карта</string>
     <string name="prefs_cat_downloading">Завантаження…</string>
     <string name="prefs_cat_advanced">Додатково</string>
     <string name="prefs_cat_about">Про</string>
     <string name="login_title">Увійти</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
-    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
-    <string name="pref_feedback">Send Feedback</string>
-    <string name="error_no_result">Could not find any geocaches that match your search.</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <string name="pref_live_map_download_hints">Стягнути поради</string>
+    <string name="pref_live_map_download_hints_summary">Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
+    <string name="pref_feedback">Надіслати відозву</string>
+    <string name="error_no_result">Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
+    <string name="error_session_expired">У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
 </resources>

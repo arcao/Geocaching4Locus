@@ -45,7 +45,11 @@ public class FeedbackHelper {
 
 		try {
 			createReport(context, FeedbackFileProvider.getReportFile(context));
-			intent.putExtra(Intent.EXTRA_STREAM, FeedbackFileProvider.getReportFileUri());
+
+			ArrayList<Uri> uris = new ArrayList<Uri>();
+			uris.add(FeedbackFileProvider.getReportFileUri());
+
+			intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
 		} catch (IOException e) {
 			Timber.e(e, e.getMessage());
 		}

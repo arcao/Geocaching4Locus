@@ -3,8 +3,12 @@ package com.arcao.feedback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.arcao.feedback.collector.AccountInfoCollector;
 import com.arcao.feedback.collector.AppInfoCollector;
@@ -25,19 +29,21 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import timber.log.Timber;
 
 public class FeedbackHelper {
-	public static void sendFeedback(Context context, int resEmail, int resSubject, int resMessageText) {
+	public static void sendFeedback(@NonNull Context context, @StringRes int resEmail, @StringRes int resSubject, @StringRes int resMessageText) {
 		String subject = context.getString(resSubject, getApplicationName(context), getVersion(context));
 
 		String email = context.getString(resEmail);
 
-		Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:")); // only e-mail apps
-
+		Intent intent = new Intent(Intent.ACTION_SEND); // only e-mail apps
+		intent.setType("plain/text");
 		intent.putExtra(Intent.EXTRA_SUBJECT, subject);
 		intent.putExtra(Intent.EXTRA_TEXT, context.getString(resMessageText));
 		intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
@@ -50,7 +56,7 @@ public class FeedbackHelper {
 			Timber.e(e, e.getMessage());
 		}
 
-		context.startActivity(Intent.createChooser(intent, null));
+		context.startActivity(createEmailOnlyChooserIntent(context, intent, null));
 	}
 
 	private static void createReport(Context context, File reportFile) throws IOException {
@@ -117,6 +123,27 @@ public class FeedbackHelper {
 		} catch (PackageManager.NameNotFoundException e) {
 			Timber.e(e, e.getMessage());
 			return "0.0";
+		}
+	}
+
+	private static Intent createEmailOnlyChooserIntent(Context context, Intent source, CharSequence chooserTitle) {
+		List<Intent> intents = new Stack<>();
+		Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:info@domain.com"));
+		List<ResolveInfo> activities = context.getPackageManager().queryIntentActivities(i, 0);
+
+		for(ResolveInfo ri : activities) {
+			Intent target = new Intent(source);
+			target.setPackage(ri.activityInfo.packageName);
+			intents.add(target);
+		}
+
+		if(!intents.isEmpty()) {
+			Intent chooserIntent = Intent.createChooser(intents.remove(0), chooserTitle);
+			chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toArray(new Parcelable[intents.size()]));
+
+			return chooserIntent;
+		} else {
+			return Intent.createChooser(source, chooserTitle);
 		}
 	}
 }

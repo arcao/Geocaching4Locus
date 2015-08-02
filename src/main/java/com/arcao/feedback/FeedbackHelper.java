@@ -9,19 +9,9 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-
-import com.arcao.feedback.collector.AccountInfoCollector;
-import com.arcao.feedback.collector.AppInfoCollector;
-import com.arcao.feedback.collector.BuildConfigCollector;
-import com.arcao.feedback.collector.Collector;
-import com.arcao.feedback.collector.ConfigurationCollector;
-import com.arcao.feedback.collector.ConstantsCollector;
-import com.arcao.feedback.collector.DisplayManagerCollector;
-import com.arcao.feedback.collector.LogCatCollector;
-import com.arcao.feedback.collector.MemoryCollector;
-import com.arcao.feedback.collector.SharedPreferencesCollector;
-
+import com.arcao.feedback.collector.*;
 import org.apache.commons.io.IOUtils;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,8 +23,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import timber.log.Timber;
 
 public class FeedbackHelper {
 	public static void sendFeedback(@NonNull Context context, @StringRes int resEmail, @StringRes int resSubject, @StringRes int resMessageText) {
@@ -104,10 +92,13 @@ public class FeedbackHelper {
 		collectors.add(new ConstantsCollector(Build.class, "BUILD"));
 		collectors.add(new ConstantsCollector(Build.VERSION.class, "VERSION"));
 		collectors.add(new MemoryCollector());
-		collectors.add(new LogCatCollector(context));
 		collectors.add(new SharedPreferencesCollector(context));
 		collectors.add(new DisplayManagerCollector(context));
 		collectors.add(new AccountInfoCollector(context));
+		collectors.add(new LocusMapInfoCollector(context));
+
+		// LogCat collector has to be the latest one to receive exceptions from collectors
+		collectors.add(new LogCatCollector(context));
 
 		return collectors;
 	}

@@ -208,4 +208,5 @@
     <string name="pref_downloading_count_of_caches_step">Rozmiar pakietu pobierania skrytek</string>
     <string name="pref_downloading_count_of_caches_step_summary">Okno dialogowe zmieniy rozmiaru pakietu pobierania skrytek</string>
     <string name="premium_member_for_filter_required">Niektóre filtry wymagają konta "premium", którego nie posiadasz. Aplikacja zostanie przełączona w tryb dla standardowych użytkowników. Proszę spróbuj ponownie.</string>
+    <string name="error_session_expired">Z powodu długiego braku aktywności (ponad 90 dni) zostałeś wylogowany. Proszę zaloguj się ponownie.</string>
 </resources>

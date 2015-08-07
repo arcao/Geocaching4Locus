@@ -3,10 +3,13 @@ package com.arcao.geocaching4locus.exception;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
+
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
+import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
+import com.arcao.geocaching.api.impl.live_geocaching_api.StatusCode;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.Geocaching4LocusApplication;
@@ -14,6 +17,7 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+
 import oauth.signpost.exception.OAuthCommunicationException;
 
 public class ExceptionHandler {
@@ -34,6 +38,9 @@ public class ExceptionHandler {
 
 		if (t instanceof InvalidCredentialsException) {
 			return ErrorActivity.createErrorIntent(mContext, R.string.error_credentials, null, true, null);
+		} else if (isSessionError(t)) {
+			Geocaching4LocusApplication.getAuthenticatorHelper().removeAccount();
+			return ErrorActivity.createErrorIntent(mContext, R.string.error_session_expired, null, true, null);
 		} else if (t instanceof InvalidResponseException) {
 			return ErrorActivity.createErrorIntent(mContext, R.string.error_invalid_api_response, t.getMessage(), false, t);
 		} else if (t instanceof CacheNotFoundException) {
@@ -48,6 +55,21 @@ public class ExceptionHandler {
 
 			return ErrorActivity.createErrorIntent(mContext, 0, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()), false, t);
 		}
+	}
+
+	private boolean isSessionError(Throwable t) {
+		if (t instanceof InvalidSessionException)
+			return true;
+
+		if (t instanceof LiveGeocachingApiException) {
+			switch (((LiveGeocachingApiException) t).getStatusCode()) {
+				case NotAuthorized:
+				case UserAccountProblem:
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t) {

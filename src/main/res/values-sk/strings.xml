@@ -208,4 +208,5 @@
     <string name="pref_downloading_count_of_caches_step">Veľkosť kroku pre počet kešiek</string>
     <string name="pref_downloading_count_of_caches_step_summary">Zmení veľkosť kroku u dialógu na vybranie počtu kešiek</string>
     <string name="premium_member_for_filter_required">Niektoré filtre vyžadujú prémiový účet, ktorý nemáte. Aplikácia sa prepne do režimu pre základný účet. Prosím, skúste to znova.</string>
+    <string name="error_session_expired">Vzhľadom k dlhej nečinnosti (cez 90 dní) ste bol odhlásený. Prosím, prihláste sa znova.</string>
 </resources>

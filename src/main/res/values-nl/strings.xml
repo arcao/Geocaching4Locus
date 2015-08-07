@@ -208,4 +208,5 @@
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
     <string name="premium_member_for_filter_required">Sommige filters vereisen een premium account welke u niet hebt. De applicatie zal terug wisselen naar een mode voor gewone gebruikers. Probeert u aub opnieuw.</string>
+    <string name="error_session_expired">Vanwege langdurige inactiviteit (meer dan 90 dagen) ben je afgemeld. AUB opnieuw aanmelden.</string>
 </resources>

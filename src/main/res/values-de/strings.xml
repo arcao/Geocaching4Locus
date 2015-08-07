@@ -209,4 +209,5 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_downloading_count_of_caches_step">Cache in 1-er oder 10-er Schritten herunterladen</string>
     <string name="pref_downloading_count_of_caches_step_summary">Auswahlmenü: Anzahl der heruntergeladenen Cache in 1-er oder 10-er Schritten</string>
     <string name="premium_member_for_filter_required">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basis-Mitgliedschaft. Bitte noch einmal versuchen.</string>
+    <string name="error_session_expired">Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden sie automatisch abgemeldet. Bitte melden sie sich erneut an.</string>
 </resources>

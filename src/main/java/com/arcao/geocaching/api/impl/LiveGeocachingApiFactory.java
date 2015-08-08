@@ -1,22 +1,28 @@
 package com.arcao.geocaching.api.impl;
 
-import com.arcao.geocaching.api.configuration.OAuthGeocachingApiConfiguration;
-import com.arcao.geocaching.api.configuration.resolver.GeocachingApiConfigurationResolver;
+import com.arcao.geocaching.api.configuration.impl.DefaultStagingGeocachingApiConfiguration;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.BuildConfig;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 
 public class LiveGeocachingApiFactory {
+	private static final String OAUTH_URL_PRODUCTION = "https://www.geocaching.com/oauth/mobileoauth.ashx";
+	private static final String OAUTH_URL_STAGING = "https://staging.geocaching.com/oauth/mobileoauth.ashx";
+
 	private static LiveGeocachingApi liveGeocachingApi;
 	private static OAuthConsumer oAuthConsumer;
 	private static OAuthProvider oAuthProvider;
 
 	public static LiveGeocachingApi getLiveGeocachingApi() throws GeocachingApiException {
 		if (liveGeocachingApi == null) {
-			liveGeocachingApi = new LiveGeocachingApi.Builder().setConfiguration(getConfiguration()).build();
+			if (BuildConfig.GEOCACHING_API_STAGING) {
+				liveGeocachingApi = new LiveGeocachingApi.Builder().setConfiguration(new DefaultStagingGeocachingApiConfiguration()).build();
+			} else {
+				liveGeocachingApi = new LiveGeocachingApi.Builder().build();
+			}
 		}
 
 		return liveGeocachingApi;
@@ -24,8 +30,7 @@ public class LiveGeocachingApiFactory {
 
 	public static OAuthConsumer getOAuthConsumer() throws GeocachingApiException {
 		if (oAuthConsumer == null) {
-			OAuthGeocachingApiConfiguration configuration = getConfiguration();
-			oAuthConsumer = new CommonsHttpOAuthConsumer(configuration.getConsumerKey(), configuration.getConsumerSecret());
+			oAuthConsumer = new CommonsHttpOAuthConsumer(BuildConfig.GEOCACHING_API_KEY, BuildConfig.GEOCACHING_API_SECRET);
 		}
 
 		return oAuthConsumer;
@@ -33,28 +38,13 @@ public class LiveGeocachingApiFactory {
 
 	public static OAuthProvider getOAuthProvider() throws GeocachingApiException {
 		if (oAuthProvider == null) {
-			OAuthGeocachingApiConfiguration configuration = getConfiguration();
-			oAuthProvider = new CommonsHttpOAuthProvider(configuration.getOAuthRequestUrl(), configuration.getOAuthAccessUrl(), configuration.getOAuthAuthorizeUrl());
+			final String oAuthUrl = (BuildConfig.GEOCACHING_API_STAGING) ? OAUTH_URL_STAGING : OAUTH_URL_PRODUCTION;
+
+			oAuthProvider = new CommonsHttpOAuthProvider(oAuthUrl, oAuthUrl, oAuthUrl);
 			// always use OAuth 1.0a
 			oAuthProvider.setOAuth10a(true);
 		}
 
 		return oAuthProvider;
-	}
-
-	private static OAuthGeocachingApiConfiguration getConfiguration() throws GeocachingApiException {
-		OAuthGeocachingApiConfiguration configuration;
-
-		if (AppConstants.USE_PRODUCTION_CONFIGURATION) {
-			configuration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.PRODUCTION_CONFIGURATION_CLASS);
-		} else {
-			configuration = GeocachingApiConfigurationResolver.resolve(OAuthGeocachingApiConfiguration.class, AppConstants.STAGGING_CONFIGURATION_CLASS);
-		}
-
-		if (configuration == null) {
-			throw new GeocachingApiException("GeocachingApi configuration class wasn't found.");
-		}
-
-		return configuration;
 	}
 }

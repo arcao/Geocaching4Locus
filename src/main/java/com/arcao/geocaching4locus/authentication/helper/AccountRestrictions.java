@@ -24,8 +24,8 @@ public class AccountRestrictions {
 	protected Date renewFullGeocacheLimit;
 	protected boolean premiumMember;
 
-	public AccountRestrictions(Context mContext) {
-		mPrefs = mContext.getSharedPreferences("RESTRICTION", 0);
+	public AccountRestrictions(Context context) {
+		mPrefs = context.getSharedPreferences("RESTRICTION", 0);
 		init();
 	}
 

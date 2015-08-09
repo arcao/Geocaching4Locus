@@ -12,17 +12,15 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.MenuActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
+import locus.api.android.ActionTools;
+import locus.api.android.utils.LocusInfo;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import locus.api.android.ActionTools;
-import locus.api.android.utils.LocusInfo;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 	public static final String VAR_B_MAP_VISIBLE = ("1300");
@@ -50,7 +48,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private LiveMapNotificationManager(Context context) {
-		mContext = context;
+		mContext = context.getApplicationContext();
 
 		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);

@@ -110,6 +110,7 @@ android {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'org/apache/http/version.properties'
         exclude 'templates/release-notes.vm'
+        exclude 'log4j.xml'
     }
 //    lintOptions { abortOnError false }
 }

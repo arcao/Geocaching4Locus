@@ -5,13 +5,14 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
+import org.apache.commons.lang3.StringUtils;
 
 public class SpannedFix {
 	public static Spanned fromHtml(String source) {
-		return applyFix(Html.fromHtml(source));
+		return applyFix(Html.fromHtml(StringUtils.defaultString(source)));
 	}
 
-	public static Spanned applyFix(Spanned spanned) {
+	private static Spanned applyFix(Spanned spanned) {
 		// this will fix crash only on API v16, other API versions are safe
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN)
 			return spanned;

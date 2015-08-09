@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -20,16 +19,15 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	private static final String TAG = UpdateMoreTask.class.getName();
@@ -167,10 +165,9 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	}
 
 	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, long[] pointIndexes, int current, int cachesPerRequest) {
-		List<Waypoint> waypoints = new ArrayList<>();
-
 		int count = Math.min(pointIndexes.length - current, cachesPerRequest);
-
+		
+		List<Waypoint> waypoints = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
 			try {
 				// get old waypoint from Locus

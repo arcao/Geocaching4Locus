@@ -188,4 +188,5 @@
     <string name="launcher_import_bookmark">Import bookmark</string>
     <string name="menu_import_bookmark">Import bookmark</string>
     <string name="import_caches_progress">Downloading caches…</string>
+    <string name="error_no_location_permission">App does not have permission to access to location service.</string>
 </resources>

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.dialog.NoLocationPermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
 import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
@@ -391,6 +392,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
 		// restart download process after log in
 		if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
 			// do not call download method directly here, must be called in onResume method
@@ -400,14 +403,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
 		if (requestCode == REQUEST_LOCATION_PERMISSION) {
 			if (PermissionUtil.verifyPermissions(grantResults)) {
 				acquireCoordinates();
 			} else {
-				// app doesn't have permission, show error here
+				NoLocationPermissionErrorDialogFragment.newInstance().show(getFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
 			}
-		} else {
-			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 

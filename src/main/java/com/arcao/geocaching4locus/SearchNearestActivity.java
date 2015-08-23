@@ -1,11 +1,15 @@
 package com.arcao.geocaching4locus;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
@@ -25,14 +30,17 @@ import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.util.PermissionUtil;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.SpannedFix;
+
+import org.apache.commons.lang3.StringUtils;
+
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
-import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.DialogListener {
@@ -41,6 +49,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	private static final String STATE_HAS_COORDINATES = "has_coordinates";
 
 	private static final int REQUEST_LOGIN = 1;
+	private static final int REQUEST_LOCATION_PERMISSION = 2;
 
 	private double mLatitude = Double.NaN;
 	private double mLongitude = Double.NaN;
@@ -216,7 +225,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 			mStartDownload = false;
 			download();
 		} else if (!mHasCoordinates) {
-			acquireCoordinates();
+			//acquireCoordinates();
 		} else {
 			updateCoordinateTextView();
 			requestProgressUpdate();
@@ -264,7 +273,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 	}
 
 	public void onClickGps(View view) {
-		acquireCoordinates();
+		requestCoordinates();
 	}
 
 	public void onClickFilter(View view) {
@@ -306,6 +315,21 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 						.content(SpannedFix.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
 						.positiveText(R.string.ok_button)
 						.show();
+	}
+
+
+	private void requestCoordinates() {
+		LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		String[] permissions;
+
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			permissions = new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+		} else {
+			permissions = new String[] {Manifest.permission.ACCESS_COARSE_LOCATION};
+		}
+
+		requestPermissions(permissions, REQUEST_LOCATION_PERMISSION);
 	}
 
 	private void acquireCoordinates() {
@@ -371,6 +395,19 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 		if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
 			// do not call download method directly here, must be called in onResume method
 			mStartDownload = true;
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if (requestCode == REQUEST_LOCATION_PERMISSION) {
+			if (PermissionUtil.verifyPermissions(grantResults)) {
+				acquireCoordinates();
+			} else {
+				// app doesn't have permission, show error here
+			}
+		} else {
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 

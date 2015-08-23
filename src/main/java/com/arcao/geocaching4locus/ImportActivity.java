@@ -8,8 +8,6 @@ import android.widget.Toast;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-import org.acra.ACRA;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,7 +71,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 		String cacheId = m.group(1);
 
-		ACRA.getErrorReporter().putCustomData("source", "import;" + cacheId);
+		Timber.i("source: import;" + cacheId);
 
 		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;

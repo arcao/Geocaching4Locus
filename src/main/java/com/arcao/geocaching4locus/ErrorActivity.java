@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
+import com.crashlytics.android.Crashlytics;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
@@ -112,10 +113,7 @@ public class ErrorActivity extends AppCompatActivity {
 
 				@Override
 				public void onNeutral(MaterialDialog dialog) {
-					Intent intent = new Intent(getActivity(), SendErrorActivity.class);
-					intent.setAction(SendErrorActivity.ACTION_SEND_ERROR);
-					intent.putExtra(SendErrorActivity.PARAM_EXCEPTION, t);
-					startActivity(intent);
+					Crashlytics.logException(t);
 					getActivity().finish();
 				}
 			});

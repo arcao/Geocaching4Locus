@@ -23,8 +23,6 @@ import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.util.UserTask;
 
-import org.acra.ACRA;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -73,7 +71,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
 		String guid = params[0];
 
-		ACRA.getErrorReporter().putCustomData("source", "import_from_bookmark;" + guid);
+		Timber.d("source: import_from_bookmark;" + guid);
 
 		// retrieve Bookmark list geocaches
 		List<Bookmark> bookmarks = api.getBookmarkListByGuid(guid);

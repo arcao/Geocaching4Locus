@@ -12,7 +12,6 @@ import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
-import org.acra.ACRA;
 import timber.log.Timber;
 
 public class UpdateActivity extends AppCompatActivity implements UpdateDialogFragment.DialogListener {
@@ -94,7 +93,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
 		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
 
-		ACRA.getErrorReporter().putCustomData("source", "update;" + cacheId);
+		Timber.i("source: update;" + cacheId);
 
 		if (getFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
 			return;

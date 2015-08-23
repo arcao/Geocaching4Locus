@@ -11,7 +11,9 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
-import org.acra.ACRA;
+import com.crashlytics.android.Crashlytics;
+
+import timber.log.Timber;
 
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
 	private static final String TAG_DIALOG = "DIALOG";
@@ -26,7 +28,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 		getSupportActionBar().setTitle(getTitle());
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		ACRA.getErrorReporter().putCustomData("source", "login");
+		Timber.i("source: login");
 	}
 
 	@Override
@@ -68,6 +70,11 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 
 		AuthenticatorHelper helper = App.get(this).getAuthenticatorHelper();
 		setResult(helper.hasAccount() ? RESULT_OK : RESULT_CANCELED);
+
+		if (helper.hasAccount()) {
+			Crashlytics.setUserName(helper.getAccount().name);
+		}
+
 		finish();
 	}
 

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import locus.api.android.utils.LocusUtils;
-import org.acra.ACRA;
 import timber.log.Timber;
 
 public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreDialogFragment.DialogListener {
@@ -51,8 +50,7 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 			return;
 		}
 
-		ACRA.getErrorReporter().putCustomData("source", "update;");
-		ACRA.getErrorReporter().putCustomData("count", String.valueOf(pointIndexes.length));
+		Timber.i("source: update;count=" + pointIndexes.length);
 
 		if (getFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
 			return;

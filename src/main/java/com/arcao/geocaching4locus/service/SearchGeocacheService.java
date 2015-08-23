@@ -33,8 +33,6 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
 
-import org.acra.ACRA;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -210,7 +208,7 @@ public class SearchGeocacheService extends AbstractService {
 		if (isCanceled())
 			return null;
 
-		ACRA.getErrorReporter().putCustomData("source", "search;" + coordinates.toString(CoordinatesFormatter.LAT_LON_DECDEGREE_COMMA));
+		Timber.i("source: search;" + coordinates.toString(CoordinatesFormatter.LAT_LON_DECDEGREE_COMMA));
 
 		GeocachingApi api = GeocachingApiFactory.create();
 

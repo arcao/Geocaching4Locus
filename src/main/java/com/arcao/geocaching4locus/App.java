@@ -6,34 +6,22 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
-import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.util.CrashlyticsTree;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import locus.api.android.utils.LocusUtils;
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
+import com.crashlytics.android.Crashlytics;
+
 import org.scribe.model.Token;
-import timber.log.Timber;
 
 import java.util.UUID;
 
-@ReportsCrashes(
-		buildConfigClass = BuildConfig.class,
-		formUri = AppConstants.ERROR_SCRIPT_URL,
-		mode = ReportingInteractionMode.NOTIFICATION,
-		resNotifTickerText = R.string.crash_notif_ticker_text,
-		resNotifTitle = R.string.crash_notif_title,
-		resNotifText = R.string.crash_notif_text,
-		resNotifIcon = android.R.drawable.stat_notify_error, // optional. default is a warning sign
-		resDialogText = R.string.crash_dialog_text,
-		resDialogIcon = android.R.drawable.ic_dialog_info, //optional. default is a warning sign
-		resDialogTitle = R.string.crash_dialog_title, // optional. default is your application name
-		resDialogCommentPrompt = R.string.crash_dialog_comment_prompt, // optional. when defined, adds a user text field input with this text resource as a label
-		resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
-)
+import io.fabric.sdk.android.Fabric;
+import locus.api.android.utils.LocusUtils;
+import timber.log.Timber;
+
 public class App extends android.app.Application {
 	private AuthenticatorHelper mAuthenticatorHelper;
 	private String mDeviceId;
@@ -41,26 +29,27 @@ public class App extends android.app.Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Fabric.with(this, new Crashlytics());
 
 		Timber.plant(new Timber.DebugTree());
-		ACRA.init(this);
+		Timber.plant(new CrashlyticsTree());
 
 	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
 
+		Crashlytics.setUserIdentifier(getDeviceId());
+
 		if (mAuthenticatorHelper.hasAccount()) {
-			ACRA.getErrorReporter().putCustomData("userName", mAuthenticatorHelper.getAccount().name);
+			Crashlytics.setUserName(mAuthenticatorHelper.getAccount().name);
 		}
 
 		try {
 			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
 			if (lv != null) {
-				ACRA.getErrorReporter().putCustomData("LocusVersion", lv.versionName);
-				ACRA.getErrorReporter().putCustomData("LocusPackage", lv.packageName);
+				Crashlytics.setString("LocusVersion", lv.versionName);
+				Crashlytics.setString("LocusPackage", lv.packageName);
 			}
 		} catch (Throwable t) {
 			Timber.e(t, t.getMessage());
-			ACRA.getErrorReporter().putCustomData("LocusVersion", "failed");
-			ACRA.getErrorReporter().putCustomData("LocusPackage", "failed");
 		}
 
 		System.setProperty("debug", "1");

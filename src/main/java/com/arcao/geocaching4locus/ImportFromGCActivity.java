@@ -9,8 +9,6 @@ import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
 
-import org.acra.ACRA;
-
 import timber.log.Timber;
 
 public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
@@ -67,7 +65,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 	}
 
 	private void startImport(String cacheId) {
-		ACRA.getErrorReporter().putCustomData("source", "importFromGC;" + cacheId);
+		Timber.i("source: importFromGC;" + cacheId);
 
 		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
 			return;

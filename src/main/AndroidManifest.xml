@@ -18,8 +18,12 @@
     <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:backupAgent=".backup.PreferencesBackupAgent" android:name=".App" android:allowBackup="true" android:largeHeap="true" android:hardwareAccelerated="true">
-        <meta-data android:name="com.google.android.backup.api_key"
+        <meta-data
+            android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="d9f9c35025d01f3c5119cabffed73f1083e2c220" />
 
         <provider
             android:name="com.arcao.feedback.FeedbackFileProvider"
@@ -94,8 +98,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".authentication.AuthenticatorActivity" android:label="@string/login_title" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name="org.acra.CrashReportDialog" android:theme="@style/AppTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
-        <activity android:name="SendErrorActivity" android:theme="@style/AppTheme.Dialog" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_launcher_gc_input" android:label="@string/launcher_import_from_gc">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />

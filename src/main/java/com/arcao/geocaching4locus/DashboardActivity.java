@@ -7,30 +7,33 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ToggleButton;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.IntentUtil;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
-
+import com.arcao.geocaching4locus.widget.DashboardButton;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 
 public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
-	private ToggleButton mLiveMapButton;
 	private LiveMapNotificationManager mLiveMapNotificationManager;
+
+	@Bind(R.id.db_live_map) DashboardButton mLiveMapButton;
+	@Bind(R.id.db_import_bookmark) DashboardButton mImportBookmarkButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_dashboard);
+    ButterKnife.bind(this);
 
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 		getSupportActionBar().setTitle(getTitle());
 
 		mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
-		mLiveMapButton = (ToggleButton) findViewById(R.id.btn_menu_live_map);
 	}
 
 	@Override
@@ -39,6 +42,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
+    
+    mImportBookmarkButton.setEnabled(App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
 	}
 
 	@Override
@@ -52,7 +57,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		startActivityForResult(new Intent(this, ImportFromGCActivity.class), 0);
 	}
 
-	public void onClickLiveMap(View view) {
+  @OnClick(R.id.db_live_map)
+	public void onClickLiveMap() {
 		mLiveMapNotificationManager.setLiveMapEnabled(!mLiveMapNotificationManager.isLiveMapEnabled());
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 
@@ -119,7 +125,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		mLiveMapButton.setChecked(newState);
 	}
 
-	public void onClickImportFromBookmark(View view) {
+  @OnClick(R.id.db_import_bookmark)
+	public void onClickImportBookmark() {
 		startActivity(new Intent(this, ImportBookmarkActivity.class));
 		finish();
 	}

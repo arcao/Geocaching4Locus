@@ -2,9 +2,9 @@ package com.arcao.feedback.collector;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 
-import org.acra.util.PackageManagerWrapper;
 import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
@@ -32,9 +32,7 @@ public class LogCatCollector extends Collector {
 
 	@Override
 	protected String collect() {
-		final PackageManagerWrapper pm = new PackageManagerWrapper(mContext);
-
-		if (!pm.hasPermission(Manifest.permission.READ_LOGS) && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+		if (!hasPermission(Manifest.permission.READ_LOGS) && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 			return "N/A";
 		}
 
@@ -43,7 +41,7 @@ public class LogCatCollector extends Collector {
 		final List<String> commandLine = new ArrayList<>();
 		commandLine.add("logcat");
 		commandLine.add("-t");
-		commandLine.add("1000");
+		commandLine.add("10000");
 		commandLine.add("-v");
 		commandLine.add("time");
 
@@ -83,5 +81,20 @@ public class LogCatCollector extends Collector {
 		}
 
 		return buffer.toString();
+	}
+
+	private boolean hasPermission(String permission) {
+		final PackageManager pm = mContext.getPackageManager();
+		if (pm == null) {
+			return false;
+		}
+
+		try {
+			return pm.checkPermission(permission, mContext.getPackageName()) == PackageManager.PERMISSION_GRANTED;
+		} catch (RuntimeException e) {
+			// To catch RuntimeException("Package manager has died") that can occur on some version of Android,
+			// when the remote PackageManager is unavailable. I suspect this sometimes occurs when the App is being reinstalled.
+			return false;
+		}
 	}
 }

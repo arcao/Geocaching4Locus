@@ -40,6 +40,7 @@
         <item name="colorControlActivated">@color/accent</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="android:listDivider">@drawable/list_divider</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
 

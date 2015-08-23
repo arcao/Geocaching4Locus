@@ -50,4 +50,11 @@ public class DashboardButton extends ToggleButton {
 
 		super.setChecked(checked);
 	}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+
+		setAlpha(enabled ? 1 : 0.38f);
+	}
 }

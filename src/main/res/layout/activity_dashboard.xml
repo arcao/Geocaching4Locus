@@ -18,10 +18,9 @@
             android:layout_height="wrap_content" >
 
             <com.arcao.geocaching4locus.widget.DashboardButton
-                android:id="@+id/btn_menu_live_map"
+                android:id="@+id/db_live_map"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_live_map"
-                android:onClick="onClickLiveMap"
                 android:text="@string/menu_live_map"
                 app:toggleable="true"/>
 
@@ -49,9 +48,9 @@
             android:layout_height="wrap_content" >
 
             <com.arcao.geocaching4locus.widget.DashboardButton
+                android:id="@+id/db_import_bookmark"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_import_bookmark"
-                android:onClick="onClickImportFromBookmark"
                 android:text="@string/menu_import_bookmark" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />

@@ -27,17 +27,17 @@
             <ImageView style="@style/SeparatorVertical.Dark" />
 
             <com.arcao.geocaching4locus.widget.DashboardButton
+                android:id="@+id/db_import_gc"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_gc_input"
-                android:onClick="onClickImportFromGC"
                 android:text="@string/menu_import_from_gc" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
             <com.arcao.geocaching4locus.widget.DashboardButton
+                android:id="@+id/db_search_nearest"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_search"
-                android:onClick="onClickNearest"
                 android:text="@string/menu_nearest" />
         </LinearLayout>
 
@@ -56,17 +56,17 @@
             <ImageView style="@style/SeparatorVertical.Dark" />
 
             <com.arcao.geocaching4locus.widget.DashboardButton
+                android:id="@+id/db_preferences"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_settings"
-                android:onClick="onClickPreferences"
                 android:text="@string/menu_preferences" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
             <com.arcao.geocaching4locus.widget.DashboardButton
+                android:id="@+id/db_manual"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_help"
-                android:onClick="onClickManual"
                 android:text="@string/menu_manual" />
 
         </LinearLayout>

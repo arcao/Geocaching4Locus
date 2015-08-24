@@ -7,12 +7,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.fragment.BookmarkListFragment;
 import com.arcao.geocaching4locus.fragment.dialog.BookmarkImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
-
 import timber.log.Timber;
 
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
@@ -27,11 +25,6 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 			return;
 		}
 
-		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
-			return;
-		}
-
 		setContentView(R.layout.activity_import_bookmark);
 		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
@@ -39,6 +32,11 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 		if (actionBar != null) {
 			actionBar.setTitle(getTitle());
 			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
+
+		// test if user is logged in
+		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+			return;
 		}
 
 		showBookmarkList();

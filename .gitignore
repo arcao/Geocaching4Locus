@@ -33,3 +33,4 @@ gradle.properties
 *.ipr
 *~
 *.swp
+crashlytics.properties

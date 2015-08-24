@@ -6,16 +6,30 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="?android:attr/listChoiceBackgroundIndicator">
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:clickable="false"
-        tools:text="Bookmark name"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:clickable="false"
+            tools:text="Bookmark name"
+            />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:singleLine="true"
+            android:clickable="false"
+            tools:text="3 caches"
+            />
+    </LinearLayout>
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"

@@ -53,6 +53,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
   protected class ViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.title) TextView title;
     @Bind(R.id.description) TextView description;
+		@Bind(R.id.count) TextView count;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -61,6 +62,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
 
     public void bind(final BookmarkList bookmarkList) {
       title.setText(bookmarkList.getName());
+			count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_cache, bookmarkList.getItemCount(), bookmarkList.getItemCount()));
       description.setText(bookmarkList.getDescription());
 			description.setVisibility(StringUtils.isEmpty(bookmarkList.getDescription()) ? View.GONE : View.VISIBLE);
 

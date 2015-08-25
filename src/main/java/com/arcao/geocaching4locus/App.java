@@ -31,7 +31,7 @@ public class App extends android.app.Application {
 		super.onCreate();
 		Fabric.with(this, new Crashlytics());
 
-		Timber.plant(new Timber.DebugTree());
+		//Timber.plant(new Timber.DebugTree());
 		Timber.plant(new CrashlyticsTree());
 
 	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);

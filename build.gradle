@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
@@ -14,10 +14,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
-    mavenCentral()
-    maven { url "http://maven.arcao.com/" }
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://maven.arcao.com/" }
 }
 
 dependencies {

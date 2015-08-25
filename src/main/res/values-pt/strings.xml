@@ -182,7 +182,14 @@
     <string name="login_title">Entrar</string>
     <string name="pref_live_map_download_hints">Descarregar dicas</string>
     <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
-    <string name="pref_feedback">Send Feedback</string>
-    <string name="error_no_result">Could not find any geocaches that match your search.</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <!-- untranslated string: pref_feedback -->
+    <!-- untranslated string: error_no_result -->
+    <!-- untranslated string: error_session_expired -->
+    <!-- untranslated string: launcher_import_bookmarks -->
+    <!-- untranslated string: menu_import_bookmarks -->
+    <!-- untranslated string: import_caches_progress -->
+    <!-- untranslated string: error_no_location_permission -->
+    <!-- untranslated string: action_import_geocaches -->
+    <!-- untranslated string: action_import_all -->
+    <!-- untranslated string: premium_feature -->
 </resources>

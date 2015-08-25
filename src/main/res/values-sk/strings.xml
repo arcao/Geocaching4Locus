@@ -185,4 +185,11 @@
     <string name="pref_feedback">Odoslať spätnú väzbu</string>
     <string name="error_no_result">Nepodarilo sa nájsť žiadne kešky zodpovedajúce zadaným parametrom.</string>
     <string name="error_session_expired">Vzhľadom k dlhej nečinnosti (cez 90 dní) ste bol odhlásený. Prosím, prihláste sa znova.</string>
+    <string name="launcher_import_bookmarks">Importovať záložky</string>
+    <string name="menu_import_bookmarks">Importovať záložky</string>
+    <string name="import_caches_progress">Sťahujem kešky...</string>
+    <string name="error_no_location_permission">Aplikácia nemá práva pristupovať k službe polohy.</string>
+    <string name="action_import_geocaches">Importovať kešky</string>
+    <string name="action_import_all">Importovať všetko</string>
+    <string name="premium_feature">Táto funkcia je len pre prémiové členov, prepáčte.</string>
 </resources>

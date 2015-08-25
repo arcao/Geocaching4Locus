@@ -169,8 +169,8 @@
 
     <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
     <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
-    <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+    <!-- untranslated string: pref_downloading_count_of_caches_step -->
+    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
     <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez...</string>
 
     <string name="prefs_cat_account">Compte</string>
@@ -185,4 +185,11 @@
     <string name="pref_feedback">Donnez votre avis</string>
     <string name="error_no_result">Impossible de trouver des caches correspondantes à vos critères</string>
     <string name="error_session_expired">A cause d\'une longue inactivité (plus de 90 jours) vous avez été déconnecté. Merci de vous identifier à nouveau.</string>
+    <!-- untranslated string: launcher_import_bookmarks -->
+    <!-- untranslated string: menu_import_bookmarks -->
+    <!-- untranslated string: import_caches_progress -->
+    <!-- untranslated string: error_no_location_permission -->
+    <!-- untranslated string: action_import_geocaches -->
+    <!-- untranslated string: action_import_all -->
+    <!-- untranslated string: premium_feature -->
 </resources>

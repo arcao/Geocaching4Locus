@@ -185,4 +185,11 @@
     <string name="pref_feedback">Odeslat zpětnou vazbu</string>
     <string name="error_no_result">Nepovedlo se najít žádné keše odpovídající zadaným parametrům.</string>
     <string name="error_session_expired">Vzhledem k dlouhé nečinnosti (přes 90 dní) jste byl odhlášen. Prosím, přihlaste se znovu.</string>
+    <string name="launcher_import_bookmarks">Importovat záložky</string>
+    <string name="menu_import_bookmarks">Importovat záložky</string>
+    <string name="import_caches_progress">Stahuji keše…</string>
+    <string name="error_no_location_permission">Aplikace nemá práva přistupovat ke službě polohy.</string>
+    <string name="action_import_geocaches">Importovat keše</string>
+    <string name="action_import_all">Importovat vše</string>
+    <string name="premium_feature">Tato funkce je pouze pro prémiové členy, promiňte.</string>
 </resources>

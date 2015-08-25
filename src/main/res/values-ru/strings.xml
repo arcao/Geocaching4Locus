@@ -167,10 +167,10 @@
     <string name="download_logs_progress">Загрузка логов…</string>
     <string name="launcher_download_logs">Загрузить логи</string>
 
-    <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
-    <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
+    <!-- untranslated string: pref_download_logs_update_cache -->
+    <!-- untranslated string: pref_download_logs_update_cache_summary -->
+    <!-- untranslated string: pref_downloading_count_of_caches_step -->
+    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
     <string name="premium_member_for_filter_required">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
 
     <string name="prefs_cat_account">Учетная запись</string>
@@ -180,9 +180,16 @@
     <string name="prefs_cat_advanced">Дополнительно</string>
     <string name="prefs_cat_about">Про</string>
     <string name="login_title">Вход</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
-    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
+    <!-- untranslated string: pref_live_map_download_hints -->
+    <!-- untranslated string: pref_live_map_download_hints_summary -->
     <string name="pref_feedback">Отправить отзыв</string>
     <string name="error_no_result">Не удалось найти кэшей, соответствующих параметрам поиска.</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <!-- untranslated string: error_session_expired -->
+    <!-- untranslated string: launcher_import_bookmarks -->
+    <!-- untranslated string: menu_import_bookmarks -->
+    <!-- untranslated string: import_caches_progress -->
+    <!-- untranslated string: error_no_location_permission -->
+    <!-- untranslated string: action_import_geocaches -->
+    <!-- untranslated string: action_import_all -->
+    <!-- untranslated string: premium_feature -->
 </resources>

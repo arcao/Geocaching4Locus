@@ -160,29 +160,36 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus and Locus is running.</string>
+    <!-- untranslated string: pref_livemap_show_disabled_notification -->
+    <!-- untranslated string: pref_livemap_show_disabled_notification_summary -->
     <string name="pref_cache_type_all">Todo</string>
-    <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
-    <string name="launcher_download_logs">Download logs</string>
+    <!-- untranslated string: button_filter -->
+    <!-- untranslated string: download_logs_progress -->
+    <!-- untranslated string: launcher_download_logs -->
 
-    <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
-    <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Change a step size for Count of caches choose dialog</string>
-    <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
+    <!-- untranslated string: pref_download_logs_update_cache -->
+    <!-- untranslated string: pref_download_logs_update_cache_summary -->
+    <!-- untranslated string: pref_downloading_count_of_caches_step -->
+    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
+    <!-- untranslated string: premium_member_for_filter_required -->
 
-    <string name="prefs_cat_account">Account</string>
+    <!-- untranslated string: prefs_cat_account -->
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mapa dinámico</string>
     <string name="prefs_cat_downloading">Descargando</string>
     <string name="prefs_cat_advanced">Avanzado</string>
     <string name="prefs_cat_about">Acerca de</string>
     <string name="login_title">Log in</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
-    <string name="pref_live_map_download_hints_summary">Slower loading and more demanding on data usage</string>
-    <string name="pref_feedback">Send Feedback</string>
-    <string name="error_no_result">Could not find any geocaches that match your search.</string>
-    <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
+    <!-- untranslated string: pref_live_map_download_hints -->
+    <!-- untranslated string: pref_live_map_download_hints_summary -->
+    <!-- untranslated string: pref_feedback -->
+    <!-- untranslated string: error_no_result -->
+    <!-- untranslated string: error_session_expired -->
+    <!-- untranslated string: launcher_import_bookmarks -->
+    <!-- untranslated string: menu_import_bookmarks -->
+    <!-- untranslated string: import_caches_progress -->
+    <!-- untranslated string: error_no_location_permission -->
+    <!-- untranslated string: action_import_geocaches -->
+    <!-- untranslated string: action_import_all -->
+    <!-- untranslated string: premium_feature -->
 </resources>

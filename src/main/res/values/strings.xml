@@ -185,8 +185,11 @@
     <string name="pref_feedback">Send Feedback</string>
     <string name="error_no_result">Could not find any geocaches that match your search.</string>
     <string name="error_session_expired">Due to long inactivity (over 90 days) you have been signed out. Please sign in again.</string>
-    <string name="launcher_import_bookmark">Import bookmark</string>
-    <string name="menu_import_bookmark">Import bookmark</string>
+    <string name="launcher_import_bookmarks">Import bookmarks</string>
+    <string name="menu_import_bookmarks">Import bookmarks</string>
     <string name="import_caches_progress">Downloading caches…</string>
     <string name="error_no_location_permission">App does not have permission to access to location service.</string>
+    <string name="action_import_geocaches">Import geocaches</string>
+    <string name="action_import_all">Import all</string>
+    <string name="premium_feature">This feature is for Premium members only, sorry.</string>
 </resources>

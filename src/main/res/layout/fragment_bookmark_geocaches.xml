@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/background_material_light">
+
+    <LinearLayout android:id="@+id/progressContainer"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:visibility="gone"
+                  android:gravity="center">
+
+        <ProgressBar style="?android:attr/progressBarStyleLarge"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <FrameLayout android:id="@+id/listContainer"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <android.support.v7.widget.RecyclerView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/list"
+                android:scrollbars="vertical"
+                android:scrollbarStyle="outsideOverlay"/>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_gravity="end"
+                android:text="@string/action_import_geocaches"
+                />
+        </LinearLayout>
+        <TextView android:id="@+id/textEmpty"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+    </FrameLayout>
+
+</FrameLayout>

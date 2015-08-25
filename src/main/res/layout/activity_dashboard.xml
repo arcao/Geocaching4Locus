@@ -51,7 +51,7 @@
                 android:id="@+id/db_import_bookmark"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_dashboard_import_bookmark"
-                android:text="@string/menu_import_bookmark" />
+                android:text="@string/menu_import_bookmarks" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 

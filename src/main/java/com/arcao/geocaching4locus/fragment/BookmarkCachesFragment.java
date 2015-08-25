@@ -8,27 +8,32 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.adapter.BookmarkListRecyclerAdapter;
-import com.arcao.geocaching4locus.task.BookmarkListRetrieveTask;
+import com.arcao.geocaching4locus.adapter.BookmarkCachesRecyclerAdapter;
+import com.arcao.geocaching4locus.task.BookmarkCachesRetrieveTask;
 import com.arcao.geocaching4locus.widget.decorator.DividerItemDecoration;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-public class BookmarkListFragment extends Fragment implements BookmarkListRetrieveTask.TaskListener {
+public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRetrieveTask.TaskListener {
 	public interface ListListener {
 		void onTitleChanged(String title);
-		void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll);
+		void onBookmarksSelected(Bookmark[] bookmarksList);
 	}
+
+	private static final String PARAM_TITLE = "TITLE";
+	private static final String PARAM_GUID = "GUID";
 
 	@Bind(R.id.list) RecyclerView recyclerView;
 	@Bind(R.id.progressContainer) View progressContainer;
@@ -36,14 +41,16 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	@Bind(R.id.textEmpty) TextView textEmpty;
 
 	private WeakReference<ListListener> mListListenerRef;
-	private BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
-	private BookmarkListRetrieveTask mTask;
+	private BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
+	private BookmarkCachesRetrieveTask mTask;
 
 
-	public static BookmarkListFragment newInstance() {
+	public static BookmarkCachesFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
+		args.putString(PARAM_TITLE, bookmarkList.getName());
+		args.putString(PARAM_GUID, bookmarkList.getGuid());
 
-		BookmarkListFragment fragment = new BookmarkListFragment();
+		BookmarkCachesFragment fragment = new BookmarkCachesFragment();
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -64,8 +71,8 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		super.onActivityCreated(savedInstanceState);
 
 		if (adapter.getItemCount() == 0) {
-			mTask = new BookmarkListRetrieveTask(getActivity(), this);
-			mTask.execute();
+			mTask = new BookmarkCachesRetrieveTask(getActivity(), this);
+			mTask.execute(getArguments().getString(PARAM_GUID));
 		}
 	}
 
@@ -74,34 +81,26 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
+		setHasOptionsMenu(true);
 	}
 
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_bookmark_list, container, false);
+		View v = inflater.inflate(R.layout.fragment_bookmark_geocaches, container, false);
 		ButterKnife.bind(this, v);
 
 		prepareRecyclerView();
 
 		ListListener listener = mListListenerRef.get();
 		if (listener != null) {
-			listener.onTitleChanged("");
+			listener.onTitleChanged(getArguments().getString(PARAM_TITLE));
 		}
 
 		return  v;
 	}
 
 	private void prepareRecyclerView() {
-		adapter.setOnItemClickListener(new BookmarkListRecyclerAdapter.OnItemClickListener() {
-			@Override
-			public void onItemClick(BookmarkList bookmarkList, boolean selectAll) {
-				ListListener listener = mListListenerRef.get();
-				if (listener != null)
-					listener.onBookmarkListSelected(bookmarkList, selectAll);
-			}
-		});
-
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -110,6 +109,26 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		setListShown(adapter.getItemCount() > 0);
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.toolbar_select_deselect, menu);
+
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.selectAll:
+				adapter.selectAll();
+				return true;
+			case R.id.deselectAll:
+				adapter.selectNone();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 	@Override
 	public void onDestroyView() {
@@ -126,10 +145,10 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	}
 
 	@Override
-	public void onTaskFinished(List<BookmarkList> bookmarkLists) {
+	public void onTaskFinished(List<Bookmark> bookmarks) {
 		mTask = null;
 
-		adapter.setBookmarkLists(bookmarkLists);
+		adapter.setBookmarks(bookmarks);
 		setListShown(true);
 	}
 
@@ -141,6 +160,14 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		getActivity().finish();
 	}
 
+	@OnClick(R.id.button)
+	public void onImportClicked() {
+		ListListener listener = mListListenerRef.get();
+		if (listener != null) {
+			List<Bookmark> checkedBookmarks = adapter.getCheckedBookmarks();
+			listener.onBookmarksSelected(checkedBookmarks.toArray(new Bookmark[checkedBookmarks.size()]));
+		}
+	}
 
 	private void setListShown(boolean visible) {
 		if (visible) {

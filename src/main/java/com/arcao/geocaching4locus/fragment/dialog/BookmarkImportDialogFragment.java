@@ -12,11 +12,13 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.BookmarkImportTask;
 
 import java.lang.ref.WeakReference;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class BookmarkImportDialogFragment extends AbstractDialogFragment implements BookmarkImportTask.TaskListener {
 	public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
 
 	private static final String PARAM_GUID = "GUID";
+	private static final String PARAM_GEOCACHE_CODES = "GEOCACHE_CODES";
 
 	public interface DialogListener {
 		void onImportFinished(Intent errorIntent);
@@ -35,6 +37,17 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		return fragment;
 	}
 
+	public static BookmarkImportDialogFragment newInstance(String[] geocacheCodes) {
+		Bundle args = new Bundle();
+		args.putStringArray(PARAM_GEOCACHE_CODES, geocacheCodes);
+
+		BookmarkImportDialogFragment fragment = new BookmarkImportDialogFragment();
+		fragment.setArguments(args);
+
+		return fragment;
+	}
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,9 +56,10 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		setCancelable(false);
 
 		String guid = getArguments().getString(PARAM_GUID);
+		String[] values = guid != null ? ArrayUtils.toArray(guid) : getArguments().getStringArray(PARAM_GEOCACHE_CODES);
 
 		mTask = new BookmarkImportTask(getActivity(), this);
-		mTask.execute(guid);
+		mTask.execute(values);
 	}
 
 	@Override

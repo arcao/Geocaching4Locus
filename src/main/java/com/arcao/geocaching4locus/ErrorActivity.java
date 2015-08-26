@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
+import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
@@ -114,6 +115,7 @@ public class ErrorActivity extends AppCompatActivity {
 				@Override
 				public void onNeutral(MaterialDialog dialog) {
 					Crashlytics.logException(t);
+					Toast.makeText(dialog.getContext(), R.string.crash_dialog_ok_toast, Toast.LENGTH_LONG).show();
 					getActivity().finish();
 				}
 			});

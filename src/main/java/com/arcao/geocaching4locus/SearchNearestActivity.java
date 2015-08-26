@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -325,7 +326,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       permissions = new String[] {Manifest.permission.ACCESS_COARSE_LOCATION};
     }
 
-    requestPermissions(permissions, REQUEST_LOCATION_PERMISSION);
+    ActivityCompat.requestPermissions(this, permissions, REQUEST_LOCATION_PERMISSION);
   }
 
   private void acquireCoordinates() {

@@ -177,7 +177,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		try {
 			mBarrier.await(0, TimeUnit.MILLISECONDS);
 		} catch (Exception e) {
-			Timber.e(e, e.getMessage());
+			// log nothing
 		}
 	}
 

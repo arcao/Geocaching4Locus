@@ -8,6 +8,14 @@
     android:gravity="center_vertical"
     android:padding="16dp">
 
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_marginRight="12dp"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
@@ -33,11 +41,4 @@
             android:ellipsize="end"
             tools:text="GC12345" />
     </LinearLayout>
-
-    <android.support.v7.widget.AppCompatCheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="false"
-        android:clickable="false" />
 </LinearLayout>

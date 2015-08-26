@@ -24,6 +24,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.6.2') {

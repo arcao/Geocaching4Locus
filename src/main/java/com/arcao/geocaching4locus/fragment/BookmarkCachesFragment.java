@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,6 +30,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRetrieveTask.TaskListener {
+
 	public interface ListListener {
 		void onTitleChanged(String title);
 		void onBookmarksSelected(Bookmark[] bookmarksList);
@@ -39,11 +43,12 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	@Bind(R.id.progressContainer) View progressContainer;
 	@Bind(R.id.listContainer) View listContainer;
 	@Bind(R.id.textEmpty) TextView textEmpty;
+	@Bind(R.id.fab) FloatingActionButton fab;
 
 	private WeakReference<ListListener> mListListenerRef;
 	private BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
 	private BookmarkCachesRetrieveTask mTask;
-
+	private Animation mAnimation;
 
 	public static BookmarkCachesFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
@@ -89,6 +94,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_bookmark_geocaches, container, false);
 		ButterKnife.bind(this, v);
+
+		mAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.simple_grow);
 
 		prepareRecyclerView();
 
@@ -160,8 +167,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 		getActivity().finish();
 	}
 
-	@OnClick(R.id.button)
-	public void onImportClicked() {
+	@OnClick(R.id.fab)
+	public void onFabClicked() {
 		ListListener listener = mListListenerRef.get();
 		if (listener != null) {
 			List<Bookmark> checkedBookmarks = adapter.getCheckedBookmarks();
@@ -173,11 +180,14 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 		if (visible) {
 			progressContainer.setVisibility(View.GONE);
 			listContainer.setVisibility(View.VISIBLE);
+			fab.startAnimation(mAnimation);
 		} else {
 			progressContainer.setVisibility(View.VISIBLE);
 			listContainer.setVisibility(View.GONE);
 		}
+
 		textEmpty.setVisibility(adapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+		fab.setVisibility(adapter.getItemCount() == 0 ? View.GONE : View.VISIBLE);
 	}
 
 	private void setEmptyText(CharSequence text) {

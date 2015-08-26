@@ -110,7 +110,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	private void prepareRecyclerView() {
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		recyclerView.addItemDecoration(
+				new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
 
 		setEmptyText("");
 		setListShown(adapter.getItemCount() > 0);
@@ -170,7 +171,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	@OnClick(R.id.fab)
 	public void onFabClicked() {
 		ListListener listener = mListListenerRef.get();
-		if (listener != null) {
+		if (listener != null && adapter.isAnyChecked()) {
 			List<Bookmark> checkedBookmarks = adapter.getCheckedBookmarks();
 			listener.onBookmarksSelected(checkedBookmarks.toArray(new Bookmark[checkedBookmarks.size()]));
 		}
@@ -193,5 +194,4 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	private void setEmptyText(CharSequence text) {
 		textEmpty.setText(text);
 	}
-
 }

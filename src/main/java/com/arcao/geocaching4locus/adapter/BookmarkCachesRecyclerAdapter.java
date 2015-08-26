@@ -63,6 +63,15 @@ public class BookmarkCachesRecyclerAdapter
     notifyItemRangeChanged(0, items.size());
   }
 
+  public boolean isAnyChecked() {
+    for (boolean item : checked) {
+      if (item)
+        return true;
+    }
+
+    return false;
+  }
+
   protected class ViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.title) TextView title;
     @Bind(R.id.subtitle) TextView subtitle;

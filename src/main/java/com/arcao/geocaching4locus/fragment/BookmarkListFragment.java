@@ -11,18 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.adapter.BookmarkListRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkListRetrieveTask;
-import com.arcao.geocaching4locus.widget.decorator.DividerItemDecoration;
-
+import com.arcao.geocaching4locus.widget.decorator.SpacesItemDecoration;
 import java.lang.ref.WeakReference;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class BookmarkListFragment extends Fragment implements BookmarkListRetrieveTask.TaskListener {
 	public interface ListListener {
@@ -104,7 +101,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		recyclerView.addItemDecoration(new SpacesItemDecoration((int)getResources().getDimension(R.dimen.cardview_space)));
 
 		setEmptyText("");
 		setListShown(adapter.getItemCount() > 0);

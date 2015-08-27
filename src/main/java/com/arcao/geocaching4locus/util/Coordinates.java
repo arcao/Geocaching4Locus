@@ -1,11 +1,16 @@
 package com.arcao.geocaching4locus.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Coordinates {
 	public static String convertDoubleToDeg(double source, boolean isLon) {
 		return convertDoubleToDeg(source, isLon, 3);
 	}
 
 	public static String convertDoubleToDeg(double source, boolean isLon, int precision) {
+		if (Double.isNaN(source))
+			return StringUtils.EMPTY;
+
 		StringBuilder sb = new StringBuilder();
 		if (source < 0) {
 			sb.append((!isLon) ? 'S' : 'W');
@@ -91,9 +96,9 @@ public class Coordinates {
 	}
 
 	public static double roundDouble(double source, int decimalPlaces) {
-	    double multipicationFactor = Math.pow(10, decimalPlaces);
-	    double sourceMultipled = source * multipicationFactor;
-	    return Math.round(sourceMultipled) / multipicationFactor;
+	    double multiplicationFactor = Math.pow(10, decimalPlaces);
+	    double sourceMultiplied = source * multiplicationFactor;
+	    return Math.round(sourceMultiplied) / multiplicationFactor;
 	}
 
 	public static String round(double source, int decimals) {

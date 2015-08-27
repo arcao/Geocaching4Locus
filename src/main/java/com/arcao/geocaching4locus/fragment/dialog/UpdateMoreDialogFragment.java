@@ -25,12 +25,11 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {
-		UpdateMoreDialogFragment fragment = new UpdateMoreDialogFragment();
-
 		Bundle args = new Bundle();
 		args.putLongArray(PARAM_POINT_INDEXES, pointIndexes);
-		fragment.setArguments(args);
 
+		UpdateMoreDialogFragment fragment = new UpdateMoreDialogFragment();
+		fragment.setArguments(args);
 		return fragment;
 	}
 
@@ -60,8 +59,6 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 
 	@Override
 	public void onTaskFinished(boolean success) {
-		mTask = null;
-
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
@@ -84,6 +81,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		super.onDismiss(dialog);
 		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
 		}
 	}
 

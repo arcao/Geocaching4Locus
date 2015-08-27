@@ -25,13 +25,11 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static ImportDialogFragment newInstance(String cacheId) {
-		ImportDialogFragment fragment = new ImportDialogFragment();
-
 		Bundle args = new Bundle();
 		args.putString(PARAM_CACHE_ID, cacheId);
 
+		ImportDialogFragment fragment = new ImportDialogFragment();
 		fragment.setArguments(args);
-
 		return fragment;
 	}
 
@@ -55,14 +53,12 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		try {
 			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
+			throw new ClassCastException(activity.toString() + " must implement DialogListener");
 		}
 	}
 
 	@Override
 	public void onTaskFinished(boolean success) {
-		mTask = null;
-
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
@@ -76,6 +72,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		super.onDismiss(dialog);
 		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
 		}
 	}
 

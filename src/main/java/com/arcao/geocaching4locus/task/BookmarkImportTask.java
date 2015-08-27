@@ -239,13 +239,4 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
     return cachesPerRequest;
   }
-
-  private String[] geocacheCodesFromBookmarks(List<Bookmark> bookmarks) {
-    String[] result = new String[bookmarks.size()];
-    for (int i = 0; i < result.length; i++) {
-      result[i] = bookmarks.get(i).getCacheCode();
-    }
-
-    return result;
-  }
 }

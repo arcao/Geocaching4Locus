@@ -6,12 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
 import locus.api.android.utils.LocusUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import timber.log.Timber;
 
 public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreDialogFragment.DialogListener {
 	private static final int REQUEST_LOGIN = 1;
-
-	private boolean mShowUpdateMoreDialog = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,28 +21,17 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 			return;
 		}
 
-		mShowUpdateMoreDialog = true;
-	}
-
-	@Override
-	protected void onResumeFragments() {
-		super.onResumeFragments();
-
-		// play with fragments here
-		if (mShowUpdateMoreDialog) {
+		if (savedInstanceState == null)
 			showUpdateMoreDialog();
-			mShowUpdateMoreDialog = false;
-		}
 	}
 
 	private void showUpdateMoreDialog() {
 		long[] pointIndexes = null;
 
-		if (LocusUtils.isIntentPointsScreenTools(getIntent())) {
+		if (LocusUtils.isIntentPointsScreenTools(getIntent()))
 			pointIndexes = LocusUtils.handleIntentPointsScreenTools(getIntent());
-		}
 
-		if (pointIndexes == null || pointIndexes.length == 0) {
+		if (ArrayUtils.isEmpty(pointIndexes)) {
 			Timber.e("No caches received");
 			setResult(RESULT_CANCELED);
 			finish();
@@ -51,10 +39,6 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 		}
 
 		Timber.i("source: update;count=" + pointIndexes.length);
-
-		if (getFragmentManager().findFragmentByTag(UpdateMoreDialogFragment.FRAGMENT_TAG) != null)
-			return;
-
 		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
 	}
 
@@ -67,10 +51,12 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
 			if (resultCode == RESULT_OK) {
-				mShowUpdateMoreDialog = true;
+				showUpdateMoreDialog();
 			} else {
 				onUpdateFinished(false);
 			}

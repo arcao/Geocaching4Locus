@@ -19,8 +19,6 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 	private static final int REQUEST_LOGIN = 1;
 
-	private boolean mShowImportDialog = false;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,18 +33,8 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 			return;
 		}
 
-		mShowImportDialog = true;
-	}
-
-	@Override
-	protected void onResumeFragments() {
-		super.onResumeFragments();
-
-		// play with fragments here
-		if (mShowImportDialog) {
+		if (savedInstanceState == null)
 			showImportDialog();
-			mShowImportDialog = false;
-		}
 	}
 
 	protected void showImportDialog() {
@@ -72,10 +60,6 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		String cacheId = m.group(1);
 
 		Timber.i("source: import;" + cacheId);
-
-		if (getFragmentManager().findFragmentByTag(ImportDialogFragment.FRAGMENT_TAG) != null)
-			return;
-
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
@@ -88,11 +72,13 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
 			if (resultCode == RESULT_OK) {
 				// we can't show dialog here, we'll do it in onResumeFragments
-				mShowImportDialog = true;
+				showImportDialog();
 			} else {
 				onImportFinished(false);
 			}

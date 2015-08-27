@@ -57,20 +57,15 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setRetainInstance(true);
 
 		if (adapter.getItemCount() == 0) {
 			mTask = new BookmarkListRetrieveTask(getActivity(), this);
 			mTask.execute();
 		}
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setRetainInstance(true);
 	}
 
 	@Nullable
@@ -107,7 +102,6 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		setListShown(adapter.getItemCount() > 0);
 	}
 
-
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
@@ -118,22 +112,20 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	public void onDestroy() {
 		super.onDestroy();
 
-		if (mTask != null)
+		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
+		}
 	}
 
 	@Override
 	public void onTaskFinished(List<BookmarkList> bookmarkLists) {
-		mTask = null;
-
 		adapter.setBookmarkLists(bookmarkLists);
 		setListShown(true);
 	}
 
 	@Override
 	public void onTaskFailed(Intent errorIntent) {
-		mTask = null;
-
 		getActivity().startActivity(errorIntent);
 		getActivity().finish();
 	}

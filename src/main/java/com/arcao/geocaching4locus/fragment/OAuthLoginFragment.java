@@ -76,8 +76,10 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 	public void onDestroy() {
 		super.onDestroy();
 
-		if (mTask != null)
+		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
+		}
 	}
 
 	@Override
@@ -116,8 +118,6 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 		// FIX savedInstanceState is null after rotation change
 		if (savedInstanceState != null)
 			mLastInstanceState = savedInstanceState;
-
-		//getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		View view = inflater.inflate(R.layout.fragment_login_oauth, container, false);
 		mProgressHolder = view.findViewById(R.id.progressHolder);
@@ -162,7 +162,6 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 
 				mTask = new OAuthLoginTask(getActivity(), OAuthLoginFragment.this);
 				mTask.execute(uri.getQueryParameter(OAUTH_VERIFIER));
-
 				return true;
 			}
 

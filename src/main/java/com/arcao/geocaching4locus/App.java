@@ -6,20 +6,17 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.CrashlyticsTree;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
-
-import org.scribe.model.Token;
-
-import java.util.UUID;
-
 import io.fabric.sdk.android.Fabric;
+import java.util.UUID;
 import locus.api.android.utils.LocusUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.scribe.model.Token;
 import timber.log.Timber;
 
 public class App extends android.app.Application {
@@ -29,18 +26,15 @@ public class App extends android.app.Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		Fabric.with(this, new Crashlytics());
-
-		//Timber.plant(new Timber.DebugTree());
 		Timber.plant(new CrashlyticsTree());
-
-	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
 
 		Crashlytics.setUserIdentifier(getDeviceId());
 
-		if (mAuthenticatorHelper.hasAccount()) {
+	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
+		if (mAuthenticatorHelper.hasAccount())
 			Crashlytics.setUserName(mAuthenticatorHelper.getAccount().name);
-		}
 
 		try {
 			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
@@ -51,8 +45,6 @@ public class App extends android.app.Application {
 		} catch (Throwable t) {
 			Timber.e(t, t.getMessage());
 		}
-
-		System.setProperty("debug", "1");
 	}
 
 	public static App get(Context context) {
@@ -66,11 +58,9 @@ public class App extends android.app.Application {
 	public String getDeviceId() {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if (mDeviceId == null) {
-			mDeviceId = pref.getString("device_id", null);
-		}
+		if (mDeviceId == null) mDeviceId = pref.getString("device_id", null);
 
-		if (mDeviceId == null) {
+		if (StringUtils.isEmpty(mDeviceId)) {
 			mDeviceId = UUID.randomUUID().toString();
 			pref.edit().putString("device_id", mDeviceId).apply();
 		}
@@ -100,7 +90,6 @@ public class App extends android.app.Application {
 	}
 
 	public Token getOAuthToken() {
-
 		SharedPreferences prefs = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
 		return new Token(
 			prefs.getString(PrefConstants.OAUTH_TOKEN, ""),
@@ -126,12 +115,10 @@ public class App extends android.app.Application {
 	private static void clearCookiesForDomain(String domain) {
 		CookieManager cookieManager = CookieManager.getInstance();
 		String cookies = cookieManager.getCookie(domain);
-		if (cookies == null) {
-			return;
-		}
 
-		String[] splitCookies = cookies.split(";");
-		for (String cookie : splitCookies) {
+		if (cookies == null) return;
+
+		for (String cookie : cookies.split(";")) {
 			String[] cookieParts = cookie.split("=");
 			if (cookieParts.length > 0) {
 				String newCookie = cookieParts[0].trim() + "=;expires=Sat, 1 Jan 2000 00:00:01 UTC;";

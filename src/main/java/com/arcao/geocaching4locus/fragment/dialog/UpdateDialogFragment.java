@@ -29,12 +29,11 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
-		UpdateDialogFragment fragment = new UpdateDialogFragment();
-
 		Bundle args = new Bundle();
 		args.putSerializable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint, updateLogs));
-		fragment.setArguments(args);
 
+		UpdateDialogFragment fragment = new UpdateDialogFragment();
+		fragment.setArguments(args);
 		return fragment;
 	}
 
@@ -58,15 +57,13 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		try {
 			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
+			throw new ClassCastException(activity.toString() + " must implement DialogListener");
 		}
 	}
 
 
 	@Override
 	public void onTaskFinished(Intent intent) {
-		mTask = null;
-
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
@@ -80,6 +77,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		super.onDismiss(dialog);
 		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
 		}
 	}
 

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
@@ -42,7 +43,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		try {
 			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement OnInputFinishedListener");
+			throw new ClassCastException(activity.toString() + " must implement DialogListener");
 		}
 	}
 
@@ -131,9 +132,6 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	public void onStart() {
 		super.onStart();
 
-//		getDialog().getWindow().clearFlags(
-//			WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-
 		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
 		// More here: http://code.google.com/p/android/issues/detail?id=19173
 		if (mErrorMessage != null) {
@@ -145,20 +143,17 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	private boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 
-		if (value.length() == 0) {
+		if (StringUtils.isEmpty(value)) {
 			editText.setError(getString(R.string.error_input_gc));
 			return false;
 		}
 
 		try {
-			if (GeocachingUtils.cacheCodeToCacheId(value) > 0) {
-				return true;
-			}
+			return GeocachingUtils.cacheCodeToCacheId(value) > 0;
 		} catch (IllegalArgumentException e) {
 			Timber.e(e, e.getMessage());
+			editText.setError(getString(R.string.error_input_gc));
+			return false;
 		}
-
-		editText.setError(getString(R.string.error_input_gc));
-		return false;
 	}
 }

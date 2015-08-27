@@ -20,7 +20,6 @@ import org.apache.commons.lang3.builder.Builder;
 
 public class ErrorActivity extends AppCompatActivity {
 	public static final String ACTION_ERROR = "com.arcao.geocaching4locus.intent.action.ERROR";
-
 	private static final String PARAM_RESOURCE_TITLE = "RESOURCE_TITLE";
 	public static final String PARAM_RESOURCE_TEXT = "RESOURCE_TEXT";
 	public static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
@@ -34,13 +33,9 @@ public class ErrorActivity extends AppCompatActivity {
 
 		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.cancelAll();
-	}
 
-	@Override
-	protected void onPostResume() {
-		super.onPostResume();
-
-		showErrorDialog();
+		if (savedInstanceState == null)
+			showErrorDialog();
 	}
 
 	private void showErrorDialog () {
@@ -49,9 +44,6 @@ public class ErrorActivity extends AppCompatActivity {
 		final Class<?> preferenceFragment = (Class<?>) getIntent().getSerializableExtra(PARAM_PREFERENCE_FRAGMENT);
 		final String additionalMessage = getIntent().getStringExtra(PARAM_ADDITIONAL_MESSAGE);
 		final Throwable t = (Throwable) getIntent().getSerializableExtra(PARAM_EXCEPTION);
-
-		if (getFragmentManager().findFragmentByTag(ErrorDialogFragment.FRAGMENT_TAG) != null)
-			return;
 
 		ErrorDialogFragment.newInstance(resTitleId, resTextId, preferenceFragment, additionalMessage, t)
 			.show(getFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);

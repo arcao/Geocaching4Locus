@@ -42,8 +42,7 @@
             android:layout_gravity="right|bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/ic_action_download"
-            app:backgroundTint="@color/accent"
-            app:elevation="4sp"
+            app:elevation="4dp"
             />
     </FrameLayout>
 </FrameLayout>

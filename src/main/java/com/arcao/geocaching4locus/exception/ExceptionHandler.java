@@ -26,8 +26,8 @@ import timber.log.Timber;
 public class ExceptionHandler {
 	protected final Context mContext;
 
-	public ExceptionHandler(Context ctx) {
-		mContext = ctx;
+	public ExceptionHandler(Context context) {
+		mContext = context;
 	}
 
 	public Intent handle(Throwable t) {

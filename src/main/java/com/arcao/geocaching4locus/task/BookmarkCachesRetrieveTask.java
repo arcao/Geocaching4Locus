@@ -29,7 +29,6 @@ public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Book
 		mTaskListenerRef = new WeakReference<>(listener);
 	}
 
-
 	@Override
 	protected List<Bookmark> doInBackground(String... params) throws Exception {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();

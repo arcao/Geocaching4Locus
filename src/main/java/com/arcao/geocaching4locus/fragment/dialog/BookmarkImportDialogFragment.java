@@ -69,14 +69,12 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		try {
 			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishedListener");
+			throw new ClassCastException(activity.toString() + " must implement DialogListener");
 		}
 	}
 
 	@Override
 	public void onTaskFailed(Intent errorIntent) {
-		mTask = null;
-
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
@@ -97,8 +95,6 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 
 	@Override
 	public void onTaskFinished(boolean success) {
-		mTask = null;
-
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
@@ -112,6 +108,7 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		super.onDismiss(dialog);
 		if (mTask != null) {
 			mTask.cancel(true);
+			mTask = null;
 		}
 	}
 

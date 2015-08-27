@@ -83,14 +83,15 @@ public class BookmarkCachesRecyclerAdapter
     }
 
     public void bind(final Bookmark bookmark) {
+      final int pos = getAdapterPosition();
+
       title.setText(bookmark.getCacheTitle());
       subtitle.setText(bookmark.getCacheCode());
-      checkbox.setChecked(checked[getAdapterPosition()]);
+      checkbox.setChecked(checked[pos]);
 
       itemView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          int pos = getAdapterPosition();
           checked[pos] = !checked[pos];
           notifyItemChanged(pos);
         }

@@ -94,7 +94,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 	}
 
-	private boolean isMapVisible(Intent intent) {
+	private static boolean isMapVisible(Intent intent) {
 		return intent.getBooleanExtra(VAR_B_MAP_VISIBLE, false);
 	}
 

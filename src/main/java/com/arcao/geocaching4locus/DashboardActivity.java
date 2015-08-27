@@ -92,8 +92,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
   @OnClick(R.id.db_import_bookmark)
   public void onClickImportBookmark() {
-    startActivity(new Intent(this, ImportBookmarkActivity.class));
-    finish();
+    startActivityForResult(new Intent(this, ImportBookmarkActivity.class), 0);
   }
 
   @OnClick(R.id.db_preferences)
@@ -129,6 +128,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
 		if (resultCode == RESULT_OK) {
 			finish();
 		}

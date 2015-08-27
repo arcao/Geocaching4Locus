@@ -37,7 +37,6 @@ import android.view.ViewGroup;
  * {@link android.preference.PreferenceActivity}.
  */
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
-
 	private AppCompatDelegate mDelegate;
 
 	@Override
@@ -122,9 +121,8 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 	}
 
 	private AppCompatDelegate getDelegate() {
-		if (mDelegate == null) {
+		if (mDelegate == null)
 			mDelegate = AppCompatDelegate.create(this, null);
-		}
 		return mDelegate;
 	}
 }

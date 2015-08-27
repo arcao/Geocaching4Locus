@@ -1,44 +1,47 @@
 package com.arcao.geocaching4locus.authentication;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.arcao.geocaching4locus.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
 import com.crashlytics.android.Crashlytics;
-
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.LoginEvent;
 import timber.log.Timber;
 
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
 	private static final String TAG_DIALOG = "DIALOG";
+
+	@Bind(R.id.toolbar) Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		ButterKnife.bind(this);
 
-		setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-		getSupportActionBar().setTitle(getTitle());
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		setSupportActionBar(toolbar);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setTitle(getTitle());
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 
 		Timber.i("source: login");
-	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		if (getFragmentManager().findFragmentByTag(TAG_DIALOG) != null)
-			return;
-
-		showLoginFragment();
+		if (savedInstanceState == null)
+			showLoginFragment();
 	}
 
 	@Override
@@ -53,32 +56,29 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 	}
 
 	private void showLoginFragment() {
-		// remove previous dialog
-		Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
-		if (!(fragment instanceof OAuthLoginFragment)) {
-			getFragmentManager().beginTransaction()
-							.replace(R.id.fragment, OAuthLoginFragment.newInstance())
-							.commit();
-		}
+		getFragmentManager().beginTransaction()
+				.replace(R.id.fragment, OAuthLoginFragment.newInstance())
+				.commit();
 	}
 
 	@Override
 	public void onLoginFinished(Intent errorIntent) {
-		if (errorIntent != null) {
-			startActivity(errorIntent);
-		}
-
 		AuthenticatorHelper helper = App.get(this).getAuthenticatorHelper();
-		setResult(helper.hasAccount() ? RESULT_OK : RESULT_CANCELED);
 
 		if (helper.hasAccount()) {
 			Crashlytics.setUserName(helper.getAccount().name);
 		}
 
+		Answers.getInstance().logLogin(new LoginEvent().putSuccess(helper.hasAccount()));
+
+		if (errorIntent != null)
+			startActivity(errorIntent);
+
+		setResult(helper.hasAccount() ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
 
-	public static Intent createIntent(Context mContext) {
-		return new Intent(mContext, AuthenticatorActivity.class);
+	public static Intent createIntent(Context context) {
+		return new Intent(context, AuthenticatorActivity.class);
 	}
 }

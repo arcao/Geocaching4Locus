@@ -17,6 +17,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 
 import java.lang.ref.WeakReference;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class SliderDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_TITLE = "TITLE";
@@ -73,7 +75,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 		try {
 			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement SeekBarDialogListener");
+			throw new ClassCastException(activity.toString() + " must implement DialogListeners");
 		}
 	}
 
@@ -229,7 +231,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 
 		@Override
 		public CharSequence filter(@NonNull CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-			if (mAvailableValues == null) {
+			if (ArrayUtils.isEmpty(mAvailableValues)) {
 				CharSequence filtered = super.filter(source, start, end, dest, dstart, dend);
 				if (filtered == null) {
 					filtered = source.subSequence(start, end);
@@ -250,14 +252,14 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 				}
 
 				if (val > mMax) {
-					return "";
+					return StringUtils.EMPTY;
 				} else {
 					return filtered;
 				}
 			} else {
 				CharSequence filtered = String.valueOf(source.subSequence(start, end));
 				if (TextUtils.isEmpty(filtered)) {
-					return "";
+					return StringUtils.EMPTY;
 				}
 				String result = String.valueOf(dest.subSequence(0, dstart)) + filtered
 								+ dest.subSequence(dend, dest.length());
@@ -268,7 +270,7 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 						return val.subSequence(dstart, val.length());
 					}
 				}
-				return "";
+				return StringUtils.EMPTY;
 			}
 		}
 

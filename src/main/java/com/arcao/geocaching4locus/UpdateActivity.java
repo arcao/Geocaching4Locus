@@ -23,8 +23,6 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
 	private SharedPreferences mPrefs;
 
-	private boolean mShowUpdateDialog = false;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,18 +34,8 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 			return;
 		}
 
-		mShowUpdateDialog = true;
-	}
-
-	@Override
-	protected void onResumeFragments() {
-		super.onResumeFragments();
-
-		// play with fragments here
-		if (mShowUpdateDialog) {
+		if (savedInstanceState == null)
 			showUpdateDialog();
-			mShowUpdateDialog = false;
-		}
 	}
 
 	public void showUpdateDialog() {
@@ -58,19 +46,16 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 			cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
 
 		} else if (LocusUtils.isIntentPointTools(getIntent())) {
-			Waypoint p = null;
-
 			try {
-				p = LocusUtils.handleIntentPointTools(this, getIntent());
+				Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
+
+				if (p != null && p.getGeocachingData() != null) {
+					cacheId = p.gcData.getCacheID();
+					oldPoint = p;
+				}
 			} catch (RequiredVersionMissingException e) {
 				Timber.e(e, e.getMessage());
 			}
-
-			if (p != null && p.getGeocachingData() != null) {
-				cacheId = p.gcData.getCacheID();
-				oldPoint = p;
-			}
-
 		} else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
 			cacheId = getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID);
 
@@ -91,13 +76,9 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 			return;
 		}
 
-		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
-
 		Timber.i("source: update;" + cacheId);
 
-		if (getFragmentManager().findFragmentByTag(UpdateDialogFragment.FRAGMENT_TAG) != null)
-			return;
-
+		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
 		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
 	}
 
@@ -110,11 +91,12 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode,resultCode,data);
+
 		// restart update process after log in
 		if (requestCode == REQUEST_LOGIN) {
 			if (resultCode == RESULT_OK) {
-				// we can't show dialog here, we'll do it in onPostResume
-				mShowUpdateDialog = true;
+				showUpdateDialog();
 			} else {
 				onUpdateFinished(null);
 			}

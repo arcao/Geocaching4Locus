@@ -72,21 +72,16 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-		if (adapter.getItemCount() == 0) {
-			mTask = new BookmarkCachesRetrieveTask(getActivity(), this);
-			mTask.execute(getArguments().getString(PARAM_GUID));
-		}
-	}
-
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
+
+		if (adapter.getItemCount() == 0) {
+			mTask = new BookmarkCachesRetrieveTask(getActivity(), this);
+			mTask.execute(getArguments().getString(PARAM_GUID));
+		}
 	}
 
 	@Nullable
@@ -154,17 +149,13 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 
 	@Override
 	public void onTaskFinished(List<Bookmark> bookmarks) {
-		mTask = null;
-
 		adapter.setBookmarks(bookmarks);
 		setListShown(true);
 	}
 
 	@Override
 	public void onTaskFailed(Intent errorIntent) {
-		mTask = null;
-
-		getActivity().startActivity(errorIntent);
+		startActivity(errorIntent);
 		getActivity().finish();
 	}
 

@@ -85,9 +85,9 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
   @Override
   public void onBookmarksSelected(Bookmark[] bookmarksList) {
-    Set<String> geocaches = new HashSet<>();
+    Set<String> geocaches = new HashSet<>(bookmarksList.length);
 
-    for (Bookmark aBookmarksList : bookmarksList) geocaches.add(aBookmarksList.getCacheCode());
+    for (Bookmark bookmark : bookmarksList) geocaches.add(bookmark.getCacheCode());
 
     BookmarkImportDialogFragment.newInstance(geocaches.toArray(new String[geocaches.size()]))
         .show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
@@ -116,6 +116,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     if (requestCode == REQUEST_LOGIN) {
       if (resultCode == RESULT_OK) {
         showBookmarkList();
+      } else {
+        finish();
       }
     }
   }
@@ -123,10 +125,11 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   @Override
   public void onImportFinished(Intent errorIntent) {
     Timber.d("onImportFinished result: " + errorIntent);
-    setResult(errorIntent == null ? RESULT_OK : RESULT_CANCELED);
-    finish();
 
-    if (errorIntent != null) {
+    if (errorIntent == null) {
+      setResult(RESULT_OK);
+      finish();
+    } else {
       startActivity(errorIntent);
     }
   }

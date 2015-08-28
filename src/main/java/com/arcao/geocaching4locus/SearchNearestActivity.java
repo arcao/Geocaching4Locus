@@ -162,8 +162,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).apply();
     }
 
-    mCountOfCachesEditText.setText(String.valueOf(mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
-        AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
+    mCountOfCachesEditText.setText(String.valueOf(
+        mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
+            AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
     mCountOfCachesEditText.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -176,7 +177,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       }
     });
 
-    fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
+    fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
   }
 
   private int getMaxCountOfCaches() {

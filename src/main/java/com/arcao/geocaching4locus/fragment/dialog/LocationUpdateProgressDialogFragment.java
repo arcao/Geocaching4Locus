@@ -36,7 +36,13 @@ public final class LocationUpdateProgressDialogFragment extends AbstractDialogFr
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
 						.progress(true, 0)
-						.negativeText(R.string.cancel_button);
+						.negativeText(R.string.cancel_button)
+						.callback(new MaterialDialog.ButtonCallback() {
+							@Override
+							public void onNegative(MaterialDialog dialog) {
+								callOnCancelListener(LocationUpdateProgressDialogFragment.this);
+							}
+						});
 
 		switch (getArguments().getInt(PARAM_SOURCE, SOURCE_NETWORK)) {
 			case SOURCE_GPS:

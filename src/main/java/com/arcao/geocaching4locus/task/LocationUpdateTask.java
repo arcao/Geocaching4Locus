@@ -89,6 +89,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		}
 
 		mDialog = LocationUpdateProgressDialogFragment.newInstance(source);
+		mDialog.setOnCancelListener(this);
 		mDialog.show(activity.getFragmentManager(), LocationUpdateProgressDialogFragment.FRAGMENT_TAG);
 	}
 
@@ -159,8 +160,8 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 	}
 
 	private void cancel() {
-		cancel(false);
 		mBarrier.reset();
+		cancel(false);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.WindowManager;
 import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -100,6 +101,8 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 							}
 						})
 						.build();
+
+		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 		ButterKnife.bind(this, dialog.getCustomView());
 

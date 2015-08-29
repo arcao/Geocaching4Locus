@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
@@ -28,9 +30,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		void onInputFinished(String input);
 	}
 
+	@Bind(R.id.input) EditText mEditText;
+	@Bind(R.id.layout) TextInputLayout mLayout;
+
 	private WeakReference<DialogListener> mDialogListenerRef;
-	private EditText mEditText;
-	private CharSequence mErrorMessage = null;
 
 	public static GCNumberInputDialogFragment newInstance() {
 		return new GCNumberInputDialogFragment();
@@ -53,7 +56,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 		if (mEditText != null && isShowing()) {
 			outState.putCharSequence(PARAM_INPUT, mEditText.getText());
-			outState.putCharSequence(PARAM_ERROR_MESSAGE, mEditText.getError());
+			outState.putCharSequence(PARAM_ERROR_MESSAGE, mLayout.getError());
 		}
 	}
 
@@ -85,6 +88,8 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 								if (validateInput(mEditText)) {
 									fireOnInputFinished(mEditText.getText().toString());
 									dialog.dismiss();
+								} else {
+									mLayout.setError(getString(R.string.error_input_gc));
 								}
 							}
 
@@ -96,9 +101,8 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 						})
 						.build();
 
-		View view = dialog.getCustomView();
+		ButterKnife.bind(this, dialog.getCustomView());
 
-		mEditText = (EditText) view.findViewById(R.id.gc_code_input_edit_text);
 		mEditText.setText("GC");
 		mEditText.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -112,14 +116,14 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if (s != null && s.length() > 0 && mEditText.getError() != null) {
-					mEditText.setError(null);
+					mLayout.setError(null);
 				}
 			}
 		});
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(PARAM_INPUT)) {
 			mEditText.setText(savedInstanceState.getCharSequence(PARAM_INPUT));
-			mErrorMessage = savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE);
+			mLayout.setError(savedInstanceState.getCharSequence(PARAM_ERROR_MESSAGE));
 		}
 
 		// move caret on a last position
@@ -128,23 +132,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		return dialog;
 	}
 
-	@Override
-	public void onStart() {
-		super.onStart();
-
-		// setError can't be called from onCreateDialog - cause NPE in StaticLayout.<init>
-		// More here: http://code.google.com/p/android/issues/detail?id=19173
-		if (mErrorMessage != null) {
-			mEditText.setError(mErrorMessage);
-			mErrorMessage = null;
-		}
-	}
-	
 	private boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 
 		if (StringUtils.isEmpty(value)) {
-			editText.setError(getString(R.string.error_input_gc));
 			return false;
 		}
 
@@ -152,7 +143,6 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			return GeocachingUtils.cacheCodeToCacheId(value) > 0;
 		} catch (IllegalArgumentException e) {
 			Timber.e(e, e.getMessage());
-			editText.setError(getString(R.string.error_input_gc));
 			return false;
 		}
 	}

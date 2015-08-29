@@ -7,7 +7,7 @@
     <attr name="listPreferredItemPaddingTop" format="dimension" />
     <attr name="listPreferredItemPaddingBottom" format="dimension" />
 
-    <declare-styleable name="SeekBarPreference">
+    <declare-styleable name="SliderPreference">
         <attr name="android:max" />
         <attr name="android:defaultValue" />
         <attr name="android:title" />

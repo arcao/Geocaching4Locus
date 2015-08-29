@@ -13,7 +13,7 @@
         android:entries="@array/pref_download_on_show_entries"
         android:entryValues="@array/pref_download_on_show_values"
         android:defaultValue="0"/>
-    <com.arcao.geocaching4locus.preference.SeekBarPreference
+    <com.arcao.geocaching4locus.preference.SliderPreference
         android:key="downloading_count_of_logs"
         android:title="@string/pref_count_of_logs"
         android:summary="@string/pref_count_of_logs_summary"

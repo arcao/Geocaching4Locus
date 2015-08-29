@@ -13,14 +13,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
-
-import java.lang.ref.WeakReference;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-public class SliderDialogFragment extends AbstractDialogFragment {
+import java.lang.ref.WeakReference;
+
+public class SliderDialogFragment extends AbstractDialogFragment implements SeekBar.OnSeekBarChangeListener, TextWatcher {
 	private static final String PARAM_TITLE = "TITLE";
 	private static final String PARAM_MESSAGE = "MESSAGE";
 	private static final String PARAM_DEFAULT_VALUE = "DEFAULT_VALUE";
@@ -32,8 +34,9 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 		void onDialogClosed(SliderDialogFragment fragment);
 	}
 
-	private SeekBar mSeekBar;
-	private EditText mValueText;
+	@Bind(R.id.seekbar) SeekBar mSeekBar;
+	@Bind(R.id.input) EditText mValueText;
+	@Bind(R.id.message) TextView mMessageText;
 
 	private int mMin = 0;
 	private int mMax = 100;
@@ -135,66 +138,64 @@ public class SliderDialogFragment extends AbstractDialogFragment {
 
 	private View prepareView() {
 		@SuppressLint("InflateParams")
-		View view = LayoutInflater.from(getActivity()).inflate(R.layout.seek_bar_dialog, null, false);
+		View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_slider, null, false);
+		ButterKnife.bind(this, view);
 
-		TextView messageView = (TextView) view.findViewById(R.id.message);
 		int message = getArguments().getInt(PARAM_MESSAGE);
 		if (message != 0) {
-			messageView.setVisibility(View.VISIBLE);
-			messageView.setText(message);
+			mMessageText.setVisibility(View.VISIBLE);
+			mMessageText.setText(message);
 		} else {
-			messageView.setVisibility(View.GONE);
+			mMessageText.setVisibility(View.GONE);
 		}
 
-		mSeekBar = (SeekBar) view.findViewById(R.id.progress);
 		mSeekBar.setMax((mMax - mMin) / mStep);
 		mSeekBar.setProgress((mValue - mMin) / mStep);
-		mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {}
+		mSeekBar.setOnSeekBarChangeListener(this);
 
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {}
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				mValue = progress * mStep + mMin;
-				if (fromUser) {
-					mValueText.setText(String.valueOf(mValue));
-					mValueText.setSelection(mValueText.getText().length());
-				}
-			}
-		});
-
-		mValueText = (EditText) view.findViewById(R.id.progress_text);
 		mValueText.setText(String.valueOf(mValue));
 		mValueText.setSelection(mValueText.getText().length());
 		mValueText.setFilters(new InputFilter[] {
 						new InputTextFilter(mValueText, mMin, mMax, mStep)
 		});
-		mValueText.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				mValue = mMin;
-				try {
-					mValue = Integer.parseInt(s.toString());
-				} catch (NumberFormatException e) {
-					// fall trough
-				}
-
-				mSeekBar.setProgress((mValue - mMin) / mStep);
-			}
-		});
+		mValueText.addTextChangedListener(this);
 
 		return view;
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		mValue = progress * mStep + mMin;
+		if (fromUser) {
+			mValueText.setText(String.valueOf(mValue));
+			mValueText.setSelection(mValueText.getText().length());
+		}
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		mValue = mMin;
+		try {
+			mValue = Integer.parseInt(s.toString());
+		} catch (NumberFormatException e) {
+			// fall trough
+		}
+
+		mSeekBar.setProgress((mValue - mMin) / mStep);
 	}
 
 	private static class InputTextFilter extends NumberKeyListener {

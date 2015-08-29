@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.preference;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -13,29 +14,32 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.arcao.geocaching4locus.R;
 import timber.log.Timber;
 
-public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+public class SliderPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener, TextWatcher {
 
-	private SeekBar mSeekBar;
-	private EditText mValueText;
+	@Bind(R.id.seekbar) SeekBar mSeekBar;
+	@Bind(R.id.input) EditText mInputText;
+	@Bind(R.id.message) TextView mMessageText;
+
 	private final Context mContext;
 
 	private final CharSequence mDialogMessage;
 	private final int mDefault;
 	private int mMax, mValue = 0;
 
-	public SeekBarPreference(Context context, AttributeSet attrs) {
+	public SliderPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
 
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SeekBarPreference);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SliderPreference);
 
-		mDialogMessage = a.getText(R.styleable.SeekBarPreference_android_dialogMessage);
-		mDefault = a.getInt(R.styleable.SeekBarPreference_android_defaultValue, 0);
-		mMax = a.getInt(R.styleable.SeekBarPreference_android_max, 100);
+		mDialogMessage = a.getText(R.styleable.SliderPreference_android_dialogMessage);
+		mDefault = a.getInt(R.styleable.SliderPreference_android_defaultValue, 0);
+		mMax = a.getInt(R.styleable.SliderPreference_android_max, 100);
 
 		mValue = getPersistedInt(mDefault);
 
@@ -44,53 +48,9 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 
 	@Override
 	protected View onCreateDialogView() {
-		View view = LayoutInflater.from(mContext).inflate(R.layout.seek_bar_dialog, null, false);
-
-		TextView messageView = (TextView) view.findViewById(R.id.message);
-		messageView.setText(mDialogMessage);
-
-		mSeekBar = (SeekBar) view.findViewById(R.id.progress);
-		mSeekBar.setOnSeekBarChangeListener(this);
-
-		mValueText = (EditText) view.findViewById(R.id.progress_text);
-		mValueText.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				int value = 0;
-				try {
-					value = Integer.parseInt(s.toString());
-				} catch (NumberFormatException e) {
-					Timber.e(e, e.getMessage());
-				}
-
-				if (value > mMax) {
-					value = mMax;
-				}
-
-				mSeekBar.setProgress(value);
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				int value = 0;
-				try {
-					value = Integer.parseInt(s.toString());
-				} catch (NumberFormatException e) {
-					Timber.e(e, e.getMessage());
-				}
-
-				if (value > mMax) {
-					value = mMax;
-					mValueText.setText(String.valueOf(value));
-					mValueText.setSelection(mValueText.getText().length());
-				}
-
-				mSeekBar.setProgress(value);
-			}
-		});
+		@SuppressLint("InflateParams")
+		View view = LayoutInflater.from(mContext).inflate(R.layout.view_slider, null, false);
+		ButterKnife.bind(this, view);
 
 		if (shouldPersist())
 			mValue = getPersistedInt(mDefault);
@@ -101,10 +61,16 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 	@Override
 	protected void onBindDialogView(@NonNull View v) {
 		super.onBindDialogView(v);
+
 		mSeekBar.setMax(mMax);
 		mSeekBar.setProgress(mValue);
-		mValueText.setText(String.valueOf(mValue));
-		mValueText.setSelection(mValueText.getText().length());
+		mSeekBar.setOnSeekBarChangeListener(this);
+
+		mInputText.setText(String.valueOf(mValue));
+		mInputText.setSelection(mInputText.getText().length());
+		mInputText.addTextChangedListener(this);
+
+		mMessageText.setText(mDialogMessage);
 	}
 
 	@Override
@@ -121,8 +87,8 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 		if (!fromTouch)
 			return;
 
-		mValueText.setText(String.valueOf(value));
-		mValueText.setSelection(mValueText.getText().length());
+		mInputText.setText(String.valueOf(value));
+		mInputText.setSelection(mInputText.getText().length());
 	}
 
 	@Override
@@ -161,5 +127,43 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 
 	public int getProgress() {
 		return mValue;
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		int value = 0;
+		try {
+			value = Integer.parseInt(s.toString());
+		} catch (NumberFormatException e) {
+			Timber.e(e, e.getMessage());
+		}
+
+		if (value > mMax) {
+			value = mMax;
+		}
+
+		mSeekBar.setProgress(value);
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		int value = 0;
+		try {
+			value = Integer.parseInt(s.toString());
+		} catch (NumberFormatException e) {
+			// do nothing
+		}
+
+		if (value > mMax) {
+			value = mMax;
+			mInputText.setText(String.valueOf(value));
+			mInputText.setSelection(mInputText.getText().length());
+		}
+
+		mSeekBar.setProgress(value);
 	}
 }

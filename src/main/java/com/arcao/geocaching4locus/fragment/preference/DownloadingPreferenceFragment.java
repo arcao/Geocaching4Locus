@@ -6,7 +6,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.preference.SeekBarPreference;
+import com.arcao.geocaching4locus.preference.SliderPreference;
 import com.arcao.preference.ListPreference;
 
 public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
@@ -22,7 +22,7 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 	protected void preparePreference() {
 		final CheckBoxPreference simpleCacheDataPreference = findPreference(DOWNLOADING_SIMPLE_CACHE_DATA, CheckBoxPreference.class);
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
-		final SeekBarPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SeekBarPreference.class);
+		final SliderPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
 		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
 
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -50,7 +50,7 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 
 		switch (key) {
 			case DOWNLOADING_COUNT_OF_LOGS:
-				final SeekBarPreference countOfLogsPreference = findPreference(key, SeekBarPreference.class);
+				final SliderPreference countOfLogsPreference = findPreference(key, SliderPreference.class);
 				countOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(countOfLogsPreference.getProgress()), R.string.pref_count_of_logs_summary));
 				break;
 

@@ -33,11 +33,8 @@ import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceive
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
 import com.arcao.geocaching4locus.task.LocationUpdateTask;
 import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
-import com.arcao.geocaching4locus.util.Coordinates;
-import com.arcao.geocaching4locus.util.LocusTesting;
-import com.arcao.geocaching4locus.util.PermissionUtil;
-import com.arcao.geocaching4locus.util.PreferenceUtil;
-import com.arcao.geocaching4locus.util.SpannedFix;
+import com.arcao.geocaching4locus.util.*;
+import com.arcao.geocaching4locus.widget.SpinnerTextView;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
@@ -63,10 +60,10 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private double mLongitude = Double.NaN;
   private boolean mHasCoordinates = false;
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.latitudeEditText) EditText mLatitudeEditText;
-  @Bind(R.id.logitudeEditText) EditText mLongitudeEditText;
-  @Bind(R.id.cacheCountEditText) EditText mCountOfCachesEditText;
+  @Bind(R.id.toolbar) Toolbar mToolbar;
+  @Bind(R.id.latitude) EditText mLatitudeEditText;
+  @Bind(R.id.longitude) EditText mLongitudeEditText;
+  @Bind(R.id.counter) SpinnerTextView mCounter;
   @Bind(R.id.fab) FloatingActionButton fab;
 
   @Override
@@ -80,7 +77,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     setContentView(R.layout.activity_search_nearest);
     ButterKnife.bind(this);
 
-    setSupportActionBar(toolbar);
+    setSupportActionBar(mToolbar);
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setTitle(getTitle());
@@ -126,7 +123,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       mHasCoordinates = true;
     }
 
-    prepareLayout();
+    prepareCounterLayout();
+
+    fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
 
     if (!mHasCoordinates) {
       onGpsClick();
@@ -136,48 +135,44 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     }
   }
 
-  @OnFocusChange({R.id.latitudeEditText, R.id.logitudeEditText})
+  @OnFocusChange({R.id.latitude, R.id.longitude})
   public void onCoordinateFocusChange(View v, boolean hasFocus) {
     if (hasFocus) return;
 
     double deg = Coordinates.convertDegToDouble(((TextView) v).getText().toString());
-    ((TextView) v).setText(Coordinates.convertDoubleToDeg(deg, false));
+    ((TextView) v).setText(Coordinates.convertDoubleToDeg(deg, v.getId() == R.id.longitude));
   }
 
-  private void prepareLayout() {
-    int countOfCaches = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
-    final int countOfCachesStep = PreferenceUtil.getParsedInt(mPrefs,
+  private void prepareCounterLayout() {
+    int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+    final int step = PreferenceUtil.getParsedInt(mPrefs,
         PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP,
         AppConstants.DOWNLOADING_COUNT_OF_CACHES_STEP_DEFAULT);
 
-    int max = getMaxCountOfCaches();
+    final int max = getMaxCountOfCaches();
 
-    if (countOfCaches > max) {
-      countOfCaches = max;
-      mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).apply();
+    if (count > max) {
+      count = max;
+      mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, count).apply();
     }
 
-    if (countOfCaches % countOfCachesStep != 0) {
-      countOfCaches = ((countOfCaches  / countOfCachesStep) + 1) * countOfCachesStep;
-      mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, countOfCaches).apply();
+    if (count % step != 0) {
+      count = ((count  / step) + 1) * step;
+      mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, count).apply();
     }
 
-    mCountOfCachesEditText.setText(String.valueOf(
-        mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
-            AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT)));
-    mCountOfCachesEditText.setOnClickListener(new View.OnClickListener() {
+    mCounter.setText(String.valueOf(count));
+
+    mCounter.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        int countOfCaches = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
-            AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+        int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
         SliderDialogFragment fragment =
-            SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
-                countOfCachesStep, getMaxCountOfCaches(), countOfCaches, countOfCachesStep);
-        fragment.show(getFragmentManager(), "countOfCaches");
+                SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
+                        step, max, count, step);
+        fragment.show(getFragmentManager(), "COUNTER");
       }
     });
-
-    fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
   }
 
   private int getMaxCountOfCaches() {
@@ -220,7 +215,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     }
   }
 
-  @OnClick(R.id.gpsButton)
+  @OnClick(R.id.gps)
   public void onGpsClick() {
     if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION);
@@ -229,7 +224,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     }
   }
 
-  @OnClick(R.id.filterButton)
+  @OnClick(R.id.filter)
   public void onFilterClick() {
     startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment.class));
   }
@@ -364,7 +359,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   public void onDialogClosed(SliderDialogFragment fragment) {
     int value = fragment.getValue();
 
-    mCountOfCachesEditText.setText(String.valueOf(value));
+    mCounter.setText(String.valueOf(value));
     mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).apply();
   }
 }

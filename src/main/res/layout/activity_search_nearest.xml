@@ -5,8 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.arcao.geocaching4locus.SearchNearestActivity"
-    >
+    tools:context="com.arcao.geocaching4locus.SearchNearestActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -14,86 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ScrollView
-            style="@style/ScreenContainer"
-            android:orientation="vertical"
-            android:fillViewport="false">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="false"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="56dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="64dp">
 
-                <TextView
-                    style="@style/SimpleHeader"
-                    android:text="@string/coordinates" >
+                <include layout="@layout/view_search_nearest_coordinates" />
 
-                </TextView>
-
-                <TableLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:stretchColumns="0" >
-
-                    <TableRow>
-
-                        <EditText
-                            android:id="@+id/latitudeEditText"
-                            style="@style/SimpleEditText"
-                            android:inputType="textNoSuggestions" />
-
-                        <Button
-                            android:id="@+id/gpsButton"
-                            style="@style/SimpleButton.GPS"
-                            android:text="@string/gps" >
-                        </Button>
-                    </TableRow>
-
-                    <TableRow>
-
-                        <EditText
-                            android:id="@+id/logitudeEditText"
-                            style="@style/SimpleEditText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:inputType="textNoSuggestions" />
-                    </TableRow>
-                </TableLayout>
-
-                <TextView
-                    style="@style/SimpleHeader"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/title_count_of_caches" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/cacheCountEditText"
-                        style="@style/SimpleEditTextButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-                    </EditText>
-
-                    <Button
-                        android:id="@+id/filterButton"
-                        style="@style/SimpleButton.Filter"
-                        android:text="@string/button_filter"/>
-                </LinearLayout>
+                <include layout="@layout/view_search_nearest_geocache_count" />
 
             </LinearLayout>
         </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fab"
+            android:layout_margin="16dp"
             android:layout_gravity="center_horizontal|bottom"
             android:src="@drawable/ic_action_download"
-            android:layout_margin="16dp"
             app:elevation="4dp" />
     </FrameLayout>
 </LinearLayout>

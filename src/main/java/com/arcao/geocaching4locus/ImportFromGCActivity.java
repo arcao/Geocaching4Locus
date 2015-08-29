@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.arcao.geocaching4locus.fragment.dialog.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import timber.log.Timber;
 
@@ -35,6 +36,8 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 
 	private void startImport(String cacheId) {
 		Timber.i("source: importFromGC;" + cacheId);
+
+		AnalyticsUtil.actionImportGC();
 
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}

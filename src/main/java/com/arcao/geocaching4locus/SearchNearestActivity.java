@@ -66,6 +66,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @Bind(R.id.counter) SpinnerTextView mCounter;
   @Bind(R.id.fab) FloatingActionButton fab;
 
+  private String mCoordinatesSource = null;
+  private boolean mUseFilter = false;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -138,6 +141,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @OnFocusChange({R.id.latitude, R.id.longitude})
   public void onCoordinateFocusChange(View v, boolean hasFocus) {
     if (hasFocus) return;
+
+    mCoordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_MANUAL;
 
     double deg = Coordinates.convertDegToDouble(((TextView) v).getText().toString());
     ((TextView) v).setText(Coordinates.convertDoubleToDeg(deg, v.getId() == R.id.longitude));
@@ -226,6 +231,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
   @OnClick(R.id.filter)
   public void onFilterClick() {
+    mUseFilter = true;
     startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment.class));
   }
 
@@ -249,6 +255,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         .putFloat(PrefConstants.LAST_LATITUDE, (float) mLatitude)
         .putFloat(PrefConstants.LAST_LONGITUDE, (float) mLongitude)
         .apply();
+
+    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter,
+            mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT));
 
     Intent intent = new Intent(this, SearchGeocacheService.class);
     intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, mLatitude);
@@ -333,6 +342,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     mLongitude = location.getLongitude();
     mHasCoordinates = true;
 
+    mCoordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_GPS;
+
     updateCoordinates();
 
     mPrefs.edit()
@@ -348,6 +359,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     mLongitude = locMapCenter.getLongitude();
     mHasCoordinates = true;
 
+    mCoordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_LOCUS;
     Timber.i("Called from Locus: lat=" + mLatitude + "; lon=" + mLongitude);
   }
 

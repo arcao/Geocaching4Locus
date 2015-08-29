@@ -3,8 +3,8 @@ package com.arcao.geocaching4locus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
 import com.arcao.geocaching4locus.fragment.dialog.UpdateMoreDialogFragment;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import locus.api.android.utils.LocusUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import timber.log.Timber;
@@ -37,6 +37,8 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 			finish();
 			return;
 		}
+
+		AnalyticsUtil.actionUpdateMore(pointIndexes.length);
 
 		Timber.i("source: update;count=" + pointIndexes.length);
 		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);

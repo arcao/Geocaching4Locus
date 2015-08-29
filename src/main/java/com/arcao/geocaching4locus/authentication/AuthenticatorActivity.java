@@ -13,9 +13,8 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.LoginEvent;
 import timber.log.Timber;
 
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
@@ -69,7 +68,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 			Crashlytics.setUserName(helper.getAccount().name);
 		}
 
-		Answers.getInstance().logLogin(new LoginEvent().putSuccess(helper.hasAccount()));
+		AnalyticsUtil.actionLogin(helper.hasAccount());
 
 		if (errorIntent != null)
 			startActivity(errorIntent);

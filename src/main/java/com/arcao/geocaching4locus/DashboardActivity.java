@@ -11,6 +11,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.arcao.geocaching4locus.constants.AppConstants;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.IntentUtil;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.widget.DashboardButton;
@@ -19,6 +20,7 @@ import locus.api.android.utils.LocusUtils;
 
 public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
 	private LiveMapNotificationManager mLiveMapNotificationManager;
+	private boolean mCalledFromLocus = false;
 
 	@Bind(R.id.db_live_map) DashboardButton mLiveMapButton;
 	@Bind(R.id.db_import_bookmark) DashboardButton mImportBookmarkButton;
@@ -29,6 +31,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		super.onCreate(savedInstanceState);
 
     mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
+		mCalledFromLocus = LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent());
 
 		setContentView(R.layout.activity_dashboard);
     ButterKnife.bind(this);
@@ -38,6 +41,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
     if (actionBar != null) {
       actionBar.setTitle(getTitle());
     }
+
+		AnalyticsUtil.actionDashboard(mCalledFromLocus);
 	}
 
 	@Override
@@ -63,7 +68,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 
 		// hide dialog only when was started from Locus
-		if (LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent())) {
+		if (mCalledFromLocus) {
 			finish();
 		}
 	}

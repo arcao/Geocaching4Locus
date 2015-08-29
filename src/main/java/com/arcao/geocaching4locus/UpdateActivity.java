@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
@@ -79,6 +79,9 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 		Timber.i("source: update;" + cacheId);
 
 		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
+
+		AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs);
+
 		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
 	}
 

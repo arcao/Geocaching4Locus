@@ -13,6 +13,7 @@ import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.fragment.BookmarkCachesFragment;
 import com.arcao.geocaching4locus.fragment.BookmarkListFragment;
 import com.arcao.geocaching4locus.fragment.dialog.BookmarkImportDialogFragment;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import timber.log.Timber;
 
@@ -73,6 +74,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   @Override
   public void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll) {
     if (selectAll) {
+      AnalyticsUtil.actionImportBookmarks(bookmarkList.getItemCount(), true);
       BookmarkImportDialogFragment.newInstance(bookmarkList.getGuid()).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
     } else {
       showBookmarkCaches(bookmarkList);
@@ -87,6 +89,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   @Override
   public void onBookmarksSelected(Bookmark[] bookmarksList) {
     Set<String> geocaches = new HashSet<>(bookmarksList.length);
+
+    AnalyticsUtil.actionImportBookmarks(bookmarksList.length, false);
 
     for (Bookmark bookmark : bookmarksList) geocaches.add(bookmark.getCacheCode());
 

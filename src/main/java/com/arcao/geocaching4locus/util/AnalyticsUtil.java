@@ -15,7 +15,7 @@ public final class AnalyticsUtil {
 
 	public static void actionDashboard(boolean calledFromLocus) {
 		Answers.getInstance().logCustom(new CustomEvent("Dashboard")
-						.putCustomAttribute("called_from_locus", Boolean.toString(calledFromLocus)));
+						.putCustomAttribute("called from locus", Boolean.toString(calledFromLocus)));
 	}
 
 	public static void actionImport() {
@@ -33,16 +33,16 @@ public final class AnalyticsUtil {
 
 	public static void actionSearchNearest(String coordinatesSource, boolean useFilter, int count) {
 		Answers.getInstance().logCustom(new CustomEvent("Search nearest")
-						.putCustomAttribute("coordinates_source", coordinatesSource == null ? COORDINATES_SOURCE_MANUAL : coordinatesSource)
-						.putCustomAttribute("use_filter", Boolean.toString(useFilter))
+						.putCustomAttribute("coordinates source", coordinatesSource == null ? COORDINATES_SOURCE_MANUAL : coordinatesSource)
+						.putCustomAttribute("use filter", Boolean.toString(useFilter))
 						.putCustomAttribute("count", count));
 
 	}
 
 	public static void actionUpdate(boolean oldPoint, boolean updateLogs) {
 		Answers.getInstance().logCustom(new CustomEvent("Update")
-						.putCustomAttribute("old_point", Boolean.toString(oldPoint))
-						.putCustomAttribute("update_logs", Boolean.toString(updateLogs)));
+						.putCustomAttribute("old point", Boolean.toString(oldPoint))
+						.putCustomAttribute("update logs", Boolean.toString(updateLogs)));
 
 	}
 

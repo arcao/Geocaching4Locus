@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.widget;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.method.MovementMethod;
 import android.util.AttributeSet;
 import com.arcao.geocaching4locus.util.ColorUtil;
 
@@ -23,5 +24,10 @@ public class SpinnerTextView extends AppCompatEditText {
 	@Override
 	protected boolean getDefaultEditable() {
 		return false;
+	}
+
+	@Override
+	protected MovementMethod getDefaultMovementMethod() {
+		return null;
 	}
 }

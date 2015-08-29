@@ -14,9 +14,10 @@ import com.arcao.geocaching4locus.fragment.BookmarkCachesFragment;
 import com.arcao.geocaching4locus.fragment.BookmarkListFragment;
 import com.arcao.geocaching4locus.fragment.dialog.BookmarkImportDialogFragment;
 import com.arcao.geocaching4locus.util.LocusTesting;
+import timber.log.Timber;
+
 import java.util.HashSet;
 import java.util.Set;
-import timber.log.Timber;
 
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkCachesFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
   private static final int REQUEST_LOGIN = 1;
@@ -98,14 +99,19 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     switch (item.getItemId()) {
       // Respond to the action bar's Up/Home button
       case android.R.id.home:
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-          getFragmentManager().popBackStack();
-        } else {
-          finish();
-        }
+        onBackPressed();
         return true;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (getFragmentManager().getBackStackEntryCount() > 0) {
+      getFragmentManager().popBackStack();
+    } else {
+      super.onBackPressed();
+    }
   }
 
   @Override

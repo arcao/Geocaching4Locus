@@ -94,6 +94,7 @@
         <item name="android:inputType">text</item>
     </style>
     <style name="Widget.AppTheme.SpinnerTextView" parent="Widget.AppCompat.EditText">
+        <item name="android:focusableInTouchMode">false</item>
         <item name="android:background">@drawable/spinner_textfield_background</item>
     </style>
     <style name="Widget.AppTheme.Button" parent="Widget.AppCompat.Button" />

@@ -30,25 +30,24 @@ The `<production_api_key>` and `<production_api_secret>` is provided via [Ground
 
 Dependencies
 ============
-
-* [ACRA][07] - Error reporting library
-* [Apache Commons Lang][02]
-* [Apache Commons IO][08]
-* [Geocaching API for Java][01]
-* [Jtpl][04]
-* [Locus API Library][06]
-* [Scrible][03] - OAuth library
-* [Simple Logging Facade for Java (SLF4J)][05]
-
+* [Apache Commons Lang](http://commons.apache.org/lang/)
+* [Apache Commons IO](http://commons.apache.org/io/)
+* [Butter Knife](https://github.com/JakeWharton/butterknife)
+* [Crashlytics](https://www.crashlytics.com)
+* [Geocaching API for Java](https://github.com/arcao/geocaching-api)
+* [Locus API](http://docs.locusmap.eu/doku.php?id=manual:advanced:locus_api)
+* [Scrible - Simple OAuth library for Java](https://github.com/fernandezpablo85/scribe-java)
+* [SLF4J - Simple Logging Facade for Java](http://www.slf4j.org/)
+* [SLF4J-Timber - SLF4J binding for Jake Wharton's Timber logging library](https://github.com/arcao/slf4j-timber)
+* [Material Dialogs](https://github.com/afollestad/material-dialogs)
+* [Timber](https://github.com/JakeWharton/timber)
 
 Developed by
 ============
-
 * [Martin Sloup (Arcao)](http://arcao.com)
 
 Other links
-============
-
+===========
 * [Official Website](http://geocaching4locus.eu/)
 * [Page on Google Play](https://play.google.com/store/apps/details?id=com.arcao.geocaching4locus)
 * [Page on AndroidPIT](http://www.androidpit.com/en/android/market/apps/app/com.arcao.geocaching4locus/Locus-addon-Geocaching)
@@ -58,7 +57,6 @@ Other links
 
 License
 =======
-
     Copyright (C) 2012 Martin Sloup, arcao.com
 
     This program is free software; you can redistribute it and/or
@@ -76,15 +74,3 @@ License
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
     
     This program comes with ABSOLUTELY NO WARRANTY!
-
-
-
-
- [01]: https://github.com/arcao/geocaching-api
- [02]: http://commons.apache.org/lang/
- [03]: https://github.com/fernandezpablo85/scribe-java
- [04]: http://jtpl.sourceforge.net/
- [05]: http://www.slf4j.org/
- [06]: http://code.google.com/p/android-locus-map/
- [07]: http://code.google.com/p/acra/
- [08]: http://commons.apache.org/io/

@@ -14,7 +14,7 @@ public class LocusTesting {
 	public static boolean isLocusInstalled(Context context) {
 		LocusUtils.LocusVersion lv = getActiveVersion(context);
 
-		Version locusVersion = Version.parseVersion(lv != null ? lv.versionName : null);
+		Version locusVersion = Version.parseVersion(lv != null ? lv.getVersionName() : null);
 		Timber.v("Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
 
 		return locusVersion.compareTo(AppConstants.LOCUS_MIN_VERSION) >= 0;

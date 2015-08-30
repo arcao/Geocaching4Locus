@@ -25,8 +25,8 @@ public class LocusMapInfoCollector extends Collector {
 		try {
 			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(mContext);
 			if (lv != null) {
-				sb.append("Locus Version = ").append(lv.versionName);
-				sb.append("\nLocus Package = ").append(lv.packageName);
+				sb.append("Locus Version = ").append(lv.getVersionName());
+				sb.append("\nLocus Package = ").append(lv.getPackageName());
 
 				LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
 				if (info != null) {

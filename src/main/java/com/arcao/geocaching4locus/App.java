@@ -13,11 +13,12 @@ import com.arcao.geocaching4locus.util.CrashlyticsTree;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
-import java.util.UUID;
 import locus.api.android.utils.LocusUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.scribe.model.Token;
 import timber.log.Timber;
+
+import java.util.UUID;
 
 public class App extends android.app.Application {
 	private AuthenticatorHelper mAuthenticatorHelper;
@@ -39,8 +40,8 @@ public class App extends android.app.Application {
 		try {
 			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
 			if (lv != null) {
-				Crashlytics.setString("LocusVersion", lv.versionName);
-				Crashlytics.setString("LocusPackage", lv.packageName);
+				Crashlytics.setString("LocusVersion", lv.getVersionName());
+				Crashlytics.setString("LocusPackage", lv.getPackageName());
 			}
 		} catch (Throwable t) {
 			Timber.e(t, t.getMessage());

@@ -31,7 +31,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }
-    compile 'menion:locus-api-android:1.33.36'
+    compile 'menion:locus-api-android:1.35.39'
 
     // from JCenter repository
     compile 'com.arcao:slf4j-timber:2.0'

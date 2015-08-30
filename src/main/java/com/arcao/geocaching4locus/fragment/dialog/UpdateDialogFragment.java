@@ -6,15 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateTask;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
+import locus.api.objects.extra.Waypoint;
 
 import java.lang.ref.WeakReference;
-
-import locus.api.objects.extra.Waypoint;
 
 public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.TaskListener {
 	public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
@@ -108,7 +106,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-						.progress(false, -1)
+						.progress(false, -1, true)
 						.negativeText(R.string.cancel_button)
 						.build();
 

@@ -93,7 +93,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		return new MaterialDialog.Builder(getActivity())
 						.content(R.string.update_caches_progress)
 						.negativeText(R.string.cancel_button)
-						.progress(false, pointIndexes.length)
+						.progress(false, pointIndexes.length, true)
 						.build();
 	}
 }

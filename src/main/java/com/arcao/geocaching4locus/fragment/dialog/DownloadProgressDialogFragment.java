@@ -58,7 +58,7 @@ public final class DownloadProgressDialogFragment extends AbstractDialogFragment
 								callOnCancelListener(DownloadProgressDialogFragment.this);
 							}
 						})
-						.progress(count < 0, count)
+						.progress(false, count, true)
 						.build();
 
 		if (count >= 0) {

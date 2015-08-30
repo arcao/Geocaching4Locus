@@ -49,11 +49,11 @@ Developed by
 Other links
 ===========
 * [Official Website](http://geocaching4locus.eu/)
-* [Page on Google Play](https://play.google.com/store/apps/details?id=com.arcao.geocaching4locus)
-* [Page on AndroidPIT](http://www.androidpit.com/en/android/market/apps/app/com.arcao.geocaching4locus/Locus-addon-Geocaching)
+* [Google Play](https://play.google.com/store/apps/details?id=com.arcao.geocaching4locus)
 * [Manual](http://geocaching4locus.eu/manual/)
 * [Discussion forum](http://forum.asamm.cz/viewtopic.php?f=26&t=549)
-* [Page on Google+](https://plus.google.com/104753360614230872185)
+* [Google+ page](https://plus.google.com/+Geocaching4LocusEu)
+* [Facebook page](https://www.facebook.com/Geocaching4Locus)
 
 License
 =======

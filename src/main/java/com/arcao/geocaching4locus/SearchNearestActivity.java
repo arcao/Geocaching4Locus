@@ -26,13 +26,13 @@ import butterknife.OnFocusChange;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.dialog.LocationUpdateDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.NoLocationPermissionErrorDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.NoLocationProviderDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
 import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
 import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
 import com.arcao.geocaching4locus.service.SearchGeocacheService;
-import com.arcao.geocaching4locus.task.LocationUpdateTask;
-import com.arcao.geocaching4locus.task.LocationUpdateTask.LocationUpdate;
 import com.arcao.geocaching4locus.util.*;
 import com.arcao.geocaching4locus.widget.SpinnerTextView;
 import locus.api.android.utils.LocusConst;
@@ -43,7 +43,7 @@ import locus.api.objects.extra.Waypoint;
 import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
-public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdate, OnIntentMainFunction, SliderDialogFragment.DialogListener {
+public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener {
   private static final String STATE_LATITUDE = "LATITUDE";
   private static final String STATE_LONGITUDE = "LONGITUDE";
   private static final String STATE_HAS_COORDINATES = "HAS_COORDINATES";
@@ -54,7 +54,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private SharedPreferences mPrefs;
   private SearchNearestActivityBroadcastReceiver mBroadcastReceiver;
   private LocationManager mLocationManager;
-  private LocationUpdateTask mTask;
 
   private double mLatitude = Double.NaN;
   private double mLongitude = Double.NaN;
@@ -130,10 +129,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
 
+    updateCoordinates();
+
     if (!mHasCoordinates) {
       onGpsClick();
     } else {
-      updateCoordinates();
       requestProgressUpdate();
     }
   }
@@ -197,9 +197,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
   @Override
   protected void onPause() {
-    if (mTask != null)
-      mTask.detach();
-
     mBroadcastReceiver.unregister(this);
 
     super.onPause();
@@ -208,10 +205,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @Override
   protected void onSaveInstanceState(Bundle outState) {
     super.onSaveInstanceState(outState);
-
-    // Fragments can't be used after onSaveInstanceState
-    if (mTask != null)
-      mTask.detach();
 
     outState.putBoolean(STATE_HAS_COORDINATES, mHasCoordinates);
     if (mHasCoordinates) {
@@ -325,18 +318,20 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     if (requestCode == REQUEST_LOCATION_PERMISSION) {
       if (PermissionUtil.verifyPermissions(grantResults)) {
-        mTask = new LocationUpdateTask(this);
-        mTask.execute();
+        LocationUpdateDialogFragment.newInstance().show(getFragmentManager(), LocationUpdateDialogFragment.FRAGMENT_TAG);
       } else {
         NoLocationPermissionErrorDialogFragment.newInstance().show(getFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
       }
     }
   }
 
-  // ---------------- LocationUpdate listeners ----------------
+  // ---------------- LocationUpdateDialogFragment.DialogListener methods ----------------
   @Override
   public void onLocationUpdate(Location location) {
-    mTask = null;
+    if (location == null) {
+      NoLocationProviderDialogFragment.newInstance().show(getFragmentManager(), NoLocationProviderDialogFragment.FRAGMENT_TAG);
+      return;
+    }
 
     mLatitude = location.getLatitude();
     mLongitude = location.getLongitude();
@@ -352,7 +347,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         .apply();
   }
 
-  // ---------------- OnIntentMainFunction listeners ----------------
+  // ---------------- OnIntentMainFunction methods ----------------
   @Override
   public void onReceived(LocusUtils.LocusVersion lv, locus.api.objects.extra.Location locGps, locus.api.objects.extra.Location locMapCenter) {
     mLatitude = locMapCenter.getLatitude();
@@ -366,7 +361,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @Override
   public void onFailed() {}
 
-  // ---------------- SliderDialogFragment.DialogListener listener ----------------
+  // ---------------- SliderDialogFragment.DialogListener methods ----------------
   @Override
   public void onDialogClosed(SliderDialogFragment fragment) {
     int value = fragment.getValue();

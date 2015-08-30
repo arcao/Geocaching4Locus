@@ -27,7 +27,7 @@ dependencies {
     compile 'com.android.support:design:23.0.0'
 
     // from maven.arcao.com repository
-    compile('com.arcao:geocaching-api:1.6.2') {
+    compile('com.arcao:geocaching-api:+') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }
@@ -41,10 +41,8 @@ dependencies {
         exclude group: 'commons-codec', module: 'commons-codec' // already in Android
     }
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.afollestad:material-dialogs:0.7.5.3'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
-        transitive = true;
-    }
+    compile 'com.afollestad:material-dialogs:0.7.9.1'
+    compile 'com.crashlytics.sdk.android:crashlytics:2.5.1'
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()

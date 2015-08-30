@@ -34,3 +34,4 @@ gradle.properties
 *~
 *.swp
 crashlytics.properties
+fabric.properties

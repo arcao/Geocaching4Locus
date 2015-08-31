@@ -31,7 +31,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		super.onCreate(savedInstanceState);
 
     mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
-		mCalledFromLocus = LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent());
+		mCalledFromLocus = LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent()) ||
+				getIntent().hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER);
 
 		setContentView(R.layout.activity_dashboard);
     ButterKnife.bind(this);

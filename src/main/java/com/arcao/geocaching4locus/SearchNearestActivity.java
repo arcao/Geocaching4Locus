@@ -85,10 +85,13 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       actionBar.setTitle(getTitle());
     }
 
+    prepareCounterLayout();
+
     mLatitude = mPrefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
     mLongitude = mPrefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 
     if (!LocusTesting.isLocusInstalled(this)) {
+      updateCoordinates();
       LocusTesting.showLocusMissingError(this);
       return; // skip retrieving Waypoint, it can crash because of old Locus API
     }
@@ -124,8 +127,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
       mHasCoordinates = true;
     }
-
-    prepareCounterLayout();
 
     fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
 
@@ -270,6 +271,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   }
 
   private void updateCoordinates() {
+    if (Double.isNaN(mLatitude)) mLatitude = 0;
+    if (Double.isNaN(mLongitude)) mLongitude = 0;
+
     mLatitudeEditText.setText(Coordinates.convertDoubleToDeg(mLatitude, false));
     mLongitudeEditText.setText(Coordinates.convertDoubleToDeg(mLongitude, true));
   }

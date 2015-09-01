@@ -19,5 +19,6 @@ public final class LocusTestingErrorDialogFragment extends AbstractErrorDialogFr
 	@Override
 	public void onPositiveButtonClick() {
 		LocusUtils.callInstallLocus(getActivity());
+		getActivity().finish();
 	}
 }

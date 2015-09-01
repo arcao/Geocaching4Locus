@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import java.util.List;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
@@ -13,6 +12,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 		super.onCreate(savedInstanceState);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+
+	@Override
+	public boolean onIsMultiPane() {
+		return getResources().getBoolean(R.bool.preferences_prefer_dual_pane);
 	}
 
 	@Override
@@ -33,7 +37,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 		switch (item.getItemId()) {
 			// Respond to the action bar's Up/Home button
 			case android.R.id.home:
-				finish();
+				onBackPressed();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

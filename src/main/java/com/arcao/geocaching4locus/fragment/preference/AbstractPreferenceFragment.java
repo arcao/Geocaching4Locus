@@ -1,21 +1,15 @@
 package com.arcao.geocaching4locus.fragment.preference;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-
-import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
-
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
-	private static final String PARAM_SCREEN = "screen";
-
 	protected SharedPreferences mPrefs;
 
 	protected <P extends Preference> P findPreference(String key, Class<P> clazz) {
@@ -46,28 +40,9 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 	}
 
-	@Override
-	public void addPreferencesFromResource(int preferencesResId) {
-		super.addPreferencesFromResource(preferencesResId);
-
-		CharSequence title =  getPreferenceScreen().getTitle();
-		if (title != null) {
-			getActivity().setTitle(title);
-		}
-	}
-
 	protected void preparePreference() {
 		// empty
 	}
-
-	protected Intent createSubScreenIntent(String subScreenKey) {
-		return SettingsActivity.createIntent(getActivity(), getClass()).putExtra(PARAM_SCREEN, subScreenKey);
-	}
-
-	protected String getSubScreenKey() {
-		return getActivity().getIntent().getStringExtra(PARAM_SCREEN);
-	}
-
 	protected CharSequence preparePreferenceSummary(CharSequence value, int resId) {
 		String summary = "";
 		if (resId != 0)

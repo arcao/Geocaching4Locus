@@ -2,32 +2,19 @@ package com.arcao.geocaching4locus.fragment.preference;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
 import android.text.method.DigitsKeyListener;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.EditText;
-
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.preference.ListPreference;
 
 public class FilterPreferenceFragment extends AbstractPreferenceFragment {
-	private static final String PARAM_SCREEN__CACHE_TYPE = "CACHE_TYPE";
-	private static final String PARAM_SCREEN__CONTAINER_TYPE = "CONTAINER_TYPE";
-	private static final String PARAM_SCREEN__DIFFICULTY = "DIFFICULTY";
-	private static final String PARAM_SCREEN__TERRAIN = "TERRAIN";
-
 	private boolean mPremiumMember;
 	private boolean mImperialUnits;
-	private String mSubScreenKey;
 
 	@Override
 	public void onCreate(Bundle paramBundle) {
@@ -42,101 +29,11 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 	@Override
 	protected void preparePreference() {
-		mSubScreenKey = getSubScreenKey();
-		if (mSubScreenKey != null) {
-			switch (mSubScreenKey) {
-				case PARAM_SCREEN__CACHE_TYPE:
-					setHasOptionsMenu(true);
-					setPreferenceScreen(findPreference(FILTER_CACHE_TYPE, PreferenceScreen.class));
-					break;
-
-				case PARAM_SCREEN__CONTAINER_TYPE:
-					setHasOptionsMenu(true);
-					setPreferenceScreen(findPreference(FILTER_CONTAINER_TYPE, PreferenceScreen.class));
-					break;
-
-				case PARAM_SCREEN__DIFFICULTY:
-					setPreferenceScreen(findPreference(FILTER_DIFFICULTY, PreferenceScreen.class));
-					break;
-
-				case PARAM_SCREEN__TERRAIN:
-					setPreferenceScreen(findPreference(FILTER_TERRAIN, PreferenceScreen.class));
-					break;
-			}
-
-			CharSequence title =  getPreferenceScreen().getTitle();
-			if (title != null) {
-				getActivity().setTitle(title);
-			}
-		}
-
-		final PreferenceScreen cacheTypeFilterScreen = findPreference(FILTER_CACHE_TYPE, PreferenceScreen.class);
-		if (cacheTypeFilterScreen != null) {
-			prepareCacheTypePreference(cacheTypeFilterScreen);
-		}
-
-		final PreferenceScreen containerTypeFilterScreen = findPreference(FILTER_CONTAINER_TYPE, PreferenceScreen.class);
-		if (containerTypeFilterScreen != null) {
-			prepareContainerTypePreference(containerTypeFilterScreen);
-		}
-
-		final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
-		if (difficultyPreference != null) {
-			prepareDifficultyPreference(difficultyPreference);
-		}
-
-		final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
-		if (terrainPreference != null) {
-			prepareTerrainPreference(terrainPreference);
-		}
-
-		final EditTextPreference distancePreference = findPreference(FILTER_DISTANCE, EditTextPreference.class);
-		if (distancePreference != null) {
-			prepareDistancePreference(distancePreference);
-		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey) || PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
-			inflater.inflate(R.menu.toolbar_select_deselect, menu);
-		}
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				// app icon in action bar clicked; go home
-				getActivity().finish();
-				return true;
-
-			case R.id.selectAll:
-				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < GeocacheType.values().length; i++)
-						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
-				}
-				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < ContainerType.values().length; i++)
-						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
-				}
-				return true;
-
-			case R.id.deselectAll:
-				if (PARAM_SCREEN__CACHE_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < GeocacheType.values().length; i++)
-						findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
-				}
-				else if (PARAM_SCREEN__CONTAINER_TYPE.equals(mSubScreenKey)) {
-					for (int i = 0; i < ContainerType.values().length; i++)
-						findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
-				}
-				return true;
-
-			default:
-				return super.onOptionsItemSelected(item);
-		}
+		prepareCacheTypePreference();
+		prepareContainerTypePreference();
+		prepareDifficultyPreference();
+		prepareTerrainPreference();
+		prepareDistancePreference();
 	}
 
 	@Override
@@ -155,118 +52,54 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 					distancePreference.setSummary(preparePreferenceSummary(distancePreference.getText() + UNIT_KM, R.string.pref_distance_summary_km));
 				}
 				break;
-
-			case FILTER_DIFFICULTY_MIN:
-			case FILTER_DIFFICULTY_MAX:
-			case FILTER_TERRAIN_MIN:
-			case FILTER_TERRAIN_MAX:
-				final ListPreference difficultyTerrainPreference = findPreference(key, ListPreference.class);
-				difficultyTerrainPreference.setSummary(prepareRatingSummary(difficultyTerrainPreference.getEntry()));
-				break;
 		}
 	}
 
-	private void prepareCacheTypePreference(PreferenceScreen cacheTypeFilterScreen) {
-		cacheTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CACHE_TYPE));
+	private void prepareCacheTypePreference() {
+		final Preference cacheTypeFilterScreen = findPreference(FILTER_CACHE_TYPE, Preference.class);
 		cacheTypeFilterScreen.setEnabled(mPremiumMember);
 		cacheTypeFilterScreen.setSummary(mPremiumMember ? prepareCacheTypeSummary() : prepareCacheTypeSummaryBasicMember());
 	}
 
-	private void prepareContainerTypePreference(PreferenceScreen containerTypeFilterScreen) {
-		containerTypeFilterScreen.setIntent(createSubScreenIntent(PARAM_SCREEN__CONTAINER_TYPE));
+	private void prepareContainerTypePreference() {
+		final Preference containerTypeFilterScreen = findPreference(FILTER_CONTAINER_TYPE, Preference.class);
 		containerTypeFilterScreen.setEnabled(mPremiumMember);
-		containerTypeFilterScreen.setSummary(mPremiumMember ? prepareContainerTypeSummary() : prepareContainerTypeSummaryBasicMember());
+		containerTypeFilterScreen.setSummary(
+				mPremiumMember ? prepareContainerTypeSummary() : prepareContainerTypeSummaryBasicMember());
 	}
 
-	private void prepareDifficultyPreference(Preference difficultyPreference) {
-		final ListPreference difficultyMinPreference = findPreference(FILTER_DIFFICULTY_MIN, ListPreference.class);
-		final ListPreference difficultyMaxPreference = findPreference(FILTER_DIFFICULTY_MAX, ListPreference.class);
-
-		difficultyPreference.setIntent(createSubScreenIntent(PARAM_SCREEN__DIFFICULTY));
+	private void prepareDifficultyPreference() {
+		final Preference difficultyPreference = findPreference(FILTER_DIFFICULTY, Preference.class);
 		difficultyPreference.setEnabled(mPremiumMember);
 
-		difficultyMinPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue()));
-		difficultyMinPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat((String) newValue);
-				float max = Float.parseFloat(difficultyMaxPreference.getValue());
-
-				if (min > max) {
-					difficultyMaxPreference.setValue((String) newValue);
-					difficultyMaxPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
-				}
-				return true;
-			}
-		});
-
-		difficultyMaxPreference.setSummary(prepareRatingSummary(difficultyMaxPreference.getValue()));
-		difficultyMaxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat(difficultyMinPreference.getValue());
-				float max = Float.parseFloat((String) newValue);
-
-				if (min > max) {
-					difficultyMinPreference.setValue((String) newValue);
-					difficultyMinPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
-				}
-				return true;
-			}
-		});
+		String difficultyMin = "1";
+		String difficultyMax = "5";
 
 		if (mPremiumMember) {
-			difficultyPreference.setSummary(prepareRatingSummary(difficultyMinPreference.getValue(), difficultyMaxPreference.getValue()));
-		} else {
-			difficultyPreference.setSummary(prepareRatingSummary("1", "5"));
+			difficultyMin = mPrefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, difficultyMin);
+			difficultyMax = mPrefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, difficultyMax);
 		}
+
+		difficultyPreference.setSummary(prepareRatingSummary(difficultyMin, difficultyMax));
 	}
 
-	private void prepareTerrainPreference(Preference terrainPreference) {
-		final ListPreference terrainMinPreference = findPreference(FILTER_TERRAIN_MIN, ListPreference.class);
-		final ListPreference terrainMaxPreference = findPreference(FILTER_TERRAIN_MAX, ListPreference.class);
-
-		terrainPreference.setIntent(createSubScreenIntent(PARAM_SCREEN__TERRAIN));
+	private void prepareTerrainPreference() {
+		final Preference terrainPreference = findPreference(FILTER_TERRAIN, Preference.class);
 		terrainPreference.setEnabled(mPremiumMember);
 
-		terrainMinPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue()));
-		terrainMinPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat((String) newValue);
-				float max = Float.parseFloat(terrainMaxPreference.getValue());
-
-				if (min > max) {
-					terrainMaxPreference.setValue((String) newValue);
-					terrainMaxPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
-				}
-				return true;
-			}
-		});
-
-		terrainMaxPreference.setSummary(prepareRatingSummary(terrainMaxPreference.getValue()));
-		terrainMaxPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				float min = Float.parseFloat(terrainMinPreference.getValue());
-				float max = Float.parseFloat((String) newValue);
-
-				if (min > max) {
-					terrainMinPreference.setValue((String) newValue);
-					terrainMinPreference.setSummary(prepareRatingSummary((CharSequence) newValue));
-				}
-				return true;
-			}
-		});
+		String terrainMin = "1";
+		String terrainMax = "5";
 
 		if (mPremiumMember) {
-			terrainPreference.setSummary(prepareRatingSummary(terrainMinPreference.getValue(), terrainMaxPreference.getValue()));
-		} else {
-			terrainPreference.setSummary(prepareRatingSummary("1", "5"));
+			terrainMin = mPrefs.getString(PrefConstants.FILTER_TERRAIN_MIN, terrainMin);
+			terrainMax = mPrefs.getString(PrefConstants.FILTER_TERRAIN_MAX, terrainMax);
 		}
+
+		terrainPreference.setSummary(prepareRatingSummary(terrainMin, terrainMax));
 	}
 
-	private void prepareDistancePreference(EditTextPreference distancePreference) {
+	private void prepareDistancePreference() {
+		final EditTextPreference distancePreference = findPreference(FILTER_DISTANCE, EditTextPreference.class);
 		final EditText filterDistanceEditText = distancePreference.getEditText();
 		filterDistanceEditText.setKeyListener(DigitsKeyListener.getInstance(false, true));
 
@@ -280,11 +113,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	}
 
 	private CharSequence prepareRatingSummary(CharSequence min, CharSequence max) {
-		return preparePreferenceSummary(min.toString() + " - " + max.toString(), 0);
-	}
-
-	private CharSequence prepareRatingSummary(CharSequence value) {
-		return preparePreferenceSummary(value, 0);
+		return preparePreferenceSummary(min + " - " + max, 0);
 	}
 
 	private CharSequence prepareCacheTypeSummary() {

@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 		// hack / fix for Samsung phones - missing padding in header layout
 		if (!onIsMultiPane() && !getIntent().hasExtra(EXTRA_SHOW_FRAGMENT)) {
-			setPreferenceScreen(getPrefernceScreenFromHeader(R.xml.preference_header));
+			setPreferenceScreen(getPreferenceScreenFromHeader(R.xml.preference_header));
 		}
 	}
 
@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 		return createIntent(context, preferenceFragment.getName());
 	}
 
-	private PreferenceScreen getPrefernceScreenFromHeader(@XmlRes int headerRes) {
+	private PreferenceScreen getPreferenceScreenFromHeader(@XmlRes int headerRes) {
 		List<Header> headers = new ArrayList<>();
 		loadHeadersFromResource(headerRes, headers);
 

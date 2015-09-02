@@ -64,7 +64,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 					PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
 
 			if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
-				Timber.i("Updating simple cache on dispaying is not allowed!");
+				Timber.i("Updating simple cache on displaying is not allowed!");
 				onUpdateFinished(null);
 				return;
 			}

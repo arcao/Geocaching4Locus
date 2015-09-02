@@ -227,7 +227,7 @@ public abstract class UserTask<Params, Progress, Result> {
 				} catch (InterruptedException e) {
 					Timber.w(e, e.getMessage());
 				} catch (ExecutionException e) {
-					Timber.e(e.getCause(), "An error occured while executing doInBackground()");
+					Timber.e(e.getCause(), "An error occurred while executing doInBackground()");
 					message = sHandler.obtainMessage(MESSAGE_POST_EXCEPTION,
 														new UserTaskResult<>(UserTask.this, e.getCause(), (Result[]) null));
 					message.sendToTarget();
@@ -238,7 +238,7 @@ public abstract class UserTask<Params, Progress, Result> {
 					message.sendToTarget();
 					return;
 				} catch (Throwable t) {
-					throw new RuntimeException("An error occured while executing "
+					throw new RuntimeException("An error occurred while executing "
 														+ "doInBackground()", t);
 				}
 
@@ -294,7 +294,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	/**
 	 * Runs on the UI thread after {@link #doInBackground(Object[])}. The
 	 * specified result is the value returned by {@link #doInBackground(Object[])}
-	 * or null if the task was cancelled or an exception occured.
+	 * or null if the task was cancelled or an exception occurred.
 	 *
 	 * @param result
 	 *          The result of the operation computed by

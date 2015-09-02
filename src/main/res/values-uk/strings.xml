@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Неправильний формат координат!</string>
     <string name="coordinates">Координати</string>
     
-    <string name="pref_title_geocaching_credentials">Реєстраційні дані Geocaching.com</string>
-    
     <string name="pref_distance">Відстань</string>
     <string name="pref_distance_summary_km">Відстань у км</string>
     <string name="pref_distance_summary_miles">Відстань у милях</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Мін. рельєф</string>
     <string name="pref_terrain_max">Макс. рельєф</string>
     
-    <string name="download_button">Завантажити до Locus</string>
-    
     <string name="pref_download_basic">Лише основна інформація</string>
     <string name="pref_download_basic_summary">Завантажувати лише основну інформацію про кеш</string>
     <string name="pref_download_on_show">Завантажувати решту інформації при показі</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Вийти як %s</string>
        
     <string name="error_report_error">Звіт про помилку</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus зазнав краху…</string>
-    <string name="crash_notif_title">Geocaching4Locus зазнав краху…</string>
-    <string name="crash_notif_text">Будь ласка, натисніть тут, щоб допомогти нам виправити проблему.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus зазнав краху…</string>
-    <string name="crash_dialog_text">Трапилася неочікувана помилка, яка примусово закрила програму. Будь ласка, допоможіть нам виправити її, надіславши нам дані про помилку, все що ви маєте зробити це натиснути \'Гаразд\'.</string>
-    <string name="crash_dialog_comment_prompt">Ви можете нижче додати власні коментарі про проблему.</string>
     <string name="crash_dialog_ok_toast">Дякуємо вам!</string>
     
     <string name="error_network">Мережа недоступна. Будь ласка, перевірте ваше з\'єднання.</string>

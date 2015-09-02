@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Niepoprawny format współrzędnych!</string>
     <string name="coordinates">Współrzędne</string>
     
-    <string name="pref_title_geocaching_credentials">Dane logowania do Geocaching.com</string>
-    
     <string name="pref_distance">Odległość</string>
     <string name="pref_distance_summary_km">Odległość w km</string>
     <string name="pref_distance_summary_miles">Odległość w milach</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Min. teren</string>
     <string name="pref_terrain_max">Max. teren</string>
     
-    <string name="download_button">Pobierz do programu Locus</string>
-    
     <string name="pref_download_basic">Tylko podstawowe informacje</string>
     <string name="pref_download_basic_summary">Pobieraj tylko podstawowe informacje o skrzynce</string>
     <string name="pref_download_on_show">Pobierz pozostałe informacje przy wyświetlaniu</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Zalogowany jako %s</string>
        
     <string name="error_report_error">Zgłoś błąd</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus zawiesił się...</string>
-    <string name="crash_notif_title">Geocaching4Locus zawiesił się...</string>
-    <string name="crash_notif_text">Kliknij tutaj, aby pomóc w naprawieniu tego problemu.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus zawiesił się</string>
-    <string name="crash_dialog_text">Podczas zatrzymywania aplikacji wystąpił nieoczekiwany błąd. Pomóż nam go naprawić poprzez wysłanie danych błędu - wystarczy, że klikniesz \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">Poniżej możesz skomentować napotkany problem:</string>
     <string name="crash_dialog_ok_toast">Dziękujemy!</string>
     
     <string name="error_network">Sieć jest niedostępna - proszę sprawdzić połączenie.</string>

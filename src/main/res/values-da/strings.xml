@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Koordinat fejl, forkert format!</string>
     <string name="coordinates">Koordinater </string>
     
-    <string name="pref_title_geocaching_credentials">Geocaching.com legitimationsoplysninger</string>
-    
     <string name="pref_distance">Afstand</string>
     <string name="pref_distance_summary_km">Afstand i Km</string>
     <string name="pref_distance_summary_miles">Afstand i miles</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Min. terræn</string>
     <string name="pref_terrain_max">Max. terræn</string>
     
-    <string name="download_button">Hent ned til Locus</string>
-    
     <string name="pref_download_basic">Basis info</string>
     <string name="pref_download_basic_summary">Hent kun basal info om cache</string>
     <string name="pref_download_on_show">Hent resterende info ved visning</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Logget på som %s</string>
        
     <string name="error_report_error">Reporter Fejl</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus er gået ned…</string>
-    <string name="crash_notif_title">Geocaching4Locus er gået ned…</string>
-    <string name="crash_notif_text">Klik her for at hjælpe med at rette problemet.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus gik ned</string>
-    <string name="crash_dialog_text">En uventet fejl er opstået og tvang App\'en til at stoppe. Hjælp os venligst med at rette fejlen ved at data\'erne, det kræver kun at Du klikker \'OK\' her. -tak.</string>
-    <string name="crash_dialog_comment_prompt">Du har mulighed for at tilføje en kommentar til problemet herunder:</string>
     <string name="crash_dialog_ok_toast">Mange Tak !</string>
     
     <string name="error_network">Netværk ikke tilgængeligt. Check venligst din forbindelse.</string>

@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Kriv format koordinata.</string>
     <string name="coordinates">Koordinate</string>
     
-    <string name="pref_title_geocaching_credentials">Uvjerenja geocaching.com</string>
-    
     <string name="pref_distance">Udaljenost</string>
     <string name="pref_distance_summary_km">Udaljenost u km</string>
     <string name="pref_distance_summary_miles">Udaljenost u miljama</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">MIn. teren</string>
     <string name="pref_terrain_max">Max. teren</string>
     
-    <string name="download_button">Skini u Locus</string>
-    
     <string name="pref_download_basic">Samo osnovne informacije</string>
     <string name="pref_download_basic_summary">Skini samo osnovne informacije o cachu.</string>
     <string name="pref_download_on_show">Skini ostatak informacija na prikaz.</string>
@@ -86,13 +82,6 @@
        
     <string name="error_report_error">Prijavite pogrešku.</string>
     
-    <string name="crash_notif_ticker_text">Geocaching4Locus se srušio...</string>
-    <string name="crash_notif_title">Geocaching4Locus se srušio...</string>
-    <string name="crash_notif_text">Stisnite ovdje kako bi pomogli riješiti problem.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus se srušio</string>
-    <string name="crash_dialog_text">Neočekivana pogreška se dogodila koja sili aplikaciju da se zaustavi. Molimo Vas, pomozite nam slanjem podataka o pogreški, sve što trebate je stisnuti \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">Možete dodati vaše komentare o problemu, ispod:</string>
     <string name="crash_dialog_ok_toast">Hvala Vam!</string>
     
     <string name="error_network">Mreža nedostupna. Molimo Vas, provjerite vezu.</string>

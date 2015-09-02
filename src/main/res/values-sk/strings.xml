@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Zlý formát súradníc!</string>
     <string name="coordinates">Súradnice</string>
     
-    <string name="pref_title_geocaching_credentials">Geocaching.com prihlasovacie údaje</string>
-    
     <string name="pref_distance">Vzdialenosť</string>
     <string name="pref_distance_summary_km">Vzdialenosť v km</string>
     <string name="pref_distance_summary_miles">Vzdialenosť v míľach</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Min. terén</string>
     <string name="pref_terrain_max">Max. terén</string>
     
-    <string name="download_button">Stiahnuť do Locusu</string>
-    
     <string name="pref_download_basic">Iba základné info</string>
     <string name="pref_download_basic_summary">Stiahnuť len základné informácie o keške</string>
     <string name="pref_download_on_show">Stiahnuť zvyšné info pri zobrazení</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Prihlásený ako %s</string>
        
     <string name="error_report_error">Nahlásiť chybu</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus spadol…</string>
-    <string name="crash_notif_title">Geocaching4Locus spadol…</string>
-    <string name="crash_notif_text">Prosím, kliknite tu pre vyriešenie problému.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus spadol</string>
-    <string name="crash_dialog_text">Neočakávaná chyba spôsobila ukončenie aplikácie. Pomôžte nám ju opraviť zaslaním dát o chybe. Všetko, čo musíte urobiť, je kliknúť na "OK".</string>
-    <string name="crash_dialog_comment_prompt">Nižšie môžete pridať svoj ​​komentár o tomto probléme:</string>
     <string name="crash_dialog_ok_toast">Vďaka!</string>
     
     <string name="error_network">Sieť nie je k dispozícii. Skontrolujte pripojenie.</string>
@@ -189,7 +177,6 @@
     <string name="menu_import_bookmarks">Importovať záložky</string>
     <string name="import_caches_progress">Sťahujem kešky...</string>
     <string name="error_no_location_permission">Aplikácia nemá práva pristupovať k službe polohy.</string>
-    <string name="action_import_geocaches">Importovať kešky</string>
     <string name="action_import_all">Importovať všetko</string>
     <string name="premium_feature">Táto funkcia je len pre prémiové členov, prepáčte.</string>
 </resources>

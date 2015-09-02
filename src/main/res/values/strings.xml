@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Wrong coordinates format!</string>
     <string name="coordinates">Coordinates</string>
     
-    <string name="pref_title_geocaching_credentials">Geocaching.com credentials</string>
-    
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance in km</string>
     <string name="pref_distance_summary_miles">Distance in miles</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Min. terrain</string>
     <string name="pref_terrain_max">Max. terrain</string>
     
-    <string name="download_button">Download to Locus</string>
-    
     <string name="pref_download_basic">Basic info only</string>
     <string name="pref_download_basic_summary">Download only basic information about cache</string>
     <string name="pref_download_on_show">Download rest info on show</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Signed in as %s</string>
        
     <string name="error_report_error">Report error</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus has crashed…</string>
-    <string name="crash_notif_title">Geocaching4Locus has crashed…</string>
-    <string name="crash_notif_text">Please click here to help fix the issue.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus has crashed</string>
-    <string name="crash_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">You might add your comments about the problem below:</string>
     <string name="crash_dialog_ok_toast">Thank you!</string>
     
     <string name="error_network">Network unavailable. Please check your connection.</string>
@@ -189,7 +177,6 @@
     <string name="menu_import_bookmarks">Import bookmarks</string>
     <string name="import_caches_progress">Downloading caches…</string>
     <string name="error_no_location_permission">App does not have permission to access to location service.</string>
-    <string name="action_import_geocaches">Import geocaches</string>
     <string name="action_import_all">Import all</string>
     <string name="premium_feature">This feature is for Premium members only, sorry.</string>
 </resources>

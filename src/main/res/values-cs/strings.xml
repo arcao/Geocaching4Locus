@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Špatný formát souřadnic!</string>
     <string name="coordinates">Souřadnice</string>
     
-    <string name="pref_title_geocaching_credentials">Přihlašovací údaje pro Geocaching.com</string>
-    
     <string name="pref_distance">Vzdálenost</string>
     <string name="pref_distance_summary_km">Vzdálenost v km</string>
     <string name="pref_distance_summary_miles">Vzdálenost v mílích</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Min. terén</string>
     <string name="pref_terrain_max">Max. terén</string>
     
-    <string name="download_button">Stáhnout do Locusu</string>
-    
     <string name="pref_download_basic">Pouze základní info</string>
     <string name="pref_download_basic_summary">Stáhnout pouze základní informace o keši</string>
     <string name="pref_download_on_show">Stáhnout zbývající info při zobrazení</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Přihlášen jako %s</string>
        
     <string name="error_report_error">Nahlásit chybu</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus spadl…</string>
-    <string name="crash_notif_title">Geocaching4Locus spadl…</string>
-    <string name="crash_notif_text">Prosím, klikněte zde pro vyřešení problému.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus spadl</string>
-    <string name="crash_dialog_text">Neočekávaná chyba způsobila ukončení aplikace. Pomozte nám ji opravit zasláním dat o chybě. Vše, co musíte udělat, je kliknout na "OK".</string>
-    <string name="crash_dialog_comment_prompt">Níže můžete přidat svůj komentář o tomto problému:</string>
     <string name="crash_dialog_ok_toast">Díky!</string>
     
     <string name="error_network">Síť není k dispozici. Zkontrolujte připojení.</string>
@@ -189,7 +177,6 @@
     <string name="menu_import_bookmarks">Importovat záložky</string>
     <string name="import_caches_progress">Stahuji keše…</string>
     <string name="error_no_location_permission">Aplikace nemá práva přistupovat ke službě polohy.</string>
-    <string name="action_import_geocaches">Importovat keše</string>
     <string name="action_import_all">Importovat vše</string>
     <string name="premium_feature">Tato funkce je pouze pro prémiové členy, promiňte.</string>
 </resources>

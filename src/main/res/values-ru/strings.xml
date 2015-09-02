@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Неправильный формат координат!</string>
     <string name="coordinates">Координаты</string>
     
-    <string name="pref_title_geocaching_credentials">данные пользователя Geocaching.com </string>
-    
     <string name="pref_distance">Дистанция</string>
     <string name="pref_distance_summary_km">Дистанция в км</string>
     <string name="pref_distance_summary_miles">Дистанция в милях</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Мин. проходимость</string>
     <string name="pref_terrain_max">Макс. проходимость</string>
     
-    <string name="download_button">Скачать на Locus</string>
-    
     <string name="pref_download_basic">Только основная информация</string>
     <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
     <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Залогинен как %s</string>
        
     <string name="error_report_error">Отчет об ошибке</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus зазнав краху…</string>
-    <string name="crash_notif_title">Geocaching4Locus зазнав краху…</string>
-    <string name="crash_notif_text">Нажмите здесь, чтобы помочь решить проблему.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus произошёл сбой</string>
-    <string name="crash_dialog_text">Неожиданная ошибка привела к остановке работы приложения. Пожалуйста помогите нам в решении этой проблемы, прислав отчет об ошибке. Необходимо просто нажать \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">Вы можете оставить свой комментарий об ошибке:</string>
     <string name="crash_dialog_ok_toast">Спасибо!</string>
     
     <string name="error_network">Сеть недоступна. Проверьте пожалуйста подключение.</string>

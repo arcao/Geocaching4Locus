@@ -11,8 +11,6 @@
     <string name="wrong_coordinates">Formato de coordenadas errado!</string>
     <string name="coordinates">Coordenadas</string>
     
-    <string name="pref_title_geocaching_credentials">Credenciais geocaching.com</string>
-    
     <string name="pref_distance">Distância</string>
     <string name="pref_distance_summary_km">Distância em km</string>
     <string name="pref_distance_summary_miles">Distância em milhas</string>
@@ -59,8 +57,6 @@
     <string name="pref_terrain_min">Terreno Mín.</string>
     <string name="pref_terrain_max">Terreno Máx.</string>
     
-    <string name="download_button">Download para o Locus</string>
-    
     <string name="pref_download_basic">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show">Descarregar o restante da informação apenas na visualização</string>
@@ -85,14 +81,6 @@
     <string name="pref_account_logout_summary">Registado como %s</string>
        
     <string name="error_report_error">Relatar erro</string>
-    
-    <string name="crash_notif_ticker_text">Geocaching4Locus crashou</string>
-    <string name="crash_notif_title">Geocaching4Locus crashou</string>
-    <string name="crash_notif_text">Carregue aqui para ajudar a corrigir o problema.</string>
-    
-    <string name="crash_dialog_title">Geocaching4Locus crashou</string>
-    <string name="crash_dialog_text">Occorreu um erro inesperado que forçou a aplicação a fechar. Por favor ajude a corrigir enviando os dados do erro, tudo o que tem de fazer é carregar em \'OK\'.</string>
-    <string name="crash_dialog_comment_prompt">Pode adicionar comentários ao problema em baixo:</string>
     <string name="crash_dialog_ok_toast">Obrigado!</string>
     
     <string name="error_network">Rede inacessível. Por favor verifique a ligação.</string>

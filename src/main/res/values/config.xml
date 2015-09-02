@@ -4,5 +4,4 @@
     <string translatable="false" name="feedback_email">arcao@arcao.com</string>
     <string translatable="false" name="feedback_subject">Feedback for %1$s, version %2$s</string>
     <string translatable="false" name="feedback_body">Your text (english or czech if possible)…</string>
-    <string translatable="false" name="error_title_empty"/>
 </resources>

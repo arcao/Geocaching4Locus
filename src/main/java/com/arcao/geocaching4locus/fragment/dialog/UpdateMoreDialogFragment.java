@@ -9,8 +9,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.TaskListener;
-
 import java.lang.ref.WeakReference;
+import org.apache.commons.lang3.ArrayUtils;
 
 public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements TaskListener {
 	public static final String FRAGMENT_TAG = UpdateMoreDialogFragment.class.getName();
@@ -93,7 +93,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		return new MaterialDialog.Builder(getActivity())
 						.content(R.string.update_caches_progress)
 						.negativeText(R.string.cancel_button)
-						.progress(false, pointIndexes.length, true)
+						.progress(false, ArrayUtils.getLength(pointIndexes), true)
 						.build();
 	}
 }

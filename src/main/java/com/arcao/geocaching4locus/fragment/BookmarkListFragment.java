@@ -33,7 +33,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	@Bind(R.id.textEmpty) TextView textEmpty;
 
 	private WeakReference<ListListener> mListListenerRef;
-	private BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
+	private final BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
 	private BookmarkListRetrieveTask mTask;
 
 

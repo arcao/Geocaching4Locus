@@ -111,6 +111,8 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 	}
 
 	public static class DataFileWriterException extends RuntimeException {
+		private static final long serialVersionUID = 2678019269077897465L;
+
 		public DataFileWriterException(IOException throwable) {
 			super(throwable);
 		}

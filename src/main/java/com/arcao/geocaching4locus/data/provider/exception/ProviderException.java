@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.provider.exception;
 
 public class ProviderException extends Exception {
+	private static final long serialVersionUID = 2825723294447278772L;
 	private final ProviderExceptionCategory exceptionCategory;
 	private String userMessage;
 

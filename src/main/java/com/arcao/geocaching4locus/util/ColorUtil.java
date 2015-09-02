@@ -59,7 +59,6 @@ public class ColorUtil {
 			// Default enabled state
 			states[i] = EMPTY_STATE_SET;
 			colors[i] = colorControlNormal;
-			i++;
 
 			mDefaultColorStateList = new ColorStateList(states, colors);
 		}

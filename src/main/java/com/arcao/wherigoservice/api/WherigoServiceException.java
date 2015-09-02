@@ -6,7 +6,7 @@ public class WherigoServiceException extends IOException {
 	private static final long serialVersionUID = -1298236380965518822L;
 
 	public static final int ERROR_OK = 0;
-	public static final int ERROR_INVALID_CREDITIALS = 1;
+	public static final int ERROR_INVALID_CREDENTIALS = 1;
 	public static final int ERROR_INVALID_SESSION = 2;
 	public static final int ERROR_CARTRIDGE_NOT_FOUND = 10;
 	public static final int ERROR_CACHE_NOT_FOUND = 11;

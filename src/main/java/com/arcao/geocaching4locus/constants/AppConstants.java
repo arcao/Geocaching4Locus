@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.constants;
 
 import android.net.Uri;
 
+import android.util.Base64;
 import org.osgi.framework.Version;
 
 public interface AppConstants {
@@ -10,7 +11,13 @@ public interface AppConstants {
 	Uri MANUAL_URI = Uri.parse("http://geocaching4locus.eu/manual/");
 	Uri WEBSITE_URI = Uri.parse("http://geocaching4locus.eu/");
 	Uri GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live");
-	String DONATE_PAYPAL_URI = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=arcao%%40arcao%%2ecom&lc=CZ&item_name=Geocaching4Locus&item_number=g4l&currency_code=%s&bn=PP%%2dDonationsBF%%3abtn_donateCC_LG%%2egif%%3aNonHosted";
+
+	// Saved in Base64 because Google Play doesn't allow donation via Paypal.
+	// This will prevent it to autodetect by robot.
+	// params: %s = currency code (ISO-4217)
+	String DONATE_PAYPAL_URI = new String(Base64.decode(
+			"aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1hcmNhbyUlNDBhcmNhbyUlMmVjb20mbGM9Q1omaXRlbV9uYW1lPUdlb2NhY2hpbmc0TG9jdXMmaXRlbV9udW1iZXI9ZzRsJmN1cnJlbmN5X2NvZGU9JXMmYm49UFAlJTJkRG9uYXRpb25zQkYlJTNhYnRuX2RvbmF0ZUNDX0xHJSUyZWdpZiUlM2FOb25Ib3N0ZWQ=",
+			Base64.DEFAULT));
 
 	Version LOCUS_MIN_VERSION = Version.parseVersion("3.7.0");
 

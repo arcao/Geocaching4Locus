@@ -46,7 +46,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	@Bind(R.id.fab) FloatingActionButton fab;
 
 	private WeakReference<ListListener> mListListenerRef;
-	private BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
+	private final BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
 	private BookmarkCachesRetrieveTask mTask;
 	private Animation mAnimation;
 

@@ -19,9 +19,12 @@ import com.arcao.geocaching4locus.adapter.BookmarkListRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkListRetrieveTask;
 import com.arcao.geocaching4locus.widget.decorator.SpacesItemDecoration;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookmarkListFragment extends Fragment implements BookmarkListRetrieveTask.TaskListener {
+	private static final String STATE_BOOKMARK_LISTS = "BOOKMARK_LISTS";
+
 	public interface ListListener {
 		void onTitleChanged(String title);
 		void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll);
@@ -35,6 +38,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	private WeakReference<ListListener> mListListenerRef;
 	private final BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
 	private BookmarkListRetrieveTask mTask;
+	private ArrayList<BookmarkList> mBookmarkLists;
 
 
 	public static BookmarkListFragment newInstance() {
@@ -56,18 +60,6 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		}
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		setRetainInstance(true);
-
-		if (adapter.getItemCount() == 0) {
-			mTask = new BookmarkListRetrieveTask(getActivity(), this);
-			mTask.execute();
-		}
-	}
-
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,6 +74,22 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		}
 
 		return  v;
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_BOOKMARK_LISTS)) {
+			mBookmarkLists = (ArrayList<BookmarkList>) savedInstanceState.getSerializable(STATE_BOOKMARK_LISTS);
+		}
+
+		if (mBookmarkLists == null) {
+			mTask = new BookmarkListRetrieveTask(getActivity(), this);
+			mTask.execute();
+		} else {
+			onTaskFinished(mBookmarkLists);
+		}
 	}
 
 	private void prepareRecyclerView() {
@@ -103,6 +111,13 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	}
 
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putSerializable(STATE_BOOKMARK_LISTS, mBookmarkLists);
+	}
+
+	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
 		ButterKnife.unbind(this);
@@ -120,7 +135,8 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 
 	@Override
 	public void onTaskFinished(List<BookmarkList> bookmarkLists) {
-		adapter.setBookmarkLists(bookmarkLists);
+		mBookmarkLists = new ArrayList<>(bookmarkLists);
+		adapter.setBookmarkLists(mBookmarkLists);
 		setListShown(true);
 	}
 

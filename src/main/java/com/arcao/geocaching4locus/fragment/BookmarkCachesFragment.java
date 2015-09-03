@@ -27,9 +27,12 @@ import com.arcao.geocaching4locus.adapter.BookmarkCachesRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkCachesRetrieveTask;
 import com.arcao.geocaching4locus.widget.decorator.DividerItemDecoration;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRetrieveTask.TaskListener {
+
+	public static final String STATE_BOOKMARKS = "BOOKMARKS";
 
 	public interface ListListener {
 		void onTitleChanged(String title);
@@ -49,6 +52,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	private final BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
 	private BookmarkCachesRetrieveTask mTask;
 	private Animation mAnimation;
+	private ArrayList<Bookmark> mBookmarkList;
 
 	public static BookmarkCachesFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
@@ -75,13 +79,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setRetainInstance(true);
 		setHasOptionsMenu(true);
-
-		if (adapter.getItemCount() == 0) {
-			mTask = new BookmarkCachesRetrieveTask(getActivity(), this);
-			mTask.execute(getArguments().getString(PARAM_GUID));
-		}
 	}
 
 	@Nullable
@@ -110,6 +108,32 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 
 		setEmptyText("");
 		setListShown(adapter.getItemCount() > 0);
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+
+
+		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_BOOKMARKS)) {
+			mBookmarkList = (ArrayList<Bookmark>) savedInstanceState.getSerializable(STATE_BOOKMARKS);
+		}
+
+		if (mBookmarkList == null) {
+			mTask = new BookmarkCachesRetrieveTask(getActivity(), this);
+			mTask.execute(getArguments().getString(PARAM_GUID));
+		} else {
+			onTaskFinished(mBookmarkList);
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		if (mBookmarkList != null) {
+			outState.putSerializable(STATE_BOOKMARKS, mBookmarkList);
+		}
 	}
 
 	@Override
@@ -148,8 +172,9 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	}
 
 	@Override
-	public void onTaskFinished(List<Bookmark> bookmarks) {
-		adapter.setBookmarks(bookmarks);
+	public void onTaskFinished(List<Bookmark> bookmarkList) {
+		mBookmarkList = new ArrayList<>(bookmarkList);
+		adapter.setBookmarks(mBookmarkList);
 		setListShown(true);
 	}
 

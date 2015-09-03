@@ -32,7 +32,6 @@
             android:enabled="true"
             android:grantUriPermissions="true"/>
 
-        <service android:name=".service.SearchGeocacheService"/>
         <service android:name=".service.LiveMapService"/>
         
         <receiver android:name=".receiver.LiveMapBroadcastReceiver" android:exported="true">

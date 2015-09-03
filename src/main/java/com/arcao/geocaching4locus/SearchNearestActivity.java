@@ -26,14 +26,18 @@ import butterknife.OnFocusChange;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.dialog.DownloadNearestDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.LocationUpdateDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.NoLocationPermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.NoLocationProviderDialogFragment;
 import com.arcao.geocaching4locus.fragment.dialog.SliderDialogFragment;
 import com.arcao.geocaching4locus.fragment.preference.FilterPreferenceFragment;
-import com.arcao.geocaching4locus.receiver.SearchNearestActivityBroadcastReceiver;
-import com.arcao.geocaching4locus.service.SearchGeocacheService;
-import com.arcao.geocaching4locus.util.*;
+import com.arcao.geocaching4locus.util.AnalyticsUtil;
+import com.arcao.geocaching4locus.util.Coordinates;
+import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.util.PermissionUtil;
+import com.arcao.geocaching4locus.util.PreferenceUtil;
+import com.arcao.geocaching4locus.util.SpannedFix;
 import com.arcao.geocaching4locus.widget.SpinnerTextView;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
@@ -43,7 +47,7 @@ import locus.api.objects.extra.Waypoint;
 import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
-public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener {
+public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener, DownloadNearestDialogFragment.DialogListener {
   private static final String STATE_LATITUDE = "LATITUDE";
   private static final String STATE_LONGITUDE = "LONGITUDE";
   private static final String STATE_HAS_COORDINATES = "HAS_COORDINATES";
@@ -52,7 +56,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private static final int REQUEST_LOCATION_PERMISSION = 2;
 
   private SharedPreferences mPrefs;
-  private SearchNearestActivityBroadcastReceiver mBroadcastReceiver;
   private LocationManager mLocationManager;
 
   private double mLatitude = Double.NaN;
@@ -73,7 +76,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     super.onCreate(savedInstanceState);
 
     mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-    mBroadcastReceiver = new SearchNearestActivityBroadcastReceiver(this);
     mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
     setContentView(R.layout.activity_search_nearest);
@@ -124,18 +126,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       mHasCoordinates = true;
     }
 
-    if (SearchGeocacheService.getInstance() != null && !SearchGeocacheService.getInstance().isCanceled()) {
-      mHasCoordinates = true;
+    if (savedInstanceState != null) {
+      fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
     }
-
-    fab.startAnimation(AnimationUtils.loadAnimation(this, R.anim.simple_grow));
 
     updateCoordinates();
 
     if (!mHasCoordinates) {
       onGpsClick();
-    } else {
-      requestProgressUpdate();
     }
   }
 
@@ -172,10 +170,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     mCounter.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+        int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
+            AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
         SliderDialogFragment fragment =
-                SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0,
-                        step, max, count, step);
+            SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0, step, max,
+                count, step);
         fragment.show(getFragmentManager(), "COUNTER");
       }
     });
@@ -186,21 +185,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX_LOW_MEMORY;
 
     return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX;
-  }
-
-  @Override
-  protected void onResume() {
-    super.onResume();
-
-    mBroadcastReceiver.register(this);
-    requestProgressUpdate();
-  }
-
-  @Override
-  protected void onPause() {
-    mBroadcastReceiver.unregister(this);
-
-    super.onPause();
   }
 
   @Override
@@ -219,7 +203,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
       ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION);
     } else {
-      ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI, REQUEST_LOCATION_PERMISSION);
+      ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI,
+          REQUEST_LOCATION_PERMISSION);
     }
   }
 
@@ -250,13 +235,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         .putFloat(PrefConstants.LAST_LONGITUDE, (float) mLongitude)
         .apply();
 
-    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter,
-            mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT));
+    int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
+        AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count);
 
-    Intent intent = new Intent(this, SearchGeocacheService.class);
-    intent.putExtra(SearchGeocacheService.PARAM_LATITUDE, mLatitude);
-    intent.putExtra(SearchGeocacheService.PARAM_LONGITUDE, mLongitude);
-    startService(intent);
+    DownloadNearestDialogFragment.newInstance(mLatitude, mLongitude, count).show(
+        getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
   }
 
   private void showError(int errorResId, String additionalMessage) {
@@ -276,14 +260,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     mLatitudeEditText.setText(Coordinates.convertDoubleToDeg(mLatitude, false));
     mLongitudeEditText.setText(Coordinates.convertDoubleToDeg(mLongitude, true));
-  }
-
-  private void requestProgressUpdate() {
-    SearchGeocacheService service = SearchGeocacheService.getInstance();
-
-    if (service != null && !service.isCanceled()) {
-      service.sendProgressUpdate();
-    }
   }
 
   @Override
@@ -372,5 +348,19 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     mCounter.setText(String.valueOf(value));
     mPrefs.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).apply();
+  }
+
+  // ------
+  @Override
+  public void onDownloadFinished(boolean cancelled) {
+    if (!cancelled) {
+      setResult(RESULT_OK);
+      finish();
+    }
+  }
+
+  @Override
+  public void onDownloadError(Intent errorIntent) {
+    startActivity(errorIntent);
   }
 }

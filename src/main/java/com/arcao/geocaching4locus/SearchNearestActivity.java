@@ -353,10 +353,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
   // ------
   @Override
-  public void onDownloadFinished(boolean cancelled) {
-    if (!cancelled) {
+  public void onDownloadFinished(Intent intent) {
+    if (intent != null) {
       setResult(RESULT_OK);
       finish();
+      startActivity(intent);
     }
   }
 

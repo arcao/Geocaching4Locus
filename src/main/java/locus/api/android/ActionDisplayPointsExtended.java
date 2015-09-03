@@ -28,7 +28,8 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	}
 
 	public static boolean sendPacksFile(Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
-		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center, intentFlags);
+		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center,
+				intentFlags);
 	}
 
 	public static boolean sendPacksFile(String action, Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
@@ -40,6 +41,23 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
 
 		return sendData(action, context, intent, callImport, center);
+	}
+
+	public static Intent createSendPacksIntent(File file, boolean callImport, boolean center) {
+		if (!file.exists())
+			return null;
+
+		Intent intent = new Intent(LocusConst.ACTION_DISPLAY_DATA);
+
+		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
+
+		// set centering tag
+		intent.putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center);
+
+		// set import tag
+		intent.putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport);
+
+		return intent;
 	}
 
 	/**

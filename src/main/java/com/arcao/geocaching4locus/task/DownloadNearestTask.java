@@ -48,7 +48,7 @@ import locus.api.utils.StoreableListFileOutput;
 import locus.api.utils.Utils;
 import timber.log.Timber;
 
-public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
+public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   private static final String PACK_WAYPOINTS_NAME = DownloadNearestTask.class.getName();
 
   private final Context mContext;
@@ -59,7 +59,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
   private final double mDistance;
 
   public interface TaskListener {
-    void onTaskFinished(boolean cancelled);
+    void onTaskFinished(Intent intent);
     void onTaskError(@NonNull Intent errorIntent);
     void onProgressUpdate(int current, int count);
   }
@@ -75,12 +75,12 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
   }
 
   @Override
-  protected void onPostExecute(Void result) {
+  protected void onPostExecute(Intent result) {
     super.onPostExecute(result);
 
     TaskListener listener = mTaskListenerRef.get();
     if (listener != null)
-      listener.onTaskFinished(false);
+      listener.onTaskFinished(result);
   }
 
   @Override
@@ -92,7 +92,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
 
 
   @Override
-  protected Void doInBackground(Void... params) throws Exception {
+  protected Intent doInBackground(Void... params) throws Exception {
     AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
     if (!authenticatorHelper.hasAccount())
       throw new InvalidCredentialsException("Account not found.");
@@ -191,11 +191,10 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
 
     if (current > 0) {
       try {
-        ActionDisplayPointsExtended.sendPacksFile(mContext, dataFile, true, false, Intent.FLAG_ACTIVITY_NEW_TASK);
+        return ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true);
       } catch (Throwable t) {
         throw new LocusMapRuntimeException(t);
       }
-      return null;
     } else {
       throw new NoResultFoundException();
     }
@@ -207,7 +206,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Void> {
 
     TaskListener listener = mTaskListenerRef.get();
     if (listener != null)
-      listener.onTaskFinished(true);
+      listener.onTaskFinished(null);
   }
 
   @Override

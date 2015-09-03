@@ -20,7 +20,7 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
   private int mCount;
 
   public interface DialogListener {
-    void onDownloadFinished(boolean cancelled);
+    void onDownloadFinished(Intent intent);
     void onDownloadError(Intent errorIntent);
   }
 
@@ -67,12 +67,12 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
 
 
   @Override
-  public void onTaskFinished(boolean cancelled) {
+  public void onTaskFinished(Intent intent) {
     dismiss();
 
     DialogListener listener = mDialogListenerRef.get();
     if (listener != null) {
-      listener.onDownloadFinished(cancelled);
+      listener.onDownloadFinished(intent);
     }
   }
 

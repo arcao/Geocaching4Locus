@@ -92,8 +92,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 			intent = new Intent(this, SearchNearestActivity.class);
 		}
 
-		startActivity(intent);
-		finish();
+		startActivityForResult(intent, 0);
 	}
 
   @OnClick(R.id.db_import_bookmark)

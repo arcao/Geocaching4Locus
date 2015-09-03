@@ -85,6 +85,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     ActionBar actionBar = getSupportActionBar();
     if (actionBar != null) {
       actionBar.setTitle(getTitle());
+      actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     prepareCounterLayout();

@@ -22,7 +22,7 @@ public interface AppConstants {
 	Version LOCUS_MIN_VERSION = Version.parseVersion("3.7.0");
 
 	/* Adaptive downloading configuration */
-	int CACHES_PER_REQUEST = 10;
+	int CACHES_PER_REQUEST = 5;
 	int ADAPTIVE_DOWNLOADING_MIN_CACHES = CACHES_PER_REQUEST;
 	int ADAPTIVE_DOWNLOADING_MAX_CACHES = 50;
 	int ADAPTIVE_DOWNLOADING_STEP = 5;

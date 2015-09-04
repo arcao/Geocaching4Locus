@@ -2,4 +2,5 @@
 <resources>
   <dimen name="text_size_tiny">12.0sp</dimen>
   <dimen name="cardview_space">8dp</dimen>
+  <dimen name="fab_outer_height">88dp</dimen><!-- 56dp (height) + 2 * 16dp (margin) -->
 </resources>

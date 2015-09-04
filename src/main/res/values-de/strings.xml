@@ -81,7 +81,6 @@
     <string name="pref_account_logout_summary">Angemeldet als %s</string>
        
     <string name="error_report_error">Fehler melden</string>
-    
     <string name="crash_dialog_ok_toast">Vielen Dank!</string>
     
     <string name="error_network">Netzwerk nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.</string>
@@ -179,7 +178,6 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <!-- untranslated string: menu_import_bookmarks -->
     <!-- untranslated string: import_caches_progress -->
     <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_geocaches -->
     <!-- untranslated string: action_import_all -->
     <!-- untranslated string: premium_feature -->
 </resources>

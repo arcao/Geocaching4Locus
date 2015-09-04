@@ -173,11 +173,10 @@
     <string name="pref_feedback">發送回報</string>
     <string name="error_no_result">找不到符合您需求的地理寶藏</string>
     <string name="error_session_expired">由於長期閒置(超過 90 天)，您已經登出，請再次登入。</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_geocaches -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    <string name="launcher_import_bookmarks">匯入書籤</string>
+    <string name="menu_import_bookmarks">匯入書籤</string>
+    <string name="import_caches_progress">下載寶藏中 ...</string>
+    <string name="error_no_location_permission">軟體沒有權限訪問定位服務</string>
+    <string name="action_import_all">匯入全部</string>
+    <string name="premium_feature">這項功能只提供給付費會員，抱歉</string>
 </resources>

@@ -81,7 +81,6 @@
     <string name="pref_account_logout_summary">Conectado como %s</string>
        
     <string name="error_report_error">Informe de errores</string>
-    
     <string name="crash_dialog_ok_toast">¡Gracias!</string>
     
     <string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
@@ -178,7 +177,6 @@
     <!-- untranslated string: menu_import_bookmarks -->
     <!-- untranslated string: import_caches_progress -->
     <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_geocaches -->
     <!-- untranslated string: action_import_all -->
     <!-- untranslated string: premium_feature -->
 </resources>

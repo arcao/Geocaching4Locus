@@ -249,7 +249,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       return;
 
     new MaterialDialog.Builder(this)
-        .title(R.string.error_title)
         .content(SpannedFix.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
         .positiveText(R.string.ok_button)
         .show();

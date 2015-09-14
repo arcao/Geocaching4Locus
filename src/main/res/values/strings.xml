@@ -18,8 +18,8 @@
     <string name="pref_imperial_units_summary">Use miles instead of kilemeters</string>
     
     <string name="error_credentials">Invalid username or password. Please check your sign-in state in preferences.</string>
-    <string name="error_title">Error occurs!</string>
-    
+    <string name="error_title">Error</string>
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Your installed version of Locus is too old. Geocaching4Locus require version %s or greater to work properly.</string>
@@ -79,10 +79,7 @@
     <string name="pref_account_login_summary">Sign in to Geocaching.com account</string>
     <string name="pref_account_logout">Sign out</string>
     <string name="pref_account_logout_summary">Signed in as %s</string>
-       
-    <string name="error_report_error">Report error</string>
-    <string name="crash_dialog_ok_toast">Thank you!</string>
-    
+
     <string name="error_network">Network unavailable. Please check your connection.</string>
 
     <string name="update_caches_progress">Updating caches…</string>
@@ -179,4 +176,9 @@
     <string name="error_no_location_permission">App does not have permission to access to location service.</string>
     <string name="action_import_all">Import all</string>
     <string name="premium_feature">This feature is for Premium members only, sorry.</string>
+    <string name="continue_button">Continue</string>
+    <string name="error_title_locus">Locus Map error</string>
+    <string name="error_send_error_report">Send error report</string>
+    <string name="error_report_sent_toast">Thank you for sending the error.</string>
+
 </resources>

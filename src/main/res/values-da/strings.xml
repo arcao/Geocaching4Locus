@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">Henter cacher ned...</string>
+    <string name="downloading">Henter cacher ned…</string>
     <string name="error_locus_not_found">Installer venligst Locus! </string>
     <string name="error_location">Tillad venligst at det trådløse net eller GPS er tændt under \'Settings\'.</string>
-    <string name="acquiring_gps_location">Finder din lokation via GPS...</string>
-    <string name="acquiring_network_location">Finder din lokation via Trådløst net...</string>
+    <string name="acquiring_gps_location">Finder din lokation via GPS…</string>
+    <string name="acquiring_network_location">Finder din lokation via Trådløst net…</string>
     
     <string name="preferences">Præferencer</string>
     <string name="wrong_coordinates">Koordinat fejl, forkert format!</string>
@@ -18,9 +18,8 @@
     <string name="pref_imperial_units_summary">Brug miles i stedet for kilometer </string>
     
     <string name="error_credentials">Ugyldigt brugernavn og eller password. Check dine Log-in indstillinger.</string>
-    <string name="error_title">Fejl opstået!</string>
-    
-    <string name="ok_button">Ok</string>
+
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Din version af Locus er for gammel. Geocaching4Locus skal bruge version %s eller højere for at virke ordentligt.</string>
     
@@ -33,7 +32,7 @@
     <string name="pref_menu_select_all">Vælg alle</string>
     <string name="pref_menu_deselect_all">Fravælg alle</string>
     
-    <string name="update_cache_progress">Updatere cache...</string>
+    <string name="update_cache_progress">Updatere cache…</string>
     
     <string name="pref_count_of_logs">Antal af Logninger</string>
     <string name="pref_count_of_logs_summary">Antal logs som hentes med cachen</string>
@@ -41,12 +40,12 @@
     <string name="pref_show_disabled">Vis ikke deaktivede</string>
     <string name="pref_show_disabled_summary">Vis midlertidigt deaktiverede caches</string>
     
-    <string name="import_cache_progress">Henter cache ned...</string>
+    <string name="import_cache_progress">Henter cache ned…</string>
     
     <string name="pref_version">Version</string>
     <string name="pref_website">Hjemside, fora, osv.</string>
     <string name="pref_donate_paypal">Doner via PayPal</string>
-    <string name="pref_donate_paypal_summary">Støt fremtidig udvikling...</string>
+    <string name="pref_donate_paypal_summary">Støt fremtidig udvikling…</string>
     <string name="pref_donate_paypal_choose_currency">Vælg din møntfod</string>
     
     <string name="pref_title_cache_type_filter">Cache typer (Premium medlem)</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">Log-på til Geocaching.com konto</string>
     <string name="pref_account_logout">Log-ud</string>
     <string name="pref_account_logout_summary">Logget på som %s</string>
-       
-    <string name="error_report_error">Reporter Fejl</string>
-    <string name="crash_dialog_ok_toast">Mange Tak !</string>
-    
+
     <string name="error_network">Netværk ikke tilgængeligt. Check venligst din forbindelse.</string>
 
     <string name="update_caches_progress">Opdaterer caches</string>
@@ -148,35 +144,40 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <!-- untranslated string: pref_livemap_show_disabled_notification -->
-    <!-- untranslated string: pref_livemap_show_disabled_notification_summary -->
+    
+    
     <string name="pref_cache_type_all">Alle</string>
-    <!-- untranslated string: button_filter -->
-    <!-- untranslated string: download_logs_progress -->
-    <!-- untranslated string: launcher_download_logs -->
+    
+    
+    
 
-    <!-- untranslated string: pref_download_logs_update_cache -->
-    <!-- untranslated string: pref_download_logs_update_cache_summary -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
-    <!-- untranslated string: premium_member_for_filter_required -->
+    
+    
+    
+    
+    
 
-    <!-- untranslated string: prefs_cat_account -->
+    
     <string name="prefs_cat_filter">Filter</string>
     <string name="prefs_cat_live_map">Live kort</string>
     <string name="prefs_cat_downloading">Downloader</string>
     <string name="prefs_cat_advanced">Avanceret</string>
     <string name="prefs_cat_about">Om programmet</string>
     <string name="login_title">Log-på</string>
-    <!-- untranslated string: pref_live_map_download_hints -->
-    <!-- untranslated string: pref_live_map_download_hints_summary -->
-    <!-- untranslated string: pref_feedback -->
-    <!-- untranslated string: error_no_result -->
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

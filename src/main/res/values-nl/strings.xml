@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Gebruik miles in plaats van kilometers</string>
     
     <string name="error_credentials">Ongeldige gebruikersnaam of paswoord. Controleer AUB de inloggegevens in Voorkeuren</string>
-    <string name="error_title">Er is een fout opgetreden!</string>
-    
+
     <string name="ok_button">Ok</string>
     
     <string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
@@ -46,7 +45,7 @@
     <string name="pref_version">Versie</string>
     <string name="pref_website">Website, forum, enz.</string>
     <string name="pref_donate_paypal">Doneer via Paypal</string>
-    <string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling...</string>
+    <string name="pref_donate_paypal_summary">Steun toekomstige ontwikkeling…</string>
     <string name="pref_donate_paypal_choose_currency">Kies uw munteenheid</string>
     
     <string name="pref_title_cache_type_filter">Cache types (Premium lid)</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>
     <string name="pref_account_logout">Afmelden</string>
     <string name="pref_account_logout_summary">Aangemeld als %s</string>
-       
-    <string name="error_report_error">Fout rapporteren</string>
-    <string name="crash_dialog_ok_toast">Bedankt!</string>
-    
+
     <string name="error_network">Netwerk onbeschikbaar. Controleer de verbinding AUB.</string>
 
-    <string name="update_caches_progress">Bezig met updaten van caches...</string>
+    <string name="update_caches_progress">Bezig met updaten van caches…</string>
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
     <string name="pref_title_container_type_filter">Grootte van container (Premium lid)</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Aangedreven door Geocaching Live</string>
-    <string name="account_geocaching_live_message">Deze add-on gebruikt Geocaching Live om informatie te verkrijgen over Geocaches. Druk hier voor meer informatie...</string>
+    <string name="account_geocaching_live_message">Deze add-on gebruikt Geocaching Live om informatie te verkrijgen over Geocaches. Druk hier voor meer informatie…</string>
     
     <string name="error_invalid_api_response">Geocaching Live gaf een ongeldig antwoord: &lt;br>%s</string>
 
@@ -152,7 +148,7 @@
     <string name="pref_livemap_show_disabled_notification_summary">Toon een melding wanneer Live map gedeactiveerd is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus en Locus actief is.</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Bezig met downloaden van logs...</string>
+    <string name="download_logs_progress">Bezig met downloaden van logs…</string>
     <string name="launcher_download_logs">Download logs</string>
 
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
@@ -175,8 +171,13 @@
     <string name="error_session_expired">Vanwege langdurige inactiviteit (meer dan 90 dagen) ben je afgemeld. AUB opnieuw aanmelden.</string>
     <string name="launcher_import_bookmarks">Importeren van bladwijzers</string>
     <string name="menu_import_bookmarks">Importeren van bladwijzers</string>
-    <string name="import_caches_progress">Bezig met downloaden van caches...</string>
+    <string name="import_caches_progress">Bezig met downloaden van caches…</string>
     <string name="error_no_location_permission">App heeft geen toegang tot de locatie dienst.</string>
     <string name="action_import_all">Importeer alles</string>
     <string name="premium_feature">Deze optie is alleen voor Premium leden, sorry.</string>
+    
+    
+    
+    
+
 </resources>

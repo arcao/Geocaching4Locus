@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Použitie míl namiesto kilometrov</string>
     
     <string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastavení.</string>
-    <string name="error_title">Došlo k chybe!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Nainštalovaná verzia Locusu je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">Prihlásiť k Geocaching.com účtu</string>
     <string name="pref_account_logout">Odhlásiť</string>
     <string name="pref_account_logout_summary">Prihlásený ako %s</string>
-       
-    <string name="error_report_error">Nahlásiť chybu</string>
-    <string name="crash_dialog_ok_toast">Vďaka!</string>
-    
+
     <string name="error_network">Sieť nie je k dispozícii. Skontrolujte pripojenie.</string>
 
     <string name="update_caches_progress">Aktualizujem kešky…</string>
@@ -175,8 +171,13 @@
     <string name="error_session_expired">Vzhľadom k dlhej nečinnosti (cez 90 dní) ste bol odhlásený. Prosím, prihláste sa znova.</string>
     <string name="launcher_import_bookmarks">Importovať záložky</string>
     <string name="menu_import_bookmarks">Importovať záložky</string>
-    <string name="import_caches_progress">Sťahujem kešky...</string>
+    <string name="import_caches_progress">Sťahujem kešky…</string>
     <string name="error_no_location_permission">Aplikácia nemá práva pristupovať k službe polohy.</string>
     <string name="action_import_all">Importovať všetko</string>
     <string name="premium_feature">Táto funkcia je len pre prémiové členov, prepáčte.</string>
+    <string name="continue_button">Pokračovať</string>
+    <string name="error_title_locus">Chyba Locus Map</string>
+    <string name="error_send_error_report">Odoslať chybové hlásenie</string>
+    <string name="error_report_sent_toast">Ďakujeme za odoslanie chyby.</string>
+
 </resources>

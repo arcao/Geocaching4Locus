@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">用英里代替公里</string>
     
     <string name="error_credentials">无效的用户名或密码，请在偏好设置中查看您的登录状态。</string>
-    <string name="error_title">出错了！</string>
-    
+
     <string name="ok_button">确定</string>
     
     <string name="error_locus_old">您安装的Locus版本过低。Geocaching4Locus需要%s或更高的版本才能正常工作。</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">登录Geocaching.com账号</string>
     <string name="pref_account_logout">退出</string>
     <string name="pref_account_logout_summary">作为%s登录</string>
-       
-    <string name="error_report_error">报告错误</string>
-    <string name="crash_dialog_ok_toast">非常感谢！</string>
-    
+
     <string name="error_network">网络无法连接，请检查你的网络。</string>
 
     <string name="update_caches_progress">藏点更新中……</string>
@@ -173,10 +169,15 @@
     <string name="pref_feedback">请反馈</string>
     <string name="error_no_result">无法找到匹配的藏点</string>
     <string name="error_session_expired">由于长期闲置（超过90天）你已经退出了登录，请重新登录。</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">Scaricamento caches...</string>
+    <string name="downloading">Scaricamento caches…</string>
     <string name="error_locus_not_found">Si prega di installare Locus!</string>
     <string name="error_location">Permetti servizio posizione Wireless o GPS in \'Impostazioni\'.</string>
-    <string name="acquiring_gps_location">Rilevamento della posizione dal GPS...</string>
-    <string name="acquiring_network_location">Rilevamento della posizione dalla rete wireless...</string>
+    <string name="acquiring_gps_location">Rilevamento della posizione dal GPS…</string>
+    <string name="acquiring_network_location">Rilevamento della posizione dalla rete wireless…</string>
     
     <string name="preferences">Preferenze</string>
     <string name="wrong_coordinates">Formato coordinate errato!</string>
@@ -18,9 +18,8 @@
     <string name="pref_imperial_units_summary">Utilizza le miglia al posto dei chilometri</string>
     
     <string name="error_credentials">Username o password invalido. Per favore controlla il tuo stato di accesso in Preferenze..</string>
-    <string name="error_title">Errore!</string>
-    
-    <string name="ok_button">Ok</string>
+
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">La versione di Locus che possiedi è obsoleta. Geocaching4Locus richiede la versione %s o una più recente per funzionare correttamente.</string>
     
@@ -33,7 +32,7 @@
     <string name="pref_menu_select_all">Seleziona tutto</string>
     <string name="pref_menu_deselect_all">Deseleziona tutto</string>
     
-    <string name="update_cache_progress">Aggiornamento cache...</string>
+    <string name="update_cache_progress">Aggiornamento cache…</string>
     
     <string name="pref_count_of_logs">Conteggio dei log</string>
     <string name="pref_count_of_logs_summary">Conteggio dei log da scaricare con cache</string>
@@ -41,12 +40,12 @@
     <string name="pref_show_disabled">Mostra disabilitato</string>
     <string name="pref_show_disabled_summary">Mostra caches temporaneamente disabilitate</string>
     
-    <string name="import_cache_progress">Scaricamento caches...</string>
+    <string name="import_cache_progress">Scaricamento caches…</string>
     
     <string name="pref_version">Versione</string>
     <string name="pref_website">Sito, forum, ecc.</string>
     <string name="pref_donate_paypal">Donazione tramite Paypal</string>
-    <string name="pref_donate_paypal_summary">Supporta lo sviluppo futuro...</string>
+    <string name="pref_donate_paypal_summary">Supporta lo sviluppo futuro…</string>
     <string name="pref_donate_paypal_choose_currency">Scegli la tua valuta</string>
     
     <string name="pref_title_cache_type_filter">Tipi di Cache (utente Premium)</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Accedere all\'account Geocaching.com</string>
     <string name="pref_account_logout">Uscire</string>
     <string name="pref_account_logout_summary">Hai effettuato l\'accesso come %s</string>
-       
-    <string name="error_report_error">Riporta errore</string>
-    <string name="crash_dialog_ok_toast">Grazie!</string>
-    
+
     <string name="error_network">Rete non disponibile. Si prega di verificare la propria connessione.</string>
 
-    <string name="update_caches_progress">Aggiornando la cache...</string>
+    <string name="update_caches_progress">Aggiornando la cache…</string>
     <string name="original_coordinates_name">Coordinate originali</string>
     <string name="pref_title_container_type_filter">Dimensioni contenitore (utente Premium)</string>
 
@@ -148,35 +144,40 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <!-- untranslated string: pref_livemap_show_disabled_notification -->
-    <!-- untranslated string: pref_livemap_show_disabled_notification_summary -->
+    
+    
     <string name="pref_cache_type_all">Tutto</string>
-    <!-- untranslated string: button_filter -->
-    <!-- untranslated string: download_logs_progress -->
-    <!-- untranslated string: launcher_download_logs -->
+    
+    
+    
 
-    <!-- untranslated string: pref_download_logs_update_cache -->
-    <!-- untranslated string: pref_download_logs_update_cache_summary -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
-    <!-- untranslated string: premium_member_for_filter_required -->
+    
+    
+    
+    
+    
 
-    <!-- untranslated string: prefs_cat_account -->
+    
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mappa dal vivo</string>
     <string name="prefs_cat_downloading">Download in corso</string>
     <string name="prefs_cat_advanced">Avanzate</string>
     <string name="prefs_cat_about">Info</string>
     <string name="login_title">Accedere</string>
-    <!-- untranslated string: pref_live_map_download_hints -->
-    <!-- untranslated string: pref_live_map_download_hints_summary -->
-    <!-- untranslated string: pref_feedback -->
-    <!-- untranslated string: error_no_result -->
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

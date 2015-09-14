@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">正在下載藏寶點...</string>
+    <string name="downloading">正在下載藏寶點…</string>
     <string name="error_locus_not_found">請安裝 Locus！</string>
     <string name="error_location">請在 \'選項\' 中允許無線網路或 GPS 定位服務</string>
-    <string name="acquiring_gps_location">正在從 GPS 取得位置...</string>
-    <string name="acquiring_network_location">正在從無線網路取得位置...</string>
+    <string name="acquiring_gps_location">正在從 GPS 取得位置…</string>
+    <string name="acquiring_network_location">正在從無線網路取得位置…</string>
     
     <string name="preferences">偏好設定</string>
     <string name="wrong_coordinates">錯誤的座標格式！</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">只用英哩而不使用公里</string>
     
     <string name="error_credentials">無效的使用者名稱或密碼。請在偏好設定中確認您的登入狀態。</string>
-    <string name="error_title">發生錯誤！</string>
-    
+
     <string name="ok_button">確定</string>
     
     <string name="error_locus_old">您已安裝的 Locus 過舊。Geocaching4Locus 需要版本至少為 %s 的 Locus 才能正常運作。</string>
@@ -33,7 +32,7 @@
     <string name="pref_menu_select_all">全選</string>
     <string name="pref_menu_deselect_all">取消全選</string>
     
-    <string name="update_cache_progress">更新寶藏 ...</string>
+    <string name="update_cache_progress">更新寶藏 …</string>
     
     <string name="pref_count_of_logs">日誌數量</string>
     <string name="pref_count_of_logs_summary">下載寶藏時的日誌數量</string>
@@ -41,10 +40,10 @@
     <string name="pref_show_disabled">顯示已關閉的</string>
     <string name="pref_show_disabled_summary">顯示已暫時關閉的寶藏</string>
     
-    <string name="import_cache_progress">正在下載寶藏...</string>
+    <string name="import_cache_progress">正在下載寶藏…</string>
     
     <string name="pref_version">版本</string>
-    <string name="pref_website">網站、論壇...等</string>
+    <string name="pref_website">網站、論壇…等</string>
     <string name="pref_donate_paypal">以 Paypal 贊助</string>
     <string name="pref_donate_paypal_summary">支援未來開發</string>
     <string name="pref_donate_paypal_choose_currency">選擇幣別</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">登入至 Geocaching.com 帳號</string>
     <string name="pref_account_logout">登出</string>
     <string name="pref_account_logout_summary">以登入為 %s</string>
-       
-    <string name="error_report_error">回報錯誤</string>
-    <string name="crash_dialog_ok_toast">感謝您！</string>
-    
+
     <string name="error_network">無可用的網路。請檢查您是否已經連線。</string>
 
-    <string name="update_caches_progress">更新寶藏 ...</string>
+    <string name="update_caches_progress">更新寶藏 …</string>
     <string name="original_coordinates_name">原始座標</string>
     <string name="pref_title_container_type_filter">寶盒尺寸(高級會員)</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">基於 Geocaching Live</string>
-    <string name="account_geocaching_live_message">這個外掛程式基於 Geocaching Live 來擷取地理寶藏資訊，點選這裡有更多資訊 ...</string>
+    <string name="account_geocaching_live_message">這個外掛程式基於 Geocaching Live 來擷取地理寶藏資訊，點選這裡有更多資訊 …</string>
     
     <string name="error_invalid_api_response">Geocaching Live 傳回無效的回應：&lt;br>%s</string>
 
@@ -152,7 +148,7 @@
     <string name="pref_livemap_show_disabled_notification_summary">當即時地圖關閉時發出通知，這只有在 Locus 執行時並且已開啟定期更新選項</string>
     <string name="pref_cache_type_all">全部</string>
     <string name="button_filter">過濾器</string>
-    <string name="download_logs_progress">下載日誌中 ...</string>
+    <string name="download_logs_progress">下載日誌中 …</string>
     <string name="launcher_download_logs">下載日誌</string>
 
     <string name="pref_download_logs_update_cache">下載日誌更新寶藏</string>
@@ -175,8 +171,13 @@
     <string name="error_session_expired">由於長期閒置(超過 90 天)，您已經登出，請再次登入。</string>
     <string name="launcher_import_bookmarks">匯入書籤</string>
     <string name="menu_import_bookmarks">匯入書籤</string>
-    <string name="import_caches_progress">下載寶藏中 ...</string>
+    <string name="import_caches_progress">下載寶藏中 …</string>
     <string name="error_no_location_permission">軟體沒有權限訪問定位服務</string>
     <string name="action_import_all">匯入全部</string>
     <string name="premium_feature">這項功能只提供給付費會員，抱歉</string>
+    
+    
+    
+    
+
 </resources>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">Pobieranie skrzynek...</string>
+    <string name="downloading">Pobieranie skrzynek…</string>
     <string name="error_locus_not_found">Zainstaluj program Locus!</string>
     <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
-    <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS...</string>
-    <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych...</string>
+    <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS…</string>
+    <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych…</string>
     
     <string name="preferences">Ustawienia</string>
     <string name="wrong_coordinates">Niepoprawny format współrzędnych!</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Używaj mil zamiast kilometrów</string>
     
     <string name="error_credentials">Nieprawidłowa nazwa użytkownika lub hasło. Sprawdź swoje dane w ustawieniach.</string>
-    <string name="error_title">Wystąpił błąd!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Zainstalowana wersja programu Locus jest nieaktualna. Do poprawnego działania Geocaching4Locus wymaga wersji %s albo nowszej. </string>
@@ -33,7 +32,7 @@
     <string name="pref_menu_select_all">Zaznacz wszystko</string>
     <string name="pref_menu_deselect_all">Odznacz wszystko</string>
     
-    <string name="update_cache_progress">Aktualizowanie skrzynki...</string>
+    <string name="update_cache_progress">Aktualizowanie skrzynki…</string>
     
     <string name="pref_count_of_logs">Ilość logów</string>
     <string name="pref_count_of_logs_summary">Ilość wpisów do pobrania wraz ze skrzynką</string>
@@ -41,12 +40,12 @@
     <string name="pref_show_disabled">Pokazuj nieaktywne</string>
     <string name="pref_show_disabled_summary">Pokaż skrzynki tymczasowo niedostępne</string>
     
-    <string name="import_cache_progress">Pobieranie skrzynki...</string>
+    <string name="import_cache_progress">Pobieranie skrzynki…</string>
     
     <string name="pref_version">Wersja</string>
     <string name="pref_website">Strona WWW, forum, itp.</string>
     <string name="pref_donate_paypal">Przekaż datek poprzez PayPal</string>
-    <string name="pref_donate_paypal_summary">Wspomóż dalszy proces tworzenia...</string>
+    <string name="pref_donate_paypal_summary">Wspomóż dalszy proces tworzenia…</string>
     <string name="pref_donate_paypal_choose_currency">Wybierz swoją walutę</string>
     
     <string name="pref_title_cache_type_filter">Rodzaje skrzynek (tylko konto  "premium")</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Zaloguj się do konta Geocaching.com</string>
     <string name="pref_account_logout">Wyloguj się</string>
     <string name="pref_account_logout_summary">Zalogowany jako %s</string>
-       
-    <string name="error_report_error">Zgłoś błąd</string>
-    <string name="crash_dialog_ok_toast">Dziękujemy!</string>
-    
+
     <string name="error_network">Sieć jest niedostępna - proszę sprawdzić połączenie.</string>
 
-    <string name="update_caches_progress">Aktualizacja skrzynek...</string>
+    <string name="update_caches_progress">Aktualizacja skrzynek…</string>
     <string name="original_coordinates_name">Pierwotne współrzędne</string>
     <string name="pref_title_container_type_filter">Rozmiar (tylko konto  "premium")</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Oparte na silniku Geocaching Live .</string>
-    <string name="account_geocaching_live_message">Ten dodatek wykorzystuje silnik Geocaching Live do pobierania informacji o skrzynkach geocache. Kliknij tutaj, aby dowiedzieć się więcej...</string>
+    <string name="account_geocaching_live_message">Ten dodatek wykorzystuje silnik Geocaching Live do pobierania informacji o skrzynkach geocache. Kliknij tutaj, aby dowiedzieć się więcej…</string>
     
     <string name="error_invalid_api_response">Usługa Geocaching Live zwraca niewłaściwą odpowiedź:&lt;br>%s</string>
 
@@ -152,7 +148,7 @@
     <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
     <string name="pref_cache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>
-    <string name="download_logs_progress">Pobieranie wpisów...</string>
+    <string name="download_logs_progress">Pobieranie wpisów…</string>
     <string name="launcher_download_logs">Pobierz wpisy</string>
 
     <string name="pref_download_logs_update_cache">Aktualizacja skrzynki przy pobieraniu wpisów</string>
@@ -173,10 +169,15 @@
     <string name="pref_feedback">Wyślij opinię</string>
     <string name="error_no_result">Nie znaleziono skrzynek geocache spełniających kryteria wyszukiwania.</string>
     <string name="error_session_expired">Z powodu długiego braku aktywności (ponad 90 dni) zostałeś wylogowany. Proszę zaloguj się ponownie.</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

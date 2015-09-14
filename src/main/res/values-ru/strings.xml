@@ -4,8 +4,8 @@
     <string name="downloading">Скачивание кэшей…</string>
     <string name="error_locus_not_found">Пожалуйста, установите Locus!</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
-    <string name="acquiring_gps_location">Местоположение определяется по GPS...</string>
-    <string name="acquiring_network_location">Местоположение определяется через беспроводную сеть...</string>
+    <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
+    <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
     
     <string name="preferences">Настройки</string>
     <string name="wrong_coordinates">Неправильный формат координат!</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Использовать мили вместо километров</string>
     
     <string name="error_credentials">Неверный логин или пароль. Пожалуйста проверьте состояние логина в настройках.</string>
-    <string name="error_title">Произошла ошибка!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
@@ -41,7 +40,7 @@
     <string name="pref_show_disabled">Показать неактивные</string>
     <string name="pref_show_disabled_summary">Показать временно неактивные кэши</string>
     
-    <string name="import_cache_progress">Завантаження кешу…</string>
+    <string name="import_cache_progress">Скачивание кэша…</string>
     
     <string name="pref_version">Версия</string>
     <string name="pref_website">Сайт, форум, итд.</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Зайти на аккаунт Geocaching.com</string>
     <string name="pref_account_logout">Выйти</string>
     <string name="pref_account_logout_summary">Залогинен как %s</string>
-       
-    <string name="error_report_error">Отчет об ошибке</string>
-    <string name="crash_dialog_ok_toast">Спасибо!</string>
-    
+
     <string name="error_network">Сеть недоступна. Проверьте пожалуйста подключение.</string>
 
-    <string name="update_caches_progress">Оновлення кешу…</string>
+    <string name="update_caches_progress">Кэш обновляется…</string>
     <string name="original_coordinates_name">Оригинальные координаты</string>
     <string name="pref_title_container_type_filter">Размер контейнера (Премиум)</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">При поддержке Geocaching Live</string>
-    <string name="account_geocaching_live_message">Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации ...</string>
+    <string name="account_geocaching_live_message">Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации …</string>
     
     <string name="error_invalid_api_response">Geocaching Live возвращает неверный ответ:&lt;br>%s</string>
 
@@ -155,10 +151,10 @@
     <string name="download_logs_progress">Загрузка логов…</string>
     <string name="launcher_download_logs">Загрузить логи</string>
 
-    <!-- untranslated string: pref_download_logs_update_cache -->
-    <!-- untranslated string: pref_download_logs_update_cache_summary -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
+    
+    
+    
+    
     <string name="premium_member_for_filter_required">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
 
     <string name="prefs_cat_account">Учетная запись</string>
@@ -168,15 +164,20 @@
     <string name="prefs_cat_advanced">Дополнительно</string>
     <string name="prefs_cat_about">Про</string>
     <string name="login_title">Вход</string>
-    <!-- untranslated string: pref_live_map_download_hints -->
-    <!-- untranslated string: pref_live_map_download_hints_summary -->
+    
+    
     <string name="pref_feedback">Отправить отзыв</string>
     <string name="error_no_result">Не удалось найти кэшей, соответствующих параметрам поиска.</string>
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

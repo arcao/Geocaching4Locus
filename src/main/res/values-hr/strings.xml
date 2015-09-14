@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">Skidam caheove...</string>
+    <string name="downloading">Skidam caheove…</string>
     <string name="error_locus_not_found">Molimo Vas instalirajte Locus!</string>
     <string name="error_location">Molimo Vas, aktivirajte Wi-Fi ili GPS u Postavkama.</string>
-    <string name="acquiring_gps_location">Dobivanje lokacija putem GPS-a....</string>
-    <string name="acquiring_network_location">Dobivanje lokacije putem Wi-Fi mreže...</string>
+    <string name="acquiring_gps_location">Dobivanje lokacija putem GPS-a….</string>
+    <string name="acquiring_network_location">Dobivanje lokacije putem Wi-Fi mreže…</string>
     
     <string name="preferences">Preference</string>
     <string name="wrong_coordinates">Kriv format koordinata.</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Koristi milje umjesto kilometara,</string>
     
     <string name="error_credentials">Nepostojeće korisničko ime ili lozinka. Provjerite Vaše podatke u Preferencama.</string>
-    <string name="error_title">Dogodila se pogreška!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Instalirana verzija Vašeg Locusa je prestara. Geocaching4Locus zahtijeva verziju %s ili veću za ispravan rad.</string>
@@ -33,7 +32,7 @@
     <string name="pref_menu_select_all">Odaberi sve</string>
     <string name="pref_menu_deselect_all">Ododaberi sve</string>
     
-    <string name="update_cache_progress">Ažuriram cache...</string>
+    <string name="update_cache_progress">Ažuriram cache…</string>
     
     <string name="pref_count_of_logs">Broj zapisnika: </string>
     <string name="pref_count_of_logs_summary">Broj zapisnika za skidanje s cacheom.</string>
@@ -41,12 +40,12 @@
     <string name="pref_show_disabled">Pokaži onemogućeno.</string>
     <string name="pref_show_disabled_summary">Pokaži privremeno onemogućene cacheove.</string>
     
-    <string name="import_cache_progress">Skidam cache...</string>
+    <string name="import_cache_progress">Skidam cache…</string>
     
     <string name="pref_version">Verzija</string>
     <string name="pref_website">Website, forum, itd.</string>
     <string name="pref_donate_paypal">Donirajte preko Paypal.</string>
-    <string name="pref_donate_paypal_summary">Podržite razvoj u budućnosti...</string>
+    <string name="pref_donate_paypal_summary">Podržite razvoj u budućnosti…</string>
     <string name="pref_donate_paypal_choose_currency">Odaberite valutu</string>
     
     <string name="pref_title_cache_type_filter">Vrste cacheova (Premium korisnici)</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Prijavite se u Vaš geocaching,com račun</string>
     <string name="pref_account_logout">Odjavi se.</string>
     <string name="pref_account_logout_summary">Prijavljen kao %s</string>
-       
-    <string name="error_report_error">Prijavite pogrešku.</string>
-    <string name="crash_dialog_ok_toast">Hvala Vam!</string>
-    
+
     <string name="error_network">Mreža nedostupna. Molimo Vas, provjerite vezu.</string>
 
-    <string name="update_caches_progress">Ažuriram caheove...</string>
+    <string name="update_caches_progress">Ažuriram caheove…</string>
     <string name="original_coordinates_name">Originalne koordinate</string>
     <string name="pref_title_container_type_filter">Veličina spremnika (Premium korisnici)</string>
 
@@ -148,35 +144,40 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <!-- untranslated string: pref_livemap_show_disabled_notification -->
-    <!-- untranslated string: pref_livemap_show_disabled_notification_summary -->
+    
+    
     <string name="pref_cache_type_all">Sve</string>
-    <!-- untranslated string: button_filter -->
-    <!-- untranslated string: download_logs_progress -->
-    <!-- untranslated string: launcher_download_logs -->
+    
+    
+    
 
-    <!-- untranslated string: pref_download_logs_update_cache -->
-    <!-- untranslated string: pref_download_logs_update_cache_summary -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
-    <!-- untranslated string: premium_member_for_filter_required -->
+    
+    
+    
+    
+    
 
-    <!-- untranslated string: prefs_cat_account -->
+    
     <string name="prefs_cat_filter">Filter</string>
     <string name="prefs_cat_live_map">Živa mapa</string>
-    <string name="prefs_cat_downloading">Preuzimam...</string>
+    <string name="prefs_cat_downloading">Preuzimam</string>
     <string name="prefs_cat_advanced">Napredno</string>
     <string name="prefs_cat_about">O</string>
     <string name="login_title">Prijavi se.</string>
-    <!-- untranslated string: pref_live_map_download_hints -->
-    <!-- untranslated string: pref_live_map_download_hints_summary -->
-    <!-- untranslated string: pref_feedback -->
-    <!-- untranslated string: error_no_result -->
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

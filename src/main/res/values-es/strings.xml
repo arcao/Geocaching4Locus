@@ -4,7 +4,7 @@
     <string name="downloading">Descargando cachés…</string>
     <string name="error_locus_not_found">¡Por favor instale Locus!</string>
     <string name="error_location">Por favor active servicio de localización por Wireless o GPS en \'Ajustes\'.</string>
-    <string name="acquiring_gps_location">Adquiriendo posición desde GPS ...</string>
+    <string name="acquiring_gps_location">Adquiriendo posición desde GPS …</string>
     <string name="acquiring_network_location">Adquiriendo posición desde red…</string>
     
     <string name="preferences">Preferencias</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Usar millas en vez de kilómetros</string>
     
     <string name="error_credentials">Nombre usuario o contraseña no válidos. Por favor compruebe su estado de conexión en preferencias.</string>
-    <string name="error_title">¡Se ha producido un error!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">La versión instalada de Locus es demasiado antigua. Geocaching4Locus requiere la versión %s o superior para funcionar correctamente.</string>
@@ -46,7 +45,7 @@
     <string name="pref_version">Versión</string>
     <string name="pref_website">Sitio web, foro, etc.</string>
     <string name="pref_donate_paypal">Donar vía Paypal</string>
-    <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro ...</string>
+    <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro …</string>
     <string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
     
     <string name="pref_title_cache_type_filter">Tipo cache (Usuario Premium)</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">Iniciar sesión en cuenta de Geocaching.com</string>
     <string name="pref_account_logout">Cerrar sesión</string>
     <string name="pref_account_logout_summary">Conectado como %s</string>
-       
-    <string name="error_report_error">Informe de errores</string>
-    <string name="crash_dialog_ok_toast">¡Gracias!</string>
-    
+
     <string name="error_network">Red no disponible. Por favor compruebe su conexión.</string>
 
     <string name="update_caches_progress">Actualizando caches…</string>
@@ -148,35 +144,40 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <!-- untranslated string: pref_livemap_show_disabled_notification -->
-    <!-- untranslated string: pref_livemap_show_disabled_notification_summary -->
+    
+    
     <string name="pref_cache_type_all">Todo</string>
-    <!-- untranslated string: button_filter -->
-    <!-- untranslated string: download_logs_progress -->
-    <!-- untranslated string: launcher_download_logs -->
+    
+    
+    
 
-    <!-- untranslated string: pref_download_logs_update_cache -->
-    <!-- untranslated string: pref_download_logs_update_cache_summary -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
-    <!-- untranslated string: premium_member_for_filter_required -->
+    
+    
+    
+    
+    
 
-    <!-- untranslated string: prefs_cat_account -->
+    
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mapa dinámico</string>
     <string name="prefs_cat_downloading">Descargando</string>
     <string name="prefs_cat_advanced">Avanzado</string>
     <string name="prefs_cat_about">Acerca de</string>
     <string name="login_title">Log in</string>
-    <!-- untranslated string: pref_live_map_download_hints -->
-    <!-- untranslated string: pref_live_map_download_hints_summary -->
-    <!-- untranslated string: pref_feedback -->
-    <!-- untranslated string: error_no_result -->
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

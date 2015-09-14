@@ -18,9 +18,8 @@
     <string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
     
     <string name="error_credentials">Nome de utilizador ou password inválidos. Por favor verifique as credenciais.</string>
-    <string name="error_title">Ocorrência de erros!</string>
-    
-    <string name="ok_button">Ok</string>
+
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
     
@@ -46,7 +45,7 @@
     <string name="pref_version">Versão</string>
     <string name="pref_website">Website, forum, etc.</string>
     <string name="pref_donate_paypal">Doar por Paypal</string>
-    <string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros...</string>
+    <string name="pref_donate_paypal_summary">Apoiar os desenvolvimentos futuros…</string>
     <string name="pref_donate_paypal_choose_currency">Escolha a moeda</string>
     
     <string name="pref_title_cache_type_filter">Tipos de Caches (Membros Premium)</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Entrar na conta Geocaching.com</string>
     <string name="pref_account_logout">Logout</string>
     <string name="pref_account_logout_summary">Registado como %s</string>
-       
-    <string name="error_report_error">Relatar erro</string>
-    <string name="crash_dialog_ok_toast">Obrigado!</string>
-    
+
     <string name="error_network">Rede inacessível. Por favor verifique a ligação.</string>
 
-    <string name="update_caches_progress">A actualizar caches...</string>
+    <string name="update_caches_progress">A actualizar caches…</string>
     <string name="original_coordinates_name">Coordenadas originais</string>
     <string name="pref_title_container_type_filter">Tamanho (Membros Premium)</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
-    <string name="account_geocaching_live_message">Este add-on usa o Gecocaching Live para obter informações sobre Geocaches. Toque aqui para mais informação...</string>
+    <string name="account_geocaching_live_message">Este add-on usa o Gecocaching Live para obter informações sobre Geocaches. Toque aqui para mais informação…</string>
     
     <string name="error_invalid_api_response">O Geocaching Live retornou uma resposta inválida:&lt;br>%s</string>
 
@@ -152,7 +148,7 @@
     <string name="pref_livemap_show_disabled_notification_summary">Mostrar notificação quando o mapa ao vivo está desligado. Apenas funciona se o Locus está ligado e se o envio de atualizações periódicas está ativo.</string>
     <string name="pref_cache_type_all">Tudo</string>
     <string name="button_filter">Filtro</string>
-    <string name="download_logs_progress">A descarregar logs....</string>
+    <string name="download_logs_progress">A descarregar logs….</string>
     <string name="launcher_download_logs">Descarregar logs</string>
 
     <string name="pref_download_logs_update_cache">Descarregar logs de atualização da cache</string>
@@ -170,13 +166,18 @@
     <string name="login_title">Entrar</string>
     <string name="pref_live_map_download_hints">Descarregar dicas</string>
     <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
-    <!-- untranslated string: pref_feedback -->
-    <!-- untranslated string: error_no_result -->
-    <!-- untranslated string: error_session_expired -->
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

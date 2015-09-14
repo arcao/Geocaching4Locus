@@ -5,7 +5,7 @@
     <string name="error_locus_not_found">Bitte Locus installieren!</string>
     <string name="error_location">Positionsbestimmung via WiFi, mobile Netzwerke oder GPS erlauben:  \'Settings\'.</string>
     <string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
-    <string name="acquiring_network_location">Positionsbestimmung via WIFI...</string>
+    <string name="acquiring_network_location">Positionsbestimmung via WIFI…</string>
     
     <string name="preferences">Einstellungen</string>
     <string name="wrong_coordinates">Ungültiges Koordinatenformat!</string>
@@ -18,9 +18,8 @@
     <string name="pref_imperial_units_summary">Zeige Meilen statt Kilometer</string>
     
     <string name="error_credentials">Benutzername oder Kennwort ungültig. Bitte überprüfen Sie Ihre Login-Angaben in den Einstellungen.</string>
-    <string name="error_title">Ein Fehler ist aufgetreten!</string>
-    
-    <string name="ok_button">Ok</string>
+
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Ihre Locus-Version ist veraltet. Geocaching4locus benötigt Version %s oder höher.</string>
     
@@ -41,7 +40,7 @@
     <string name="pref_show_disabled">Zeige deaktivierte</string>
     <string name="pref_show_disabled_summary">Zeige vorübergehend deaktivierte Caches</string>
     
-    <string name="import_cache_progress">Lade Geocache...</string>
+    <string name="import_cache_progress">Lade Geocache…</string>
     
     <string name="pref_version">Version</string>
     <string name="pref_website">Webseite, Forum, etc.</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Melden Sie sich bei Ihrem Geocaching.com Konto an</string>
     <string name="pref_account_logout">Abmelden</string>
     <string name="pref_account_logout_summary">Angemeldet als %s</string>
-       
-    <string name="error_report_error">Fehler melden</string>
-    <string name="crash_dialog_ok_toast">Vielen Dank!</string>
-    
+
     <string name="error_network">Netzwerk nicht verfügbar. Bitte überprüfen Sie Ihre Verbindung.</string>
 
-    <string name="update_caches_progress">Caches werden aktualisiert ...</string>
+    <string name="update_caches_progress">Caches werden aktualisiert …</string>
     <string name="original_coordinates_name">Ursprüngliche Koordinaten</string>
     <string name="pref_title_container_type_filter">Behältergröße (Premium Mitglieder)</string>
 
@@ -138,7 +134,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     </plurals>
     
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
-    <string name="account_geocaching_live_message">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen...</string>
+    <string name="account_geocaching_live_message">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen…</string>
     
     <string name="error_invalid_api_response">Geocaching Live gibt eine ungültige Angabe zurück:&lt;br>%s</string>
 
@@ -174,10 +170,15 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_feedback">Feedback senden</string>
     <string name="error_no_result">Keine der Suche entsprechenden Geocaches gefunden.</string>
     <string name="error_session_expired">Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden sie automatisch abgemeldet. Bitte melden sie sich erneut an.</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    <string name="launcher_import_bookmarks">Lesezeichen importieren</string>
+    <string name="menu_import_bookmarks">Lesezeichen importieren</string>
+    <string name="import_caches_progress">Lade Caches…</string>
+    
+    <string name="action_import_all">Alle Import</string>
+    
+    <string name="continue_button">Fortsetzen</string>
+    <string name="error_title_locus">Locus Map Fehler</string>
+    <string name="error_send_error_report">Fehlerbericht senden</string>
+    <string name="error_report_sent_toast">Vielen Dank für Senden der Fehler.</string>
+
 </resources>

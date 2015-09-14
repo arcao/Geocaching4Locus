@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools"
            tools:locale="en">
-    <string name="downloading">Téléchargement des caches...</string>
+    <string name="downloading">Téléchargement des caches…</string>
     <string name="error_locus_not_found">Merci d\'installer Locus</string>
     <string name="error_location">Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
-    <string name="acquiring_gps_location">En cours de localisation par GPS...</string>
+    <string name="acquiring_gps_location">En cours de localisation par GPS…</string>
     <string name="acquiring_network_location">En cours de localisation par le réseau </string>
     
     <string name="preferences">Paramètres</string>
@@ -18,9 +18,8 @@
     <string name="pref_imperial_units_summary">Utiliser les miles au lieu des kilomètres</string>
     
     <string name="error_credentials">Pseudo ou mot de passe invalide. Merci de vérifier vos identifiants dans les préférences.</string>
-    <string name="error_title">Une erreur est survenue !</string>
-    
-    <string name="ok_button">Ok</string>
+
+    <string name="ok_button">OK</string>
     
     <string name="error_locus_old">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>
     
@@ -41,12 +40,12 @@
     <string name="pref_show_disabled">Montrer les caches désactivées</string>
     <string name="pref_show_disabled_summary">Montrer les caches temporairement désactivées</string>
     
-    <string name="import_cache_progress">Téléchargement de la cache...</string>
+    <string name="import_cache_progress">Téléchargement de la cache…</string>
     
     <string name="pref_version">Version</string>
-    <string name="pref_website">Site internet, forum, etc...</string>
+    <string name="pref_website">Site internet, forum, etc…</string>
     <string name="pref_donate_paypal">Faire un don par Paypal</string>
-    <string name="pref_donate_paypal_summary">Encourager les futures évolutions...</string>
+    <string name="pref_donate_paypal_summary">Encourager les futures évolutions…</string>
     <string name="pref_donate_paypal_choose_currency">Choisissez votre devise</string>
     
     <string name="pref_title_cache_type_filter">Types de cache (Membres Premium)</string>
@@ -79,13 +78,10 @@
     <string name="pref_account_login_summary">Connexion avec le compte de Geocaching.com</string>
     <string name="pref_account_logout">Déconnexion</string>
     <string name="pref_account_logout_summary">Connecté en tant que %s</string>
-       
-    <string name="error_report_error">Signaler une erreur</string>
-    <string name="crash_dialog_ok_toast">Merci !</string>
-    
+
     <string name="error_network">Accès internet indisponible. Veuillez vérifier votre connexion. </string>
 
-    <string name="update_caches_progress">Mise à jour des caches...</string>
+    <string name="update_caches_progress">Mise à jour des caches…</string>
     <string name="original_coordinates_name">Coordonnées d\'origine</string>
     <string name="pref_title_container_type_filter">Taille de la cache (Membre Premium)</string>
 
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Propulsé par Geocaching Live</string>
-    <string name="account_geocaching_live_message">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Pressez ici pour plus d\'information...</string>
+    <string name="account_geocaching_live_message">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Pressez ici pour plus d\'information…</string>
     
     <string name="error_invalid_api_response">Geocaching Live a envoyé une réponse invalide:&lt;br>%s</string>
 
@@ -157,9 +153,9 @@
 
     <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
     <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
-    <!-- untranslated string: pref_downloading_count_of_caches_step -->
-    <!-- untranslated string: pref_downloading_count_of_caches_step_summary -->
-    <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez...</string>
+    
+    
+    <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez…</string>
 
     <string name="prefs_cat_account">Compte</string>
     <string name="prefs_cat_filter">Filtrer</string>
@@ -173,10 +169,15 @@
     <string name="pref_feedback">Donnez votre avis</string>
     <string name="error_no_result">Impossible de trouver des caches correspondantes à vos critères</string>
     <string name="error_session_expired">A cause d\'une longue inactivité (plus de 90 jours) vous avez été déconnecté. Merci de vous identifier à nouveau.</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

@@ -5,7 +5,7 @@
     <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
     <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
-    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě...</string>
+    <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
     
     <string name="preferences">Nastavení</string>
     <string name="wrong_coordinates">Špatný formát souřadnic!</string>
@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Použít míle místo kilometrů</string>
     
     <string name="error_credentials">Chybné uživatelské jméno nebo heslo. Prosím zkontrolujte stav přihlášení v nastavení.</string>
-    <string name="error_title">Nastala chyba!</string>
-    
+
     <string name="ok_button">OK</string>
     
     <string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">Přihlásit se k Geocaching.com účtu</string>
     <string name="pref_account_logout">Odhlásit</string>
     <string name="pref_account_logout_summary">Přihlášen jako %s</string>
-       
-    <string name="error_report_error">Nahlásit chybu</string>
-    <string name="crash_dialog_ok_toast">Díky!</string>
-    
+
     <string name="error_network">Síť není k dispozici. Zkontrolujte připojení.</string>
 
     <string name="update_caches_progress">Aktualizuji keše…</string>
@@ -179,4 +175,9 @@
     <string name="error_no_location_permission">Aplikace nemá práva přistupovat ke službě polohy.</string>
     <string name="action_import_all">Importovat vše</string>
     <string name="premium_feature">Tato funkce je pouze pro prémiové členy, promiňte.</string>
+    <string name="continue_button">Pokračovat</string>
+    <string name="error_title_locus">Chyba Locus Map</string>
+    <string name="error_send_error_report">Odeslat chybové hlášení</string>
+    <string name="error_report_sent_toast">Děkujeme za odeslání chyby.</string>
+
 </resources>

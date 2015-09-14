@@ -18,8 +18,7 @@
     <string name="pref_imperial_units_summary">Використовувати милі замість кілометрів</string>
     
     <string name="error_credentials">Невірне псевдо користувача або ж гасло. Будь ласка, спробуйте ще раз.</string>
-    <string name="error_title">Трапилася помилка!</string>
-    
+
     <string name="ok_button">Гаразд</string>
     
     <string name="error_locus_old">Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
@@ -79,10 +78,7 @@
     <string name="pref_account_login_summary">Увійти у профіль Geocaching.com</string>
     <string name="pref_account_logout">Вийти</string>
     <string name="pref_account_logout_summary">Вийти як %s</string>
-       
-    <string name="error_report_error">Звіт про помилку</string>
-    <string name="crash_dialog_ok_toast">Дякуємо вам!</string>
-    
+
     <string name="error_network">Мережа недоступна. Будь ласка, перевірте ваше з\'єднання.</string>
 
     <string name="update_caches_progress">Оновлення кешу…</string>
@@ -137,7 +133,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>
-    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації ...</string>
+    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
     
     <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:&lt;br>%s</string>
 
@@ -152,7 +148,7 @@
     <string name="pref_livemap_show_disabled_notification_summary">Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
     <string name="pref_cache_type_all">Всі</string>
     <string name="button_filter">Фільтр</string>
-    <string name="download_logs_progress">Стягування журналів змін...</string>
+    <string name="download_logs_progress">Стягування журналів змін…</string>
     <string name="launcher_download_logs">Завантажити журнали змін</string>
 
     <string name="pref_download_logs_update_cache">Завантажити журнали змін оновленого кешу</string>
@@ -173,10 +169,15 @@
     <string name="pref_feedback">Надіслати відозву</string>
     <string name="error_no_result">Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
     <string name="error_session_expired">У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
-    <!-- untranslated string: launcher_import_bookmarks -->
-    <!-- untranslated string: menu_import_bookmarks -->
-    <!-- untranslated string: import_caches_progress -->
-    <!-- untranslated string: error_no_location_permission -->
-    <!-- untranslated string: action_import_all -->
-    <!-- untranslated string: premium_feature -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
 </resources>

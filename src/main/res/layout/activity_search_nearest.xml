@@ -24,7 +24,7 @@
                 android:orientation="vertical"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="64dp">
+                android:layout_marginBottom="@dimen/fab_outer_height">
 
                 <include layout="@layout/view_search_nearest_coordinates" />
 

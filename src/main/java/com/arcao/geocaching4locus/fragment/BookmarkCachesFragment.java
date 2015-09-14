@@ -25,6 +25,7 @@ import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.adapter.BookmarkCachesRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkCachesRetrieveTask;
+import com.arcao.geocaching4locus.widget.decorator.BottomMarginItemDecorator;
 import com.arcao.geocaching4locus.widget.decorator.DividerItemDecoration;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -104,7 +105,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 		recyclerView.setAdapter(adapter);
 		recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		recyclerView.addItemDecoration(
-				new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+						new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+		recyclerView.addItemDecoration(new BottomMarginItemDecorator(getActivity(), R.dimen.fab_outer_height));
 
 		setEmptyText("");
 		setListShown(adapter.getItemCount() > 0);

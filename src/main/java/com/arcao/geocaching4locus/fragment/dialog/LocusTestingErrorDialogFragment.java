@@ -10,7 +10,7 @@ public final class LocusTestingErrorDialogFragment extends AbstractErrorDialogFr
 
 	public static LocusTestingErrorDialogFragment newInstance(Context context) {
 		LocusTestingErrorDialogFragment fragment = new LocusTestingErrorDialogFragment();
-		fragment.prepareDialog(R.string.error_title, LocusUtils.isLocusAvailable(context) ? R.string.error_locus_old : R.string.error_locus_not_found, AppConstants.LOCUS_MIN_VERSION.toString());
+		fragment.prepareDialog(0, LocusUtils.isLocusAvailable(context) ? R.string.error_locus_old : R.string.error_locus_not_found, AppConstants.LOCUS_MIN_VERSION.toString());
 
 		return fragment;
 	}

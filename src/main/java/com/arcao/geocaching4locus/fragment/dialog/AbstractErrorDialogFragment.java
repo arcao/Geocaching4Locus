@@ -3,6 +3,8 @@ package com.arcao.geocaching4locus.fragment.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.SpannedFix;
@@ -13,7 +15,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	private static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
 	private static final String PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
 
-	protected void prepareDialog(int resTitle, int resErrorMessage, String additionalMessage) {
+	protected void prepareDialog(@StringRes int resTitle, @StringRes int resErrorMessage, @Nullable String additionalMessage) {
 		Bundle args = new Bundle();
 		args.putInt(PARAM_TITLE, resTitle);
 		args.putInt(PARAM_ERROR_MESSAGE, resErrorMessage);
@@ -37,16 +39,23 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Bundle args = getArguments();
 
-		return new MaterialDialog.Builder(getActivity())
-						.title(args.getInt(PARAM_TITLE))
-						.content(SpannedFix.fromHtml(getString(args.getInt(PARAM_ERROR_MESSAGE), StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE)))))
+		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+						.content(SpannedFix.fromHtml(getString(args.getInt(PARAM_ERROR_MESSAGE),
+								StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE)))))
 						.positiveText(R.string.ok_button)
 						.callback(new MaterialDialog.ButtonCallback() {
 							@Override
 							public void onPositive(MaterialDialog dialog) {
 								onPositiveButtonClick();
 							}
-						})
-						.build();
+						});
+
+
+		int title = args.getInt(PARAM_TITLE);
+		if (title != 0) {
+			builder.title(title);
+		}
+
+		return builder.build();
 	}
 }

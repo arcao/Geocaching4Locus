@@ -105,7 +105,6 @@ public class ExceptionHandler {
 				message = "";
 
 			return builder
-					.setTitle(R.string.error_title)
 					.setAdditionalMessage(
 							String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
 					.setException(t)

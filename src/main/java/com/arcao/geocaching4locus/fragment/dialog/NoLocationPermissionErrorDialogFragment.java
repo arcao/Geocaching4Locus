@@ -7,7 +7,7 @@ public class NoLocationPermissionErrorDialogFragment extends AbstractErrorDialog
 
 	public static NoLocationPermissionErrorDialogFragment newInstance() {
 		NoLocationPermissionErrorDialogFragment fragment = new NoLocationPermissionErrorDialogFragment();
-		fragment.prepareDialog(R.string.error_title, R.string.error_no_location_permission, null);
+		fragment.prepareDialog(0, R.string.error_no_location_permission, null);
 
 		return fragment;
 	}

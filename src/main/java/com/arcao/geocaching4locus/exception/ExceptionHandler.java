@@ -37,8 +37,8 @@ public class ExceptionHandler {
 		Intent nextAction = null;
 
 		if (t instanceof IntentedException) {
-			t = t.getCause();
 			nextAction = ((IntentedException) t).getIntent();
+			t = t.getCause();
 		}
 
 		// special handling for some API exceptions

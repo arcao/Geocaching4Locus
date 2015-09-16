@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.exception;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
-
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
@@ -19,9 +18,10 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
-
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
+import org.apache.commons.lang3.StringUtils;
 import org.scribe.exceptions.OAuthConnectionException;
-
 import timber.log.Timber;
 
 public class ExceptionHandler {
@@ -80,18 +80,22 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			return builder
-					.setText(R.string.error_network)
-					.build();
+			builder.setText(R.string.error_network);
+
+			// Allow sending error report for exceptions that not caused by timeout or unknown host
+			Throwable innerT = t.getCause();
+			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)) {
+				builder.setException(t);
+			}
+
+			return builder.build();
 		} else if (t instanceof NoResultFoundException) {
 			return builder
 					.setText(R.string.error_no_result)
 					.build();
 		} else if (t instanceof LocusMapRuntimeException) {
 			t = t.getCause();
-			String message = t.getMessage();
-			if (message == null)
-				message = "";
+			String message = StringUtils.defaultString(t.getMessage());
 
 			return builder
 					.setTitle(R.string.error_title_locus)
@@ -100,10 +104,7 @@ public class ExceptionHandler {
 					.setException(t)
 					.build();
 		} else {
-			String message = t.getMessage();
-			if (message == null)
-				message = "";
-
+			String message = StringUtils.defaultString(t.getMessage());
 			return builder
 					.setAdditionalMessage(
 							String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))

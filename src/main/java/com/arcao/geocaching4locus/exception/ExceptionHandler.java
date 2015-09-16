@@ -34,53 +34,60 @@ public class ExceptionHandler {
 	public Intent handle(Throwable t) {
 		Timber.e(t, t.getMessage());
 
-		Intent nextAction = null;
+		Intent positiveAction = null;
 
 		if (t instanceof IntentedException) {
-			nextAction = ((IntentedException) t).getIntent();
+			positiveAction = ((IntentedException) t).getIntent();
 			t = t.getCause();
 		}
 
 		// special handling for some API exceptions
 		if (t instanceof LiveGeocachingApiException) {
-			Intent intent = handleLiveGeocachingApiExceptions((LiveGeocachingApiException) t, nextAction);
+			Intent intent = handleLiveGeocachingApiExceptions((LiveGeocachingApiException) t, positiveAction);
 			if (intent != null)
 				return intent;
 		}
 
 		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
-		if (nextAction != null) {
-			builder.setNextAction(nextAction);
+		if (positiveAction != null) {
+			builder
+					.setPositiveAction(positiveAction)
+					.setPositiveButtonText(R.string.continue_button)
+					.setNegativeButtonText(R.string.cancel_button);
 		}
 
 		if (t instanceof InvalidCredentialsException) {
 			return builder
-					.setText(R.string.error_credentials)
-					.setNextAction(SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.setNextActionText(R.string.ok_button)
+					.setMessage(R.string.error_credentials)
+					.setPositiveAction(
+							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
+					.setPositiveButtonText(R.string.ok_button)
+					.setNegativeButtonText(0)
 					.build();
 		} else if (t instanceof InvalidSessionException ||
 						(t instanceof LiveGeocachingApiException && ((LiveGeocachingApiException) t).getStatusCode() == StatusCode.NotAuthorized)) {
 			App.get(mContext).getAuthenticatorHelper().removeAccount();
 			return builder
-					.setText(R.string.error_session_expired)
-					.setNextAction(SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.setNextActionText(R.string.ok_button)
+					.setMessage(R.string.error_session_expired)
+					.setPositiveAction(
+							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
+					.setPositiveButtonText(R.string.ok_button)
+					.setNegativeButtonText(0)
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.setText(R.string.error_invalid_api_response)
+					.setMessage(R.string.error_invalid_api_response)
 					.setAdditionalMessage(t.getMessage())
 					.setException(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
 			return builder
-					.setText(R.string.error_cache_not_found)
+					.setMessage(R.string.error_cache_not_found)
 					.setAdditionalMessage(((CacheNotFoundException) t).getCacheCode())
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.setText(R.string.error_network);
+			builder.setMessage(R.string.error_network);
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -91,7 +98,7 @@ public class ExceptionHandler {
 			return builder.build();
 		} else if (t instanceof NoResultFoundException) {
 			return builder
-					.setText(R.string.error_no_result)
+					.setMessage(R.string.error_no_result)
 					.build();
 		} else if (t instanceof LocusMapRuntimeException) {
 			t = t.getCause();
@@ -113,14 +120,15 @@ public class ExceptionHandler {
 		}
 	}
 
-	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent nextAction) {
+	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction) {
 		AccountRestrictions restrictions = App.get(mContext).getAuthenticatorHelper().getRestrictions();
+		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
 
-				int resTitle = (restrictions.isPremiumMember()) ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
-				int resText = (restrictions.isPremiumMember()) ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
+				int title = (restrictions.isPremiumMember()) ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
+				int message = (restrictions.isPremiumMember()) ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
 
 				// apply format on a text
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
@@ -135,22 +143,35 @@ public class ExceptionHandler {
 				}
 
 				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
-
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-				String errorText = mContext.getString(resText, cacheString, periodString, renewTime);
+				String errorText = mContext.getString(message, cacheString, periodString, renewTime);
 
-				return new ErrorActivity.IntentBuilder(mContext)
-						.setTitle(resTitle)
-						.setAdditionalMessage(errorText)
-						.setNextAction(nextAction)
-						.build();
+				builder
+						.setTitle(title)
+						.setAdditionalMessage(errorText);
+
+				if (positiveAction != null) {
+					builder
+							.setPositiveAction(positiveAction)
+							.setPositiveButtonText(R.string.continue_button)
+							.setNegativeButtonText(R.string.cancel_button);
+				}
+
+				return builder.build();
 
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
-				return new ErrorActivity.IntentBuilder(mContext)
+				builder
 						.setTitle(R.string.method_quota_exceeded_title)
-						.setText(R.string.method_quota_exceeded_message)
-						.setNextAction(nextAction)
-						.build();
+						.setMessage(R.string.method_quota_exceeded_message);
+
+				if (positiveAction != null) {
+					builder
+							.setPositiveAction(positiveAction)
+							.setPositiveButtonText(R.string.continue_button)
+							.setNegativeButtonText(R.string.cancel_button);
+				}
+
+				return builder.build();
 
 			case PremiumMembershipRequiredForBookmarksExcludeFilter:
 			case PremiumMembershipRequiredForDifficultyFilter:
@@ -162,9 +183,9 @@ public class ExceptionHandler {
 			case PremiumMembershipRequiredForTerrainFilter:
 			case PremiumMembershipRequiredForTrackableCountFilter:
 				restrictions.updateMemberType(MemberType.Basic);
-				return new ErrorActivity.IntentBuilder(mContext)
+				return builder
 						.setTitle(R.string.premium_member_warning_title)
-						.setText(R.string.premium_member_for_filter_required)
+						.setMessage(R.string.premium_member_for_filter_required)
 						.build();
 
 			default:

@@ -26,12 +26,13 @@ import org.apache.commons.lang3.builder.Builder;
 public class ErrorActivity extends AppCompatActivity {
 	private static final String PARAM_ARGUMENTS = "ARGS";
 
-	private static final String BUNDLE_RESOURCE_TITLE = "RESOURCE_TITLE";
-	private static final String BUNDLE_RESOURCE_TEXT = "RESOURCE_TEXT";
-	private static final String BUNDLE_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
-	private static final String BUNDLE_NEXT_ACTION = "NEXT_ACTION";
-	private static final String BUNDLE_NEXT_ACTION_TEXT = "NEXT_ACTION_TEXT";
-	private static final String BUNDLE_EXCEPTION = "EXCEPTION";
+	private static final String KEY_TITLE = "TITLE";
+	private static final String KEY_MESSAGE = "MESSAGE";
+	private static final String KEY_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
+	private static final String KEY_POSITIVE_ACTION = "POSITIVE_ACTION";
+	private static final String KEY_POSITIVE_BUTTON_TEXT = "POSITIVE_BUTTON_TEXT";
+	private static final String KEY_NEGATIVE_BUTTON_TEXT = "NEGATIVE_BUTTON_TEXT";
+	private static final String KEY_EXCEPTION = "EXCEPTION";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,33 +65,31 @@ public class ErrorActivity extends AppCompatActivity {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Bundle args = getArguments();
 
-			final int resTitleId = args.getInt(BUNDLE_RESOURCE_TITLE);
-			final int resTextId = args.getInt(BUNDLE_RESOURCE_TEXT);
-			final String additionalMessage = args.getString(BUNDLE_ADDITIONAL_MESSAGE);
-			final Intent nextAction = args.getParcelable(BUNDLE_NEXT_ACTION);
-			int resNextActionText = args.getInt(BUNDLE_NEXT_ACTION_TEXT);
-			final Throwable t = (Throwable) args.getSerializable(BUNDLE_EXCEPTION);
+			final int title = args.getInt(KEY_TITLE);
+			final int message = args.getInt(KEY_MESSAGE);
+			final String additionalMessage = args.getString(KEY_ADDITIONAL_MESSAGE);
+			final Intent positiveAction = args.getParcelable(KEY_POSITIVE_ACTION);
+			int positiveButtonText = args.getInt(KEY_POSITIVE_BUTTON_TEXT);
+			int negativeButtonText = args.getInt(KEY_NEGATIVE_BUTTON_TEXT);
+			final Throwable t = (Throwable) args.getSerializable(KEY_EXCEPTION);
 
-			if (resNextActionText == 0)
-				resNextActionText = R.string.continue_button;
 
 			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-					.positiveText(nextAction != null ? resNextActionText : R.string.ok_button);
+					.positiveText(positiveButtonText != 0 ? positiveButtonText : R.string.ok_button);
 
-			if (resTitleId != 0) {
-				builder.title(resTitleId);
+			if (title != 0) {
+				builder.title(title);
 			}
 
-			if (resTextId != 0) {
+			if (message != 0) {
 				builder.content(SpannedFix.fromHtml(
-						String.format(getString(resTextId), StringUtils.defaultString(additionalMessage))));
+						String.format(getString(message), StringUtils.defaultString(additionalMessage))));
 			} else {
 				builder.content(SpannedFix.fromHtml(StringUtils.defaultString(additionalMessage)));
 			}
 
-
-			if (nextAction != null) {
-				builder.negativeText(R.string.cancel_button);
+			if (negativeButtonText != 0) {
+				builder.negativeText(negativeButtonText);
 			}
 
 			builder.callback(new MaterialDialog.ButtonCallback() {
@@ -103,8 +102,8 @@ public class ErrorActivity extends AppCompatActivity {
 								.show();
 					}
 
-					if (nextAction != null) {
-						startActivity(nextAction);
+					if (positiveAction != null) {
+						startActivity(positiveAction);
 					}
 					getActivity().finish();
 				}
@@ -155,12 +154,12 @@ public class ErrorActivity extends AppCompatActivity {
 	public static class IntentBuilder implements Builder<Intent> {
 		private final Context context;
 		private int title = 0;
-		private int text = 0;
-		private String additionalMessage;
-		private Intent nextAction;
-		private int nextActionText;
-		private Throwable exception;
-
+		private int message = 0;
+		private String additionalMessage = null;
+		private Intent positiveAction = null;
+		private int positiveButtonText = 0;
+		private int negativeButtonText = 0;
+		private Throwable exception = null;
 
 		public IntentBuilder(@NonNull Context context) {
 			this.context = context;
@@ -171,8 +170,8 @@ public class ErrorActivity extends AppCompatActivity {
 			return this;
 		}
 
-		public IntentBuilder setText(@StringRes int text) {
-			this.text = text;
+		public IntentBuilder setMessage(@StringRes int message) {
+			this.message = message;
 			return this;
 		}
 
@@ -181,13 +180,18 @@ public class ErrorActivity extends AppCompatActivity {
 			return this;
 		}
 
-		public IntentBuilder setNextAction(@Nullable Intent nextAction) {
-			this.nextAction = nextAction;
+		public IntentBuilder setPositiveAction(@Nullable Intent positiveAction) {
+			this.positiveAction = positiveAction;
 			return this;
 		}
 
-		public IntentBuilder setNextActionText(@StringRes int nextActionText) {
-			this.nextActionText = nextActionText;
+		public IntentBuilder setPositiveButtonText(@StringRes int positiveButtonText) {
+			this.positiveButtonText = positiveButtonText;
+			return this;
+		}
+
+		public IntentBuilder setNegativeButtonText(@StringRes int negativeButtonText) {
+			this.negativeButtonText = negativeButtonText;
 			return this;
 		}
 
@@ -199,12 +203,13 @@ public class ErrorActivity extends AppCompatActivity {
 		@Override
 		public Intent build() {
 			Bundle args = new Bundle();
-			args.putInt(BUNDLE_RESOURCE_TITLE, title);
-			args.putInt(BUNDLE_RESOURCE_TEXT, text);
-			args.putCharSequence(BUNDLE_ADDITIONAL_MESSAGE, additionalMessage);
-			args.putParcelable(BUNDLE_NEXT_ACTION, nextAction);
-			args.putInt(BUNDLE_NEXT_ACTION_TEXT, nextActionText);
-			args.putSerializable(BUNDLE_EXCEPTION, exception);
+			args.putInt(KEY_TITLE, title);
+			args.putInt(KEY_MESSAGE, message);
+			args.putCharSequence(KEY_ADDITIONAL_MESSAGE, additionalMessage);
+			args.putParcelable(KEY_POSITIVE_ACTION, positiveAction);
+			args.putInt(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText);
+			args.putInt(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText);
+			args.putSerializable(KEY_EXCEPTION, exception);
 
 			return new Intent(context, ErrorActivity.class)
 					.putExtra(PARAM_ARGUMENTS, args);

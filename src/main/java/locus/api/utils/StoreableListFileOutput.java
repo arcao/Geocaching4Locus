@@ -17,6 +17,10 @@ public class StoreableListFileOutput implements Closeable {
 		this.mWriter = new DataFileWriterBigEndian(out);
 	}
 
+	public int getItemCount() {
+		return mCount;
+	}
+
 	public synchronized void beginList() throws IOException {
 		try {
 			if (mListOpened)
@@ -77,5 +81,4 @@ public class StoreableListFileOutput implements Closeable {
 			throw e.getCause();
 		}
 	}
-
 }

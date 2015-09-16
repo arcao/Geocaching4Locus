@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -30,11 +31,13 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
+import com.arcao.geocaching4locus.exception.IntentedException;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.util.ParcelFile;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.UserTask;
+import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -182,9 +185,11 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     } catch (InvalidSessionException e) {
       authenticatorHelper.invalidateAuthToken();
 
-      throw e;
+      throw handleException(e, fileOutput, dataFile);
     } catch (IOException e) {
-      throw new GeocachingApiException(e.getMessage(), e);
+      throw handleException(new GeocachingApiException(e.getMessage(), e), fileOutput, dataFile);
+    } catch (Exception e) {
+      throw handleException(e, fileOutput, dataFile);
     } finally {
       Utils.closeStream(fileOutput);
     }
@@ -198,6 +203,13 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     } else {
       throw new NoResultFoundException();
     }
+  }
+
+  private Exception handleException(@NonNull Exception e, @Nullable StoreableListFileOutput fileOutput, @Nullable File dataFile) {
+    if (fileOutput == null || dataFile == null || fileOutput.getItemCount() == 0)
+      return e;
+
+    return new IntentedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));
   }
 
   @Override

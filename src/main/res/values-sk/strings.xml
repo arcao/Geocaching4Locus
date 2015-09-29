@@ -175,9 +175,10 @@
     <string name="error_no_location_permission">Aplikácia nemá práva pristupovať k službe polohy.</string>
     <string name="action_import_all">Importovať všetko</string>
     <string name="premium_feature">Táto funkcia je len pre prémiové členov, prepáčte.</string>
-    <string name="continue_button">Pokračovať</string>
     <string name="error_title_locus">Chyba Locus Map</string>
     <string name="error_send_error_report">Odoslať chybové hlásenie</string>
     <string name="error_report_sent_toast">Ďakujeme za odoslanie chyby.</string>
-
+    <string name="error_continue_locus_map">Chcete pokračovať s čiastočne prijatými dátami do Locus Map?</string>
+    <string name="yes_button">Áno</string>
+    <string name="no_button">Nie</string>
 </resources>

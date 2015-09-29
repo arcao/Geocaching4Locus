@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/md_content_padding_top"
+        android:paddingBottom="@dimen/md_content_padding_bottom"
+        android:paddingLeft="@dimen/md_dialog_frame_margin"
+        android:paddingRight="@dimen/md_dialog_frame_margin">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/md_content_textsize"
+            android:textColor="?android:textColorSecondary"
+            android:textColorLink="?android:textColorPrimary"
+            android:lineSpacingMultiplier="1.2"
+            tools:text="Content\nc\nc\nc\nc\nc\nc\nc\nc\nc" />
+
+    </ScrollView>
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:text="@string/error_send_error_report"
+        android:textSize="@dimen/md_content_textsize"
+        android:textColor="?android:textColorSecondary"/>
+</LinearLayout>

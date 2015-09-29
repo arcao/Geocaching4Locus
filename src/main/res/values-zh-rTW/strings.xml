@@ -175,9 +175,10 @@
     <string name="error_no_location_permission">軟體沒有權限訪問定位服務</string>
     <string name="action_import_all">匯入全部</string>
     <string name="premium_feature">這項功能只提供給付費會員，抱歉</string>
-    
-    
-    
-    
-
+    <string name="error_title_locus">Locus 地圖異常</string>
+    <string name="error_send_error_report">發送異常報告</string>
+    <string name="error_report_sent_toast">感謝您發送這個異常報告</string>
+    <string name="error_continue_locus_map">您要在 Locus 地圖上使用未完整接收的資料嗎?</string>
+    <string name="yes_button">是</string>
+    <string name="no_button">否</string>
 </resources>

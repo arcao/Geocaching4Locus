@@ -175,9 +175,10 @@
     <string name="error_no_location_permission">App heeft geen toegang tot de locatie dienst.</string>
     <string name="action_import_all">Importeer alles</string>
     <string name="premium_feature">Deze optie is alleen voor Premium leden, sorry.</string>
+    <string name="error_title_locus">Locus Map fout</string>
+    <string name="error_send_error_report">Verstuur fout rapport</string>
+    <string name="error_report_sent_toast">Bedankt om de fout te melden.</string>
     
-    
-    
-    
-
+    <string name="yes_button">Ja</string>
+    <string name="no_button">Nee</string>
 </resources>

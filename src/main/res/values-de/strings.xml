@@ -111,7 +111,7 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="basic_member_full_geocaching_quota_exceeded">Sie haben das Limit zum Herunterladen der kompletten Informationen von &lt;b>%1$s pro %2$s Periode&lt;/b> erreicht. Ihre tägliche Anzahl wird reduziert auf %3$s.&lt;br>
 &lt;br>
 &lt;i>Erwerben Sie heute bei geocaching.com eine Premium-Mitgliedschaft, um neben anderen Vorteilen alle Informationen von bis zu 6000 Caches pro Tag herunterzuladen. Besuchen Sie geocaching.com zum Upgraden.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Sie haben das Download-Limit für Cache-Komplettinfos von &lt;b>6000 Caches pro 24 Stunden&lt;/b> erreicht. Ihr tägliches Limit ist jetzt %3$s.</string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Sie haben das Download-Limit für Cache-Komplettinfos von &lt;b>6000 Caches pro 24 Stunden&lt;/b> erreicht. Ihr tägliches Limit beträgt jetzt %3$s.</string>
     <string name="method_quota_exceeded_title">Langsamer!</string>
     <string name="method_quota_exceeded_message">Sie haben das Limit der maximalen Aktionen/Aufrufe pro Minute erreicht </string>
 
@@ -154,9 +154,9 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
 
     <string name="pref_download_logs_update_cache">Logs werden heruntergeladen und der Cache wird aktualisiert</string>
     <string name="pref_download_logs_update_cache_summary">Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
-    <string name="pref_downloading_count_of_caches_step">Caches in 1-er oder 10-er-Schritten herunterladen</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Auswahlmenü: Anzahl der heruntergeladenen Caches in 1er- oder 10er-Schritten</string>
-    <string name="premium_member_for_filter_required">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basis-Mitgliedschaft. Bitte noch einmal versuchen.</string>
+    <string name="pref_downloading_count_of_caches_step">Caches in Einer- oder Zehner-Schritten herunterladen</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Auswahlmenü: Anzahl der heruntergeladenen Caches in Einer- oder Zehner-Schritten</string>
+    <string name="premium_member_for_filter_required">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basic-Mitgliedschaft. Bitte noch einmal versuchen.</string>
 
     <string name="prefs_cat_account">Anmeldung</string>
     <string name="prefs_cat_filter">Filter</string>
@@ -169,16 +169,17 @@ Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktiv
     <string name="pref_live_map_download_hints_summary">Langsameres Laden und höherer Datenverbrauch</string>
     <string name="pref_feedback">Feedback senden</string>
     <string name="error_no_result">Keine der Suche entsprechenden Geocaches gefunden.</string>
-    <string name="error_session_expired">Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden sie automatisch abgemeldet. Bitte melden sie sich erneut an.</string>
+    <string name="error_session_expired">Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden Sie automatisch abgemeldet. Bitte melden Sie sich erneut an.</string>
     <string name="launcher_import_bookmarks">Lesezeichen importieren</string>
     <string name="menu_import_bookmarks">Lesezeichen importieren</string>
     <string name="import_caches_progress">Lade Caches…</string>
-    
+    <string name="error_no_location_permission">Diese App hat keine Rechte, auf lokale Dienste zuzugreifen.</string>
     <string name="action_import_all">Alle Import</string>
-    
-    <string name="continue_button">Fortsetzen</string>
+    <string name="premium_feature">Sorry, aber diese Funktion steht nur Premium Members zur Verfügung</string>
     <string name="error_title_locus">Locus Map Fehler</string>
     <string name="error_send_error_report">Fehlerbericht senden</string>
     <string name="error_report_sent_toast">Vielen Dank für Senden der Fehler.</string>
-
+    <string name="error_continue_locus_map">Möchtest Du mit nur teilweisem Datenempfang mit Locus Maps fortfahren?</string>
+    <string name="yes_button">Ja</string>
+    <string name="no_button">Nein</string>
 </resources>

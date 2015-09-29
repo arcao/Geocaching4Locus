@@ -18,11 +18,12 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
 import org.apache.commons.lang3.StringUtils;
 import org.scribe.exceptions.OAuthConnectionException;
 import timber.log.Timber;
+
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
 
 public class ExceptionHandler {
 	private final Context mContext;
@@ -35,15 +36,17 @@ public class ExceptionHandler {
 		Timber.e(t, t.getMessage());
 
 		Intent positiveAction = null;
+		String baseMessage = "%s";
 
 		if (t instanceof IntentedException) {
 			positiveAction = ((IntentedException) t).getIntent();
 			t = t.getCause();
+			baseMessage = "%s<br /><br />" + mContext.getString(R.string.error_continue_locus_map);
 		}
 
 		// special handling for some API exceptions
 		if (t instanceof LiveGeocachingApiException) {
-			Intent intent = handleLiveGeocachingApiExceptions((LiveGeocachingApiException) t, positiveAction);
+			Intent intent = handleLiveGeocachingApiExceptions((LiveGeocachingApiException) t, positiveAction, baseMessage);
 			if (intent != null)
 				return intent;
 		}
@@ -52,8 +55,8 @@ public class ExceptionHandler {
 		if (positiveAction != null) {
 			builder
 					.setPositiveAction(positiveAction)
-					.setPositiveButtonText(R.string.continue_button)
-					.setNegativeButtonText(R.string.cancel_button);
+					.setPositiveButtonText(R.string.yes_button)
+					.setNegativeButtonText(R.string.no_button);
 		}
 
 		if (t instanceof InvalidCredentialsException) {
@@ -76,18 +79,16 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.setMessage(R.string.error_invalid_api_response)
-					.setAdditionalMessage(t.getMessage())
+					.setMessage(baseMessage, mContext.getString(R.string.error_invalid_api_response, t.getMessage()))
 					.setException(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
 			return builder
-					.setMessage(R.string.error_cache_not_found)
-					.setAdditionalMessage(((CacheNotFoundException) t).getCacheCode())
+					.setMessage(R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode())
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.setMessage(R.string.error_network);
+			builder.setMessage(baseMessage, mContext.getString(R.string.error_network));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -106,21 +107,19 @@ public class ExceptionHandler {
 
 			return builder
 					.setTitle(R.string.error_title_locus)
-					.setAdditionalMessage(
-							String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.setMessage(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
 					.setException(t)
 					.build();
 		} else {
 			String message = StringUtils.defaultString(t.getMessage());
 			return builder
-					.setAdditionalMessage(
-							String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.setMessage(baseMessage, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
 					.setException(t)
 					.build();
 		}
 	}
 
-	protected Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction) {
+	private Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction, String baseMessage) {
 		AccountRestrictions restrictions = App.get(mContext).getAuthenticatorHelper().getRestrictions();
 		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 
@@ -147,14 +146,14 @@ public class ExceptionHandler {
 				String errorText = mContext.getString(message, cacheString, periodString, renewTime);
 
 				builder
-						.setTitle(title)
-						.setAdditionalMessage(errorText);
+							.setTitle(title)
+				      .setMessage(baseMessage, errorText);
 
 				if (positiveAction != null) {
 					builder
 							.setPositiveAction(positiveAction)
-							.setPositiveButtonText(R.string.continue_button)
-							.setNegativeButtonText(R.string.cancel_button);
+							.setPositiveButtonText(R.string.yes_button)
+							.setNegativeButtonText(R.string.no_button);
 				}
 
 				return builder.build();
@@ -162,13 +161,13 @@ public class ExceptionHandler {
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
 						.setTitle(R.string.method_quota_exceeded_title)
-						.setMessage(R.string.method_quota_exceeded_message);
+						.setMessage(baseMessage, mContext.getString(R.string.method_quota_exceeded_message));
 
 				if (positiveAction != null) {
 					builder
 							.setPositiveAction(positiveAction)
-							.setPositiveButtonText(R.string.continue_button)
-							.setNegativeButtonText(R.string.cancel_button);
+							.setPositiveButtonText(R.string.yes_button)
+							.setNegativeButtonText(R.string.no_button);
 				}
 
 				return builder.build();

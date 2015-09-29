@@ -12,6 +12,13 @@ public class SpannedFix {
 		return applyFix(Html.fromHtml(source));
 	}
 
+	public static CharSequence applyFix(@NonNull CharSequence source) {
+		if (source instanceof Spanned)
+			return applyFix((Spanned)source);
+
+		return source;
+	}
+
 	public static Spanned applyFix(@NonNull Spanned spanned) {
 		// this will fix crash only on API v16, other API versions are safe
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN)

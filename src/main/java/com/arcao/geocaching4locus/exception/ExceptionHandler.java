@@ -166,8 +166,8 @@ public class ExceptionHandler {
 				if (positiveAction != null) {
 					builder
 							.setPositiveAction(positiveAction)
-							.setPositiveButtonText(R.string.continue_button)
-							.setNegativeButtonText(R.string.cancel_button);
+							.setPositiveButtonText(R.string.yes_button)
+							.setNegativeButtonText(R.string.no_button);
 				}
 
 				return builder.build();

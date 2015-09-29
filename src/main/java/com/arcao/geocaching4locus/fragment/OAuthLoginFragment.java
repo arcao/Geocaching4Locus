@@ -16,7 +16,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.ErrorActivity;
 import com.arcao.geocaching4locus.R;
@@ -24,11 +23,10 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.task.OAuthLoginTask.TaskListener;
 import com.arcao.geocaching4locus.util.IntentUtil;
+import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
-
-import timber.log.Timber;
 
 public class OAuthLoginFragment extends Fragment implements TaskListener {
 	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
@@ -191,7 +189,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 
 			if (getActivity() != null)
-				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).setAdditionalMessage(description).build());
+				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).setMessage(description).build());
 		}
 
 		@Override

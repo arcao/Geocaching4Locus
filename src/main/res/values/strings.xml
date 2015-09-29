@@ -175,9 +175,10 @@
     <string name="error_no_location_permission">App does not have permission to access to location service.</string>
     <string name="action_import_all">Import all</string>
     <string name="premium_feature">This feature is for Premium members only, sorry.</string>
-    <string name="continue_button">Continue</string>
     <string name="error_title_locus">Locus Map error</string>
     <string name="error_send_error_report">Send error report</string>
     <string name="error_report_sent_toast">Thank you for sending the error.</string>
-
+    <string name="error_continue_locus_map">Do you want continue with a partially received data to Locus Map?</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
 </resources>

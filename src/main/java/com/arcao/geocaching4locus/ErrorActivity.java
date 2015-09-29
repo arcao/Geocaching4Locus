@@ -9,18 +9,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.text.Html;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.Checkable;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import com.crashlytics.android.Crashlytics;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
 
 public class ErrorActivity extends AppCompatActivity {
@@ -28,7 +28,6 @@ public class ErrorActivity extends AppCompatActivity {
 
 	private static final String KEY_TITLE = "TITLE";
 	private static final String KEY_MESSAGE = "MESSAGE";
-	private static final String KEY_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE";
 	private static final String KEY_POSITIVE_ACTION = "POSITIVE_ACTION";
 	private static final String KEY_POSITIVE_BUTTON_TEXT = "POSITIVE_BUTTON_TEXT";
 	private static final String KEY_NEGATIVE_BUTTON_TEXT = "NEGATIVE_BUTTON_TEXT";
@@ -65,9 +64,8 @@ public class ErrorActivity extends AppCompatActivity {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Bundle args = getArguments();
 
-			final int title = args.getInt(KEY_TITLE);
-			final int message = args.getInt(KEY_MESSAGE);
-			final String additionalMessage = args.getString(KEY_ADDITIONAL_MESSAGE);
+			final CharSequence title = args.getCharSequence(KEY_TITLE);
+			final CharSequence message = args.getCharSequence(KEY_MESSAGE);
 			final Intent positiveAction = args.getParcelable(KEY_POSITIVE_ACTION);
 			int positiveButtonText = args.getInt(KEY_POSITIVE_BUTTON_TEXT);
 			int negativeButtonText = args.getInt(KEY_NEGATIVE_BUTTON_TEXT);
@@ -77,16 +75,11 @@ public class ErrorActivity extends AppCompatActivity {
 			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
 					.positiveText(positiveButtonText != 0 ? positiveButtonText : R.string.ok_button);
 
-			if (title != 0) {
+			if (!TextUtils.isEmpty(title)) {
 				builder.title(title);
 			}
 
-			if (message != 0) {
-				builder.content(SpannedFix.fromHtml(
-						String.format(getString(message), StringUtils.defaultString(additionalMessage))));
-			} else {
-				builder.content(SpannedFix.fromHtml(StringUtils.defaultString(additionalMessage)));
-			}
+			builder.customView(R.layout.dialog_error, false);
 
 			if (negativeButtonText != 0) {
 				builder.negativeText(negativeButtonText);
@@ -95,11 +88,13 @@ public class ErrorActivity extends AppCompatActivity {
 			builder.callback(new MaterialDialog.ButtonCallback() {
 				@Override
 				public void onPositive(MaterialDialog dialog) {
-					final CheckBox checkBox = (CheckBox) dialog.getView().findViewById(R.id.checkbox);
-					if (checkBox != null && checkBox.isChecked()) {
-						Crashlytics.logException(t);
-						Toast.makeText(dialog.getContext(), R.string.error_report_sent_toast, Toast.LENGTH_LONG)
-								.show();
+					if (dialog.getCustomView() != null) {
+						final Checkable checkBox = (Checkable) dialog.getCustomView().findViewById(R.id.checkbox);
+						if (checkBox != null && checkBox.isChecked()) {
+							Crashlytics.logException(t);
+							Toast.makeText(dialog.getContext(), R.string.error_report_sent_toast, Toast.LENGTH_LONG)
+											.show();
+						}
 					}
 
 					if (positiveAction != null) {
@@ -115,36 +110,27 @@ public class ErrorActivity extends AppCompatActivity {
 			});
 
 			final MaterialDialog dialog = builder.build();
+			View rootView = dialog.getCustomView();
+			if (rootView != null) {
+				TextView content = (TextView) rootView.findViewById(R.id.content);
+				CheckBox checkBox = (CheckBox) rootView.findViewById(R.id.checkbox);
 
-			if (t != null) {
-				ViewGroup rootLayout = (ViewGroup) dialog.getView();
-				ScrollView scrollView =
-						(ScrollView) rootLayout.findViewById(
-								com.afollestad.materialdialogs.R.id.contentScrollView);
-
-				View[] innerViews = new View[scrollView.getChildCount()];
-				for (int i = 0; i < innerViews.length; i++) {
-					innerViews[i] = scrollView.getChildAt(i);
-				}
-				scrollView.removeAllViews();
-
-				LinearLayout layout = new LinearLayout(dialog.getContext());
-				layout.setOrientation(LinearLayout.VERTICAL);
-
-				for (View innerView : innerViews) {
-					layout.addView(innerView);
+				// add paddingTop for untitled dialogs
+				if (TextUtils.isEmpty(title)) {
+					rootView.setPadding(0, dialog.getContext().getResources()
+									.getDimensionPixelSize(com.afollestad.materialdialogs.R.dimen.md_notitle_vertical_padding), 0, 0);
 				}
 
-				CheckBox checkBox = (CheckBox) LayoutInflater.from(dialog.getContext()).inflate(R.layout.dialog_error_checkbox, layout, false);
-				if (dialog.getContentView() != null) {
-					// fix for text color
-					checkBox.setTextColor(dialog.getContentView().getTextColors());
+				if (content != null && !TextUtils.isEmpty(message)) {
+					dialog.setTypeface(content, builder.getRegularFont());
+					content.setMovementMethod(new LinkMovementMethod());
+					content.setText(SpannedFix.applyFix(message));
 				}
-				layout.addView(checkBox);
 
-				scrollView.addView(layout,
-						new LinearLayout.LayoutParams(
-								ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+				if (checkBox != null) {
+					dialog.setTypeface(checkBox, builder.getRegularFont());
+					checkBox.setVisibility(t != null ? View.VISIBLE : View.GONE);
+				}
 			}
 
 			return dialog;
@@ -153,9 +139,8 @@ public class ErrorActivity extends AppCompatActivity {
 
 	public static class IntentBuilder implements Builder<Intent> {
 		private final Context context;
-		private int title = 0;
-		private int message = 0;
-		private String additionalMessage = null;
+		private CharSequence title = null;
+		private CharSequence message = null;
 		private Intent positiveAction = null;
 		private int positiveButtonText = 0;
 		private int negativeButtonText = 0;
@@ -166,17 +151,17 @@ public class ErrorActivity extends AppCompatActivity {
 		}
 
 		public IntentBuilder setTitle(@StringRes int resTitle) {
-			this.title = resTitle;
+			this.title = context.getString(resTitle);
 			return this;
 		}
 
-		public IntentBuilder setMessage(@StringRes int message) {
-			this.message = message;
+		public IntentBuilder setMessage(@StringRes int message, Object... params) {
+			this.message = Html.fromHtml(context.getString(message, params));
 			return this;
 		}
 
-		public IntentBuilder setAdditionalMessage(@Nullable String additionalMessage) {
-			this.additionalMessage = additionalMessage;
+		public IntentBuilder setMessage(String message, Object... params) {
+			this.message = Html.fromHtml(String.format(message, params));
 			return this;
 		}
 
@@ -203,9 +188,8 @@ public class ErrorActivity extends AppCompatActivity {
 		@Override
 		public Intent build() {
 			Bundle args = new Bundle();
-			args.putInt(KEY_TITLE, title);
-			args.putInt(KEY_MESSAGE, message);
-			args.putCharSequence(KEY_ADDITIONAL_MESSAGE, additionalMessage);
+			args.putCharSequence(KEY_TITLE, title);
+			args.putCharSequence(KEY_MESSAGE, message);
 			args.putParcelable(KEY_POSITIVE_ACTION, positiveAction);
 			args.putInt(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText);
 			args.putInt(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText);

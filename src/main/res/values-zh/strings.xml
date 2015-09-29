@@ -179,5 +179,6 @@
     
     
     
-
+    <string name="yes_button">是</string>
+    <string name="no_button">否</string>
 </resources>

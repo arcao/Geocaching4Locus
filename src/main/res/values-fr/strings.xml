@@ -3,7 +3,7 @@
            tools:locale="en">
     <string name="downloading">Téléchargement des caches…</string>
     <string name="error_locus_not_found">Merci d\'installer Locus</string>
-    <string name="error_location">Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
+    <string name="error_location">Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
     <string name="acquiring_gps_location">En cours de localisation par GPS…</string>
     <string name="acquiring_network_location">En cours de localisation par le réseau </string>
     
@@ -153,8 +153,8 @@
 
     <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
     <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
-    
-    
+    <string name="pref_downloading_count_of_caches_step">Echelle de comptage du nombre de caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Boite de dialogue de changement de l\'echelle de comptage du nombre de caches</string>
     <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez…</string>
 
     <string name="prefs_cat_account">Compte</string>
@@ -169,15 +169,16 @@
     <string name="pref_feedback">Donnez votre avis</string>
     <string name="error_no_result">Impossible de trouver des caches correspondantes à vos critères</string>
     <string name="error_session_expired">A cause d\'une longue inactivité (plus de 90 jours) vous avez été déconnecté. Merci de vous identifier à nouveau.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
+    <string name="launcher_import_bookmarks">Importer les signets</string>
+    <string name="menu_import_bookmarks">Importer les signets</string>
+    <string name="import_caches_progress">Télécharger les caches</string>
+    <string name="error_no_location_permission">L\'appli n\'a pas les permissions pour accéder à la localisation</string>
+    <string name="action_import_all">Tout importer</string>
+    <string name="premium_feature">Cette possibilité est réservée aux membres premium, désolé.</string>
+    <string name="error_title_locus">Erreur de Locus Map</string>
+    <string name="error_send_error_report">Envoyer un rapport d\'erreur</string>
+    <string name="error_report_sent_toast">Merci d\'avoir envoyé le rapport d\'erreur.</string>
+    <string name="error_continue_locus_map">Souhaitez-vous continuer avec un téléchargement partiel des données vers Locus Map?</string>
+    <string name="yes_button">Oui</string>
+    <string name="no_button">Non</string>
 </resources>

@@ -144,40 +144,41 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    
-    
+    <string name="pref_livemap_show_disabled_notification">Onemogućene obavijesti</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Pokaži obavijesti kad je Karta uživo onemogućena. Ovo radi isključivo ako su omogućena periodička ažuriranja u Locusu i Locus je pokrenut.</string>
     <string name="pref_cache_type_all">Sve</string>
-    
-    
-    
+    <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Preuzimam zapisnike....</string>
+    <string name="launcher_download_logs">Preuzmi zapisnike</string>
 
-    
-    
-    
-    
-    
+    <string name="pref_download_logs_update_cache">Preuzmi zapisnike, ažuriraj pričuvnu memoriju</string>
+    <string name="pref_download_logs_update_cache_summary">Radnja "Preuzmi zapisnike" također ažurira geocache podatke</string>
+    <string name="pref_downloading_count_of_caches_step">Korak preskoka za broj cacheova</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Promjeni korak preskoka za broj cacheova</string>
+    <string name="premium_member_for_filter_required">Neki filtri zahtjevaju premium račun kojeg nemate. Aplikacija će se sada prebaciti na osnovni način korištenja. Molimo, pokušajte ponovno.</string>
 
-    
+    <string name="prefs_cat_account">Račun</string>
     <string name="prefs_cat_filter">Filter</string>
     <string name="prefs_cat_live_map">Živa mapa</string>
     <string name="prefs_cat_downloading">Preuzimam</string>
     <string name="prefs_cat_advanced">Napredno</string>
     <string name="prefs_cat_about">O</string>
     <string name="login_title">Prijavi se.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
+    <string name="pref_live_map_download_hints">Preuzmi savjete</string>
+    <string name="pref_live_map_download_hints_summary">Sporije učitavanj i više opterećuje mobilni promet</string>
+    <string name="pref_feedback">Pošaljite povratnu informaciju</string>
+    <string name="error_no_result">Ne mogu pronaći nijedan geocache po vašem traženju..</string>
+    <string name="error_session_expired">Zbog dugog razdoblja neaktivnosti (90 dana), odjavljeni ste. Molimo, prijavite se ponovno.</string>
+    <string name="launcher_import_bookmarks">Uvezite oznake</string>
+    <string name="menu_import_bookmarks">Uvezite oznake</string>
+    <string name="import_caches_progress">Preuzimam caheove...</string>
+    <string name="error_no_location_permission">Aplikacija nema dopuštenje da pristupi usluzi lociranja.</string>
+    <string name="action_import_all">Uvezi sve</string>
+    <string name="premium_feature">Žao nam je, ali ova odlika je samo za Premium članove.</string>
+    <string name="error_title_locus">Locus Map greška</string>
+    <string name="error_send_error_report">Pošalji izvješće o greški</string>
+    <string name="error_report_sent_toast">Hvala Vam što ste poslali grešku.</string>
+    <string name="error_continue_locus_map">Želite li nastaviti s djelomično primljenim podacima ka Locus Map?</string>
+    <string name="yes_button">Da</string>
+    <string name="no_button">Ne</string>
 </resources>

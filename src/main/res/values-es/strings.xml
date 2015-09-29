@@ -179,5 +179,6 @@
     
     
     
-
+    <string name="yes_button">Si</string>
+    <string name="no_button">No</string>
 </resources>

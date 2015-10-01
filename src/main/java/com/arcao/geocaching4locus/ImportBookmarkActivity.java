@@ -75,7 +75,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   public void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll) {
     if (selectAll) {
       AnalyticsUtil.actionImportBookmarks(bookmarkList.getItemCount(), true);
-      BookmarkImportDialogFragment.newInstance(bookmarkList.getGuid()).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
+      BookmarkImportDialogFragment.newInstance(bookmarkList).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
     } else {
       showBookmarkCaches(bookmarkList);
     }

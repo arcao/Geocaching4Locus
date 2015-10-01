@@ -6,30 +6,34 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.BookmarkImportTask;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.ref.WeakReference;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class BookmarkImportDialogFragment extends AbstractDialogFragment implements BookmarkImportTask.TaskListener {
 	public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
 
 	private static final String PARAM_GUID = "GUID";
+	private static final String PARAM_COUNT = "COUNT";
 	private static final String PARAM_GEOCACHE_CODES = "GEOCACHE_CODES";
 
 	public interface DialogListener {
 		void onImportFinished(Intent errorIntent);
 	}
 
-	private BookmarkImportTask mTask;
+	@Nullable private BookmarkImportTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
+	private int mCount;
 
-	public static BookmarkImportDialogFragment newInstance(String guid) {
+	public static BookmarkImportDialogFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
-		args.putString(PARAM_GUID, guid);
+		args.putString(PARAM_GUID, bookmarkList.getGuid());
+		args.putInt(PARAM_COUNT, bookmarkList.getItemCount());
 
 		BookmarkImportDialogFragment fragment = new BookmarkImportDialogFragment();
 		fragment.setArguments(args);
@@ -40,14 +44,14 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 	public static BookmarkImportDialogFragment newInstance(String[] geocacheCodes) {
 		Bundle args = new Bundle();
 		args.putStringArray(PARAM_GEOCACHE_CODES, geocacheCodes);
+		args.putInt(PARAM_COUNT, geocacheCodes.length);
 
 		BookmarkImportDialogFragment fragment = new BookmarkImportDialogFragment();
 		fragment.setArguments(args);
 
 		return fragment;
 	}
-
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,8 +59,12 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		setRetainInstance(true);
 		setCancelable(false);
 
-		String guid = getArguments().getString(PARAM_GUID);
-		String[] values = guid != null ? ArrayUtils.toArray(guid) : getArguments().getStringArray(PARAM_GEOCACHE_CODES);
+		Bundle args = getArguments();
+
+		String guid = args.getString(PARAM_GUID);
+		mCount = args.getInt(PARAM_COUNT);
+
+		String[] values = guid != null ? ArrayUtils.toArray(guid) : args.getStringArray(PARAM_GEOCACHE_CODES);
 
 		mTask = new BookmarkImportTask(getActivity(), this);
 		mTask.execute(values);
@@ -92,7 +100,6 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		}
 	}
 
-
 	@Override
 	public void onTaskFinished(boolean success) {
 		dismiss();
@@ -118,7 +125,7 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 		return new MaterialDialog.Builder(getActivity())
 						.content(R.string.import_caches_progress)
 						.negativeText(R.string.cancel_button)
-						.progress(false, 0)
+						.progress(false, mCount, true)
 						.build();
 	}
 }

@@ -172,10 +172,10 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       @Override
       public void onClick(View v) {
         int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
-            AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
+                AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
         SliderDialogFragment fragment =
-            SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0, step, max,
-                count, step);
+                SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0, step, max,
+                        count, step);
         fragment.show(getFragmentManager(), "COUNTER");
       }
     });
@@ -201,12 +201,24 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
   @OnClick(R.id.gps)
   public void onGpsClick() {
+    mHasCoordinates = true;
     if (mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-      ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION);
+      if (PermissionUtil.hasPermission(this, PermissionUtil.PERMISSION_LOCATION_GPS)) {
+        requestLocation();
+      } else {
+        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION);
+      }
     } else {
-      ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI,
-          REQUEST_LOCATION_PERMISSION);
+      if (PermissionUtil.hasPermission(this, PermissionUtil.PERMISSION_LOCATION_WIFI)) {
+        requestLocation();
+      } else {
+        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI, REQUEST_LOCATION_PERMISSION);
+      }
     }
+  }
+
+  private void requestLocation() {
+    LocationUpdateDialogFragment.newInstance().show(getFragmentManager(), LocationUpdateDialogFragment.FRAGMENT_TAG);
   }
 
   @OnClick(R.id.filter)
@@ -241,7 +253,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count);
 
     DownloadNearestDialogFragment.newInstance(mLatitude, mLongitude, count).show(
-        getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
+            getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
   }
 
   private void showError(int errorResId, String additionalMessage) {
@@ -298,7 +310,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     if (requestCode == REQUEST_LOCATION_PERMISSION) {
       if (PermissionUtil.verifyPermissions(grantResults)) {
-        LocationUpdateDialogFragment.newInstance().show(getFragmentManager(), LocationUpdateDialogFragment.FRAGMENT_TAG);
+        requestLocation();
       } else {
         NoLocationPermissionErrorDialogFragment.newInstance().show(getFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
       }

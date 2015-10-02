@@ -28,6 +28,8 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 	protected void preparePreference() {
 		final Preference versionPreference = findPreference(ABOUT_VERSION, Preference.class);
 		final Preference websitePreference = findPreference(ABOUT_WEBSITE, Preference.class);
+		final Preference facebookPreference = findPreference(ABOUT_FACEBOOK, Preference.class);
+		final Preference gplusPreference = findPreference(ABOUT_GPLUS, Preference.class);
 		final Preference feedbackPreference = findPreference(ABOUT_FEEDBACK, Preference.class);
 		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
 
@@ -38,6 +40,24 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				IntentUtil.showWebPage(getActivity(), AppConstants.WEBSITE_URI);
+				return true;
+			}
+		});
+
+		facebookPreference.setSummary(AppConstants.FACEBOOK_URI.toString());
+		facebookPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				IntentUtil.showWebPage(getActivity(), AppConstants.FACEBOOK_URI);
+				return true;
+			}
+		});
+
+		gplusPreference.setSummary(AppConstants.GPLUS_URI.toString());
+		gplusPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				IntentUtil.showWebPage(getActivity(), AppConstants.GPLUS_URI);
 				return true;
 			}
 		});

@@ -47,6 +47,8 @@ public interface PrefConstants {
 
 	String ABOUT_VERSION = "about_version";
 	String ABOUT_WEBSITE = "about_website";
+	String ABOUT_FACEBOOK = "about_facebook";
+	String ABOUT_GPLUS = "about_gplus";
 	String ABOUT_FEEDBACK = "about_feedback";
 	String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
 	String ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live";

@@ -4,6 +4,7 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 import com.google.gson.stream.MalformedJsonException;
+import org.apache.commons.io.IOUtils;
 import timber.log.Timber;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.zip.InflaterInputStream;
 
 public class WherigoServiceImpl implements WherigoService {
 	private static final String BASE_URL = "http://wherigo-service.appspot.com/api/";
+	public static final int TIMEOUT_MILLIS = 30000;
+	public static final int HTTP_400 = 400;
 
 	@Override
 	public String getCacheCodeFromGuid(String cacheGuid) throws WherigoServiceException {
@@ -81,7 +84,7 @@ public class WherigoServiceImpl implements WherigoService {
 	}
 
 	private JsonReader callGet(String function) throws WherigoServiceException {
-		InputStream is;
+		InputStream is = null;
 		InputStreamReader isr;
 
 		Timber.i("Getting " + maskParameterValues(function));
@@ -91,8 +94,8 @@ public class WherigoServiceImpl implements WherigoService {
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
 			// important! sometimes GC API takes too long to return response
-			con.setConnectTimeout(30000);
-			con.setReadTimeout(30000);
+			con.setConnectTimeout(TIMEOUT_MILLIS);
+			con.setReadTimeout(TIMEOUT_MILLIS);
 
 			con.setRequestMethod("GET");
 			//con.setRequestProperty("User-Agent", "Geocaching/4.0 CFNetwork/459 Darwin/10.0.0d3");
@@ -100,7 +103,7 @@ public class WherigoServiceImpl implements WherigoService {
 			con.setRequestProperty("Accept-Language", "en-US");
 			con.setRequestProperty("Accept-Encoding", "gzip, deflate");
 
-			if (con.getResponseCode() >= 400) {
+			if (con.getResponseCode() >= HTTP_400) {
 				is = con.getErrorStream();
 			} else {
 				is = con.getInputStream();
@@ -118,26 +121,21 @@ public class WherigoServiceImpl implements WherigoService {
 				Timber.i("callGet(): WITHOUT COMPRESSION");
 			}
 
-			if (con.getResponseCode() >= 400) {
-				isr = new InputStreamReader(is, "UTF-8");
-
-				StringBuilder sb = new StringBuilder();
-				char buffer[] = new char[1024];
-				int len;
-
-				while ((len = isr.read(buffer)) != -1) {
-					sb.append(buffer, 0, len);
+			if (con.getResponseCode() >= HTTP_400) {
+				try {
+					String content = IOUtils.toString(is, "UTF-8");
+					// read error response
+					throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, content);
+				} finally {
+					IOUtils.closeQuietly(is);
 				}
-
-				isr.close();
-
-				// read error response
-				throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, sb.toString());
 			}
 
 			isr = new InputStreamReader(is, "UTF-8");
 			return new JsonReader(isr);
 		} catch (Exception e) {
+			IOUtils.closeQuietly(is);
+
 			Timber.e(e, e.toString());
 			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getClass().getSimpleName(), e);
 		}

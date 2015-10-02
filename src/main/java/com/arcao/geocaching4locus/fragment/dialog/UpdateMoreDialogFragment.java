@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateMoreTask;
 import com.arcao.geocaching4locus.task.UpdateMoreTask.TaskListener;
-import java.lang.ref.WeakReference;
 import org.apache.commons.lang3.ArrayUtils;
+
+import java.lang.ref.WeakReference;
 
 public final class UpdateMoreDialogFragment extends AbstractDialogFragment implements TaskListener {
 	public static final String FRAGMENT_TAG = UpdateMoreDialogFragment.class.getName();
@@ -21,7 +23,7 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		void onUpdateFinished(boolean success);
 	}
 
-	private UpdateMoreTask mTask;
+	@Nullable private UpdateMoreTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {

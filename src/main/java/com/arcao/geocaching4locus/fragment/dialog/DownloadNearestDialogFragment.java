@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.DownloadNearestTask;
@@ -24,7 +25,7 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
     void onDownloadError(Intent errorIntent);
   }
 
-  private DownloadNearestTask mTask;
+  @Nullable private DownloadNearestTask mTask;
   private WeakReference<DialogListener> mDialogListenerRef;
 
   public static DownloadNearestDialogFragment newInstance(double latitude, double longitude, int count) {

@@ -8,6 +8,7 @@ public class ReverseListIterator<T> implements Iterator<T>, Iterable<T> {
 	private int position;
 
 	public ReverseListIterator(List<T> list) {
+		//noinspection AssignmentToCollectionOrArrayFieldFromParameter
 		this.list = list;
 		this.position = list.size() - 1;
 	}
@@ -24,6 +25,7 @@ public class ReverseListIterator<T> implements Iterator<T>, Iterable<T> {
 
 	@Override
 	public T next() {
+		//noinspection ValueOfIncrementOrDecrementUsed
 		return list.get(position--);
 	}
 

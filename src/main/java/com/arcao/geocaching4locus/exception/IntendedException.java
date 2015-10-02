@@ -4,11 +4,11 @@ import android.content.Intent;
 import com.arcao.geocaching4locus.util.ParcelableUtil;
 import java.io.IOException;
 
-public class IntentedException extends Exception {
+public class IntendedException extends Exception {
   private static final long serialVersionUID = -6278705769679870918L;
   private transient Intent intent;
 
-  public IntentedException(Throwable throwable, Intent intent) {
+  public IntendedException(Throwable throwable, Intent intent) {
     super(throwable);
     this.intent = intent;
   }

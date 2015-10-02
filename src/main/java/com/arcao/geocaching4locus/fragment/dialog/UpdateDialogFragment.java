@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.UpdateTask;
@@ -23,7 +24,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		void onUpdateFinished(Intent result);
 	}
 
-	private UpdateTask mTask;
+	@Nullable private UpdateTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {

@@ -106,7 +106,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 		ButterKnife.bind(this, dialog.getCustomView());
 
-		mEditText.setText("GC");
+		mEditText.setText(R.string.prefix_gc);
 		mEditText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -135,7 +135,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		return dialog;
 	}
 
-	private boolean validateInput(EditText editText) {
+	private static boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 
 		if (StringUtils.isEmpty(value)) {

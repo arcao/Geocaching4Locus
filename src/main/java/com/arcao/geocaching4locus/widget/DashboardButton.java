@@ -9,7 +9,10 @@ import android.widget.ToggleButton;
 import com.arcao.geocaching4locus.R;
 
 public class DashboardButton extends ToggleButton {
-	private boolean mToggleable = false;
+	private static final float ALPHA_DISABLED = 0.38f;
+	private static final float ALPHA_ENABLED = 1F;
+
+	private final boolean mToggleable;
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public DashboardButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -55,6 +58,6 @@ public class DashboardButton extends ToggleButton {
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 
-		setAlpha(enabled ? 1 : 0.38f);
+		setAlpha(enabled ? ALPHA_ENABLED : ALPHA_DISABLED);
 	}
 }

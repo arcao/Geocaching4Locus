@@ -118,6 +118,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_BOOKMARKS)) {
+			//noinspection unchecked
 			mBookmarkList = (ArrayList<Bookmark>) savedInstanceState.getSerializable(STATE_BOOKMARKS);
 		}
 

@@ -19,10 +19,6 @@
          <attr name="icon" />
     </declare-styleable>
 
-    <declare-styleable name="FragmentPreference">
-        <attr name="fragmentName" format="string" />
-    </declare-styleable>
-
     <declare-styleable name="DashboardButton">
         <attr name="toggleable" format="boolean" />
     </declare-styleable>

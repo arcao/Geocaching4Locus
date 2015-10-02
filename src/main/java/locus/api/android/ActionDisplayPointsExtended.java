@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import locus.api.android.objects.PackWaypoints;
+import android.support.annotation.Nullable;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import timber.log.Timber;
@@ -15,17 +15,6 @@ import java.io.IOException;
 
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	private static final String LOCUS_CACHE_FILENAME = "data.locus";
-
-	public static boolean sendPack(Context context, PackWaypoints data, boolean callImport, boolean center, int intentFlags)
-			throws RequiredVersionMissingException {
-		if (data == null)
-			return false;
-		Intent intent = new Intent();
-		intent.addFlags(intentFlags);
-		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_DATA,
-				data.getAsBytes());
-		return sendData(LocusConst.ACTION_DISPLAY_DATA, context, intent, callImport, center);
-	}
 
 	public static boolean sendPacksFile(Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
 		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center,
@@ -43,6 +32,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 		return sendData(action, context, intent, callImport, center);
 	}
 
+	@Nullable
 	public static Intent createSendPacksIntent(File file, boolean callImport, boolean center) {
 		if (!file.exists())
 			return null;

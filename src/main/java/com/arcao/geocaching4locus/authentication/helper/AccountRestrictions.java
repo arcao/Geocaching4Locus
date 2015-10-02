@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.authentication.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-
 import com.arcao.geocaching.api.data.GeocacheLimits;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.data.apilimits.CacheLimit;
@@ -13,10 +12,9 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class AccountRestrictions {
-	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = TimeUnit.DAYS.toSeconds(365);
+	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 31536000; // Year in seconds
 
 	private final SharedPreferences mPrefs;
 
@@ -137,16 +135,6 @@ public class AccountRestrictions {
 
 	public long getFullGeocacheLimitPeriod() {
 		return fullGeocacheLimitPeriod;
-	}
-
-	public long getFullGeocacheLimitLeft() {
-		checkRenewPeriod();
-
-		return Math.max(0, maxFullGeocacheLimit - currentFullGeocacheLimit);
-	}
-
-	public boolean isFullGeocachesLimitWarningRequired() {
-		return !premiumMember && getFullGeocacheLimitLeft() > 0;
 	}
 
 	protected void checkRenewPeriod() {

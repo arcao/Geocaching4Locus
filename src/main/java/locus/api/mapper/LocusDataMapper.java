@@ -1,57 +1,36 @@
 package locus.api.mapper;
 
 import android.content.Context;
-
-import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.data.GeocacheLog;
-import com.arcao.geocaching.api.data.ImageData;
-import com.arcao.geocaching.api.data.Trackable;
-import com.arcao.geocaching.api.data.User;
-import com.arcao.geocaching.api.data.UserWaypoint;
+import com.arcao.geocaching.api.data.*;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.AttributeType;
-import com.arcao.geocaching.api.data.type.ContainerType;
-import com.arcao.geocaching.api.data.type.GeocacheLogType;
-import com.arcao.geocaching.api.data.type.GeocacheType;
-import com.arcao.geocaching.api.data.type.WaypointType;
+import com.arcao.geocaching.api.data.type.*;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.*;
 import org.apache.commons.lang3.StringUtils;
+import timber.log.Timber;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import locus.api.objects.extra.ExtraData;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.GeocachingAttribute;
-import locus.api.objects.geocaching.GeocachingData;
-import locus.api.objects.geocaching.GeocachingImage;
-import locus.api.objects.geocaching.GeocachingLog;
-import locus.api.objects.geocaching.GeocachingTrackable;
-import locus.api.objects.geocaching.GeocachingWaypoint;
-import timber.log.Timber;
 
 public class LocusDataMapper {
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 	private static final String GSAK_USERNAME = "gsak";
 	private static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
-	private static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]l", Pattern.CASE_INSENSITIVE);
+	private static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]+[l|ł]", Pattern.CASE_INSENSITIVE);
 	private static final String GEOCACHE_GUID_LINK_PREFIX = "http://www.geocaching.com/seek/cache_details.aspx?guid=";
+
+	private static final Pattern NOTE__COORDINATE_PATTERN = Pattern.compile("\\b[nNsS]\\s*\\d"); // begin of coordinates
+	private static final Pattern NOTE__NAME_PATTERN = Pattern.compile("^(.+):\\s*\\z");
+	private static final long WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0");
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
@@ -248,7 +227,7 @@ public class LocusDataMapper {
 		return t;
 	}
 
-	public static Waypoint addCacheLogs(Waypoint to, Collection<GeocacheLog> logs) {
+	public static Waypoint addCacheLogs(Waypoint to, Iterable<GeocacheLog> logs) {
 		if (to == null || to.gcData == null)
 			return to;
 
@@ -411,22 +390,18 @@ public class LocusDataMapper {
 	}
 
 	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromNote(Context context, String note, String cacheCode) {
-		List<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
+		Collection<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
 		if (StringUtils.isBlank(note)) {
 			return res;
 		}
-
-		final Pattern coordPattern = Pattern.compile("\\b[nNsS]\\s*\\d"); // begin of coordinates
-		final Pattern namePattern = Pattern.compile("^(.+):\\s*\\z");
-		final long waypointBaseId = GeocachingUtils.base31Decode("N0");
 
 		int count = 0;
 		int nameCount = 0;
 
 		String namePrefix = "";
 
-		Matcher matcher = coordPattern.matcher(note);
+		Matcher matcher = NOTE__COORDINATE_PATTERN.matcher(note);
 		while (matcher.find()) {
 			try {
 				final Coordinates point = CoordinatesParser.parse(note.substring(matcher.start()));
@@ -434,12 +409,12 @@ public class LocusDataMapper {
 
 				String name = namePrefix + note.substring(0, matcher.start());
 
-				// TODO fix it better
+				// name can contains more lines, use the last one for name only
 				int lastLineEnd = name.lastIndexOf('\n');
 				if (lastLineEnd != -1)
 					name = name.substring(lastLineEnd +1);
 
-				Matcher nameMatcher = namePattern.matcher(name);
+				Matcher nameMatcher = NOTE__NAME_PATTERN.matcher(name);
 
 				WaypointType waypointType = WaypointType.ReferencePoint;
 
@@ -454,7 +429,7 @@ public class LocusDataMapper {
 					name = context.getString(R.string.user_waypoint_name, nameCount);
 				}
 
-				final String code = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
+				final String code = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2);
 
 				res.add(new com.arcao.geocaching.api.data.Waypoint(point, new Date(), code, name, "", waypointType));
 
@@ -467,18 +442,16 @@ public class LocusDataMapper {
 			}
 
 			note = note.substring(matcher.start() + 1);
-			matcher = coordPattern.matcher(note);
+			matcher = NOTE__COORDINATE_PATTERN.matcher(note);
 		}
 		return res;
 	}
 
 	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromUserWaypoints(Context context, Collection<UserWaypoint> userWaypoints, String cacheCode) {
-		List<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
+		Collection<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
 		if (userWaypoints == null || userWaypoints.size() == 0)
 			return res;
-
-		final int waypointBaseId = (int) GeocachingUtils.base31Decode("N0");
 
 		int count = 1;
 		for (UserWaypoint uw : userWaypoints) {
@@ -486,7 +459,7 @@ public class LocusDataMapper {
 				continue;
 
 			final String name = context.getString(R.string.final_location_name, count);
-			final String waypointCode = GeocachingUtils.base31Encode(waypointBaseId + count) + cacheCode.substring(2);
+			final String waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2);
 
 			res.add(new com.arcao.geocaching.api.data.Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));
 			count++;
@@ -496,7 +469,7 @@ public class LocusDataMapper {
 	}
 
 	public static Waypoint mergePoints(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
-		clearExtraOnDisplayCallback(toPoint);
+		toPoint.removeExtraOnDisplay();
 
 		if (fromPoint == null || fromPoint.gcData == null)
 			return toPoint;
@@ -509,10 +482,6 @@ public class LocusDataMapper {
 		fixEditedWaypoints(toPoint, fromPoint);
 
 		return toPoint;
-	}
-
-	private static void clearExtraOnDisplayCallback(Waypoint p) {
-		p.addParameter(ExtraData.PAR_INTENT_EXTRA_ON_DISPLAY, "clear");
 	}
 
 	// issue #14: Keep cache logs from GSAK when updating cache

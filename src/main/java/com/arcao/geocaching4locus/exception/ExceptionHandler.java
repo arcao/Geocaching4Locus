@@ -38,8 +38,8 @@ public class ExceptionHandler {
 		Intent positiveAction = null;
 		String baseMessage = "%s";
 
-		if (t instanceof IntentedException) {
-			positiveAction = ((IntentedException) t).getIntent();
+		if (t instanceof IntendedException) {
+			positiveAction = ((IntendedException) t).getIntent();
 			t = t.getCause();
 			baseMessage = "%s<br /><br />" + mContext.getString(R.string.error_continue_locus_map);
 		}
@@ -126,8 +126,8 @@ public class ExceptionHandler {
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
 
-				int title = (restrictions.isPremiumMember()) ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
-				int message = (restrictions.isPremiumMember()) ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
+				int title = restrictions.isPremiumMember() ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
+				int message = restrictions.isPremiumMember() ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
 
 				// apply format on a text
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();

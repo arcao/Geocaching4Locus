@@ -12,6 +12,7 @@ import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching4locus.R;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class BookmarkCachesRecyclerAdapter
@@ -35,7 +36,7 @@ public class BookmarkCachesRecyclerAdapter
     return items.size();
   }
 
-  public void setBookmarks(List<Bookmark> bookmarks) {
+  public void setBookmarks(Collection<Bookmark> bookmarks) {
     items.clear();
     items.addAll(bookmarks);
     checked = new boolean[items.size()];
@@ -43,7 +44,7 @@ public class BookmarkCachesRecyclerAdapter
   }
 
   public List<Bookmark> getCheckedBookmarks() {
-    List <Bookmark> result = new ArrayList<>();
+    List <Bookmark> result = new ArrayList<>(checkedCount());
 
     int count = items.size();
     for (int i = 0; i < count; i++)
@@ -51,6 +52,15 @@ public class BookmarkCachesRecyclerAdapter
         result.add(items.get(i));
 
     return result;
+  }
+
+  private int checkedCount() {
+    int count = 0;
+    for (boolean item : checked) {
+      if (item) count++;
+    }
+
+    return count;
   }
 
   public void selectAll() {

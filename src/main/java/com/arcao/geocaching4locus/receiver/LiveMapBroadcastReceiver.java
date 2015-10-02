@@ -22,6 +22,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	// Limitation on Groundspeak side to 100000 meters
 	private static final float MAX_DIAGONAL_DISTANCE = 100000F;
 	private static final float DEFAULT_DISTANCE_LIMIT = 100F;
+	private static final float DISTANCE_LIMIT_DIVIDER = 2.5F;
 
 	private static boolean mForceUpdate = false;
 
@@ -35,6 +36,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		final LiveMapNotificationManager liveMapNotificationManager = LiveMapNotificationManager.get(context);
 
 		if (liveMapNotificationManager.handleBroadcastIntent(intent)) {
+			//noinspection AssignmentToStaticFieldFromInstanceMethod
 			mForceUpdate = liveMapNotificationManager.isForceUpdateRequiredInFuture();
 			return;
 		}
@@ -81,6 +83,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				if (!update.isNewMapCenter() && !update.isNewZoomLevel() && !mForceUpdate)
 					return;
 
+				//noinspection AssignmentToStaticFieldFromInstanceMethod
 				mForceUpdate = false;
 
 				// When Live map is enabled, Locus sometimes send NaN when is starting
@@ -114,6 +117,6 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 		if (locMapCenter == null || mapTopLeft == null)
 			return DEFAULT_DISTANCE_LIMIT;
 
-		return mapTopLeft.distanceTo(locMapCenter) / 2.5F;
+		return mapTopLeft.distanceTo(locMapCenter) / DISTANCE_LIMIT_DIVIDER;
 	}
 }

@@ -18,8 +18,6 @@ import com.crashlytics.android.Crashlytics;
 import timber.log.Timber;
 
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
-	private static final String TAG_DIALOG = "DIALOG";
-
 	@Bind(R.id.toolbar) Toolbar toolbar;
 
 	@Override
@@ -63,17 +61,18 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 	@Override
 	public void onLoginFinished(Intent errorIntent) {
 		AuthenticatorHelper helper = App.get(this).getAuthenticatorHelper();
+		boolean result = helper.hasAccount();
 
-		if (helper.hasAccount()) {
+		if (result) {
 			Crashlytics.setUserName(helper.getAccount().name);
 		}
 
-		AnalyticsUtil.actionLogin(helper.hasAccount());
+		AnalyticsUtil.actionLogin(result);
 
 		if (errorIntent != null)
 			startActivity(errorIntent);
 
-		setResult(helper.hasAccount() ? RESULT_OK : RESULT_CANCELED);
+		setResult(result ? RESULT_OK : RESULT_CANCELED);
 		finish();
 	}
 

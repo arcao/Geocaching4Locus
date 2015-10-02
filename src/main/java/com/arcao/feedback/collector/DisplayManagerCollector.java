@@ -10,12 +10,11 @@ import android.util.SparseArray;
 import android.view.Display;
 import android.view.Surface;
 import android.view.WindowManager;
+import timber.log.Timber;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import timber.log.Timber;
 
 public class DisplayManagerCollector extends Collector {
 	private final Context mContext;
@@ -60,6 +59,7 @@ public class DisplayManagerCollector extends Collector {
 		return result.toString();
 	}
 
+	@SuppressWarnings("deprecation")
 	private static Object collectDisplayData(Display display) {
 		final DisplayMetrics metrics = new DisplayMetrics();
 		display.getMetrics(metrics);

@@ -31,7 +31,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
-import com.arcao.geocaching4locus.exception.IntentedException;
+import com.arcao.geocaching4locus.exception.IntendedException;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.util.ParcelFile;
@@ -209,7 +209,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     if (fileOutput == null || dataFile == null || fileOutput.getItemCount() == 0)
       return e;
 
-    return new IntentedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));
+    return new IntendedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));
   }
 
   @Override

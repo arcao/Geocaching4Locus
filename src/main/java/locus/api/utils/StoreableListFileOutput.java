@@ -63,12 +63,6 @@ public class StoreableListFileOutput implements Closeable {
 		}
 	}
 
-	public synchronized void writeCollection(final Iterable<? extends Storable> objs) throws IOException {
-		for(Storable obj : objs) {
-			write(obj);
-		}
-	}
-
 	@Override
 	public void close() throws IOException {
 		try {

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 		void onLoginFinished(Intent errorIntent);
 	}
 
-	private OAuthLoginTask mTask;
+	@Nullable private OAuthLoginTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
 	private WebView mWebView = null;
 	private View mProgressHolder = null;
@@ -185,6 +186,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 		}
 
 		@Override
+		@SuppressWarnings("deprecation")
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 

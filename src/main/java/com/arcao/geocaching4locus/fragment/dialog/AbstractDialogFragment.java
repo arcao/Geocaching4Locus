@@ -6,12 +6,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
-
 public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
-
-	private WeakReference<CancellableDialog> cancellableRef;
 
 	// This is work around for the situation when method show is called after saving
 	// state even if you do all right. Especially when show is called after click on
@@ -74,23 +70,5 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 
 	public boolean isShowing() {
 		return getDialog() != null && getDialog().isShowing();
-	}
-
-	protected void callOnCancelListener(AbstractDialogFragment dialogFragment) {
-		if (cancellableRef == null)
-			return;
-
-		CancellableDialog listener = cancellableRef.get();
-		if (listener != null) {
-			listener.onCancel(dialogFragment);
-		}
-	}
-
-	public void setOnCancelListener(CancellableDialog cancellableDialog) {
-		cancellableRef = new WeakReference<>(cancellableDialog);
-	}
-
-	public interface CancellableDialog {
-		void onCancel(AbstractDialogFragment dialogFragment);
 	}
 }

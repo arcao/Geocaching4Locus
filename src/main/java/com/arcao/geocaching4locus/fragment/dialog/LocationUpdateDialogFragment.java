@@ -2,10 +2,12 @@ package com.arcao.geocaching4locus.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.LocationUpdateTask;
@@ -19,9 +21,9 @@ public class LocationUpdateDialogFragment extends AbstractDialogFragment impleme
 		void onLocationUpdate(Location location);
 	}
 
-	private LocationUpdateTask mTask;
+	@Nullable private LocationUpdateTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
-	private String mProvider = LocationManager.GPS_PROVIDER;
+	@NonNull private String mProvider = LocationManager.GPS_PROVIDER;
 
 	public static LocationUpdateDialogFragment newInstance() {
 		return new LocationUpdateDialogFragment();
@@ -49,20 +51,22 @@ public class LocationUpdateDialogFragment extends AbstractDialogFragment impleme
 		}
 	}
 
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		super.onDismiss(dialog);
+		if (mTask != null) {
+			mTask.cancel(true);
+			mTask = null;
+		}
+	}
+
 	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
 						.content(R.string.acquiring_gps_location)
 						.progress(true, 0)
-						.negativeText(R.string.cancel_button)
-						.callback(new MaterialDialog.ButtonCallback() {
-							@Override
-							public void onNegative(MaterialDialog dialog) {
-								if (mTask != null)
-									mTask.cancel(true);
-							}
-						});
+						.negativeText(R.string.cancel_button);
 
 		switch (mProvider) {
 			case LocationManager.GPS_PROVIDER:

@@ -3,6 +3,9 @@ package com.arcao.geocaching4locus.util;
 import org.apache.commons.lang3.StringUtils;
 
 public class Coordinates {
+	private static final double MIN_PER_DEG = 60D;
+	private static final double SEC_PER_DEG = 3600D;
+
 	public static String convertDoubleToDeg(double source, boolean isLon) {
 		return convertDoubleToDeg(source, isLon, 3);
 	}
@@ -23,8 +26,8 @@ public class Coordinates {
 		int deg = (int) source;
 
 		// FIX for rounding errors
-		double min = roundDouble(((source - deg) * 60D), precision);
-		if (min == 60D) {
+		double min = roundDouble(((source - deg) * MIN_PER_DEG), precision);
+		if (min == MIN_PER_DEG) {
 			deg++;
 			min = 0D;
 		}
@@ -80,7 +83,7 @@ public class Coordinates {
 				}
 			}
 
-			return direction * (deg + (min / 60D) + (sec / 3600D));
+			return direction * (deg + (min / MIN_PER_DEG) + (sec / SEC_PER_DEG));
 		} catch (Exception e) {
 			return Float.NaN;
 		}

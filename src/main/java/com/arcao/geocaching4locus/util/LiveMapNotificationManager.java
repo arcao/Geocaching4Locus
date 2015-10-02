@@ -87,6 +87,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 				if (!mNotificationShown || mLastLiveMapState != isLiveMapEnabled()) {
 					showNotification();
+					//noinspection AssignmentToStaticFieldFromInstanceMethod
 					mLastLiveMapState = isLiveMapEnabled();
 				}
 				updateNotificationHideAlarm();
@@ -131,6 +132,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private void showNotification() {
+		//noinspection AssignmentToStaticFieldFromInstanceMethod
 		mNotificationShown = true;
 
 		NotificationCompat.Builder builder = createBaseNotification();
@@ -138,6 +140,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private void hideNotification() {
+		//noinspection AssignmentToStaticFieldFromInstanceMethod
 		mNotificationShown = false;
 
 		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);

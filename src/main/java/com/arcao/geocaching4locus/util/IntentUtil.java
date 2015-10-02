@@ -19,7 +19,7 @@ public class IntentUtil {
 		if (intent.resolveActivity(activity.getPackageManager()) != null) {
 			activity.startActivity(intent);
 		} else {
-			Toast.makeText(activity, "Webpage cannot be opened. No application found to handle webpage.", Toast.LENGTH_LONG).show();
+			Toast.makeText(activity, "Web page cannot be opened. No application found to handle web pages.", Toast.LENGTH_LONG).show();
 		}
 	}
 }

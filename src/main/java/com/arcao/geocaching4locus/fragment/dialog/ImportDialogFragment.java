@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.task.ImportTask;
@@ -21,7 +22,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		void onImportFinished(boolean success);
 	}
 
-	private ImportTask mTask;
+	@Nullable private ImportTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
 
 	public static ImportDialogFragment newInstance(String cacheId) {

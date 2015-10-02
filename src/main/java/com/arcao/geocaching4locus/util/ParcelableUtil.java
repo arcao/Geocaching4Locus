@@ -4,12 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ParcelableUtil {
-    public static byte[] marshall(Parcelable parceable) {
+    public static byte[] marshall(Parcelable parcelable) {
         Parcel parcel = Parcel.obtain();
-        parceable.writeToParcel(parcel, 0);
-        byte[] bytes = parcel.marshall();
-        //parcel.recycle(); // not sure if needed or a good idea
-        return bytes;
+        parcelable.writeToParcel(parcel, 0);
+        return parcel.marshall();
     }
 
     private static Parcel unmarshall(byte[] bytes) {

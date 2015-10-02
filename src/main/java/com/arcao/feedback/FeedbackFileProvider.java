@@ -11,13 +11,12 @@ import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.webkit.MimeTypeMap;
-
 import com.arcao.geocaching4locus.BuildConfig;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
-import timber.log.Timber;
+import java.util.Arrays;
 
 /**
  * <p>
@@ -107,25 +106,25 @@ public class FeedbackFileProvider extends ContentProvider {
 			case REPORT_FILE_ID:
 				final File file = getReportFile(getContext());
 
-				if (projection == null) {
-					projection = COLUMNS;
-				}
+				String[] columns = projection != null ? projection : COLUMNS;
+				String[] cols = new String[columns.length];
+				Object[] values = new Object[columns.length];
 
-				String[] cols = new String[projection.length];
-				Object[] values = new Object[projection.length];
 				int i = 0;
-				for (String col : projection) {
+				for (String col : columns) {
 					if (OpenableColumns.DISPLAY_NAME.equals(col)) {
 						cols[i] = OpenableColumns.DISPLAY_NAME;
-						values[i++] = file.getName();
+						values[i] = file.getName();
+						i++;
 					} else if (OpenableColumns.SIZE.equals(col)) {
 						cols[i] = OpenableColumns.SIZE;
-						values[i++] = file.length();
+						values[i] = file.length();
+						i++;
 					}
 				}
 
-				cols = copyOf(cols, i);
-				values = copyOf(values, i);
+				cols = Arrays.copyOf(cols, i);
+				values = Arrays.copyOf(values, i);
 
 				final MatrixCursor cursor = new MatrixCursor(cols, 1);
 				cursor.addRow(values);
@@ -133,18 +132,6 @@ public class FeedbackFileProvider extends ContentProvider {
 			default:
 				return null;
 		}
-	}
-
-	private static String[] copyOf(String[] original, int newLength) {
-		final String[] result = new String[newLength];
-		System.arraycopy(original, 0, result, 0, newLength);
-		return result;
-	}
-
-	private static Object[] copyOf(Object[] original, int newLength) {
-		final Object[] result = new Object[newLength];
-		System.arraycopy(original, 0, result, 0, newLength);
-		return result;
 	}
 
 	// Not supported / used / methods

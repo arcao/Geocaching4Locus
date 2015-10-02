@@ -6,17 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkListRecyclerAdapter.ViewHolder> {
   public interface OnItemClickListener {
@@ -45,7 +43,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
     this.onItemClickListener = onItemClickListener;
   }
 
-  public void setBookmarkLists(List<BookmarkList> bookmarkLists) {
+  public void setBookmarkLists(Collection<BookmarkList> bookmarkLists) {
     items.clear();
     items.addAll(bookmarkLists);
     notifyDataSetChanged();

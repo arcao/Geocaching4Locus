@@ -37,7 +37,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 
 	private WeakReference<ListListener> mListListenerRef;
 	private final BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
-	private BookmarkListRetrieveTask mTask;
+	@Nullable private BookmarkListRetrieveTask mTask;
 	private ArrayList<BookmarkList> mBookmarkLists;
 
 
@@ -81,6 +81,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		super.onViewCreated(view, savedInstanceState);
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(STATE_BOOKMARK_LISTS)) {
+			//noinspection unchecked
 			mBookmarkLists = (ArrayList<BookmarkList>) savedInstanceState.getSerializable(STATE_BOOKMARK_LISTS);
 		}
 

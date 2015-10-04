@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">正在下載藏寶點…</string>
-    <string name="error_locus_not_found">請安裝 Locus！</string>
+    <string name="error_locus_not_found">Locus Map應用程序沒有發現，但Geocaching4Locus它要求才能正常工作。請安裝Locus Map。</string>
     <string name="error_location">請在 \'選項\' 中允許無線網路或 GPS 定位服務</string>
     <string name="acquiring_gps_location">正在從 GPS 取得位置…</string>
     <string name="acquiring_network_location">正在從無線網路取得位置…</string>

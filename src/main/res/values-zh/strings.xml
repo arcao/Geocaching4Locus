@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">下载藏点……</string>
-    <string name="error_locus_not_found">请先安装Locus!</string>
+    <string name="error_locus_not_found">Locus Map应用程序没有发现，但Geocaching4Locus它要求才能正常工作。请安装Locus Map。</string>
     <string name="error_location">请在“设置”中允许无线设备或GPS的定位功能。</string>
     <string name="acquiring_gps_location">正在从GPS获取位置信息</string>
     <string name="acquiring_network_location">正在从无线网络中获取位置信息……</string>
@@ -107,7 +106,7 @@
 
     <string name="basic_member_warning_title">普通用户接入</string>
     <string name="premium_member_warning_title">高级用户接入</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">您已经用完了每24小时下载3个藏点详细信息的限额，您的每日限额将在%3$s.&lt;br>被重置。
+    <string name="basic_member_full_geocaching_quota_exceeded">您已经用完了每%2$s小时下载%1$s个藏点详细信息的限额，您的每日限额将在%3$s.&lt;br>被重置。
 &lt;br>
 &lt;i>在Geocaching.com上升级为高级用户，每天最多可以下载6000个藏点的详细信息，并能享受更多权益，请访问geocaching.com升级。&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">您已经用完了每24小时下载&lt;b6000个藏点详细信息的限额，您的每日限额将在%3$s重置。</string>
@@ -169,16 +168,16 @@
     <string name="pref_feedback">请反馈</string>
     <string name="error_no_result">无法找到匹配的藏点</string>
     <string name="error_session_expired">由于长期闲置（超过90天）你已经退出了登录，请重新登录。</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="launcher_import_bookmarks">导入书签</string>
+    <string name="menu_import_bookmarks">导入书签</string>
+    <string name="import_caches_progress">下载缓存…</string>
+    <string name="error_no_location_permission">该应用程序没有权限访问到的位置服务。</string>
+    <string name="action_import_all">导入所有</string>
+    <string name="premium_feature">此功能只限于付费用户，对不起。</string>
+    <string name="error_title_locus">Locus Map错误</string>
+    <string name="error_send_error_report">发送错误报告</string>
+    <string name="error_report_sent_toast">谢谢你送的错误。</string>
+    <string name="error_continue_locus_map">你想继续使用部分接收到的数据Locus Map？</string>
     <string name="yes_button">是</string>
     <string name="no_button">否</string>
 </resources>

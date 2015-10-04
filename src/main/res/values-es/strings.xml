@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Descargando cachés…</string>
-    <string name="error_locus_not_found">¡Por favor instale Locus!</string>
+    <string name="error_locus_not_found">Aplicación Locus Map no se encuentra, pero Geocaching4Locus se requiere para que funcione correctamente. Por favor, instale Locus Map.</string>
     <string name="error_location">Por favor active servicio de localización por Wireless o GPS en \'Ajustes\'.</string>
-    <string name="acquiring_gps_location">Adquiriendo posición desde GPS …</string>
+    <string name="acquiring_gps_location">Adquiriendo posición desde GPS…</string>
     <string name="acquiring_network_location">Adquiriendo posición desde red…</string>
     
     <string name="preferences">Preferencias</string>
@@ -45,7 +44,7 @@
     <string name="pref_version">Versión</string>
     <string name="pref_website">Sitio web, foro, etc.</string>
     <string name="pref_donate_paypal">Donar vía Paypal</string>
-    <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro …</string>
+    <string name="pref_donate_paypal_summary">Apoyar desarrollo futuro…</string>
     <string name="pref_donate_paypal_choose_currency">Elige tu moneda</string>
     
     <string name="pref_title_cache_type_filter">Tipo cache (Usuario Premium)</string>
@@ -103,7 +102,7 @@
     <string name="launcher_update_more_caches">Actualizar caches</string>
     <string name="launcher_import_from_gc">Importar desde código GC</string>
     
-    <string name="title_count_of_caches">Número de caches</string>
+    <string name="title_count_of_caches">Contador de cachés</string>
 
     <string name="basic_member_warning_title">Acceso miembro básico</string>
     <string name="premium_member_warning_title">Acceso miembro premium</string>
@@ -116,8 +115,8 @@
 
     <plurals name="plurals_cache">
         <item quantity="one">%d cache</item>
-        <item quantity="few">%d caches</item>
-        <item quantity="other">%d caches</item>
+        <item quantity="few">%d cachés</item>
+        <item quantity="other">%d cachés</item>
     </plurals>
     
     <plurals name="plurals_hour">
@@ -137,48 +136,48 @@
     
     <string name="error_invalid_api_response">Geocaching Live ha dado respuesta no válida:&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus Live map</string>
-    <string name="livemap_notification_message_enabled">Live map is enabled.</string>
-    <string name="livemap_notification_message_disabled">Live map is disabled.</string>
-    <string name="livemap_notification_message_downloading">Downloading Live map caches: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Enable Live Map</string>
-    <string name="livemap_notification_action_disable">Disable Live Map</string>
-    <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    
-    
+    <string name="livemap_notification_title">Geocaching4Locus Mapa dinámico</string>
+    <string name="livemap_notification_message_enabled">Mapa dinámico está activada.</string>
+    <string name="livemap_notification_message_disabled">Mapa dinámico está desactivado.</string>
+    <string name="livemap_notification_message_downloading">Descarga de cachés mapa dinámico: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Habilitar</string>
+    <string name="livemap_notification_action_disable">Deshabilitar</string>
+    <string name="livemap_error">Geocaching4Locus Mapa dinámico: %s</string>
+    <string name="pref_livemap_show_disabled_notification">Notificación desactivado</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Mostrar una notificación cuando un mapa dinámico está desactivado. Esto sólo funciona si las actualizaciones periódicas son permitidos en Locus Map y Locus Map se está ejecutando.</string>
     <string name="pref_cache_type_all">Todo</string>
-    
-    
-    
+    <string name="button_filter">Filtro</string>
+    <string name="download_logs_progress">Descarga de registros…</string>
+    <string name="launcher_download_logs">Descargar registros</string>
 
-    
-    
-    
-    
-    
+    <string name="pref_download_logs_update_cache">Descargar registra caché de actualización</string>
+    <string name="pref_download_logs_update_cache_summary">Acción "Descargar registros", también se actualizan los datos de caché</string>
+    <string name="pref_downloading_count_of_caches_step">Tamaño del paso para el contador de cachés</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Cambiar un tamaño de paso para el contador de cachés de diálogo elegir</string>
+    <string name="premium_member_for_filter_required">Algunos filtros requieren cuenta de miembro premium que no lo tiene. La aplicación se conecta ahora a modo para los usuarios básicos. Por favor, inténtelo de nuevo.</string>
 
-    
+    <string name="prefs_cat_account">Cuenta</string>
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mapa dinámico</string>
     <string name="prefs_cat_downloading">Descargando</string>
     <string name="prefs_cat_advanced">Avanzado</string>
     <string name="prefs_cat_about">Acerca de</string>
-    <string name="login_title">Log in</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="login_title">Iniciar sesión</string>
+    <string name="pref_live_map_download_hints">Descarga consejos</string>
+    <string name="pref_live_map_download_hints_summary">Carga más lento y más exigente en la utilización de los datos</string>
+    <string name="pref_feedback">Enviar comentarios</string>
+    <string name="error_no_result">No se pudo encontrar ningún cachés que responden a su búsqueda.</string>
+    <string name="error_session_expired">Debido a la larga inactividad (más de 90 días), que se han cerrado la sesión. Por favor, iniciar sesión de nuevo.</string>
+    <string name="launcher_import_bookmarks">Importar favoritos</string>
+    <string name="menu_import_bookmarks">Importar favoritos</string>
+    <string name="import_caches_progress">Descargando cachés…</string>
+    <string name="error_no_location_permission">App no tiene permiso para acceder al servicio de localización.</string>
+    <string name="action_import_all">Importar todos</string>
+    <string name="premium_feature">Esta característica es para los miembros premium única, lo siento.</string>
+    <string name="error_title_locus">Locus Map de error</string>
+    <string name="error_send_error_report">Enviar reporte de error</string>
+    <string name="error_report_sent_toast">Gracias por enviar el error usted.</string>
+    <string name="error_continue_locus_map">¿Quieres continuar con datos parcialmente recibidas a Locus Map?</string>
     <string name="yes_button">Si</string>
     <string name="no_button">No</string>
 </resources>

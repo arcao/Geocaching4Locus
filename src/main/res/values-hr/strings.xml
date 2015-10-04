@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Skidam caheove…</string>
-    <string name="error_locus_not_found">Molimo Vas instalirajte Locus!</string>
+    <string name="error_locus_not_found">Locus Map aplikacija nije pronađena, ali Geocaching4Locus zahtijeva da rade ispravno. Molimo Vas instalirajte Locus Map.</string>
     <string name="error_location">Molimo Vas, aktivirajte Wi-Fi ili GPS u Postavkama.</string>
     <string name="acquiring_gps_location">Dobivanje lokacija putem GPS-a….</string>
     <string name="acquiring_network_location">Dobivanje lokacije putem Wi-Fi mreže…</string>
@@ -171,7 +170,7 @@
     <string name="error_session_expired">Zbog dugog razdoblja neaktivnosti (90 dana), odjavljeni ste. Molimo, prijavite se ponovno.</string>
     <string name="launcher_import_bookmarks">Uvezite oznake</string>
     <string name="menu_import_bookmarks">Uvezite oznake</string>
-    <string name="import_caches_progress">Preuzimam caheove...</string>
+    <string name="import_caches_progress">Preuzimam caheove…</string>
     <string name="error_no_location_permission">Aplikacija nema dopuštenje da pristupi usluzi lociranja.</string>
     <string name="action_import_all">Uvezi sve</string>
     <string name="premium_feature">Žao nam je, ali ova odlika je samo za Premium članove.</string>

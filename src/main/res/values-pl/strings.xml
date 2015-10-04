@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Pobieranie skrzynek…</string>
-    <string name="error_locus_not_found">Zainstaluj program Locus!</string>
+    <string name="error_locus_not_found">Aplikacja Locus Mapa nie zostanie znaleziony, ale Geocaching4Locus wymaga do poprawnej pracy. Proszę zainstalować Locus Map.</string>
     <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
     <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS…</string>
     <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych…</string>
@@ -169,16 +168,16 @@
     <string name="pref_feedback">Wyślij opinię</string>
     <string name="error_no_result">Nie znaleziono skrzynek geocache spełniających kryteria wyszukiwania.</string>
     <string name="error_session_expired">Z powodu długiego braku aktywności (ponad 90 dni) zostałeś wylogowany. Proszę zaloguj się ponownie.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="launcher_import_bookmarks">Importuj zakładki</string>
+    <string name="menu_import_bookmarks">Importuj zakładki</string>
+    <string name="import_caches_progress">Pobieram skrzynki…</string>
+    <string name="error_no_location_permission">Aplikacja nie ma uprawnień, aby uzyskać dostęp do usługi lokalizacji.</string>
+    <string name="action_import_all">Importuj wszystkie</string>
+    <string name="premium_feature">Ta funkcja jest tylko dla użytkowników premium, przepraszam.</string>
+    <string name="error_title_locus">Błąd Locus Map</string>
+    <string name="error_send_error_report">Wyślij raport o błędach</string>
+    <string name="error_report_sent_toast">Dziękujemy za wysłanie błąd.</string>
+    <string name="error_continue_locus_map">Czy chcesz kontynuować częściowo odebranych danych do Locus Map?</string>
     <string name="yes_button">Tak</string>
     <string name="no_button">Nie</string>
 </resources>

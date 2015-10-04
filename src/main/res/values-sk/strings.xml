@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Sťahujem kešky…</string>
-    <string name="error_locus_not_found">Prosím, nainštalujte Locus!</string>
+    <string name="error_locus_not_found">Aplikácia Locus Map nebola nájdená, ale Geocaching4Locus ju vyžaduje, aby fungoval správne. Prosím nainštalujte Locus Map.</string>
     <string name="error_location">Prosím povolte službu určenie polohy z bezdrôtovej siete alebo zo satelitov GPS v "Nastavenia".</string>
     <string name="acquiring_gps_location">Získavam polohu z GPS…</string>
     <string name="acquiring_network_location">Získavam polohu z bezdrôtovej siete…</string>
@@ -21,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">Nainštalovaná verzia Locusu je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
+    <string name="error_locus_old">Nainštalovaná verzia Locus Map je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
     
     <string name="cancel_button">Zrušiť</string>
     
@@ -59,7 +58,7 @@
     <string name="pref_download_basic">Iba základné info</string>
     <string name="pref_download_basic_summary">Stiahnuť len základné informácie o keške</string>
     <string name="pref_download_on_show">Stiahnuť zvyšné info pri zobrazení</string>
-    <string name="pref_download_on_show_summary">Stiahnuť zvyšné informácie o keške, až keď Locus zobrazí obsah kešky</string>
+    <string name="pref_download_on_show_summary">Stiahnuť zvyšné informácie o keške, až keď Locus Map zobrazí obsah kešky</string>
     <string-array name="pref_download_on_show_entries">
         <item>raz</item>
         <item>po každej</item>
@@ -87,7 +86,7 @@
 
     <string name="livemap_activated">Aktívna mapa zapnutá. Teraz pohnite s mapou, aby sa zobrazili kešky.</string>
     <string name="livemap_deactivated">Aktívna mapa vypnutá.</string>
-    <string name="livemap_disabled">Nemáte povolené zasielanie pravidelných aktualizácií z Locusu. Najprv ich prosím povoľte v Locusu: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
+    <string name="livemap_disabled">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
     <string name="error_location_title">Služba na určenie polohy nie je povolená</string>
     <string name="error_location_settings_button">Nastavenia</string>
     

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Scaricamento caches…</string>
-    <string name="error_locus_not_found">Si prega di installare Locus!</string>
+    <string name="error_locus_not_found">Applicazione Locus Map non viene trovato, ma Geocaching4Locus richiede per funzionare correttamente. Si prega di installare Locus Map.</string>
     <string name="error_location">Permetti servizio posizione Wireless o GPS in \'Impostazioni\'.</string>
     <string name="acquiring_gps_location">Rilevamento della posizione dal GPS…</string>
     <string name="acquiring_network_location">Rilevamento della posizione dalla rete wireless…</string>
@@ -144,41 +143,41 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    
-    
+    <string name="pref_livemap_show_disabled_notification">Disabilitare notifica</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Mostra notifica quando mappa live è disabilitato. Questo funziona solo se gli aggiornamenti periodici sono ammessi in Locus Map e Locus Map è in esecuzione.</string>
     <string name="pref_cache_type_all">Tutto</string>
-    
-    
-    
+    <string name="button_filter">Filtro</string>
+    <string name="download_logs_progress">Scarica i log…</string>
+    <string name="launcher_download_logs">Scarica logs</string>
 
-    
-    
-    
-    
-    
+    <string name="pref_download_logs_update_cache">Scarica i log aggiornamento della cache</string>
+    <string name="pref_download_logs_update_cache_summary">Azione "Scarica logs" aggiornano anche i dati della cache</string>
+    <string name="pref_downloading_count_of_caches_step">Dimensione del passo per il conte di cache</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Modificare una dimensione del passo per il conte di cache scegliere finestra di dialogo</string>
+    <string name="premium_member_for_filter_required">Alcuni filtri richiedono member account premium che voi non avete. L\'applicazione è ora in modalità commutata per gli utenti di base. Si prega di riprovare.</string>
 
-    
+    <string name="prefs_cat_account">Conto</string>
     <string name="prefs_cat_filter">Filtro</string>
     <string name="prefs_cat_live_map">Mappa dal vivo</string>
     <string name="prefs_cat_downloading">Download in corso</string>
     <string name="prefs_cat_advanced">Avanzate</string>
     <string name="prefs_cat_about">Info</string>
     <string name="login_title">Accedere</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="pref_live_map_download_hints">Scarica indizio</string>
+    <string name="pref_live_map_download_hints_summary">Più lento caricamento e più esigente sull\'utilizzo dei dati</string>
+    <string name="pref_feedback">Invia commenti</string>
+    <string name="error_no_result">Impossibile trovare le cache che corrispondono alla tua ricerca.</string>
+    <string name="error_session_expired">A causa della lunga inattività (più di 90 giorni) si sono stati registrati fuori. Si prega di accedere nuovamente.</string>
+    <string name="launcher_import_bookmarks">Importerà preferiti</string>
+    <string name="menu_import_bookmarks">Importerà preferiti</string>
+    <string name="import_caches_progress">Scaricamento caches…</string>
+    <string name="error_no_location_permission">App non dispone dell\'autorizzazione per accedere al servizio di localizzazione.</string>
+    <string name="action_import_all">Importa tutti</string>
+    <string name="premium_feature">Questa funzione è per i membri premium solo, mi dispiace.</string>
+    <string name="error_title_locus">Errore Locus Map</string>
+    <string name="error_send_error_report">Invia rapporto di errore</string>
+    <string name="error_report_sent_toast">Grazie per l\'invio l\'errore.</string>
+    <string name="error_continue_locus_map">Vuoi continuare con dati parzialmente ricevuti a Locus Map?</string>
     <string name="yes_button">Sì</string>
     <string name="no_button">No</string>
 </resources>

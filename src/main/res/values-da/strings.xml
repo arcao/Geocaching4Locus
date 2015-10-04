@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Henter cacher ned…</string>
-    <string name="error_locus_not_found">Installer venligst Locus! </string>
+    <string name="error_locus_not_found">Locus Map ansøgning er ikke fundet, men Geocaching4Locus det kræver for at fungere korrekt. Du skal installere Locus Map.</string>
     <string name="error_location">Tillad venligst at det trådløse net eller GPS er tændt under \'Settings\'.</string>
     <string name="acquiring_gps_location">Finder din lokation via GPS…</string>
     <string name="acquiring_network_location">Finder din lokation via Trådløst net…</string>
@@ -144,41 +143,41 @@
     <string name="livemap_notification_action_enable">Enable Live Map</string>
     <string name="livemap_notification_action_disable">Disable Live Map</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    
-    
+    <string name="pref_livemap_show_disabled_notification">Deaktiveret meddelelse</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Vis meddelelse, når Live-kortet er deaktiveret. Dette virker kun, hvis de periodiske opdateringer er tilladt i Locus Map og Locus Map kører.</string>
     <string name="pref_cache_type_all">Alle</string>
-    
-    
-    
+    <string name="button_filter">Filter</string>
+    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="launcher_download_logs">Hent logfiler</string>
 
-    
-    
-    
-    
-    
+    <string name="pref_download_logs_update_cache">Hent logfiler opdatering cache</string>
+    <string name="pref_download_logs_update_cache_summary">Handling "Hent logfiler" også opdatere geocache data</string>
+    <string name="pref_downloading_count_of_caches_step">Trin størrelse for antal caches</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Ændre et skridt størrelse for antal caches vælger dialogen</string>
+    <string name="premium_member_for_filter_required">Nogle filtre kræver premium medlemskonto, som du ikke har det. Den app er tændt nu tilstanden for basale brugere. Venligst prøve det igen.</string>
 
-    
+    <string name="prefs_cat_account">Konto</string>
     <string name="prefs_cat_filter">Filter</string>
     <string name="prefs_cat_live_map">Live kort</string>
     <string name="prefs_cat_downloading">Downloader</string>
     <string name="prefs_cat_advanced">Avanceret</string>
     <string name="prefs_cat_about">Om programmet</string>
     <string name="login_title">Log-på</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="pref_live_map_download_hints">Hent råd</string>
+    <string name="pref_live_map_download_hints_summary">Langsommere lastning og mere krævende på dataforbrug</string>
+    <string name="pref_feedback">Send kommentar</string>
+    <string name="error_no_result">Kunne ikke finde nogen caches der matcher din søgning.</string>
+    <string name="error_session_expired">På grund af lang inaktivitet (over 90 dage) du er blevet logget ud. Venligst log ind igen.</string>
+    <string name="launcher_import_bookmarks">Importer bogmærker</string>
+    <string name="menu_import_bookmarks">Importer bogmærker</string>
+    <string name="import_caches_progress">Henter cacher ned…</string>
+    <string name="error_no_location_permission">App har ikke tilladelse til at få adgang til placering service.</string>
+    <string name="action_import_all">Importer alle</string>
+    <string name="premium_feature">Denne funktion er for premium medlemmer kun, ked af det.</string>
+    <string name="error_title_locus">Locus Map fejl</string>
+    <string name="error_send_error_report">Send fejlrapport</string>
+    <string name="error_report_sent_toast">Tak for at sende fejlen.</string>
+    <string name="error_continue_locus_map">Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
     <string name="yes_button">Ja</string>
     <string name="no_button">Nej</string>
 </resources>

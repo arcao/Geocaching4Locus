@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Stahuji keše…</string>
-    <string name="error_locus_not_found">Prosím nainstalujte Locus!</string>
+    <string name="error_locus_not_found">Aplikace Locus Map nebyla nalezena, ale Geocaching4Locus ji vyžaduje, aby fungoval správně. Prosím nainstalujte Locus Map.</string>
     <string name="error_location">Prosím povolte službu určení polohy z bezdrátové sítě nebo ze satelitů GPS v "Nastavení".</string>
     <string name="acquiring_gps_location">Zaměřuji polohu pomocí GPS…</string>
     <string name="acquiring_network_location">Zaměřuji polohu přes bezdrátové sítě…</string>
@@ -21,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">Nainstalovaná verze Locusu je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
+    <string name="error_locus_old">Nainstalovaná verze Locusu Map je příliš stará. Geocaching4Locus vyžaduje pro správnou funkčnost verzi %s nebo vyšší.</string>
     
     <string name="cancel_button">Storno</string>
     
@@ -59,7 +58,7 @@
     <string name="pref_download_basic">Pouze základní info</string>
     <string name="pref_download_basic_summary">Stáhnout pouze základní informace o keši</string>
     <string name="pref_download_on_show">Stáhnout zbývající info při zobrazení</string>
-    <string name="pref_download_on_show_summary">Stáhnout zbývající informace o keši, až když Locus zobrazí obsah keše</string>
+    <string name="pref_download_on_show_summary">Stáhnout zbývající informace o keši, až když Locus Map zobrazí obsah keše</string>
     <string-array name="pref_download_on_show_entries">
         <item>jednou</item>
         <item>pokaždé</item>
@@ -87,7 +86,7 @@
 
     <string name="livemap_activated">Live mapa zapnuta. Nyní pohněte s mapou, aby se zobrazily keše.</string>
     <string name="livemap_deactivated">Live mapa vypnuta.</string>
-    <string name="livemap_disabled">Nemáte povolené zasílání periodických aktualizací z Locusu. Nejprve je prosím povolte v Locusu: Nastavení → Různé → Povolit periodické aktualizace.</string>
+    <string name="livemap_disabled">Nemáte povolené zasílání periodických aktualizací z Locus Map. Nejprve je prosím povolte v Locus Map: Nastavení → Různé → Povolit periodické aktualizace.</string>
     <string name="error_location_title">Služba k určení polohy není povolena</string>
     <string name="error_location_settings_button">Nastavení</string>
     
@@ -98,7 +97,7 @@
     
     <string name="dialog_count_of_caches_title">Počet keší</string>
     <string name="launcher_nearest_caches">Nejbližší keše</string>
-    <string name="launcher_import_cache">Importovat keš do Locusu</string>
+    <string name="launcher_import_cache">Importovat keš do Locus Map</string>
     <string name="launcher_update_cache">Aktualizovat keš</string>    
     <string name="launcher_update_more_caches">Aktualizovat keše</string>
     <string name="launcher_import_from_gc">Importovat z GC kódu</string>
@@ -145,7 +144,7 @@
     <string name="livemap_notification_action_disable">Zakázat Live mapu</string>
     <string name="livemap_error">Live mapa Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Notifikace zakázáno</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Zobrazit notifikaci, když je Live mapa zakázána. Toto funguje jen, pokud periodické aktualizace jsou povoleny v Locusu a Locus běží.</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Zobrazit notifikaci, když je Live mapa zakázána. Toto funguje jen, pokud periodické aktualizace jsou povoleny v Locus Map a Locus Map běží.</string>
     <string name="pref_cache_type_all">Vše</string>
     <string name="button_filter">Filtr</string>
     <string name="download_logs_progress">Stahuji logy…</string>

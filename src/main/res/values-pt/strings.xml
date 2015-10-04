@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">A descarregar caches…</string>
-    <string name="error_locus_not_found">Por favor instale o Locus!</string>
+    <string name="error_locus_not_found">Aplicação Locus Map não for encontrado, mas Geocaching4Locus ele necessita para funcionar corretamente. Por favor, instale Locus Map.</string>
     <string name="error_location">Por favor ative a localização através de Wireless ou GPS nas definições.</string>
     <string name="acquiring_gps_location">Adquirindo coordenadas através do GPS…</string>
     <string name="acquiring_network_location">Adquirindo coordenadas através da rede Wireles…</string>
@@ -15,7 +14,7 @@
     <string name="pref_distance_summary_km">Distância em km</string>
     <string name="pref_distance_summary_miles">Distância em milhas</string>
     <string name="pref_imperial_units">Unidades Imperiais</string>
-    <string name="pref_imperial_units_summary">Usar milhas em vez de kilómetros</string>
+    <string name="pref_imperial_units_summary">Usar milhas em vez de quilómetros</string>
     
     <string name="error_credentials">Nome de utilizador ou password inválidos. Por favor verifique as credenciais.</string>
 
@@ -23,7 +22,7 @@
     
     <string name="error_locus_old">A versão instalada do Locus é antiga. Geocaching4Locus requer a versão %s ou superior para funcionar correctamente.</string>
     
-    <string name="cancel_button">Cancel</string>
+    <string name="cancel_button">Cancelar</string>
     
     <string name="pref_show_found">Mostrar encontradas</string>
     <string name="pref_show_found_summary">Mostrar caches encontradas</string>
@@ -148,7 +147,7 @@
     <string name="pref_livemap_show_disabled_notification_summary">Mostrar notificação quando o mapa ao vivo está desligado. Apenas funciona se o Locus está ligado e se o envio de atualizações periódicas está ativo.</string>
     <string name="pref_cache_type_all">Tudo</string>
     <string name="button_filter">Filtro</string>
-    <string name="download_logs_progress">A descarregar logs….</string>
+    <string name="download_logs_progress">A descarregar logs…</string>
     <string name="launcher_download_logs">Descarregar logs</string>
 
     <string name="pref_download_logs_update_cache">Descarregar logs de atualização da cache</string>
@@ -166,19 +165,19 @@
     <string name="login_title">Entrar</string>
     <string name="pref_live_map_download_hints">Descarregar dicas</string>
     <string name="pref_live_map_download_hints_summary">Mais lento a descarregar e mais exigente na quantidade de dados</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="pref_feedback">Enviar comentários</string>
+    <string name="error_no_result">Não conseguimos encontrar caches que correspondem à sua pesquisa.</string>
+    <string name="error_session_expired">Devido à longa inatividade (mais de 90 dias) você foi desconectado. Por favor efetue login novamente.</string>
+    <string name="launcher_import_bookmarks">Importar favoritos</string>
+    <string name="menu_import_bookmarks">Importar favoritos</string>
+    <string name="import_caches_progress">Baixando caches…</string>
+    <string name="error_no_location_permission">A aplicação não tem permissão para aceder ao serviço de localização.</string>
+    <string name="action_import_all">Importar tudo</string>
+    <string name="premium_feature">Este recurso é para usuários especiais somente, desculpe.</string>
+    <string name="error_title_locus">Erro no mapa do Locus</string>
+    <string name="error_send_error_report">Enviar relatório de erro </string>
+    <string name="error_report_sent_toast">Obrigado por enviar o relatório </string>
+    <string name="error_continue_locus_map">Pretende continuar para o Locus apenas com dados recebidos parcialmente? </string>
     <string name="yes_button">Sim</string>
     <string name="no_button">Não</string>
 </resources>

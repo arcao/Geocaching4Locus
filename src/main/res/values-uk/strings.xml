@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Завантаження кешу…</string>
-    <string name="error_locus_not_found">Будь ласка, встановіть Locus!</string>
+    <string name="error_locus_not_found">Додаток Locus Map не знайдена, але вона вимагає Geocaching4Locus щоб працювати належним чином. Будь ласка, встановіть Locus Map.</string>
     <string name="error_location">Будь ласка, дозвольте Послугу визначення місця знаходження на основі мобільної мережі та GPS у \'Налаштуваннях\'.</string>
     <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
     <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
@@ -169,16 +168,16 @@
     <string name="pref_feedback">Надіслати відозву</string>
     <string name="error_no_result">Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
     <string name="error_session_expired">У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="launcher_import_bookmarks">Імпорт закладок</string>
+    <string name="menu_import_bookmarks">Імпорт закладок</string>
+    <string name="import_caches_progress">Завантаження кешу…</string>
+    <string name="error_no_location_permission">Додаток не має дозволу на доступ до служби місцезнаходження.</string>
+    <string name="action_import_all">Імпортувати всі</string>
+    <string name="premium_feature">Ця функція призначена для елітних членів тільки, вибачте.</string>
+    <string name="error_title_locus">Помилка Locus Map</string>
+    <string name="error_send_error_report">Відправити звіт про помилку</string>
+    <string name="error_report_sent_toast">Спасибі за відправку помилку.</string>
+    <string name="error_continue_locus_map">Ви хочете продовжити з частково отриманих даних в Locus Map?</string>
     <string name="yes_button">Так</string>
     <string name="no_button">Ні</string>
 </resources>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Скачивание кэшей…</string>
-    <string name="error_locus_not_found">Пожалуйста, установите Locus!</string>
+    <string name="error_locus_not_found">Будь ласка, встановіть Locus!</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
     <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
     <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
@@ -21,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
+    <string name="error_locus_old">Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
     
     <string name="cancel_button">Отмена</string>
     
@@ -59,7 +58,7 @@
     <string name="pref_download_basic">Только основная информация</string>
     <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
     <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
-    <string name="pref_download_on_show_summary">Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
+    <string name="pref_download_on_show_summary">Завантажувати решту інформації про кеш, коли зміст кешу показано у Locus</string>
     <string-array name="pref_download_on_show_entries">
         <item>один раз</item>
         <item>каждый раз</item>
@@ -87,7 +86,7 @@
 
     <string name="livemap_activated">Онлайн карта активирована. Теперь отправляйтесь с картой на поиск кэшей.</string>
     <string name="livemap_deactivated">Онлайн карта деактивирована.</string>
-    <string name="livemap_disabled">Вы не разрешили отправку периодического обновления Locus. Пожалуйста, включите это сначала в Locus: Настройки → Разное → Включить периодическое обновление.</string>
+    <string name="livemap_disabled">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
     <string name="error_location_title">Сервис локации недоступен</string>
     <string name="error_location_settings_button">Настройки</string>
     
@@ -98,7 +97,7 @@
     
     <string name="dialog_count_of_caches_title">Количество кэшей</string>
     <string name="launcher_nearest_caches">Ближайшие кэши</string>
-    <string name="launcher_import_cache">Импортировать кэши в Locus</string>
+    <string name="launcher_import_cache">Імпортувати кеш до Locus</string>
     <string name="launcher_update_cache">Обновить кэш</string>    
     <string name="launcher_update_more_caches">Обновить кэши</string>
     <string name="launcher_import_from_gc">Импортировать из GC кода</string>
@@ -133,7 +132,7 @@
     </plurals>
     
     <string name="account_geocaching_live_title">При поддержке Geocaching Live</string>
-    <string name="account_geocaching_live_message">Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации …</string>
+    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
     
     <string name="error_invalid_api_response">Geocaching Live возвращает неверный ответ:&lt;br>%s</string>
 
@@ -151,10 +150,10 @@
     <string name="download_logs_progress">Загрузка логов…</string>
     <string name="launcher_download_logs">Загрузить логи</string>
 
-    
-    
-    
-    
+    <string name="pref_download_logs_update_cache">Загрузить логи обновляет кэш</string>
+    <string name="pref_download_logs_update_cache_summary">Действие "Загрузить логи" Также обновлять данные кэша</string>
+    <string name="pref_downloading_count_of_caches_step">Размер шага для количество кэшей</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Изменить размер шага для количество кэшей выбрать диалог</string>
     <string name="premium_member_for_filter_required">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
 
     <string name="prefs_cat_account">Учетная запись</string>
@@ -164,21 +163,21 @@
     <string name="prefs_cat_advanced">Дополнительно</string>
     <string name="prefs_cat_about">Про</string>
     <string name="login_title">Вход</string>
-    
-    
+    <string name="pref_live_map_download_hints">Скачать намеки</string>
+    <string name="pref_live_map_download_hints_summary">Медленнее погрузки и более требовательны к использованию данных</string>
     <string name="pref_feedback">Отправить отзыв</string>
     <string name="error_no_result">Не удалось найти кэшей, соответствующих параметрам поиска.</string>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="error_session_expired">Благодаря большому бездействия (более 90 дней), вы вышли из системы. Пожалуйста, войдите в систему снова.</string>
+    <string name="launcher_import_bookmarks">Импорт закладок</string>
+    <string name="menu_import_bookmarks">Импорт закладок</string>
+    <string name="import_caches_progress">Скачивание кэшей…</string>
+    <string name="error_no_location_permission">Приложение не имеет разрешения на доступ к службе местонахождения.</string>
+    <string name="action_import_all">Импортировать все</string>
+    <string name="premium_feature">Эта функция предназначена для премиум членов только, извините.</string>
+    <string name="error_title_locus">Ошибка Locus Map</string>
+    <string name="error_send_error_report">Отправить отчет об ошибке</string>
+    <string name="error_report_sent_toast">Спасибо за отправку ошибку.</string>
+    <string name="error_continue_locus_map">Вы хотите продолжить с частично полученных данных в Locus Map?</string>
     <string name="yes_button">Да</string>
     <string name="no_button">Нет</string>
 </resources>

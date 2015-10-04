@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools"
-           tools:locale="en">
+<resources>
     <string name="downloading">Lade caches…</string>
-    <string name="error_locus_not_found">Bitte Locus installieren!</string>
+    <string name="error_locus_not_found">Locus Map-Anwendung nicht gefunden wird, aber Geocaching4Locus es um richtig zu arbeiten erfordert. Bitte Locus Map installieren.</string>
     <string name="error_location">Positionsbestimmung via WiFi, mobile Netzwerke oder GPS erlauben:  \'Settings\'.</string>
     <string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
     <string name="acquiring_network_location">Positionsbestimmung via WIFI…</string>
@@ -21,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">Ihre Locus-Version ist veraltet. Geocaching4locus benötigt Version %s oder höher.</string>
+    <string name="error_locus_old">Ihre Locus Map-Version ist veraltet. Geocaching4locus benötigt Version %s oder höher.</string>
     
     <string name="cancel_button">Abbrechen</string>
     
@@ -59,7 +58,7 @@
     <string name="pref_download_basic">Nur Basisdaten</string>
     <string name="pref_download_basic_summary">Nur Basisinformationen zum Cache herunterladen</string>
     <string name="pref_download_on_show">Restliche Infos beim Anzeigen herunterladen</string>
-    <string name="pref_download_on_show_summary">Die restlichen Infos über den Cache herunterladen, wenn dieser in Locus angezeigt wird</string>
+    <string name="pref_download_on_show_summary">Die restlichen Infos über den Cache herunterladen, wenn dieser in Locus Map angezeigt wird</string>
     <string-array name="pref_download_on_show_entries">
         <item>Einmal</item>
         <item>Immer</item>
@@ -87,8 +86,7 @@
 
     <string name="livemap_activated">Live Karte aktiviert. Bewege nun die Karte, um Caches zu sehen</string>
     <string name="livemap_deactivated">Live Karte deaktiviert</string>
-    <string name="livemap_disabled">Sie haben das Senden von regelmäßigen Updates nicht aktiviert.
-Aktivieren unter:  Einstellungen -> Verschiedenes -> Regelmäßige Updates aktivieren.</string>
+    <string name="livemap_disabled">Sie haben den Informationsaustausch für Add-ons nicht aktiviert. Aktivierung in Locus Map unter:  Einstellungen -> Verschiedenes -> AddOn Verbindung aktivieren</string>
     <string name="error_location_title">Positionsbestimmung nicht aktiviert</string>
     <string name="error_location_settings_button">Einstellungen</string>
     

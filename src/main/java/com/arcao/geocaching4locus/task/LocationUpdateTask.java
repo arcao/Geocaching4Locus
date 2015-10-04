@@ -106,7 +106,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 		try {
 			mBarrier.await(TIMEOUT, TimeUnit.SECONDS);
 		} catch (TimeoutException e) {
-			Timber.i("Barrier timeouted");
+			Timber.i("Barrier timeout");
 		} catch (BrokenBarrierException e) {
 			Timber.i("Barrier cancelled");
 		} finally {

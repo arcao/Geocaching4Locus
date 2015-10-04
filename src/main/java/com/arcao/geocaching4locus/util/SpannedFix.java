@@ -8,7 +8,7 @@ import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
 
 public class SpannedFix {
-	public static Spanned fromHtml(@NonNull String source) {
+	public static CharSequence fromHtml(@NonNull String source) {
 		return applyFix(Html.fromHtml(source));
 	}
 

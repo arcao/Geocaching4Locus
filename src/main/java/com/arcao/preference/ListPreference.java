@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  * Changes against original implementation (by Arcao):
- *   * Feb 5, 2012 - removed setSummary / getSummary which strip formating of Spanned string
+ *   * Feb 5, 2012 - removed setSummary / getSummary which strip formatting of Spanned string
  */
 package com.arcao.preference;
 

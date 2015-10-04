@@ -6,11 +6,11 @@ public class Coordinates {
 	private static final double MIN_PER_DEG = 60D;
 	private static final double SEC_PER_DEG = 3600D;
 
-	public static String convertDoubleToDeg(double source, boolean isLon) {
+	public static CharSequence convertDoubleToDeg(double source, boolean isLon) {
 		return convertDoubleToDeg(source, isLon, 3);
 	}
 
-	public static String convertDoubleToDeg(double source, boolean isLon, int precision) {
+	public static CharSequence convertDoubleToDeg(double source, boolean isLon, int precision) {
 		if (Double.isNaN(source))
 			return StringUtils.EMPTY;
 

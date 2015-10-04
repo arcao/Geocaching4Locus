@@ -15,16 +15,7 @@ import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
@@ -37,12 +28,6 @@ import com.arcao.geocaching4locus.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.util.ParcelFile;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
 import com.arcao.geocaching4locus.util.UserTask;
-import java.io.File;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
@@ -50,6 +35,13 @@ import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableListFileOutput;
 import locus.api.utils.Utils;
 import timber.log.Timber;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   private static final String PACK_WAYPOINTS_NAME = DownloadNearestTask.class.getName();
@@ -242,7 +234,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
 
   private List<Filter> createFilters() {
-    ArrayList<Filter> filters = new ArrayList<>(9);
+    List<Filter> filters = new ArrayList<>(9);
 
     AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
     String userName = authenticatorHelper.getAccount().name;

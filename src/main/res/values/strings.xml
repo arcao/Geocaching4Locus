@@ -86,7 +86,7 @@
 
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>
-    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map: Settings → Miscellaneous → Enable periodic updates.</string>
+    <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
     <string name="error_location_title">No location service allowed</string>
     <string name="error_location_settings_button">Settings</string>
     

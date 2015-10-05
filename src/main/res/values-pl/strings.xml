@@ -106,7 +106,7 @@
 
     <string name="basic_member_warning_title">Dostęp standardowego użytkownika</string>
     <string name="premium_member_warning_title">Dostęp użytkownika "premium"</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów &lt;b>%1$s co każde %2$s&lt;/b>. Twój dzienny limit zostanie odnowiony o %3$s.&lt;br>
+    <string name="basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów skrzynek &lt;b>%1$s co każde %2$s&lt;/b>. Twój dzienny limit zostanie odnowiony o %3$s.&lt;br>
 &lt;br>
 &lt;i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.&lt;/i></string>
     <string name="premium_member_full_geocaching_quota_exceeded_message">Osiągnąłeś limit pobierania szczegółów &lt;b>6000 skrzynek na 24h&lt;/b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
@@ -142,7 +142,7 @@
     <string name="livemap_notification_message_downloading">Pobieranie skrzynek "mapy na żywo": %1$d / %2$d (%3$d%%)</string>
     <string name="livemap_notification_action_enable">Włącz "mapę na żywo"</string>
     <string name="livemap_notification_action_disable">Wyłącz "mapę na żywo"</string>
-    <string name="livemap_error">Żywa mapa Geocaching4Locus : %s</string>
+    <string name="livemap_error">Mapa na żywo Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Wyłączone powiadomienie</string>
     <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
     <string name="pref_cache_type_all">Wszystkie</string>

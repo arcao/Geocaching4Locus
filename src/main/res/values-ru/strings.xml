@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Скачивание кэшей…</string>
-    <string name="error_locus_not_found">Будь ласка, встановіть Locus!</string>
+    <string name="error_locus_not_found">Приложение Locus Map не найдена, но она требует Geocaching4Locus чтобы работать должным образом. Пожалуйста, установите Locus Map.</string>
     <string name="error_location">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
-    <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
-    <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
+    <string name="acquiring_gps_location">Местоположение определяется по GPS…</string>
+    <string name="acquiring_network_location">Местоположение определяется через беспроводную сеть…</string>
     
     <string name="preferences">Настройки</string>
     <string name="wrong_coordinates">Неправильный формат координат!</string>
@@ -20,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
+    <string name="error_locus_old">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
     
     <string name="cancel_button">Отмена</string>
     
@@ -58,7 +58,7 @@
     <string name="pref_download_basic">Только основная информация</string>
     <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
     <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
-    <string name="pref_download_on_show_summary">Завантажувати решту інформації про кеш, коли зміст кешу показано у Locus</string>
+    <string name="pref_download_on_show_summary">Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
     <string-array name="pref_download_on_show_entries">
         <item>один раз</item>
         <item>каждый раз</item>
@@ -97,7 +97,7 @@
     
     <string name="dialog_count_of_caches_title">Количество кэшей</string>
     <string name="launcher_nearest_caches">Ближайшие кэши</string>
-    <string name="launcher_import_cache">Імпортувати кеш до Locus</string>
+    <string name="launcher_import_cache">Импортировать кэши в Locus</string>
     <string name="launcher_update_cache">Обновить кэш</string>    
     <string name="launcher_update_more_caches">Обновить кэши</string>
     <string name="launcher_import_from_gc">Импортировать из GC кода</string>
@@ -132,17 +132,17 @@
     </plurals>
     
     <string name="account_geocaching_live_title">При поддержке Geocaching Live</string>
-    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
+    <string name="account_geocaching_live_message">Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации …</string>
     
     <string name="error_invalid_api_response">Geocaching Live возвращает неверный ответ:&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus Live map</string>
-    <string name="livemap_notification_message_enabled">Live map is enabled.</string>
-    <string name="livemap_notification_message_disabled">Live map is disabled.</string>
-    <string name="livemap_notification_message_downloading">Downloading Live map caches: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Enable Live Map</string>
-    <string name="livemap_notification_action_disable">Disable Live Map</string>
-    <string name="livemap_error">Geocaching4Locus Live map: %s</string>
+    
+    <string name="livemap_notification_message_enabled">Жива мапа увімкнена.</string>
+    <string name="livemap_notification_message_disabled">Жива мапа вимкнена.</string>
+    <string name="livemap_notification_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Увімкнути живу мапу</string>
+    <string name="livemap_notification_action_disable">Вимкнути живу мапу</string>
+    <string name="livemap_error">Жива мапа Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Уведомление об отключении</string>
     <string name="pref_livemap_show_disabled_notification_summary">Показывать уведомление, когда Живая карта отключена. Это работает, только если в Locus разрешены периодические обновления и Locus запущен.</string>
     <string name="pref_cache_type_all">Все</string>
@@ -157,12 +157,12 @@
     <string name="premium_member_for_filter_required">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
 
     <string name="prefs_cat_account">Учетная запись</string>
-    <string name="prefs_cat_filter">Фільтр</string>
+    <string name="prefs_cat_filter">Фильтр</string>
     <string name="prefs_cat_live_map">Живая карта</string>
     <string name="prefs_cat_downloading">Загрузка</string>
     <string name="prefs_cat_advanced">Дополнительно</string>
-    <string name="prefs_cat_about">Про</string>
-    <string name="login_title">Вход</string>
+    <string name="prefs_cat_about">О программе</string>
+    <string name="login_title">Логин</string>
     <string name="pref_live_map_download_hints">Скачать намеки</string>
     <string name="pref_live_map_download_hints_summary">Медленнее погрузки и более требовательны к использованию данных</string>
     <string name="pref_feedback">Отправить отзыв</string>

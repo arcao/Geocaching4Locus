@@ -116,19 +116,19 @@
     <plurals name="plurals_cache">
         <item quantity="one">%d кеш</item>
         <item quantity="few">%d кешів</item>
-        <item quantity="other">%d кеші</item>
+        <item quantity="other">%d кешів</item>
     </plurals>
     
     <plurals name="plurals_hour">
         <item quantity="one">%d година</item>
         <item quantity="few">%d години</item>
-        <item quantity="other">%d годин</item>
+        <item quantity="other">%d години</item>
     </plurals>
     
     <plurals name="plurals_minute">
         <item quantity="one">%d хвилина</item>
         <item quantity="few">%d хвилини</item>
-        <item quantity="other">%d хвилин</item>
+        <item quantity="other">%d хвилини</item>
     </plurals>
     
     <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>

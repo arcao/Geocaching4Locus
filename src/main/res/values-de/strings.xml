@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Lade caches…</string>
-    <string name="error_locus_not_found">Locus Map-Anwendung nicht gefunden wird, aber Geocaching4Locus es um richtig zu arbeiten erfordert. Bitte Locus Map installieren.</string>
+    <string name="error_locus_not_found">Die App \'Locus Map\' wurde nicht gefunden, wird aber von Geocaching4Locus benötigt. Bitte Locus Map installieren.</string>
     <string name="error_location">Positionsbestimmung via WiFi, mobile Netzwerke oder GPS erlauben:  \'Settings\'.</string>
     <string name="acquiring_gps_location">Positionsbestimmung via GPS…</string>
     <string name="acquiring_network_location">Positionsbestimmung via WIFI…</string>
@@ -39,12 +39,12 @@
     <string name="pref_show_disabled">Zeige deaktivierte</string>
     <string name="pref_show_disabled_summary">Zeige vorübergehend deaktivierte Caches</string>
     
-    <string name="import_cache_progress">Lade Geocache…</string>
+    <string name="import_cache_progress">Lade caches…</string>
     
     <string name="pref_version">Version</string>
     <string name="pref_website">Webseite, Forum, etc.</string>
     <string name="pref_donate_paypal">Spenden über Paypal</string>
-    <string name="pref_donate_paypal_summary">Unterstützen Sie die zukünftige Entwicklung…</string>
+    <string name="pref_donate_paypal_summary">Unterstützen Sie die zukünftige Entwicklung …</string>
     <string name="pref_donate_paypal_choose_currency">Wählen Sie Ihre Währung</string>
     
     <string name="pref_title_cache_type_filter">Cachetyp (Premium Mitglieder)</string>
@@ -66,7 +66,7 @@
     </string-array>
     
     <string name="menu_live_map">Live Karte</string>
-    <string name="menu_nearest">Nächste</string>
+    <string name="menu_nearest">Näherster</string>
     <string name="menu_manual">Beschreibung</string>
     <string name="menu_preferences">Einstellungen</string>
     
@@ -114,9 +114,9 @@
     <string name="method_quota_exceeded_message">Sie haben das Limit der maximalen Aktionen/Aufrufe pro Minute erreicht </string>
 
     <plurals name="plurals_cache">
-        <item quantity="one">%d Cache</item>
-        <item quantity="few">%d Caches</item>
-        <item quantity="other">%d Caches</item>
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d caches</item>
+        <item quantity="other">%d caches</item>
     </plurals>
     
     <plurals name="plurals_hour">
@@ -138,7 +138,7 @@
 
     <string name="livemap_notification_title">Geocaching4Locus Live Karte</string>
     <string name="livemap_notification_message_enabled">Live Karte ist eingeschaltet</string>
-    <string name="livemap_notification_message_disabled">Live Karte ist ausgeschaltet</string>
+    <string name="livemap_notification_message_disabled">Live Karte ist ausgeschaltet.</string>
     <string name="livemap_notification_message_downloading">Downloading Live map caches: %1$d / %2$d (%3$d%%)</string>
     <string name="livemap_notification_action_enable">Schalte Live Karte ein</string>
     <string name="livemap_notification_action_disable">Schalte Live Karte aus</string>
@@ -148,7 +148,7 @@
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Logs werden heruntergeladen</string>
-    <string name="launcher_download_logs">Loggs herunterladen</string>
+    <string name="launcher_download_logs">Logs herunterladen</string>
 
     <string name="pref_download_logs_update_cache">Logs werden heruntergeladen und der Cache wird aktualisiert</string>
     <string name="pref_download_logs_update_cache_summary">Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
@@ -172,11 +172,11 @@
     <string name="menu_import_bookmarks">Lesezeichen importieren</string>
     <string name="import_caches_progress">Lade Caches…</string>
     <string name="error_no_location_permission">Diese App hat keine Rechte, auf lokale Dienste zuzugreifen.</string>
-    <string name="action_import_all">Alle Import</string>
+    <string name="action_import_all">Alle importieren</string>
     <string name="premium_feature">Sorry, aber diese Funktion steht nur Premium Members zur Verfügung</string>
-    <string name="error_title_locus">Locus Map Fehler</string>
+    <string name="error_title_locus">Fehler in Locus Map</string>
     <string name="error_send_error_report">Fehlerbericht senden</string>
-    <string name="error_report_sent_toast">Vielen Dank für Senden der Fehler.</string>
+    <string name="error_report_sent_toast">Vielen Dank für das Senden der Fehlermeldung.</string>
     <string name="error_continue_locus_map">Möchtest Du mit nur teilweisem Datenempfang mit Locus Maps fortfahren?</string>
     <string name="yes_button">Ja</string>
     <string name="no_button">Nein</string>

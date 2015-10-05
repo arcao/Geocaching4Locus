@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Téléchargement des caches…</string>
-    <string name="error_locus_not_found">Demande Locus Map est introuvable, mais Geocaching4Locus il a besoin pour fonctionner correctement. S\'il vous plaît installer Locus Map.</string>
+    <string name="error_locus_not_found">L\'application Locus Map n\'a pas été trouvée. Geocaching4Locus en a besoin pour fonctionnner correctement. Merci d\'installer Locus Map.</string>
     <string name="error_location">Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
     <string name="acquiring_gps_location">En cours de localisation par GPS…</string>
     <string name="acquiring_network_location">En cours de localisation par le réseau </string>

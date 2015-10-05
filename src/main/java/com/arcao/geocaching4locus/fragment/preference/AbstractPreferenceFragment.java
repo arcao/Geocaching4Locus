@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
 	protected SharedPreferences mPrefs;
 
+	@SuppressWarnings("unchecked")
 	protected <P extends Preference> P findPreference(CharSequence key, Class<P> clazz) {
 		return (P)super.findPreference(key);
 	}

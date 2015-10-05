@@ -46,4 +46,10 @@ public interface AppConstants {
 	int LOGS_TO_UPDATE_MAX = 100;
 
 	float MILES_PER_KILOMETER = 1.609344F;
+	float DISTANCE_KM_DEFAULT = 50;
+	float DISTANCE_MILES_DEFAULT = 50 / MILES_PER_KILOMETER;
+
+	// restrictions in Geocaching Live Service
+	float DISTANCE_KM_MIN = 0.1F;
+	float DISTANCE_KM_MAX = 50;
 }

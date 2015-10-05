@@ -337,13 +337,13 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     boolean imperialUnits = mPrefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
 
     double distance = PreferenceUtil.getParsedDouble(mPrefs, PrefConstants.FILTER_DISTANCE,
-        imperialUnits ? 31.0685596 : 50);
+        imperialUnits ? AppConstants.DISTANCE_MILES_DEFAULT : AppConstants.DISTANCE_KM_DEFAULT);
     if (imperialUnits) {
       distance *= AppConstants.MILES_PER_KILOMETER;
     }
 
     // fix for min and max distance error in Geocaching Live API
-    return (float) Math.max(Math.min(distance, 50), 0.1);
+    return (float) Math.max(Math.min(distance, AppConstants.DISTANCE_KM_MAX), AppConstants.DISTANCE_KM_MIN);
   }
 
   private double computeDistance(@NonNull Coordinates coordinates, @NonNull Geocache cache) {

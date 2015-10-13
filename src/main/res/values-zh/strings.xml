@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">下载藏点……</string>
-    <string name="error_locus_not_found">Locus Map应用程序没有发现，但Geocaching4Locus它要求才能正常工作。请安装Locus Map。</string>
+    <string name="error_locus_not_found">没有找到Locus Map应用，Geocaching4Locus需要依靠Locus Map才能正常工作。请先安装Locus Map。</string>
     <string name="error_location">请在“设置”中允许无线设备或GPS的定位功能。</string>
     <string name="acquiring_gps_location">正在从GPS获取位置信息</string>
     <string name="acquiring_network_location">正在从无线网络中获取位置信息……</string>

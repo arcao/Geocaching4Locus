@@ -43,7 +43,7 @@ public class ServerTimestampServiceImpl extends TimestampServiceImpl {
 				is = c.getInputStream();
 				Timber.i("Response: " + IOUtils.toString(is));
 				if (date > 0) {
-					Timber.i("We got time: " + date);
+					Timber.i("We got time: " + c.getHeaderField("Date") + " = "  + date);
 					return new Date(date);
 				}
 			}

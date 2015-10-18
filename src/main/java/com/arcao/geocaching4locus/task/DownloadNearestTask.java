@@ -246,12 +246,12 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     filters.add(new GeocacheExclusionsFilter(false, showDisabled ? null : true, null));
 
     boolean showFound = mPrefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
-    if (showFound) {
+    if (!showFound) {
       filters.add(new NotFoundByUsersFilter(userName));
     }
 
     boolean showOwn = mPrefs.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
-    if (showOwn) {
+    if (!showOwn) {
       filters.add(new NotHiddenByUsersFilter(userName));
     }
 

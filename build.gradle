@@ -17,7 +17,8 @@ apply plugin: 'io.fabric'
 repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
-    maven { url "http://maven.arcao.com/" }
+    maven { url 'https://jitpack.io' }
+    maven { url 'http://maven.arcao.com' }
 }
 
 dependencies {
@@ -43,7 +44,9 @@ dependencies {
         exclude group: 'commons-codec', module: 'commons-codec' // already in Android
     }
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.afollestad:material-dialogs:0.7.9.1'
+    compile('com.afollestad.material-dialogs:core:0.8.4.2@aar') {
+        transitive = true
+    }
     compile 'com.crashlytics.sdk.android:crashlytics:2.5.2'
 }
 

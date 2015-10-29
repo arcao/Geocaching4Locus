@@ -182,7 +182,8 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 							urlLowerCase.contains("/mobileoauth/") ||
 							urlLowerCase.contains("/mobilesignin/") ||
 							urlLowerCase.contains("/mobilecontent/") ||
-							urlLowerCase.contains("//m.facebook");
+							urlLowerCase.contains("//m.facebook") ||
+							urlLowerCase.contains("/login/fbc.aspx");
 		}
 
 		@Override

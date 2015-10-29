@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
@@ -78,29 +79,31 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-						.title(R.string.dialog_gc_number_input_title)
-						.positiveText(R.string.ok_button)
-						.negativeText(R.string.cancel_button)
-						.customView(R.layout.dialog_gc_number_input, false)
-						.autoDismiss(false)
-						.callback(new MaterialDialog.ButtonCallback() {
-							@Override
-							public void onPositive(MaterialDialog dialog) {
-								if (validateInput(mEditText)) {
-									fireOnInputFinished(mEditText.getText().toString());
-									dialog.dismiss();
-								} else {
-									mLayout.setError(getString(R.string.error_input_gc));
-								}
-							}
-
-							@Override
-							public void onNegative(MaterialDialog dialog) {
-								fireOnInputFinished(null);
-								dialog.dismiss();
-							}
-						})
-						.build();
+				.title(R.string.dialog_gc_number_input_title)
+				.positiveText(R.string.ok_button)
+				.negativeText(R.string.cancel_button)
+				.customView(R.layout.dialog_gc_number_input, false)
+				.autoDismiss(false)
+				.onPositive(new MaterialDialog.SingleButtonCallback() {
+					@Override
+					public void onClick(@NonNull MaterialDialog materialDialog,
+							@NonNull DialogAction dialogAction) {
+						if (validateInput(mEditText)) {
+							fireOnInputFinished(mEditText.getText().toString());
+							materialDialog.dismiss();
+						} else {
+							mLayout.setError(getString(R.string.error_input_gc));
+						}
+					}
+				})
+				.onNegative(new MaterialDialog.SingleButtonCallback() {
+					@Override
+					public void onClick(@NonNull MaterialDialog materialDialog,
+							@NonNull DialogAction dialogAction) {
+						fireOnInputFinished(null);
+						materialDialog.dismiss();
+					}
+				}).build();
 
 		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 

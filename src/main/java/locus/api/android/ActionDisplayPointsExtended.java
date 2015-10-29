@@ -21,7 +21,8 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 				intentFlags);
 	}
 
-	public static boolean sendPacksFile(String action, Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
+	private static boolean sendPacksFile(String action, Context context, File file,
+			boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
 		if (!file.exists())
 			return false;
 

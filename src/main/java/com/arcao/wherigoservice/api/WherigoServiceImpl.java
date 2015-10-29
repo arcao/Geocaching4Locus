@@ -18,8 +18,8 @@ import java.util.zip.InflaterInputStream;
 
 public class WherigoServiceImpl implements WherigoService {
 	private static final String BASE_URL = "http://wherigo-service.appspot.com/api/";
-	public static final int TIMEOUT_MILLIS = 30000;
-	public static final int HTTP_400 = 400;
+	private static final int TIMEOUT_MILLIS = 30000;
+	private static final int HTTP_400 = 400;
 
 	@Override
 	public String getCacheCodeFromGuid(String cacheGuid) throws WherigoServiceException {

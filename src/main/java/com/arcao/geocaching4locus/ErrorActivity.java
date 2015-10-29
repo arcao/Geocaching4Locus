@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
@@ -91,14 +92,15 @@ public class ErrorActivity extends AppCompatActivity {
 				builder.negativeText(negativeButtonText);
 			}
 
-			builder.callback(new MaterialDialog.ButtonCallback() {
+			builder.onPositive(new MaterialDialog.SingleButtonCallback() {
 				@Override
-				public void onPositive(MaterialDialog dialog) {
-					if (dialog.getCustomView() != null) {
-						final Checkable checkBox = (Checkable) dialog.getCustomView().findViewById(R.id.checkbox);
+				public void onClick(@NonNull MaterialDialog materialDialog,
+						@NonNull DialogAction dialogAction) {
+					if (materialDialog.getCustomView() != null) {
+						final Checkable checkBox = (Checkable) materialDialog.getCustomView().findViewById(R.id.checkbox);
 						if (checkBox != null && checkBox.isChecked()) {
 							Crashlytics.logException(t);
-							Toast.makeText(dialog.getContext(), R.string.error_report_sent_toast, Toast.LENGTH_LONG)
+							Toast.makeText(materialDialog.getContext(), R.string.error_report_sent_toast, Toast.LENGTH_LONG)
 											.show();
 						}
 					}
@@ -108,9 +110,11 @@ public class ErrorActivity extends AppCompatActivity {
 					}
 					getActivity().finish();
 				}
-
+			});
+			builder.onNegative(new MaterialDialog.SingleButtonCallback() {
 				@Override
-				public void onNegative(MaterialDialog dialog) {
+				public void onClick(@NonNull MaterialDialog materialDialog,
+						@NonNull DialogAction dialogAction) {
 					getActivity().finish();
 				}
 			});

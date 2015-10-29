@@ -28,8 +28,8 @@ public class WherigoJsonResultParser {
 	}
 
 	public static class Result {
-		protected int statusCode;
-		protected String statusMessage;
+		private int statusCode;
+		private String statusMessage;
 
 		public int getStatusCode() {
 			return statusCode;

@@ -41,7 +41,7 @@ public class AccountRestrictions {
 		init();
 	}
 
-	protected void init() {
+	private void init() {
 		maxFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, Long.MAX_VALUE);
 		currentFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);
 		fullGeocacheLimitPeriod = mPrefs.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD);
@@ -137,7 +137,7 @@ public class AccountRestrictions {
 		return fullGeocacheLimitPeriod;
 	}
 
-	protected void checkRenewPeriod() {
+	private void checkRenewPeriod() {
 		if (renewFullGeocacheLimit.before(new Date())) {
 			Calendar c = Calendar.getInstance();
 			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);

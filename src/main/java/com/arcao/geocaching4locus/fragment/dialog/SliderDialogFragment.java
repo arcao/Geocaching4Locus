@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import org.apache.commons.lang3.ArrayUtils;
@@ -113,22 +114,21 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 		}
 
 		return new MaterialDialog.Builder(getActivity())
-						.title(getArguments().getInt(PARAM_TITLE))
-						.customView(prepareView(), false)
-						.positiveText(R.string.ok_button)
-						.negativeText(R.string.cancel_button)
-						.callback(new MaterialDialog.ButtonCallback() {
-							@Override
-							public void onPositive(MaterialDialog dialog) {
-								mNewValue = mValue;
-								fireDialogClose();
-							}
+				.title(getArguments().getInt(PARAM_TITLE))
+				.customView(prepareView(), false)
+				.positiveText(R.string.ok_button)
+				.negativeText(R.string.cancel_button)
+				.onAny(new MaterialDialog.SingleButtonCallback() {
+					@Override
+					public void onClick(@NonNull MaterialDialog materialDialog,
+							@NonNull DialogAction dialogAction) {
+						if (dialogAction == DialogAction.POSITIVE)
+							mNewValue = mValue;
 
-							@Override
-							public void onNegative(MaterialDialog dialog) {
-								fireDialogClose();
-							}
-						}).build();
+						fireDialogClose();
+					}
+				})
+				.build();
 	}
 
 	@Override

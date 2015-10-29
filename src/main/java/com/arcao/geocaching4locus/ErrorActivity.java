@@ -21,11 +21,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import com.crashlytics.android.Crashlytics;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
+import timber.log.Timber;
 
 public class ErrorActivity extends AppCompatActivity {
-	private static final String PARAM_ARGUMENTS = "ARGS";
-
 	private static final String KEY_TITLE = "TITLE";
 	private static final String KEY_MESSAGE = "MESSAGE";
 	private static final String KEY_POSITIVE_ACTION = "POSITIVE_ACTION";
@@ -42,7 +42,11 @@ public class ErrorActivity extends AppCompatActivity {
 	}
 
 	private void showErrorDialog () {
-		Bundle args = getIntent().getBundleExtra(PARAM_ARGUMENTS);
+		Bundle args = getIntent().getExtras();
+		if (args == null) {
+			finish();
+			return;
+		}
 
 		ErrorDialogFragment.newInstance(args)
 			.show(getFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
@@ -63,14 +67,16 @@ public class ErrorActivity extends AppCompatActivity {
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			final Bundle args = getArguments();
+			if (args == null) {
+				Timber.e("getArguments() is null");
+			}
 
-			final CharSequence title = args.getCharSequence(KEY_TITLE);
-			final CharSequence message = args.getCharSequence(KEY_MESSAGE);
-			final Intent positiveAction = args.getParcelable(KEY_POSITIVE_ACTION);
-			int positiveButtonText = args.getInt(KEY_POSITIVE_BUTTON_TEXT);
-			int negativeButtonText = args.getInt(KEY_NEGATIVE_BUTTON_TEXT);
-			final Throwable t = (Throwable) args.getSerializable(KEY_EXCEPTION);
-
+			final CharSequence title = args != null ? args.getCharSequence(KEY_TITLE) : null;
+			final CharSequence message = args != null ? args.getCharSequence(KEY_MESSAGE) : StringUtils.EMPTY;
+			final Intent positiveAction = args != null ? args.<Intent>getParcelable(KEY_POSITIVE_ACTION) : null;
+			int positiveButtonText = args != null ? args.getInt(KEY_POSITIVE_BUTTON_TEXT) : 0;
+			int negativeButtonText = args != null ? args.getInt(KEY_NEGATIVE_BUTTON_TEXT) : 0;
+			final Throwable t = (Throwable) (args != null ? args.getSerializable(KEY_EXCEPTION) : null);
 
 			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
 					.positiveText(positiveButtonText != 0 ? positiveButtonText : R.string.ok_button);
@@ -187,16 +193,13 @@ public class ErrorActivity extends AppCompatActivity {
 
 		@Override
 		public Intent build() {
-			Bundle args = new Bundle();
-			args.putCharSequence(KEY_TITLE, title);
-			args.putCharSequence(KEY_MESSAGE, message);
-			args.putParcelable(KEY_POSITIVE_ACTION, positiveAction);
-			args.putInt(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText);
-			args.putInt(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText);
-			args.putSerializable(KEY_EXCEPTION, exception);
-
 			return new Intent(context, ErrorActivity.class)
-					.putExtra(PARAM_ARGUMENTS, args);
+					.putExtra(KEY_TITLE, title)
+					.putExtra(KEY_MESSAGE, message)
+					.putExtra(KEY_POSITIVE_ACTION, positiveAction)
+					.putExtra(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText)
+					.putExtra(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText)
+					.putExtra(KEY_EXCEPTION, exception);
 		}
 	}
 }

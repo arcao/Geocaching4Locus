@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -19,13 +18,11 @@ import com.arcao.geocaching4locus.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.util.UserTask;
+import com.arcao.wherigoservice.api.WherigoApiFactory;
 import com.arcao.wherigoservice.api.WherigoService;
-import com.arcao.wherigoservice.api.WherigoServiceImpl;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
@@ -76,7 +73,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
 
-		WherigoService wherigoService = new WherigoServiceImpl();
+		WherigoService wherigoService = WherigoApiFactory.create();
 
 		String cacheId = params[0];
 

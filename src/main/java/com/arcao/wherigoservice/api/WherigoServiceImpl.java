@@ -1,35 +1,37 @@
 package com.arcao.wherigoservice.api;
 
+import com.arcao.geocaching.api.exception.InvalidResponseException;
+import com.arcao.geocaching.api.exception.NetworkException;
+import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 import com.google.gson.stream.MalformedJsonException;
-import org.apache.commons.io.IOUtils;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import timber.log.Timber;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
-
 public class WherigoServiceImpl implements WherigoService {
+	private static final Logger logger = LoggerFactory.getLogger(WherigoServiceImpl.class);
+
 	private static final String BASE_URL = "http://wherigo-service.appspot.com/api/";
-	private static final int TIMEOUT_MILLIS = 30000;
-	private static final int HTTP_400 = 400;
+	private final JsonDownloader downloader;
+
+	public WherigoServiceImpl(JsonDownloader downloader) {
+		this.downloader = downloader;
+	}
 
 	@Override
 	public String getCacheCodeFromGuid(String cacheGuid) throws WherigoServiceException {
 		String cacheCode = null;
 
 		try {
-			JsonReader r = callGet(
-					"getCacheCodeFromGuid?CacheGUID=" + cacheGuid +
-					"&format=json"
-			);
+			JsonReader r = callGet("getCacheCodeFromGuid?CacheGUID=" + cacheGuid +
+					"&format=json");
 
 			r.beginObject();
 			checkError(r);
@@ -54,6 +56,11 @@ public class WherigoServiceImpl implements WherigoService {
 			r.endObject();
 			r.close();
 			Timber.i("Cache code: " + cacheCode);
+
+		} catch (NetworkException e) {
+			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
+		} catch (InvalidResponseException e) {
+			throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: " + e.getMessage(), e);
 		} catch (IOException e) {
 			Timber.e(e, e.toString());
 			if (!isGsonException(e)) {
@@ -83,71 +90,48 @@ public class WherigoServiceImpl implements WherigoService {
 		}
 	}
 
-	private JsonReader callGet(String function) throws WherigoServiceException {
-		InputStream is = null;
-		InputStreamReader isr;
-
-		Timber.i("Getting " + maskParameterValues(function));
+	protected JsonReader callGet(String function) throws NetworkException, InvalidResponseException {
+		logger.debug("Getting " + maskParameterValues(function));
 
 		try {
-			URL url = new URL(BASE_URL + function);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-			// important! sometimes GC API takes too long to return response
-			con.setConnectTimeout(TIMEOUT_MILLIS);
-			con.setReadTimeout(TIMEOUT_MILLIS);
-
-			con.setRequestMethod("GET");
-			//con.setRequestProperty("User-Agent", "Geocaching/4.0 CFNetwork/459 Darwin/10.0.0d3");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("Accept-Language", "en-US");
-			con.setRequestProperty("Accept-Encoding", "gzip, deflate");
-
-			if (con.getResponseCode() >= HTTP_400) {
-				is = con.getErrorStream();
-			} else {
-				is = con.getInputStream();
-			}
-
-			final String encoding = con.getContentEncoding();
-
-			if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
-				Timber.i("callGet(): GZIP OK");
-				is = new GZIPInputStream(is);
-			} else if (encoding != null && encoding.equalsIgnoreCase("deflate")) {
-				Timber.i("callGet(): DEFLATE OK");
-				is = new InflaterInputStream(is, new Inflater(true));
-			} else {
-				Timber.i("callGet(): WITHOUT COMPRESSION");
-			}
-
-			if (con.getResponseCode() >= HTTP_400) {
-				try {
-					String content = IOUtils.toString(is, "UTF-8");
-					// read error response
-					throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, content);
-				} finally {
-					IOUtils.closeQuietly(is);
-				}
-			}
-
-			isr = new InputStreamReader(is, "UTF-8");
-			return new JsonReader(isr);
-		} catch (Exception e) {
-			IOUtils.closeQuietly(is);
-
-			Timber.e(e, e.toString());
-			throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getClass().getSimpleName(), e);
+			URL url = new URL(BASE_URL + "/" + function);
+			return downloader.get(url);
+		} catch (MalformedURLException e) {
+			logger.error(e.toString(), e);
+			throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
 		}
 	}
 
-	private String maskParameterValues(String function) {
-		// do nothing
-		//function = function.replaceAll("([Aa]ccess[Tt]oken=)([^&]+)", "$1******");
+	protected JsonReader callPost(String function, String postBody) throws NetworkException, InvalidResponseException {
+		logger.debug("Posting " + maskParameterValues(function));
+		logger.debug("Body: " + maskJsonParameterValues(postBody));
+
+		try {
+			byte[] postData = postBody.getBytes("UTF-8");
+			URL url = new URL(BASE_URL + "/" + function);
+
+			return downloader.post(url, postData);
+		} catch (MalformedURLException e) {
+			logger.error(e.toString(), e);
+			throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
+		} catch (UnsupportedEncodingException e) {
+			logger.error(e.toString(), e);
+			throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + "): " + e.getMessage(), e);
+		}
+	}
+
+	protected String maskParameterValues(String function) {
+		function = function.replaceAll("([Aa]ccess[Tt]oken=)([^&]+)", "$1******");
 		return function;
 	}
 
-	private boolean isGsonException(Throwable t) {
-		return IOException.class.equals(t.getClass()) || t instanceof MalformedJsonException || t instanceof IllegalStateException || t instanceof NumberFormatException;
+	protected String maskJsonParameterValues(String postBody) {
+		postBody = postBody.replaceAll("(\"[Aa]ccess[Tt]oken\"\\s*:\\s*\")([^\"]+)(\")", "$1******$3");
+		return postBody;
+	}
+
+	protected boolean isGsonException(Throwable t) {
+		// This IOException mess will be fixed in a next GSON release
+		return (IOException.class.equals(t.getClass()) && t.getMessage() != null && t.getMessage().startsWith("Expected JSON document")) || t instanceof MalformedJsonException || t instanceof IllegalStateException || t instanceof NumberFormatException;
 	}
 }

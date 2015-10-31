@@ -9,12 +9,8 @@ import org.scribe.model.Token;
 import org.scribe.services.TimestampService;
 import org.scribe.utils.OAuthEncoder;
 
-import java.net.URI;
-
 public class GeocachingOAuthProvider extends DefaultApi10a {
-	private static final URI TIMESTAMP_URI = URI.create("http://www.geocaching.com/robots.txt");
 	private static final String OAUTH_URL = "https://www.geocaching.com/oauth/mobileoauth.ashx";
-
 	private TimestampService timestampService = null;
 
 	@Override
@@ -30,7 +26,7 @@ public class GeocachingOAuthProvider extends DefaultApi10a {
 	@Override
 	public TimestampService getTimestampService() {
 		if (timestampService == null)
-			timestampService = new ServerTimestampServiceImpl(TIMESTAMP_URI);
+			timestampService = new ServerTimestampServiceImpl();
 		return timestampService;
 	}
 

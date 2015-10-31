@@ -1,24 +1,26 @@
 package com.arcao.geocaching.api.oauth.services;
 
-import org.apache.commons.io.IOUtils;
-import org.scribe.exceptions.OAuthConnectionException;
-import org.scribe.services.TimestampServiceImpl;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.util.Date;
+import com.arcao.wherigoservice.api.WherigoApiFactory;
 import java.util.Random;
-
+import org.scribe.services.TimestampServiceImpl;
 import timber.log.Timber;
 
 public class ServerTimestampServiceImpl extends TimestampServiceImpl {
 	private final Random rand = new Random();
 	private final long ts;
 
-	public ServerTimestampServiceImpl(URI uri) {
-		ts = getServerDate(uri).getTime() / 1000;
+	public ServerTimestampServiceImpl() {
+		long time;
+		try {
+			time = WherigoApiFactory.create().getTime();
+			Timber.i("server time received (ms): " + time);
+		} catch (Exception e) {
+			time = System.currentTimeMillis();
+			Timber.e(e, "No server time received. Used system time (ms): " + time);
+		}
+
+		// timestamp in seconds
+		ts = time / 1000;
 	}
 
 	@Override
@@ -29,31 +31,5 @@ public class ServerTimestampServiceImpl extends TimestampServiceImpl {
 	@Override
 	public String getNonce() {
 		return String.valueOf(ts + rand.nextInt());
-	}
-
-	private static Date getServerDate(URI uri) {
-		InputStream is = null;
-		try {
-			Timber.i("Getting server time from url: " + uri);
-			HttpURLConnection c = (HttpURLConnection) uri.toURL().openConnection();
-			c.setRequestMethod("GET");
-			c.connect();
-			if (c.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				long date = c.getDate();
-				is = c.getInputStream();
-				Timber.i("Response: " + IOUtils.toString(is));
-				if (date > 0) {
-					Timber.i("We got time: " + c.getHeaderField("Date") + " = "  + date);
-					return new Date(date);
-				}
-			}
-		} catch (IOException e) {
-			throw new OAuthConnectionException(e);
-		} finally {
-			IOUtils.closeQuietly(is);
-		}
-
-		Timber.e("No Date header found in a response, used device time instead.");
-		return new Date();
 	}
 }

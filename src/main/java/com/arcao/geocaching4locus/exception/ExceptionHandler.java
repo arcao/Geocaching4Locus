@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+import java.net.ConnectException;
 import org.apache.commons.lang3.StringUtils;
 import org.scribe.exceptions.OAuthConnectionException;
 import timber.log.Timber;
@@ -92,7 +93,8 @@ public class ExceptionHandler {
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
-			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)) {
+			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)
+					&& !(innerT instanceof ConnectException)) {
 				builder.setException(t);
 			}
 

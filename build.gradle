@@ -48,6 +48,7 @@ dependencies {
         transitive = true
     }
     compile 'com.crashlytics.sdk.android:crashlytics:2.5.2'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
 }
 
 def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()

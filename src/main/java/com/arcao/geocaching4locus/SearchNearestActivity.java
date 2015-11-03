@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -366,9 +367,14 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @Override
   public void onDownloadFinished(Intent intent) {
     if (intent != null) {
-      setResult(RESULT_OK);
-      finish();
-      startActivity(intent);
+      if (intent.resolveActivity(getPackageManager()) != null) {
+        setResult(RESULT_OK);
+        finish();
+        startActivity(intent);
+      } else {
+        Toast.makeText(this,
+            "Unable to start Locus Map application. Is Locus Map application installed?", Toast.LENGTH_LONG).show();
+      }
     }
   }
 

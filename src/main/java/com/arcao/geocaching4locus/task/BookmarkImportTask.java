@@ -64,6 +64,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
       throw new InvalidCredentialsException("Account not found.");
 
     GeocachingApi api = GeocachingApiFactory.create();
+    LocusDataMapper mapper = new LocusDataMapper(mContext);
 
     login(api);
 
@@ -132,7 +133,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
           break;
 
         PackWaypoints pw = new PackWaypoints("BookmarkImport");
-        List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(mContext, cachesToAdd);
+        List<Waypoint> waypoints = mapper.toLocusPoints(cachesToAdd);
 
         for (Waypoint wpt : waypoints) {
           if (simpleCacheData) {

@@ -74,6 +74,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 			throw new InvalidCredentialsException("Account not found.");
 
 		WherigoService wherigoService = WherigoApiFactory.create();
+		LocusDataMapper mapper = new LocusDataMapper(mContext);
 
 		String cacheId = params[0];
 
@@ -108,7 +109,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 			try {
 				slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
-				Waypoint waypoint = LocusDataMapper.toLocusPoint(mContext, cache);
+				Waypoint waypoint = mapper.toLocusPoint(cache);
 				PackWaypoints pack = new PackWaypoints("import");
 				pack.addWaypoint(waypoint);
 

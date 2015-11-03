@@ -36,6 +36,7 @@ import locus.api.utils.DataWriterBigEndian;
 import timber.log.Timber;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
+
 	public interface TaskListener {
 		enum State {
 			CACHE,
@@ -49,10 +50,12 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 	private final WeakReference<TaskListener> mTaskListenerRef;
 	private final Context mContext;
+	private final LocusDataMapper mMapper;
 
 	public UpdateTask(Context context, TaskListener listener) {
 		mContext = context.getApplicationContext();
 		mTaskListenerRef = new WeakReference<>(listener);
+		mMapper = new LocusDataMapper(mContext);
 	}
 
 	@Override
@@ -78,15 +81,14 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			return;
 		}
 
-		Waypoint p;
+		Waypoint p = result.oldPoint;
 		if (result.updateLogs && !downloadLogsUpdateCache) {
-			p = LocusDataMapper.mergeCacheLogs(result.oldPoint, result.newPoint);
+			mMapper.mergeCacheLogs(result.oldPoint, result.newPoint);
 			result.newPoint = p;
 		} else {
-			p = LocusDataMapper.mergePoints(mContext, result.newPoint, result.oldPoint);
+			mMapper.mergePoints(result.newPoint, result.oldPoint);
 
 			if (replaceCache) {
-				//ActionDisplayPointsExtended.storeGeocacheToCache(mContext, p);
 				p.removeExtraOnDisplay();
 			}
 		}
@@ -164,7 +166,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			if (isCancelled())
 				return null;
 
-			result.newPoint = LocusDataMapper.toLocusPoint(mContext, cache);
+			result.newPoint = mMapper.toLocusPoint(cache);
 
 
 			if (result.updateLogs || resultQuality == GeocachingApi.ResultQuality.SUMMARY) {
@@ -185,7 +187,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 						break;
 					}
 
-					LocusDataMapper.addCacheLogs(result.newPoint, retrievedLogs);
+					mMapper.addCacheLogs(result.newPoint, retrievedLogs);
 
 					startIndex += retrievedLogs.size();
 				}

@@ -82,6 +82,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = GeocachingApiFactory.create();
+		LocusDataMapper mapper = new LocusDataMapper(mContext);
 
 		GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
 		if (!authenticatorHelper.getRestrictions().isPremiumMember()) {
@@ -121,7 +122,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				if (cachesToAdd.size() == 0)
 					break;
 
-				List<Waypoint> points = LocusDataMapper.toLocusPoints(mContext, cachesToAdd);
+				List<Waypoint> points = mapper.toLocusPoints(cachesToAdd);
 
 				for (Waypoint p : points) {
 					if (p == null || p.gcData == null)
@@ -130,7 +131,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					// Geocaching API can return caches in a different order
 					Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
 
-					p = LocusDataMapper.mergePoints(mContext, p, oldPoint);
+					mapper.mergePoints(p, oldPoint);
 
 					// update new point data in Locus
 					ActionTools.updateLocusWaypoint(mContext, locusVersion, p, false);

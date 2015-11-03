@@ -199,6 +199,8 @@ public class LiveMapService extends IntentService {
 			throw new InvalidCredentialsException("Account not found.");
 
 		GeocachingApi api = GeocachingApiFactory.create();
+		LocusDataMapper mapper = new LocusDataMapper(this);
+
 		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 
 		int current = 0;
@@ -254,7 +256,10 @@ public class LiveMapService extends IntentService {
 
 				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + requests);
 				for (Geocache cache : caches) {
-					Waypoint wpt = LocusDataMapper.toLocusPoint(getApplicationContext(), cache);
+					Waypoint wpt = mapper.toLocusPoint(cache);
+					if (wpt == null)
+						continue;
+
 					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCode());
 					pw.addWaypoint(wpt);
 				}

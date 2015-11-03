@@ -98,6 +98,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     Timber.i("source=search;coordinates=" + mCoordinates + ";count=" + mCount);
 
     GeocachingApi api = GeocachingApiFactory.create();
+    LocusDataMapper mapper = new LocusDataMapper(mContext);
 
 
     GeocachingApi.ResultQuality resultQuality = authenticatorHelper.getRestrictions().isPremiumMember() ?
@@ -152,7 +153,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         }
 
         PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-        List<Waypoint> waypoints = LocusDataMapper.toLocusPoints(mContext, cachesToAdd);
+        List<Waypoint> waypoints = mapper.toLocusPoints(cachesToAdd);
 
         for (Waypoint wpt : waypoints) {
           if (simpleCacheData) {

@@ -1,25 +1,48 @@
 package locus.api.mapper;
 
 import android.content.Context;
-import com.arcao.geocaching.api.data.*;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.GeocacheLog;
+import com.arcao.geocaching.api.data.ImageData;
+import com.arcao.geocaching.api.data.Trackable;
+import com.arcao.geocaching.api.data.User;
+import com.arcao.geocaching.api.data.UserWaypoint;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.coordinates.CoordinatesParser;
-import com.arcao.geocaching.api.data.type.*;
+import com.arcao.geocaching.api.data.type.AttributeType;
+import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheLogType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
+import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
-import locus.api.objects.extra.Location;
-import locus.api.objects.extra.Waypoint;
-import locus.api.objects.geocaching.*;
-import org.apache.commons.lang3.StringUtils;
-import timber.log.Timber;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import locus.api.objects.extra.Location;
+import locus.api.objects.extra.Waypoint;
+import locus.api.objects.geocaching.GeocachingAttribute;
+import locus.api.objects.geocaching.GeocachingData;
+import locus.api.objects.geocaching.GeocachingImage;
+import locus.api.objects.geocaching.GeocachingLog;
+import locus.api.objects.geocaching.GeocachingTrackable;
+import locus.api.objects.geocaching.GeocachingWaypoint;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import timber.log.Timber;
 
 public class LocusDataMapper {
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
@@ -36,16 +59,27 @@ public class LocusDataMapper {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
 
-	public static List<Waypoint> toLocusPoints(Context context, Iterable<Geocache> caches) {
-		List<Waypoint> points = new ArrayList<>();
+	private final Context mContext;
+
+	public LocusDataMapper(@NonNull Context context) {
+		mContext = context.getApplicationContext();
+	}
+
+	@NonNull
+	public List<Waypoint> toLocusPoints(@Nullable List<Geocache> caches) {
+		if (CollectionUtils.isEmpty(caches))
+			return Collections.emptyList();
+
+		List<Waypoint> points = new ArrayList<>(caches.size());
 		for (Geocache cache : caches) {
-			points.add(toLocusPoint(context, cache));
+			CollectionUtils.addIgnoreNull(points, toLocusPoint(cache));
 		}
 
 		return points;
 	}
 
-	public static locus.api.objects.extra.Waypoint toLocusPoint(Context context, Geocache cache) {
+	@Nullable
+	public locus.api.objects.extra.Waypoint toLocusPoint(@Nullable Geocache cache) {
 		if (cache == null)
 			return null;
 
@@ -73,14 +107,9 @@ public class LocusDataMapper {
 			d.setCacheUrl(GEOCACHE_GUID_LINK_PREFIX + cache.getGuid());
 		}
 
-		if (cache.getPlaceDate() != null)
-			d.setDateHidden(cache.getPlaceDate().getTime());
-
-		if (cache.getPublishDate() != null)
-			d.setDatePublished(cache.getPublishDate().getTime());
-
-		if (cache.getLastUpdateDate() != null)
-  	  d.setDateUpdated(cache.getLastUpdateDate().getTime());
+		d.setDateHidden(toSafeDateLong(cache.getPlaceDate()));
+		d.setDatePublished(toSafeDateLong(cache.getPublishDate()));
+ 	  d.setDateUpdated(toSafeDateLong(cache.getLastUpdateDate()));
 
 		d.setContainer(toLocusContainerType(cache.getContainerType()));
 		d.setFound(cache.isFoundByUser());
@@ -95,43 +124,51 @@ public class LocusDataMapper {
 		d.setFavoritePoints(cache.getFavoritePoints());
 
 		sortCacheLogsByCreated(cache.getGeocacheLogs());
-		for (GeocacheLog log : cache.getGeocacheLogs()) {
-			d.logs.add(toLocusCacheLog(log));
+
+		for (GeocacheLog log : CollectionUtils.emptyIfNull(cache.getGeocacheLogs())) {
+			CollectionUtils.addIgnoreNull(d.logs, toLocusCacheLog(log));
 		}
 
-		boolean trackableLightData = cache.getTrackables().size() > 100;
-		for (Trackable trackable : cache.getTrackables()) {
-			d.trackables.add(toLocusTrackable(trackable, trackableLightData));
+		boolean trackableLightData = cache.getTrackables() != null && cache.getTrackables().size() > 100;
+		for (Trackable trackable : CollectionUtils.emptyIfNull(cache.getTrackables())) {
+			CollectionUtils.addIgnoreNull(d.trackables, toLocusTrackable(trackable, trackableLightData));
 		}
 
-		for (com.arcao.geocaching.api.data.Waypoint waypoint : cache.getWaypoints()) {
-			d.waypoints.add(toLocusWaypoint(waypoint));
+		for (com.arcao.geocaching.api.data.Waypoint waypoint : CollectionUtils.emptyIfNull(
+				cache.getWaypoints())) {
+			CollectionUtils.addIgnoreNull(d.waypoints, toLocusWaypoint(waypoint));
 		}
 
-		for (ImageData image : cache.getImages()) {
+		for (ImageData image : CollectionUtils.emptyIfNull(cache.getImages())) {
 			d.addImage(toLocusImage(image));
 		}
 
-		for (AttributeType attribute : cache.getAttributes()) {
+		for (AttributeType attribute : CollectionUtils.emptyIfNull(cache.getAttributes())) {
+			if (attribute == null)
+				continue;
+
 			d.attributes.add(new GeocachingAttribute(attribute.getId(), attribute.isOn()));
 		}
 
-		for (com.arcao.geocaching.api.data.Waypoint waypoint : getWaypointsFromUserWaypoints(context, cache.getUserWaypoints(), cache.getCode())) {
-			d.waypoints.add(toLocusWaypoint(waypoint));
-		}
+		CollectionUtils.addIgnoreNull(d.waypoints,
+				toLocusWaypoint(getCorrectedCoordinateWaypoint(cache)));
 
-		for (com.arcao.geocaching.api.data.Waypoint waypoint : getWaypointsFromNote(context, cache.getPersonalNote(), cache.getCode())) {
-			d.waypoints.add(toLocusWaypoint(waypoint));
+		for (com.arcao.geocaching.api.data.Waypoint waypoint : CollectionUtils.emptyIfNull(
+				getWaypointsFromNote(cache))) {
+			CollectionUtils.addIgnoreNull(d.waypoints, toLocusWaypoint(waypoint));
 		}
 
 		p.gcData = d;
 
-		updateCacheLocationByCorrectedCoordinates(context, p, cache.getUserWaypoints());
+		updateCacheLocationByCorrectedCoordinates(p, cache.getUserWaypoints());
 
 		return p;
 	}
 
-	private static void sortCacheLogsByCreated(List<GeocacheLog> cacheLogs) {
+	private void sortCacheLogsByCreated(@Nullable List<GeocacheLog> cacheLogs) {
+		if (cacheLogs == null)
+			return;
+
 		Collections.sort(cacheLogs, new Comparator<GeocacheLog>() {
 			@Override
 			public int compare(GeocacheLog lhs, GeocacheLog rhs) {
@@ -141,7 +178,11 @@ public class LocusDataMapper {
 	}
 
 
-	private static GeocachingImage toLocusImage(ImageData image) {
+	@Nullable
+	private GeocachingImage toLocusImage(@Nullable ImageData image) {
+		if (image == null)
+			return null;
+
 		GeocachingImage i = new GeocachingImage();
 		i.setName(image.getName());
 		i.setDescription(image.getDescription());
@@ -151,10 +192,13 @@ public class LocusDataMapper {
 		return i;
 	}
 
-	private static void updateCacheLocationByCorrectedCoordinates(Context mContext, Waypoint p, Iterable<UserWaypoint> userWaypoints) {
-		UserWaypoint correctedCoordinateUserWaypoint = null;
+	private void updateCacheLocationByCorrectedCoordinates(@NonNull Waypoint p, @Nullable Collection<UserWaypoint> userWaypoints) {
+		if (CollectionUtils.isEmpty(userWaypoints))
+			return;
+
 
 		// find corrected coordinate user waypoint
+		UserWaypoint correctedCoordinateUserWaypoint = null;
 		for (UserWaypoint w : userWaypoints) {
 			if (w.isCorrectedCoordinate()) {
 				correctedCoordinateUserWaypoint = w;
@@ -192,9 +236,12 @@ public class LocusDataMapper {
 		location.set(newLocation);
 	}
 
-	private static GeocachingWaypoint toLocusWaypoint(com.arcao.geocaching.api.data.Waypoint waypoint) {
-		GeocachingWaypoint w = new GeocachingWaypoint();
+	@Nullable
+	private GeocachingWaypoint toLocusWaypoint(@Nullable com.arcao.geocaching.api.data.Waypoint waypoint) {
+		if (waypoint == null)
+			return null;
 
+		GeocachingWaypoint w = new GeocachingWaypoint();
 		w.setCode(waypoint.getWaypointCode());
 		w.setLat(waypoint.getLatitude());
 		w.setLon(waypoint.getLongitude());
@@ -205,9 +252,12 @@ public class LocusDataMapper {
 		return w;
 	}
 
-	private static GeocachingTrackable toLocusTrackable(Trackable trackable, boolean trackableLightData) {
-		GeocachingTrackable t = new GeocachingTrackable();
+	@Nullable
+	private GeocachingTrackable toLocusTrackable(@Nullable Trackable trackable, boolean trackableLightData) {
+		if (trackable == null)
+			return null;
 
+		GeocachingTrackable t = new GeocachingTrackable();
 		t.setId(trackable.getId());
 		t.setImgUrl(trackable.getTrackableTypeImage());
 		t.setName(trackable.getName());
@@ -218,7 +268,7 @@ public class LocusDataMapper {
 			t.setOriginalOwner(trackable.getOwner().getUserName());
 		}
 		t.setSrcDetails(trackable.getTrackablePage());
-		t.setReleased(trackable.getCreated().getTime());
+		t.setReleased(toSafeDateLong(trackable.getCreated()));
 
 		if (!trackableLightData) {
 			t.setDetails(trackable.getDescription());
@@ -227,22 +277,23 @@ public class LocusDataMapper {
 		return t;
 	}
 
-	public static Waypoint addCacheLogs(Waypoint to, Iterable<GeocacheLog> logs) {
-		if (to == null || to.gcData == null)
-			return to;
+	public void addCacheLogs(@NonNull Waypoint to, @Nullable Collection<GeocacheLog> logs) {
+		if (to.gcData == null || CollectionUtils.isEmpty(logs))
+			return;
 
 		for (GeocacheLog log : logs) {
-			to.gcData.logs.add(toLocusCacheLog(log));
+			CollectionUtils.addIgnoreNull(to.gcData.logs, toLocusCacheLog(log));
 		}
-
-		return to;
 	}
 
-	private static GeocachingLog toLocusCacheLog(GeocacheLog log) {
-		GeocachingLog l = new GeocachingLog();
+	@Nullable
+	private GeocachingLog toLocusCacheLog(@Nullable GeocacheLog log) {
+		if (log == null)
+			return null;
 
+		GeocachingLog l = new GeocachingLog();
 		l.setId(log.getId());
-		l.setDate(log.getVisited().getTime());
+		l.setDate(toSafeDateLong(log.getVisited()));
 		User author = log.getAuthor();
 		if (author != null) {
 			l.setFinder(author.getUserName());
@@ -259,7 +310,10 @@ public class LocusDataMapper {
 		return l;
 	}
 
-	private static int toLocusCacheType(GeocacheType cacheType) {
+	private int toLocusCacheType(@Nullable GeocacheType cacheType) {
+		if (cacheType == null)
+			return GeocachingData.CACHE_TYPE_UNDEFINED;
+
 		switch (cacheType) {
 			case CacheInTrashOutEvent:
 				return GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT;
@@ -304,7 +358,10 @@ public class LocusDataMapper {
 		}
 	}
 
-	private static int toLocusContainerType(ContainerType containerType) {
+	private int toLocusContainerType(@Nullable ContainerType containerType) {
+		if (containerType == null)
+			return GeocachingData.CACHE_SIZE_NOT_CHOSEN;
+
 		switch(containerType) {
 			case Huge:
 				return GeocachingData.CACHE_SIZE_HUGE;
@@ -321,11 +378,15 @@ public class LocusDataMapper {
 			case Small:
 				return GeocachingData.CACHE_SIZE_SMALL;
 			default:
-				return GeocachingData.CACHE_SIZE_OTHER;
+				return GeocachingData.CACHE_SIZE_NOT_CHOSEN;
 		}
 	}
 
-	private static String toLocusWaypointType(WaypointType waypointType) {
+	@NonNull
+	private String toLocusWaypointType(@Nullable WaypointType waypointType) {
+		if (waypointType == null)
+			return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE;
+
 		switch (waypointType) {
 			case FinalLocation:
 				return GeocachingWaypoint.CACHE_WAYPOINT_TYPE_FINAL;
@@ -344,7 +405,10 @@ public class LocusDataMapper {
 		}
 	}
 
-	private static int toLocusLogType(GeocacheLogType logType) {
+	private int toLocusLogType(@Nullable GeocacheLogType logType) {
+		if (logType == null)
+			return  GeocachingLog.CACHE_LOG_TYPE_UNKNOWN;
+
 		switch (logType) {
 			case Announcement:
 				return GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT;
@@ -389,16 +453,19 @@ public class LocusDataMapper {
 		}
 	}
 
-	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromNote(Context context, String note, String cacheCode) {
-		Collection<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
-		if (StringUtils.isBlank(note)) {
-			return res;
-		}
+	@Nullable
+	private Collection<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromNote(@NonNull Geocache geocache ) {
+		String note = geocache.getPersonalNote();
+		final String cacheCode = geocache.getCode();
+
+		if (StringUtils.isBlank(note))
+			return null;
+
+		Collection<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
 
 		int count = 0;
 		int nameCount = 0;
-
 		String namePrefix = "";
 
 		Matcher matcher = NOTE__COORDINATE_PATTERN.matcher(note);
@@ -426,7 +493,7 @@ public class LocusDataMapper {
 					}
 				} else {
 					nameCount++;
-					name = context.getString(R.string.user_waypoint_name, nameCount);
+					name = mContext.getString(R.string.user_waypoint_name, nameCount);
 				}
 
 				final String code = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2);
@@ -444,77 +511,90 @@ public class LocusDataMapper {
 			note = note.substring(matcher.start() + 1);
 			matcher = NOTE__COORDINATE_PATTERN.matcher(note);
 		}
+
 		return res;
 	}
 
-	private static Iterable<com.arcao.geocaching.api.data.Waypoint> getWaypointsFromUserWaypoints(Context context, Collection<UserWaypoint> userWaypoints, String cacheCode) {
-		Collection<com.arcao.geocaching.api.data.Waypoint> res = new ArrayList<>();
+	@Nullable
+	private com.arcao.geocaching.api.data.Waypoint getCorrectedCoordinateWaypoint(@NonNull Geocache geocache) {
+		final Collection<UserWaypoint> userWaypoints = geocache.getUserWaypoints();
+		final String cacheCode = geocache.getCode();
 
-		if (userWaypoints == null || userWaypoints.size() == 0)
-			return res;
+		if (CollectionUtils.isEmpty(userWaypoints))
+			return null;
 
-		int count = 1;
 		for (UserWaypoint uw : userWaypoints) {
-			if (!uw.isCorrectedCoordinate())
-				continue;
+			if (uw.isCorrectedCoordinate()) {
 
-			final String name = context.getString(R.string.final_location_name, count);
-			final String waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2);
+				final String name = mContext.getString(R.string.final_location_name);
+				final String waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID) + cacheCode.substring(2);
 
-			res.add(new com.arcao.geocaching.api.data.Waypoint(uw.getCoordinates(), new Date(), waypointCode, name, uw.getDescription(), WaypointType.FinalLocation));
-			count++;
-		}
-
-		return res;
-	}
-
-	public static Waypoint mergePoints(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
-		toPoint.removeExtraOnDisplay();
-
-		if (fromPoint == null || fromPoint.gcData == null)
-			return toPoint;
-
-		fixArchivedCacheLocation(toPoint, fromPoint);
-		mergeCacheLogs(toPoint, fromPoint);
-		fixComputedCoordinates(mContext, toPoint, fromPoint);
-		copyWaypointId(toPoint, fromPoint);
-		copyGcVote(toPoint, fromPoint);
-		fixEditedWaypoints(toPoint, fromPoint);
-
-		return toPoint;
-	}
-
-	// issue #14: Keep cache logs from GSAK when updating cache
-	public static Waypoint mergeCacheLogs(Waypoint toPoint, Waypoint fromPoint) {
-		if (fromPoint.gcData.logs.size() == 0)
-			return toPoint;
-
-		for(GeocachingLog fromLog : new ReverseListIterator<>(fromPoint.gcData.logs)) {
-			if (GSAK_USERNAME.equalsIgnoreCase(fromLog.getFinder())) {
-				fromLog.setDate(new Date().getTime());
-				toPoint.gcData.logs.add(0, fromLog);
+				return new com.arcao.geocaching.api.data.Waypoint(uw.getCoordinates(), new Date(),
+						waypointCode, name, uw.getDescription(), WaypointType.FinalLocation);
 			}
 		}
 
-		return toPoint;
+		return null;
+	}
+
+	public void mergePoints(@NonNull Waypoint toPoint, @Nullable Waypoint fromPoint) {
+		toPoint.removeExtraOnDisplay();
+
+		if (fromPoint == null || fromPoint.gcData == null)
+			return;
+
+		fixArchivedCacheLocation(toPoint, fromPoint);
+		mergeCacheLogs(toPoint, fromPoint);
+		fixComputedCoordinates(toPoint, fromPoint);
+		copyWaypointId(toPoint, fromPoint);
+		copyGcVote(toPoint, fromPoint);
+		fixEditedWaypoints(toPoint, fromPoint);
+	}
+
+	// issue #14: Keep cache logs from GSAK when updating cache
+	public void mergeCacheLogs(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
+		if (fromPoint.gcData == null || CollectionUtils.isEmpty(fromPoint.gcData.logs))
+			return;
+
+		for(GeocachingLog fromLog : new ReverseListIterator<>(fromPoint.gcData.logs)) {
+			if (GSAK_USERNAME.equalsIgnoreCase(fromLog.getFinder())) {
+				fromLog.setDate(System.currentTimeMillis());
+				toPoint.gcData.logs.add(0, fromLog);
+			}
+		}
+	}
+
+	private static long toSafeDateLong(@Nullable Date date) {
+		return date != null ? date.getTime() : 0;
 	}
 
 	// issue #13: Use old coordinates when cache is archived after update
-	private static Waypoint fixArchivedCacheLocation(Waypoint toPoint, Waypoint fromPoint) {
-		if (!toPoint.gcData.isArchived() || (fromPoint.getLocation().getLatitude() == 0 && fromPoint.getLocation().getLongitude() == 0)
-			|| Double.isNaN(fromPoint.getLocation().getLatitude()) || Double.isNaN(fromPoint.getLocation().getLongitude())
-			|| fromPoint.gcData.isComputed())
-			return toPoint;
+	private void fixArchivedCacheLocation(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
+		if (fromPoint.gcData == null || toPoint.gcData == null)
+			return;
 
-		toPoint.getLocation().setLatitude(fromPoint.getLocation().getLatitude());
-		toPoint.getLocation().setLongitude(fromPoint.getLocation().getLongitude());
+		double latitude = fromPoint.getLocation().getLatitude();
+		double longitude  = fromPoint.getLocation().getLongitude();
 
-		return toPoint;
+		// are valid coordinates
+		if (Double.isNaN(latitude) || Double.isNaN(longitude) || (latitude == 0 && longitude == 0))
+			return;
+
+		// is new point not archived or has computed coordinates
+		if (!toPoint.gcData.isArchived() || fromPoint.gcData.isComputed())
+			return;
+
+		// store coordinates to new point
+		toPoint.getLocation().setLatitude(latitude);
+		toPoint.getLocation().setLongitude(longitude);
 	}
 
-	private static Waypoint fixComputedCoordinates(Context mContext, Waypoint toPoint, Waypoint fromPoint) {
+	private void fixComputedCoordinates(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
+		if (fromPoint.gcData == null || toPoint.gcData == null)
+			return;
+
 		if (!fromPoint.gcData.isComputed() || toPoint.gcData.isComputed())
-			return toPoint;
+			return;
 
 		Location location = toPoint.getLocation();
 
@@ -537,47 +617,45 @@ public class LocusDataMapper {
 
 		// update coordinates to new location
 		location.set(fromPoint.getLocation());
-		return toPoint;
 	}
 
-	private static Waypoint copyWaypointId(Waypoint toPoint, Waypoint fromPoint) {
+	private void copyWaypointId(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
 		if (fromPoint.id == 0)
-			return toPoint;
+			return;
 
 		toPoint.id = fromPoint.id;
-
-		return toPoint;
 	}
 
 
-	private static GeocachingWaypoint getWaypointByNamePrefix(Waypoint fromPoint, String prefix) {
-		if (fromPoint.gcData == null)
+	@Nullable
+	private GeocachingWaypoint getWaypointByNamePrefix(@NonNull Waypoint fromPoint, @NonNull String prefix) {
+		if (fromPoint.gcData == null || CollectionUtils.isEmpty(fromPoint.gcData.waypoints))
 			return null;
 
 		for (GeocachingWaypoint waypoint : fromPoint.gcData.waypoints) {
-			if (waypoint.getCode() != null && waypoint.getCode().startsWith(prefix)) {
+			if (waypoint == null || StringUtils.isEmpty(waypoint.getCode()))
+				continue;
+
+			if (waypoint.getCode().startsWith(prefix))
 				return waypoint;
-			}
 		}
 
 		return null;
 	}
 
-	private static Waypoint copyGcVote(Waypoint toPoint, Waypoint fromPoint) {
-		if (fromPoint.gcData == null)
-			return toPoint;
+	private void copyGcVote(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
+		if (fromPoint.gcData == null || toPoint.gcData == null)
+			return;
 
 		toPoint.gcData.setGcVoteAverage(fromPoint.gcData.getGcVoteAverage());
 		toPoint.gcData.setGcVoteNumOfVotes(fromPoint.gcData.getGcVoteNumOfVotes());
 		toPoint.gcData.setGcVoteUserVote(fromPoint.gcData.getGcVoteUserVote());
-
-		return toPoint;
 	}
 
-	private static Waypoint fixEditedWaypoints(Waypoint toPoint, Waypoint fromPoint) {
-		if (fromPoint.gcData.waypoints == null || fromPoint.gcData.waypoints.size() == 0
-			|| toPoint.gcData == null || toPoint.gcData.waypoints.size() == 0)
-			return toPoint;
+	private void fixEditedWaypoints(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
+		if (toPoint.gcData == null || CollectionUtils.isEmpty(fromPoint.gcData.waypoints) ||
+				CollectionUtils.isEmpty(toPoint.gcData.waypoints))
+			return;
 
 		// find Waypoint with zero coordinates
 		for (GeocachingWaypoint waypoint : toPoint.gcData.waypoints) {
@@ -594,7 +672,5 @@ public class LocusDataMapper {
 
 			}
 		}
-
-		return toPoint;
 	}
 }

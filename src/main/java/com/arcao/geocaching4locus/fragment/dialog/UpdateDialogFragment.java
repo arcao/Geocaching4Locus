@@ -29,7 +29,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
 	public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
 		Bundle args = new Bundle();
-		args.putSerializable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint, updateLogs));
+		args.putParcelable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint, updateLogs));
 
 		UpdateDialogFragment fragment = new UpdateDialogFragment();
 		fragment.setArguments(args);
@@ -43,7 +43,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 		setRetainInstance(true);
 		setCancelable(false);
 
-		UpdateTaskData data = (UpdateTaskData) getArguments().getSerializable(PARAM_UPDATE_DATA);
+		UpdateTaskData data = getArguments().getParcelable(PARAM_UPDATE_DATA);
 
 		mTask = new UpdateTask(getActivity(), this);
 		mTask.execute(data);

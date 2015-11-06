@@ -156,7 +156,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	private static final int KEEP_ALIVE = 10;
 
 	private static final BlockingQueue<Runnable> sWorkQueue =
-						new LinkedBlockingQueue<>(MAXIMUM_POOL_SIZE);
+						new LinkedBlockingQueue<>();
 
 	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
 		private final AtomicInteger mCount = new AtomicInteger(1);

@@ -78,15 +78,14 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			return;
 		}
 
-		Waypoint p = result.oldPoint;
 		if (result.updateLogs && !downloadLogsUpdateCache) {
 			mMapper.mergeCacheLogs(result.oldPoint, result.newPoint);
-			result.newPoint = p;
+			result.newPoint = result.oldPoint;
 		} else {
 			mMapper.mergePoints(result.newPoint, result.oldPoint);
 
 			if (replaceCache) {
-				p.removeExtraOnDisplay();
+				result.newPoint.removeExtraOnDisplay();
 			}
 		}
 
@@ -101,7 +100,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		TaskListener listener = mTaskListenerRef.get();
 		if (listener != null) {
-			listener.onTaskFinished(LocusUtils.prepareResultExtraOnDisplayIntent(p, replaceCache));
+			listener.onTaskFinished(LocusUtils.prepareResultExtraOnDisplayIntent(result.newPoint, replaceCache));
 		}
 	}
 
@@ -237,7 +236,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 	public static class UpdateTaskData implements Parcelable {
 		protected final String cacheId;
-		protected final Waypoint oldPoint;
+		protected Waypoint oldPoint;
 		protected Waypoint newPoint = null;
 		protected final boolean updateLogs;
 
@@ -248,17 +247,14 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		}
 
 		private UpdateTaskData(Parcel in) {
-			Waypoint waypoint;
-
 			cacheId = in.readString();
 
 			try {
-				waypoint = new Waypoint(in.createByteArray());
+				byte[] data = in.createByteArray();
+				if (ArrayUtils.isNotEmpty(data)) oldPoint = new Waypoint(data);
 			} catch (IOException e) {
-				waypoint = new Waypoint();
 				Timber.e(e, e.getMessage());
 			}
-			oldPoint = waypoint;
 
 			try {
 				byte[] data = in.createByteArray();
@@ -283,14 +279,14 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 				byte[] data = oldPoint.getAsBytes();
 				dest.writeByteArray(data);
 			} else {
-				dest.writeByteArray(new byte[0]);
+				dest.writeByteArray(null);
 			}
 
 			if (newPoint != null) {
 				byte[] data = newPoint.getAsBytes();
 				dest.writeByteArray(data);
 			} else {
-				dest.writeByteArray(new byte[0]);
+				dest.writeByteArray(null);
 			}
 
 			dest.writeInt(updateLogs ? 1 : 0);

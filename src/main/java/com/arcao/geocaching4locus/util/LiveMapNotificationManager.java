@@ -28,7 +28,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
 	private static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
 	private static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
-	private static final long NOTIFICATION_TIMEOUT_MS = 1250;
+	private static final long NOTIFICATION_TIMEOUT_MS = 1500;
 	private static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
 
 	private static boolean mNotificationShown = false;

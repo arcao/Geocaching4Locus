@@ -34,7 +34,7 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 					accountPreference.setTitle(R.string.pref_account_login);
 					accountPreference.setSummary(R.string.pref_account_login_summary);
 				} else {
-					authenticatorHelper.addAccount(getActivity());
+					authenticatorHelper.requestSignOn(getActivity(), 0);
 				}
 
 				return true;
@@ -43,7 +43,8 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 
 		if (authenticatorHelper.hasAccount()) {
 			accountPreference.setTitle(R.string.pref_account_logout);
-			accountPreference.setSummary(prepareAccountSummary(authenticatorHelper.getAccount().name, R.string.pref_account_logout_summary));
+			//noinspection ConstantConditions
+			accountPreference.setSummary(prepareAccountSummary(authenticatorHelper.getAccount().name));
 		} else {
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);
@@ -59,11 +60,8 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		});
 	}
 
-	private CharSequence prepareAccountSummary(CharSequence value, int resId) {
-		String summary = "%s";
-		if (resId != 0)
-			summary = getText(resId).toString();
-
+	private CharSequence prepareAccountSummary(CharSequence value) {
+		String summary = getString(R.string.pref_account_logout_summary);
 		return SpannedFix.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
 	}
 }

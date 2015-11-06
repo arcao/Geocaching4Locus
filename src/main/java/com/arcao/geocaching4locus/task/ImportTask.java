@@ -131,7 +131,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
-			authenticatorHelper.invalidateAuthToken();
+			authenticatorHelper.invalidateOAuthToken();
 
 			throw e;
 		}
@@ -161,7 +161,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 
-		String token = authenticatorHelper.getAuthToken();
+		String token = authenticatorHelper.getOAuthToken();
 		if (token == null) {
 			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");

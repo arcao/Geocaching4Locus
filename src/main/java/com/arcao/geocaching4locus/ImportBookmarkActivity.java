@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkCachesFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
-  private static final int REQUEST_LOGIN = 1;
+  private static final int REQUEST_SIGN_ON = 1;
 
   @Bind(R.id.toolbar) Toolbar toolbar;
 
@@ -51,7 +51,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     }
 
     // test if user is logged in
-    if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+    if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_SIGN_ON)) {
       return;
     }
 
@@ -123,7 +123,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     super.onActivityResult(requestCode, resultCode, data);
 
     // restart update process after log in
-    if (requestCode == REQUEST_LOGIN) {
+    if (requestCode == REQUEST_SIGN_ON) {
       if (resultCode == RESULT_OK) {
         showBookmarkList();
       } else {

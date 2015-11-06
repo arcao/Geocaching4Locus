@@ -3,6 +3,8 @@ package com.arcao.geocaching4locus.task;
 import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.UserProfile;
@@ -26,9 +28,8 @@ import java.lang.ref.WeakReference;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	public interface TaskListener {
-		void onLoginUrlAvailable(String url);
-
-		void onTaskFinished(Intent errorIntent);
+		void onLoginUrlAvailable(@NonNull String url);
+		void onTaskFinished(@Nullable Intent errorIntent);
 	}
 
 	private final Context mContext;
@@ -64,12 +65,12 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 		if (params.length == 0) {
 			Token requestToken = service.getRequestToken();
-			app.storeOAuthToken(requestToken);
+			helper.setOAuthRequestToken(requestToken);
 			String authUrl = service.getAuthorizationUrl(requestToken);
 			Timber.i("AuthorizationUrl: " + authUrl);
 			return new String[]{authUrl};
 		} else {
-			Token requestToken = app.getOAuthToken();
+			Token requestToken = helper.getOAuthRequestToken();
 			Token accessToken = service.getAccessToken(requestToken, new Verifier(params[0]));
 
 			// get account name
@@ -84,9 +85,10 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 				helper.removeAccount();
 			}
 
-			Account account = new Account(userProfile.getUser().getUserName(), AuthenticatorHelper.ACCOUNT_TYPE);
-			helper.addAccountExplicitly(account, null);
-			helper.setAuthToken(account, AuthenticatorHelper.ACCOUNT_TYPE, api.getSession());
+			Account account = helper.createAccount(userProfile.getUser().getUserName());
+			helper.addAccount(account);
+			helper.setOAuthToken(api.getSession());
+			helper.deleteOAuthRequestToken();
 
 			// update member type and restrictions
 			accountRestrictions.updateMemberType(userProfile.getUser().getMemberType());

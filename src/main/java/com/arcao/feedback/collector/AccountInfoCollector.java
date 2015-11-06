@@ -26,6 +26,7 @@ public class AccountInfoCollector extends Collector {
 		if (!helper.hasAccount()) {
 			sb.append("No Account").append("\n");
 		} else {
+			//noinspection ConstantConditions
 			sb.append("NAME=").append(helper.getAccount().name).append("\n");
 
 			sb.append("\n--- RESTRICTIONS ---\n");

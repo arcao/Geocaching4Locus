@@ -19,7 +19,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 	private static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 
-	private static final int REQUEST_LOGIN = 1;
+	private static final int REQUEST_SIGN_ON = 1;
 
 	private SharedPreferences mPrefs;
 
@@ -30,7 +30,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 		mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+		if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_SIGN_ON)) {
 			return;
 		}
 
@@ -97,7 +97,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 		super.onActivityResult(requestCode,resultCode,data);
 
 		// restart update process after log in
-		if (requestCode == REQUEST_LOGIN) {
+		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
 				showUpdateDialog();
 			} else {

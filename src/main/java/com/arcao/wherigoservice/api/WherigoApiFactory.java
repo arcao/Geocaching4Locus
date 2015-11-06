@@ -6,9 +6,6 @@ import com.arcao.geocaching.api.downloader.OkHttpClientJsonDownloader;
 import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.squareup.okhttp.OkHttpClient;
 
-/**
- * Created by Arcao on 29. 10. 2015.
- */
 public final class WherigoApiFactory {
   public static WherigoService create() {
     GeocachingApiConfiguration apiConfiguration = new DefaultProductionGeocachingApiConfiguration();

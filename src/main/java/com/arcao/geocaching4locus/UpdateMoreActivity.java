@@ -17,7 +17,7 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 		super.onCreate(savedInstanceState);
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+		if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_LOGIN)) {
 			return;
 		}
 

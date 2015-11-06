@@ -64,6 +64,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 		boolean result = helper.hasAccount();
 
 		if (result) {
+			//noinspection ConstantConditions
 			Crashlytics.setUserName(helper.getAccount().name);
 		}
 

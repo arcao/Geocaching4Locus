@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.support.annotation.XmlRes;
 import android.view.MenuItem;
 import java.util.ArrayList;
@@ -55,15 +56,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public static Intent createIntent(Context context) {
+	@NonNull
+	public static Intent createIntent(@NonNull Context context) {
 		return new Intent(context, SettingsActivity.class);
 	}
 
-	public static Intent createIntent(Context context, String preferenceFragment) {
+	@NonNull
+	public static Intent createIntent(@NonNull Context context, @NonNull String preferenceFragment) {
 		return createIntent(context).putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, preferenceFragment);
 	}
 
-	public static Intent createIntent(Context context, Class<?> preferenceFragment) {
+	@NonNull
+	public static Intent createIntent(@NonNull Context context, @NonNull Class<?> preferenceFragment) {
 		return createIntent(context, preferenceFragment.getName());
 	}
 

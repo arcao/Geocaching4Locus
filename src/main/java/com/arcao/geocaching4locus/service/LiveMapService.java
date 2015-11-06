@@ -211,6 +211,7 @@ public class LiveMapService extends IntentService {
 		try {
 			login(api);
 
+			//noinspection ConstantConditions
 			String username = authenticatorHelper.getAccount().name;
 
 			notificationManager.setDownloadingProgress(0, CACHES_COUNT);
@@ -277,7 +278,7 @@ public class LiveMapService extends IntentService {
 			}
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
-			authenticatorHelper.invalidateAuthToken();
+			authenticatorHelper.invalidateOAuthToken();
 
 			throw e;
 		} finally {
@@ -296,7 +297,7 @@ public class LiveMapService extends IntentService {
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(this).getAuthenticatorHelper();
 
-		String token = authenticatorHelper.getAuthToken();
+		String token = authenticatorHelper.getOAuthToken();
 		if (token == null) {
 			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");

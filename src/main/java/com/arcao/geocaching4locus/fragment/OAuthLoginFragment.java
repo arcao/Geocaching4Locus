@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -82,7 +83,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 	}
 
 	@Override
-	public void onLoginUrlAvailable(String url) {
+	public void onLoginUrlAvailable(@NonNull String url) {
 		if (mWebView != null) {
 			mWebView.loadUrl(url);
 		}

@@ -53,7 +53,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private static final String STATE_LONGITUDE = "LONGITUDE";
   private static final String STATE_HAS_COORDINATES = "HAS_COORDINATES";
 
-  private static final int REQUEST_LOGIN = 1;
+  private static final int REQUEST_SIGN_ON = 1;
   private static final int REQUEST_LOCATION_PERMISSION = 2;
 
   private SharedPreferences mPrefs;
@@ -231,7 +231,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @OnClick(R.id.fab)
   public void onDownloadClick() {
     // test if user is logged in
-    if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+    if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_SIGN_ON)) {
       return;
     }
 
@@ -300,7 +300,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     super.onActivityResult(requestCode, resultCode, data);
 
     // restart download process after log in
-    if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
+    if (requestCode == REQUEST_SIGN_ON && resultCode == RESULT_OK) {
       onDownloadClick();
     }
   }

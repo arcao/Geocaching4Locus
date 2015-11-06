@@ -72,7 +72,7 @@ public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Book
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 
-		String token = authenticatorHelper.getAuthToken();
+		String token = authenticatorHelper.getOAuthToken();
 		if (token == null) {
 			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");

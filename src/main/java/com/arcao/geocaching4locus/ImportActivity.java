@@ -16,7 +16,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 	private final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 
-	private static final int REQUEST_LOGIN = 1;
+	private static final int REQUEST_SIGN_ON = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		}
 
 		// test if user is logged in
-		if (!App.get(this).getAuthenticatorHelper().isLoggedIn(this, REQUEST_LOGIN)) {
+		if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_SIGN_ON)) {
 			return;
 		}
 
@@ -76,7 +76,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		super.onActivityResult(requestCode, resultCode, data);
 
 		// restart update process after log in
-		if (requestCode == REQUEST_LOGIN) {
+		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
 				// we can't show dialog here, we'll do it in onResumeFragments
 				showImportDialog();

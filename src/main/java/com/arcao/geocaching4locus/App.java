@@ -8,17 +8,15 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
-import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.util.CrashlyticsTree;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import java.util.UUID;
 import locus.api.android.utils.LocusUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.scribe.model.Token;
 import timber.log.Timber;
-
-import java.util.UUID;
 
 public class App extends android.app.Application {
 	private AuthenticatorHelper mAuthenticatorHelper;
@@ -34,14 +32,17 @@ public class App extends android.app.Application {
 		Crashlytics.setUserIdentifier(getDeviceId());
 
 	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
-		if (mAuthenticatorHelper.hasAccount())
+		if (mAuthenticatorHelper.hasAccount()) {
+			//noinspection ConstantConditions
 			Crashlytics.setUserName(mAuthenticatorHelper.getAccount().name);
+			Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, mAuthenticatorHelper.getRestrictions().isPremiumMember());
+		}
 
 		try {
 			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
 			if (lv != null) {
-				Crashlytics.setString("LocusVersion", lv.getVersionName());
-				Crashlytics.setString("LocusPackage", lv.getPackageName());
+				Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, lv.getVersionName());
+				Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, lv.getPackageName());
 			}
 		} catch (Throwable t) {
 			Timber.e(t, t.getMessage());
@@ -76,26 +77,6 @@ public class App extends android.app.Application {
 			Timber.e(e, e.getMessage());
 			return "1.0";
 		}
-	}
-
-	public void storeOAuthToken(Token token) {
-		if (token == null || token.isEmpty())
-			return;
-
-		SharedPreferences pref = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
-
-		pref.edit()
-			.putString(PrefConstants.OAUTH_TOKEN, token.getToken())
-			.putString(PrefConstants.OAUTH_TOKEN_SECRET, token.getSecret())
-			.apply();
-	}
-
-	public Token getOAuthToken() {
-		SharedPreferences prefs = getSharedPreferences("ACCOUNT", Context.MODE_PRIVATE);
-		return new Token(
-			prefs.getString(PrefConstants.OAUTH_TOKEN, ""),
-			prefs.getString(PrefConstants.OAUTH_TOKEN_SECRET, "")
-		);
 	}
 
 	@SuppressWarnings("deprecation")

@@ -151,7 +151,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			return current > 0;
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
-			authenticatorHelper.invalidateAuthToken();
+			authenticatorHelper.invalidateOAuthToken();
 
 			throw e;
 		}
@@ -237,7 +237,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 
-		String token = authenticatorHelper.getAuthToken();
+		String token = authenticatorHelper.getOAuthToken();
 		if (token == null) {
 			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");

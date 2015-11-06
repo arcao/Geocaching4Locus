@@ -3,13 +3,14 @@ package com.arcao.geocaching4locus.authentication.helper;
 import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import org.scribe.model.Token;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	private final SharedPreferences mPrefs;
@@ -29,12 +30,14 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	}
 
 	@Override
+	@NonNull
 	public AccountRestrictions getRestrictions() {
 		return restrictions;
 	}
 
 	@Override
-	public String getAuthToken() {
+	@Nullable
+	public String getOAuthToken() {
 		if (!hasAccount())
 			return null;
 
@@ -42,35 +45,35 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	}
 
 	@Override
+	@Nullable
 	public Account getAccount() {
-		String username = mPrefs.getString(PrefConstants.USERNAME, null);
+		String userName = mPrefs.getString(PrefConstants.USERNAME, null);
 
-		if (username == null)
+		if (userName == null)
 			return null;
 
-		return new Account(username, ACCOUNT_TYPE);
+		return new Account(userName, ACCOUNT_TYPE);
+	}
+
+	@NonNull
+	@Override
+	public Account createAccount(@NonNull String userName) {
+		return new Account(userName, ACCOUNT_TYPE);
 	}
 
 	@Override
-	public void addAccount(Activity activity) {
-		activity.startActivity(new Intent(activity, AuthenticatorActivity.class));
-	}
-
-	@Override
-	public boolean addAccountExplicitly(Account account, String password) {
-		if (account == null || hasAccount())
-			return false;
+	public void addAccount(@NonNull Account account) {
+		if (hasAccount())
+			removeAccount();
 
 		mPrefs.edit()
 			.putString(PrefConstants.USERNAME, account.name)
 			.remove(PrefConstants.SESSION)
 			.apply();
-
-		return true;
 	}
 
 	@Override
-	public void setAuthToken(Account account, String authTokenType, String authToken) {
+	public void setOAuthToken(@Nullable String authToken) {
 		if (!hasAccount())
 			return;
 
@@ -100,7 +103,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	}
 
 	@Override
-	public void invalidateAuthToken() {
+	public void invalidateOAuthToken() {
 		mPrefs.edit()
 			.remove(PrefConstants.SESSION)
 			.apply();
@@ -119,7 +122,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		int prefVersion = mPrefs.getInt(PrefConstants.PREF_VERSION, 0);
 
 		// remove account when password is set
-		// remove old accounts with not set premium account property
+		// remove old accounts with unset member type property
 		if (mPrefs.contains(PrefConstants.PASSWORD) || prefVersion < 1) {
 			removeAccount();
 		}
@@ -128,11 +131,39 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	}
 
 	@Override
-	public boolean isLoggedIn(Activity activity, int requestCode) {
+	public boolean requestSignOn(@NonNull Activity activity, int requestCode) {
 		if (hasAccount())
-			return true;
+			return false;
 
 		activity.startActivityForResult(AuthenticatorActivity.createIntent(activity), requestCode);
-		return false;
+		return true;
+	}
+
+	@Override
+	public void setOAuthRequestToken(@Nullable Token token) {
+		if (token == null || token.isEmpty())
+			return;
+
+		mPrefs.edit()
+				.putString(PrefConstants.OAUTH_TOKEN, token.getToken())
+				.putString(PrefConstants.OAUTH_TOKEN_SECRET, token.getSecret())
+				.apply();
+	}
+
+	@Override
+	@NonNull
+	public Token getOAuthRequestToken() {
+		return new Token(
+				mPrefs.getString(PrefConstants.OAUTH_TOKEN, ""),
+				mPrefs.getString(PrefConstants.OAUTH_TOKEN_SECRET, "")
+		);
+	}
+
+	@Override
+	public void deleteOAuthRequestToken() {
+		mPrefs.edit()
+				.remove(PrefConstants.OAUTH_TOKEN)
+				.remove(PrefConstants.OAUTH_TOKEN_SECRET)
+				.apply();
 	}
 }

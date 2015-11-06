@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.exception;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
@@ -29,11 +30,12 @@ import java.net.UnknownHostException;
 public class ExceptionHandler {
 	private final Context mContext;
 
-	public ExceptionHandler(Context context) {
+	public ExceptionHandler(@NonNull Context context) {
 		mContext = context;
 	}
 
-	public Intent handle(Throwable t) {
+	@NonNull
+	public Intent handle(@NonNull Throwable t) {
 		Timber.e(t, t.getMessage());
 
 		Intent positiveAction = null;

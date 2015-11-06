@@ -3,8 +3,9 @@ package com.arcao.geocaching4locus.task;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -21,18 +22,14 @@ import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.UserTask;
-
 import java.io.IOException;
-import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.List;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
-import locus.api.utils.DataReaderBigEndian;
-import locus.api.utils.DataWriterBigEndian;
+import org.apache.commons.lang3.ArrayUtils;
 import timber.log.Timber;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
@@ -200,7 +197,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			return result;
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
-			authenticatorHelper.invalidateAuthToken();
+			authenticatorHelper.invalidateOAuthToken();
 
 			throw e;
 		}
@@ -229,7 +226,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 	private void login(GeocachingApi api) throws GeocachingApiException {
 		AuthenticatorHelper authenticatorHelper = App.get(mContext).getAuthenticatorHelper();
 
-		String token = authenticatorHelper.getAuthToken();
+		String token = authenticatorHelper.getOAuthToken();
 		if (token == null) {
 			authenticatorHelper.removeAccount();
 			throw new InvalidCredentialsException("Account not found.");
@@ -238,12 +235,10 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		api.openSession(token);
 	}
 
-	public static class UpdateTaskData implements Serializable {
-		private static final long serialVersionUID = 2711790385777741041L;
-
+	public static class UpdateTaskData implements Parcelable {
 		protected final String cacheId;
-		protected transient Waypoint oldPoint;
-		protected transient Waypoint newPoint = null;
+		protected final Waypoint oldPoint;
+		protected Waypoint newPoint = null;
 		protected final boolean updateLogs;
 
 		public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
@@ -252,51 +247,65 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			this.updateLogs = updateLogs;
 		}
 
+		private UpdateTaskData(Parcel in) {
+			Waypoint waypoint;
 
-		private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-			out.defaultWriteObject();
+			cacheId = in.readString();
 
-			DataWriterBigEndian writer = new DataWriterBigEndian();
+			try {
+				waypoint = new Waypoint(in.createByteArray());
+			} catch (IOException e) {
+				waypoint = new Waypoint();
+				Timber.e(e, e.getMessage());
+			}
+			oldPoint = waypoint;
+
+			try {
+				byte[] data = in.createByteArray();
+				if (ArrayUtils.isNotEmpty(data)) newPoint = new Waypoint(data);
+			} catch (IOException e) {
+				Timber.e(e, e.getMessage());
+			}
+
+			updateLogs = in.readInt() == 1;
+		}
+
+		@Override
+		public int describeContents() {
+			return 0;
+		}
+
+		@Override
+		public void writeToParcel(Parcel dest, int flags) {
+			dest.writeString(cacheId);
 
 			if (oldPoint != null) {
-				oldPoint.write(writer);
-
-				out.writeInt(writer.size());
-				writer.writeTo(out);
+				byte[] data = oldPoint.getAsBytes();
+				dest.writeByteArray(data);
 			} else {
-				out.writeInt(0);
+				dest.writeByteArray(new byte[0]);
 			}
-
-			writer.reset();
 
 			if (newPoint != null) {
-				newPoint.write(writer);
-
-				out.writeInt(writer.size());
-				writer.writeTo(out);
+				byte[] data = newPoint.getAsBytes();
+				dest.writeByteArray(data);
 			} else {
-				out.writeInt(0);
+				dest.writeByteArray(new byte[0]);
 			}
+
+			dest.writeInt(updateLogs ? 1 : 0);
 		}
 
-		private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-			in.defaultReadObject();
-
-			int len = in.readInt();
-			if (len > 0) {
-				byte[] buffer = new byte[len];
-				if (in.read(buffer) > 0) {
-					oldPoint = new Waypoint(new DataReaderBigEndian(buffer));
-				}
+		public static final Creator<UpdateTaskData> CREATOR = new Creator<UpdateTaskData>() {
+			@Override
+			public UpdateTaskData createFromParcel(Parcel source) {
+				return new UpdateTaskData(source);
 			}
 
-			len = in.readInt();
-			if (len > 0) {
-				byte[] buffer = new byte[len];
-				if (in.read(buffer) > 0) {
-					newPoint = new Waypoint(new DataReaderBigEndian(buffer));
-				}
+			@Override
+			public UpdateTaskData[] newArray(int size) {
+				return new UpdateTaskData[0];
 			}
-		}
+		};
 	}
 }

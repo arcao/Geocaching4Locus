@@ -18,7 +18,7 @@ import timber.log.Timber;
 public class WherigoServiceImpl implements WherigoService {
 	private static final Logger logger = LoggerFactory.getLogger(WherigoServiceImpl.class);
 
-	private static final String BASE_URL = "https://wherigo-service.appspot.com/api/";
+	private static final String BASE_URL = "https://wherigo-service.appspot.com/api";
 	private final JsonDownloader downloader;
 
 	public WherigoServiceImpl(JsonDownloader downloader) {

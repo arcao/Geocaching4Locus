@@ -96,7 +96,7 @@ public class ExceptionHandler {
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
 			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)
-					&& !(innerT instanceof ConnectException)) {
+					&& !(innerT instanceof ConnectException) && !isSSLConnectionException(innerT)) {
 				builder.setException(t);
 			}
 
@@ -121,6 +121,13 @@ public class ExceptionHandler {
 					.setException(t)
 					.build();
 		}
+	}
+
+	private boolean isSSLConnectionException(Throwable t) {
+		String message = t.getMessage();
+
+		return StringUtils.isNotEmpty(message) && (message.contains("Connection reset by peer")
+				|| message.contains("Connection timed out"));
 	}
 
 	private Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction, String baseMessage) {

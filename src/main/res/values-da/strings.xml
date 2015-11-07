@@ -71,7 +71,7 @@
     <string name="menu_preferences">Præferencer</string>
     
     <string name="user_waypoint_name">Bruger waypoint (koordinatpunkter) %1$d</string>
-    <string name="final_location_name">Sidste lokation %1$d</string>
+    <string name="final_location_name">Sidste lokation</string>
     
     <string name="pref_account_login">Log-på</string>
     <string name="pref_account_login_summary">Log-på til Geocaching.com konto</string>

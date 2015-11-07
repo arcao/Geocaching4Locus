@@ -71,7 +71,7 @@
     <string name="menu_preferences">Параметри</string>
     
     <string name="user_waypoint_name">Дорожня точка %1$d</string>
-    <string name="final_location_name">Кінцеве розташування %1$d</string>
+    <string name="final_location_name">Кінцеве розташування</string>
     
     <string name="pref_account_login">Увійти</string>
     <string name="pref_account_login_summary">Увійти у профіль Geocaching.com</string>

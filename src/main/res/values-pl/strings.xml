@@ -71,7 +71,7 @@
     <string name="menu_preferences">Ustawienia</string>
     
     <string name="user_waypoint_name">Punkt trasy użytkownika %1$d</string>
-    <string name="final_location_name">Lokalizacja końcowa %1$d</string>
+    <string name="final_location_name">Lokalizacja końcowa</string>
     
     <string name="pref_account_login">Zaloguj się</string>
     <string name="pref_account_login_summary">Zaloguj się do konta Geocaching.com</string>

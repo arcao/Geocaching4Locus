@@ -71,7 +71,7 @@
     <string name="menu_preferences">偏好设置</string>
     
     <string name="user_waypoint_name">用户航点%1$d</string>
-    <string name="final_location_name">最终位置 %1$d</string>
+    <string name="final_location_name">最终位置</string>
     
     <string name="pref_account_login">登录</string>
     <string name="pref_account_login_summary">登录Geocaching.com账号</string>

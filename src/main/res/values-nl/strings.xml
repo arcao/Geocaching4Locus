@@ -71,7 +71,7 @@
     <string name="menu_preferences">Voorkeuren</string>
     
     <string name="user_waypoint_name">Gebruikers via punt %1$d</string>
-    <string name="final_location_name">Eindbestemming %1$d</string>
+    <string name="final_location_name">Eindbestemming</string>
     
     <string name="pref_account_login">Aanmelden</string>
     <string name="pref_account_login_summary">Aanmelden op Geocaching.com account</string>

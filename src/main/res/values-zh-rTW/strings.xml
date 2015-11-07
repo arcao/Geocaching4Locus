@@ -71,7 +71,7 @@
     <string name="menu_preferences">偏好設定</string>
     
     <string name="user_waypoint_name">使用者航點 %1$d</string>
-    <string name="final_location_name">最終位置 %1$d</string>
+    <string name="final_location_name">最終位置</string>
     
     <string name="pref_account_login">登入</string>
     <string name="pref_account_login_summary">登入至 Geocaching.com 帳號</string>

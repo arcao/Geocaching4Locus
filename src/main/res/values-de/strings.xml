@@ -71,7 +71,7 @@
     <string name="menu_preferences">Einstellungen</string>
     
     <string name="user_waypoint_name">Benutzerwegpunkte %1$d</string>
-    <string name="final_location_name">Zielpunkt bei %1$d</string>
+    <string name="final_location_name">Zielpunkt</string>
     
     <string name="pref_account_login">Anmelden</string>
     <string name="pref_account_login_summary">Melden Sie sich bei Ihrem Geocaching.com Konto an</string>

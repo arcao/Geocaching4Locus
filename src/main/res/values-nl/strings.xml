@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Bezig met downloaden van caches…</string>
-    <string name="error_locus_not_found">Locus Map applicatie is niet gevonden, maar Geocaching4Locus het nodig heeft om goed te werken. Gelieve Locus te installeren.</string>
-    <string name="error_location">Sta de WIFI of GPS-locatie dienst toe in \'Instellingen\'.</string>
+    <string name="error_locus_not_found">Locus Map applicatie is niet gevonden: Geocaching4Locus heeft dit nodig om goed te werken. Gelieve Locus te installeren.</string>
+    <string name="error_location">Toestaan van de WIFI of GPS locatie dienst in \'Instellingen\'.</string>
     <string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
     <string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
     

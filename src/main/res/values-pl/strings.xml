@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Pobieranie skrzynek…</string>
-    <string name="error_locus_not_found">Aplikacja Locus Mapa nie zostanie znaleziony, ale Geocaching4Locus wymaga do poprawnej pracy. Proszę zainstalować Locus Map.</string>
+    <string name="error_locus_not_found">Geocaching4Locus wymaga aplikacji Locus, która nie została znaleziona. Zainstaluj aplikację Locus.</string>
     <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
     <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS…</string>
     <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych…</string>
@@ -25,8 +25,8 @@
     <string name="cancel_button">Anuluj</string>
     
     <string name="pref_show_found">Pokaż znalezione</string>
-    <string name="pref_show_found_summary">Pokaż znalezione skrzynki</string>
-    <string name="pref_show_own">Pokaż własne ukryte</string>
+    <string name="pref_show_found_summary">Pokazuj znalezione skrzynki</string>
+    <string name="pref_show_own">Pokazuj własne ukryte</string>
     <string name="pref_show_own_summary">Pokazuj własne skrzynki (ukryte przez ciebie)</string>
     <string name="pref_menu_select_all">Zaznacz wszystko</string>
     <string name="pref_menu_deselect_all">Odznacz wszystko</string>
@@ -153,7 +153,7 @@
     <string name="pref_download_logs_update_cache">Aktualizacja skrzynki przy pobieraniu wpisów</string>
     <string name="pref_download_logs_update_cache_summary">Akcja "Pobierz wpisy" równocześnie aktualizuje skrzynkę geocache</string>
     <string name="pref_downloading_count_of_caches_step">Rozmiar pakietu pobierania skrytek</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Okno dialogowe zmieniy rozmiaru pakietu pobierania skrytek</string>
+    <string name="pref_downloading_count_of_caches_step_summary">Okno dialogowe zmiany rozmiaru pakietu pobierania skrytek</string>
     <string name="premium_member_for_filter_required">Niektóre filtry wymagają konta "premium", którego nie posiadasz. Aplikacja zostanie przełączona w tryb dla standardowych użytkowników. Proszę spróbuj ponownie.</string>
 
     <string name="prefs_cat_account">Konto</string>

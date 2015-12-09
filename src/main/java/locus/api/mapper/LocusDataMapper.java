@@ -307,6 +307,11 @@ public class LocusDataMapper {
 			l.addImage(toLocusImage(image));
 		}
 
+		if (log.getUpdatedCoordinates() != null) {
+			l.setCooLat(log.getUpdatedCoordinates().getLatitude());
+			l.setCooLon(log.getUpdatedCoordinates().getLongitude());
+		}
+
 		return l;
 	}
 

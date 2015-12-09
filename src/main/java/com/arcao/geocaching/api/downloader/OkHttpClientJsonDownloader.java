@@ -72,7 +72,6 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 					.addHeader("Accept", "application/json")
 					.addHeader("Accept-Language", "en-US")
 					.addHeader("Accept-Encoding", "gzip, deflate")
-					.addHeader("Accept", "application/json")
 					.build();
 
 			Response response = client.newCall(request).execute();

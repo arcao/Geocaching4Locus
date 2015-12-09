@@ -62,6 +62,7 @@
     </style>
     <style name="AppTheme.Dialog.NoTitle">
         <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
     <style name="AppTheme.Settings">
         <item name="windowNoTitle">false</item>

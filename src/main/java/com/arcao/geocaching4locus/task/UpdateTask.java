@@ -17,6 +17,7 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.task.UpdateTask.UpdateTaskData;
@@ -158,6 +159,9 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 			Geocache cache = api.getGeocache(resultQuality, result.cacheId, logCount, 0);
 			authenticatorHelper.getRestrictions().updateLimits(api.getLastGeocacheLimits());
+
+			if (cache == null)
+				throw new CacheNotFoundException(result.cacheId);
 
 			if (isCancelled())
 				return null;

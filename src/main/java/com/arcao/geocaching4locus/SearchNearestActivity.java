@@ -242,6 +242,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     if (Double.isNaN(mLatitude) || Double.isNaN(mLongitude)) {
       showError(R.string.wrong_coordinates, null);
+      return;
     }
 
     mPrefs.edit()

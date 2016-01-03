@@ -47,7 +47,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 
 			if (!response.isSuccessful()) {
 				// read error response
-				throw new InvalidResponseException(body.string());
+				throw new InvalidResponseException(response.code() + " " + response.message() + "\n\n" + body.string());
 			}
 
 			reader = body.charStream();
@@ -79,7 +79,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 
 			if (!response.isSuccessful()) {
 				// read error response
-				throw new InvalidResponseException(body.string());
+				throw new InvalidResponseException(response.code() + " " + response.message() + "\n\n" + body.string());
 			}
 
 			reader = body.charStream();

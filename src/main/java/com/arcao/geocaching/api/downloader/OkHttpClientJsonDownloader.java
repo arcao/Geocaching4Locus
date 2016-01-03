@@ -6,16 +6,12 @@ import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.geocaching4locus.BuildConfig;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
+import com.squareup.okhttp.*;
+import timber.log.Timber;
+
 import java.io.Reader;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-import timber.log.Timber;
 
 public class OkHttpClientJsonDownloader implements JsonDownloader {
 	private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
@@ -53,6 +49,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 			reader = body.charStream();
 			return new JsonReader(reader);
 		} catch (InvalidResponseException e) {
+			Timber.e(e, e.getMessage());
 			throw e;
 		} catch (Throwable e) {
 			Timber.e(e, e.getMessage());
@@ -85,6 +82,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 			reader = body.charStream();
 			return new JsonReader(reader);
 		} catch (InvalidResponseException e) {
+			Timber.e(e, e.getMessage());
 			throw e;
 		} catch (Throwable e) {
 			Timber.e(e, e.getMessage());

@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
+import java.util.Locale;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
@@ -70,7 +71,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 			}
 		}
 
-		if (cacheId == null || PARAM_CACHE_ID__DO_NOTHING.equals(cacheId)) {
+		if (cacheId == null || !cacheId.toUpperCase(Locale.US).startsWith("GC")) {
 			Timber.e("cacheId/simpleCacheId not found");
 			onUpdateFinished(null);
 			return;

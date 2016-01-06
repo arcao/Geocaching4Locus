@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.util.Locale;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.LocusDataMapper;
@@ -179,7 +180,8 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			try {
 				// get old waypoint from Locus
 				Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, pointIndexes[current + i]);
-				if (wpt == null || wpt.gcData == null || wpt.gcData.getCacheID() == null || wpt.gcData.getCacheID().length() == 0) {
+				if (wpt == null || wpt.gcData == null || wpt.gcData.getCacheID() == null
+						|| !wpt.gcData.getCacheID().toUpperCase(Locale.US).startsWith("GC")) {
 					Timber.w("Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
 					continue;
 				}

@@ -17,7 +17,6 @@ import timber.log.Timber;
 
 public class UpdateActivity extends AppCompatActivity implements UpdateDialogFragment.DialogListener {
 	private static final String PARAM_CACHE_ID = "cacheId";
-	private static final String PARAM_CACHE_ID__DO_NOTHING = "DO_NOTHING";
 	public static final String PARAM_SIMPLE_CACHE_ID = "simpleCacheId";
 
 	private static final int REQUEST_SIGN_ON = 1;

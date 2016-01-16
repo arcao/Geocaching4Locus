@@ -1,28 +1,27 @@
 package com.arcao.geocaching.api.downloader;
 
-import com.arcao.geocaching.api.configuration.GeocachingApiConfiguration;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
 import com.arcao.geocaching4locus.BuildConfig;
-import com.squareup.okhttp.*;
-import timber.log.Timber;
-
 import java.io.Reader;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import timber.log.Timber;
 
 public class OkHttpClientJsonDownloader implements JsonDownloader {
 	private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
 	private final OkHttpClient client;
 
-	public OkHttpClientJsonDownloader(GeocachingApiConfiguration configuration, OkHttpClient client) {
-		this.client = client.clone();
-
-		this.client.setConnectTimeout(configuration.getConnectTimeout(), TimeUnit.MILLISECONDS);
-		this.client.setReadTimeout(configuration.getReadTimeout(), TimeUnit.MILLISECONDS);
+	public OkHttpClientJsonDownloader(OkHttpClient client) {
+		this.client = client;
 	}
 
 	@Override
@@ -64,7 +63,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 		try {
 			Request request = new Request.Builder()
 					.url(url)
-					.method("POST", RequestBody.create(MEDIA_TYPE_JSON, postData))
+					.post(RequestBody.create(MEDIA_TYPE_JSON, postData))
 					.addHeader("User-Agent", "Geocaching4Locus/" + BuildConfig.VERSION_NAME)
 					.addHeader("Accept", "application/json")
 					.addHeader("Accept-Language", "en-US")

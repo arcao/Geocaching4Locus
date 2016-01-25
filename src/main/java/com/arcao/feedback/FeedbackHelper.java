@@ -87,7 +87,7 @@ public class FeedbackHelper {
 		Collection<Collector> collectors = new ArrayList<>();
 
 		collectors.add(new AppInfoCollector(context));
-		collectors.add(new BuildConfigCollector());
+		collectors.add(new BuildConfigCollector(context));
 		collectors.add(new ConfigurationCollector(context));
 		collectors.add(new ConstantsCollector(Build.class, "BUILD"));
 		collectors.add(new ConstantsCollector(Build.VERSION.class, "VERSION"));

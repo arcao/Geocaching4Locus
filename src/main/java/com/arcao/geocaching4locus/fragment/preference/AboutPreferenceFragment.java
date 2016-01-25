@@ -5,15 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.view.View;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.feedback.FeedbackHelper;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.BuildConfig;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
 import com.arcao.geocaching4locus.util.IntentUtil;
+import hu.supercluster.paperwork.Paperwork;
 
 public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 	@Override
@@ -32,8 +31,9 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 		final Preference gplusPreference = findPreference(ABOUT_GPLUS, Preference.class);
 		final Preference feedbackPreference = findPreference(ABOUT_FEEDBACK, Preference.class);
 		final Preference donatePaypalPreference = findPreference(ABOUT_DONATE_PAYPAL, Preference.class);
+		final Paperwork paperwork = new Paperwork(getActivity());
 
-		versionPreference.setSummary(App.get(getActivity()).getVersion() + " (" + BuildConfig.GIT_SHA + ")");
+		versionPreference.setSummary(App.get(getActivity()).getVersion() + " (" + paperwork.get("gitSha") + ")");
 
 		websitePreference.setSummary(AppConstants.WEBSITE_URI.toString());
 		websitePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

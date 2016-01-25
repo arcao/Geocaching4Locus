@@ -4,15 +4,25 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha6'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha7'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
         classpath 'io.fabric.tools:gradle:1.21.2'
+        classpath 'hu.supercluster:paperwork-plugin:1.2.1'
     }
 }
 
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'hu.supercluster.paperwork'
+
+paperwork {
+     set = [
+         buildTime: buildTime("yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
+         gitSha: gitSha(),
+         buildBy: (env('USER') ?: env('USERNAME')) + '@' + (env('HOSTNAME') ?: env('COMPUTERNAME'))
+     ]
+}
 
 repositories {
     jcenter()
@@ -50,10 +60,9 @@ dependencies {
     }
     compile 'com.crashlytics.sdk.android:crashlytics:2.5.5'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'hu.supercluster:paperwork:1.2.1'
 }
 
-def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
-def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZ", TimeZone.getTimeZone("UTC"))
 def gitVersionCode = 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim().toInteger();
 
 def isTravis = "true".equals(System.getenv("TRAVIS"))
@@ -83,8 +92,6 @@ android {
 
     defaultConfig {
         versionCode gitVersionCode
-        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
-        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
         buildConfigField "String", "GEOCACHING_API_KEY", "\"${geocachingApiKey}\""
         buildConfigField "String", "GEOCACHING_API_SECRET", "\"${geocachingApiSecret}\""
         buildConfigField "boolean", "GEOCACHING_API_STAGING", "${geocachingApiStaging}"

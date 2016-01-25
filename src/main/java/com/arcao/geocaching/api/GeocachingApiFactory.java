@@ -7,8 +7,9 @@ import com.arcao.geocaching.api.downloader.OkHttpClientJsonDownloader;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching4locus.BuildConfig;
-import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
+
+import java.util.concurrent.TimeUnit;
 
 public class GeocachingApiFactory {
 	private static GeocachingApiConfiguration apiConfiguration;
@@ -23,10 +24,11 @@ public class GeocachingApiFactory {
 		return LiveGeocachingApi.Builder.liveGeocachingApi().withConfiguration(apiConfiguration).withDownloader(jsonDownloader).build();
 	}
 
-	private static void createJsonDownloader() {
+	public static JsonDownloader createJsonDownloader() {
 		if (jsonDownloader == null) {
 			jsonDownloader = new OkHttpClientJsonDownloader(client);
 		}
+		return jsonDownloader;
 	}
 
 	private static void createOkHttpClient() {

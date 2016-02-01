@@ -4,10 +4,10 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha7'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha9'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
         classpath 'io.fabric.tools:gradle:1.21.2'
-        classpath 'hu.supercluster:paperwork-plugin:1.2.1'
+        classpath 'hu.supercluster:paperwork-plugin:1.2.2'
     }
 }
 
@@ -44,7 +44,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }
-    compile 'menion:locus-api-android:1.35.39'
+    compile 'menion:locus-api-android:1.37.41'
 
     // from JCenter repository
     compile 'com.arcao:slf4j-timber:2.1'
@@ -60,7 +60,7 @@ dependencies {
     }
     compile 'com.crashlytics.sdk.android:crashlytics:2.5.5'
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
-    compile 'hu.supercluster:paperwork:1.2.1'
+    compile 'hu.supercluster:paperwork:1.2.2'
 }
 
 def gitVersionCode = 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim().toInteger();

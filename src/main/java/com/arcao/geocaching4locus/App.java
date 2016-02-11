@@ -12,6 +12,7 @@ import com.arcao.geocaching4locus.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.util.CrashlyticsTree;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import io.fabric.sdk.android.Fabric;
 import java.util.UUID;
 import locus.api.android.utils.LocusUtils;
@@ -26,7 +27,13 @@ public class App extends android.app.Application {
 	public void onCreate() {
 		super.onCreate();
 
-		Fabric.with(this, new Crashlytics());
+		// Set up Crashlytics, disabled for debug builds
+		Crashlytics crashlyticsKit = new Crashlytics.Builder()
+				.core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+				.build();
+
+		// Initialize Fabric with the debug-disabled crashlytics.
+		Fabric.with(this, crashlyticsKit);
 		Timber.plant(new CrashlyticsTree());
 
 		Crashlytics.setUserIdentifier(getDeviceId());

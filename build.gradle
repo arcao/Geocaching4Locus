@@ -112,6 +112,7 @@ android {
 
     buildTypes {
         debug {
+            ext.enableCrashlytics = false
             versionNameSuffix '-dev'
         }
         release {

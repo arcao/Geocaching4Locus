@@ -35,4 +35,3 @@ gradle.properties
 *.swp
 crashlytics.properties
 fabric.properties
-/src/main/assets/paperwork.json

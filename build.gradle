@@ -91,6 +91,7 @@ android {
 
     defaultConfig {
         versionCode gitVersionCode()
+        vectorDrawables.useSupportLibrary = true
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""

@@ -41,7 +41,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:icon="@drawable/ic_action_search" android:label="@string/launcher_nearest_caches" android:theme="@style/AppTheme.DialogWhenLarge" android:name="com.arcao.geocaching4locus.SearchNearestActivity" android:exported="true">
+        <activity android:icon="@drawable/ic_launcher_search" android:label="@string/launcher_nearest_caches" android:theme="@style/AppTheme.DialogWhenLarge" android:name="com.arcao.geocaching4locus.SearchNearestActivity" android:exported="true">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -58,21 +58,21 @@
         <activity android:name=".SettingsActivity" android:label="@string/preferences" android:theme="@style/AppTheme.Settings"/>
         <activity android:name="ErrorActivity" android:theme="@style/AppTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name="UpdateActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_cache">
+            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_cache">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
         <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".UpdateActivity" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_download_logs" android:label="@string/launcher_download_logs">
+            <intent-filter android:icon="@drawable/ic_launcher_download_logs" android:label="@string/launcher_download_logs">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity-alias>
         <activity android:name="UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_more_caches">
+            <intent-filter android:icon="@drawable/ic_launcher_update" android:label="@string/launcher_update_more_caches">
                 <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -99,12 +99,12 @@
         </activity>
         <activity android:name=".authentication.AuthenticatorActivity" android:label="@string/login_title" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+            <intent-filter android:icon="@drawable/ic_launcher_gc_input" android:label="@string/launcher_import_from_gc">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImportBookmarkActivity" android:theme="@style/AppTheme.DialogWhenLarge" android:exported="true" android:icon="@drawable/ic_action_import_bookmark" android:label="@string/launcher_import_bookmarks">
+        <activity android:name=".ImportBookmarkActivity" android:theme="@style/AppTheme.DialogWhenLarge" android:exported="true" android:icon="@drawable/ic_launcher_bookmark" android:label="@string/launcher_import_bookmarks">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />

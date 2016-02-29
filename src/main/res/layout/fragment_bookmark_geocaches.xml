@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_action_download"
+            app:srcCompat="@drawable/ic_download_24dp"
             app:elevation="4dp"
             />
     </FrameLayout>

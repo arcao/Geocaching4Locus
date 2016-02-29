@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.support.v7.widget.TintContextWrapper;
 import android.util.AttributeSet;
 import android.widget.ToggleButton;
 import com.arcao.geocaching4locus.R;
@@ -16,17 +17,17 @@ public class DashboardButton extends ToggleButton {
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	public DashboardButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-		super(context, attrs, defStyleAttr, defStyleRes);
+		super(TintContextWrapper.wrap(context), attrs, defStyleAttr, defStyleRes);
 
-		final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, defStyleRes);
+		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, defStyleRes);
 		mToggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false);
 		a.recycle();
 	}
 
 	public DashboardButton(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
+		super(TintContextWrapper.wrap(context), attrs, defStyleAttr);
 
-		final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, android.R.style.Widget_Button_Toggle);
+		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, android.R.style.Widget_Button_Toggle);
 		mToggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false);
 		a.recycle();
 	}

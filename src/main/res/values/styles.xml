@@ -129,7 +129,7 @@
     <style name="MainMenuButton" parent="android:Widget.Button">
         <item name="android:textSize">@dimen/text_size_tiny</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/foreground1</item>
+        <item name="android:textColor">?android:textColorLink</item>
         <item name="android:gravity">center|top</item>
         <item name="android:background">@drawable/item_background_holo_light</item>
         <item name="android:paddingTop">5dp</item>
@@ -140,5 +140,6 @@
         <item name="android:minWidth">88dp</item>
         <item name="android:minHeight">88dp</item>
         <item name="android:maxLines">2</item>
+        <item name="colorControlNormal">@color/accent</item>
     </style>
 </resources>

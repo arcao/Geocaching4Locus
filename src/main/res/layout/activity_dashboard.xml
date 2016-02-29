@@ -20,7 +20,7 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_live_map"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_live_map"
+                android:drawableTop="@drawable/ic_live_map_48dp"
                 android:text="@string/menu_live_map"
                 app:toggleable="true"/>
 
@@ -29,7 +29,7 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_import_gc"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_gc_input"
+                android:drawableTop="@drawable/ic_gc_input_48dp"
                 android:text="@string/menu_import_from_gc" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
@@ -37,7 +37,7 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_search_nearest"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_search"
+                android:drawableTop="@drawable/ic_search_48dp"
                 android:text="@string/menu_nearest" />
         </LinearLayout>
 
@@ -50,7 +50,7 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_import_bookmark"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_import_bookmark"
+                android:drawableTop="@drawable/ic_bookmark_border_48dp"
                 android:text="@string/menu_import_bookmarks" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
@@ -58,7 +58,7 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_preferences"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_settings"
+                android:drawableTop="@drawable/ic_settings_48dp"
                 android:text="@string/menu_preferences" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
@@ -66,10 +66,9 @@
             <com.arcao.geocaching4locus.widget.DashboardButton
                 android:id="@+id/db_manual"
                 style="@style/MainMenuButton"
-                android:drawableTop="@drawable/ic_action_help"
+                android:drawableTop="@drawable/ic_help_48dp"
                 android:text="@string/menu_manual" />
 
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

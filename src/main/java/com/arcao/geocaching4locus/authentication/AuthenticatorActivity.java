@@ -13,6 +13,7 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.fragment.OAuthLoginFragment;
+import com.arcao.geocaching4locus.fragment.dialog.BasicMembershipWarningDialogFragment;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.crashlytics.android.Crashlytics;
 import timber.log.Timber;
@@ -74,7 +75,13 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 			startActivity(errorIntent);
 
 		setResult(result ? RESULT_OK : RESULT_CANCELED);
-		finish();
+
+		if (helper.getRestrictions().isPremiumMember()) {
+			finish();
+			return;
+		}
+
+		BasicMembershipWarningDialogFragment.newInstance().show(getFragmentManager(), BasicMembershipWarningDialogFragment.FRAGMENT_TAG);
 	}
 
 	public static Intent createIntent(Context context) {

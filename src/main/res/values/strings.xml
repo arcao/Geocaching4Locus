@@ -180,4 +180,5 @@
     <string name="error_continue_locus_map">Do you want continue with a partially received data to Locus Map?</string>
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
+    <string name="basic_member_warning_message">This add-on is fully working with a premium membership only. With a basic membership you are able to download traditional geocaches basic info (without geocache listing) and use only a few filters in searching dialog. For more information please read the <a href="http://geocaching4locus.eu/manual/">manual on Geocaching4Locus website</a>.</string>
 </resources>

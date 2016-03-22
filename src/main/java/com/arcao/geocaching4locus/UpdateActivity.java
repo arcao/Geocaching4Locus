@@ -9,11 +9,12 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.fragment.dialog.UpdateDialogFragment;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
-import java.util.Locale;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
+
+import java.util.Locale;
 
 public class UpdateActivity extends AppCompatActivity implements UpdateDialogFragment.DialogListener {
 	private static final String PARAM_CACHE_ID = "cacheId";
@@ -49,7 +50,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 			try {
 				Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
 
-				if (p != null && p.getGeocachingData() != null) {
+				if (p != null && p.gcData != null) {
 					cacheId = p.gcData.getCacheID();
 					oldPoint = p;
 				}

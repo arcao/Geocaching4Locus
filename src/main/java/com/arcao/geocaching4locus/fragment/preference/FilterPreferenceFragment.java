@@ -13,6 +13,8 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
 public class FilterPreferenceFragment extends AbstractPreferenceFragment {
+	public static final String TEXT_VALUE_SEPARATOR = ", ";
+
 	private boolean mPremiumMember;
 	private boolean mImperialUnits;
 
@@ -135,7 +137,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		} else {
 			for (int i = 0; i < GeocacheType.values().length; i++) {
 				if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
-					if (sb.length() != 0) sb.append(", ");
+					if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 					sb.append(shortCacheTypeName[i]);
 				}
 			}
@@ -145,7 +147,15 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	}
 
 	private CharSequence prepareCacheTypeSummaryBasicMember() {
-		return preparePreferenceSummary(shortCacheTypeName[0], 0);
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(shortCacheTypeName[GeocacheType.Traditional.ordinal()]);
+		sb.append(TEXT_VALUE_SEPARATOR);
+		sb.append(shortCacheTypeName[GeocacheType.Event.ordinal()]);
+		sb.append(TEXT_VALUE_SEPARATOR);
+		sb.append(shortCacheTypeName[GeocacheType.CacheInTrashOutEvent.ordinal()]);
+
+		return preparePreferenceSummary(sb.toString(), 0);
 	}
 
 	private CharSequence prepareContainerTypeSummary() {
@@ -153,14 +163,14 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 
 		for (int i = 0; i < ContainerType.values().length; i++) {
 			if (mPrefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
-				if (sb.length() != 0) sb.append(", ");
+				if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 				sb.append(shortContainerTypeName[i]);
 			}
 		}
 
 		if (sb.length() == 0) {
 			for (int i = 0; i < ContainerType.values().length; i++) {
-				if (sb.length() != 0) sb.append(", ");
+				if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 				sb.append(shortContainerTypeName[i]);
 			}
 		}

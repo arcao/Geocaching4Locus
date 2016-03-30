@@ -71,10 +71,13 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 
 		AnalyticsUtil.actionLogin(result);
 
-		if (errorIntent != null)
-			startActivity(errorIntent);
-
 		setResult(result ? RESULT_OK : RESULT_CANCELED);
+
+		if (errorIntent != null) {
+			startActivity(errorIntent);
+			finish();
+			return;
+		}
 
 		if (helper.getRestrictions().isPremiumMember()) {
 			finish();

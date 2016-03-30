@@ -58,6 +58,7 @@ public class AccountRestrictions {
 		switch (memberType) {
 			case Charter:
 			case Premium:
+				presetPremiumMembershipConfiguration();
 				premiumMember = true;
 				break;
 			default:
@@ -95,6 +96,17 @@ public class AccountRestrictions {
 
 		editor.apply();
 	}
+
+	private void presetPremiumMembershipConfiguration() {
+		SharedPreferences defaultPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		defaultPreferences.edit()
+				// DOWNLOADING
+				.putBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false)
+				.putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5)
+				.apply();
+	}
+
 
 	public void updateLimits(ApiLimits apiLimits) {
 		if (apiLimits == null)

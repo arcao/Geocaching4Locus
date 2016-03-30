@@ -35,14 +35,11 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 		// do nothing
 	}
 
-	@NonNull
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+	protected void onDialogBuild(MaterialDialog.Builder builder) {
 		Bundle args = getArguments();
 
-		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-				.content(SpannedFix.fromHtml(getString(args.getInt(PARAM_ERROR_MESSAGE),
-						StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE)))))
+		builder.content(SpannedFix.fromHtml(getString(args.getInt(PARAM_ERROR_MESSAGE),
+				StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE)))))
 				.positiveText(R.string.ok_button)
 				.onPositive(new MaterialDialog.SingleButtonCallback() {
 					@Override
@@ -52,12 +49,17 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 					}
 				});
 
-
 		int title = args.getInt(PARAM_TITLE);
 		if (title != 0) {
 			builder.title(title);
 		}
+	}
 
+	@NonNull
+	@Override
+	public final Dialog onCreateDialog(Bundle savedInstanceState) {
+		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
+		onDialogBuild(builder);
 		return builder.build();
 	}
 }

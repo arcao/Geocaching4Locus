@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -26,6 +27,11 @@ public class App extends android.app.Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		if (BuildConfig.DEBUG) {
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());
+			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
+		}
 
 		// Set up Crashlytics, disabled for debug builds
 		Crashlytics crashlyticsKit = new Crashlytics.Builder()

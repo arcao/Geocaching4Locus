@@ -3,9 +3,12 @@ package com.arcao.geocaching4locus.authentication.helper;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import com.arcao.geocaching.api.data.GeocacheLimits;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.data.apilimits.CacheLimit;
+import com.arcao.geocaching.api.data.type.ContainerType;
+import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 
@@ -17,6 +20,7 @@ public class AccountRestrictions {
 	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 1440; // 24 hours in minutes
 
 	private final SharedPreferences mPrefs;
+	private final Context mContext;
 
 	private long maxFullGeocacheLimit;
 	private long currentFullGeocacheLimit;
@@ -25,7 +29,8 @@ public class AccountRestrictions {
 	private boolean premiumMember;
 
 	public AccountRestrictions(Context context) {
-		mPrefs = context.getSharedPreferences(PrefConstants.RESTRICTION_STORAGE_NAME, Context.MODE_PRIVATE);
+		mContext = context.getApplicationContext();
+		mPrefs = mContext.getSharedPreferences(PrefConstants.RESTRICTION_STORAGE_NAME, Context.MODE_PRIVATE);
 		init();
 	}
 
@@ -56,6 +61,7 @@ public class AccountRestrictions {
 				premiumMember = true;
 				break;
 			default:
+				presetBasicMembershipConfiguration();
 				premiumMember = false;
 				break;
 		}
@@ -63,6 +69,31 @@ public class AccountRestrictions {
 		mPrefs.edit()
 			.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, premiumMember)
 			.apply();
+	}
+
+	private void presetBasicMembershipConfiguration() {
+		SharedPreferences defaultPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		Editor editor = defaultPreferences.edit()
+				// DOWNLOADING
+				.putBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, true)
+				.putString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER)
+				.putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 0)
+				// LIVE MAP
+				.putBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false)
+				// FILTERS
+				.putString(PrefConstants.FILTER_DIFFICULTY_MIN, "1")
+				.putString(PrefConstants.FILTER_DIFFICULTY_MAX, "5")
+				.putString(PrefConstants.FILTER_TERRAIN_MIN, "1")
+				.putString(PrefConstants.FILTER_TERRAIN_MAX, "5");
+
+		// multi-select filters (select all)
+		for (int i = 0; i < GeocacheType.values().length; i++)
+			editor.putBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true);
+		for (int i = 0; i < ContainerType.values().length; i++)
+			editor.putBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true);
+
+		editor.apply();
 	}
 
 	public void updateLimits(ApiLimits apiLimits) {

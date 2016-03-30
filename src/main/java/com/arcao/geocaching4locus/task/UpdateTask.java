@@ -10,6 +10,7 @@ import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.GeocacheLog;
+import com.arcao.geocaching.api.data.Trackable;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
@@ -135,7 +136,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-
+		boolean basicMember = !authenticatorHelper.getRestrictions().isPremiumMember();
 
 		if (!authenticatorHelper.hasAccount())
 			throw new InvalidCredentialsException("Account not found.");
@@ -152,8 +153,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			int originalLogCount = logCount;
 
 			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
-			if (!authenticatorHelper.getRestrictions().isPremiumMember()) {
-				resultQuality = GeocachingApi.ResultQuality.SUMMARY;
+			if (basicMember) {
+				resultQuality = GeocachingApi.ResultQuality.LITE;
 				logCount = 0;
 			}
 
@@ -168,8 +169,15 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 			result.newPoint = mMapper.toLocusPoint(cache);
 
+			if (basicMember) {
+				// add trackables
+				List<Trackable> trackables = api.getTrackablesByCacheCode(result.cacheId, 0, 30, 0);
+				mMapper.addTrackables(result.newPoint, trackables);
 
-			if (result.updateLogs || resultQuality == GeocachingApi.ResultQuality.SUMMARY) {
+				// TODO images
+			}
+
+			if (result.updateLogs || basicMember) {
 				int startIndex = logCount;
 				int maxLogs = AppConstants.LOGS_TO_UPDATE_MAX - logCount;
 

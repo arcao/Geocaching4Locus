@@ -130,15 +130,6 @@ public class LocusDataMapper {
 
 		sortCacheLogsByCreated(cache.getGeocacheLogs());
 
-		for (GeocacheLog log : CollectionUtils.emptyIfNull(cache.getGeocacheLogs())) {
-			CollectionUtils.addIgnoreNull(d.logs, toLocusCacheLog(log));
-		}
-
-		boolean trackableLightData = cache.getTrackables() != null && cache.getTrackables().size() > 100;
-		for (Trackable trackable : CollectionUtils.emptyIfNull(cache.getTrackables())) {
-			CollectionUtils.addIgnoreNull(d.trackables, toLocusTrackable(trackable, trackableLightData));
-		}
-
 		for (com.arcao.geocaching.api.data.Waypoint waypoint : CollectionUtils.emptyIfNull(
 				cache.getWaypoints())) {
 			CollectionUtils.addIgnoreNull(d.waypoints, toLocusWaypoint(waypoint));
@@ -165,6 +156,9 @@ public class LocusDataMapper {
 
 		p.gcData = d;
 
+		addCacheLogs(p, cache.getGeocacheLogs());
+		addTrackables(p, cache.getTrackables());
+
 		updateCacheLocationByCorrectedCoordinates(p, cache.getUserWaypoints());
 
 		if (!mPremiumMember)
@@ -173,6 +167,15 @@ public class LocusDataMapper {
 		return p;
 	}
 
+	public void addTrackables(@NonNull Waypoint toPoint, @Nullable List<Trackable> trackables) {
+		if (trackables == null || toPoint.gcData == null)
+			return;
+
+		boolean trackableLightData = trackables.size() > 100;
+		for (Trackable trackable : trackables) {
+			CollectionUtils.addIgnoreNull(toPoint.gcData.trackables, toLocusTrackable(trackable, trackableLightData));
+		}
+	}
 
 	private void applyListingForBasicMembers(@NonNull Waypoint toPoint) {
 		if (toPoint.gcData == null)
@@ -294,12 +297,12 @@ public class LocusDataMapper {
 		return t;
 	}
 
-	public void addCacheLogs(@NonNull Waypoint to, @Nullable Collection<GeocacheLog> logs) {
-		if (to.gcData == null || CollectionUtils.isEmpty(logs))
+	public void addCacheLogs(@NonNull Waypoint toPoint, @Nullable Collection<GeocacheLog> logs) {
+		if (toPoint.gcData == null || CollectionUtils.isEmpty(logs))
 			return;
 
 		for (GeocacheLog log : logs) {
-			CollectionUtils.addIgnoreNull(to.gcData.logs, toLocusCacheLog(log));
+			CollectionUtils.addIgnoreNull(toPoint.gcData.logs, toLocusCacheLog(log));
 		}
 	}
 

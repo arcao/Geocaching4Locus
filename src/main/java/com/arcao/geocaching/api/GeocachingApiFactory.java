@@ -26,6 +26,7 @@ public class GeocachingApiFactory {
 
 	public static JsonDownloader createJsonDownloader() {
 		if (jsonDownloader == null) {
+			createOkHttpClient();
 			jsonDownloader = new OkHttpClientJsonDownloader(client);
 		}
 		return jsonDownloader;
@@ -33,6 +34,7 @@ public class GeocachingApiFactory {
 
 	private static void createOkHttpClient() {
 		if (client == null) {
+			createApiConfiguration();
 			client = new OkHttpClient.Builder()
 					.connectTimeout(apiConfiguration.getConnectTimeout(), TimeUnit.MILLISECONDS)
 					.readTimeout(apiConfiguration.getReadTimeout(), TimeUnit.MILLISECONDS)

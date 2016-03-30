@@ -5,17 +5,22 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 
+import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.preference.SliderPreference;
 import com.arcao.preference.ListPreference;
 
 public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
+	private boolean mPremiumMember;
+
 	@Override
 	public void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_downloading);
+
+		mPremiumMember = App.get(getActivity()).getAuthenticatorHelper().getRestrictions().isPremiumMember();
 	}
 
 	@Override
@@ -25,6 +30,8 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 		final SliderPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
 		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
 
+		simpleCacheDataPreference.setEnabled(mPremiumMember);
+
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -32,9 +39,11 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 				return true;
 			}
 		});
-		fullCacheDataOnShowPreference.setEnabled(simpleCacheDataPreference.isChecked());
+
+		fullCacheDataOnShowPreference.setEnabled(simpleCacheDataPreference.isChecked() && mPremiumMember);
 		fullCacheDataOnShowPreference.setSummary(preparePreferenceSummary(fullCacheDataOnShowPreference.getEntry(), R.string.pref_download_on_show_summary));
 
+		downloadingCountOfLogsPreference.setEnabled(mPremiumMember);
 		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()),
 						R.string.pref_count_of_logs_summary));
 

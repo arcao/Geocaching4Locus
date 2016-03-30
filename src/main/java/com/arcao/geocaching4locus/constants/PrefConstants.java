@@ -5,7 +5,7 @@ public interface PrefConstants {
 	String RESTRICTION_STORAGE_NAME = "RESTRICTION";
 
 	String PREF_VERSION = "pref_version";
-	int CURRENT_PREF_VERSION = 1;
+	int CURRENT_PREF_VERSION = 2;
 
 	String LAST_LATITUDE = "latitude";
 	String LAST_LONGITUDE = "longitude";

@@ -8,6 +8,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import org.scribe.model.Token;
@@ -113,21 +114,21 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		// remove username, password and session from old storage
 		SharedPreferences defaultPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-		defaultPref.edit()
-			.remove(PrefConstants.USERNAME)
-			.remove(PrefConstants.PASSWORD)
-			.remove(PrefConstants.SESSION)
-			.apply();
-
 		int prefVersion = mPrefs.getInt(PrefConstants.PREF_VERSION, 0);
 
-		// remove account when password is set
-		// remove old accounts with unset member type property
-		if (mPrefs.contains(PrefConstants.PASSWORD) || prefVersion < 1) {
+		if (prefVersion < 1) {
+			// remove old accounts with unset member type property
 			removeAccount();
 		}
+		if (prefVersion < 2) {
+			// apply restrictions for basic membership
+			if (hasAccount() && !restrictions.isPremiumMember())
+				restrictions.updateMemberType(MemberType.Basic);
+		}
 
-		mPrefs.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).apply();
+		// update pref_version to latest one
+		if (prefVersion != PrefConstants.CURRENT_PREF_VERSION)
+			mPrefs.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).apply();
 	}
 
 	@Override

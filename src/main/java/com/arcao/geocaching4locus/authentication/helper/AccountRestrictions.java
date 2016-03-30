@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class AccountRestrictions {
-	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 31536000; // Year in minutes
+	private static final long DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD = 1440; // 24 hours in minutes
 
 	private final SharedPreferences mPrefs;
 

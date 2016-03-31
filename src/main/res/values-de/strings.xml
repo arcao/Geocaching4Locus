@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Möchtest Du mit nur teilweisem Datenempfang mit Locus Maps fortfahren?</string>
     <string name="yes_button">Ja</string>
     <string name="no_button">Nein</string>
+    <string name="basic_member_warning_message">Nur Premium Member können die volle Leistungsfähigkeit dieser Erweiterung ausschöpfen. Als Basic Member kannst Du nur Traditionals, Events und CITOs mit Basisinformationen (Beschreibungen und Hints, keine Attribute, Bilder und Logs) mit nur wenigen Such-Filtern herunterladen. Weitere Informationen erhälst Du auf der Website von Geocaching4Locus. </string>
+    <string name="basic_member_warning_button_manual">Zeige die Anleitung</string>
 </resources>

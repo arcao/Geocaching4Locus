@@ -34,7 +34,7 @@
     <string name="update_cache_progress">Mise à jour de la cache</string>
     
     <string name="pref_count_of_logs">Nombre de logs</string>
-    <string name="pref_count_of_logs_summary">Nombre de logs à charger avec chaque cache</string>
+    <string name="pref_count_of_logs_summary">Nombre de logs à télécharger par cache</string>
     <string name="gps">GPS</string>
     <string name="pref_show_disabled">Montrer les caches désactivées</string>
     <string name="pref_show_disabled_summary">Montrer les caches temporairement désactivées</string>
@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Souhaitez-vous continuer avec un téléchargement partiel des données vers Locus Map?</string>
     <string name="yes_button">Oui</string>
     <string name="no_button">Non</string>
+    <string name="basic_member_warning_message">Cet add-on ne fonctionne pleinement qu\'avec une adhésion premium. En tant que membre de base que vous pouvez télécharger, événement et CITO géocaches traditionnels avec informations de base (inscription en ligne, hint, pas d\'attributs, pas d\'images, derniers logs en ligne, etc) et utilisent seulement quelques filtres dans la recherchePour plus d\'informations merci de lire le manuel sur le site Geocaching Locus.</string>
+    <string name="basic_member_warning_button_manual">Lien vers le manuel</string>
 </resources>

@@ -2,5 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <!-- speed up app deployment in debug mode -->
-    <application android:vmSafeMode="true" tools:ignore="AllowBackup" />
+    <application android:vmSafeMode="true" tools:ignore="AllowBackup,GoogleAppIndexingWarning" />
 </manifest>

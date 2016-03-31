@@ -117,6 +117,13 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		int prefVersion = mPrefs.getInt(PrefConstants.PREF_VERSION, 0);
 
 		if (prefVersion < 1) {
+			// remove user name, password and session from old storage
+			defaultPref.edit()
+					.remove(PrefConstants.USERNAME)
+					.remove(PrefConstants.PASSWORD)
+					.remove(PrefConstants.SESSION)
+					.apply();
+
 			// remove old accounts with unset member type property
 			removeAccount();
 		}

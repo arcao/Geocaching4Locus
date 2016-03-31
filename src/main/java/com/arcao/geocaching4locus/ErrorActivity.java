@@ -75,7 +75,9 @@ public class ErrorActivity extends AppCompatActivity {
 			final CharSequence title = args != null ? args.getCharSequence(KEY_TITLE) : null;
 			final CharSequence message = args != null ? args.getCharSequence(KEY_MESSAGE) : StringUtils.EMPTY;
 			final Intent positiveAction = args != null ? args.<Intent>getParcelable(KEY_POSITIVE_ACTION) : null;
+			@StringRes
 			int positiveButtonText = args != null ? args.getInt(KEY_POSITIVE_BUTTON_TEXT) : 0;
+			@StringRes
 			int negativeButtonText = args != null ? args.getInt(KEY_NEGATIVE_BUTTON_TEXT) : 0;
 			final Throwable t = (Throwable) (args != null ? args.getSerializable(KEY_EXCEPTION) : null);
 

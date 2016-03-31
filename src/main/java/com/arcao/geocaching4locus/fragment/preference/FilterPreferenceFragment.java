@@ -147,15 +147,12 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	}
 
 	private CharSequence prepareCacheTypeSummaryBasicMember() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(shortCacheTypeName[GeocacheType.Traditional.ordinal()]);
-		sb.append(TEXT_VALUE_SEPARATOR);
-		sb.append(shortCacheTypeName[GeocacheType.Event.ordinal()]);
-		sb.append(TEXT_VALUE_SEPARATOR);
-		sb.append(shortCacheTypeName[GeocacheType.CacheInTrashOutEvent.ordinal()]);
-
-		return preparePreferenceSummary(sb.toString(), 0);
+		return preparePreferenceSummary(shortCacheTypeName[GeocacheType.Traditional.ordinal()] +
+				TEXT_VALUE_SEPARATOR +
+				shortCacheTypeName[GeocacheType.Event.ordinal()] +
+				TEXT_VALUE_SEPARATOR +
+				shortCacheTypeName[GeocacheType.CacheInTrashOutEvent.ordinal()],
+				0);
 	}
 
 	private CharSequence prepareContainerTypeSummary() {

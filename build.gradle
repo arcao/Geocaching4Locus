@@ -96,6 +96,8 @@ android {
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
         buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', geocachingApiStaging
+
+        resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
     }
 
     compileOptions {
@@ -121,7 +123,7 @@ android {
 
             signingConfig signingConfigs.release
             minifyEnabled true
-            // shrinkResources true // too aggressive
+            //shrinkResources true // too aggressive
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard.cfg'
         }

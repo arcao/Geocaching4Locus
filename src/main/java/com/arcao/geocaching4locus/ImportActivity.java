@@ -58,7 +58,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 		String cacheId = m.group(1);
 
-		AnalyticsUtil.actionImport();
+		AnalyticsUtil.actionImport(App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
 
 		Timber.i("source: import;" + cacheId);
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);

@@ -37,7 +37,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 	private void startImport(String cacheId) {
 		Timber.i("source: importFromGC;" + cacheId);
 
-		AnalyticsUtil.actionImportGC();
+		AnalyticsUtil.actionImportGC(App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
 
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}

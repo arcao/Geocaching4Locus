@@ -63,13 +63,14 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 	public void onLoginFinished(Intent errorIntent) {
 		AuthenticatorHelper helper = App.get(this).getAuthenticatorHelper();
 		boolean result = helper.hasAccount();
+		boolean premiumMember = helper.getRestrictions().isPremiumMember();
 
 		if (result) {
 			//noinspection ConstantConditions
 			Crashlytics.setUserName(helper.getAccount().name);
 		}
 
-		AnalyticsUtil.actionLogin(result);
+		AnalyticsUtil.actionLogin(result, premiumMember);
 
 		setResult(result ? RESULT_OK : RESULT_CANCELED);
 
@@ -79,7 +80,7 @@ public class AuthenticatorActivity extends AbstractActionBarActivity implements 
 			return;
 		}
 
-		if (helper.getRestrictions().isPremiumMember()) {
+		if (premiumMember) {
 			finish();
 			return;
 		}

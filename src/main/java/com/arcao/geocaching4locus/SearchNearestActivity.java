@@ -252,7 +252,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
         AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
-    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count);
+    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count,
+        App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
 
     DownloadNearestDialogFragment.newInstance(mLatitude, mLongitude, count).show(
             getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);

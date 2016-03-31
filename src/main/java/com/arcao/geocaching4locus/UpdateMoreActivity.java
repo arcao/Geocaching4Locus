@@ -38,7 +38,8 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 			return;
 		}
 
-		AnalyticsUtil.actionUpdateMore(pointIndexes.length);
+		AnalyticsUtil.actionUpdateMore(pointIndexes.length,
+				App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
 
 		Timber.i("source: update;count=" + pointIndexes.length);
 		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);

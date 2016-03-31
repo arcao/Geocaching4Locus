@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">您要在 Locus 地圖上使用未完整接收的資料嗎?</string>
     <string name="yes_button">是</string>
     <string name="no_button">否</string>
+    <string name="basic_member_warning_message">這個功能只適用於付費會員，基本會員只能下載傳統寶藏、網聚寶藏的基本訊息(寶藏內文、提示、日誌，但是沒有寶藏屬性和相關圖片)，另外只能使用較少的過濾條件來搜尋寶藏，更多訊息請查閱 Geocaching4Locus 網站。</string>
+    <string name="basic_member_warning_button_manual">顯示選單</string>
 </resources>

@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Chcete pokračovat s částečně přijatými daty do Locus Map?</string>
     <string name="yes_button">Ano</string>
     <string name="no_button">Ne</string>
+    <string name="basic_member_warning_message">Toto rozšíření je plně funkční pouze s prémiovým členstvím. Jako základní člen budete moct stáhnout tradiční, eventy a CITO keše se základními informacemi (on-line listing, nápověda v on-line listingu, žádné atributy, žádné obrázky, logy v on-line listingu, atd.) a používat pouze několik filtrů při hledání keší. Pro více informací si prosím přečtěte manuál na webu Geocaching4Locus.</string>
+    <string name="basic_member_warning_button_manual">Ukaž mi manuál</string>
 </resources>

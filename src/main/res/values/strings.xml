@@ -180,6 +180,6 @@
     <string name="error_continue_locus_map">Do you want continue with a partially received data to Locus Map?</string>
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
-    <string name="basic_member_warning_message">This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (online listing, hint in listing, no attributes, no images, logs in listing, …) and use only a few filters in searching dialog. For more information please read the manual on Geocaching4Locus website.</string>
+    <string name="basic_member_warning_message">This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the manual on Geocaching4Locus website.</string>
     <string name="basic_member_warning_button_manual">Show me manual</string>
 </resources>

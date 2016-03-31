@@ -90,7 +90,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 
 			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
 			if (!authenticatorHelper.getRestrictions().isPremiumMember()) {
-				resultQuality = GeocachingApi.ResultQuality.SUMMARY;
+				resultQuality = GeocachingApi.ResultQuality.LITE;
 				logCount = 0;
 			}
 

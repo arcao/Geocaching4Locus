@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Czy chcesz kontynuować częściowo odebranych danych do Locus Map?</string>
     <string name="yes_button">Tak</string>
     <string name="no_button">Nie</string>
+    <string name="basic_member_warning_message">Ten dodatek działa w pełni jedynie z kontami premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event, CITO tylko wraz z podstawowymi informacjami (opis online, podpowiedź w opisie online, bez obrazków, wpisy w opisie online itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
+    <string name="basic_member_warning_button_manual">Pokaż instrukcję użytkownika</string>
 </resources>

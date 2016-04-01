@@ -103,6 +103,7 @@ public class AccountRestrictions {
 		defaultPreferences.edit()
 				// DOWNLOADING
 				.putBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false)
+				.putString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE)
 				.putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5)
 				.apply();
 	}

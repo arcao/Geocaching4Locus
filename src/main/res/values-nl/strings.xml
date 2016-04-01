@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Verder gaan naar Locus met gedeeltelijk ontvangen data?</string>
     <string name="yes_button">Ja</string>
     <string name="no_button">Nee</string>
+    <string name="basic_member_warning_message">Deze add-on werkt alleen compleet met een premium lidmaatschap. Als basic lid kun je traditional caches downloaden en ook event en CITO caches met basis info (...) en slechts een paar filters toepassen tijdens zoeken naar geocaches. Voor meer informatie lees aub de gebruiksaanwijzing  op de Geocaching4Locus website.</string>
+    <string name="basic_member_warning_button_manual">Toon gebruiksaanwijzing</string>
 </resources>

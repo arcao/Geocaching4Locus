@@ -180,4 +180,6 @@
     <string name="error_continue_locus_map">Želite li nastaviti s djelomično primljenim podacima ka Locus Map?</string>
     <string name="yes_button">Da</string>
     <string name="no_button">Ne</string>
+    
+    
 </resources>

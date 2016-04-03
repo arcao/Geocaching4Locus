@@ -9,6 +9,11 @@ import android.support.annotation.NonNull;
 public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
 
+	public AbstractDialogFragment() {
+		if (getArguments() == null)
+			setArguments(new Bundle());
+	}
+
 	// This is work around for the situation when method show is called after saving
 	// state even if you do all right. Especially when show is called after click on
 	// a button.
@@ -41,13 +46,12 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 			super.onDestroyView();
 	}
 
+
+
 	@Override
 	public void dismiss() {
 		// this fix IllegalStateException when App is hidden
 		if (!isAdded() || getFragmentManager() == null) {
-			if (getArguments() == null)
-				setArguments(new Bundle());
-
 			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
 			return;
 		}

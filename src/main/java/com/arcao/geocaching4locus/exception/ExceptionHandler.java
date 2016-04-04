@@ -19,13 +19,13 @@ import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+import java.io.EOFException;
+import java.io.InterruptedIOException;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import org.apache.commons.lang3.StringUtils;
 import org.scribe.exceptions.OAuthConnectionException;
 import timber.log.Timber;
-
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
 
 public class ExceptionHandler {
 	private final Context mContext;
@@ -96,7 +96,7 @@ public class ExceptionHandler {
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
 			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)
-					&& !(innerT instanceof ConnectException) && !isSSLConnectionException(innerT)) {
+					&& !(innerT instanceof ConnectException) && !(innerT instanceof EOFException) && !isSSLConnectionException(innerT)) {
 				builder.setException(t);
 			}
 

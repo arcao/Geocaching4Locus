@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.constants;
 
 import android.net.Uri;
 
+import android.os.Build;
 import android.util.Base64;
 import org.osgi.framework.Version;
 
@@ -53,5 +54,5 @@ public interface AppConstants {
 	float DISTANCE_KM_MIN = 0.1F;
 	float DISTANCE_KM_MAX = 50;
 
-	String PREMIUM_CHARACTER = new String(Character.toChars(0x1F451));
+	String PREMIUM_CHARACTER = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) ? new String(Character.toChars(0x1F451)) : "(PM)";
 }

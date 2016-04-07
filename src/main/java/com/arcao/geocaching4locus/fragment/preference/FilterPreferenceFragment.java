@@ -61,6 +61,9 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		final Preference cacheTypeFilterScreen = findPreference(FILTER_CACHE_TYPE, Preference.class);
 		cacheTypeFilterScreen.setEnabled(mPremiumMember);
 		cacheTypeFilterScreen.setSummary(mPremiumMember ? prepareCacheTypeSummary() : prepareCacheTypeSummaryBasicMember());
+		if (!mPremiumMember) {
+			applyPremiumTitleSign(cacheTypeFilterScreen);
+		}
 	}
 
 	private void prepareContainerTypePreference() {
@@ -68,6 +71,9 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		containerTypeFilterScreen.setEnabled(mPremiumMember);
 		containerTypeFilterScreen.setSummary(
 				mPremiumMember ? prepareContainerTypeSummary() : prepareContainerTypeSummaryBasicMember());
+		if (!mPremiumMember) {
+			applyPremiumTitleSign(containerTypeFilterScreen);
+		}
 	}
 
 	private void prepareDifficultyPreference() {
@@ -80,6 +86,8 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		if (mPremiumMember) {
 			difficultyMin = mPrefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, difficultyMin);
 			difficultyMax = mPrefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, difficultyMax);
+		} else {
+			applyPremiumTitleSign(difficultyPreference);
 		}
 
 		difficultyPreference.setSummary(prepareRatingSummary(difficultyMin, difficultyMax));
@@ -95,6 +103,8 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		if (mPremiumMember) {
 			terrainMin = mPrefs.getString(PrefConstants.FILTER_TERRAIN_MIN, terrainMin);
 			terrainMax = mPrefs.getString(PrefConstants.FILTER_TERRAIN_MAX, terrainMax);
+		} else {
+			applyPremiumTitleSign(terrainPreference);
 		}
 
 		terrainPreference.setSummary(prepareRatingSummary(terrainMin, terrainMax));

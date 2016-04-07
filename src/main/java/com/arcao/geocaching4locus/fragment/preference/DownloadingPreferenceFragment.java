@@ -48,6 +48,12 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 						R.string.pref_count_of_logs_summary));
 
 		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
+
+		if (!mPremiumMember) {
+			applyPremiumTitleSign(simpleCacheDataPreference);
+			applyPremiumTitleSign(fullCacheDataOnShowPreference);
+			applyPremiumTitleSign(downloadingCountOfLogsPreference);
+		}
 	}
 
 	@Override

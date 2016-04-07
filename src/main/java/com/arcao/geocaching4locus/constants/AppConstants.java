@@ -52,4 +52,6 @@ public interface AppConstants {
 	// restrictions in Geocaching Live Service
 	float DISTANCE_KM_MIN = 0.1F;
 	float DISTANCE_KM_MAX = 50;
+
+	String PREMIUM_CHARACTER = new String(Character.toChars(0x1F451));
 }

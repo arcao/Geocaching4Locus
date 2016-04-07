@@ -25,5 +25,8 @@ public class LiveMapPreferenceFragment extends AbstractPreferenceFragment {
 		final CheckBoxPreference downloadHintsPreference = findPreference(LIVE_MAP_DOWNLOAD_HINTS, CheckBoxPreference.class);
 		downloadHintsPreference.setEnabled(mPremiumMember);
 
+		if (!mPremiumMember) {
+			applyPremiumTitleSign(downloadHintsPreference);
+		}
 	}
 }

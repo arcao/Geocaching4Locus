@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Support the future development…</string>
     <string name="pref_donate_paypal_choose_currency">Choose your currency</string>
     
-    <string name="pref_title_cache_type_filter">Cache types (Premium member)</string>
-    <string name="pref_title_difficulty_filter">Difficulty (Premium member)</string>
-    <string name="pref_title_terrain_filter">Terrain (Premium member)</string>
+    <string name="pref_title_cache_type_filter">Cache types</string>
+    <string name="pref_title_difficulty_filter">Difficulty</string>
+    <string name="pref_title_terrain_filter">Terrain</string>
     <string name="pref_difficulty_min">Min. difficulty</string>
     <string name="pref_difficulty_max">Max. difficulty</string>
     <string name="pref_terrain_min">Min. terrain</string>
@@ -82,7 +82,7 @@
 
     <string name="update_caches_progress">Updating caches…</string>
     <string name="original_coordinates_name">Original coordinates</string>
-    <string name="pref_title_container_type_filter">Container size (Premium member)</string>
+    <string name="pref_title_container_type_filter">Container size</string>
 
     <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
     <string name="livemap_deactivated">Live map deactivated.</string>

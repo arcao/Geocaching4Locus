@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.util.SpannedFix;
 import org.apache.commons.lang3.StringUtils;
@@ -52,5 +53,9 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 		if (value != null && value.length() > 0)
 			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
 		return SpannedFix.fromHtml(StringUtils.defaultString(summary));
+	}
+
+	protected void applyPremiumTitleSign(Preference preference) {
+		preference.setTitle(String.format("%s %s", preference.getTitle(), AppConstants.PREMIUM_CHARACTER));
 	}
 }

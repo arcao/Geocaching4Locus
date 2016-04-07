@@ -50,10 +50,15 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	protected void onResume() {
 		super.onResume();
 
+		boolean premiumMember = App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember();
+
 		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
 
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
-    mImportBookmarkButton.setEnabled(App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember());
+    mImportBookmarkButton.setEnabled(premiumMember);
+		if (!premiumMember) {
+			mImportBookmarkButton.setText(String.format("%s %s", getString(R.string.menu_import_bookmarks), AppConstants.PREMIUM_CHARACTER));
+		}
 	}
 
 	@Override

@@ -193,7 +193,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 
 			if (getActivity() != null)
-				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).setMessage(description).build());
+				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).message(description).build());
 		}
 
 		@Override

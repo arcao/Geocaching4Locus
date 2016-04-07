@@ -35,7 +35,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     }
 
     if (!App.get(this).getAuthenticatorHelper().getRestrictions().isPremiumMember()) {
-      startActivity(new ErrorActivity.IntentBuilder(this).setMessage(R.string.premium_feature).build());
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.premium_feature).build());
       finish();
       return;
     }

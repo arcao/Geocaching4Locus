@@ -57,68 +57,68 @@ public class ExceptionHandler {
 		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 		if (positiveAction != null) {
 			builder
-					.setPositiveAction(positiveAction)
-					.setPositiveButtonText(R.string.yes_button)
-					.setNegativeButtonText(R.string.no_button);
+					.positiveAction(positiveAction)
+					.positiveButtonText(R.string.yes_button)
+					.negativeButtonText(R.string.no_button);
 		}
 
 		if (t instanceof InvalidCredentialsException) {
 			return builder
-					.setMessage(R.string.error_credentials)
-					.setPositiveAction(
+					.message(R.string.error_credentials)
+					.positiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.setPositiveButtonText(R.string.ok_button)
-					.setNegativeButtonText(null)
+					.positiveButtonText(R.string.ok_button)
+					.negativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidSessionException ||
 						(t instanceof LiveGeocachingApiException && ((LiveGeocachingApiException) t).getStatusCode() == StatusCode.NotAuthorized)) {
 			App.get(mContext).getAuthenticatorHelper().removeAccount();
 			return builder
-					.setMessage(R.string.error_session_expired)
-					.setPositiveAction(
+					.message(R.string.error_session_expired)
+					.positiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.setPositiveButtonText(R.string.ok_button)
-					.setNegativeButtonText(null)
+					.positiveButtonText(R.string.ok_button)
+					.negativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.setMessage(baseMessage, mContext.getString(R.string.error_invalid_api_response, t.getMessage()))
-					.setException(t)
+					.message(baseMessage, mContext.getString(R.string.error_invalid_api_response, t.getMessage()))
+					.exception(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
 			return builder
-					.setMessage(R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode())
+					.message(R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode())
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.setMessage(baseMessage, mContext.getString(R.string.error_network));
+			builder.message(baseMessage, mContext.getString(R.string.error_network));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
 			if (innerT != null && !(innerT instanceof InterruptedIOException) && !(innerT instanceof UnknownHostException)
 					&& !(innerT instanceof ConnectException) && !(innerT instanceof EOFException) && !isSSLConnectionException(innerT)) {
-				builder.setException(t);
+				builder.exception(t);
 			}
 
 			return builder.build();
 		} else if (t instanceof NoResultFoundException) {
 			return builder
-					.setMessage(R.string.error_no_result)
+					.message(R.string.error_no_result)
 					.build();
 		} else if (t instanceof LocusMapRuntimeException) {
 			t = t.getCause();
 			String message = StringUtils.defaultString(t.getMessage());
 
 			return builder
-					.setTitle(R.string.error_title_locus)
-					.setMessage(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
-					.setException(t)
+					.title(R.string.error_title_locus)
+					.message(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.exception(t)
 					.build();
 		} else {
 			String message = StringUtils.defaultString(t.getMessage());
 			return builder
-					.setMessage(baseMessage, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
-					.setException(t)
+					.message(baseMessage, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.exception(t)
 					.build();
 		}
 	}
@@ -157,28 +157,28 @@ public class ExceptionHandler {
 				String errorText = mContext.getString(message, cacheString, periodString, renewTime);
 
 				builder
-							.setTitle(title)
-				      .setMessage(baseMessage, errorText);
+							.title(title)
+				      .message(baseMessage, errorText);
 
 				if (positiveAction != null) {
 					builder
-							.setPositiveAction(positiveAction)
-							.setPositiveButtonText(R.string.yes_button)
-							.setNegativeButtonText(R.string.no_button);
+							.positiveAction(positiveAction)
+							.positiveButtonText(R.string.yes_button)
+							.negativeButtonText(R.string.no_button);
 				}
 
 				return builder.build();
 
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
-						.setTitle(R.string.method_quota_exceeded_title)
-						.setMessage(baseMessage, mContext.getString(R.string.method_quota_exceeded_message));
+						.title(R.string.method_quota_exceeded_title)
+						.message(baseMessage, mContext.getString(R.string.method_quota_exceeded_message));
 
 				if (positiveAction != null) {
 					builder
-							.setPositiveAction(positiveAction)
-							.setPositiveButtonText(R.string.yes_button)
-							.setNegativeButtonText(R.string.no_button);
+							.positiveAction(positiveAction)
+							.positiveButtonText(R.string.yes_button)
+							.negativeButtonText(R.string.no_button);
 				}
 
 				return builder.build();
@@ -194,8 +194,8 @@ public class ExceptionHandler {
 			case PremiumMembershipRequiredForTrackableCountFilter:
 				restrictions.updateMemberType(MemberType.Basic);
 				return builder
-						.setTitle(R.string.premium_member_warning_title)
-						.setMessage(R.string.premium_member_for_filter_required)
+						.title(R.string.premium_member_warning_title)
+						.message(R.string.premium_member_for_filter_required)
 						.build();
 
 			default:

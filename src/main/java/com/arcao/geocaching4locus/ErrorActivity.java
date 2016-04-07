@@ -162,42 +162,42 @@ public class ErrorActivity extends AppCompatActivity {
 			this.context = context;
 		}
 
-		public IntentBuilder setTitle(@StringRes int resTitle) {
+		public IntentBuilder title(@StringRes int resTitle) {
 			this.title = context.getString(resTitle);
 			return this;
 		}
 
-		public IntentBuilder setMessage(@StringRes int message, Object... params) {
+		public IntentBuilder message(@StringRes int message, Object... params) {
 			this.message = Html.fromHtml(context.getString(message, params));
 			return this;
 		}
 
-		public IntentBuilder setMessage(String message, Object... params) {
+		public IntentBuilder message(String message, Object... params) {
 			this.message = Html.fromHtml(String.format(message, params));
 			return this;
 		}
 
-		public IntentBuilder setPositiveAction(@Nullable Intent positiveAction) {
+		public IntentBuilder positiveAction(@Nullable Intent positiveAction) {
 			this.positiveAction = positiveAction;
 			return this;
 		}
 
-		public IntentBuilder setPositiveButtonText(@StringRes int positiveButtonText) {
+		public IntentBuilder positiveButtonText(@StringRes int positiveButtonText) {
 			this.positiveButtonText = context.getString(positiveButtonText);
 			return this;
 		}
 
-		public IntentBuilder setNegativeButtonText(@StringRes int negativeButtonText) {
+		public IntentBuilder negativeButtonText(@StringRes int negativeButtonText) {
 			this.negativeButtonText = context.getString(negativeButtonText);
 			return this;
 		}
 
-		public IntentBuilder setNegativeButtonText(CharSequence negativeButtonText) {
+		public IntentBuilder negativeButtonText(CharSequence negativeButtonText) {
 			this.negativeButtonText = negativeButtonText;
 			return this;
 		}
 
-		public IntentBuilder setException(@Nullable Throwable exception) {
+		public IntentBuilder exception(@Nullable Throwable exception) {
 			this.exception = exception;
 			return this;
 		}

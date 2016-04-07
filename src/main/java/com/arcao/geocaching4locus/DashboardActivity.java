@@ -14,11 +14,14 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.IntentUtil;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
+import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.widget.DashboardButton;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 
 public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
+	private static final int REQUEST_SIGN_ON = 1;
+
 	private LiveMapNotificationManager mLiveMapNotificationManager;
 	private boolean mCalledFromLocus = false;
 
@@ -70,6 +73,17 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
   @OnClick(R.id.db_live_map)
 	public void onClickLiveMap() {
+		// test if Locus Map is installed
+		if (!LocusTesting.isLocusInstalled(this)) {
+			LocusTesting.showLocusMissingError(this);
+			return;
+		}
+
+		// test if user is logged in
+		if (App.get(this).getAuthenticatorHelper().requestSignOn(this, REQUEST_SIGN_ON)) {
+			return;
+		}
+
 		mLiveMapNotificationManager.setLiveMapEnabled(!mLiveMapNotificationManager.isLiveMapEnabled());
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
 
@@ -139,6 +153,13 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == REQUEST_SIGN_ON) {
+			if (resultCode == RESULT_OK) {
+				onClickLiveMap();
+			}
+			return;
+		}
 
 		if (resultCode == RESULT_OK) {
 			finish();

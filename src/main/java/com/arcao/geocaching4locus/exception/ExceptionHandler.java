@@ -68,7 +68,7 @@ public class ExceptionHandler {
 					.setPositiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
 					.setPositiveButtonText(R.string.ok_button)
-					.setNegativeButtonText(0)
+					.setNegativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidSessionException ||
 						(t instanceof LiveGeocachingApiException && ((LiveGeocachingApiException) t).getStatusCode() == StatusCode.NotAuthorized)) {
@@ -78,7 +78,7 @@ public class ExceptionHandler {
 					.setPositiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
 					.setPositiveButtonText(R.string.ok_button)
-					.setNegativeButtonText(0)
+					.setNegativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder

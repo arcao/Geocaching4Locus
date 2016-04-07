@@ -75,14 +75,14 @@ public class ErrorActivity extends AppCompatActivity {
 			final CharSequence title = args != null ? args.getCharSequence(KEY_TITLE) : null;
 			final CharSequence message = args != null ? args.getCharSequence(KEY_MESSAGE) : StringUtils.EMPTY;
 			final Intent positiveAction = args != null ? args.<Intent>getParcelable(KEY_POSITIVE_ACTION) : null;
-			@StringRes
-			int positiveButtonText = args != null ? args.getInt(KEY_POSITIVE_BUTTON_TEXT) : 0;
-			@StringRes
-			int negativeButtonText = args != null ? args.getInt(KEY_NEGATIVE_BUTTON_TEXT) : 0;
+			final CharSequence positiveButtonText = args != null ? args.getCharSequence(KEY_POSITIVE_BUTTON_TEXT) : null;
+			final CharSequence negativeButtonText = args != null ? args.getCharSequence(KEY_NEGATIVE_BUTTON_TEXT) : null;
 			final Throwable t = (Throwable) (args != null ? args.getSerializable(KEY_EXCEPTION) : null);
 
+			final Context context = getActivity();
+
 			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-					.positiveText(positiveButtonText != 0 ? positiveButtonText : R.string.ok_button);
+					.positiveText(!TextUtils.isEmpty(positiveButtonText) ? positiveButtonText : context.getString(R.string.ok_button));
 
 			if (!TextUtils.isEmpty(title)) {
 				builder.title(title);
@@ -90,7 +90,7 @@ public class ErrorActivity extends AppCompatActivity {
 
 			builder.customView(R.layout.dialog_error, false);
 
-			if (negativeButtonText != 0) {
+			if (!TextUtils.isEmpty(negativeButtonText)) {
 				builder.negativeText(negativeButtonText);
 			}
 
@@ -154,8 +154,8 @@ public class ErrorActivity extends AppCompatActivity {
 		private CharSequence title = null;
 		private CharSequence message = null;
 		private Intent positiveAction = null;
-		private int positiveButtonText = 0;
-		private int negativeButtonText = 0;
+		private CharSequence positiveButtonText = null;
+		private CharSequence negativeButtonText = null;
 		private Throwable exception = null;
 
 		public IntentBuilder(@NonNull Context context) {
@@ -183,11 +183,16 @@ public class ErrorActivity extends AppCompatActivity {
 		}
 
 		public IntentBuilder setPositiveButtonText(@StringRes int positiveButtonText) {
-			this.positiveButtonText = positiveButtonText;
+			this.positiveButtonText = context.getString(positiveButtonText);
 			return this;
 		}
 
 		public IntentBuilder setNegativeButtonText(@StringRes int negativeButtonText) {
+			this.negativeButtonText = context.getString(negativeButtonText);
+			return this;
+		}
+
+		public IntentBuilder setNegativeButtonText(CharSequence negativeButtonText) {
 			this.negativeButtonText = negativeButtonText;
 			return this;
 		}

@@ -286,21 +286,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		@Override
 		public void writeToParcel(Parcel dest, int flags) {
 			dest.writeString(cacheId);
-
-			if (oldPoint != null) {
-				byte[] data = oldPoint.getAsBytes();
-				dest.writeByteArray(data);
-			} else {
-				dest.writeByteArray(null);
-			}
-
-			if (newPoint != null) {
-				byte[] data = newPoint.getAsBytes();
-				dest.writeByteArray(data);
-			} else {
-				dest.writeByteArray(null);
-			}
-
+			dest.writeByteArray(oldPoint != null ? oldPoint.getAsBytes() : null);
+			dest.writeByteArray(newPoint != null ? newPoint.getAsBytes() : null);
 			dest.writeInt(updateLogs ? 1 : 0);
 		}
 

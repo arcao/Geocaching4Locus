@@ -326,4 +326,16 @@ public class LiveMapService extends IntentService {
 				Toast.makeText(getApplicationContext(), getResources().getString(R.string.livemap_error, message), Toast.LENGTH_LONG).show();}
 		});
 	}
+
+	public static void cleanLiveMapItems(Context context) {
+		try {
+			for (int i = 1; i < REQUESTS; i++) {
+				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
+				ActionDisplayPoints.sendPackSilent(context, pw, false);
+			}
+		} catch (Throwable t) {
+			t = new LocusMapRuntimeException(t);
+			Timber.e(t, t.getMessage());
+		}
+	}
 }

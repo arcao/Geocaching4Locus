@@ -15,6 +15,8 @@ import com.arcao.geocaching4locus.DashboardActivity;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
+import com.arcao.geocaching4locus.service.LiveMapService;
+
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import timber.log.Timber;
@@ -195,6 +197,11 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			}
 		} catch (Throwable e) {
 			Timber.e(e, "Unable to receive info about current state of periodic update events from Locus.");
+		}
+
+		// hide visible geocaches when live map is disabling
+		if (!enabled && isLiveMapEnabled() && mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP_HIDE_CACHES_ON_DISABLED, false)) {
+			LiveMapService.cleanLiveMapItems(mContext);
 		}
 
 		if (enabled && !periodicUpdateEnabled) {

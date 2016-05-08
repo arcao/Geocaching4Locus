@@ -183,6 +183,8 @@
     <string name="no_button">No</string>
     <string name="basic_member_warning_message">This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the manual on Geocaching4Locus website.</string>
     <string name="basic_member_warning_button_manual">Show me manual</string>
+    <string name="live_map_hide_caches_on_disabled">Hide geocaches on disabled</string>
+    <string name="live_map_hide_caches_on_disabled_summary">Hide Live map geocaches when Live map feature is disabled</string>
     <string name="warning_external_storage_permission">The app require <b>write external storage</b> permission for storing Geocache Data for Locus Map. Please <b>allow</b> this permission in a next dialog.</string>
     <string name="error_no_external_storage_permission">The app does not have permission to <b>write external storage</b>. This permission is needed for storing Geocaching data for Locus Map.</string>
 </resources>

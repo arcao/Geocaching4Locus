@@ -11,7 +11,7 @@ import android.support.annotation.Nullable;
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.authentication.AuthenticatorActivity;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import org.scribe.model.Token;
+import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	private final SharedPreferences mPrefs;
@@ -148,22 +148,25 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 	}
 
 	@Override
-	public void setOAuthRequestToken(@Nullable Token token) {
+	public void setOAuthRequestToken(@Nullable OAuth1RequestToken token) {
 		if (token == null || token.isEmpty())
 			return;
 
 		mPrefs.edit()
 				.putString(PrefConstants.OAUTH_TOKEN, token.getToken())
-				.putString(PrefConstants.OAUTH_TOKEN_SECRET, token.getSecret())
+				.putString(PrefConstants.OAUTH_TOKEN_SECRET, token.getTokenSecret())
+				.putBoolean(PrefConstants.OAUTH_CALLBACK_CONFIRMED, token.isOauthCallbackConfirmed())
 				.apply();
 	}
 
 	@Override
 	@NonNull
-	public Token getOAuthRequestToken() {
-		return new Token(
+	public OAuth1RequestToken getOAuthRequestToken() {
+		return new OAuth1RequestToken(
 				mPrefs.getString(PrefConstants.OAUTH_TOKEN, ""),
-				mPrefs.getString(PrefConstants.OAUTH_TOKEN_SECRET, "")
+				mPrefs.getString(PrefConstants.OAUTH_TOKEN_SECRET, ""),
+				mPrefs.getBoolean(PrefConstants.OAUTH_CALLBACK_CONFIRMED, false),
+				null
 		);
 	}
 
@@ -172,6 +175,7 @@ public class PreferenceAuthenticatorHelper implements AuthenticatorHelper {
 		mPrefs.edit()
 				.remove(PrefConstants.OAUTH_TOKEN)
 				.remove(PrefConstants.OAUTH_TOKEN_SECRET)
+				.remove(PrefConstants.OAUTH_CALLBACK_CONFIRMED)
 				.apply();
 	}
 }

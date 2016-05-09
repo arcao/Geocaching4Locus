@@ -6,15 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkListRecyclerAdapter.ViewHolder> {
   public interface OnItemClickListener {
@@ -50,10 +53,10 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
   }
 
   protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @Bind(R.id.title) TextView title;
-    @Bind(R.id.description) TextView description;
-		@Bind(R.id.count) TextView count;
-    @Bind(R.id.button) Button button;
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.description) TextView description;
+    @BindView(R.id.count) TextView count;
+    @BindView(R.id.button) Button button;
 
     private BookmarkList bookmarkList;
 
@@ -66,11 +69,11 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
       this.bookmarkList = bookmarkList;
 
       title.setText(bookmarkList.getName());
-			count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_cache,
-          bookmarkList.getItemCount(), bookmarkList.getItemCount()));
+      count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_cache,
+              bookmarkList.getItemCount(), bookmarkList.getItemCount()));
       description.setText(bookmarkList.getDescription());
-			description.setVisibility(
-          StringUtils.isEmpty(bookmarkList.getDescription()) ? View.GONE : View.VISIBLE);
+      description.setVisibility(
+              StringUtils.isEmpty(bookmarkList.getDescription()) ? View.GONE : View.VISIBLE);
 
       button.setOnClickListener(this);
       itemView.setOnClickListener(this);

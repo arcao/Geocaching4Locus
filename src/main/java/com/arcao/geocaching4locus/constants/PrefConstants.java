@@ -16,6 +16,7 @@ public interface PrefConstants {
 
 	String OAUTH_TOKEN = "OAUTH_TOKEN";
 	String OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET";
+	String OAUTH_CALLBACK_CONFIRMED = "OAUTH_CALLBACK_CONFIRMED";
 
 	String FILTER_CACHE_TYPE = "cache_type_filter";
 	String FILTER_CACHE_TYPE_PREFIX = "filter_";

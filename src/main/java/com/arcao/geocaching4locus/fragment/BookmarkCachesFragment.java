@@ -17,9 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
@@ -27,9 +25,15 @@ import com.arcao.geocaching4locus.adapter.BookmarkCachesRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkCachesRetrieveTask;
 import com.arcao.geocaching4locus.widget.decorator.BottomMarginItemDecorator;
 import com.arcao.geocaching4locus.widget.decorator.DividerItemDecoration;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRetrieveTask.TaskListener {
 
@@ -43,17 +47,18 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	private static final String PARAM_TITLE = "TITLE";
 	private static final String PARAM_GUID = "GUID";
 
-	@Bind(R.id.list) RecyclerView recyclerView;
-	@Bind(R.id.progressContainer) View progressContainer;
-	@Bind(R.id.listContainer) View listContainer;
-	@Bind(R.id.textEmpty) TextView textEmpty;
-	@Bind(R.id.fab) FloatingActionButton fab;
+	@BindView(R.id.list) RecyclerView recyclerView;
+	@BindView(R.id.progressContainer) View progressContainer;
+	@BindView(R.id.listContainer) View listContainer;
+	@BindView(R.id.textEmpty) TextView textEmpty;
+	@BindView(R.id.fab) FloatingActionButton fab;
 
 	private WeakReference<ListListener> mListListenerRef;
 	private final BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
 	private BookmarkCachesRetrieveTask mTask;
 	private Animation mAnimation;
 	private ArrayList<Bookmark> mBookmarkList;
+	private Unbinder unbinder;
 
 	public static BookmarkCachesFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
@@ -87,7 +92,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_bookmark_geocaches, container, false);
-		ButterKnife.bind(this, v);
+		unbinder = ButterKnife.bind(this, v);
 
 		mAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.simple_grow);
 
@@ -163,7 +168,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		ButterKnife.unbind(this);
+		unbinder.unbind();
 	}
 
 	@Override

@@ -7,7 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.arcao.geocaching4locus.constants.AppConstants;
@@ -25,26 +26,26 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	private LiveMapNotificationManager mLiveMapNotificationManager;
 	private boolean mCalledFromLocus = false;
 
-	@Bind(R.id.db_live_map) DashboardButton mLiveMapButton;
-	@Bind(R.id.db_import_bookmark) DashboardButton mImportBookmarkButton;
-  @Bind(R.id.toolbar) Toolbar toolbar;
+	@BindView(R.id.db_live_map) DashboardButton mLiveMapButton;
+	@BindView(R.id.db_import_bookmark) DashboardButton mImportBookmarkButton;
+	@BindView(R.id.toolbar) Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-    mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
+		mLiveMapNotificationManager = LiveMapNotificationManager.get(this);
 		mCalledFromLocus = LocusUtils.isIntentMainFunction(getIntent()) || LocusUtils.isIntentMainFunctionGc(getIntent()) ||
 				getIntent().hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER);
 
 		setContentView(R.layout.activity_dashboard);
-    ButterKnife.bind(this);
+		ButterKnife.bind(this);
 
 		setSupportActionBar(toolbar);
-    final ActionBar actionBar = getSupportActionBar();
-    if (actionBar != null) {
-      actionBar.setTitle(getTitle());
-    }
+		final ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setTitle(getTitle());
+		}
 
 		AnalyticsUtil.actionDashboard(mCalledFromLocus);
 	}
@@ -58,7 +59,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
 
 		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
-    mImportBookmarkButton.setEnabled(premiumMember);
+		mImportBookmarkButton.setEnabled(premiumMember);
 		if (!premiumMember) {
 			mImportBookmarkButton.setText(String.format("%s %s", getString(R.string.menu_import_bookmarks), AppConstants.PREMIUM_CHARACTER));
 		}
@@ -71,7 +72,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		super.onPause();
 	}
 
-  @OnClick(R.id.db_live_map)
+	@OnClick(R.id.db_live_map)
 	public void onClickLiveMap() {
 		// test if Locus Map is installed
 		if (!LocusTesting.isLocusInstalled(this)) {
@@ -93,12 +94,12 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		}
 	}
 
-  @OnClick(R.id.db_import_gc)
-  public void onClickImportGC() {
-    startActivityForResult(new Intent(this, ImportFromGCActivity.class), 0);
-  }
+	@OnClick(R.id.db_import_gc)
+	public void onClickImportGC() {
+		startActivityForResult(new Intent(this, ImportFromGCActivity.class), 0);
+	}
 
-  @OnClick(R.id.db_search_nearest)
+	@OnClick(R.id.db_search_nearest)
 	public void onClickSearchNearest() {
 		Intent intent;
 
@@ -114,22 +115,22 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		startActivityForResult(intent, 0);
 	}
 
-  @OnClick(R.id.db_import_bookmark)
-  public void onClickImportBookmark() {
-    startActivityForResult(new Intent(this, ImportBookmarkActivity.class), 0);
-  }
+	@OnClick(R.id.db_import_bookmark)
+	public void onClickImportBookmark() {
+		startActivityForResult(new Intent(this, ImportBookmarkActivity.class), 0);
+	}
 
-  @OnClick(R.id.db_preferences)
+	@OnClick(R.id.db_preferences)
 	public void onClickPreferences() {
 		startActivity(SettingsActivity.createIntent(this));
 	}
 
-  @OnClick(R.id.db_manual)
-  public void onClickManual() {
-    IntentUtil.showWebPage(this, AppConstants.MANUAL_URI);
-  }
+	@OnClick(R.id.db_manual)
+	public void onClickManual() {
+		IntentUtil.showWebPage(this, AppConstants.MANUAL_URI);
+	}
 
-  @Override
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.toolbar_dashboard, menu);
@@ -152,7 +153,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {

@@ -4,7 +4,8 @@ import android.accounts.Account;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import org.scribe.model.Token;
+
+import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public interface AuthenticatorHelper {
 	String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
@@ -25,7 +26,7 @@ public interface AuthenticatorHelper {
 	AccountRestrictions getRestrictions();
 	boolean requestSignOn(@NonNull Activity activity, int requestCode);
 
-	void setOAuthRequestToken(@Nullable Token token);
-	Token getOAuthRequestToken();
+	void setOAuthRequestToken(@Nullable OAuth1RequestToken token);
+	OAuth1RequestToken getOAuthRequestToken();
 	void deleteOAuthRequestToken();
 }

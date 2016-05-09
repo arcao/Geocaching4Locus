@@ -7,22 +7,30 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.text.*;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.NumberKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.ref.WeakReference;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SliderDialogFragment extends AbstractDialogFragment implements SeekBar.OnSeekBarChangeListener, TextWatcher {
 	private static final String PARAM_TITLE = "TITLE";
@@ -36,9 +44,9 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 		void onDialogClosed(SliderDialogFragment fragment);
 	}
 
-	@Bind(R.id.seekbar) SeekBar mSeekBar;
-	@Bind(R.id.input) EditText mValueText;
-	@Bind(R.id.message) TextView mMessageText;
+	@BindView(R.id.seekbar) SeekBar mSeekBar;
+	@BindView(R.id.input) EditText mValueText;
+	@BindView(R.id.message) TextView mMessageText;
 
 	private int mMin = 0;
 	private int mMax = 100;

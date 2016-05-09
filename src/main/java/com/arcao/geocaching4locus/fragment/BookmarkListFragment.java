@@ -11,16 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.adapter.BookmarkListRecyclerAdapter;
 import com.arcao.geocaching4locus.task.BookmarkListRetrieveTask;
 import com.arcao.geocaching4locus.widget.decorator.SpacesItemDecoration;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class BookmarkListFragment extends Fragment implements BookmarkListRetrieveTask.TaskListener {
 	private static final String STATE_BOOKMARK_LISTS = "BOOKMARK_LISTS";
@@ -30,15 +34,16 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 		void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll);
 	}
 
-	@Bind(R.id.list) RecyclerView recyclerView;
-	@Bind(R.id.progressContainer) View progressContainer;
-	@Bind(R.id.listContainer) View listContainer;
-	@Bind(R.id.textEmpty) TextView textEmpty;
+	@BindView(R.id.list) RecyclerView recyclerView;
+	@BindView(R.id.progressContainer) View progressContainer;
+	@BindView(R.id.listContainer) View listContainer;
+	@BindView(R.id.textEmpty) TextView textEmpty;
 
 	private WeakReference<ListListener> mListListenerRef;
 	private final BookmarkListRecyclerAdapter	adapter = new BookmarkListRecyclerAdapter();
 	@Nullable private BookmarkListRetrieveTask mTask;
 	private ArrayList<BookmarkList> mBookmarkLists;
+	private Unbinder unbinder;
 
 
 	public static BookmarkListFragment newInstance() {
@@ -64,7 +69,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_bookmark_list, container, false);
-		ButterKnife.bind(this, v);
+		unbinder = ButterKnife.bind(this, v);
 
 		prepareRecyclerView();
 
@@ -121,7 +126,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-		ButterKnife.unbind(this);
+		unbinder.unbind();
 	}
 
 	@Override

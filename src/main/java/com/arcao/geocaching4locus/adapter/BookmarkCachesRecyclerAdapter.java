@@ -6,17 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching4locus.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BookmarkCachesRecyclerAdapter
-    extends RecyclerView.Adapter<BookmarkCachesRecyclerAdapter.ViewHolder> {
+        extends RecyclerView.Adapter<BookmarkCachesRecyclerAdapter.ViewHolder> {
 
   private final List<Bookmark> items = new ArrayList<>();
   private boolean[] checked = new boolean[0];
@@ -83,9 +86,9 @@ public class BookmarkCachesRecyclerAdapter
   }
 
   protected class ViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.title) TextView title;
-    @Bind(R.id.subtitle) TextView subtitle;
-		@Bind(R.id.checkbox) CheckBox checkbox;
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.subtitle) TextView subtitle;
+    @BindView(R.id.checkbox) CheckBox checkbox;
 
     public ViewHolder(View itemView) {
       super(itemView);

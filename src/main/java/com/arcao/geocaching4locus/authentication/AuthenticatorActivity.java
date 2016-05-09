@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.arcao.geocaching4locus.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.App;
@@ -19,7 +20,7 @@ import com.crashlytics.android.Crashlytics;
 import timber.log.Timber;
 
 public class AuthenticatorActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
-	@Bind(R.id.toolbar) Toolbar toolbar;
+	@BindView(R.id.toolbar) Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

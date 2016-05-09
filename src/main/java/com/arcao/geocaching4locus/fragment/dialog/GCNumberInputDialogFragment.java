@@ -10,16 +10,19 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.widget.EditText;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
+
 import org.apache.commons.lang3.StringUtils;
-import timber.log.Timber;
 
 import java.lang.ref.WeakReference;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 
 public class GCNumberInputDialogFragment extends AbstractDialogFragment {
@@ -32,8 +35,8 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		void onInputFinished(String input);
 	}
 
-	@Bind(R.id.input) EditText mEditText;
-	@Bind(R.id.layout) TextInputLayout mLayout;
+	@BindView(R.id.input) EditText mEditText;
+	@BindView(R.id.layout) TextInputLayout mLayout;
 
 	private WeakReference<DialogListener> mDialogListenerRef;
 

@@ -6,7 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
@@ -23,7 +24,7 @@ import java.util.Set;
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkCachesFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
   private static final int REQUEST_SIGN_ON = 1;
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
+  @BindView(R.id.toolbar) Toolbar toolbar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +62,14 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
   protected void showBookmarkList() {
     getFragmentManager().beginTransaction()
-        .replace(R.id.fragment, BookmarkListFragment.newInstance())
-        .commit();
+            .replace(R.id.fragment, BookmarkListFragment.newInstance())
+            .commit();
   }
 
   protected void showBookmarkCaches(BookmarkList bookmarkList) {
     getFragmentManager().beginTransaction().addToBackStack(null)
-        .replace(R.id.fragment, BookmarkCachesFragment.newInstance(bookmarkList))
-        .commit();
+            .replace(R.id.fragment, BookmarkCachesFragment.newInstance(bookmarkList))
+            .commit();
   }
 
   @Override
@@ -95,7 +96,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     for (Bookmark bookmark : bookmarksList) geocaches.add(bookmark.getCacheCode());
 
     BookmarkImportDialogFragment.newInstance(geocaches.toArray(new String[geocaches.size()]))
-        .show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
+            .show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
   }
 
   @Override

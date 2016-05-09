@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.UserProfile;
@@ -18,13 +19,14 @@ import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.exception.ExceptionHandler;
 import com.arcao.geocaching4locus.util.DeviceInfoFactory;
 import com.arcao.geocaching4locus.util.UserTask;
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
-import timber.log.Timber;
+import com.github.scribejava.core.builder.ServiceBuilder;
+import com.github.scribejava.core.model.OAuth1AccessToken;
+import com.github.scribejava.core.model.OAuth1RequestToken;
+import com.github.scribejava.core.oauth.OAuth10aService;
 
 import java.lang.ref.WeakReference;
+
+import timber.log.Timber;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	public interface TaskListener {
@@ -40,7 +42,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		mTaskListenerRef = new WeakReference<>(listener);
 	}
 
-	private OAuthService createOAuthService() {
+	private OAuth10aService createOAuthService() {
 		ServiceBuilder serviceBuilder = new ServiceBuilder()
 						.apiKey(BuildConfig.GEOCACHING_API_KEY)
 						.apiSecret(BuildConfig.GEOCACHING_API_SECRET)
@@ -48,30 +50,28 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 						.debug();
 
 		if (BuildConfig.GEOCACHING_API_STAGING) {
-			serviceBuilder.provider(GeocachingOAuthProvider.Staging.class);
+			return serviceBuilder.build(new GeocachingOAuthProvider.Staging());
 		} else {
-			serviceBuilder.provider(GeocachingOAuthProvider.class);
+			return serviceBuilder.build(new GeocachingOAuthProvider());
 		}
-
-		return serviceBuilder.build();
 	}
 
 	@Override
 	protected String[] doInBackground(String... params) throws Exception {
-		OAuthService service = createOAuthService();
+		OAuth10aService service = createOAuthService();
 		App app = App.get(mContext);
 		AuthenticatorHelper helper = app.getAuthenticatorHelper();
 		AccountRestrictions accountRestrictions = helper.getRestrictions();
 
 		if (params.length == 0) {
-			Token requestToken = service.getRequestToken();
+			OAuth1RequestToken requestToken = service.getRequestToken();
 			helper.setOAuthRequestToken(requestToken);
 			String authUrl = service.getAuthorizationUrl(requestToken);
 			Timber.i("AuthorizationUrl: " + authUrl);
 			return new String[]{authUrl};
 		} else {
-			Token requestToken = helper.getOAuthRequestToken();
-			Token accessToken = service.getAccessToken(requestToken, new Verifier(params[0]));
+			OAuth1RequestToken requestToken = helper.getOAuthRequestToken();
+			OAuth1AccessToken accessToken = service.getAccessToken(requestToken, params[0]);
 
 			// get account name
 			GeocachingApi api = GeocachingApiFactory.create();

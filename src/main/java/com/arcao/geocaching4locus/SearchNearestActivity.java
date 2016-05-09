@@ -20,7 +20,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
@@ -63,11 +64,11 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private double mLongitude = Double.NaN;
   private boolean mHasCoordinates = false;
 
-  @Bind(R.id.toolbar) Toolbar mToolbar;
-  @Bind(R.id.latitude) EditText mLatitudeEditText;
-  @Bind(R.id.longitude) EditText mLongitudeEditText;
-  @Bind(R.id.counter) SpinnerTextView mCounter;
-  @Bind(R.id.fab) FloatingActionButton fab;
+  @BindView(R.id.toolbar) Toolbar mToolbar;
+  @BindView(R.id.latitude) EditText mLatitudeEditText;
+  @BindView(R.id.longitude) EditText mLongitudeEditText;
+  @BindView(R.id.counter) SpinnerTextView mCounter;
+  @BindView(R.id.fab) FloatingActionButton fab;
 
   private String mCoordinatesSource = null;
   private boolean mUseFilter = false;

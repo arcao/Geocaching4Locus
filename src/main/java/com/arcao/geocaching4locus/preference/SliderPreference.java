@@ -14,16 +14,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import butterknife.Bind;
-import butterknife.ButterKnife;
+
 import com.arcao.geocaching4locus.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class SliderPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener, TextWatcher {
 
-	@Bind(R.id.seekbar) SeekBar mSeekBar;
-	@Bind(R.id.input) EditText mInputText;
-	@Bind(R.id.message) TextView mMessageText;
+	@BindView(R.id.seekbar) SeekBar mSeekBar;
+	@BindView(R.id.input) EditText mInputText;
+	@BindView(R.id.message) TextView mMessageText;
 
 	private final Context mContext;
 

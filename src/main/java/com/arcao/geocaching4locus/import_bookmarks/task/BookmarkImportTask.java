@@ -31,7 +31,7 @@ import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableListFileOutput;
+import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
 import timber.log.Timber;
 
@@ -98,15 +98,14 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
       logCount = 0;
     }
 
-    StoreableListFileOutput slfo = null;
+    StoreableWriter writer = null;
 
     try {
       File dataFile = ActionDisplayPointsExtended.getCacheFileName(mContext);
 
       login(api);
 
-      slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
-      slfo.beginList();
+      writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
       publishProgress();
 
@@ -143,7 +142,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
           pw.addWaypoint(wpt);
         }
 
-        slfo.write(pw);
+        writer.write(pw);
 
         progress += cachesToAdd.size();
 
@@ -151,8 +150,6 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         long requestDuration = System.currentTimeMillis() - startTime;
         cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
       }
-
-      slfo.endList();
 
       Timber.i("found caches: " + progress);
 
@@ -170,7 +167,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
       Timber.e(e, e.getMessage());
       throw new GeocachingApiException(e.getMessage(), e);
     } finally {
-      Utils.closeStream(slfo);
+      Utils.closeStream(writer);
     }
   }
 

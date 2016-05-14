@@ -27,7 +27,7 @@ import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableListFileOutput;
+import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
 import timber.log.Timber;
 
@@ -104,23 +104,21 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 				throw new CacheNotFoundException(cacheId);
 
 			File dataFile = ActionDisplayPointsExtended.getCacheFileName(mContext);
-			StoreableListFileOutput slfo = null;
+			StoreableWriter writer = null;
 
 			try {
-				slfo = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
+				writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
 				Waypoint waypoint = mapper.toLocusPoint(cache);
 				PackWaypoints pack = new PackWaypoints("import");
 				pack.addWaypoint(waypoint);
 
-				slfo.beginList();
-				slfo.write(pack);
-				slfo.endList();
+				writer.write(pack);
 			} catch (IOException e) {
 				Timber.e(e, e.getMessage());
 				throw new GeocachingApiException(e.getMessage(), e);
 			} finally {
-				Utils.closeStream(slfo);
+				Utils.closeStream(writer);
 			}
 
 			try {

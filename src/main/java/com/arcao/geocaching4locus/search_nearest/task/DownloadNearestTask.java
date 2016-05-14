@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -15,26 +16,28 @@ import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.*;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.update.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.error.exception.IntendedException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.arcao.geocaching4locus.search_nearest.parcel.ParcelFile;
-import com.arcao.geocaching4locus.base.util.PreferenceUtil;
-import com.arcao.geocaching4locus.base.task.UserTask;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
-import locus.api.objects.extra.Waypoint;
-import locus.api.utils.StoreableListFileOutput;
-import locus.api.utils.Utils;
-import timber.log.Timber;
+import com.arcao.geocaching4locus.update.UpdateActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +45,14 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackWaypoints;
+import locus.api.mapper.LocusDataMapper;
+import locus.api.objects.extra.Waypoint;
+import locus.api.utils.StoreableWriter;
+import locus.api.utils.Utils;
+import timber.log.Timber;
 
 public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   private static final String PACK_WAYPOINTS_NAME = DownloadNearestTask.class.getName();
@@ -113,13 +124,12 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
     int current = 0;
     ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName(mContext));
-    StoreableListFileOutput fileOutput = null;
+    StoreableWriter writer = null;
 
     try {
       login(api);
 
-      fileOutput = new StoreableListFileOutput(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
-      fileOutput.beginList();
+      writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
       int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
 
@@ -163,7 +173,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
           pw.addWaypoint(wpt);
         }
 
-        fileOutput.write(pw);
+        writer.write(pw);
 
         current += cachesToAdd.size();
 
@@ -172,19 +182,17 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
       }
 
-      fileOutput.endList();
-
       Timber.i("found caches: " + current);
     } catch (InvalidSessionException e) {
       accountManager.invalidateOAuthToken();
 
-      throw handleException(e, fileOutput, dataFile);
+      throw handleException(e, writer, dataFile);
     } catch (IOException e) {
-      throw handleException(new GeocachingApiException(e.getMessage(), e), fileOutput, dataFile);
+      throw handleException(new GeocachingApiException(e.getMessage(), e), writer, dataFile);
     } catch (Exception e) {
-      throw handleException(e, fileOutput, dataFile);
+      throw handleException(e, writer, dataFile);
     } finally {
-      Utils.closeStream(fileOutput);
+      Utils.closeStream(writer);
     }
 
     if (current > 0) {
@@ -198,8 +206,8 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     }
   }
 
-  private Exception handleException(@NonNull Exception e, @Nullable StoreableListFileOutput fileOutput, @Nullable File dataFile) {
-    if (fileOutput == null || dataFile == null || fileOutput.getItemCount() == 0)
+  private Exception handleException(@NonNull Exception e, @Nullable StoreableWriter writer, @Nullable File dataFile) {
+    if (writer == null || dataFile == null || writer.getSize() == 0)
       return e;
 
     return new IntendedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));

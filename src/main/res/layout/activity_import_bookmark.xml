@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:minHeight="400dp"
-              tools:context=".ImportBookmarkActivity">
+              tools:context=".import_bookmarks.ImportBookmarkActivity">
 
     <include layout="@layout/toolbar" />
 

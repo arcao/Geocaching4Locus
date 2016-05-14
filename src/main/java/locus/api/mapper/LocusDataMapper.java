@@ -3,6 +3,7 @@ package locus.api.mapper;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.data.ImageData;
@@ -19,7 +20,11 @@ import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.util.ReverseListIterator;
+import com.arcao.geocaching4locus.base.util.ReverseListIterator;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +38,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
@@ -41,8 +47,6 @@ import locus.api.objects.geocaching.GeocachingImage;
 import locus.api.objects.geocaching.GeocachingLog;
 import locus.api.objects.geocaching.GeocachingTrackable;
 import locus.api.objects.geocaching.GeocachingWaypoint;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class LocusDataMapper {
@@ -67,7 +71,7 @@ public class LocusDataMapper {
 
 	public LocusDataMapper(@NonNull Context context) {
 		mContext = context.getApplicationContext();
-		mPremiumMember = App.get(mContext).getAuthenticatorHelper().getRestrictions().isPremiumMember();
+		mPremiumMember = App.get(mContext).getAccountManager().getRestrictions().isPremiumMember();
 	}
 
 	@NonNull

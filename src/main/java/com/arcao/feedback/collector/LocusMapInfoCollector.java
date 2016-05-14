@@ -1,7 +1,7 @@
 package com.arcao.feedback.collector;
 
 import android.content.Context;
-import com.arcao.geocaching4locus.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusTesting;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;

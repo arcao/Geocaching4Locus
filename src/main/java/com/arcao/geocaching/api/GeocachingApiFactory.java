@@ -7,9 +7,10 @@ import com.arcao.geocaching.api.downloader.OkHttpClientJsonDownloader;
 import com.arcao.geocaching.api.impl.LiveGeocachingApi;
 import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching4locus.BuildConfig;
-import okhttp3.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 
 public class GeocachingApiFactory {
 	private static GeocachingApiConfiguration apiConfiguration;
@@ -17,36 +18,36 @@ public class GeocachingApiFactory {
 	private static JsonDownloader jsonDownloader;
 
 	public static GeocachingApi create() {
-		createApiConfiguration();
-		createOkHttpClient();
-		createJsonDownloader();
-
-		return LiveGeocachingApi.Builder.liveGeocachingApi().withConfiguration(apiConfiguration).withDownloader(jsonDownloader).build();
+		return LiveGeocachingApi.Builder.liveGeocachingApi()
+				.withConfiguration(getApiConfiguration())
+				.withDownloader(getJsonDownloader())
+				.build();
 	}
 
-	public static JsonDownloader createJsonDownloader() {
+	public static JsonDownloader getJsonDownloader() {
 		if (jsonDownloader == null) {
-			createOkHttpClient();
-			jsonDownloader = new OkHttpClientJsonDownloader(client);
+			jsonDownloader = new OkHttpClientJsonDownloader(getOkHttpClient());
 		}
 		return jsonDownloader;
 	}
 
-	private static void createOkHttpClient() {
+	private static OkHttpClient getOkHttpClient() {
 		if (client == null) {
-			createApiConfiguration();
+			GeocachingApiConfiguration apiConfiguration = getApiConfiguration();
 			client = new OkHttpClient.Builder()
 					.connectTimeout(apiConfiguration.getConnectTimeout(), TimeUnit.MILLISECONDS)
 					.readTimeout(apiConfiguration.getReadTimeout(), TimeUnit.MILLISECONDS)
 					.build();
 		}
+		return client;
 	}
 
-	private static void createApiConfiguration() {
+	private static GeocachingApiConfiguration getApiConfiguration() {
 		if (apiConfiguration == null) {
 			apiConfiguration = new DefaultProductionGeocachingApiConfiguration();
 			if (BuildConfig.GEOCACHING_API_STAGING)
 				apiConfiguration = new DefaultStagingGeocachingApiConfiguration();
 		}
+		return apiConfiguration;
 	}
 }

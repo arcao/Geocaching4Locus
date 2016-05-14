@@ -2,8 +2,8 @@ package com.arcao.feedback.collector;
 
 import android.content.Context;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
-import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 public class AccountInfoCollector extends Collector {
 	private final Context mContext;
@@ -21,7 +21,7 @@ public class AccountInfoCollector extends Collector {
 	protected String collect() {
 		final StringBuilder sb = new StringBuilder();
 
-		AuthenticatorHelper helper = App.get(mContext).getAuthenticatorHelper();
+		AccountManager helper = App.get(mContext).getAccountManager();
 
 		if (!helper.hasAccount()) {
 			sb.append("No Account").append("\n");

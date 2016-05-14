@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              tools:context="com.arcao.geocaching4locus.DashboardActivity">
+              tools:context=".dashboard.DashboardActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_live_map"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_live_map"
@@ -26,7 +26,7 @@
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_import_gc"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_gc_input"
@@ -34,7 +34,7 @@
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_search_nearest"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_search"
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_import_bookmark"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_import_bookmark"
@@ -55,7 +55,7 @@
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_preferences"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_settings"
@@ -63,7 +63,7 @@
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_manual"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_help"

@@ -19,7 +19,6 @@ apply plugin: 'io.fabric'
 repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
-    maven { url 'https://jitpack.io' }
     maven { url 'http://maven.arcao.com' }
 }
 
@@ -36,7 +35,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }
-    compile 'menion:locus-api-android:1.37.41'
+    compile 'menion:locus-api-android:1.38.42'
 
     // from JCenter repository
     compile 'com.arcao:slf4j-timber:2.1'
@@ -48,9 +47,7 @@ dependencies {
     }
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
     compile 'com.crashlytics.sdk.android:crashlytics:2.5.5'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
 }

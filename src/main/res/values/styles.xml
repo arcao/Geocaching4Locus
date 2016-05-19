@@ -10,6 +10,7 @@
         <item name="windowActionBar">false</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
 
         <item name="listPreferredItemPaddingLeft">8dp</item>
         <item name="listPreferredItemPaddingRight">8dp</item>
@@ -27,6 +28,7 @@
         <item name="windowActionBar">false</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
     <style name="AppBaseTheme.DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge">
@@ -40,6 +42,7 @@
         <item name="android:listDivider">@drawable/list_divider</item>
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">

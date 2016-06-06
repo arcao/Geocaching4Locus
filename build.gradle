@@ -95,7 +95,7 @@ android {
         buildConfigField 'String', 'BUILD_TIME', 'null'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
         buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
-        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', geocachingApiStaging
+        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
     }

@@ -24,11 +24,11 @@ repositories {
 
 dependencies {
     // from Android local maven repository
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.6.3') {
@@ -42,14 +42,14 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'commons-io:commons-io:2.5'
-    compile('com.github.scribejava:scribejava-core:2.5.3') {
+    compile('com.github.scribejava:scribejava-core:2.7.3') {
         exclude group: 'commons-codec', module: 'commons-codec' // already in Android
     }
-    compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.5.5'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.crashlytics.sdk.android:crashlytics:2.5.7'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
 }
 
 def gitSha() {
@@ -80,8 +80,8 @@ if (!project.hasProperty('geocachingApiStaging')) {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.0'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -125,7 +125,7 @@ android {
 
             signingConfig signingConfigs.release
             minifyEnabled true
-            //shrinkResources true // too aggressive
+            shrinkResources true
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
             proguardFile 'proguard.cfg'
         }

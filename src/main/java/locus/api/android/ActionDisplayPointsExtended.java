@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import locus.api.android.utils.LocusConst;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import locus.api.android.utils.LocusConst;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import timber.log.Timber;
 
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	private static final String LOCUS_CACHE_FILENAME = "data.locus";
@@ -69,7 +70,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
 	 * @throws IOException If I/O error occurs
 	 */
-	@SuppressLint("WorldReadableFiles")
+	@SuppressLint({"WorldReadableFiles", "SetWorldReadable"})
 	public static FileOutputStream getCacheFileOutputStream(Context context) throws IOException {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			//noinspection deprecation

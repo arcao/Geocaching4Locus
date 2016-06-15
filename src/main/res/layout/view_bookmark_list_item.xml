@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceListItem"
                 android:fontFamily="sans-serif-light"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:clickable="false"
                 tools:text="Bookmark name"/>
@@ -63,7 +63,7 @@
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:fontFamily="sans-serif-light"
                 android:textColor="?android:attr/textColorSecondary"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:clickable="false"
                 tools:text="3 caches"/>
             <Button

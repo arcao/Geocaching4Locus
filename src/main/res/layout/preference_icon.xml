@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceListItem"
         tools:text="@string/account_geocaching_live_title"/>
 

@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:fontFamily="sans-serif-light"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="marquee"
             tools:text="Title" />
         <TextView
@@ -37,7 +37,7 @@
             android:textAppearance="?attr/textAppearanceListItemSecondary"
             android:fontFamily="sans-serif-light"
             android:textColor="?android:attr/textColorSecondary"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="end"
             tools:text="GC12345" />
     </LinearLayout>

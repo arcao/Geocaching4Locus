@@ -5,8 +5,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-        classpath 'io.fabric.tools:gradle:1.21.6'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
+        classpath 'io.fabric.tools:gradle:1.21.7'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -24,11 +24,11 @@ repositories {
 
 dependencies {
     // from Android local maven repository
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
-    compile 'com.android.support:cardview-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:support-v4:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.6.3') {
@@ -42,14 +42,14 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'commons-io:commons-io:2.5'
-    compile('com.github.scribejava:scribejava-core:2.7.3') {
+    compile('com.github.scribejava:scribejava-core:2.8.1') {
         exclude group: 'commons-codec', module: 'commons-codec' // already in Android
     }
-    compile 'com.jakewharton:butterknife:8.1.0'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
-    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.5.7'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.afollestad.material-dialogs:core:0.8.6.2'
+    compile 'com.crashlytics.sdk.android:crashlytics:2.6.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 
 def gitSha() {
@@ -81,7 +81,7 @@ if (!project.hasProperty('geocachingApiStaging')) {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    buildToolsVersion '24.0.1'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.

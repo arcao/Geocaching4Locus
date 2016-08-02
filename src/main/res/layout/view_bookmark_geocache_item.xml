@@ -6,7 +6,8 @@
     android:orientation="horizontal"
     android:minHeight="?attr/listPreferredItemHeight"
     android:gravity="center_vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:theme="@style/AppTheme.DialogWhenLarge">
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/checkbox"

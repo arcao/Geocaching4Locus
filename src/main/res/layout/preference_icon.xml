@@ -10,7 +10,8 @@
               android:paddingStart="?attr/listPreferredItemPaddingLeft"
               android:paddingRight="?attr/listPreferredItemPaddingRight"
               android:paddingEnd="?attr/listPreferredItemPaddingRight"
-              android:paddingTop="?attr/listPreferredItemPaddingTop">
+              android:paddingTop="?attr/listPreferredItemPaddingTop"
+              tools:theme="@style/AppTheme.Settings">
 
     <TextView
         android:id="@android:id/title"

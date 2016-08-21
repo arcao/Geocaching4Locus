@@ -75,3 +75,6 @@
 -keepattributes Synthetic # can be removed?
 
 -keepattributes *Annotation*
+
+# Bugfix on some devices with java.lang.NoSuchMethodError
+-keepnames class org.apache.commons.lang3.** { *; }

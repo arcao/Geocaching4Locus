@@ -6,6 +6,7 @@ import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
+import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
@@ -42,7 +43,10 @@ public class GeocachingApiLoginTask {
         if (manager.isAccountUpdateRequired()) {
             UserProfile userProfile = mApi.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
 
-            account = manager.createAccount(userProfile.getUser());
+            if (userProfile == null)
+                throw new InvalidResponseException("User profile is null");
+
+            account = manager.createAccount(userProfile.user());
             manager.updateAccount(account);
         }
     }

@@ -34,8 +34,8 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 
 	public static BookmarkImportDialogFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
-		args.putString(PARAM_GUID, bookmarkList.getGuid());
-		args.putInt(PARAM_COUNT, bookmarkList.getItemCount());
+		args.putString(PARAM_GUID, bookmarkList.guid());
+		args.putInt(PARAM_COUNT, bookmarkList.itemCount());
 
 		BookmarkImportDialogFragment fragment = new BookmarkImportDialogFragment();
 		fragment.setArguments(args);

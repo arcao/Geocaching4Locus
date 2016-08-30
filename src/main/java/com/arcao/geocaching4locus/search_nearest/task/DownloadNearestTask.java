@@ -15,16 +15,16 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
+import com.arcao.geocaching.api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.filter.Filter;
+import com.arcao.geocaching.api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
@@ -73,7 +73,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   public DownloadNearestTask(Context context, TaskListener listener, double latitude, double longitude, int count) {
     mContext = context.getApplicationContext();
     mTaskListenerRef = new WeakReference<>(listener);
-    mCoordinates = new Coordinates(latitude, longitude);
+    mCoordinates = Coordinates.create(latitude, longitude);
     mCount = count;
 
     mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -241,10 +241,10 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     String userName = accountManager.getAccount().name();
     boolean premiumMember = accountManager.isPremium();
 
-    filters.add(new PointRadiusFilter(mCoordinates.getLatitude(), mCoordinates.getLongitude(), (long) (mDistance * 1000)));
+    filters.add(new PointRadiusFilter(mCoordinates.latitude(), mCoordinates.longitude(), (long) (mDistance * 1000)));
 
     boolean showDisabled = mPrefs.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
-    filters.add(new GeocacheExclusionsFilter(false, showDisabled ? null : true, null));
+    filters.add(new GeocacheExclusionsFilter(false, showDisabled ? null : true, null, null, null, null));
 
     boolean showFound = mPrefs.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
     if (!showFound) {
@@ -309,7 +309,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
       double distance = computeDistance(coordinates, cache);
 
       if (distance > maxDistance) {
-        Timber.i("Cache " + cache.getCode() + " is over distance.");
+        Timber.i("Cache " + cache.code() + " is over distance.");
         caches.remove(cache);
       } else {
         return;
@@ -331,7 +331,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   }
 
   private double computeDistance(@NonNull Coordinates coordinates, @NonNull Geocache cache) {
-    return cache.getCoordinates().distanceTo(coordinates) / 1000;
+    return cache.coordinates().distanceTo(coordinates) / 1000;
   }
 
   private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {

@@ -10,8 +10,8 @@ import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
+import com.arcao.geocaching.api.filter.CacheCodeFilter;
+import com.arcao.geocaching.api.filter.Filter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
@@ -77,7 +77,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
       List<Bookmark> bookmarks = api.getBookmarkListByGuid(guid);
 
       for (Bookmark bookmark : bookmarks)
-        geocacheCodes.add(bookmark.getCacheCode());
+        geocacheCodes.add(bookmark.cacheCode());
 
     } else {
       Collections.addAll(geocacheCodes, params);

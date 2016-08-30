@@ -8,7 +8,8 @@ import android.support.annotation.Nullable;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.UserProfile;
-import com.arcao.geocaching.api.data.apilimits.ApiLimits;
+import com.arcao.geocaching.api.data.apilimits.ApiLimitsResponse;
+import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
@@ -78,15 +79,18 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 			api.openSession(accessToken.getToken());
 
 			UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
-			ApiLimits apiLimits = api.getApiLimits();
+			ApiLimitsResponse apiLimitsResponse = api.getApiLimits();
 
-			Account account = helper.createAccount(userProfile.getUser());
+			if (userProfile == null)
+				throw new InvalidResponseException("User profile is null");
+
+			Account account = helper.createAccount(userProfile.user());
 			helper.addAccount(account);
 			helper.setOAuthToken(api.getSession());
 			helper.deleteOAuthRequestToken();
 
 			// update restrictions
-			accountRestrictions.updateLimits(apiLimits);
+			accountRestrictions.updateLimits(apiLimitsResponse.apiLimits());
 
 			return null;
 		}

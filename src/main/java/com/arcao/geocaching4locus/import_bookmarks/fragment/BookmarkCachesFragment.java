@@ -62,8 +62,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
 
 	public static BookmarkCachesFragment newInstance(BookmarkList bookmarkList) {
 		Bundle args = new Bundle();
-		args.putString(PARAM_TITLE, bookmarkList.getName());
-		args.putString(PARAM_GUID, bookmarkList.getGuid());
+		args.putString(PARAM_TITLE, bookmarkList.name());
+		args.putString(PARAM_GUID, bookmarkList.guid());
 
 		BookmarkCachesFragment fragment = new BookmarkCachesFragment();
 		fragment.setArguments(args);

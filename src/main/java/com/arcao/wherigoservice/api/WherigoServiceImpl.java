@@ -2,8 +2,8 @@ package com.arcao.wherigoservice.api;
 
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
-import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.geocaching.api.downloader.JsonDownloader;
+import com.arcao.geocaching.api.parser.JsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
 import com.google.gson.stream.MalformedJsonException;

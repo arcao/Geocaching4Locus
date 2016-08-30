@@ -100,14 +100,14 @@ public class AccountRestrictions {
 		if (apiLimits == null)
 			return;
 
-		List<CacheLimit> limits = apiLimits.getCacheLimits();
+		List<CacheLimit> limits = apiLimits.cacheLimits();
 		if (limits.isEmpty())
 			return;
 
 		CacheLimit limit = limits.get(0);
 
-		maxFullGeocacheLimit = limit.getLimit();
-		fullGeocacheLimitPeriod = limit.getPeriod();
+		maxFullGeocacheLimit = limit.limit();
+		fullGeocacheLimitPeriod = limit.period();
 
 		mPrefs.edit()
 			.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
@@ -119,14 +119,14 @@ public class AccountRestrictions {
 		if (cacheLimits == null)
 			return;
 
-		maxFullGeocacheLimit = cacheLimits.getMaxGeocacheCount();
+		maxFullGeocacheLimit = cacheLimits.maxGeocacheCount();
 
 		Editor editor = mPrefs.edit();
 
 		// cache limit was renew
-		if (currentFullGeocacheLimit > cacheLimits.getCurrentGeocacheCount()
-				|| (currentFullGeocacheLimit == 0 && cacheLimits.getCurrentGeocacheCount() > 0)) {
-			currentFullGeocacheLimit = cacheLimits.getCurrentGeocacheCount();
+		if (currentFullGeocacheLimit > cacheLimits.currentGeocacheCount()
+				|| (currentFullGeocacheLimit == 0 && cacheLimits.currentGeocacheCount() > 0)) {
+			currentFullGeocacheLimit = cacheLimits.currentGeocacheCount();
 
 			Calendar c = Calendar.getInstance();
 			c.add(Calendar.MINUTE, (int) fullGeocacheLimitPeriod);
@@ -138,7 +138,7 @@ public class AccountRestrictions {
 			editor.putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit);
 			editor.putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.getTime());
 		} else {
-			currentFullGeocacheLimit = cacheLimits.getCurrentGeocacheCount();
+			currentFullGeocacheLimit = cacheLimits.currentGeocacheCount();
 
 			// store it to preferences
 			editor.putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit);

@@ -1,7 +1,7 @@
 package com.arcao.wherigoservice.api.parser;
 
 
-import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.geocaching.api.parser.JsonReader;
 
 import java.io.IOException;
 

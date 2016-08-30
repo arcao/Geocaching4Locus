@@ -10,17 +10,15 @@ public final class DeviceInfoFactory {
 	public static DeviceInfo create(Context context) {
 		App app = App.get(context);
 
-		return new DeviceInfo(
-				0,
-				0,
-				app.getVersion(),
-				Build.MANUFACTURER,
-				Build.MODEL,
-				Build.VERSION.RELEASE,
-				0,
-				app.getDeviceId(),
-				null,
-				null
-		);
+		return DeviceInfo.builder()
+				.applicationCurrentMemoryUsage(0)
+				.applicationPeakMemoryUsage(0)
+				.applicationSoftwareVersion(app.getVersion())
+				.deviceManufacturer(Build.MANUFACTURER)
+				.deviceName(Build.MODEL)
+				.deviceOperatingSystem(Build.VERSION.RELEASE)
+				.deviceTotalMemoryInMb(0)
+				.deviceUniqueId(app.getDeviceId())
+				.build();
 	}
 }

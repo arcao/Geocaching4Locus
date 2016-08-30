@@ -81,7 +81,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   @Override
   public void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll) {
     if (selectAll) {
-      AnalyticsUtil.actionImportBookmarks(bookmarkList.getItemCount(), true);
+      AnalyticsUtil.actionImportBookmarks(bookmarkList.itemCount(), true);
       BookmarkImportDialogFragment.newInstance(bookmarkList).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
     } else {
       showBookmarkCaches(bookmarkList);
@@ -99,7 +99,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
     AnalyticsUtil.actionImportBookmarks(bookmarksList.length, false);
 
-    for (Bookmark bookmark : bookmarksList) geocaches.add(bookmark.getCacheCode());
+    for (Bookmark bookmark : bookmarksList) geocaches.add(bookmark.cacheCode());
 
     BookmarkImportDialogFragment.newInstance(geocaches.toArray(new String[geocaches.size()]))
             .show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);

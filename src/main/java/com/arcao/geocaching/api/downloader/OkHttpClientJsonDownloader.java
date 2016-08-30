@@ -2,11 +2,12 @@ package com.arcao.geocaching.api.downloader;
 
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
-import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.geocaching.api.parser.JsonReader;
 import com.arcao.geocaching4locus.BuildConfig;
+
 import java.io.Reader;
 import java.net.URL;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

@@ -31,7 +31,7 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
 
     // from maven.arcao.com repository
-    compile('com.arcao:geocaching-api:1.6.3') {
+    compile('com.arcao:geocaching-api:2.0') {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }

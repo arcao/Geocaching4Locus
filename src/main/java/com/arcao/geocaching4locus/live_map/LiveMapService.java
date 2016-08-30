@@ -18,16 +18,16 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
-import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
+import com.arcao.geocaching.api.filter.BookmarksExcludeFilter;
+import com.arcao.geocaching.api.filter.DifficultyFilter;
+import com.arcao.geocaching.api.filter.GeocacheContainerSizeFilter;
+import com.arcao.geocaching.api.filter.GeocacheExclusionsFilter;
+import com.arcao.geocaching.api.filter.GeocacheTypeFilter;
+import com.arcao.geocaching.api.filter.NotFoundByUsersFilter;
+import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
+import com.arcao.geocaching.api.filter.PointRadiusFilter;
+import com.arcao.geocaching.api.filter.TerrainFilter;
+import com.arcao.geocaching.api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
@@ -226,7 +226,7 @@ public class LiveMapService extends IntentService {
 							new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE),
 							new GeocacheTypeFilter(cacheTypes),
 							new GeocacheContainerSizeFilter(containerTypes),
-							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null),
+							new GeocacheExclusionsFilter(false, showDisabled ? null : true, null, null, null, null),
 							new NotFoundByUsersFilter(showFound ? null : username),
 							new NotHiddenByUsersFilter(showOwn ? null : username),
 							new DifficultyFilter(difficultyMin, difficultyMax),
@@ -254,7 +254,7 @@ public class LiveMapService extends IntentService {
 					if (wpt == null)
 						continue;
 
-					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.getCode());
+					wpt.setExtraOnDisplay(getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.code());
 					pw.addWaypoint(wpt);
 				}
 

@@ -49,9 +49,9 @@ public class PreferenceAccountManager implements AccountManager {
 				.name(userName)
 				.premium(mPrefs.getBoolean(PrefConstants.ACCOUNT_PREMIUM, false))
 				.avatarUrl(mPrefs.getString(PrefConstants.ACCOUNT_AVATAR_URL, null))
-				.homeCoordinates(Coordinates.Builder.coordinates()
-						.withLatitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, Float.NaN))
-						.withLongitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, Float.NaN))
+				.homeCoordinates(Coordinates.builder()
+						.latitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, Float.NaN))
+						.longitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, Float.NaN))
 						.build())
 				.build();
 	}
@@ -66,10 +66,11 @@ public class PreferenceAccountManager implements AccountManager {
 					.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, Float.NaN)
 					.apply();
 
-			if (account.homeCoordinates() != null) {
+			Coordinates homeCoordinates = account.homeCoordinates();
+			if (homeCoordinates != null) {
 				mPrefs.edit()
-						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, (float) account.homeCoordinates().getLatitude())
-						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, (float) account.homeCoordinates().getLongitude())
+						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, (float) homeCoordinates.latitude())
+						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, (float) homeCoordinates.longitude())
 						.apply();
 			}
 		} else {
@@ -93,10 +94,10 @@ public class PreferenceAccountManager implements AccountManager {
 	@Override
 	public Account createAccount(@NonNull User user) {
 		return Account.builder()
-				.name(user.getUserName())
-				.premium(user.getMemberType() == MemberType.Premium || user.getMemberType() == MemberType.Charter)
-				.avatarUrl(user.getAvatarUrl())
-				.homeCoordinates(user.getHomeCoordinates())
+				.name(user.userName())
+				.premium(user.memberType() == MemberType.Premium || user.memberType() == MemberType.Charter)
+				.avatarUrl(user.avatarUrl())
+				.homeCoordinates(user.homeCoordinates())
 				.build();
 	}
 

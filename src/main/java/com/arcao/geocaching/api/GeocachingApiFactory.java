@@ -3,9 +3,8 @@ package com.arcao.geocaching.api;
 import com.arcao.geocaching.api.configuration.GeocachingApiConfiguration;
 import com.arcao.geocaching.api.configuration.impl.DefaultProductionGeocachingApiConfiguration;
 import com.arcao.geocaching.api.configuration.impl.DefaultStagingGeocachingApiConfiguration;
+import com.arcao.geocaching.api.downloader.JsonDownloader;
 import com.arcao.geocaching.api.downloader.OkHttpClientJsonDownloader;
-import com.arcao.geocaching.api.impl.LiveGeocachingApi;
-import com.arcao.geocaching.api.impl.live_geocaching_api.downloader.JsonDownloader;
 import com.arcao.geocaching4locus.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -18,9 +17,9 @@ public class GeocachingApiFactory {
 	private static JsonDownloader jsonDownloader;
 
 	public static GeocachingApi create() {
-		return LiveGeocachingApi.Builder.liveGeocachingApi()
-				.withConfiguration(getApiConfiguration())
-				.withDownloader(getJsonDownloader())
+		return LiveGeocachingApi.builder()
+				.configuration(getApiConfiguration())
+				.downloader(getJsonDownloader())
 				.build();
 	}
 

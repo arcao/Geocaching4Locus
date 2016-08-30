@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager;
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
@@ -49,10 +50,12 @@ public class App extends android.app.Application {
 		Crashlytics.setUserIdentifier(getDeviceId());
 
 	 	mAccountManager = new PreferenceAccountManager(this);
-		if (mAccountManager.hasAccount()) {
+
+		Account account = mAccountManager.getAccount();
+		if (account != null) {
 			//noinspection ConstantConditions
-			Crashlytics.setUserName(mAccountManager.getAccount().name);
-			Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, mAccountManager.getRestrictions().isPremiumMember());
+			Crashlytics.setUserName(account.name());
+			Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
 		}
 
 		try {

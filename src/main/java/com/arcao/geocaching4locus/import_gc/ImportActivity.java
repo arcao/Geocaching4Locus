@@ -6,13 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
-import timber.log.Timber;
+import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import timber.log.Timber;
 
 public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
@@ -60,7 +61,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 		String cacheId = m.group(1);
 
-		AnalyticsUtil.actionImport(App.get(this).getAccountManager().getRestrictions().isPremiumMember());
+		AnalyticsUtil.actionImport(App.get(this).getAccountManager().isPremium());
 
 		Timber.i("source: import;" + cacheId);
 		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);

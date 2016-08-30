@@ -7,22 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkCachesFragment;
-import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment;
-import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkImportDialogFragment;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
-import timber.log.Timber;
+import com.arcao.geocaching4locus.error.ErrorActivity;
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkCachesFragment;
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkImportDialogFragment;
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkCachesFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
   private static final int REQUEST_SIGN_ON = 1;
@@ -38,7 +40,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
       return;
     }
 
-    if (!App.get(this).getAccountManager().getRestrictions().isPremiumMember()) {
+    AccountManager accountManager = App.get(this).getAccountManager();
+    if (!accountManager.isPremium()) {
       startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.premium_feature).build());
       finish();
       return;
@@ -55,7 +58,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     }
 
     // test if user is logged in
-    if (App.get(this).getAccountManager().requestSignOn(this, REQUEST_SIGN_ON)) {
+    if (accountManager.requestSignOn(this, REQUEST_SIGN_ON)) {
       return;
     }
 

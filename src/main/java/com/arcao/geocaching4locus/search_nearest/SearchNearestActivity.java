@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
@@ -238,7 +239,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @OnClick(R.id.fab)
   public void onDownloadClick() {
     // test if user is logged in
-    if (App.get(this).getAccountManager().requestSignOn(this, REQUEST_SIGN_ON)) {
+    AccountManager accountManager = App.get(this).getAccountManager();
+    if (accountManager.requestSignOn(this, REQUEST_SIGN_ON)) {
       return;
     }
 
@@ -259,8 +261,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
         AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
-    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count,
-        App.get(this).getAccountManager().getRestrictions().isPremiumMember());
+    AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count, accountManager.isPremium());
 
     DownloadNearestDialogFragment.newInstance(mLatitude, mLongitude, count).show(
             getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);

@@ -11,6 +11,7 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.fragment.BasicMembershipWarningDialogFragment;
 import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginFragment;
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
@@ -64,17 +65,16 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
 	@Override
 	public void onLoginFinished(Intent errorIntent) {
 		AccountManager helper = App.get(this).getAccountManager();
-		boolean result = helper.hasAccount();
-		boolean premiumMember = helper.getRestrictions().isPremiumMember();
+		Account account = helper.getAccount();
+		boolean premiumMember = helper.isPremium();
 
-		if (result) {
-			//noinspection ConstantConditions
-			Crashlytics.setUserName(helper.getAccount().name);
+		if (account != null) {
+			Crashlytics.setUserName(account.name());
 		}
 
-		AnalyticsUtil.actionLogin(result, premiumMember);
+		AnalyticsUtil.actionLogin(account != null, premiumMember);
 
-		setResult(result ? RESULT_OK : RESULT_CANCELED);
+		setResult(account != null ? RESULT_OK : RESULT_CANCELED);
 
 		if (errorIntent != null) {
 			startActivity(errorIntent);

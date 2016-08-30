@@ -8,26 +8,25 @@ import android.preference.PreferenceManager;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
-import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
-import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import java.util.Locale;
+
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.LocusDataMapper;
@@ -66,10 +65,10 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 	@Override
 	protected Boolean doInBackground(long[]... params) throws Exception {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 		AccountManager accountManager = App.get(mContext).getAccountManager();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		LocusDataMapper mapper = new LocusDataMapper(mContext);
 
-		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 		LocusUtils.LocusVersion locusVersion;
 		try {
 			locusVersion = LocusTesting.getActiveVersion(mContext);
@@ -77,27 +76,23 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			throw new LocusMapRuntimeException(t);
 		}
 
-		long[] pointIndexes = params[0];
-
-		if (!accountManager.hasAccount())
-			throw new InvalidCredentialsException("Account not found.");
-
-		GeocachingApi api = GeocachingApiFactory.create();
-		LocusDataMapper mapper = new LocusDataMapper(mContext);
-
-		GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
-		if (!accountManager.getRestrictions().isPremiumMember()) {
-			resultQuality = GeocachingApi.ResultQuality.LITE;
-			logCount = 0;
-		}
-
-		int current = 0;
-		int count = pointIndexes.length;
-		int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-
 		try {
-			login(api);
+			GeocachingApi api = GeocachingApiFactory.create();
+			GeocachingApiLoginTask.create(mContext, api).perform();
 
+			int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+
+			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+			if (!accountManager.isPremium()) {
+				resultQuality = GeocachingApi.ResultQuality.LITE;
+				logCount = 0;
+			}
+
+			long[] pointIndexes = params[0];
+
+			int current = 0;
+			int count = pointIndexes.length;
+			int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
 			while (current < count) {
 				long startTime = System.currentTimeMillis();
 
@@ -124,14 +119,12 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 					break;
 
 				List<Waypoint> points = mapper.toLocusPoints(cachesToAdd);
-
 				for (Waypoint p : points) {
 					if (p == null || p.gcData == null)
 						continue;
 
 					// Geocaching API can return caches in a different order
 					Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
-
 					mapper.mergePoints(p, oldPoint);
 
 					// update new point data in Locus
@@ -145,10 +138,9 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
 			}
 
-			publishProgress(current);
-
 			Timber.i("updated caches: " + current);
 
+			publishProgress(current);
 			return current > 0;
 		} catch (InvalidSessionException e) {
 			Timber.e(e, e.getMessage());
@@ -173,7 +165,6 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, LocusUtils.LocusVersion locusVersion, long[] pointIndexes, int current, int cachesPerRequest) {
 		int count = Math.min(pointIndexes.length - current, cachesPerRequest);
-
 		List<Waypoint> waypoints = new ArrayList<>(count);
 
 		for (int i = 0; i < count; i++) {
@@ -191,7 +182,6 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				throw new LocusMapRuntimeException(t);
 			}
 		}
-
 
 		return waypoints;
 	}
@@ -234,18 +224,6 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 			listener.onTaskFinished(false);
 
 		mContext.startActivity(intent);
-	}
-
-	private void login(GeocachingApi api) throws GeocachingApiException {
-		AccountManager accountManager = App.get(mContext).getAccountManager();
-
-		String token = accountManager.getOAuthToken();
-		if (token == null) {
-			accountManager.removeAccount();
-			throw new InvalidCredentialsException("Account not found.");
-		}
-
-		api.openSession(token);
 	}
 
 	private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {

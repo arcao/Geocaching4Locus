@@ -6,32 +6,35 @@ import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.data.Trackable;
-import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
-import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
-import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
-import com.arcao.geocaching4locus.update.task.UpdateTask.UpdateTaskData;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
+import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+import com.arcao.geocaching4locus.update.task.UpdateTask.UpdateTaskData;
+
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
+
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.LocusDataMapper;
 import locus.api.objects.extra.Waypoint;
-import org.apache.commons.lang3.ArrayUtils;
 import timber.log.Timber;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
@@ -133,26 +136,20 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 	@Override
 	protected UpdateTaskData doInBackground(UpdateTaskData... params) throws Exception {
 		AccountManager accountManager = App.get(mContext).getAccountManager();
-
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-		boolean basicMember = !accountManager.getRestrictions().isPremiumMember();
-
-		if (!accountManager.hasAccount())
-			throw new InvalidCredentialsException("Account not found.");
 
 		UpdateTaskData result = params[0];
-
-		GeocachingApi api = GeocachingApiFactory.create();
-
 		try {
-			login(api);
-
 			publishProgress();
 
+			GeocachingApi api = GeocachingApiFactory.create();
+			GeocachingApiLoginTask.create(mContext, api).perform();
+
+			int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 			int originalLogCount = logCount;
 
 			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+			boolean basicMember = !accountManager.isPremium();
 			if (basicMember) {
 				resultQuality = GeocachingApi.ResultQuality.LITE;
 				logCount = 0;
@@ -234,23 +231,11 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		mContext.startActivity(intent);
 	}
 
-	private void login(GeocachingApi api) throws GeocachingApiException {
-		AccountManager accountManager = App.get(mContext).getAccountManager();
-
-		String token = accountManager.getOAuthToken();
-		if (token == null) {
-			accountManager.removeAccount();
-			throw new InvalidCredentialsException("Account not found.");
-		}
-
-		api.openSession(token);
-	}
-
 	public static class UpdateTaskData implements Parcelable {
-		protected final String cacheId;
-		protected Waypoint oldPoint;
-		protected Waypoint newPoint = null;
-		protected final boolean updateLogs;
+		final String cacheId;
+		Waypoint oldPoint;
+		Waypoint newPoint = null;
+		final boolean updateLogs;
 
 		public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
 			this.cacheId = cacheId;

@@ -30,6 +30,7 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.update.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
@@ -108,8 +109,6 @@ public class LiveMapService extends IntentService {
 		if (countOfJobs.getAndDecrement() > 1)
 			return;
 
-		loadConfiguration(prefs);
-
 		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
 		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
 		double topLeftLatitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
@@ -155,7 +154,7 @@ public class LiveMapService extends IntentService {
 		terrainMax = 5;
 
 		// Premium member feature?
-		if (App.get(this).getAccountManager().getRestrictions().isPremiumMember()) {
+		if (App.get(this).getAccountManager().isPremium()) {
 			difficultyMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MIN, "1"));
 			difficultyMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_DIFFICULTY_MAX, "5"));
 
@@ -194,30 +193,24 @@ public class LiveMapService extends IntentService {
 
 	private void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
 		AccountManager accountManager = App.get(this).getAccountManager();
-
-		if (!accountManager.hasAccount())
-			throw new InvalidCredentialsException("Account not found.");
-
-		GeocachingApi api = GeocachingApiFactory.create();
+		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
 		LocusDataMapper mapper = new LocusDataMapper(this);
 
-		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
-
 		int current = 0;
-		int perPage;
-
 		int requests = 0;
-
 		try {
-			login(api);
+			GeocachingApi api = GeocachingApiFactory.create();
+			GeocachingApiLoginTask.create(this, api).perform();
+
+			loadConfiguration(prefs);
 
 			//noinspection ConstantConditions
-			String username = accountManager.getAccount().name;
+			String username = accountManager.getAccount().name();
 
 			notificationManager.setDownloadingProgress(0, CACHES_COUNT);
 
 			while (current < CACHES_COUNT) {
-				perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
+				int perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
 
 				if (countOfJobs.get() > 0) {
 					Timber.d("New job found, skipped downloading next caches ...");
@@ -248,7 +241,7 @@ public class LiveMapService extends IntentService {
 				if (caches.size() == 0)
 					break;
 
-				if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false))
+				if (!notificationManager.isLiveMapEnabled())
 					break;
 
 				current += caches.size();
@@ -292,18 +285,6 @@ public class LiveMapService extends IntentService {
 			PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
 			ActionDisplayPoints.sendPackSilent(this, pw, false);
 		}
-	}
-
-	private void login(GeocachingApi api) throws GeocachingApiException {
-		AccountManager accountManager = App.get(this).getAccountManager();
-
-		String token = accountManager.getOAuthToken();
-		if (token == null) {
-			accountManager.removeAccount();
-			throw new InvalidCredentialsException("Account not found.");
-		}
-
-		api.openSession(token);
 	}
 
 	public static Intent createIntent(Context context, double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) {

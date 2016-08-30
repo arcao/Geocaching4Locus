@@ -82,7 +82,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
 
 		AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs,
-				App.get(this).getAccountManager().getRestrictions().isPremiumMember());
+				App.get(this).getAccountManager().isPremium());
 
 		UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
 	}

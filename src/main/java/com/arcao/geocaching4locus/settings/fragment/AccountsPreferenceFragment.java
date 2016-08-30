@@ -5,6 +5,7 @@ import android.preference.Preference;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
@@ -30,7 +31,7 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
-				if (accountManager.hasAccount()) {
+				if (accountManager.getAccount() != null) {
 					accountManager.removeAccount();
 					accountPreference.setTitle(R.string.pref_account_login);
 					accountPreference.setSummary(R.string.pref_account_login_summary);
@@ -42,10 +43,11 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 			}
 		});
 
-		if (accountManager.hasAccount()) {
+		Account account = accountManager.getAccount();
+		if (account != null) {
 			accountPreference.setTitle(R.string.pref_account_logout);
 			//noinspection ConstantConditions
-			accountPreference.setSummary(prepareAccountSummary(accountManager.getAccount().name));
+			accountPreference.setSummary(prepareAccountSummary(account.name()));
 		} else {
 			accountPreference.setTitle(R.string.pref_account_login);
 			accountPreference.setSummary(R.string.pref_account_login_summary);

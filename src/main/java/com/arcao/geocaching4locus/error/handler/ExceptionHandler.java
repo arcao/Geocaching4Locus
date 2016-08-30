@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 
-import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
@@ -13,15 +12,16 @@ import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.StatusCode;
 import com.arcao.geocaching.api.impl.live_geocaching_api.exception.LiveGeocachingApiException;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
+import com.arcao.geocaching4locus.base.constants.AppConstants;
+import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.error.exception.IntendedException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
-import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
-import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
 import com.github.scribejava.core.exceptions.OAuthConnectionException;
@@ -139,14 +139,17 @@ public class ExceptionHandler {
 	}
 
 	private Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction, String baseMessage) {
-		AccountRestrictions restrictions = App.get(mContext).getAccountManager().getRestrictions();
+		AccountManager accountManager = App.get(mContext).getAccountManager();
+		boolean premiumMember = accountManager.isPremium();
+		AccountRestrictions restrictions = accountManager.getRestrictions();
+
 		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
 
-				int title = restrictions.isPremiumMember() ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
-				int message = restrictions.isPremiumMember() ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
+				int title = premiumMember ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
+				int message = premiumMember ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
 
 				// apply format on a text
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
@@ -200,7 +203,7 @@ public class ExceptionHandler {
 			case PremiumMembershipRequiredForNotHiddenByUserFilter:
 			case PremiumMembershipRequiredForTerrainFilter:
 			case PremiumMembershipRequiredForTrackableCountFilter:
-				restrictions.updateMemberType(MemberType.Basic);
+				accountManager.updateAccountNextTime();
 				return builder
 						.title(R.string.premium_member_warning_title)
 						.message(R.string.premium_member_for_filter_required)

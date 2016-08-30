@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.authentication.util;
 
-import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,15 +7,23 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.arcao.geocaching.api.data.User;
+import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.authentication.LoginActivity;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 public class PreferenceAccountManager implements AccountManager {
 	private final SharedPreferences mPrefs;
 	private final Context mContext;
 	private final AccountRestrictions restrictions;
+	private Account account = null;
+	private long lastAccountUpdateTime = 0;
 
 	public PreferenceAccountManager(Context context) {
 		// Do not store username, password and hash in default shared preferences
@@ -24,10 +31,50 @@ public class PreferenceAccountManager implements AccountManager {
 		mContext = context.getApplicationContext();
 
 		mPrefs = mContext.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE);
-
 		restrictions = new AccountRestrictions(mContext);
 
+		load();
+	}
+
+	private void load() {
 		upgradeStorage();
+
+		lastAccountUpdateTime = mPrefs.getLong(PrefConstants.ACCOUNT_LAST_ACCOUNT_UPDATE_TIME, 0);
+		String userName = mPrefs.getString(PrefConstants.ACCOUNT_USERNAME, null);
+
+		if (userName == null)
+			return;
+
+		account = Account.builder()
+				.name(userName)
+				.premium(mPrefs.getBoolean(PrefConstants.ACCOUNT_PREMIUM, false))
+				.avatarUrl(mPrefs.getString(PrefConstants.ACCOUNT_AVATAR_URL, null))
+				.homeCoordinates(Coordinates.Builder.coordinates()
+						.withLatitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, Float.NaN))
+						.withLongitude(mPrefs.getFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, Float.NaN))
+						.build())
+				.build();
+	}
+
+	private void store() {
+		if (account != null) {
+			mPrefs.edit()
+					.putString(PrefConstants.ACCOUNT_USERNAME, account.name())
+					.putBoolean(PrefConstants.ACCOUNT_PREMIUM, account.premium())
+					.putString(PrefConstants.ACCOUNT_AVATAR_URL, account.avatarUrl())
+					.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, Float.NaN)
+					.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, Float.NaN)
+					.apply();
+
+			if (account.homeCoordinates() != null) {
+				mPrefs.edit()
+						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, (float) account.homeCoordinates().getLatitude())
+						.putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, (float) account.homeCoordinates().getLongitude())
+						.apply();
+			}
+		} else {
+			removeAccount();
+		}
 	}
 
 	@Override
@@ -38,99 +85,112 @@ public class PreferenceAccountManager implements AccountManager {
 
 	@Override
 	@Nullable
-	public String getOAuthToken() {
-		if (!hasAccount())
-			return null;
-
-		return mPrefs.getString(PrefConstants.SESSION, null);
-	}
-
-	@Override
-	@Nullable
 	public Account getAccount() {
-		String userName = mPrefs.getString(PrefConstants.USERNAME, null);
-
-		if (userName == null)
-			return null;
-
-		return new Account(userName, ACCOUNT_TYPE);
+		return account;
 	}
 
 	@NonNull
 	@Override
-	public Account createAccount(@NonNull String userName) {
-		return new Account(userName, ACCOUNT_TYPE);
+	public Account createAccount(@NonNull User user) {
+		return Account.builder()
+				.name(user.getUserName())
+				.premium(user.getMemberType() == MemberType.Premium || user.getMemberType() == MemberType.Charter)
+				.avatarUrl(user.getAvatarUrl())
+				.homeCoordinates(user.getHomeCoordinates())
+				.build();
 	}
 
 	@Override
 	public void addAccount(@NonNull Account account) {
-		if (hasAccount())
+		if (this.account != null)
 			removeAccount();
 
-		mPrefs.edit()
-			.putString(PrefConstants.USERNAME, account.name)
-			.remove(PrefConstants.SESSION)
-			.apply();
-	}
+		this.account = account;
+		lastAccountUpdateTime = new Date().getTime();
+		store();
 
-	@Override
-	public void setOAuthToken(@Nullable String authToken) {
-		if (!hasAccount())
-			return;
-
-		Editor editor = mPrefs.edit();
-		if (authToken != null) {
-			editor.putString(PrefConstants.SESSION, authToken);
-		} else {
-			editor.remove(PrefConstants.SESSION);
-		}
-		editor.apply();
-	}
-
-	@Override
-	public boolean hasAccount() {
-		return mPrefs.getString(PrefConstants.USERNAME, null) != null;
+		restrictions.applyRestrictions(account.premium());
 	}
 
 	@Override
 	public void removeAccount() {
+		account = null;
+
 		mPrefs.edit()
-			.remove(PrefConstants.USERNAME)
-			.remove(PrefConstants.PASSWORD)
-			.remove(PrefConstants.SESSION)
-			.apply();
+				.remove(PrefConstants.ACCOUNT_USERNAME)
+				.remove(PrefConstants.ACCOUNT_SESSION)
+				.remove(PrefConstants.ACCOUNT_PREMIUM)
+				.remove(PrefConstants.ACCOUNT_AVATAR_URL)
+				.remove(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT)
+				.remove(PrefConstants.ACCOUNT_HOME_COORDINATES_LON)
+				.apply();
 
 		restrictions.remove();
 	}
 
 	@Override
+	public boolean isPremium() {
+		return account != null && account.premium();
+	}
+
+	public boolean isAccountUpdateRequired() {
+		return TimeUnit.MILLISECONDS.toDays(new Date().getTime() - lastAccountUpdateTime) > 0;
+	}
+
+	public void updateAccountNextTime() {
+		lastAccountUpdateTime = 0;
+		store();
+	}
+
+	public void updateAccount(@NonNull Account account) {
+		this.account = account;
+		lastAccountUpdateTime = new Date().getTime();
+		store();
+	}
+
+	@Override
+	@Nullable
+	public String getOAuthToken() {
+		if (account == null)
+			return null;
+
+		return mPrefs.getString(PrefConstants.ACCOUNT_SESSION, null);
+	}
+
+	@Override
+	public void setOAuthToken(@Nullable String authToken) {
+		if (account == null)
+			return;
+
+		Editor editor = mPrefs.edit();
+		if (authToken != null) {
+			editor.putString(PrefConstants.ACCOUNT_SESSION, authToken);
+		} else {
+			editor.remove(PrefConstants.ACCOUNT_SESSION);
+		}
+		editor.apply();
+	}
+
+	@Override
 	public void invalidateOAuthToken() {
-		mPrefs.edit()
-			.remove(PrefConstants.SESSION)
-			.apply();
+		mPrefs.edit().remove(PrefConstants.ACCOUNT_SESSION).apply();
 	}
 
 	private void upgradeStorage() {
-		// remove username, password and session from old storage
 		SharedPreferences defaultPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
 		int prefVersion = mPrefs.getInt(PrefConstants.PREF_VERSION, 0);
-
 		if (prefVersion < 1) {
 			// remove user name, password and session from old storage
 			defaultPref.edit()
-					.remove(PrefConstants.USERNAME)
-					.remove(PrefConstants.PASSWORD)
-					.remove(PrefConstants.SESSION)
+					.remove(PrefConstants.ACCOUNT_USERNAME)
+					.remove(PrefConstants.ACCOUNT_PASSWORD)
+					.remove(PrefConstants.ACCOUNT_SESSION)
 					.apply();
-
-			// remove old accounts with unset member type property
-			removeAccount();
 		}
-		if (prefVersion < 2) {
-			// apply restrictions for basic membership
-			if (hasAccount() && !restrictions.isPremiumMember())
-				restrictions.updateMemberType(MemberType.Basic);
+		if (prefVersion < 3) {
+			// remove old account with unset home coordinates and avatar
+			removeAccount();
 		}
 
 		// update pref_version to latest one
@@ -140,7 +200,7 @@ public class PreferenceAccountManager implements AccountManager {
 
 	@Override
 	public boolean requestSignOn(@NonNull Activity activity, int requestCode) {
-		if (hasAccount())
+		if (account != null)
 			return false;
 
 		activity.startActivityForResult(LoginActivity.createIntent(activity), requestCode);

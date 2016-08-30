@@ -4,29 +4,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.CacheCodeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.Filter;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.update.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
-import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+import com.arcao.geocaching4locus.update.UpdateActivity;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.LocusDataMapper;
@@ -56,17 +59,13 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
   protected Boolean doInBackground(String... params) throws Exception {
     AccountManager accountManager = App.get(mContext).getAccountManager();
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+    LocusDataMapper mapper = new LocusDataMapper(mContext);
+
+    GeocachingApi api = GeocachingApiFactory.create();
+    GeocachingApiLoginTask.create(mContext, api).perform();
 
     boolean simpleCacheData = prefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
     int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-
-    if (!accountManager.hasAccount())
-      throw new InvalidCredentialsException("Account not found.");
-
-    GeocachingApi api = GeocachingApiFactory.create();
-    LocusDataMapper mapper = new LocusDataMapper(mContext);
-
-    login(api);
 
     final List<String> geocacheCodes = new ArrayList<>();
     if (params.length == 1 && isGuid(params[0])) {
@@ -90,9 +89,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
     if (max <= 0)
       throw new NoResultFoundException();
 
-    GeocachingApi.ResultQuality resultQuality = accountManager.getRestrictions().isPremiumMember() ?
-        GeocachingApi.ResultQuality.FULL : GeocachingApi.ResultQuality.SUMMARY;
-
+    GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
     if (simpleCacheData) {
       resultQuality = GeocachingApi.ResultQuality.LITE;
       logCount = 0;
@@ -102,16 +99,12 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
     try {
       File dataFile = ActionDisplayPointsExtended.getCacheFileName(mContext);
-
-      login(api);
-
       writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
       publishProgress();
 
       progress = 0;
       int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-
       while (progress < max) {
         long startTime = System.currentTimeMillis();
 
@@ -145,8 +138,8 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         writer.write(pw);
 
         progress += cachesToAdd.size();
-
         publishProgress();
+
         long requestDuration = System.currentTimeMillis() - startTime;
         cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
       }
@@ -207,18 +200,6 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
     if (listener != null) {
       listener.onTaskFailed(intent);
     }
-  }
-
-  private void login(GeocachingApi api) throws GeocachingApiException {
-    AccountManager accountManager = App.get(mContext).getAccountManager();
-
-    String token = accountManager.getOAuthToken();
-    if (token == null) {
-      accountManager.removeAccount();
-      throw new InvalidCredentialsException("Account not found.");
-    }
-
-    api.openSession(token);
   }
 
   private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {

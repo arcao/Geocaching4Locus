@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.authentication.task;
 
-import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,12 +12,13 @@ import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
-import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
-import com.arcao.geocaching4locus.base.constants.AppConstants;
-import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory;
+import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
@@ -80,18 +80,12 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 			UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
 			ApiLimits apiLimits = api.getApiLimits();
 
-			// add account
-			if (helper.hasAccount()) {
-				helper.removeAccount();
-			}
-
-			Account account = helper.createAccount(userProfile.getUser().getUserName());
+			Account account = helper.createAccount(userProfile.getUser());
 			helper.addAccount(account);
 			helper.setOAuthToken(api.getSession());
 			helper.deleteOAuthRequestToken();
 
-			// update member type and restrictions
-			accountRestrictions.updateMemberType(userProfile.getUser().getMemberType());
+			// update restrictions
 			accountRestrictions.updateLimits(apiLimits);
 
 			return null;

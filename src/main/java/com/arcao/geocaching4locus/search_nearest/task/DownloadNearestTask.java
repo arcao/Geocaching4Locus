@@ -14,7 +14,6 @@ import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
-import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.BookmarksExcludeFilter;
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.DifficultyFilter;
@@ -28,6 +27,7 @@ import com.arcao.geocaching.api.impl.live_geocaching_api.filter.PointRadiusFilte
 import com.arcao.geocaching.api.impl.live_geocaching_api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
@@ -99,42 +99,33 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
   @Override
   protected Intent doInBackground(Void... params) throws Exception {
-    AccountManager accountManager = App.get(mContext).getAccountManager();
-    if (!accountManager.hasAccount())
-      throw new InvalidCredentialsException("Account not found.");
-
-    if (isCancelled())
-      return null;
-
     Timber.i("source=search;coordinates=" + mCoordinates + ";count=" + mCount);
 
-    GeocachingApi api = GeocachingApiFactory.create();
+    AccountManager accountManager = App.get(mContext).getAccountManager();
     LocusDataMapper mapper = new LocusDataMapper(mContext);
-
-
-    GeocachingApi.ResultQuality resultQuality = accountManager.getRestrictions().isPremiumMember() ?
-        GeocachingApi.ResultQuality.FULL : GeocachingApi.ResultQuality.SUMMARY;
-
-    int logCount = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
-    boolean simpleCacheData = mPrefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
-    if (simpleCacheData) {
-      resultQuality = GeocachingApi.ResultQuality.LITE;
-      logCount = 0;
-    }
-
-    int current = 0;
     ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName(mContext));
-    StoreableWriter writer = null;
 
+    StoreableWriter writer = null;
+    int current = 0;
     try {
-      login(api);
+      GeocachingApi api = GeocachingApiFactory.create();
+      GeocachingApiLoginTask.create(mContext, api).perform();
+
+      GeocachingApi.ResultQuality resultQuality = accountManager.isPremium() ?
+              GeocachingApi.ResultQuality.FULL : GeocachingApi.ResultQuality.LITE;
+
+      int logCount = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+      boolean simpleCacheData = mPrefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
+      if (simpleCacheData) {
+        resultQuality = GeocachingApi.ResultQuality.LITE;
+        logCount = 0;
+      }
 
       writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
-      int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-
       publishProgress(current);
 
+      int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
       while (current < mCount) {
         long startTime = System.currentTimeMillis();
 
@@ -176,8 +167,8 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         writer.write(pw);
 
         current += cachesToAdd.size();
-
         publishProgress(current);
+
         long requestDuration = System.currentTimeMillis() - startTime;
         cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
       }
@@ -247,8 +238,8 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
     AccountManager accountManager = App.get(mContext).getAccountManager();
     //noinspection ConstantConditions
-    String userName = accountManager.getAccount().name;
-    boolean premiumMember = accountManager.getRestrictions().isPremiumMember();
+    String userName = accountManager.getAccount().name();
+    boolean premiumMember = accountManager.isPremium();
 
     filters.add(new PointRadiusFilter(mCoordinates.getLatitude(), mCoordinates.getLongitude(), (long) (mDistance * 1000)));
 
@@ -282,10 +273,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
       }
 
       // TODO: 3. 9. 2015 Move it to configuration
-      boolean excludeIgnoreList = true;
-      if (excludeIgnoreList) {
-        filters.add(new BookmarksExcludeFilter(true));
-      }
+      filters.add(new BookmarksExcludeFilter(true));
     }
 
     return filters;
@@ -315,20 +303,6 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     return filter.toArray(new ContainerType[filter.size()]);
   }
 
-
-  private void login(GeocachingApi api) throws GeocachingApiException {
-    AccountManager accountManager = App.get(mContext).getAccountManager();
-
-    String token = accountManager.getOAuthToken();
-    if (token == null) {
-      accountManager.removeAccount();
-      throw new InvalidCredentialsException("Account not found.");
-    }
-
-    api.openSession(token);
-  }
-
-
   private void removeCachesOverDistance(@NonNull List<Geocache> caches, @NonNull Coordinates coordinates, double maxDistance) {
     while (caches.size() > 0) {
       Geocache cache = caches.get(caches.size() - 1);
@@ -343,7 +317,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     }
   }
 
-  public float getDistance() {
+  private float getDistance() {
     boolean imperialUnits = mPrefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
 
     double distance = PreferenceUtil.getParsedDouble(mPrefs, PrefConstants.FILTER_DISTANCE,

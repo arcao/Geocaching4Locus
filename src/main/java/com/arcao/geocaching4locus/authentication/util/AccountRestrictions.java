@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.data.GeocacheLimits;
 import com.arcao.geocaching.api.data.apilimits.ApiLimits;
 import com.arcao.geocaching.api.data.apilimits.CacheLimit;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
-import com.arcao.geocaching.api.data.type.MemberType;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 import java.util.Calendar;
@@ -26,7 +26,6 @@ public class AccountRestrictions {
 	private long currentFullGeocacheLimit;
 	private long fullGeocacheLimitPeriod;
 	private Date renewFullGeocacheLimit;
-	private boolean premiumMember;
 
 	public AccountRestrictions(Context context) {
 		mContext = context.getApplicationContext();
@@ -40,7 +39,6 @@ public class AccountRestrictions {
 			.remove(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT)
 			.remove(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD)
 			.remove(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT)
-			.remove(PrefConstants.RESTRICTION__PREMIUM_MEMBER)
 			.apply();
 
 		init();
@@ -51,25 +49,14 @@ public class AccountRestrictions {
 		currentFullGeocacheLimit = mPrefs.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0);
 		fullGeocacheLimitPeriod = mPrefs.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD);
 		renewFullGeocacheLimit = new Date(mPrefs.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0));
-		premiumMember = mPrefs.getBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, false);
 	}
 
-	public void updateMemberType(MemberType memberType) {
-		switch (memberType) {
-			case Charter:
-			case Premium:
-				presetPremiumMembershipConfiguration();
-				premiumMember = true;
-				break;
-			default:
-				presetBasicMembershipConfiguration();
-				premiumMember = false;
-				break;
+	public void applyRestrictions(boolean premium) {
+		if (premium) {
+			presetPremiumMembershipConfiguration();
+		} else {
+			presetBasicMembershipConfiguration();
 		}
-
-		mPrefs.edit()
-			.putBoolean(PrefConstants.RESTRICTION__PREMIUM_MEMBER, premiumMember)
-			.apply();
 	}
 
 	private void presetBasicMembershipConfiguration() {
@@ -159,10 +146,6 @@ public class AccountRestrictions {
 		}
 
 		editor.apply();
-	}
-
-	public boolean isPremiumMember() {
-		return premiumMember;
 	}
 
 	public long getMaxFullGeocacheLimit() {

@@ -1,8 +1,9 @@
 package com.arcao.feedback.collector;
 
 import android.content.Context;
+
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 public class AccountInfoCollector extends Collector {
@@ -21,13 +22,12 @@ public class AccountInfoCollector extends Collector {
 	protected String collect() {
 		final StringBuilder sb = new StringBuilder();
 
-		AccountManager helper = App.get(mContext).getAccountManager();
-
-		if (!helper.hasAccount()) {
+		Account account = App.get(mContext).getAccountManager().getAccount();
+		if (account == null) {
 			sb.append("No Account").append("\n");
 		} else {
 			//noinspection ConstantConditions
-			sb.append("NAME=").append(helper.getAccount().name).append("\n");
+			sb.append("NAME=").append(account.name()).append("\n");
 
 			sb.append("\n--- RESTRICTIONS ---\n");
 			sb.append(new SharedPreferencesCollector(mContext, PrefConstants.RESTRICTION_STORAGE_NAME).collect());

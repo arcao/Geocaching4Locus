@@ -5,14 +5,22 @@ public interface PrefConstants {
 	String RESTRICTION_STORAGE_NAME = "RESTRICTION";
 
 	String PREF_VERSION = "pref_version";
-	int CURRENT_PREF_VERSION = 2;
+	int CURRENT_PREF_VERSION = 3;
 
 	String LAST_LATITUDE = "latitude";
 	String LAST_LONGITUDE = "longitude";
 
-	String USERNAME = "username";
-	String PASSWORD = "password";
-	String SESSION = "session";
+	String ACCOUNT_USERNAME = "username";
+	String ACCOUNT_PREMIUM = "premium_account";
+	String ACCOUNT_AVATAR_URL = "avatar_url";
+	String ACCOUNT_HOME_COORDINATES_LAT = "home_coordinates_lat";
+	String ACCOUNT_HOME_COORDINATES_LON = "home_coordinates_lon";
+	String ACCOUNT_SESSION = "session";
+	String ACCOUNT_LAST_ACCOUNT_UPDATE_TIME = "last_account_update_time";
+
+	@Deprecated
+	String ACCOUNT_PASSWORD = "password";
+
 
 	String OAUTH_TOKEN = "OAUTH_TOKEN";
 	String OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET";
@@ -55,7 +63,6 @@ public interface PrefConstants {
 	String ABOUT_DONATE_PAYPAL = "about_donate_paypal";
 	String ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live";
 
-	String RESTRICTION__PREMIUM_MEMBER = "premium_account";
 	String RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit";
 	String RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD = "full_geocache_limit_period";
 	String RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit";
@@ -70,34 +77,34 @@ public interface PrefConstants {
 	String UNIT_MILES = "mi";
 
 	String[] shortCacheTypeName = {
-					"Tradi",
-					"Multi",
-					"Mystery",
-					"Virtual",
-					"Earth",
-					"APE",
-					"Letter",
-					"Wherigo",
-					"Event",
-					"M-Event",
-					"CITO",
-					"Advent",
-					"Webcam",
-					"Loc-less",
-					"L&F",
-					"GS HQ",
-					"GS L&F",
-					"GS Party",
-					"G-Event"
+			"Tradi",
+			"Multi",
+			"Mystery",
+			"Virtual",
+			"Earth",
+			"APE",
+			"Letter",
+			"Wherigo",
+			"Event",
+			"M-Event",
+			"CITO",
+			"Advent",
+			"Webcam",
+			"Loc-less",
+			"L&F",
+			"GS HQ",
+			"GS L&F",
+			"GS Party",
+			"G-Event"
 	};
 
 	String[] shortContainerTypeName = {
-					"?",
-					"M",
-					"S",
-					"R",
-					"L",
-					"H",
-					"O"
+			"?",
+			"M",
+			"S",
+			"R",
+			"L",
+			"H",
+			"O"
 	};
 }

@@ -71,7 +71,7 @@ public class LocusDataMapper {
 
 	public LocusDataMapper(@NonNull Context context) {
 		mContext = context.getApplicationContext();
-		mPremiumMember = App.get(mContext).getAccountManager().getRestrictions().isPremiumMember();
+		mPremiumMember = App.get(mContext).getAccountManager().isPremium();
 	}
 
 	@NonNull

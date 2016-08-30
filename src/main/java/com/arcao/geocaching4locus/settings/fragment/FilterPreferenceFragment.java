@@ -26,7 +26,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_filter);
 
-		mPremiumMember = App.get(getActivity()).getAccountManager().getRestrictions().isPremiumMember();
+		mPremiumMember = App.get(getActivity()).getAccountManager().isPremium();
 		mImperialUnits = mPrefs.getBoolean(PrefConstants.IMPERIAL_UNITS, false);
 	}
 

@@ -21,7 +21,7 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_downloading);
 
-		mPremiumMember = App.get(getActivity()).getAccountManager().getRestrictions().isPremiumMember();
+		mPremiumMember = App.get(getActivity()).getAccountManager().isPremium();
 	}
 
 	@Override

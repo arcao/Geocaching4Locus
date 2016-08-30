@@ -16,7 +16,7 @@ public class LiveMapPreferenceFragment extends AbstractPreferenceFragment {
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preference_category_live_map);
 
-		mPremiumMember = App.get(getActivity()).getAccountManager().getRestrictions().isPremiumMember();
+		mPremiumMember = App.get(getActivity()).getAccountManager().isPremium();
 	}
 
 	@Override

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.update.fragment.UpdateMoreDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import locus.api.android.utils.LocusUtils;
+import com.arcao.geocaching4locus.update.fragment.UpdateMoreDialogFragment;
+
 import org.apache.commons.lang3.ArrayUtils;
+
+import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
 public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreDialogFragment.DialogListener {
@@ -41,7 +43,7 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
 		}
 
 		AnalyticsUtil.actionUpdateMore(pointIndexes.length,
-				App.get(this).getAccountManager().getRestrictions().isPremiumMember());
+				App.get(this).getAccountManager().isPremium());
 
 		Timber.i("source: update;count=" + pointIndexes.length);
 		UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);

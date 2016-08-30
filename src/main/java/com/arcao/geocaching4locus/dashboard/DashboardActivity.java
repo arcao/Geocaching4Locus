@@ -12,15 +12,15 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
+import com.arcao.geocaching4locus.base.util.IntentUtil;
+import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.dashboard.widget.DashboardButton;
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity;
 import com.arcao.geocaching4locus.import_gc.ImportFromGCActivity;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import com.arcao.geocaching4locus.base.util.IntentUtil;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +61,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		boolean premiumMember = App.get(this).getAccountManager().getRestrictions().isPremiumMember();
+		boolean premiumMember = App.get(this).getAccountManager().isPremium();
 
 		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
 
@@ -70,6 +69,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		mImportBookmarkButton.setEnabled(premiumMember);
 		if (!premiumMember) {
 			mImportBookmarkButton.setText(String.format("%s %s", getString(R.string.menu_import_bookmarks), AppConstants.PREMIUM_CHARACTER));
+		} else {
+			mImportBookmarkButton.setText(R.string.menu_import_bookmarks);
 		}
 	}
 

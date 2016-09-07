@@ -188,7 +188,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 					int logsPerRequest = Math.min(maxLogs - startIndex, AppConstants.LOGS_PER_REQUEST);
 					List<GeocacheLog> retrievedLogs = api.getGeocacheLogsByCacheCode(result.cacheId, startIndex, logsPerRequest);
 
-					if (retrievedLogs == null || retrievedLogs.isEmpty()) {
+					if (retrievedLogs.isEmpty()) {
 						break;
 					}
 

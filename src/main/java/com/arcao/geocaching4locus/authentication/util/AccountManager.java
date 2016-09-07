@@ -8,8 +8,6 @@ import com.arcao.geocaching.api.data.User;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public interface AccountManager {
-	String ACCOUNT_TYPE = "com.arcao.geocaching4locus";
-
 	@Nullable
 	Account getAccount();
 	@NonNull

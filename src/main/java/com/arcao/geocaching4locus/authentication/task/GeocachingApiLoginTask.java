@@ -13,8 +13,8 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory;
 
 public class GeocachingApiLoginTask {
-    private Context mContext;
-    private GeocachingApi mApi;
+    private final Context mContext;
+    private final GeocachingApi mApi;
 
     private GeocachingApiLoginTask(Context context, GeocachingApi api) {
         mContext = context.getApplicationContext();

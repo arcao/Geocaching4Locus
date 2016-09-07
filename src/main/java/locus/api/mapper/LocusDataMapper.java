@@ -59,7 +59,7 @@ public class LocusDataMapper {
 	private static final Pattern NOTE__COORDINATE_PATTERN = Pattern.compile("\\b[nNsS]\\s*\\d"); // begin of coordinates
 	private static final Pattern NOTE__NAME_PATTERN = Pattern.compile("^(.+):\\s*\\z");
 	private static final long WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0");
-	public static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
+	private static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
 			+ "<p><a href=\"%1$s#ctl00_ContentBody_ShortDescription\">%2$s</a></p>";
 
 	static {
@@ -208,10 +208,10 @@ public class LocusDataMapper {
 			return null;
 
 		GeocachingImage i = new GeocachingImage();
-		i.setName(image.getName());
-		i.setDescription(image.getDescription());
-		i.setThumbUrl(image.getThumbUrl());
-		i.setUrl(image.getUrl());
+		i.setName(image.name());
+		i.setDescription(image.description());
+		i.setThumbUrl(image.thumbUrl());
+		i.setUrl(image.url());
 
 		return i;
 	}

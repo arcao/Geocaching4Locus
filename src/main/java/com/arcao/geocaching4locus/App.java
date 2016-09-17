@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -25,7 +26,7 @@ import io.fabric.sdk.android.Fabric;
 import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
-public class App extends android.app.Application {
+public class App extends Application {
 	private AccountManager mAccountManager;
 	private String mDeviceId;
 

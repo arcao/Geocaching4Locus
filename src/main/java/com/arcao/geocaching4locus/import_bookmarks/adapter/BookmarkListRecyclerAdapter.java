@@ -25,7 +25,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
   }
 
   private final List<BookmarkList> items = new ArrayList<>();
-  private OnItemClickListener onItemClickListener;
+  OnItemClickListener onItemClickListener;
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

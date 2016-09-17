@@ -99,7 +99,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				// prepare old cache data
 				List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(mContext, locusVersion, pointIndexes, current, cachesPerRequest);
 
-				if (oldPoints.size() == 0) {
+				if (oldPoints.isEmpty()) {
 					// all are Waypoints without geocaching data
 					current += Math.min(pointIndexes.length - current, cachesPerRequest);
 					publishProgress(current);
@@ -115,7 +115,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				if (isCancelled())
 					return false;
 
-				if (cachesToAdd.size() == 0)
+				if (cachesToAdd.isEmpty())
 					break;
 
 				List<Waypoint> points = mapper.toLocusPoints(cachesToAdd);
@@ -151,7 +151,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	}
 
 	private Waypoint searchOldPointByGCCode(Iterable<Waypoint> oldPoints, String gcCode) {
-		if (gcCode == null || gcCode.length() == 0)
+		if (gcCode == null || gcCode.isEmpty())
 			return null;
 
 		for (Waypoint oldPoint : oldPoints) {

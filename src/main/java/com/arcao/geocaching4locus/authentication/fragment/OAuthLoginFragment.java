@@ -38,10 +38,10 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 		void onLoginFinished(Intent errorIntent);
 	}
 
-	@Nullable private OAuthLoginTask mTask;
+	@Nullable OAuthLoginTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
-	private WebView mWebView = null;
-	private View mProgressHolder = null;
+	private WebView mWebView;
+	View mProgressHolder;
 	private Bundle mLastInstanceState;
 
 	public static OAuthLoginFragment newInstance() {
@@ -151,6 +151,9 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 	}
 
 	private class DialogWebViewClient extends WebViewClient {
+		DialogWebViewClient() {
+		}
+
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {

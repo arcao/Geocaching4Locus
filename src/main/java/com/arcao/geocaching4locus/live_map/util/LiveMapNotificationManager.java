@@ -34,8 +34,8 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static final long NOTIFICATION_TIMEOUT_MS = 2000;
 	private static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
 
-	private static boolean mNotificationShown = false;
-	private static boolean mLastLiveMapState = false;
+	private static boolean mNotificationShown;
+	private static boolean mLastLiveMapState;
 
 	private final Context mContext;
 	private final NotificationManager mNotificationManager;
@@ -233,7 +233,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	public void removeLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {
 		mStateChangeListeners.remove(liveMapStateChangeListener);
 
-		if (mStateChangeListeners.size() == 0) {
+		if (mStateChangeListeners.isEmpty()) {
 			mSharedPrefs.unregisterOnSharedPreferenceChangeListener(this);
 		}
 	}

@@ -161,16 +161,17 @@ public class LiveMapService extends IntentService {
 			terrainMin = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MIN, "1"));
 			terrainMax = Float.parseFloat(prefs.getString(PrefConstants.FILTER_TERRAIN_MAX, "5"));
 
-			cacheTypes = getCacheTypeFilterResult(prefs);
-			containerTypes = getContainerTypeFilterResult(prefs);
+			cacheTypes = getSelectedGeocacheTypes(prefs);
+			containerTypes = getSelectedContainerTypes(prefs);
 			excludeIgnoreList = true;
 		}
 	}
 
-	private GeocacheType[] getCacheTypeFilterResult(SharedPreferences prefs) {
+	private GeocacheType[] getSelectedGeocacheTypes(SharedPreferences prefs) {
 		List<GeocacheType> filter = new Vector<>();
 
-		for (int i = 0; i < GeocacheType.values().length; i++) {
+		final int len = GeocacheType.values().length;
+		for (int i = 0; i < len; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				filter.add(GeocacheType.values()[i]);
 			}
@@ -179,10 +180,11 @@ public class LiveMapService extends IntentService {
 		return filter.toArray(new GeocacheType[filter.size()]);
 	}
 
-	private ContainerType[] getContainerTypeFilterResult(SharedPreferences prefs) {
+	private ContainerType[] getSelectedContainerTypes(SharedPreferences prefs) {
 		List<ContainerType> filter = new Vector<>();
 
-		for (int i = 0; i < ContainerType.values().length; i++) {
+		final int len = ContainerType.values().length;
+		for (int i = 0; i < len; i++) {
 			if (prefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
 				filter.add(ContainerType.values()[i]);
 			}
@@ -238,7 +240,7 @@ public class LiveMapService extends IntentService {
 					caches = api.getMoreGeocaches(resultQuality, current, perPage, 0, 0);
 				}
 
-				if (caches.size() == 0)
+				if (caches.isEmpty())
 					break;
 
 				if (!notificationManager.isLiveMapEnabled())

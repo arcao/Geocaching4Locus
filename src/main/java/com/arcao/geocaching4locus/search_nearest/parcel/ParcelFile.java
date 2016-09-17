@@ -29,7 +29,7 @@ public class ParcelFile extends File implements Parcelable {
   }
 
   // PARCELABLE PART
-  private ParcelFile(Parcel in) {
+  ParcelFile(Parcel in) {
     super(in.readString());
   }
 

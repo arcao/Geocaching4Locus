@@ -175,8 +175,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	private static final int MESSAGE_POST_CANCEL = 0x3;
 	private static final int MESSAGE_POST_EXCEPTION = 0x4;
 
-	@SuppressWarnings("rawtypes")
-	private static final Handler sHandler = new InternalHandler();
+	@SuppressWarnings("rawtypes") static final Handler sHandler = new InternalHandler();
 
 	private final WorkerRunnable<Params, Result> mWorker;
 	private final FutureTask<Result> mFuture;
@@ -271,7 +270,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *
 	 * @return A result, defined by the subclass of this task.
 	 *
-	 * @throws java.lang.Exception If error occurs in this method exceptions can be handled in
+	 * @throws Exception If error occurs in this method exceptions can be handled in
 	 *           {@link #onException(Throwable)}.
 	 *
 	 * @see #onPreExecute()
@@ -485,22 +484,25 @@ public abstract class UserTask<Params, Progress, Result> {
 								new UserTaskResult<>(this, null, values)).sendToTarget();
 	}
 
-	private void finish(Result result) {
+	void finish(Result result) {
 		onPostExecute(result);
 		mStatus = Status.FINISHED;
 	}
 
-	private void exception(Throwable e) {
+	void exception(Throwable e) {
 	  onException(e);
 	  mStatus = Status.FINISHED;
 	}
 
-	private void cancel() {
+	void cancel() {
 	  onCancelled();
 	  mStatus = Status.FINISHED;
 	}
 
 	private static class InternalHandler<Params, Progress, Result> extends Handler {
+		InternalHandler() {
+		}
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public void handleMessage(Message msg) {
@@ -528,6 +530,9 @@ public abstract class UserTask<Params, Progress, Result> {
 
 	private static abstract class WorkerRunnable<Params, Result> implements Callable<Result> {
 		Params[] mParams;
+
+		WorkerRunnable() {
+		}
 	}
 
 	private static class UserTaskResult<Task, Data> {

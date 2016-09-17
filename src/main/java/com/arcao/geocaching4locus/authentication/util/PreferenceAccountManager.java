@@ -22,8 +22,8 @@ public class PreferenceAccountManager implements AccountManager {
 	private final SharedPreferences mPrefs;
 	private final Context mContext;
 	private final AccountRestrictions restrictions;
-	private Account account = null;
-	private long lastAccountUpdateTime = 0;
+	private Account account;
+	private long lastAccountUpdateTime;
 
 	public PreferenceAccountManager(Context context) {
 		// Do not store username, password and hash in default shared preferences

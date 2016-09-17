@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 public class DataFileWriterBigEndian extends DataWriterBigEndian {
-	private long mStoredPosition = 0;
+	private long mStoredPosition;
 
 	private final OutputStream mOut;
 	private final FileChannel mChannel;

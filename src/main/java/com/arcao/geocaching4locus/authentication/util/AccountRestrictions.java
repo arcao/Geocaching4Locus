@@ -76,9 +76,11 @@ public class AccountRestrictions {
 				.putString(PrefConstants.FILTER_TERRAIN_MAX, "5");
 
 		// multi-select filters (select all)
-		for (int i = 0; i < GeocacheType.values().length; i++)
+		final int geocacheTypeLength = GeocacheType.values().length;
+		for (int i = 0; i < geocacheTypeLength; i++)
 			editor.putBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true);
-		for (int i = 0; i < ContainerType.values().length; i++)
+		final int ContainerTypeLength = ContainerType.values().length;
+		for (int i = 0; i < ContainerTypeLength; i++)
 			editor.putBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true);
 
 		editor.apply();

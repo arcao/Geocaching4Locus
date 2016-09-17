@@ -5,22 +5,23 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v7.appcompat.R;
 import android.util.TypedValue;
 
 public class ColorUtil {
 	private static final ThreadLocal<TypedValue> TL_TYPED_VALUE = new ThreadLocal<>();
 
-	private static final int[] DISABLED_STATE_SET = new int[]{-android.R.attr.state_enabled};
-	private static final int[] FOCUSED_STATE_SET = new int[]{android.R.attr.state_focused};
-	private static final int[] ACTIVATED_STATE_SET = new int[]{android.R.attr.state_activated};
-	private static final int[] PRESSED_STATE_SET = new int[]{android.R.attr.state_pressed};
-	private static final int[] CHECKED_STATE_SET = new int[]{android.R.attr.state_checked};
-	private static final int[] SELECTED_STATE_SET = new int[]{android.R.attr.state_selected};
+	private static final int[] DISABLED_STATE_SET = {-android.R.attr.state_enabled};
+	private static final int[] FOCUSED_STATE_SET = {android.R.attr.state_focused};
+	private static final int[] ACTIVATED_STATE_SET = {android.R.attr.state_activated};
+	private static final int[] PRESSED_STATE_SET = {android.R.attr.state_pressed};
+	private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
+	private static final int[] SELECTED_STATE_SET = {android.R.attr.state_selected};
 	private static final int[] EMPTY_STATE_SET = new int[0];
 
 	private static final int[] TEMP_ARRAY = new int[1];
 
-	private static ColorStateList mDefaultColorStateList = null;
+	private static ColorStateList mDefaultColorStateList;
 
 	public static ColorStateList getDefaultColorStateList(Context context) {
 		if (mDefaultColorStateList == null) {
@@ -29,9 +30,9 @@ public class ColorUtil {
 			 * Order is important here. The default enabled state needs to go at the bottom.
 			 */
 
-			final int colorControlNormal = getThemeAttrColor(context, android.support.v7.appcompat.R.attr.colorControlNormal);
+			final int colorControlNormal = getThemeAttrColor(context, R.attr.colorControlNormal);
 			final int colorControlActivated = getThemeAttrColor(context,
-							android.support.v7.appcompat.R.attr.colorControlActivated);
+							R.attr.colorControlActivated);
 
 			final int[][] states = new int[7][];
 			final int[] colors = new int[7];
@@ -39,7 +40,7 @@ public class ColorUtil {
 
 			// Disabled state
 			states[i] = DISABLED_STATE_SET;
-			colors[i] = getDisabledThemeAttrColor(context, android.support.v7.appcompat.R.attr.colorControlNormal);
+			colors[i] = getDisabledThemeAttrColor(context, R.attr.colorControlNormal);
 			i++;
 
 			states[i] = FOCUSED_STATE_SET;

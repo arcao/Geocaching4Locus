@@ -36,7 +36,7 @@ public class DisplayManagerCollector extends Collector {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			// Before Android 4.2, there was a single display available from the
 			// window manager
-			final WindowManager windowManager = (WindowManager) mContext.getSystemService(android.content.Context.WINDOW_SERVICE);
+			final WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 			displays = new Display[1];
 			displays[0] = windowManager.getDefaultDisplay();
 		} else {

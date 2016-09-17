@@ -47,8 +47,8 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
   private final Context mContext;
   private final WeakReference<TaskListener> mTaskListenerRef;
-  private int progress = 0;
-  private int max = 0;
+  private int progress;
+  private int max;
 
   public BookmarkImportTask(Context context, TaskListener listener) {
     mContext = context.getApplicationContext();
@@ -121,7 +121,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         if (isCancelled())
           return false;
 
-        if (cachesToAdd.size() == 0)
+        if (cachesToAdd.isEmpty())
           break;
 
         PackWaypoints pw = new PackWaypoints("BookmarkImport");

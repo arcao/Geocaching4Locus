@@ -16,6 +16,7 @@
 
 package com.arcao.geocaching4locus.import_bookmarks.widget.decorator;
 
+import android.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -32,8 +33,8 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
-	private static final int[] ATTRS = new int[]{
-					android.R.attr.listDivider
+	private static final int[] ATTRS = {
+					R.attr.listDivider
 	};
 
 	@Retention(SOURCE)

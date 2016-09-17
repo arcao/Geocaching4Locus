@@ -234,7 +234,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 	public static class UpdateTaskData implements Parcelable {
 		final String cacheId;
 		Waypoint oldPoint;
-		Waypoint newPoint = null;
+		Waypoint newPoint;
 		final boolean updateLogs;
 
 		public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
@@ -243,7 +243,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			this.updateLogs = updateLogs;
 		}
 
-		private UpdateTaskData(Parcel in) {
+		UpdateTaskData(Parcel in) {
 			cacheId = in.readString();
 
 			try {

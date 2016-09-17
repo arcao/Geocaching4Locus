@@ -31,7 +31,7 @@ public class SliderPreference extends DialogPreference implements SeekBar.OnSeek
 
 	private final CharSequence mDialogMessage;
 	private final int mDefault;
-	private int mMax, mValue = 0;
+	private int mMax, mValue;
 
 	public SliderPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);

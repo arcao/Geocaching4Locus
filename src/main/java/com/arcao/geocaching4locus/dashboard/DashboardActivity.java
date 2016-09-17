@@ -32,7 +32,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 	private static final int REQUEST_SIGN_ON = 1;
 
 	private LiveMapNotificationManager mLiveMapNotificationManager;
-	private boolean mCalledFromLocus = false;
+	private boolean mCalledFromLocus;
 
 	@BindView(R.id.db_live_map) DashboardButton mLiveMapButton;
 	@BindView(R.id.db_import_bookmark) DashboardButton mImportBookmarkButton;

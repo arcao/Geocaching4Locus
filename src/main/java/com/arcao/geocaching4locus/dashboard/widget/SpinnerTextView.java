@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.dashboard.widget;
 
 import android.content.Context;
+import android.support.v7.appcompat.R;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.method.MovementMethod;
 import android.util.AttributeSet;
@@ -12,7 +13,7 @@ public class SpinnerTextView extends AppCompatEditText {
 	}
 
 	public SpinnerTextView(Context context, AttributeSet attrs) {
-		this(context, attrs, android.support.v7.appcompat.R.attr.editTextStyle);
+		this(context, attrs, R.attr.editTextStyle);
 	}
 
 	public SpinnerTextView(Context context, AttributeSet attrs, int defStyleAttr) {

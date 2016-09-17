@@ -213,7 +213,7 @@ public class Version implements Comparable {
 		}
 
 		version = version.trim();
-		if (version.length() == 0) {
+		if (version.isEmpty()) {
 			return emptyVersion;
 		}
 

@@ -58,7 +58,7 @@ public class ErrorActivity extends AppCompatActivity {
 		public static final String FRAGMENT_TAG = ErrorDialogFragment.class.getName();
 
 
-		private static DialogFragment newInstance(Bundle args) {
+		static DialogFragment newInstance(Bundle args) {
 			ErrorDialogFragment fragment = new ErrorDialogFragment();
 			fragment.setCancelable(false);
 			fragment.setArguments(args);
@@ -152,12 +152,12 @@ public class ErrorActivity extends AppCompatActivity {
 
 	public static class IntentBuilder implements Builder<Intent> {
 		private final Context context;
-		private CharSequence title = null;
-		private CharSequence message = null;
-		private Intent positiveAction = null;
-		private CharSequence positiveButtonText = null;
-		private CharSequence negativeButtonText = null;
-		private Throwable exception = null;
+		private CharSequence title;
+		private CharSequence message;
+		private Intent positiveAction;
+		private CharSequence positiveButtonText;
+		private CharSequence negativeButtonText;
+		private Throwable exception;
 
 		public IntentBuilder(@NonNull Context context) {
 			this.context = context;

@@ -7,9 +7,9 @@ import java.io.IOException;
 import locus.api.objects.Storable;
 
 public class StoreableWriter implements Closeable {
-	private boolean mClosed = false;
-	private int mCount = 0;
-	private int mCounterPosition = 0;
+	private boolean mClosed;
+	private int mCount;
+	private final int mCounterPosition;
 
 	private final DataFileWriterBigEndian mWriter;
 

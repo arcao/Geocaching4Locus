@@ -135,7 +135,8 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		boolean allChecked = true;
 		boolean noneChecked = true;
 
-		for (int i = 0; i < GeocacheType.values().length; i++) {
+		final int len = GeocacheType.values().length;
+		for (int i = 0; i < len; i++) {
 			if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 				noneChecked = false;
 			} else {
@@ -146,7 +147,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		if (allChecked || noneChecked) {
 			sb.append(getString(R.string.pref_cache_type_all));
 		} else {
-			for (int i = 0; i < GeocacheType.values().length; i++) {
+			for (int i = 0; i < len; i++) {
 				if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
 					if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 					sb.append(shortCacheTypeName[i]);
@@ -169,7 +170,8 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	private CharSequence prepareContainerTypeSummary() {
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < ContainerType.values().length; i++) {
+		final int len = ContainerType.values().length;
+		for (int i = 0; i < len; i++) {
 			if (mPrefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
 				if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 				sb.append(shortContainerTypeName[i]);
@@ -177,7 +179,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		}
 
 		if (sb.length() == 0) {
-			for (int i = 0; i < ContainerType.values().length; i++) {
+			for (int i = 0; i < len; i++) {
 				if (sb.length() != 0) sb.append(TEXT_VALUE_SEPARATOR);
 				sb.append(shortContainerTypeName[i]);
 			}
@@ -189,7 +191,8 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 	private CharSequence prepareContainerTypeSummaryBasicMember() {
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < ContainerType.values().length; i++) {
+		final int len = ContainerType.values().length;
+		for (int i = 0; i < len; i++) {
 			if (sb.length() != 0) sb.append(", ");
 			sb.append(shortContainerTypeName[i]);
 		}

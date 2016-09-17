@@ -29,7 +29,7 @@ public class SpannedFix {
 		// and after them.  If not, then insert a space before and/or after each span.
 		SpannableStringBuilder builder = new SpannableStringBuilder(spanned);
 
-		MetricAffectingSpan spans[] = builder.getSpans(0, builder.length(), MetricAffectingSpan.class);
+		MetricAffectingSpan[] spans = builder.getSpans(0, builder.length(), MetricAffectingSpan.class);
 		for (MetricAffectingSpan span: spans) {
 			int spanStart = builder.getSpanStart(span);
 			if (spanStart > 0 && isNotSpace(builder, spanStart - 1)) {

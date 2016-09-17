@@ -88,7 +88,7 @@ public class LocusDataMapper {
 	}
 
 	@Nullable
-	public locus.api.objects.extra.Waypoint toLocusPoint(@Nullable Geocache cache) {
+	public Waypoint toLocusPoint(@Nullable Geocache cache) {
 		if (cache == null)
 			return null;
 
@@ -516,7 +516,7 @@ public class LocusDataMapper {
 
 				WaypointType waypointType = WaypointType.ReferencePoint;
 
-				if (nameMatcher.find() && nameMatcher.group(1).trim().length() > 0) {
+				if (nameMatcher.find() && !nameMatcher.group(1).trim().isEmpty()) {
 					name = nameMatcher.group(1).trim();
 
 					if (FINAL_WAYPOINT_NAME_PATTERN.matcher(name).matches()) {

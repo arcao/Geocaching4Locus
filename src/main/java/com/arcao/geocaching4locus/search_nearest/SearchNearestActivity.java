@@ -64,12 +64,12 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private static final int REQUEST_SIGN_ON = 1;
   private static final int REQUEST_LOCATION_PERMISSION = 2;
 
-  private SharedPreferences mPrefs;
+  SharedPreferences mPrefs;
   private LocationManager mLocationManager;
 
   private double mLatitude = Double.NaN;
   private double mLongitude = Double.NaN;
-  private boolean mHasCoordinates = false;
+  private boolean mHasCoordinates;
 
   @BindView(R.id.toolbar) Toolbar mToolbar;
   @BindView(R.id.latitude) EditText mLatitudeEditText;
@@ -77,8 +77,8 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   @BindView(R.id.counter) SpinnerTextView mCounter;
   @BindView(R.id.fab) FloatingActionButton fab;
 
-  private String mCoordinatesSource = null;
-  private boolean mUseFilter = false;
+  private String mCoordinatesSource;
+  private boolean mUseFilter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {

@@ -51,8 +51,8 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 	private int mMin = 0;
 	private int mMax = 100;
 	private int mStep = 1;
-	private int mValue = mMin;
-	private int mNewValue = mValue;
+	int mValue = mMin;
+	int mNewValue = mValue;
 
 	private WeakReference<DialogListener> mDialogListenerRef;
 
@@ -92,7 +92,7 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 		}
 	}
 
-	private void fireDialogClose() {
+	void fireDialogClose() {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onDialogClosed(this);
@@ -209,12 +209,12 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 
 	private static class InputTextFilter extends NumberKeyListener {
 		private static final char[] DIGIT_CHARACTERS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-		private final EditText mEditText;
+		final EditText mEditText;
 		@Nullable private final String[] mAvailableValues;
 		private final int mMin;
 		private final int mMax;
 
-		private InputTextFilter(EditText editText, int min, int max, int step) {
+		InputTextFilter(EditText editText, int min, int max, int step) {
 			mEditText = editText;
 			mMin = min;
 			mMax = max;
@@ -224,7 +224,8 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 			} else {
 				mAvailableValues = new String[((max - min) / step) + 1];
 
-				for (int i = 0; i < mAvailableValues.length; i++) {
+				final int length = mAvailableValues.length;
+				for (int i = 0; i < length; i++) {
 					mAvailableValues[i] = String.valueOf(min + (i * step));
 				}
 			}

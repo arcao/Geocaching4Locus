@@ -31,6 +31,8 @@ public class ContainerTypeFilterPreferenceFragment extends AbstractPreferenceFra
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		final int containerTypeLength = ContainerType.values().length;
+
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				// app icon in action bar clicked; go home
@@ -38,12 +40,12 @@ public class ContainerTypeFilterPreferenceFragment extends AbstractPreferenceFra
 				return true;
 
 			case R.id.selectAll:
-				for (int i = 0; i < ContainerType.values().length; i++)
+				for (int i = 0; i < containerTypeLength; i++)
 					findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
 				return true;
 
 			case R.id.deselectAll:
-				for (int i = 0; i < ContainerType.values().length; i++)
+				for (int i = 0; i < containerTypeLength; i++)
 					findPreference(FILTER_CONTAINER_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
 				return true;
 

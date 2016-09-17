@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
@@ -66,7 +68,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		}
 	}
 
-	private void fireOnInputFinished(String input) {
+	void fireOnInputFinished(String input) {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
 			listener.onInputFinished(input);
@@ -109,9 +111,15 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 					}
 				}).build();
 
-		dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		final Window window = dialog.getWindow();
+		if (window != null)
+			window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
-		ButterKnife.bind(this, dialog.getCustomView());
+		final View customView = dialog.getCustomView();
+		if (customView == null)
+			throw new IllegalStateException("Custom view is null");
+
+		ButterKnife.bind(this, customView);
 
 		mEditText.setText(R.string.prefix_gc);
 		mEditText.addTextChangedListener(new TextWatcher() {
@@ -142,7 +150,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		return dialog;
 	}
 
-	private static boolean validateInput(EditText editText) {
+	static boolean validateInput(EditText editText) {
 		String value = editText.getText().toString();
 
 		if (StringUtils.isEmpty(value)) {

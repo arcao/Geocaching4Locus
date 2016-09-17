@@ -142,14 +142,14 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         if (isCancelled())
           return null;
 
-        if (cachesToAdd.size() == 0)
+        if (cachesToAdd.isEmpty())
           break;
 
         // FIX for not working distance filter
         if (computeDistance(mCoordinates, cachesToAdd.get(cachesToAdd.size() - 1)) > mDistance) {
           removeCachesOverDistance(cachesToAdd, mCoordinates, mDistance);
 
-          if (cachesToAdd.size() == 0)
+          if (cachesToAdd.isEmpty())
             break;
         }
 
@@ -280,9 +280,10 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   }
 
   private GeocacheType[] getSelectedGeocacheTypes() {
-    Vector<GeocacheType> filter = new Vector<>(GeocacheType.values().length);
+    final int len = GeocacheType.values().length;
+    Vector<GeocacheType> filter = new Vector<>(len);
 
-    for (int i = 0; i < GeocacheType.values().length; i++) {
+    for (int i = 0; i < len; i++) {
       if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
         filter.add(GeocacheType.values()[i]);
       }
@@ -292,9 +293,10 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   }
 
   private ContainerType[] getSelectedContainerTypes() {
-    Vector<ContainerType> filter = new Vector<>(ContainerType.values().length);
+    final int len = ContainerType.values().length;
+    Vector<ContainerType> filter = new Vector<>(len);
 
-    for (int i = 0; i < ContainerType.values().length; i++) {
+    for (int i = 0; i < len; i++) {
       if (mPrefs.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
         filter.add(ContainerType.values()[i]);
       }
@@ -304,7 +306,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
   }
 
   private void removeCachesOverDistance(@NonNull List<Geocache> caches, @NonNull Coordinates coordinates, double maxDistance) {
-    while (caches.size() > 0) {
+    while (!caches.isEmpty()) {
       Geocache cache = caches.get(caches.size() - 1);
       double distance = computeDistance(coordinates, cache);
 

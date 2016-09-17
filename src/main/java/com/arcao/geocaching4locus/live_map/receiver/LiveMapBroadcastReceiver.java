@@ -24,7 +24,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 	private static final float DEFAULT_DISTANCE_LIMIT = 100F;
 	private static final float DISTANCE_LIMIT_DIVIDER = 2.5F;
 
-	private static boolean mForceUpdate = false;
+	static boolean mForceUpdate;
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {

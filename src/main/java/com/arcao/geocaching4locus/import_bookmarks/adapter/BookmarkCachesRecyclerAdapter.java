@@ -22,7 +22,7 @@ public class BookmarkCachesRecyclerAdapter
         extends RecyclerView.Adapter<BookmarkCachesRecyclerAdapter.ViewHolder> {
 
   private final List<Bookmark> items = new ArrayList<>();
-  private boolean[] checked = new boolean[0];
+  boolean[] checked = new boolean[0];
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -85,12 +85,12 @@ public class BookmarkCachesRecyclerAdapter
     return false;
   }
 
-  protected class ViewHolder extends RecyclerView.ViewHolder {
+  class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.title) TextView title;
     @BindView(R.id.subtitle) TextView subtitle;
     @BindView(R.id.checkbox) CheckBox checkbox;
 
-    public ViewHolder(View itemView) {
+    ViewHolder(View itemView) {
       super(itemView);
       ButterKnife.bind(this, itemView);
     }

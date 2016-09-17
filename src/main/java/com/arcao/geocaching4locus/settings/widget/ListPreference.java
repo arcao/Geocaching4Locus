@@ -45,7 +45,7 @@ public class ListPreference extends DialogPreference {
 	private CharSequence[] mEntries;
 	private CharSequence[] mEntryValues;
 	private String mValue;
-	private int mClickedDialogEntryIndex;
+	int mClickedDialogEntryIndex;
 
 	public ListPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);

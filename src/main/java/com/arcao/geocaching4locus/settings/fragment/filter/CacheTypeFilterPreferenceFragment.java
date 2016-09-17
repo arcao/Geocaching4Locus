@@ -31,6 +31,8 @@ public class CacheTypeFilterPreferenceFragment extends AbstractPreferenceFragmen
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		final int geocacheTypeLength = GeocacheType.values().length;
+
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				// app icon in action bar clicked; go home
@@ -38,12 +40,12 @@ public class CacheTypeFilterPreferenceFragment extends AbstractPreferenceFragmen
 				return true;
 
 			case R.id.selectAll:
-				for (int i = 0; i < GeocacheType.values().length; i++)
+				for (int i = 0; i < geocacheTypeLength; i++)
 					findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(true);
 				return true;
 
 			case R.id.deselectAll:
-				for (int i = 0; i < GeocacheType.values().length; i++)
+				for (int i = 0; i < geocacheTypeLength; i++)
 					findPreference(FILTER_CACHE_TYPE_PREFIX + i, CheckBoxPreference.class).setChecked(false);
 				return true;
 

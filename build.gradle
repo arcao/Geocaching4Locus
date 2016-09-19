@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
         classpath 'io.fabric.tools:gradle:1.21.7'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -84,7 +84,7 @@ if (!project.hasProperty('geocachingApiStaging')) {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    buildToolsVersion '24.0.2'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.

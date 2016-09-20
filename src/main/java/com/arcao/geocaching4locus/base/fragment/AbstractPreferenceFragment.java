@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.SpannedFix;
@@ -43,7 +45,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	}
 
 	protected void preparePreference() {
-		// empty
+		if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane))
+			getActivity().setTitle(getPreferenceScreen().getTitle());
 	}
 	protected CharSequence preparePreferenceSummary(CharSequence value, int resId) {
 		String summary = "";

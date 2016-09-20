@@ -2,15 +2,17 @@ package com.arcao.geocaching4locus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.fragment.dialog.ImportDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import timber.log.Timber;
-
+import com.arcao.geocaching4locus.util.PermissionUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import timber.log.Timber;
 
 public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
@@ -32,7 +34,10 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 			return;
 		}
 
-		if (savedInstanceState == null)
+		if (savedInstanceState != null)
+			return;
+
+		if (PermissionUtil.requestExternalStoragePermission(this))
 			showImportDialog();
 	}
 
@@ -78,10 +83,23 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		// restart update process after log in
 		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
-				// we can't show dialog here, we'll do it in onResumeFragments
-				showImportDialog();
+				if (PermissionUtil.requestExternalStoragePermission(this))
+					showImportDialog();
 			} else {
 				onImportFinished(false);
+			}
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+		if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+			if (PermissionUtil.verifyPermissions(grantResults)) {
+				showImportDialog();
+			} else {
+				NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
 			}
 		}
 	}

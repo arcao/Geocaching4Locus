@@ -64,6 +64,9 @@
 -dontwarn org.apache.commons.codec.binary.**
 -dontwarn com.ning.http.client.**
 
+# SLF4J
+-dontwarn org.slf4j.**
+
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable #needed
 -keepattributes Signature # Needed by google-api-client #to make XStream work with obfuscation?

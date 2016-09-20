@@ -93,6 +93,8 @@ android {
     }
 
     defaultConfig {
+        minSdkVersion hasProperty('devMinSdk') ? devMinSdk.toInteger() : 14
+        targetSdkVersion 24
         versionCode gitVersionCode()
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'

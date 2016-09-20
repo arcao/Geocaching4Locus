@@ -13,14 +13,16 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.DashboardActivity;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.SettingsActivity;
+import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
+import com.arcao.geocaching4locus.fragment.preference.LiveMapPreferenceFragment;
 import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArraySet;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import timber.log.Timber;
-
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 	private static final String VAR_B_MAP_VISIBLE = ("1300");
@@ -29,7 +31,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
 	private static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
 	private static final long NOTIFICATION_TIMEOUT_MS = 2000;
-	private static final int NOTIFICATION_ID = R.string.menu_live_map; // something unique
 
 	private static boolean mNotificationShown = false;
 	private static boolean mLastLiveMapState = false;
@@ -119,10 +120,14 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 		if (current < count) {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map_downloading_anim);
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
 			nb.setContentText(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+			} else {
+				nb.setContentTitle(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+		}
 		}
 
-		mNotificationManager.notify(NOTIFICATION_ID, nb.build());
+		mNotificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, nb.build());
 	}
 
 	private void updateNotificationHideAlarm() {
@@ -138,7 +143,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mNotificationShown = true;
 
 		NotificationCompat.Builder builder = createBaseNotification();
-		mNotificationManager.notify(NOTIFICATION_ID, builder.build());
+		mNotificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, builder.build());
 	}
 
 	private void hideNotification() {
@@ -149,7 +154,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
 
 		alarmManager.cancel(pendingIntent);
-		mNotificationManager.cancel(NOTIFICATION_ID);
+		mNotificationManager.cancel(AppConstants.NOTIFICATION_ID_LIVEMAP);
 	}
 
 	private NotificationCompat.Builder createBaseNotification() {
@@ -160,18 +165,30 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		nb.setLocalOnly(true);
 		nb.setCategory(NotificationCompat.CATEGORY_SERVICE);
 
-		nb.setContentTitle(mContext.getText(R.string.livemap_notification_title));
-
+		CharSequence state;
 		if (isLiveMapEnabled()) {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map);
-			nb.setContentText(mContext.getText(R.string.livemap_notification_message_enabled));
+			state = mContext.getText(R.string.livemap_notification_message_enabled);
 			nb.addAction(R.drawable.ic_stat_navigation_cancel, mContext.getText(R.string.livemap_notification_action_disable), createPendingIntent(ACTION_LIVE_MAP_DISABLE));
 		} else {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map_disabled);
-			nb.setContentText(mContext.getText(R.string.livemap_notification_message_disabled));
+			state = mContext.getText(R.string.livemap_notification_message_disabled);
 			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.livemap_notification_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
 		}
+		nb.addAction(R.drawable.ic_stat_livemap_settings,
+				mContext.getText(R.string.livemap_notification_action_settings),
+				PendingIntent.getActivity(mContext, 0,
+						SettingsActivity.createIntent(mContext, LiveMapPreferenceFragment.class),
+						PendingIntent.FLAG_UPDATE_CURRENT));
 
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+			nb.setContentTitle(mContext.getText(R.string.livemap_notification_title));
+			nb.setContentText(state);
+		} else {
+			nb.setSubText(mContext.getText(R.string.menu_live_map));
+			nb.setContentTitle(state);
+
+		}
 		nb.setPriority(NotificationCompat.PRIORITY_MAX); // always show button
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {

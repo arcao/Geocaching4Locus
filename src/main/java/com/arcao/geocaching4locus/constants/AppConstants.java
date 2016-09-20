@@ -52,4 +52,6 @@ public interface AppConstants {
 	// restrictions in Geocaching Live Service
 	float DISTANCE_KM_MIN = 0.1F;
 	float DISTANCE_KM_MAX = 50;
+
+	int NOTIFICATION_ID_LIVEMAP = 0;
 }

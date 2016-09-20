@@ -84,8 +84,8 @@
     <string name="original_coordinates_name">Original coordinates</string>
     <string name="pref_title_container_type_filter">Container size (Premium member)</string>
 
-    <string name="livemap_activated">Live map activated. Now move with map to see caches.</string>
-    <string name="livemap_deactivated">Live map deactivated.</string>
+    <string name="livemap_activated">Live map enabled. Now move with map to see caches.</string>
+    <string name="livemap_deactivated">Live map disabled.</string>
     <string name="livemap_disabled">You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
     <string name="error_location_title">No location service allowed</string>
     <string name="error_location_settings_button">Settings</string>
@@ -140,8 +140,9 @@
     <string name="livemap_notification_message_enabled">Live map is enabled.</string>
     <string name="livemap_notification_message_disabled">Live map is disabled.</string>
     <string name="livemap_notification_message_downloading">Downloading Live map caches: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Enable Live Map</string>
-    <string name="livemap_notification_action_disable">Disable Live Map</string>
+    <string name="livemap_notification_action_enable">Enable</string>
+    <string name="livemap_notification_action_disable">Disable</string>
+    <string name="livemap_notification_action_settings">Settings</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
     <string name="pref_livemap_show_disabled_notification">Disabled notification</string>
     <string name="pref_livemap_show_disabled_notification_summary">Show notification when Live map is disabled. This works only if the periodic updates are allowed in Locus Map and Locus Map is running.</string>

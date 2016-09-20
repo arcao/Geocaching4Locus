@@ -106,10 +106,10 @@
 
     <string name="basic_member_warning_title">Basic member access</string>
     <string name="premium_member_warning_title">Premium member access</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">You reached the limit for downloading full details of &lt;b>%1$s per %2$s period&lt;/b>. Your daily quota will be reset at %3$s.&lt;br>
-        &lt;br>
-        &lt;i>Upgrade to geocaching.com premium membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocaching.com to upgrade.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">You reached the limit for downloading full details of &lt;b>6000 caches per 24 hours period&lt;/b>. Your daily quota will be reset at %3$s.</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">You reached the limit for downloading full details of <b>%1$s per %2$s period</b>. Your daily quota will be reset at %3$s.<br/>
+        <br/>
+        <i>Upgrade to geocaching.com premium membership today to download the full details for up to 6000 caches per day and access many more benefits. Visit geocaching.com to upgrade.</i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">You reached the limit for downloading full details of <b>6000 caches per 24 hours period</b>. Your daily quota will be reset at %3$s.</string>
     <string name="method_quota_exceeded_title">Hey, slow down!</string>
     <string name="method_quota_exceeded_message">You reached the limit for maximum actions/calls per minute period.</string>
 
@@ -134,7 +134,7 @@
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">This add-on use Geocaching Live for getting information about geocaches. Tap here for more information…</string>
     
-    <string name="error_invalid_api_response">Geocaching Live returns invalid response:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live returns invalid response:<br/>%s</string>
 
     <string name="livemap_notification_title">Geocaching4Locus Live map</string>
     <string name="livemap_notification_message_enabled">Live map is enabled.</string>
@@ -182,6 +182,8 @@
     <string name="no_button">No</string>
     <string name="basic_member_warning_message">This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the manual on Geocaching4Locus website.</string>
     <string name="basic_member_warning_button_manual">Show me manual</string>
+    <string name="warning_external_storage_permission">The app require <b>write external storage</b> permission for storing Geocache Data for Locus Map. Please <b>allow</b> this permission in a next dialog.</string>
+    <string name="error_no_external_storage_permission">The app does not have permission to <b>write external storage</b>. This permission is needed for storing Geocaching data for Locus Map.</string>
     <string name="live_map_hide_caches_on_disabled">Hide geocaches on disabled</string>
     <string name="live_map_hide_caches_on_disabled_summary">Hide Live map geocaches when Live map feature is disabled</string>
 </resources>

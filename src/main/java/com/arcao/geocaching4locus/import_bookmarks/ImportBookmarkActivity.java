@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.import_bookmarks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +15,9 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
+import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkCachesFragment;
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkImportDialogFragment;
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment;
@@ -62,7 +65,10 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
       return;
     }
 
-    if (savedInstanceState == null)
+    if (savedInstanceState != null)
+      return;
+
+    if (PermissionUtil.requestExternalStoragePermission(this))
       showBookmarkList();
   }
 
@@ -132,9 +138,23 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     // restart update process after log in
     if (requestCode == REQUEST_SIGN_ON) {
       if (resultCode == RESULT_OK) {
+        if (PermissionUtil.requestExternalStoragePermission(this))
         showBookmarkList();
       } else {
         finish();
+      }
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+      if (PermissionUtil.verifyPermissions(grantResults)) {
+        showBookmarkList();
+      } else {
+        NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
       }
     }
   }

@@ -3,7 +3,7 @@ package locus.api.android;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 
 import java.io.File;
@@ -53,13 +53,38 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	}
 
 	/**
+	 * Is external storage available for writing file?
+	 * @return true if we can write to storage otherwise false
+	 */
+	private static boolean isExternalStorageWritable() {
+		String state = Environment.getExternalStorageState();
+
+		// We can read and write the media
+		// Something else is wrong. It may be one of many other states, but all we
+		// need to know is we can neither read nor write
+		return Environment.MEDIA_MOUNTED.equals(state);
+	}
+
+	/**
 	 * Get a path including file name to save data for Locus
 	 * @param context	Context
 	 * @return	path to file
 	 */
 	public static File getCacheFileName(Context context) {
-		File cacheFile = context.getFileStreamPath(LOCUS_CACHE_FILENAME);
+		//if (!isExternalStorageWritable())
+		//	throw new IllegalStateException("External storage (or SD Card) is not available.");
+
+		File cacheFile = new File(Environment.getExternalStorageDirectory(), String.format("/Geocaching4Locus/%s", LOCUS_CACHE_FILENAME));
+
 		Timber.d("Cache file for Locus: " + cacheFile.toString());
+
+		File parentDirectory = cacheFile.getParentFile();
+
+		parentDirectory.mkdirs();
+
+		if (!parentDirectory.isDirectory())
+			throw new IllegalStateException("External storage (or SD Card) is not writable.");
+
 
 		return cacheFile;
 	}
@@ -70,12 +95,8 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
 	 * @throws IOException If I/O error occurs
 	 */
-	@SuppressLint({"WorldReadableFiles", "SetWorldReadable"})
+	@SuppressLint("SetWorldReadable")
 	public static FileOutputStream getCacheFileOutputStream(Context context) throws IOException {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			//noinspection deprecation
-			return context.openFileOutput(LOCUS_CACHE_FILENAME, Context.MODE_WORLD_READABLE); // file has to be readable for Locus
-		} else {
 			File file = getCacheFileName(context);
 			FileOutputStream fos = new FileOutputStream(file);
 			fos.flush(); // create empty file
@@ -85,5 +106,4 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
 
 			return fos;
 		}
-	}
 }

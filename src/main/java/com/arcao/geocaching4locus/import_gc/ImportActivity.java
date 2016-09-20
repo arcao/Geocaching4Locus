@@ -2,12 +2,15 @@ package com.arcao.geocaching4locus.import_gc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.PermissionUtil;
+import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 
 import java.util.regex.Matcher;
@@ -35,7 +38,10 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 			return;
 		}
 
-		if (savedInstanceState == null)
+		if (savedInstanceState != null)
+			return;
+
+		if (PermissionUtil.requestExternalStoragePermission(this))
 			showImportDialog();
 	}
 
@@ -81,10 +87,23 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		// restart update process after log in
 		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
-				// we can't show dialog here, we'll do it in onResumeFragments
+				if (PermissionUtil.requestExternalStoragePermission(this))
 				showImportDialog();
 			} else {
 				onImportFinished(false);
+			}
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+		if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+			if (PermissionUtil.verifyPermissions(grantResults)) {
+				showImportDialog();
+			} else {
+				NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
 			}
 		}
 	}

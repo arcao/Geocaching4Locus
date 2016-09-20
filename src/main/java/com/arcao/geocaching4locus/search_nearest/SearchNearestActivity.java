@@ -26,22 +26,23 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
-import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.dashboard.widget.SpinnerTextView;
-import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
-import com.arcao.geocaching4locus.search_nearest.fragment.LocationUpdateDialogFragment;
-import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment;
-import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment;
-import com.arcao.geocaching4locus.settings.SettingsActivity;
-import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment;
+import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.Coordinates;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.base.util.SpannedFix;
+import com.arcao.geocaching4locus.dashboard.widget.SpinnerTextView;
+import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
+import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
+import com.arcao.geocaching4locus.search_nearest.fragment.LocationUpdateDialogFragment;
+import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment;
+import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment;
+import com.arcao.geocaching4locus.settings.SettingsActivity;
+import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -62,7 +63,6 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   private static final String STATE_HAS_COORDINATES = "HAS_COORDINATES";
 
   private static final int REQUEST_SIGN_ON = 1;
-  private static final int REQUEST_LOCATION_PERMISSION = 2;
 
   SharedPreferences mPrefs;
   private LocationManager mLocationManager;
@@ -215,13 +215,13 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       if (PermissionUtil.hasPermission(this, PermissionUtil.PERMISSION_LOCATION_GPS)) {
         requestLocation();
       } else {
-        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION);
+        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_GPS, PermissionUtil.REQUEST_LOCATION_PERMISSION);
       }
     } else {
       if (PermissionUtil.hasPermission(this, PermissionUtil.PERMISSION_LOCATION_WIFI)) {
         requestLocation();
       } else {
-        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI, REQUEST_LOCATION_PERMISSION);
+        ActivityCompat.requestPermissions(this, PermissionUtil.PERMISSION_LOCATION_WIFI, PermissionUtil.REQUEST_LOCATION_PERMISSION);
       }
     }
   }
@@ -259,11 +259,21 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         .putFloat(PrefConstants.LAST_LONGITUDE, (float) mLongitude)
         .apply();
 
+    if (PermissionUtil.requestExternalStoragePermission(this))
+      performDownload();
+  }
+
+  private void performDownload() {
+    AccountManager accountManager = App.get(this).getAccountManager();
+
+    double latitude = mPrefs.getFloat(PrefConstants.LAST_LATITUDE, 0);
+    double longitude = mPrefs.getFloat(PrefConstants.LAST_LONGITUDE, 0);
+
     int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
         AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
     AnalyticsUtil.actionSearchNearest(mCoordinatesSource, mUseFilter, count, accountManager.isPremium());
 
-    DownloadNearestDialogFragment.newInstance(mLatitude, mLongitude, count).show(
+    DownloadNearestDialogFragment.newInstance(latitude, longitude, count).show(
             getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
   }
 
@@ -319,12 +329,20 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-    if (requestCode == REQUEST_LOCATION_PERMISSION) {
+    if (requestCode == PermissionUtil.REQUEST_LOCATION_PERMISSION) {
       if (PermissionUtil.verifyPermissions(grantResults)) {
         requestLocation();
       } else {
         NoLocationPermissionErrorDialogFragment.newInstance().show(getFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
       }
+    }
+
+    if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+      if (PermissionUtil.verifyPermissions(grantResults)) {
+        performDownload();
+      } else {
+        NoExternalStoragePermissionErrorDialogFragment.newInstance(false).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+  }
     }
   }
 

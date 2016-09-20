@@ -2,13 +2,17 @@ package com.arcao.geocaching4locus.import_gc;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.import_gc.fragment.GCNumberInputDialogFragment;
-import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.PermissionUtil;
+import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
+import com.arcao.geocaching4locus.import_gc.fragment.GCNumberInputDialogFragment;
+import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
+
 import timber.log.Timber;
 
 public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
@@ -28,7 +32,10 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 			return;
 		}
 
-		if (savedInstanceState == null)
+		if (savedInstanceState != null)
+			return;
+
+		if (PermissionUtil.requestExternalStoragePermission(this))
 			showGCNumberInputDialog();
 	}
 
@@ -67,9 +74,23 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 		// restart update process after log in
 		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
+				if (PermissionUtil.requestExternalStoragePermission(this))
 				showGCNumberInputDialog();
 			} else {
 				onImportFinished(false);
+			}
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+		if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+			if (PermissionUtil.verifyPermissions(grantResults)) {
+				showGCNumberInputDialog();
+			} else {
+				NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
 			}
 		}
 	}

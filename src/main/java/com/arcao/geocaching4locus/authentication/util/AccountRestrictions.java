@@ -67,6 +67,7 @@ public class AccountRestrictions {
 				.putBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, true)
 				.putString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER)
 				.putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 0)
+				.putBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false)
 				// LIVE MAP
 				.putBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false)
 				// FILTERS
@@ -94,6 +95,7 @@ public class AccountRestrictions {
 				.putBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false)
 				.putString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE)
 				.putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5)
+				.putBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false)
 				.apply();
 	}
 

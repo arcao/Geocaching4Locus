@@ -30,9 +30,9 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
 		final SliderPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
 		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
+		final CheckBoxPreference disableDnfNmNaCaches = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, CheckBoxPreference.class);
 
 		simpleCacheDataPreference.setEnabled(mPremiumMember);
-
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -49,6 +49,8 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 						R.string.pref_count_of_logs_summary));
 
 		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
+
+		disableDnfNmNaCaches.setEnabled(true);
 
 		if (!mPremiumMember) {
 			applyPremiumTitleSign(simpleCacheDataPreference);

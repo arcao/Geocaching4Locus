@@ -163,9 +163,9 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
           }
 
           // Disable logs when newest log is DNF, NM, NA type.
-          if(mPrefs.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false)) {
+          if (mPrefs.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false) && wpt.gcData.logs.size() > 0) {
             GeocachingLog cacheLog = wpt.gcData.logs.get(wpt.gcData.logs.size() - 1);
-            if(cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NEEDS_MAINTENANCE || cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NEEDS_ARCHIVED || cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NOT_FOUND)
+            if (cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NEEDS_MAINTENANCE || cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NEEDS_ARCHIVED || cacheLog.getType() == GeocachingLog.CACHE_LOG_TYPE_NOT_FOUND)
             {
               wpt.gcData.setAvailable(false);
             }

@@ -155,7 +155,15 @@ public class SliderPreference extends DialogPreference implements SeekBar.OnSeek
 	}
 
 	public void setProgress(int progress) {
+		if (progress == mValue)
+			return;
+
 		mValue = progress;
+
+		persistInt(mValue);
+		notifyDependencyChange(shouldDisableDependents());
+		notifyChanged();
+
 		if (mSeekBar != null)
 			mSeekBar.setProgress(progress);
 	}

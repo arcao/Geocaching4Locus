@@ -73,8 +73,22 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 
 		switch (key) {
 			case DOWNLOADING_COUNT_OF_LOGS:
-				final SliderPreference countOfLogsPreference = findPreference(key, SliderPreference.class);
-				countOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(countOfLogsPreference.getProgress()), R.string.pref_count_of_logs_summary));
+				SliderPreference countOfLogsPreference = findPreference(key, SliderPreference.class);
+				SliderPreference disableDnfNmNaCachesLogsCountPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, SliderPreference.class);
+				CheckBoxPreference disableDnfNmNaCachesPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, CheckBoxPreference.class);
+
+				int newIntValue = countOfLogsPreference.getProgress();
+				countOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(newIntValue), R.string.pref_count_of_logs_summary));
+
+				// additional checking if enough logs will be downloaded
+				if (disableDnfNmNaCachesPreference.isChecked() && disableDnfNmNaCachesLogsCountPreference.getProgress() > newIntValue) {
+					if (newIntValue > 1) {
+						disableDnfNmNaCachesLogsCountPreference.setProgress(newIntValue);
+					} else {
+						disableDnfNmNaCachesPreference.setChecked(false);
+						disableDnfNmNaCachesLogsCountPreference.setProgress(1);
+					}
+				}
 				break;
 
 			case DOWNLOADING_COUNT_OF_CACHES_STEP:
@@ -88,10 +102,29 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 				break;
 
 			case DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT:
-				final SliderPreference disableDnfNmNaCachesLogsCountPreference = findPreference(key, SliderPreference.class);
-				disableDnfNmNaCachesLogsCountPreference.setSummary(preparePreferenceSummary(String.valueOf(disableDnfNmNaCachesLogsCountPreference.getProgress()), 0));
+				disableDnfNmNaCachesLogsCountPreference = findPreference(key, SliderPreference.class);
+				countOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
+				disableDnfNmNaCachesPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, CheckBoxPreference.class);
+
+				newIntValue = disableDnfNmNaCachesLogsCountPreference.getProgress();
+				disableDnfNmNaCachesLogsCountPreference.setSummary(preparePreferenceSummary(String.valueOf(newIntValue), 0));
+
+				// additional checking if enough logs will be downloaded
+				if (disableDnfNmNaCachesPreference.isChecked() && newIntValue	> countOfLogsPreference.getProgress()) {
+					countOfLogsPreference.setProgress(newIntValue);
+				}
 				break;
 
+			case DOWNLOADING_DISABLE_DNF_NM_NA_CACHES:
+				disableDnfNmNaCachesPreference = findPreference(key, CheckBoxPreference.class);
+				disableDnfNmNaCachesLogsCountPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, SliderPreference.class);
+				countOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
+
+				// additional checking if enough logs will be downloaded
+				if (disableDnfNmNaCachesPreference.isChecked() && disableDnfNmNaCachesLogsCountPreference.getProgress()	> countOfLogsPreference.getProgress()) {
+					countOfLogsPreference.setProgress(disableDnfNmNaCachesLogsCountPreference.getProgress());
+				}
+				break;
 		}
 	}
 }

@@ -32,4 +32,9 @@
         android:entries="@array/count_of_caches_steps"
         android:entryValues="@array/count_of_caches_steps"
         android:defaultValue="10" />
+    <CheckBoxPreference
+        android:key="disable_dnf_nm_na_caches"
+        android:title="@string/pref_disable_dnf_nm_na_caches"
+        android:summary="@string/pref_disable_dnf_nm_na_caches_summary"
+        android:defaultValue="false "/>
 </PreferenceScreen>

@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="downloading">Downloading caches…</string>
     <string name="error_locus_not_found">Locus Map application was not found, but Geocaching4Locus requires it to work properly. Please install Locus Map.</string>
-    <string name="error_location">Please allow Wireless or GPS location service in \'Settings\'.</string>
+    <string name="error_location">Please allow Wireless or GPS location service in ‘Settings’.</string>
     <string name="acquiring_gps_location">Acquiring location from GPS…</string>
     <string name="acquiring_network_location">Acquiring location from wireless network…</string>
     
@@ -187,4 +187,8 @@
     <string name="error_no_external_storage_permission">The app does not have permission to <b>write external storage</b>. This permission is needed for storing Geocaching data for Locus Map.</string>
     <string name="live_map_hide_caches_on_disabled">Hide geocaches on disabled</string>
     <string name="live_map_hide_caches_on_disabled_summary">Hide Live map geocaches when Live map feature is disabled</string>
+    <string name="pref_disable_dnf_nm_na_caches">Disable DNF, NM and NA caches</string>
+    <string name="pref_disable_dnf_nm_na_caches_summary">Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
+    <string name="pref_disable_dnf_nm_na_caches_logs_count">How many last logs to check</string>
+
 </resources>

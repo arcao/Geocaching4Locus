@@ -85,6 +85,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		if (result.updateLogs && !downloadLogsUpdateCache) {
 			mMapper.mergeCacheLogs(result.oldPoint, result.newPoint);
+			mMapper.applyUnavailabilityForGeocache(result.oldPoint);
 			result.newPoint = result.oldPoint;
 		} else {
 			mMapper.mergePoints(result.newPoint, result.oldPoint);

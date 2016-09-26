@@ -52,6 +52,8 @@ public interface PrefConstants {
 	String DOWNLOADING_COUNT_OF_LOGS = "downloading_count_of_logs";
 	String DOWNLOADING_COUNT_OF_CACHES_STEP = "downloading_count_of_caches_step";
 	String DOWNLOAD_LOGS_UPDATE_CACHE = "download_logs_update_cache";
+	String DOWNLOADING_DISABLE_DNF_NM_NA_CACHES = "disable_dnf_nm_na_caches";
+	String DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT = "disable_dnf_nm_na_caches_logs_count";
 
 	String IMPERIAL_UNITS = "imperial_units";
 

@@ -30,8 +30,11 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 		final ListPreference fullCacheDataOnShowPreference = findPreference(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, ListPreference.class);
 		final SliderPreference downloadingCountOfLogsPreference = findPreference(DOWNLOADING_COUNT_OF_LOGS, SliderPreference.class);
 		final ListPreference countOfCachesStepPreference = findPreference(DOWNLOADING_COUNT_OF_CACHES_STEP, ListPreference.class);
+		final CheckBoxPreference disableDnfNmNaCachesPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, CheckBoxPreference.class);
+		final SliderPreference disableDnfNmNaCachesLogsCountPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, SliderPreference.class);
 
 		simpleCacheDataPreference.setEnabled(mPremiumMember);
+		disableDnfNmNaCachesPreference.setEnabled(mPremiumMember);
 
 		simpleCacheDataPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
@@ -49,11 +52,15 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 						R.string.pref_count_of_logs_summary));
 
 		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
+		disableDnfNmNaCachesLogsCountPreference.setSummary(preparePreferenceSummary(String.valueOf(disableDnfNmNaCachesLogsCountPreference.getProgress()), 0));
 
 		if (!mPremiumMember) {
 			applyPremiumTitleSign(simpleCacheDataPreference);
 			applyPremiumTitleSign(fullCacheDataOnShowPreference);
 			applyPremiumTitleSign(downloadingCountOfLogsPreference);
+			applyPremiumTitleSign(disableDnfNmNaCachesPreference);
+			applyPremiumTitleSign(disableDnfNmNaCachesLogsCountPreference);
+			disableDnfNmNaCachesPreference.setChecked(false);
 		}
 	}
 
@@ -79,6 +86,12 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 				final ListPreference fullCacheDataOnShowPreference = findPreference(key, ListPreference.class);
 				fullCacheDataOnShowPreference.setSummary(preparePreferenceSummary(fullCacheDataOnShowPreference.getEntry(), R.string.pref_download_on_show_summary));
 				break;
+
+			case DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT:
+				final SliderPreference disableDnfNmNaCachesLogsCountPreference = findPreference(key, SliderPreference.class);
+				disableDnfNmNaCachesLogsCountPreference.setSummary(preparePreferenceSummary(String.valueOf(disableDnfNmNaCachesLogsCountPreference.getProgress()), 0));
+				break;
+
 		}
 	}
 }

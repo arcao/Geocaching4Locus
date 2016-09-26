@@ -1,9 +1,10 @@
 package locus.api.mapper;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.data.ImageData;
@@ -20,11 +21,8 @@ import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.ReverseListIterator;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +36,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
@@ -47,6 +44,9 @@ import locus.api.objects.geocaching.GeocachingImage;
 import locus.api.objects.geocaching.GeocachingLog;
 import locus.api.objects.geocaching.GeocachingTrackable;
 import locus.api.objects.geocaching.GeocachingWaypoint;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
 public class LocusDataMapper {
@@ -68,10 +68,12 @@ public class LocusDataMapper {
 
 	private final Context mContext;
 	private final boolean mPremiumMember;
+	private final SharedPreferences mPrefs;
 
 	public LocusDataMapper(@NonNull Context context) {
 		mContext = context.getApplicationContext();
 		mPremiumMember = App.get(mContext).getAccountManager().isPremium();
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 	}
 
 	@NonNull
@@ -132,8 +134,6 @@ public class LocusDataMapper {
 		d.setNotes(cache.personalNote());
 		d.setFavoritePoints(cache.favoritePoints());
 
-		sortCacheLogsByCreated(cache.geocacheLogs());
-
 		for (com.arcao.geocaching.api.data.Waypoint waypoint : CollectionUtils.emptyIfNull(
 				cache.waypoints())) {
 			CollectionUtils.addIgnoreNull(d.waypoints, toLocusWaypoint(waypoint));
@@ -168,6 +168,8 @@ public class LocusDataMapper {
 		if (!mPremiumMember)
 			applyListingForBasicMembers(p);
 
+		applyUnavailabilityForGeocache(p);
+
 		return p;
 	}
 
@@ -189,14 +191,14 @@ public class LocusDataMapper {
 		toPoint.gcData.setDescriptions("", false, longDescription, true);
 	}
 
-	private void sortCacheLogsByCreated(@Nullable List<GeocacheLog> cacheLogs) {
-		if (cacheLogs == null)
+	private void sortCacheLogsByCreated(@NotNull Waypoint waypoint) {
+		if (waypoint.gcData == null || waypoint.gcData.logs == null || waypoint.gcData.logs.isEmpty())
 			return;
 
-		Collections.sort(cacheLogs, new Comparator<GeocacheLog>() {
+		Collections.sort(waypoint.gcData.logs, new Comparator<GeocachingLog>() {
 			@Override
-			public int compare(GeocacheLog lhs, GeocacheLog rhs) {
-				return lhs.created().compareTo(rhs.created());
+			public int compare(GeocachingLog lhs, GeocachingLog rhs) {
+				return lhs.getDate() > rhs.getDate() ? 1 : lhs.getDate() == rhs.getDate() ? -1 : 0;
 			}
 		});
 	}
@@ -310,6 +312,8 @@ public class LocusDataMapper {
 		for (GeocacheLog log : logs) {
 			CollectionUtils.addIgnoreNull(toPoint.gcData.logs, toLocusCacheLog(log));
 		}
+
+		sortCacheLogsByCreated(toPoint);
 	}
 
 	@Nullable
@@ -593,6 +597,7 @@ public class LocusDataMapper {
 		copyWaypointId(toPoint, fromPoint);
 		copyGcVote(toPoint, fromPoint);
 		fixEditedWaypoints(toPoint, fromPoint);
+		applyUnavailabilityForGeocache(toPoint);
 	}
 
 	// issue #14: Keep cache logs from GSAK when updating cache
@@ -715,6 +720,51 @@ public class LocusDataMapper {
 				}
 
 			}
+		}
+	}
+
+	public void applyUnavailabilityForGeocache(@NonNull Waypoint toPoint) {
+		int counter = 0;
+
+		// only when this feature is enabled
+		if (!mPrefs.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false))
+			return;
+
+		// only when there is any log
+		if (toPoint.gcData == null || toPoint.gcData.logs == null || toPoint.gcData.logs.isEmpty())
+			return;
+
+		// skip analyzing already archived geocache
+		if (toPoint.gcData.isArchived())
+			return;
+
+		// go through all logs (must be sorted by visited date, newest first)
+		List<GeocachingLog> geocachingLogs = toPoint.gcData.logs;
+		loop: for (GeocachingLog log : geocachingLogs) {
+			Timber.d("Analyzing log with date: %d", log.getDate());
+
+			// skip GSAK log
+			if (GSAK_USERNAME.equalsIgnoreCase(log.getFinder()))
+				continue;
+
+			// increase counter for DNF, NM and NA log
+			switch (log.getType()) {
+				case GeocachingLog.CACHE_LOG_TYPE_NOT_FOUND:
+				case GeocachingLog.CACHE_LOG_TYPE_NEEDS_MAINTENANCE:
+				case GeocachingLog.CACHE_LOG_TYPE_NEEDS_ARCHIVED:
+					counter++;
+					break;
+
+				default:
+					// for other log types break the loop
+					break loop;
+			}
+		}
+
+		// if counter contains required count
+		if (counter >= mPrefs.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)) {
+			// set geocache as not available
+			toPoint.gcData.setAvailable(false);
 		}
 	}
 }

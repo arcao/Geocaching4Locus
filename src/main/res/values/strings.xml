@@ -152,7 +152,7 @@
     <string name="launcher_download_logs">Download logs</string>
 
     <string name="pref_download_logs_update_cache">Download logs update cache</string>
-    <string name="pref_download_logs_update_cache_summary">Action "Download logs" also update geocache data</string>
+    <string name="pref_download_logs_update_cache_summary">Action “Download logs” also update geocache data</string>
     <string name="pref_downloading_count_of_caches_step">Step size for Count of caches</string>
     <string name="pref_downloading_count_of_caches_step_summary">Change a step size for count of caches choose dialog</string>
     <string name="premium_member_for_filter_required">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>

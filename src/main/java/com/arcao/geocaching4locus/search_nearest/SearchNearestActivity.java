@@ -34,7 +34,7 @@ import com.arcao.geocaching4locus.base.util.Coordinates;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
-import com.arcao.geocaching4locus.base.util.SpannedFix;
+import com.arcao.geocaching4locus.base.util.HtmlUtil;
 import com.arcao.geocaching4locus.dashboard.widget.SpinnerTextView;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
@@ -282,7 +282,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       return;
 
     new MaterialDialog.Builder(this)
-        .content(SpannedFix.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
+        .content(HtmlUtil.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
         .positiveText(R.string.ok_button)
         .show();
   }

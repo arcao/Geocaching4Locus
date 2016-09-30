@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.base.util.SpannedFix;
+import com.arcao.geocaching4locus.base.util.HtmlUtil;
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
@@ -54,8 +54,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 			summary = getText(resId).toString();
 
 		if (value != null && value.length() > 0)
-			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
-		return SpannedFix.fromHtml(StringUtils.defaultString(summary));
+			return HtmlUtil.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
+		return HtmlUtil.fromHtml(StringUtils.defaultString(summary));
 	}
 
 	protected void applyPremiumTitleSign(Preference preference) {

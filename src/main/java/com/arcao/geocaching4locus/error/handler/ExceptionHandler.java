@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
-
 import com.arcao.geocaching.api.StatusCode;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
@@ -16,6 +15,8 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
+import com.arcao.geocaching4locus.base.util.HtmlUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.error.exception.IntendedException;
@@ -25,14 +26,11 @@ import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
 import com.github.scribejava.core.exceptions.OAuthConnectionException;
-
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.EOFException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
-
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class ExceptionHandler {
@@ -165,7 +163,7 @@ public class ExceptionHandler {
 
 				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-				String errorText = mContext.getString(message, cacheString, periodString, renewTime);
+				String errorText = HtmlUtil.toHtml(ResourcesUtil.getText(mContext, message, cacheString, periodString, renewTime));
 
 				builder
 							.title(title)

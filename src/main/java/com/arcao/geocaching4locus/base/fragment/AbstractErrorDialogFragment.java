@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.base.util.SpannedFix;
-
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import org.apache.commons.lang3.StringUtils;
 
 public class AbstractErrorDialogFragment extends AbstractDialogFragment {
@@ -40,8 +38,8 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 	protected void onDialogBuild(MaterialDialog.Builder builder) {
 		Bundle args = getArguments();
 
-		builder.content(SpannedFix.fromHtml(getString(args.getInt(PARAM_ERROR_MESSAGE),
-				StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE)))))
+		builder.content(ResourcesUtil.getText(getActivity(), args.getInt(PARAM_ERROR_MESSAGE),
+				StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE))))
 				.positiveText(R.string.ok_button)
 				.onPositive(new MaterialDialog.SingleButtonCallback() {
 					@Override

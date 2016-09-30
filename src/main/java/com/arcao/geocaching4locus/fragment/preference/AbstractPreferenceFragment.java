@@ -7,7 +7,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.SpannedFix;
+import com.arcao.geocaching4locus.util.HtmlUtil;
+import com.arcao.geocaching4locus.util.ResourcesUtil;
 import org.apache.commons.lang3.StringUtils;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
@@ -49,10 +50,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	protected CharSequence preparePreferenceSummary(CharSequence value, int resId) {
 		String summary = "";
 		if (resId != 0)
-			summary = getText(resId).toString();
+			summary = ResourcesUtil.getHtmlString(getActivity(), resId);
 
 		if (value != null && value.length() > 0)
-			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
-		return SpannedFix.fromHtml(StringUtils.defaultString(summary));
+			return HtmlUtil.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
+		return HtmlUtil.fromHtml(StringUtils.defaultString(summary));
 	}
 }

@@ -18,15 +18,14 @@ import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
+import com.arcao.geocaching4locus.util.ResourcesUtil;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+import java.io.InterruptedIOException;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import org.apache.commons.lang3.StringUtils;
 import org.scribe.exceptions.OAuthConnectionException;
 import timber.log.Timber;
-
-import java.io.InterruptedIOException;
-import java.net.UnknownHostException;
-
 public class ExceptionHandler {
 	private final Context mContext;
 
@@ -44,7 +43,7 @@ public class ExceptionHandler {
 		if (t instanceof IntendedException) {
 			positiveAction = ((IntendedException) t).getIntent();
 			t = t.getCause();
-			baseMessage = "%s<br /><br />" + mContext.getString(R.string.error_continue_locus_map);
+			baseMessage = "%s<br /><br />" + ResourcesUtil.getHtmlString(mContext, R.string.error_continue_locus_map);
 		}
 
 		// special handling for some API exceptions
@@ -82,7 +81,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.setMessage(baseMessage, mContext.getString(R.string.error_invalid_api_response, t.getMessage()))
+					.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_invalid_api_response, t.getMessage()))
 					.setException(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
@@ -91,7 +90,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.setMessage(baseMessage, mContext.getString(R.string.error_network));
+			builder.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_network));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -154,7 +153,7 @@ public class ExceptionHandler {
 
 				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-				String errorText = mContext.getString(message, cacheString, periodString, renewTime);
+				String errorText = ResourcesUtil.getHtmlString(mContext, message, cacheString, periodString, renewTime);
 
 				builder
 							.setTitle(title)
@@ -172,7 +171,7 @@ public class ExceptionHandler {
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
 						.setTitle(R.string.method_quota_exceeded_title)
-						.setMessage(baseMessage, mContext.getString(R.string.method_quota_exceeded_message));
+						.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.method_quota_exceeded_message));
 
 				if (positiveAction != null) {
 					builder

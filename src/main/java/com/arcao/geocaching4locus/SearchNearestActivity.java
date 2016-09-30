@@ -39,7 +39,7 @@ import com.arcao.geocaching4locus.util.Coordinates;
 import com.arcao.geocaching4locus.util.LocusTesting;
 import com.arcao.geocaching4locus.util.PermissionUtil;
 import com.arcao.geocaching4locus.util.PreferenceUtil;
-import com.arcao.geocaching4locus.util.SpannedFix;
+import com.arcao.geocaching4locus.util.ResourcesUtil;
 import com.arcao.geocaching4locus.widget.SpinnerTextView;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
@@ -272,7 +272,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       return;
 
     new MaterialDialog.Builder(this)
-        .content(SpannedFix.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
+        .content(ResourcesUtil.getText(this, errorResId, StringUtils.defaultString(additionalMessage)))
         .positiveText(R.string.ok_button)
         .show();
   }

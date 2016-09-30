@@ -121,9 +121,9 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		if (current < count) {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map_downloading_anim);
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-			nb.setContentText(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+			nb.setContentText(ResourcesUtil.getText(mContext, R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
 			} else {
-				nb.setContentTitle(mContext.getResources().getString(R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+				nb.setContentTitle(ResourcesUtil.getText(mContext, R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
 		}
 		}
 

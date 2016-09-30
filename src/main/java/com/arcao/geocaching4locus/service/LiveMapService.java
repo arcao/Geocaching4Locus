@@ -36,6 +36,7 @@ import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 
+import com.arcao.geocaching4locus.util.ResourcesUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -323,7 +324,7 @@ public class LiveMapService extends IntentService {
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.livemap_error, message), Toast.LENGTH_LONG).show();}
+				Toast.makeText(getApplicationContext(), ResourcesUtil.getText(getApplicationContext(), R.string.livemap_error, message), Toast.LENGTH_LONG).show();}
 		});
 	}
 }

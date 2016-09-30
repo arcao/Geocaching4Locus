@@ -7,7 +7,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
 
-public class SpannedFix {
+public class HtmlUtil {
 	public static CharSequence fromHtml(@NonNull String source) {
 		return applyFix(Html.fromHtml(source));
 	}
@@ -19,7 +19,7 @@ public class SpannedFix {
 		return source;
 	}
 
-	public static Spanned applyFix(@NonNull Spanned spanned) {
+	private static Spanned applyFix(@NonNull Spanned spanned) {
 		// this will fix crash only on API v16, other API versions are safe
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN)
 			return spanned;
@@ -29,7 +29,7 @@ public class SpannedFix {
 		// and after them.  If not, then insert a space before and/or after each span.
 		SpannableStringBuilder builder = new SpannableStringBuilder(spanned);
 
-		MetricAffectingSpan spans[] = builder.getSpans(0, builder.length(), MetricAffectingSpan.class);
+		MetricAffectingSpan[] spans = builder.getSpans(0, builder.length(), MetricAffectingSpan.class);
 		for (MetricAffectingSpan span: spans) {
 			int spanStart = builder.getSpanStart(span);
 			if (spanStart > 0 && isNotSpace(builder, spanStart - 1)) {

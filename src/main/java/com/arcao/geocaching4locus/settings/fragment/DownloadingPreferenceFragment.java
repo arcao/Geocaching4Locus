@@ -49,9 +49,9 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 
 		downloadingCountOfLogsPreference.setEnabled(mPremiumMember);
 		downloadingCountOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(downloadingCountOfLogsPreference.getProgress()),
-						R.string.pref_count_of_logs_summary));
+						R.string.pref_logs_count_summary));
 
-		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
+		countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_step_geocaching_count_summary));
 		disableDnfNmNaCachesLogsCountPreference.setSummary(preparePreferenceSummary(String.valueOf(disableDnfNmNaCachesLogsCountPreference.getProgress()), 0));
 
 		if (!mPremiumMember) {
@@ -78,7 +78,7 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 				CheckBoxPreference disableDnfNmNaCachesPreference = findPreference(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, CheckBoxPreference.class);
 
 				int newIntValue = countOfLogsPreference.getProgress();
-				countOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(newIntValue), R.string.pref_count_of_logs_summary));
+				countOfLogsPreference.setSummary(preparePreferenceSummary(String.valueOf(newIntValue), R.string.pref_logs_count_summary));
 
 				// additional checking if enough logs will be downloaded
 				if (disableDnfNmNaCachesPreference.isChecked() && disableDnfNmNaCachesLogsCountPreference.getProgress() > newIntValue) {
@@ -93,7 +93,7 @@ public class DownloadingPreferenceFragment extends AbstractPreferenceFragment {
 
 			case DOWNLOADING_COUNT_OF_CACHES_STEP:
 				final ListPreference countOfCachesStepPreference = findPreference(key, ListPreference.class);
-				countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_downloading_count_of_caches_step_summary));
+				countOfCachesStepPreference.setSummary(preparePreferenceSummary(countOfCachesStepPreference.getEntry(), R.string.pref_step_geocaching_count_summary));
 				break;
 
 			case DOWNLOADING_FULL_CACHE_DATE_ON_SHOW:

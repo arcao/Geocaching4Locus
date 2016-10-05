@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppTheme.Header"
-        android:text="@string/title_count_of_caches" />
+        android:text="@string/title_geocache_count" />
 
     <LinearLayout
         android:orientation="horizontal"

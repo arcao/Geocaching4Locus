@@ -34,8 +34,8 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 			public boolean onPreferenceClick(Preference preference) {
 				if (accountManager.getAccount() != null) {
 					accountManager.removeAccount();
-					accountPreference.setTitle(R.string.pref_account_login);
-					accountPreference.setSummary(R.string.pref_account_login_summary);
+					accountPreference.setTitle(R.string.pref_login);
+					accountPreference.setSummary(R.string.pref_login_summary);
 				} else {
 					accountManager.requestSignOn(getActivity(), 0);
 				}
@@ -46,12 +46,12 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 
 		Account account = accountManager.getAccount();
 		if (account != null) {
-			accountPreference.setTitle(R.string.pref_account_logout);
+			accountPreference.setTitle(R.string.pref_logout);
 			//noinspection ConstantConditions
 			accountPreference.setSummary(prepareAccountSummary(account.name()));
 		} else {
-			accountPreference.setTitle(R.string.pref_account_login);
-			accountPreference.setSummary(R.string.pref_account_login_summary);
+			accountPreference.setTitle(R.string.pref_login);
+			accountPreference.setSummary(R.string.pref_login_summary);
 		}
 
 		final Preference geocachingLivePreference = findPreference(ACCOUNT_GEOCACHING_LIVE, Preference.class);
@@ -65,7 +65,7 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 	}
 
 	private CharSequence prepareAccountSummary(CharSequence value) {
-		String summary = ResourcesUtil.getHtmlString(getActivity(), R.string.pref_account_logout_summary);
+		String summary = ResourcesUtil.getHtmlString(getActivity(), R.string.pref_logout_summary);
 		return HtmlUtil.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
 	}
 }

@@ -125,8 +125,8 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new MaterialDialog.Builder(getActivity())
-						.content(R.string.import_caches_progress)
-						.negativeText(R.string.cancel_button)
+						.content(R.string.progress_import_geocaches)
+						.negativeText(R.string.button_cancel)
 						.progress(false, mCount, true)
 						.build();
 	}

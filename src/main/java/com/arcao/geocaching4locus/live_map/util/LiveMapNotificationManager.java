@@ -127,9 +127,9 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		if (current < count) {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map_downloading_anim);
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-				nb.setContentText(ResourcesUtil.getText(mContext, R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+				nb.setContentText(ResourcesUtil.getText(mContext, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
 			} else {
-				nb.setContentTitle(ResourcesUtil.getText(mContext, R.string.livemap_notification_message_downloading, current, count, (current * 100) / count));
+				nb.setContentTitle(ResourcesUtil.getText(mContext, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
 			}
 		}
 
@@ -174,21 +174,21 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		CharSequence state;
 		if (isLiveMapEnabled()) {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map);
-			state = mContext.getText(R.string.livemap_notification_message_enabled);
-			nb.addAction(R.drawable.ic_stat_navigation_cancel, mContext.getText(R.string.livemap_notification_action_disable), createPendingIntent(ACTION_LIVE_MAP_DISABLE));
+			state = mContext.getText(R.string.notify_live_map_message_enabled);
+			nb.addAction(R.drawable.ic_stat_navigation_cancel, mContext.getText(R.string.notify_live_map_action_disable), createPendingIntent(ACTION_LIVE_MAP_DISABLE));
 		} else {
 			nb.setSmallIcon(R.drawable.ic_stat_location_map_disabled);
-			state = mContext.getText(R.string.livemap_notification_message_disabled);
-			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.livemap_notification_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
+			state = mContext.getText(R.string.notify_live_map_message_disabled);
+			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.notify_live_map_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
 		}
 		nb.addAction(R.drawable.ic_stat_livemap_settings,
-				mContext.getText(R.string.livemap_notification_action_settings),
+				mContext.getText(R.string.notify_live_map_action_settings),
 				PendingIntent.getActivity(mContext, 0,
 						SettingsActivity.createIntent(mContext, LiveMapPreferenceFragment.class),
 						PendingIntent.FLAG_UPDATE_CURRENT));
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-			nb.setContentTitle(mContext.getText(R.string.livemap_notification_title));
+			nb.setContentTitle(mContext.getText(R.string.notify_live_map));
 			nb.setContentText(state);
 		} else {
 			nb.setSubText(mContext.getText(R.string.menu_live_map));
@@ -228,11 +228,11 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		if (enabled && !periodicUpdateEnabled) {
 			enabled = false;
 
-			Toast.makeText(mContext, mContext.getText(R.string.livemap_disabled), Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, mContext.getText(R.string.error_live_map_periodic_updates), Toast.LENGTH_LONG).show();
 		} else if (enabled) {
-			Toast.makeText(mContext, mContext.getText(R.string.livemap_activated), Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_enabled), Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(mContext, mContext.getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
+			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_disabled), Toast.LENGTH_LONG).show();
 		}
 
 		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();

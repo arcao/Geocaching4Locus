@@ -82,8 +82,8 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new MaterialDialog.Builder(getActivity())
-						.content(R.string.import_cache_progress)
-						.negativeText(R.string.cancel_button)
+						.content(R.string.progress_import_geocache)
+						.negativeText(R.string.button_cancel)
 						.progress(true, 0)
 						.build();
 	}

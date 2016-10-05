@@ -45,7 +45,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
     AccountManager accountManager = App.get(this).getAccountManager();
     if (!accountManager.isPremium()) {
-      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.premium_feature).build());
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build());
       finish();
       return;
     }

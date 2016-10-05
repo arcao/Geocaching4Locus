@@ -3,26 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment"
-        android:title="@string/prefs_cat_account"
+        android:title="@string/pref_account"
         android:icon="@drawable/empty"/>
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment"
-        android:title="@string/prefs_cat_filter"
+        android:title="@string/pref_filter"
         android:icon="@drawable/empty"/>
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment"
-        android:title="@string/prefs_cat_live_map"
+        android:title="@string/pref_live_map"
         android:icon="@drawable/empty"/>
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.DownloadingPreferenceFragment"
-        android:title="@string/prefs_cat_downloading"
+        android:title="@string/pref_downloading"
         android:icon="@drawable/empty"/>
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.AdvancedPreferenceFragment"
-        android:title="@string/prefs_cat_advanced"
+        android:title="@string/pref_advanced"
         android:icon="@drawable/empty"/>
     <header
         android:fragment="com.arcao.geocaching4locus.settings.fragment.AboutPreferenceFragment"
-        android:title="@string/prefs_cat_about"
+        android:title="@string/pref_about"
         android:icon="@drawable/empty"/>
 </preference-headers>

@@ -59,7 +59,7 @@
                 android:id="@+id/db_preferences"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_settings"
-                android:text="@string/menu_preferences" />
+                android:text="@string/menu_settings" />
 
             <ImageView style="@style/SeparatorVertical.Dark" />
 

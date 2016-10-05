@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.AppTheme.Header"
-        android:text="@string/coordinates">
+        android:text="@string/title_coordinates">
 
     </TextView>
 
@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:minHeight="0dp"
                 style="@style/Widget.AppTheme.Button"
-                android:text="@string/gps"/>
+                android:text="@string/button_gps"/>
         </TableRow>
 
         <TableRow

@@ -13,7 +13,7 @@ public class BasicMembershipWarningDialogFragment extends AbstractErrorDialogFra
 
   public static BasicMembershipWarningDialogFragment newInstance() {
     BasicMembershipWarningDialogFragment fragment = new BasicMembershipWarningDialogFragment();
-    fragment.prepareDialog(R.string.basic_member_warning_title, R.string.basic_member_warning_message, null);
+    fragment.prepareDialog(R.string.title_basic_member_warning, R.string.warning_basic_member, null);
     return fragment;
   }
 
@@ -31,7 +31,7 @@ public class BasicMembershipWarningDialogFragment extends AbstractErrorDialogFra
     // disable auto dismiss
     builder.autoDismiss(false);
 
-    builder.neutralText(R.string.basic_member_warning_button_manual)
+    builder.neutralText(R.string.button_show_manual)
         .onNeutral(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

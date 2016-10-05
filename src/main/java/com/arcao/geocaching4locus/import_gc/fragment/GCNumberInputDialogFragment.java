@@ -85,9 +85,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-				.title(R.string.dialog_gc_number_input_title)
-				.positiveText(R.string.ok_button)
-				.negativeText(R.string.cancel_button)
+				.title(R.string.title_import_from_gc)
+				.positiveText(R.string.button_ok)
+				.negativeText(R.string.button_cancel)
 				.customView(R.layout.dialog_gc_number_input, false)
 				.autoDismiss(false)
 				.onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -98,7 +98,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 							fireOnInputFinished(mEditText.getText().toString());
 							materialDialog.dismiss();
 						} else {
-							mLayout.setError(getText(R.string.error_input_gc));
+							mLayout.setError(getText(R.string.error_gc_code_invalid));
 						}
 					}
 				})

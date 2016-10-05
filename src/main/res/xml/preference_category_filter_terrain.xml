@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_title_terrain_filter">
+    android:title="@string/pref_terrain">
     <com.arcao.geocaching4locus.settings.widget.ListPreference
         android:key="terrain_filter_min"
         android:title="@string/pref_terrain_min"

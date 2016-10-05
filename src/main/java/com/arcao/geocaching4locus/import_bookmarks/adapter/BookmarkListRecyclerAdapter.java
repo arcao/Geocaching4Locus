@@ -69,7 +69,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
       this.bookmarkList = bookmarkList;
 
       title.setText(bookmarkList.name());
-      count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_cache,
+      count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_geocache,
               bookmarkList.itemCount(), bookmarkList.itemCount()));
       description.setText(bookmarkList.description());
       description.setVisibility(

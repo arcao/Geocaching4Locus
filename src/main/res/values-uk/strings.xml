@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="downloading">Завантаження кешу…</string>
+    <string name="progress_download_geocaches">Завантаження кешу…</string>
     <string name="error_locus_not_found">Додаток Locus Map не знайдена, але вона вимагає Geocaching4Locus щоб працювати належним чином. Будь ласка, встановіть Locus Map.</string>
-    <string name="error_location">Будь ласка, дозвольте Послугу визначення місця знаходження на основі мобільної мережі та GPS у \'Налаштуваннях\'.</string>
-    <string name="acquiring_gps_location">Отримання розташування від GPS…</string>
-    <string name="acquiring_network_location">Отримання розташування з мобільної мережі…</string>
+    <string name="error_location_disabled">Будь ласка, дозвольте Послугу визначення місця знаходження на основі мобільної мережі та GPS у \'Налаштуваннях\'.</string>
+    <string name="progress_acquire_gps_location">Отримання розташування від GPS…</string>
+    <string name="progress_acquire_network_location">Отримання розташування з мобільної мережі…</string>
     
-    <string name="preferences">Параметри</string>
-    <string name="wrong_coordinates">Неправильний формат координат!</string>
-    <string name="coordinates">Координати</string>
+    <string name="action_settings">Параметри</string>
+    <string name="error_coordinates_format">Неправильний формат координат!</string>
+    <string name="title_coordinates">Координати</string>
     
     <string name="pref_distance">Відстань</string>
     <string name="pref_distance_summary_km">Відстань у км</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">Імперські одиниці</string>
     <string name="pref_imperial_units_summary">Використовувати милі замість кілометрів</string>
     
-    <string name="error_credentials">Невірне псевдо користувача або ж гасло. Будь ласка, спробуйте ще раз.</string>
+    <string name="error_no_account">Невірне псевдо користувача або ж гасло. Будь ласка, спробуйте ще раз.</string>
 
-    <string name="ok_button">Гаразд</string>
+    <string name="button_ok">Гаразд</string>
     
-    <string name="error_locus_old">Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
+    <string name="error_old_locus_map">Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
     
-    <string name="cancel_button">Скасувати</string>
+    <string name="button_cancel">Скасувати</string>
     
     <string name="pref_show_found">Показати знайдене</string>
     <string name="pref_show_found_summary">Показати знайдений кеш</string>
     <string name="pref_show_own">Показати власний прихований</string>
     <string name="pref_show_own_summary">Показати власний кеш (прихований від вас)</string>
-    <string name="pref_menu_select_all">Вибрати усе</string>
-    <string name="pref_menu_deselect_all">Зняти усе виділення</string>
+    <string name="menu_select_all">Вибрати усе</string>
+    <string name="menu_deselect_all">Зняти усе виділення</string>
     
-    <string name="update_cache_progress">Оновлення кешу…</string>
+    <string name="progress_update_geocache">Оновлення кешу…</string>
     
-    <string name="pref_count_of_logs">Кількість журналів</string>
-    <string name="pref_count_of_logs_summary">Кількість журналів для завантаження з кешем</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">Кількість журналів</string>
+    <string name="pref_logs_count_summary">Кількість журналів для завантаження з кешем</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">Показати вимкнене</string>
     <string name="pref_show_disabled_summary">Показати тимчасово вимкнений кеш</string>
     
-    <string name="import_cache_progress">Завантаження кешу…</string>
+    <string name="progress_import_geocache">Завантаження кешу…</string>
     
     <string name="pref_version">Версія</string>
     <string name="pref_website">Веб-сайт, форум, тощо</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Підтримка майбутнього розвитку…</string>
     <string name="pref_donate_paypal_choose_currency">Виберіть вашу валюту</string>
     
-    <string name="pref_title_cache_type_filter">Типи кешу (преміум користувач)</string>
-    <string name="pref_title_difficulty_filter">Складність (преміум користувач)</string>
-    <string name="pref_title_terrain_filter">Рельєф (преміум користувач)</string>
+    <string name="pref_geocache_type">Типи кешу (преміум користувач)</string>
+    <string name="pref_difficulty">Складність (преміум користувач)</string>
+    <string name="pref_terrain">Рельєф (преміум користувач)</string>
     <string name="pref_difficulty_min">Мін. складність</string>
     <string name="pref_difficulty_max">Макс. складність</string>
     <string name="pref_terrain_min">Мін. рельєф</string>
@@ -68,52 +68,52 @@
     <string name="menu_live_map">Жива карта</string>
     <string name="menu_nearest">Найближче</string>
     <string name="menu_manual">Вручну</string>
-    <string name="menu_preferences">Параметри</string>
+    <string name="menu_settings">Параметри</string>
     
-    <string name="user_waypoint_name">Дорожня точка %1$d</string>
-    <string name="final_location_name">Кінцеве розташування</string>
+    <string name="var_user_waypoint_name">Дорожня точка %1$d</string>
+    <string name="var_final_location_name">Кінцеве розташування</string>
     
-    <string name="pref_account_login">Увійти</string>
-    <string name="pref_account_login_summary">Увійти у профіль Geocaching.com</string>
-    <string name="pref_account_logout">Вийти</string>
-    <string name="pref_account_logout_summary">Вийти як %s</string>
+    <string name="pref_login">Увійти</string>
+    <string name="pref_login_summary">Увійти у профіль Geocaching.com</string>
+    <string name="pref_logout">Вийти</string>
+    <string name="pref_logout_summary">Вийти як %s</string>
 
-    <string name="error_network">Мережа недоступна. Будь ласка, перевірте ваше з\'єднання.</string>
+    <string name="error_network_unavailable">Мережа недоступна. Будь ласка, перевірте ваше з\'єднання.</string>
 
-    <string name="update_caches_progress">Оновлення кешу…</string>
-    <string name="original_coordinates_name">Початкові координати</string>
-    <string name="pref_title_container_type_filter">Розмір контейнера (преміум користувач)</string>
+    <string name="progress_update_geocaches">Оновлення кешу…</string>
+    <string name="var_original_coordinates_name">Початкові координати</string>
+    <string name="pref_container_size">Розмір контейнера (преміум користувач)</string>
 
-    <string name="livemap_activated">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
-    <string name="livemap_deactivated">Жива карта деактивована.</string>
-    <string name="livemap_disabled">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
-    <string name="error_location_title">Послуга розташування не дозволена</string>
-    <string name="error_location_settings_button">Налаштування</string>
+    <string name="toast_live_map_enabled">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
+    <string name="toast_live_map_disabled">Жива карта деактивована.</string>
+    <string name="error_live_map_periodic_updates">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
+    <string name="error_location_not_alloved">Послуга розташування не дозволена</string>
+    <string name="button_settings">Налаштування</string>
     
     <string name="menu_import_from_gc">Імпорт GC</string>
-    <string name="dialog_gc_number_input_title">Імпорт з коду GC</string>
-    <string name="error_input_gc">Код GC не дійсний.</string>
-    <string name="error_cache_not_found">Кеш %s не знайдено.</string>
+    <string name="title_import_from_gc">Імпорт з коду GC</string>
+    <string name="error_gc_code_invalid">Код GC не дійсний.</string>
+    <string name="error_geocache_not_found">Кеш %s не знайдено.</string>
     
-    <string name="dialog_count_of_caches_title">Лічильник кешів</string>
-    <string name="launcher_nearest_caches">Найближчі кеші</string>
-    <string name="launcher_import_cache">Імпортувати кеш до Locus</string>
-    <string name="launcher_update_cache">Оновити кеш</string>    
-    <string name="launcher_update_more_caches">Оновити кеші</string>
+    <string name="title_geocache_count">Лічильник кешів</string>
+    <string name="launcher_nearest_geocaches">Найближчі кеші</string>
+    <string name="launcher_import_geocache">Імпортувати кеш до Locus</string>
+    <string name="launcher_update_geocache">Оновити кеш</string>
+    <string name="launcher_update_geocaches">Оновити кеші</string>
     <string name="launcher_import_from_gc">Імпорт з коду GC</string>
     
     <string name="title_count_of_caches">Лічильник кешів</string>
 
-    <string name="basic_member_warning_title">Доступ базового користувача</string>
-    <string name="premium_member_warning_title">Доступ преміум користувача</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
+    <string name="title_basic_member_warning">Доступ базового користувача</string>
+    <string name="title_premium_member_warning">Доступ преміум користувача</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
 &lt;br>
 &lt;i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Ви досягнули обмеження для завантаження повної інформації &lt;b>6000 кешів за 24 години&lt;/b> Ваша щоденна квота буде обнулена о %3$s.</string>
-    <string name="method_quota_exceeded_title">Гей, повільніше!</string>
-    <string name="method_quota_exceeded_message">Ви досягнули обмеження на максимальну кількість дій/дзвінків за хвилину.</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>6000 кешів за 24 години&lt;/b> Ваша щоденна квота буде обнулена о %3$s.</string>
+    <string name="title_method_quota_exceeded">Гей, повільніше!</string>
+    <string name="error_method_quota_exceeded">Ви досягнули обмеження на максимальну кількість дій/дзвінків за хвилину.</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d кеш</item>
         <item quantity="few">%d кешів</item>
         <item quantity="other">%d кешів</item>
@@ -131,55 +131,55 @@
         <item quantity="other">%d хвилини</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>
-    <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
+    <string name="pref_geocaching_live">Підтримується Geocaching Live</string>
+    <string name="pref_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
     
     <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Жива мапа Geocaching4Locus</string>
-    <string name="livemap_notification_message_enabled">Жива мапа увімкнена.</string>
-    <string name="livemap_notification_message_disabled">Жива мапа вимкнена.</string>
-    <string name="livemap_notification_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Увімкнути живу мапу</string>
-    <string name="livemap_notification_action_disable">Вимкнути живу мапу</string>
-    <string name="livemap_error">Жива мапа Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Сповіщення вимкнено</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
-    <string name="pref_cache_type_all">Всі</string>
+    <string name="notify_live_map">Жива мапа Geocaching4Locus</string>
+    <string name="notify_live_map_message_enabled">Жива мапа увімкнена.</string>
+    <string name="notify_live_map_message_disabled">Жива мапа вимкнена.</string>
+    <string name="notify_live_map_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">Увімкнути живу мапу</string>
+    <string name="notify_live_map_action_disable">Вимкнути живу мапу</string>
+    <string name="error_live_map">Жива мапа Geocaching4Locus: %s</string>
+    <string name="pref_disabled_notification">Сповіщення вимкнено</string>
+    <string name="pref_disabled_notification_summary">Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
+    <string name="pref_geocache_type_all">Всі</string>
     <string name="button_filter">Фільтр</string>
-    <string name="download_logs_progress">Стягування журналів змін…</string>
+    <string name="progress_download_logs">Стягування журналів змін…</string>
     <string name="launcher_download_logs">Завантажити журнали змін</string>
 
-    <string name="pref_download_logs_update_cache">Завантажити журнали змін оновленого кешу</string>
-    <string name="pref_download_logs_update_cache_summary">Дія "Завантажити журнали" також оновлює кеш даних</string>
-    <string name="pref_downloading_count_of_caches_step">Розмір числа пакету кешів</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Змінити розмір кешу обраного діялоґу</string>
-    <string name="premium_member_for_filter_required">Деякі фільтри потребують преміюм-акаунт, який Ви не маєте. Застосунок перемикається на основний режим. Будь ласка, спробуйте ще раз.</string>
+    <string name="pref_download_logs_update_geocache">Завантажити журнали змін оновленого кешу</string>
+    <string name="pref_download_logs_update_geocache_summary">Дія "Завантажити журнали" також оновлює кеш даних</string>
+    <string name="pref_step_geocaching_count">Розмір числа пакету кешів</string>
+    <string name="pref_step_geocaching_count_summary">Змінити розмір кешу обраного діялоґу</string>
+    <string name="error_premium_filter">Деякі фільтри потребують преміюм-акаунт, який Ви не маєте. Застосунок перемикається на основний режим. Будь ласка, спробуйте ще раз.</string>
 
-    <string name="prefs_cat_account">Акаунт</string>
-    <string name="prefs_cat_filter">Фільтр</string>
-    <string name="prefs_cat_live_map">Жива карта</string>
-    <string name="prefs_cat_downloading">Завантаження…</string>
-    <string name="prefs_cat_advanced">Додатково</string>
-    <string name="prefs_cat_about">Про</string>
-    <string name="login_title">Увійти</string>
-    <string name="pref_live_map_download_hints">Стягнути поради</string>
-    <string name="pref_live_map_download_hints_summary">Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
+    <string name="pref_account">Акаунт</string>
+    <string name="pref_filter">Фільтр</string>
+    <string name="pref_live_map">Жива карта</string>
+    <string name="pref_downloading">Завантаження…</string>
+    <string name="pref_advanced">Додатково</string>
+    <string name="pref_about">Про</string>
+    <string name="title_login">Увійти</string>
+    <string name="pref_download_hints">Стягнути поради</string>
+    <string name="pref_download_hints_summary">Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
     <string name="pref_feedback">Надіслати відозву</string>
     <string name="error_no_result">Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
     <string name="error_session_expired">У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
     <string name="launcher_import_bookmarks">Імпорт закладок</string>
     <string name="menu_import_bookmarks">Імпорт закладок</string>
-    <string name="import_caches_progress">Завантаження кешу…</string>
+    <string name="progress_import_geocaches">Завантаження кешу…</string>
     <string name="error_no_location_permission">Додаток не має дозволу на доступ до служби місцезнаходження.</string>
     <string name="action_import_all">Імпортувати всі</string>
-    <string name="premium_feature">Ця функція призначена для елітних членів тільки, вибачте.</string>
-    <string name="error_title_locus">Помилка Locus Map</string>
-    <string name="error_send_error_report">Відправити звіт про помилку</string>
-    <string name="error_report_sent_toast">Спасибі за відправку помилку.</string>
+    <string name="error_premium_feature">Ця функція призначена для елітних членів тільки, вибачте.</string>
+    <string name="title_locus_map_error">Помилка Locus Map</string>
+    <string name="button_send_error_report">Відправити звіт про помилку</string>
+    <string name="toast_error_report_sent">Спасибі за відправку помилку.</string>
     <string name="error_continue_locus_map">Ви хочете продовжити з частково отриманих даних в Locus Map?</string>
-    <string name="yes_button">Так</string>
-    <string name="no_button">Ні</string>
+    <string name="button_yes">Так</string>
+    <string name="button_no">Ні</string>
     
     
 </resources>

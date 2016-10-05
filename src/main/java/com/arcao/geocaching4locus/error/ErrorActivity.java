@@ -83,7 +83,7 @@ public class ErrorActivity extends AppCompatActivity {
 			final Context context = getActivity();
 
 			MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-					.positiveText(!TextUtils.isEmpty(positiveButtonText) ? positiveButtonText : context.getString(R.string.ok_button));
+					.positiveText(!TextUtils.isEmpty(positiveButtonText) ? positiveButtonText : context.getString(R.string.button_ok));
 
 			if (!TextUtils.isEmpty(title)) {
 				builder.title(title);
@@ -103,7 +103,7 @@ public class ErrorActivity extends AppCompatActivity {
 						final Checkable checkBox = (Checkable) materialDialog.getCustomView().findViewById(R.id.checkbox);
 						if (checkBox != null && checkBox.isChecked()) {
 							Crashlytics.logException(t);
-							Toast.makeText(materialDialog.getContext(), R.string.error_report_sent_toast, Toast.LENGTH_LONG)
+							Toast.makeText(materialDialog.getContext(), R.string.toast_error_report_sent, Toast.LENGTH_LONG)
 											.show();
 						}
 					}

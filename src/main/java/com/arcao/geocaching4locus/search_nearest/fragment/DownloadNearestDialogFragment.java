@@ -110,9 +110,9 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
   @Override
   public Dialog onCreateDialog(Bundle savedInstanceState) {
     return new MaterialDialog.Builder(getActivity())
-        .content(R.string.downloading)
+        .content(R.string.progress_download_geocaches)
         .progress(false, mCount, true)
-        .negativeText(R.string.cancel_button)
+        .negativeText(R.string.button_cancel)
         .build();
   }
 

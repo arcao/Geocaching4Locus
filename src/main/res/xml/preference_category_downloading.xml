@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/prefs_cat_downloading"
+    android:title="@string/pref_downloading"
     >
     <CheckBoxPreference
         android:key="simple_cache_data"
@@ -24,20 +24,20 @@
         android:defaultValue="5" />
     <CheckBoxPreference
         android:key="download_logs_update_cache"
-        android:title="@string/pref_download_logs_update_cache"
-        android:summary="@string/pref_download_logs_update_cache_summary"
+        android:title="@string/pref_download_logs_update_geocache"
+        android:summary="@string/pref_download_logs_update_geocache_summary"
         android:defaultValue="true" />
     <com.arcao.geocaching4locus.settings.widget.ListPreference
         android:key="downloading_count_of_caches_step"
-        android:title="@string/pref_downloading_count_of_caches_step"
-        android:summary="@string/pref_downloading_count_of_caches_step_summary"
+        android:title="@string/pref_step_geocaching_count"
+        android:summary="@string/pref_step_geocaching_count_summary"
         android:entries="@array/count_of_caches_steps"
         android:entryValues="@array/count_of_caches_steps"
         android:defaultValue="10" />
     <CheckBoxPreference
         android:key="disable_dnf_nm_na_caches"
-        android:title="@string/pref_disable_dnf_nm_na_caches"
-        android:summary="@string/pref_disable_dnf_nm_na_caches_summary"
+        android:title="@string/pref_disable_dnf_nm_na_geocaches"
+        android:summary="@string/pref_disable_dnf_nm_na_geocaches_summary"
         android:defaultValue="false"/>
     <com.arcao.geocaching4locus.settings.widget.SliderPreference
         android:key="disable_dnf_nm_na_caches_logs_count"

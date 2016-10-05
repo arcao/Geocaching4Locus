@@ -180,7 +180,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         int count = mPrefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES,
                 AppConstants.DOWNLOADING_COUNT_OF_CACHES_DEFAULT);
         SliderDialogFragment fragment =
-                SliderDialogFragment.newInstance(R.string.dialog_count_of_caches_title, 0, step, max,
+                SliderDialogFragment.newInstance(R.string.title_geocache_count, 0, step, max,
                         count, step);
         fragment.show(getFragmentManager(), "COUNTER");
       }
@@ -247,7 +247,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     mLongitude = Coordinates.convertDegToDouble(mLongitudeEditText.getText().toString());
 
     if (Double.isNaN(mLatitude) || Double.isNaN(mLongitude)) {
-      showError(R.string.wrong_coordinates, null);
+      showError(R.string.error_coordinates_format, null);
       return;
     }
 
@@ -280,7 +280,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
     new MaterialDialog.Builder(this)
         .content(ResourcesUtil.getText(this, errorResId, StringUtils.defaultString(additionalMessage)))
-        .positiveText(R.string.ok_button)
+        .positiveText(R.string.button_ok)
         .show();
   }
 

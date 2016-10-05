@@ -251,7 +251,7 @@ public class LocusDataMapper {
 
 		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.gcData.getCacheID().substring(2));
 		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
+		waypoint.setName(mContext.getString(R.string.var_original_coordinates_name));
 		waypoint.setLat(location.getLatitude());
 		waypoint.setLon(location.getLongitude());
 
@@ -528,7 +528,7 @@ public class LocusDataMapper {
 					}
 				} else {
 					nameCount++;
-					name = mContext.getString(R.string.user_waypoint_name, nameCount);
+					name = mContext.getString(R.string.var_user_waypoint_name, nameCount);
 				}
 
 				final String code = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2);
@@ -568,7 +568,7 @@ public class LocusDataMapper {
 		for (UserWaypoint uw : userWaypoints) {
 			if (uw.correctedCoordinate()) {
 
-				final String name = mContext.getString(R.string.final_location_name);
+				final String name = mContext.getString(R.string.var_final_location_name);
 				final String waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID) + cacheCode.substring(2);
 
 				return com.arcao.geocaching.api.data.Waypoint.builder()
@@ -660,7 +660,7 @@ public class LocusDataMapper {
 
 		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + toPoint.gcData.getCacheID().substring(2));
 		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
+		waypoint.setName(mContext.getString(R.string.var_original_coordinates_name));
 		waypoint.setLat(location.getLatitude());
 		waypoint.setLon(location.getLongitude());
 

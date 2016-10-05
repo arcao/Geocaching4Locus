@@ -124,8 +124,8 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
 		return new MaterialDialog.Builder(getActivity())
 				.title(getArguments().getInt(PARAM_TITLE))
 				.customView(prepareView(), false)
-				.positiveText(R.string.ok_button)
-				.negativeText(R.string.cancel_button)
+				.positiveText(R.string.button_ok)
+				.negativeText(R.string.button_cancel)
 				.onAny(new MaterialDialog.SingleButtonCallback() {
 					@Override
 					public void onClick(@NonNull MaterialDialog materialDialog,

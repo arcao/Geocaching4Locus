@@ -63,16 +63,16 @@ public class ExceptionHandler {
 		if (positiveAction != null) {
 			builder
 					.positiveAction(positiveAction)
-					.positiveButtonText(R.string.yes_button)
-					.negativeButtonText(R.string.no_button);
+					.positiveButtonText(R.string.button_yes)
+					.negativeButtonText(R.string.button_no);
 		}
 
 		if (t instanceof InvalidCredentialsException) {
 			return builder
-					.message(R.string.error_credentials)
+					.message(R.string.error_no_account)
 					.positiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.positiveButtonText(R.string.ok_button)
+					.positiveButtonText(R.string.button_ok)
 					.negativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidSessionException ||
@@ -82,7 +82,7 @@ public class ExceptionHandler {
 					.message(R.string.error_session_expired)
 					.positiveAction(
 							SettingsActivity.createIntent(mContext, AccountsPreferenceFragment.class))
-					.positiveButtonText(R.string.ok_button)
+					.positiveButtonText(R.string.button_ok)
 					.negativeButtonText(null)
 					.build();
 		} else if (t instanceof InvalidResponseException) {
@@ -92,11 +92,11 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
 			return builder
-					.message(R.string.error_cache_not_found, ((CacheNotFoundException) t).getCacheCode())
+					.message(R.string.error_geocache_not_found, ((CacheNotFoundException) t).getCacheCode())
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_network));
+			builder.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_network_unavailable));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -115,7 +115,7 @@ public class ExceptionHandler {
 			String message = StringUtils.defaultString(t.getMessage());
 
 			return builder
-					.title(R.string.error_title_locus)
+					.title(R.string.title_locus_map_error)
 					.message(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
 					.exception(t)
 					.build();
@@ -145,8 +145,8 @@ public class ExceptionHandler {
 		switch (t.getStatusCode()) {
 			case CacheLimitExceeded: // 118: user reach the quota limit
 
-				int title = premiumMember ? R.string.premium_member_warning_title : R.string.basic_member_warning_title;
-				int message = premiumMember ? R.string.premium_member_full_geocaching_quota_exceeded_message : R.string.basic_member_full_geocaching_quota_exceeded;
+				int title = premiumMember ? R.string.title_premium_member_warning : R.string.title_basic_member_warning;
+				int message = premiumMember ? R.string.error_premium_member_full_geocaching_quota_exceeded : R.string.error_basic_member_full_geocaching_quota_exceeded;
 
 				// apply format on a text
 				int cachesPerPeriod = (int) restrictions.getMaxFullGeocacheLimit();
@@ -161,7 +161,7 @@ public class ExceptionHandler {
 				}
 
 				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
-				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
+				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod);
 				String errorText = ResourcesUtil.getHtmlString(mContext, message, cacheString, periodString, renewTime);
 
 				builder
@@ -171,22 +171,22 @@ public class ExceptionHandler {
 				if (positiveAction != null) {
 					builder
 							.positiveAction(positiveAction)
-							.positiveButtonText(R.string.yes_button)
-							.negativeButtonText(R.string.no_button);
+							.positiveButtonText(R.string.button_yes)
+							.negativeButtonText(R.string.button_no);
 				}
 
 				return builder.build();
 
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
-						.title(R.string.method_quota_exceeded_title)
-						.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.method_quota_exceeded_message));
+						.title(R.string.title_method_quota_exceeded)
+						.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_method_quota_exceeded));
 
 				if (positiveAction != null) {
 					builder
 							.positiveAction(positiveAction)
-							.positiveButtonText(R.string.yes_button)
-							.negativeButtonText(R.string.no_button);
+							.positiveButtonText(R.string.button_yes)
+							.negativeButtonText(R.string.button_no);
 				}
 
 				return builder.build();
@@ -202,8 +202,8 @@ public class ExceptionHandler {
 			case PremiumMembershipRequiredForTrackableCountFilter:
 				accountManager.updateAccountNextTime();
 				return builder
-						.title(R.string.premium_member_warning_title)
-						.message(R.string.premium_member_for_filter_required)
+						.title(R.string.title_premium_member_warning)
+						.message(R.string.error_premium_filter)
 						.build();
 
 			default:

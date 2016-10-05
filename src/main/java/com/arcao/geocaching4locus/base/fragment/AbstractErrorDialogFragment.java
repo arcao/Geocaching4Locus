@@ -40,7 +40,7 @@ public class AbstractErrorDialogFragment extends AbstractDialogFragment {
 
 		builder.content(ResourcesUtil.getText(getActivity(), args.getInt(PARAM_ERROR_MESSAGE),
 				StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE))))
-				.positiveText(R.string.ok_button)
+				.positiveText(R.string.button_ok)
 				.onPositive(new MaterialDialog.SingleButtonCallback() {
 					@Override
 					public void onClick(@NonNull MaterialDialog materialDialog,

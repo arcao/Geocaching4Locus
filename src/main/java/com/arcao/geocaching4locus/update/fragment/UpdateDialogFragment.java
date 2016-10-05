@@ -92,12 +92,12 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	private void updateDialog(State state, int progress, int max, MaterialDialog dialog) {
 		switch (state) {
 			case CACHE:
-				dialog.setContent(R.string.update_cache_progress);
+				dialog.setContent(R.string.progress_update_geocache);
 				dialog.setProgress(-1);
 				dialog.setMaxProgress(1);
 				break;
 			case LOGS:
-				dialog.setContent(R.string.download_logs_progress);
+				dialog.setContent(R.string.progress_download_logs);
 				dialog.setMaxProgress(max);
 				dialog.setProgress(progress);
 				break;
@@ -109,7 +109,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
 						.progress(false, -1, true)
-						.negativeText(R.string.cancel_button)
+						.negativeText(R.string.button_cancel)
 						.build();
 
 		updateDialog(State.CACHE, 0, 0, dialog);

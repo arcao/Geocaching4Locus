@@ -25,7 +25,7 @@ public class LocusTesting {
 	}
 
 	public static void showLocusTooOldToast(final Context context) {
-		Toast.makeText(context, ResourcesUtil.getText(context, R.string.error_locus_old, AppConstants.LOCUS_MIN_VERSION.toString()), Toast.LENGTH_LONG).show();
+		Toast.makeText(context, ResourcesUtil.getText(context, R.string.error_old_locus_map, AppConstants.LOCUS_MIN_VERSION.toString()), Toast.LENGTH_LONG).show();
 	}
 
 	public static LocusUtils.LocusVersion getActiveVersion(Context context) {

@@ -21,10 +21,10 @@ public class NoLocationProviderDialogFragment extends AbstractDialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new MaterialDialog.Builder(getActivity())
-				.title(R.string.error_location_title)
-				.content(R.string.error_location)
-				.positiveText(R.string.ok_button)
-				.neutralText(R.string.error_location_settings_button)
+				.title(R.string.error_location_not_alloved)
+				.content(R.string.error_location_disabled)
+				.positiveText(R.string.button_ok)
+				.neutralText(R.string.button_settings)
 
 				.onNeutral(new MaterialDialog.SingleButtonCallback() {
 					@Override

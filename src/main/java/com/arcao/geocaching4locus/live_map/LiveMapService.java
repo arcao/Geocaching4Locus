@@ -127,13 +127,13 @@ public class LiveMapService extends IntentService {
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (InvalidCredentialsException e) {
 			Timber.e(e, e.getMessage());
-			showMessage(getString(R.string.error_credentials));
+			showMessage(getString(R.string.error_no_account));
 
 			// disable live map
 			prefs.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
 		} catch (NetworkException e) {
 			Timber.e(e, e.getMessage());
-			showMessage(getString(R.string.error_network));
+			showMessage(getString(R.string.error_network_unavailable));
 		} catch (Exception e) {
 			Timber.e(e, e.getMessage());
 		} finally {
@@ -307,7 +307,7 @@ public class LiveMapService extends IntentService {
 		new Handler(Looper.getMainLooper()).post(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(getApplicationContext(), ResourcesUtil.getText(getApplicationContext(), R.string.livemap_error, message), Toast.LENGTH_LONG).show();}
+				Toast.makeText(getApplicationContext(), ResourcesUtil.getText(getApplicationContext(), R.string.error_live_map, message), Toast.LENGTH_LONG).show();}
 		});
 	}
 

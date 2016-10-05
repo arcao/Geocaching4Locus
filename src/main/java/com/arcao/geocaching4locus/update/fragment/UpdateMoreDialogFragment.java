@@ -94,8 +94,8 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 		long[] pointIndexes = getArguments().getLongArray(PARAM_POINT_INDEXES);
 
 		return new MaterialDialog.Builder(getActivity())
-						.content(R.string.update_caches_progress)
-						.negativeText(R.string.cancel_button)
+						.content(R.string.progress_update_geocaches)
+						.negativeText(R.string.button_cancel)
 						.progress(false, ArrayUtils.getLength(pointIndexes), true)
 						.build();
 	}

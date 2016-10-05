@@ -41,7 +41,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:icon="@drawable/ic_action_search" android:label="@string/launcher_nearest_caches" android:theme="@style/AppTheme.DialogWhenLarge" android:name=".search_nearest.SearchNearestActivity" android:exported="true">
+        <activity android:icon="@drawable/ic_action_search" android:label="@string/launcher_nearest_geocaches" android:theme="@style/AppTheme.DialogWhenLarge" android:name=".search_nearest.SearchNearestActivity" android:exported="true">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -55,10 +55,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".settings.SettingsActivity" android:label="@string/preferences" android:theme="@style/AppTheme.Settings"/>
+        <activity android:name=".settings.SettingsActivity" android:label="@string/action_settings" android:theme="@style/AppTheme.Settings"/>
         <activity android:name=".error.ErrorActivity" android:theme="@style/AppTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
         <activity android:name=".update.UpdateActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_cache">
+            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocache">
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
@@ -72,12 +72,12 @@
             </intent-filter>
         </activity-alias>
         <activity android:name=".update.UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_more_caches">
+            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocaches">
                 <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/launcher_import_cache">
+        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/launcher_import_geocache">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -97,7 +97,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".authentication.LoginActivity" android:label="@string/login_title" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".authentication.LoginActivity" android:label="@string/title_login" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
             <intent-filter android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />

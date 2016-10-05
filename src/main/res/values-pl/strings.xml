@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="downloading">Pobieranie skrzynek…</string>
+    <string name="progress_download_geocaches">Pobieranie skrzynek…</string>
     <string name="error_locus_not_found">Geocaching4Locus wymaga aplikacji Locus, która nie została znaleziona. Zainstaluj aplikację Locus.</string>
-    <string name="error_location">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
-    <string name="acquiring_gps_location">Określanie lokalizacji za pomocą GPS…</string>
-    <string name="acquiring_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych…</string>
+    <string name="error_location_disabled">Proszę zezwolić na dostęp do usługi lokalizacji z wykorzystaniem sieci bezprzewodowych lub odbiornika GPS w menu \'Ustawienia\'.</string>
+    <string name="progress_acquire_gps_location">Określanie lokalizacji za pomocą GPS…</string>
+    <string name="progress_acquire_network_location">Określanie lokalizacji za pomocą sieci bezprzewodowych…</string>
     
-    <string name="preferences">Ustawienia</string>
-    <string name="wrong_coordinates">Niepoprawny format współrzędnych!</string>
-    <string name="coordinates">Współrzędne</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="error_coordinates_format">Niepoprawny format współrzędnych!</string>
+    <string name="title_coordinates">Współrzędne</string>
     
     <string name="pref_distance">Odległość</string>
     <string name="pref_distance_summary_km">Odległość w km</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">Jednostki imperialne</string>
     <string name="pref_imperial_units_summary">Używaj mil zamiast kilometrów</string>
     
-    <string name="error_credentials">Nieprawidłowa nazwa użytkownika lub hasło. Sprawdź swoje dane w ustawieniach.</string>
+    <string name="error_no_account">Nieprawidłowa nazwa użytkownika lub hasło. Sprawdź swoje dane w ustawieniach.</string>
 
-    <string name="ok_button">OK</string>
+    <string name="button_ok">OK</string>
     
-    <string name="error_locus_old">Zainstalowana wersja programu Locus jest nieaktualna. Do poprawnego działania Geocaching4Locus wymaga wersji %s albo nowszej. </string>
+    <string name="error_old_locus_map">Zainstalowana wersja programu Locus jest nieaktualna. Do poprawnego działania Geocaching4Locus wymaga wersji %s albo nowszej. </string>
     
-    <string name="cancel_button">Anuluj</string>
+    <string name="button_cancel">Anuluj</string>
     
     <string name="pref_show_found">Pokaż znalezione</string>
     <string name="pref_show_found_summary">Pokazuj znalezione skrzynki</string>
     <string name="pref_show_own">Pokazuj własne ukryte</string>
     <string name="pref_show_own_summary">Pokazuj własne skrzynki (ukryte przez ciebie)</string>
-    <string name="pref_menu_select_all">Zaznacz wszystko</string>
-    <string name="pref_menu_deselect_all">Odznacz wszystko</string>
+    <string name="menu_select_all">Zaznacz wszystko</string>
+    <string name="menu_deselect_all">Odznacz wszystko</string>
     
-    <string name="update_cache_progress">Aktualizowanie skrzynki…</string>
+    <string name="progress_update_geocache">Aktualizowanie skrzynki…</string>
     
-    <string name="pref_count_of_logs">Ilość logów</string>
-    <string name="pref_count_of_logs_summary">Ilość wpisów do pobrania wraz ze skrzynką</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">Ilość logów</string>
+    <string name="pref_logs_count_summary">Ilość wpisów do pobrania wraz ze skrzynką</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">Pokazuj nieaktywne</string>
     <string name="pref_show_disabled_summary">Pokaż skrzynki tymczasowo niedostępne</string>
     
-    <string name="import_cache_progress">Pobieranie skrzynki…</string>
+    <string name="progress_import_geocache">Pobieranie skrzynki…</string>
     
     <string name="pref_version">Wersja</string>
     <string name="pref_website">Strona WWW, forum, itp.</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Wspomóż dalszy proces tworzenia…</string>
     <string name="pref_donate_paypal_choose_currency">Wybierz swoją walutę</string>
     
-    <string name="pref_title_cache_type_filter">Rodzaje skrzynek (tylko konto  "premium")</string>
-    <string name="pref_title_difficulty_filter">Trudność (tylko konto  "premium")</string>
-    <string name="pref_title_terrain_filter">Teren (tylko konto  "premium")</string>
+    <string name="pref_geocache_type">Rodzaje skrzynek (tylko konto  "premium")</string>
+    <string name="pref_difficulty">Trudność (tylko konto  "premium")</string>
+    <string name="pref_terrain">Teren (tylko konto  "premium")</string>
     <string name="pref_difficulty_min">Min. trudność</string>
     <string name="pref_difficulty_max">Max. trudność</string>
     <string name="pref_terrain_min">Min. teren</string>
@@ -68,52 +68,52 @@
     <string name="menu_live_map">Mapa "na żywo"</string>
     <string name="menu_nearest">Najbliższe</string>
     <string name="menu_manual">Instrukcja</string>
-    <string name="menu_preferences">Ustawienia</string>
+    <string name="menu_settings">Ustawienia</string>
     
-    <string name="user_waypoint_name">Punkt trasy użytkownika %1$d</string>
-    <string name="final_location_name">Lokalizacja końcowa</string>
+    <string name="var_user_waypoint_name">Punkt trasy użytkownika %1$d</string>
+    <string name="var_final_location_name">Lokalizacja końcowa</string>
     
-    <string name="pref_account_login">Zaloguj się</string>
-    <string name="pref_account_login_summary">Zaloguj się do konta Geocaching.com</string>
-    <string name="pref_account_logout">Wyloguj się</string>
-    <string name="pref_account_logout_summary">Zalogowany jako %s</string>
+    <string name="pref_login">Zaloguj się</string>
+    <string name="pref_login_summary">Zaloguj się do konta Geocaching.com</string>
+    <string name="pref_logout">Wyloguj się</string>
+    <string name="pref_logout_summary">Zalogowany jako %s</string>
 
-    <string name="error_network">Sieć jest niedostępna - proszę sprawdzić połączenie.</string>
+    <string name="error_network_unavailable">Sieć jest niedostępna - proszę sprawdzić połączenie.</string>
 
-    <string name="update_caches_progress">Aktualizacja skrzynek…</string>
-    <string name="original_coordinates_name">Pierwotne współrzędne</string>
-    <string name="pref_title_container_type_filter">Rozmiar (tylko konto  "premium")</string>
+    <string name="progress_update_geocaches">Aktualizacja skrzynek…</string>
+    <string name="var_original_coordinates_name">Pierwotne współrzędne</string>
+    <string name="pref_container_size">Rozmiar (tylko konto  "premium")</string>
 
-    <string name="livemap_activated">Mapa "na żywo" została aktywowana. Przesuwaj widok, aby przeglądać skrzynki.</string>
-    <string name="livemap_deactivated">Mapa "na żywo" została dezaktywowana.</string>
-    <string name="livemap_disabled">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus (włącz w programie Locus: Ustawienia → Różne → Włącz okresowe uaktualnienia).</string>
-    <string name="error_location_title">Brak dostępu do usług lokalizacji.</string>
-    <string name="error_location_settings_button">Ustawienia</string>
+    <string name="toast_live_map_enabled">Mapa "na żywo" została aktywowana. Przesuwaj widok, aby przeglądać skrzynki.</string>
+    <string name="toast_live_map_disabled">Mapa "na żywo" została dezaktywowana.</string>
+    <string name="error_live_map_periodic_updates">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus (włącz w programie Locus: Ustawienia → Różne → Włącz okresowe uaktualnienia).</string>
+    <string name="error_location_not_alloved">Brak dostępu do usług lokalizacji.</string>
+    <string name="button_settings">Ustawienia</string>
     
     <string name="menu_import_from_gc">Importuj GC</string>
-    <string name="dialog_gc_number_input_title">Importuj według kodu GC</string>
-    <string name="error_input_gc">Nieprawidłowy kod GC.</string>
-    <string name="error_cache_not_found">Skrzynka %s nie została znaleziona.</string>
+    <string name="title_import_from_gc">Importuj według kodu GC</string>
+    <string name="error_gc_code_invalid">Nieprawidłowy kod GC.</string>
+    <string name="error_geocache_not_found">Skrzynka %s nie została znaleziona.</string>
     
-    <string name="dialog_count_of_caches_title">Liczba skrzynek</string>
-    <string name="launcher_nearest_caches">Najbliższe skrzynki</string>
-    <string name="launcher_import_cache">Importuj skrzynkę do programu Locus</string>
-    <string name="launcher_update_cache">Uaktualnij skrzynkę</string>    
-    <string name="launcher_update_more_caches">Aktualizuj skrzynki</string>
+    <string name="title_geocache_count">Liczba skrzynek</string>
+    <string name="launcher_nearest_geocaches">Najbliższe skrzynki</string>
+    <string name="launcher_import_geocache">Importuj skrzynkę do programu Locus</string>
+    <string name="launcher_update_geocache">Uaktualnij skrzynkę</string>
+    <string name="launcher_update_geocaches">Aktualizuj skrzynki</string>
     <string name="launcher_import_from_gc">Importuj według kodu GC</string>
     
     <string name="title_count_of_caches">Liczba skrzynek</string>
 
-    <string name="basic_member_warning_title">Dostęp standardowego użytkownika</string>
-    <string name="premium_member_warning_title">Dostęp użytkownika "premium"</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów skrzynek &lt;b>%1$s co każde %2$s&lt;/b>. Twój dzienny limit zostanie odnowiony o %3$s.&lt;br>
+    <string name="title_basic_member_warning">Dostęp standardowego użytkownika</string>
+    <string name="title_premium_member_warning">Dostęp użytkownika "premium"</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów skrzynek &lt;b>%1$s co każde %2$s&lt;/b>. Twój dzienny limit zostanie odnowiony o %3$s.&lt;br>
 &lt;br>
 &lt;i>Wykup konto "premium", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź  stronę Geocaching.com już teraz.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Osiągnąłeś limit pobierania szczegółów &lt;b>6000 skrzynek na 24h&lt;/b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
-    <string name="method_quota_exceeded_title">Hej, zwolnij!</string>
-    <string name="method_quota_exceeded_message">Osiągnąłeś minutowy limit maksymalnej ilości akcji/połączeń.</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">Osiągnąłeś limit pobierania szczegółów &lt;b>6000 skrzynek na 24h&lt;/b> . Twój dzienny limit pobierania zostanie odnowiony o %3$s.</string>
+    <string name="title_method_quota_exceeded">Hej, zwolnij!</string>
+    <string name="error_method_quota_exceeded">Osiągnąłeś minutowy limit maksymalnej ilości akcji/połączeń.</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d skrzynka</item>
         <item quantity="few">%d skrzynki</item>
         <item quantity="other">%d skrzynki</item>
@@ -131,55 +131,55 @@
         <item quantity="other">%d minuty</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Oparte na silniku Geocaching Live .</string>
-    <string name="account_geocaching_live_message">Ten dodatek wykorzystuje silnik Geocaching Live do pobierania informacji o skrzynkach geocache. Kliknij tutaj, aby dowiedzieć się więcej…</string>
+    <string name="pref_geocaching_live">Oparte na silniku Geocaching Live .</string>
+    <string name="pref_geocaching_live_message">Ten dodatek wykorzystuje silnik Geocaching Live do pobierania informacji o skrzynkach geocache. Kliknij tutaj, aby dowiedzieć się więcej…</string>
     
     <string name="error_invalid_api_response">Usługa Geocaching Live zwraca niewłaściwą odpowiedź:&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus mapa "na żywo"</string>
-    <string name="livemap_notification_message_enabled">Mapa "na żywo" jest włączona.</string>
-    <string name="livemap_notification_message_disabled">Mapa "na żywo" jest wyłączona.</string>
-    <string name="livemap_notification_message_downloading">Pobieranie skrzynek "mapy na żywo": %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Włącz "mapę na żywo"</string>
-    <string name="livemap_notification_action_disable">Wyłącz "mapę na żywo"</string>
-    <string name="livemap_error">Mapa na żywo Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Wyłączone powiadomienie</string>
-    <string name="pref_livemap_show_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
-    <string name="pref_cache_type_all">Wszystkie</string>
+    <string name="notify_live_map">Geocaching4Locus mapa "na żywo"</string>
+    <string name="notify_live_map_message_enabled">Mapa "na żywo" jest włączona.</string>
+    <string name="notify_live_map_message_disabled">Mapa "na żywo" jest wyłączona.</string>
+    <string name="notify_live_map_message_downloading">Pobieranie skrzynek "mapy na żywo": %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">Włącz "mapę na żywo"</string>
+    <string name="notify_live_map_action_disable">Wyłącz "mapę na żywo"</string>
+    <string name="error_live_map">Mapa na żywo Geocaching4Locus: %s</string>
+    <string name="pref_disabled_notification">Wyłączone powiadomienie</string>
+    <string name="pref_disabled_notification_summary"> Pokazuj powiadomienia kiedy Mapa na żywo jest wyłączona. Ta funkcja działa jeśli periodyczne uaktualnienia są włączone, a Locus jest uruchomiony.</string>
+    <string name="pref_geocache_type_all">Wszystkie</string>
     <string name="button_filter">Filtr</string>
-    <string name="download_logs_progress">Pobieranie wpisów…</string>
+    <string name="progress_download_logs">Pobieranie wpisów…</string>
     <string name="launcher_download_logs">Pobierz wpisy</string>
 
-    <string name="pref_download_logs_update_cache">Aktualizacja skrzynki przy pobieraniu wpisów</string>
-    <string name="pref_download_logs_update_cache_summary">Akcja "Pobierz wpisy" równocześnie aktualizuje skrzynkę geocache</string>
-    <string name="pref_downloading_count_of_caches_step">Rozmiar pakietu pobierania skrytek</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Okno dialogowe zmiany rozmiaru pakietu pobierania skrytek</string>
-    <string name="premium_member_for_filter_required">Niektóre filtry wymagają konta "premium", którego nie posiadasz. Aplikacja zostanie przełączona w tryb dla standardowych użytkowników. Proszę spróbuj ponownie.</string>
+    <string name="pref_download_logs_update_geocache">Aktualizacja skrzynki przy pobieraniu wpisów</string>
+    <string name="pref_download_logs_update_geocache_summary">Akcja "Pobierz wpisy" równocześnie aktualizuje skrzynkę geocache</string>
+    <string name="pref_step_geocaching_count">Rozmiar pakietu pobierania skrytek</string>
+    <string name="pref_step_geocaching_count_summary">Okno dialogowe zmiany rozmiaru pakietu pobierania skrytek</string>
+    <string name="error_premium_filter">Niektóre filtry wymagają konta "premium", którego nie posiadasz. Aplikacja zostanie przełączona w tryb dla standardowych użytkowników. Proszę spróbuj ponownie.</string>
 
-    <string name="prefs_cat_account">Konto</string>
-    <string name="prefs_cat_filter">Filtr</string>
-    <string name="prefs_cat_live_map">Mapa "na żywo"</string>
-    <string name="prefs_cat_downloading">Pobieranie</string>
-    <string name="prefs_cat_advanced">Zaawansowane</string>
-    <string name="prefs_cat_about">O programie</string>
-    <string name="login_title">Zaloguj się</string>
-    <string name="pref_live_map_download_hints">Pobierz podpowiedzi</string>
-    <string name="pref_live_map_download_hints_summary">Wolniejsze ładowanie oraz bardziej wymagające pod względem wykorzystania danych</string>
+    <string name="pref_account">Konto</string>
+    <string name="pref_filter">Filtr</string>
+    <string name="pref_live_map">Mapa "na żywo"</string>
+    <string name="pref_downloading">Pobieranie</string>
+    <string name="pref_advanced">Zaawansowane</string>
+    <string name="pref_about">O programie</string>
+    <string name="title_login">Zaloguj się</string>
+    <string name="pref_download_hints">Pobierz podpowiedzi</string>
+    <string name="pref_download_hints_summary">Wolniejsze ładowanie oraz bardziej wymagające pod względem wykorzystania danych</string>
     <string name="pref_feedback">Wyślij opinię</string>
     <string name="error_no_result">Nie znaleziono skrzynek geocache spełniających kryteria wyszukiwania.</string>
     <string name="error_session_expired">Z powodu długiego braku aktywności (ponad 90 dni) zostałeś wylogowany. Proszę zaloguj się ponownie.</string>
     <string name="launcher_import_bookmarks">Importuj zakładki</string>
     <string name="menu_import_bookmarks">Importuj zakładki</string>
-    <string name="import_caches_progress">Pobieram skrzynki…</string>
+    <string name="progress_import_geocaches">Pobieram skrzynki…</string>
     <string name="error_no_location_permission">Aplikacja nie ma uprawnień, aby uzyskać dostęp do usługi lokalizacji.</string>
     <string name="action_import_all">Importuj wszystkie</string>
-    <string name="premium_feature">Ta funkcja jest tylko dla użytkowników premium, przepraszam.</string>
-    <string name="error_title_locus">Błąd Locus Map</string>
-    <string name="error_send_error_report">Wyślij raport o błędach</string>
-    <string name="error_report_sent_toast">Dziękujemy za wysłanie błąd.</string>
+    <string name="error_premium_feature">Ta funkcja jest tylko dla użytkowników premium, przepraszam.</string>
+    <string name="title_locus_map_error">Błąd Locus Map</string>
+    <string name="button_send_error_report">Wyślij raport o błędach</string>
+    <string name="toast_error_report_sent">Dziękujemy za wysłanie błąd.</string>
     <string name="error_continue_locus_map">Czy chcesz kontynuować częściowo odebranych danych do Locus Map?</string>
-    <string name="yes_button">Tak</string>
-    <string name="no_button">Nie</string>
-    <string name="basic_member_warning_message">Ten dodatek działa w pełni jedynie z kontami premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event, CITO tylko wraz z podstawowymi informacjami (opis online, podpowiedź w opisie online, bez obrazków, wpisy w opisie online itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
-    <string name="basic_member_warning_button_manual">Pokaż instrukcję użytkownika</string>
+    <string name="button_yes">Tak</string>
+    <string name="button_no">Nie</string>
+    <string name="warning_basic_member">Ten dodatek działa w pełni jedynie z kontami premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event, CITO tylko wraz z podstawowymi informacjami (opis online, podpowiedź w opisie online, bez obrazków, wpisy w opisie online itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
+    <string name="button_show_manual">Pokaż instrukcję użytkownika</string>
 </resources>

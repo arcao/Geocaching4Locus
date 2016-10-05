@@ -65,16 +65,16 @@ public class LocationUpdateDialogFragment extends AbstractDialogFragment impleme
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-						.content(R.string.acquiring_gps_location)
+						.content(R.string.progress_acquire_gps_location)
 						.progress(true, 0)
-						.negativeText(R.string.cancel_button);
+						.negativeText(R.string.button_cancel);
 
 		switch (mProvider) {
 			case LocationManager.GPS_PROVIDER:
-				builder.content(R.string.acquiring_gps_location);
+				builder.content(R.string.progress_acquire_gps_location);
 				break;
 			default:
-				builder.content(R.string.acquiring_network_location);
+				builder.content(R.string.progress_acquire_network_location);
 				break;
 		}
 
@@ -102,10 +102,10 @@ public class LocationUpdateDialogFragment extends AbstractDialogFragment impleme
 
 		switch (provider) {
 			case LocationManager.GPS_PROVIDER:
-				dialog.setContent(R.string.acquiring_gps_location);
+				dialog.setContent(R.string.progress_acquire_gps_location);
 				break;
 			default:
-				dialog.setContent(R.string.acquiring_network_location);
+				dialog.setContent(R.string.progress_acquire_network_location);
 				break;
 		}
 	}

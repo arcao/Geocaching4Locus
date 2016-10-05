@@ -145,7 +145,7 @@ public class FilterPreferenceFragment extends AbstractPreferenceFragment {
 		}
 
 		if (allChecked || noneChecked) {
-			sb.append(getString(R.string.pref_cache_type_all));
+			sb.append(getString(R.string.pref_geocache_type_all));
 		} else {
 			for (int i = 0; i < len; i++) {
 				if (mPrefs.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {

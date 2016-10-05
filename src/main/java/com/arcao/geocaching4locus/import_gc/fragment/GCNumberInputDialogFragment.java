@@ -98,7 +98,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 							fireOnInputFinished(mEditText.getText().toString());
 							materialDialog.dismiss();
 						} else {
-							mLayout.setError(getString(R.string.error_input_gc));
+							mLayout.setError(getText(R.string.error_input_gc));
 						}
 					}
 				})

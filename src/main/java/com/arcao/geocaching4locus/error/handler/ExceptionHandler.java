@@ -15,7 +15,6 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
-import com.arcao.geocaching4locus.base.util.HtmlUtil;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
@@ -50,7 +49,7 @@ public class ExceptionHandler {
 		if (t instanceof IntendedException) {
 			positiveAction = ((IntendedException) t).getIntent();
 			t = t.getCause();
-			baseMessage = "%s<br /><br />" + mContext.getString(R.string.error_continue_locus_map);
+			baseMessage = "%s<br /><br />" + ResourcesUtil.getHtmlString(mContext, R.string.error_continue_locus_map);
 		}
 
 		// special handling for some API exceptions
@@ -88,7 +87,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.message(baseMessage, mContext.getString(R.string.error_invalid_api_response, t.getMessage()))
+					.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_invalid_api_response, t.getMessage()))
 					.exception(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
@@ -97,7 +96,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.message(baseMessage, mContext.getString(R.string.error_network));
+			builder.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_network));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -163,7 +162,7 @@ public class ExceptionHandler {
 
 				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
 				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-				String errorText = HtmlUtil.toHtml(ResourcesUtil.getText(mContext, message, cacheString, periodString, renewTime));
+				String errorText = ResourcesUtil.getHtmlString(mContext, message, cacheString, periodString, renewTime);
 
 				builder
 							.title(title)
@@ -181,7 +180,7 @@ public class ExceptionHandler {
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
 						.title(R.string.method_quota_exceeded_title)
-						.message(baseMessage, mContext.getString(R.string.method_quota_exceeded_message));
+						.message(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.method_quota_exceeded_message));
 
 				if (positiveAction != null) {
 					builder

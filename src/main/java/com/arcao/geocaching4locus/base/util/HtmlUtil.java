@@ -23,7 +23,7 @@ public class HtmlUtil {
 		return source;
 	}
 
-	public static Spanned applyFix(@NonNull Spanned spanned) {
+	private static Spanned applyFix(@NonNull Spanned spanned) {
 		// this will fix crash only on API v16, other API versions are safe
 		if (Build.VERSION.SDK_INT != Build.VERSION_CODES.JELLY_BEAN)
 			return spanned;

@@ -20,7 +20,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
@@ -34,7 +37,7 @@ import com.arcao.geocaching4locus.base.util.Coordinates;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
-import com.arcao.geocaching4locus.base.util.HtmlUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.dashboard.widget.SpinnerTextView;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
@@ -43,18 +46,12 @@ import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionEr
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment;
-
-import org.apache.commons.lang3.StringUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnFocusChange;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener, DownloadNearestDialogFragment.DialogListener {
@@ -282,7 +279,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
       return;
 
     new MaterialDialog.Builder(this)
-        .content(HtmlUtil.fromHtml(getString(errorResId, StringUtils.defaultString(additionalMessage))))
+        .content(ResourcesUtil.getText(this, errorResId, StringUtils.defaultString(additionalMessage)))
         .positiveText(R.string.ok_button)
         .show();
   }

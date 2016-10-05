@@ -164,7 +164,7 @@ public class ErrorActivity extends AppCompatActivity {
 		}
 
 		public IntentBuilder title(@StringRes int resTitle) {
-			this.title = context.getString(resTitle);
+			this.title = context.getText(resTitle);
 			return this;
 		}
 
@@ -184,12 +184,12 @@ public class ErrorActivity extends AppCompatActivity {
 		}
 
 		public IntentBuilder positiveButtonText(@StringRes int positiveButtonText) {
-			this.positiveButtonText = context.getString(positiveButtonText);
+			this.positiveButtonText = context.getText(positiveButtonText);
 			return this;
 		}
 
 		public IntentBuilder negativeButtonText(@StringRes int negativeButtonText) {
-			this.negativeButtonText = context.getString(negativeButtonText);
+			this.negativeButtonText = context.getText(negativeButtonText);
 			return this;
 		}
 

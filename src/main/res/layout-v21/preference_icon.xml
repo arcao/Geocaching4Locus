@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
-            tools:src="@drawable/geocaching_live_icon"/>
+            tools:src="@drawable/geocaching_live_icon"
+            tools:ignore="ContentDescription"/>
 
         <TextView
             android:id="@android:id/summary"

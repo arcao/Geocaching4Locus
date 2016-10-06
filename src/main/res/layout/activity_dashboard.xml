@@ -24,7 +24,8 @@
                 android:text="@string/menu_live_map"
                 app:toggleable="true"/>
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
             <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_import_gc"
@@ -32,7 +33,8 @@
                 android:drawableTop="@drawable/ic_action_gc_input"
                 android:text="@string/menu_import_from_gc" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
             <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_search_nearest"
@@ -41,7 +43,8 @@
                 android:text="@string/menu_nearest" />
         </LinearLayout>
 
-        <ImageView style="@style/SeparatorHorizontal.Dark" />
+        <ImageView style="@style/SeparatorHorizontal.Dark"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +56,8 @@
                 android:drawableTop="@drawable/ic_action_import_bookmark"
                 android:text="@string/menu_import_bookmarks" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
             <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_preferences"
@@ -61,7 +65,8 @@
                 android:drawableTop="@drawable/ic_action_settings"
                 android:text="@string/menu_settings" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
             <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_manual"

@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Mapa dinámico activado. Ahora muévete con el mapa para ver los caches.</string>
     <string name="toast_live_map_disabled">Mapa dinámico desactivado.</string>
     <string name="error_live_map_periodic_updates">No has activado enviar actualizaciones periódicas desde Locus. Por favor, actívalo primero en Locus: Settings → Misc. → Activar actualizaciones periódicas.</string>
-    <string name="error_location_not_alloved">Servicio de localización no permitido</string>
+    <string name="error_location_not_allowed">Servicio de localización no permitido</string>
     <string name="button_settings">Ajustes</string>
     
     <string name="menu_import_from_gc">Importar GC</string>

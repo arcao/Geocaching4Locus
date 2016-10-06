@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Živa mapa aktivirana. Sada se pomičite po mapi kako bi vidjeli cacheove.</string>
     <string name="toast_live_map_disabled">Živa mapa deaktivirana.</string>
     <string name="error_live_map_periodic_updates">You do not have allowed sending Periodic updates from Locus. Please, enable it first in Locus: Settings → Miscellaneous → Enable periodic updates.</string>
-    <string name="error_location_not_alloved">Nije dopuštena lokacijska usluga.</string>
+    <string name="error_location_not_allowed">Nije dopuštena lokacijska usluga.</string>
     <string name="button_settings">Postavke</string>
     
     <string name="menu_import_from_gc">Uvezi GC</string>

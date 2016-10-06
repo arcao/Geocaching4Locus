@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
     <string name="toast_live_map_disabled">Live kaart gedeactiveerd</string>
     <string name="error_live_map_periodic_updates">   Je hebt het sturen van periodieke updates door Locus niet toegelaten. Gelieve het eerst in te schakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen.</string>
-    <string name="error_location_not_alloved">Geen locatie diensten toegestaan</string>
+    <string name="error_location_not_allowed">Geen locatie diensten toegestaan</string>
     <string name="button_settings">Instellingen</string>
     
     <string name="menu_import_from_gc">Importeer GC</string>

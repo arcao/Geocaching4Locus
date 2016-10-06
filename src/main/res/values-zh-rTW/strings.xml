@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">即時地圖執行中，現在可移動地圖查看寶藏</string>
     <string name="toast_live_map_disabled">即時地圖已關閉</string>
     <string name="error_live_map_periodic_updates">您沒有允許從 Locus 發送定期更新，請先到 Locuc 開啟 : 選項 → 其它選項 → 開啟定期更新</string>
-    <string name="error_location_not_alloved">沒有允許定位服務</string>
+    <string name="error_location_not_allowed">沒有允許定位服務</string>
     <string name="button_settings">設定</string>
     
     <string name="menu_import_from_gc">匯入寶藏</string>

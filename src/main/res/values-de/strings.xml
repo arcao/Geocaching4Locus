@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Live Karte aktiviert. Bewege nun die Karte, um Caches zu sehen</string>
     <string name="toast_live_map_disabled">Live Karte deaktiviert</string>
     <string name="error_live_map_periodic_updates">Sie haben den Informationsaustausch für Add-ons nicht aktiviert. Aktivierung in Locus Map unter:  Einstellungen -> Verschiedenes -> AddOn Verbindung aktivieren</string>
-    <string name="error_location_not_alloved">Positionsbestimmung nicht aktiviert</string>
+    <string name="error_location_not_allowed">Positionsbestimmung nicht aktiviert</string>
     <string name="button_settings">Einstellungen</string>
     
     <string name="menu_import_from_gc">Importiere GC</string>

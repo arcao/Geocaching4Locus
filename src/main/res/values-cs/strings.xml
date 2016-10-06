@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Live mapa zapnuta. Nyní pohněte s mapou, aby se zobrazily keše.</string>
     <string name="toast_live_map_disabled">Live mapa vypnuta.</string>
     <string name="error_live_map_periodic_updates">Nemáte povolené zasílání periodických aktualizací z Locus Map. Nejprve je prosím povolte v Locus Map: Nastavení → Různé → Povolit periodické aktualizace.</string>
-    <string name="error_location_not_alloved">Služba k určení polohy není povolena</string>
+    <string name="error_location_not_allowed">Služba k určení polohy není povolena</string>
     <string name="button_settings">Nastavení</string>
     
     <string name="menu_import_from_gc">Importovat GC</string>

@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Carte en direct activée. Déplacer la carte pour voir les caches.</string>
     <string name="toast_live_map_disabled">Carte en direct désactivée.</string>
     <string name="error_live_map_periodic_updates">Vous n\'avez pas autorisé la mise à jour périodique dans Locus. Commencez par l\'autoriser dans Locus: Paramètres->Divers->Mises à jour périodiques</string>
-    <string name="error_location_not_alloved">Aucun service de localisation activé</string>
+    <string name="error_location_not_allowed">Aucun service de localisation activé</string>
     <string name="button_settings">Paramètres</string>
     
     <string name="menu_import_from_gc">Importer GC</string>

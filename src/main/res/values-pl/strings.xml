@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Mapa "na żywo" została aktywowana. Przesuwaj widok, aby przeglądać skrzynki.</string>
     <string name="toast_live_map_disabled">Mapa "na żywo" została dezaktywowana.</string>
     <string name="error_live_map_periodic_updates">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus (włącz w programie Locus: Ustawienia → Różne → Włącz okresowe uaktualnienia).</string>
-    <string name="error_location_not_alloved">Brak dostępu do usług lokalizacji.</string>
+    <string name="error_location_not_allowed">Brak dostępu do usług lokalizacji.</string>
     <string name="button_settings">Ustawienia</string>
     
     <string name="menu_import_from_gc">Importuj GC</string>

@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Live kort aktiveret. Bevæg kortet og se cacherne</string>
     <string name="toast_live_map_disabled">Live kort deaktiveret</string>
     <string name="error_live_map_periodic_updates">Du har ikke tilladt at sende Periodiske opdateringer fra Locus. Slå det til under Locus: Settings → Miscellaneous → Enable periodic updates.</string>
-    <string name="error_location_not_alloved">Lokalitets tjeneste er ikke tilladt</string>
+    <string name="error_location_not_allowed">Lokalitets tjeneste er ikke tilladt</string>
     <string name="button_settings">Indstillinger</string>
     
     <string name="menu_import_from_gc">Importer GC</string>

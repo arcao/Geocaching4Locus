@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Онлайн карта активирована. Теперь отправляйтесь с картой на поиск кэшей.</string>
     <string name="toast_live_map_disabled">Онлайн карта деактивирована.</string>
     <string name="error_live_map_periodic_updates">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
-    <string name="error_location_not_alloved">Сервис локации недоступен</string>
+    <string name="error_location_not_allowed">Сервис локации недоступен</string>
     <string name="button_settings">Настройки</string>
     
     <string name="menu_import_from_gc">Импортировать GC</string>

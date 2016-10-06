@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">在线地图已经激活，移动地图后即可看到藏点。</string>
     <string name="toast_live_map_disabled">在线地图已经关闭。</string>
     <string name="error_live_map_periodic_updates">您没有在Locus中激活即时更新，请先在Locus中激活：设置 → 其它→ 激活即时更新。</string>
-    <string name="error_location_not_alloved">定位服务没有激活</string>
+    <string name="error_location_not_allowed">定位服务没有激活</string>
     <string name="button_settings">设置</string>
     
     <string name="menu_import_from_gc">导入藏点</string>

@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Mapa ao vivo ativo. Movimente-se no mapa para ver as caches.</string>
     <string name="toast_live_map_disabled">Mapa ao viva inativo.</string>
     <string name="error_live_map_periodic_updates">Não ativou o envio de atualizações periódicas no Locus. Por favor ative em: Definições  → Vários → Ativar atualizações periódicas.</string>
-    <string name="error_location_not_alloved">Nenhum serviço de localização permitido.</string>
+    <string name="error_location_not_allowed">Nenhum serviço de localização permitido.</string>
     <string name="button_settings">Definições</string>
     
     <string name="menu_import_from_gc">Importar cache</string>

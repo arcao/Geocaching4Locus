@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Live map enabled. Now move with map to see caches.</string>
     <string name="toast_live_map_disabled">Live map disabled.</string>
     <string name="error_live_map_periodic_updates">You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
-    <string name="error_location_not_alloved">No location service allowed</string>
+    <string name="error_location_not_allowed">No location service allowed</string>
     <string name="button_settings">Settings</string>
     
     <string name="menu_import_from_gc">Import GC</string>
@@ -155,37 +155,68 @@
     <string name="pref_step_geocaching_count_summary">Change a step size for count of caches choose dialog</string>
     <string name="error_premium_filter">Some filters require premium member account which you does not have it. The app is switched now to mode for basic users. Please try it again.</string>
 
-    <string name="pref_account">Account</string>
-    <string name="pref_filter">Filter</string>
-    <string name="pref_live_map">Live map</string>
-    <string name="pref_downloading">Downloading</string>
-    <string name="pref_advanced">Advanced</string>
-    <string name="pref_about">About</string>
-    <string name="title_login">Sign in</string>
-    <string name="pref_download_hints">Download hints</string>
-    <string name="pref_download_hints_summary">Slower loading and more demanding on data usage</string>
-    <string name="pref_feedback">Send Feedback</string>
-    <string name="error_no_result">Could not find any geocaches that match your search.</string>
-    <string name="error_session_expired">Due to token expiry (after 90 days of inactivity) you have been signed out. Please sign in again.</string>
-    <string name="launcher_import_bookmarks">Import bookmarks</string>
-    <string name="menu_import_bookmarks">Import bookmarks</string>
-    <string name="progress_import_geocaches">Downloading caches…</string>
-    <string name="error_no_location_permission">The app does not have permission to access to location service.</string>
-    <string name="action_import_all">Import all</string>
-    <string name="error_premium_feature">This feature is for premium members only, sorry.</string>
-    <string name="title_locus_map_error">Locus Map error</string>
-    <string name="button_send_error_report">Send error report</string>
-    <string name="toast_error_report_sent">Thank you for sending the error.</string>
-    <string name="error_continue_locus_map">Do you want continue with a partially received data to Locus Map?</string>
-    <string name="button_yes">Yes</string>
-    <string name="button_no">No</string>
-    <string name="warning_basic_member">This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the manual on Geocaching4Locus website.</string>
-    <string name="button_show_manual">Show me manual</string>
-    <string name="warning_external_storage_permission">The app require <b>write external storage</b> permission for storing Geocache Data for Locus Map. Please <b>allow</b> this permission in a next dialog.</string>
-    <string name="error_no_external_storage_permission">The app does not have permission to <b>write external storage</b>. This permission is needed for storing Geocaching data for Locus Map.</string>
-    <string name="pref_hide_geocaches_on_disabled">Hide geocaches on disabled</string>
-    <string name="pref_hide_geocaches_on_disabled_summary">Hide Live map geocaches when Live map feature is disabled</string>
-    <string name="pref_disable_dnf_nm_na_geocaches">Disable DNF, NM and NA caches</string>
-    <string name="pref_disable_dnf_nm_na_geocaches_summary">Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
-    <string name="pref_disable_dnf_nm_na_geocaches_logs_count">How many last logs to check</string>
+    <string name="pref_account" comment="Title of category preference for Account settings."
+        >Account</string>
+    <string name="pref_filter" comment="Title of category preference for Filter settings."
+        >Filter</string>
+    <string name="pref_live_map" comment="Title of category preference for Live Map settings."
+        >Live map</string>
+    <string name="pref_downloading" comment="Title of category preference for Downloading settings."
+        >Downloading</string>
+    <string name="pref_advanced" comment="Title of category preference for Advanced settings."
+        >Advanced</string>
+    <string name="pref_about" comment="Title of category preference for About settings."
+        >About</string>
+    <string name="title_login" comment="Window title for sign in task."
+        >Sign in</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >Download hints</string>
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >Slower loading and more demanding on data usage</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >Send Feedback</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >Could not find any geocaches that match your search.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >Due to token expiry (after 90 days of inactivity) you have been signed out. Please sign in again.</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >Import bookmarks</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >Import bookmarks</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >The app does not have permission to access to location service.</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >Import all</string>
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >This feature is for premium members only, sorry.</string>
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs."
+        >Locus Map error</string>
+    <string name="button_send_error_report" comment="Button for Send error report action."
+        >Send error report</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >Thank you for sending the error.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >Do you want continue with a partially received data to Locus Map?</string>
+    <string name="button_yes" comment="Button for Yes action."
+        >Yes</string>
+    <string name="button_no" comment="Button for No action."
+        >No</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
+        >This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the manual on Geocaching4Locus website.</string>
+    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >Show me manual</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
+        >The app require <b>write external storage</b> permission for storing Geocache Data for Locus Map. Please <b>allow</b> this permission in a next dialog.</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
+        >The app does not have permission to <b>write external storage</b>. This permission is needed for storing Geocaching data for Locus Map.</string>
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Hide geocaches on disabled</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Hide Live map geocaches when Live map feature is disabled</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Disable DNF, NM and NA caches</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
+        >How many last logs to check</string>
 </resources>

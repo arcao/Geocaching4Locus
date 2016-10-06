@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Aktívna mapa zapnutá. Teraz pohnite s mapou, aby sa zobrazili skrýše.</string>
     <string name="toast_live_map_disabled">Aktívna mapa vypnutá.</string>
     <string name="error_live_map_periodic_updates">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
-    <string name="error_location_not_alloved">Služba na určenie polohy nie je povolená</string>
+    <string name="error_location_not_allowed">Služba na určenie polohy nie je povolená</string>
     <string name="button_settings">Nastavenia</string>
     
     <string name="menu_import_from_gc">Importovať GC</string>

@@ -87,7 +87,7 @@
     <string name="toast_live_map_enabled">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
     <string name="toast_live_map_disabled">Жива карта деактивована.</string>
     <string name="error_live_map_periodic_updates">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
-    <string name="error_location_not_alloved">Послуга розташування не дозволена</string>
+    <string name="error_location_not_allowed">Послуга розташування не дозволена</string>
     <string name="button_settings">Налаштування</string>
     
     <string name="menu_import_from_gc">Імпорт GC</string>

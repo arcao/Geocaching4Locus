@@ -6,7 +6,7 @@
     <string name="acquiring_gps_location">Finder din lokation via GPS…</string>
     <string name="acquiring_network_location">Finder din lokation via Trådløst net…</string>
     
-    <string name="preferences">Præferencer</string>
+    <string name="preferences">Indstilinger</string>
     <string name="wrong_coordinates">Koordinat fejl, forkert format!</string>
     <string name="coordinates">Koordinater </string>
     
@@ -68,7 +68,7 @@
     <string name="menu_live_map">Live kort</string>
     <string name="menu_nearest">Nærmeste</string>
     <string name="menu_manual">Manual</string>
-    <string name="menu_preferences">Præferencer</string>
+    <string name="menu_preferences">Indstilinger</string>
     
     <string name="user_waypoint_name">Bruger waypoint (koordinatpunkter) %1$d</string>
     <string name="final_location_name">Sidste lokation</string>
@@ -84,8 +84,8 @@
     <string name="original_coordinates_name">Originale kordinater</string>
     <string name="pref_title_container_type_filter">Beholder størrelse (Premium medlem)</string>
 
-    <string name="livemap_activated">Live kort aktiveret. Bevæg kortet og se cacherne</string>
-    <string name="livemap_deactivated">Live kort deaktiveret</string>
+    <string name="livemap_activated">Live kort aktiveret. Nu flytter med kortet for at se caches.</string>
+    <string name="livemap_deactivated">Live kort deaktiveret.</string>
     <string name="livemap_disabled">Du har ikke tilladt at sende Periodiske opdateringer fra Locus. Slå det til under Locus: Settings → Miscellaneous → Enable periodic updates.</string>
     <string name="error_location_title">Lokalitets tjeneste er ikke tilladt</string>
     <string name="error_location_settings_button">Indstillinger</string>
@@ -99,17 +99,17 @@
     <string name="launcher_nearest_caches">Nærmeste cacher</string>
     <string name="launcher_import_cache">Importer cache til Locus</string>
     <string name="launcher_update_cache">Opdater cache</string>    
-    <string name="launcher_update_more_caches">Update cacher</string>
+    <string name="launcher_update_more_caches">Opdater caches</string>
     <string name="launcher_import_from_gc">Importer fra GC kode</string>
     
     <string name="title_count_of_caches">Antal caches</string>
 
     <string name="basic_member_warning_title">Basis medlems adgang</string>
     <string name="premium_member_warning_title">Premium medlems adgang</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Du har nået begrænsningen for at du kan hente de fulde detalier i dag &lt;b>%1$s per %2$s period&lt;/b>. Your daily quota will be reset at %3$s.&lt;br>
-&lt;br>
-&lt;i>Opgrader til geocaching.com Premium Medlemsskab og download alle detalier helt op til 6000 caches i døgnet og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Du har nået begrænsningen for at du kan hente de fulde detalier i dag of &lt;b>6000 caches i døgnet &lt;/b>. Your daily quota will be reset at %3$s.</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Du har nået begrænsningen for at du kan hente de fulde detalier i dag <b>%1$s per %2$s period</b>. Your daily quota will be reset at %3$s.<br/>
+<br/>
+<i>Opgrader til geocaching.com Premium Medlemsskab og download alle detalier helt op til 6000 caches i døgnet og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.</i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Du har nået begrænsningen for at du kan hente de fulde detalier i dag of <b>6000 caches i døgnet </b>. Your daily quota will be reset at %3$s.</string>
     <string name="method_quota_exceeded_title">Så, rolig nu!</string>
     <string name="method_quota_exceeded_message">Du har nået  bebrænsningen for antal forspørgsler/opkald i minuttet</string>
 
@@ -134,20 +134,21 @@
     <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
     <string name="account_geocaching_live_message">Denne tilføjelse bruger Geocaching Live til at hente information om Geocaches. Tryk her for mere information…</string>
     
-    <string name="error_invalid_api_response">Geocaching Live har modtaget et ugyldigt svar:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live har modtaget et ugyldigt svar:<br/>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus Live map</string>
-    <string name="livemap_notification_message_enabled">Live map is enabled.</string>
-    <string name="livemap_notification_message_disabled">Live map is disabled.</string>
-    <string name="livemap_notification_message_downloading">Downloading Live map caches: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Enable Live Map</string>
-    <string name="livemap_notification_action_disable">Disable Live Map</string>
-    <string name="livemap_error">Geocaching4Locus Live map: %s</string>
+    <string name="livemap_notification_title">Geocaching4Locus live kort</string>
+    <string name="livemap_notification_message_enabled">Live kort er aktiveret.</string>
+    <string name="livemap_notification_message_disabled">Live kort er deaktiveret</string>
+    <string name="livemap_notification_message_downloading">Download af live kort geocaches: %1$d / %2$d (%3$d%%)</string>
+    <string name="livemap_notification_action_enable">Aktiver</string>
+    <string name="livemap_notification_action_disable">Deaktiver</string>
+    <string name="livemap_notification_action_settings">Indstillinger</string>
+    <string name="livemap_error">Geocaching4Locus live kort: %s</string>
     <string name="pref_livemap_show_disabled_notification">Deaktiveret meddelelse</string>
     <string name="pref_livemap_show_disabled_notification_summary">Vis meddelelse, når Live-kortet er deaktiveret. Dette virker kun, hvis de periodiske opdateringer er tilladt i Locus Map og Locus Map kører.</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Downloading logs…</string>
+    <string name="download_logs_progress">Downloader logfiler…</string>
     <string name="launcher_download_logs">Hent logfiler</string>
 
     <string name="pref_download_logs_update_cache">Hent logfiler opdatering cache</string>
@@ -156,30 +157,63 @@
     <string name="pref_downloading_count_of_caches_step_summary">Ændre et skridt størrelse for antal caches vælger dialogen</string>
     <string name="premium_member_for_filter_required">Nogle filtre kræver premium medlemskonto, som du ikke har det. Den app er tændt nu tilstanden for basale brugere. Venligst prøve det igen.</string>
 
-    <string name="prefs_cat_account">Konto</string>
-    <string name="prefs_cat_filter">Filter</string>
-    <string name="prefs_cat_live_map">Live kort</string>
-    <string name="prefs_cat_downloading">Downloader</string>
-    <string name="prefs_cat_advanced">Avanceret</string>
-    <string name="prefs_cat_about">Om programmet</string>
-    <string name="login_title">Log-på</string>
-    <string name="pref_live_map_download_hints">Hent råd</string>
-    <string name="pref_live_map_download_hints_summary">Langsommere lastning og mere krævende på dataforbrug</string>
-    <string name="pref_feedback">Send kommentar</string>
-    <string name="error_no_result">Kunne ikke finde nogen caches der matcher din søgning.</string>
-    <string name="error_session_expired">På grund af lang inaktivitet (over 90 dage) du er blevet logget ud. Venligst log ind igen.</string>
-    <string name="launcher_import_bookmarks">Importer bogmærker</string>
-    <string name="menu_import_bookmarks">Importer bogmærker</string>
+    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+        >Konto</string>
+    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+        >Filter</string>
+    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+        >Live kort</string>
+    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+        >Downloader</string>
+    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+        >Avanceret</string>
+    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+        >Om programmet</string>
+    <string name="login_title" comment="Window title for sign in task."
+        >Log-på</string>
+    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >Hent råd</string>
+    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >Langsommere lastning og mere krævende på dataforbrug</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >Send kommentar</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >Kunne ikke finde nogen caches der matcher din søgning.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >På grund af lang inaktivitet (over 90 dage) du er blevet logget ud. Venligst log ind igen.</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >Importer bogmærker</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >Importer bogmærker</string>
     <string name="import_caches_progress">Henter cacher ned…</string>
-    <string name="error_no_location_permission">App har ikke tilladelse til at få adgang til placering service.</string>
-    <string name="action_import_all">Importer alle</string>
-    <string name="premium_feature">Denne funktion er for premium medlemmer kun, ked af det.</string>
-    <string name="error_title_locus">Locus Map fejl</string>
-    <string name="error_send_error_report">Send fejlrapport</string>
-    <string name="error_report_sent_toast">Tak for at sende fejlen.</string>
-    <string name="error_continue_locus_map">Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
-    <string name="yes_button">Ja</string>
-    <string name="no_button">Nej</string>
-    
-    
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >App har ikke tilladelse til at få adgang til placering service.</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >Importer alle</string>
+    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >Denne funktion er for premium medlemmer kun, ked af det.</string>
+    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+        >Locus Map fejl</string>
+    <string name="error_send_error_report" comment="Button for Send error report action."
+        >Send fejlrapport</string>
+    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >Tak for at sende fejlen.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
+    <string name="yes_button" comment="Button for Yes action."
+        >Ja</string>
+    <string name="no_button" comment="Button for No action."
+        >Nej</string>
+    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Denne add-on er fuldt arbejder med kun en præmie medlemskab. Som et grundlæggende medlem du er i stand til at hente de traditionelle, event og CITO geocaches med grundlæggende info (online notering, antyder i online-notering, ingen attributter, ingen billeder, logger på online-notering, osv) og brug kun få filtre i søgningen geocaches. For mere information kan du læse manualen på Geocaching4Locus hjemmeside.</string>
+    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >Vis mig manual</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
+        >Den app kræver <b>skrive ekstern lagring</b> tilladelse til lagring af geocache data for Locus Map. Venligst <b>tillade</b> denne tilladelse i en næste dialogboks.</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
+        >Den app har ikke tilladelse til at <b>skrive eksternt lager</b>. Denne tilladelse er nødvendig til lagring af geocaching data for Locus Map.</string>
+    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Skjul geocaches på deaktiveret</string>
+    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Skjul live kort geocaches når live kort er deaktiveret</string>
 </resources>

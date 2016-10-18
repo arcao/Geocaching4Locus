@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -20,10 +19,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.fragment.dialog.AbstractDialogFragment;
-import com.arcao.geocaching4locus.util.SpannedFix;
+import com.arcao.geocaching4locus.util.HtmlUtil;
+import com.arcao.geocaching4locus.util.ResourcesUtil;
 import com.crashlytics.android.Crashlytics;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
+import org.oshkimaadziig.george.androidutils.SpanFormatter;
 import timber.log.Timber;
 
 public class ErrorActivity extends AppCompatActivity {
@@ -136,7 +137,7 @@ public class ErrorActivity extends AppCompatActivity {
 				if (content != null && !TextUtils.isEmpty(message)) {
 					dialog.setTypeface(content, builder.getRegularFont());
 					content.setMovementMethod(new LinkMovementMethod());
-					content.setText(SpannedFix.applyFix(message));
+					content.setText(HtmlUtil.applyFix(message));
 				}
 
 				if (checkBox != null) {
@@ -163,17 +164,17 @@ public class ErrorActivity extends AppCompatActivity {
 		}
 
 		public IntentBuilder setTitle(@StringRes int resTitle) {
-			this.title = context.getString(resTitle);
+			this.title = context.getText(resTitle);
 			return this;
 		}
 
 		public IntentBuilder setMessage(@StringRes int message, Object... params) {
-			this.message = Html.fromHtml(context.getString(message, params));
+			this.message = ResourcesUtil.getText(context, message, params);
 			return this;
 		}
 
-		public IntentBuilder setMessage(String message, Object... params) {
-			this.message = Html.fromHtml(String.format(message, params));
+		public IntentBuilder setMessage(CharSequence message, Object... params) {
+			this.message = SpanFormatter.format(message, params);
 			return this;
 		}
 

@@ -84,8 +84,8 @@
     <string name="original_coordinates_name">原始座標</string>
     <string name="pref_title_container_type_filter">寶盒尺寸(高級會員)</string>
 
-    <string name="livemap_activated">即時地圖執行中，現在可移動地圖查看寶藏</string>
-    <string name="livemap_deactivated">即時地圖已關閉</string>
+    
+    
     <string name="livemap_disabled">您沒有允許從 Locus 發送定期更新，請先到 Locuc 開啟 : 選項 → 其它選項 → 開啟定期更新</string>
     <string name="error_location_title">沒有允許定位服務</string>
     <string name="error_location_settings_button">設定</string>
@@ -106,10 +106,10 @@
 
     <string name="basic_member_warning_title">基本會員資格</string>
     <string name="premium_member_warning_title">高級會員資格</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">您已經到達 %2$s 內下載 &lt;b>%1$s 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置
-&lt;br>
-&lt;i>到地理藏寶官網升級為高級會員之後可每天下載 6000 個寶藏的詳細資訊，查閱 Geocaching.com &lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">您已經到達 24 小時內下載 &lt;b>6000 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">您已經到達 %2$s 內下載 <b>%1$s 個寶藏詳細資訊的限制</b>，您每天的限額將會在 %3$s.<br/> 重置
+<br/>
+<i>到地理藏寶官網升級為高級會員之後可每天下載 6000 個寶藏的詳細資訊，查閱 Geocaching.com </i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">您已經到達 24 小時內下載 <b>6000 個寶藏詳細資訊的限制</b>，您每天的限額將會在 %3$s.<br/> 重置</string>
     <string name="method_quota_exceeded_title">嘿，慢一點！</string>
     <string name="method_quota_exceeded_message">您已經到達每分鐘內最大的動作限制</string>
 
@@ -134,14 +134,15 @@
     <string name="account_geocaching_live_title">基於 Geocaching Live</string>
     <string name="account_geocaching_live_message">這個外掛程式基於 Geocaching Live 來擷取地理寶藏資訊，點選這裡有更多資訊 …</string>
     
-    <string name="error_invalid_api_response">Geocaching Live 傳回無效的回應：&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live 傳回無效的回應：<br/>%s</string>
 
     <string name="livemap_notification_title">Geocaching4Locus 即時地圖</string>
     <string name="livemap_notification_message_enabled">即時地圖已開啟</string>
     <string name="livemap_notification_message_disabled">即時地圖已關閉</string>
     <string name="livemap_notification_message_downloading">下載即時地圖的寶藏 : %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">開啟即時地圖</string>
-    <string name="livemap_notification_action_disable">關閉即時地圖</string>
+    
+    
+    
     <string name="livemap_error">Geocaching4Locus 即時地圖 : %s</string>
     <string name="pref_livemap_show_disabled_notification">已關閉通知</string>
     <string name="pref_livemap_show_disabled_notification_summary">當即時地圖關閉時發出通知，這只有在 Locus 執行時並且已開啟定期更新選項</string>
@@ -156,30 +157,59 @@
     <string name="pref_downloading_count_of_caches_step_summary">在寶藏計次對話框中變更區間</string>
     <string name="premium_member_for_filter_required">有些過濾器需要高級會員可使用，現在程式切換到基本會員模式，請再次嘗試</string>
 
-    <string name="prefs_cat_account">帳號</string>
-    <string name="prefs_cat_filter">篩選器</string>
-    <string name="prefs_cat_live_map">即時地圖</string>
-    <string name="prefs_cat_downloading">下載</string>
-    <string name="prefs_cat_advanced">進階</string>
-    <string name="prefs_cat_about">關於</string>
-    <string name="login_title">登入</string>
-    <string name="pref_live_map_download_hints">下載提示</string>
-    <string name="pref_live_map_download_hints_summary">在資料運用時載入較慢並且更為嚴苛</string>
-    <string name="pref_feedback">發送回報</string>
-    <string name="error_no_result">找不到符合您需求的地理寶藏</string>
-    <string name="error_session_expired">由於長期閒置(超過 90 天)，您已經登出，請再次登入。</string>
-    <string name="launcher_import_bookmarks">匯入書籤</string>
-    <string name="menu_import_bookmarks">匯入書籤</string>
+    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+        >帳號</string>
+    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+        >篩選器</string>
+    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+        >即時地圖</string>
+    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+        >下載</string>
+    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+        >進階</string>
+    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+        >關於</string>
+    <string name="login_title" comment="Window title for sign in task."
+        >登入</string>
+    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >下載提示</string>
+    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >在資料運用時載入較慢並且更為嚴苛</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >發送回報</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >找不到符合您需求的地理寶藏</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >由於長期閒置(超過 90 天)，您已經登出，請再次登入。</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >匯入書籤</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >匯入書籤</string>
     <string name="import_caches_progress">下載寶藏中 …</string>
-    <string name="error_no_location_permission">軟體沒有權限訪問定位服務</string>
-    <string name="action_import_all">匯入全部</string>
-    <string name="premium_feature">這項功能只提供給付費會員，抱歉</string>
-    <string name="error_title_locus">Locus 地圖異常</string>
-    <string name="error_send_error_report">發送異常報告</string>
-    <string name="error_report_sent_toast">感謝您發送這個異常報告</string>
-    <string name="error_continue_locus_map">您要在 Locus 地圖上使用未完整接收的資料嗎?</string>
-    <string name="yes_button">是</string>
-    <string name="no_button">否</string>
-    <string name="basic_member_warning_message">這個功能只適用於付費會員，基本會員只能下載傳統寶藏、網聚寶藏的基本訊息(寶藏內文、提示、日誌，但是沒有寶藏屬性和相關圖片)，另外只能使用較少的過濾條件來搜尋寶藏，更多訊息請查閱 Geocaching4Locus 網站。</string>
-    <string name="basic_member_warning_button_manual">顯示選單</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >軟體沒有權限訪問定位服務</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >匯入全部</string>
+    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >這項功能只提供給付費會員，抱歉</string>
+    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+        >Locus 地圖異常</string>
+    <string name="error_send_error_report" comment="Button for Send error report action."
+        >發送異常報告</string>
+    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >感謝您發送這個異常報告</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >您要在 Locus 地圖上使用未完整接收的資料嗎?</string>
+    <string name="yes_button" comment="Button for Yes action."
+        >是</string>
+    <string name="no_button" comment="Button for No action."
+        >否</string>
+    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+        >這個功能只適用於付費會員，基本會員只能下載傳統寶藏、網聚寶藏的基本訊息(寶藏內文、提示、日誌，但是沒有寶藏屬性和相關圖片)，另外只能使用較少的過濾條件來搜尋寶藏，更多訊息請查閱 Geocaching4Locus 網站。</string>
+    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >顯示選單</string>
+    
+    
+    
+    
 </resources>

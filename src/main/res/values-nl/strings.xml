@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="downloading">Bezig met downloaden van caches…</string>
-    <string name="error_locus_not_found">Locus Map applicatie is niet gevonden: Geocaching4Locus heeft dit nodig om goed te werken. Gelieve Locus te installeren.</string>
+    <string name="error_locus_not_found">Locus Map applicatie is niet gevonden: Geocaching4Locus Map heeft dit nodig om goed te werken. Gelieve Locus Map te installeren.</string>
     <string name="error_location">Toestaan van de WIFI of GPS locatie dienst in \'Instellingen\'.</string>
     <string name="acquiring_gps_location">Locatie aan het verkrijgen via GPS…</string>
-    <string name="acquiring_network_location">Locatie aan het verkrijgen via draadloos netwerk…</string>
+    <string name="acquiring_network_location">Ophalen locatie via wifi</string>
     
     <string name="preferences">Voorkeuren</string>
     <string name="wrong_coordinates">Foutief coördinaten formaat!</string>
@@ -20,7 +20,7 @@
 
     <string name="ok_button">OK</string>
     
-    <string name="error_locus_old">De geïnstalleerde versie van Locus is te oud. Geocaching4Locus heeft versie %s of hoger nodig om naar behoren te werken.</string>
+    <string name="error_locus_old">De geïnstalleerde versie van Locus Map is te oud. Geocaching4Locus Map heeft versie %s of hoger nodig om naar behoren te werken.</string>
     
     <string name="cancel_button">Annuleren</string>
     
@@ -58,7 +58,7 @@
     <string name="pref_download_basic">Alleen basis info</string>
     <string name="pref_download_basic_summary">Enkel basisinformatie betreffende de cache downloaden</string>
     <string name="pref_download_on_show">Op \'tonen\' de resterende informatie downloaden</string>
-    <string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus</string>
+    <string name="pref_download_on_show_summary">Download de rest van de informatie betreffende de cache als de cache inhoud getoond wordt in Locus Map</string>
     <string-array name="pref_download_on_show_entries">
         <item>eenmalig</item>
         <item>Iedere</item>
@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Live kaart</string>
     <string name="menu_nearest">Dichtsbijzijnde</string>
-    <string name="menu_manual">Handmatig</string>
+    <string name="menu_manual">Handleiding</string>
     <string name="menu_preferences">Voorkeuren</string>
     
     <string name="user_waypoint_name">Gebruikers via punt %1$d</string>
@@ -84,9 +84,9 @@
     <string name="original_coordinates_name">Oorspronkelijke coördinaten</string>
     <string name="pref_title_container_type_filter">Grootte van container (Premium lid)</string>
 
-    <string name="livemap_activated">Live kaart geactiveerd. Beweeg met de kaart om caches te zien.</string>
-    <string name="livemap_deactivated">Live kaart gedeactiveerd</string>
-    <string name="livemap_disabled">   Je hebt het sturen van periodieke updates door Locus niet toegelaten. Gelieve het eerst in te schakelen in Locus: Instellingen → Diversen → Periodieke updates inschakelen.</string>
+    <string name="livemap_activated">Live map ingeschakeld. Beweeg de map om caches te gaan zien.</string>
+    <string name="livemap_deactivated">Live map uitgeschakeld.</string>
+    <string name="livemap_disabled">   Je hebt het sturen van periodieke updates door Locus Map niet toegelaten. Gelieve het eerst in te schakelen in Locus Map: Instellingen → Diversen → Periodieke updates inschakelen.</string>
     <string name="error_location_title">Geen locatie diensten toegestaan</string>
     <string name="error_location_settings_button">Instellingen</string>
     
@@ -97,7 +97,7 @@
     
     <string name="dialog_count_of_caches_title">Aantal caches</string>
     <string name="launcher_nearest_caches">Caches dichtbij</string>
-    <string name="launcher_import_cache">Importeer cache in Locus</string>
+    <string name="launcher_import_cache">Importeer cache in Locus Map</string>
     <string name="launcher_update_cache">Update cache</string>    
     <string name="launcher_update_more_caches">Update caches</string>
     <string name="launcher_import_from_gc">Importeer via GC code</string>
@@ -106,10 +106,10 @@
 
     <string name="basic_member_warning_title">Basis lid toegang</string>
     <string name="premium_member_warning_title">Premium lid toegang</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Je hebt de limiet om alle details te dowloaden van &lt;b>%1$s per %2$s periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.&lt;br>
-&lt;br>
-&lt;i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Je hebt de limiet om het downloaden van alle details van &lt;b>6000 caches per 24 uur periode&lt;/b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Je hebt de limiet om alle details te dowloaden van <b>%1$s per %2$s periode</b> bereikt. Je dagelijkse quota wordt gereset om %3$s.<br/>
+<br/>
+<i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.</i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Je hebt de limiet om het downloaden van alle details van <b>6000 caches per 24 uur periode</b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
     <string name="method_quota_exceeded_title">Hey, kalm aan!</string>
     <string name="method_quota_exceeded_message">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
 
@@ -134,17 +134,18 @@
     <string name="account_geocaching_live_title">Aangedreven door Geocaching Live</string>
     <string name="account_geocaching_live_message">Deze add-on gebruikt Geocaching Live om informatie te verkrijgen over Geocaches. Druk hier voor meer informatie…</string>
     
-    <string name="error_invalid_api_response">Geocaching Live gaf een ongeldig antwoord: &lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live gaf een ongeldig antwoord: <br/>%s</string>
 
     <string name="livemap_notification_title">Geocaching4Locus Live map</string>
     <string name="livemap_notification_message_enabled">Live map is geactiveerd.</string>
-    <string name="livemap_notification_message_disabled">Live map is gedeactiveerd.</string>
+    <string name="livemap_notification_message_disabled">Live map is uitgeschakeld.</string>
     <string name="livemap_notification_message_downloading">Bezig met downloaden van Live map caches: %1$d / %2$d  (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Activeer Live Map</string>
-    <string name="livemap_notification_action_disable">Deactiveer Live Map</string>
+    <string name="livemap_notification_action_enable">Schakelen</string>
+    <string name="livemap_notification_action_disable">Uitschakelen</string>
+    <string name="livemap_notification_action_settings">Instellingen</string>
     <string name="livemap_error">Geocaching4Locus Live map: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Gedeactiveerde melding</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Toon een melding wanneer Live map gedeactiveerd is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus en Locus actief is.</string>
+    <string name="pref_livemap_show_disabled_notification">Uitgeschakeld melding</string>
+    <string name="pref_livemap_show_disabled_notification_summary">Toon een melding wanneer Live map uitgeschakeld is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus Map en Locus Map actief is.</string>
     <string name="pref_cache_type_all">Alle</string>
     <string name="button_filter">Filter</string>
     <string name="download_logs_progress">Bezig met downloaden van logs…</string>
@@ -156,30 +157,63 @@
     <string name="pref_downloading_count_of_caches_step_summary">Verander stap grootte voor dialoog over aantal caches</string>
     <string name="premium_member_for_filter_required">Sommige filters vereisen een premium account welke u niet hebt. De applicatie zal terug wisselen naar een mode voor gewone gebruikers. Probeert u aub opnieuw.</string>
 
-    <string name="prefs_cat_account">Account</string>
-    <string name="prefs_cat_filter">Filter</string>
-    <string name="prefs_cat_live_map">Live kaart</string>
-    <string name="prefs_cat_downloading">Bezig met downloaden</string>
-    <string name="prefs_cat_advanced">Geavanceerd</string>
-    <string name="prefs_cat_about">Over</string>
-    <string name="login_title">Log in</string>
-    <string name="pref_live_map_download_hints">Download hints</string>
-    <string name="pref_live_map_download_hints_summary">Laadt trager en verbruikt meer data</string>
-    <string name="pref_feedback">Verzend feedback</string>
-    <string name="error_no_result">Geen geocaches gevonden die aan jouw zoektermen voldoen.</string>
-    <string name="error_session_expired">Vanwege langdurige inactiviteit (meer dan 90 dagen) ben je afgemeld. AUB opnieuw aanmelden.</string>
-    <string name="launcher_import_bookmarks">Importeren van bladwijzers</string>
-    <string name="menu_import_bookmarks">Importeren van bladwijzers</string>
+    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+        >Account</string>
+    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+        >Filter</string>
+    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+        >Live kaart</string>
+    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+        >Bezig met downloaden</string>
+    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+        >Geavanceerd</string>
+    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+        >Over</string>
+    <string name="login_title" comment="Window title for sign in task."
+        >Log in</string>
+    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >Download hints</string>
+    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >Laadt trager en verbruikt meer data</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >Verzend feedback</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >Geen geocaches gevonden die aan jouw zoektermen voldoen.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >Vanwege langdurige inactiviteit (meer dan 90 dagen) ben je afgemeld. AUB opnieuw aanmelden.</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >Importeren van bladwijzers</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >Importeren van bladwijzers</string>
     <string name="import_caches_progress">Bezig met downloaden van caches…</string>
-    <string name="error_no_location_permission">App heeft geen toegang tot de locatie dienst.</string>
-    <string name="action_import_all">Importeer alles</string>
-    <string name="premium_feature">Deze optie is alleen voor Premium leden, sorry.</string>
-    <string name="error_title_locus">Locus Map fout</string>
-    <string name="error_send_error_report">Verstuur fout rapport</string>
-    <string name="error_report_sent_toast">Bedankt voor het melden van de fout</string>
-    <string name="error_continue_locus_map">Verder gaan naar Locus met gedeeltelijk ontvangen data?</string>
-    <string name="yes_button">Ja</string>
-    <string name="no_button">Nee</string>
-    <string name="basic_member_warning_message">Deze add-on werkt alleen compleet met een premium lidmaatschap. Als basic lid kun je traditional caches downloaden en ook event en CITO caches met basis info (...) en slechts een paar filters toepassen tijdens zoeken naar geocaches. Voor meer informatie lees aub de gebruiksaanwijzing  op de Geocaching4Locus website.</string>
-    <string name="basic_member_warning_button_manual">Toon gebruiksaanwijzing</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >App heeft geen toegang tot de locatie dienst.</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >Importeer alles</string>
+    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >Deze optie is alleen voor Premium leden, sorry.</string>
+    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+        >Locus Map fout</string>
+    <string name="error_send_error_report" comment="Button for Send error report action."
+        >Verstuur fout rapport</string>
+    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >Bedankt voor het melden van de fout</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >Verder gaan naar Locus Map met gedeeltelijk ontvangen data?</string>
+    <string name="yes_button" comment="Button for Yes action."
+        >Ja</string>
+    <string name="no_button" comment="Button for No action."
+        >Nee</string>
+    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Deze add-on werkt alleen compleet met een premium lidmaatschap. Als basic lid kun je traditional caches downloaden en ook event en CITO caches met basis info (…) en slechts een paar filters toepassen tijdens zoeken naar geocaches. Voor meer informatie lees aub de gebruiksaanwijzing  op de Geocaching4Locus website.</string>
+    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >Toon gebruiksaanwijzing</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
+        >De app heeft toestemming nodig om te <b>schrijven op externe opslag</b> om Geocaching gegevens op te slaan voor de Locus Map app. Dit aub <b>toestaan</b> in het volgende scherm.</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
+        >De app heeft geen toestemming om te <b>schrijven op externe opslag</b>. Dit is nodig om Geocaching gegevens op te slaan voor de Locus Map app.</string>
+    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Verberg geocaches op uitgeschakeld</string>
+    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Verberg Live map geocaches wanneer Live map functie is uitgeschakeld</string>
 </resources>

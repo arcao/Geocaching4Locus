@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.PrefConstants;
-import com.arcao.geocaching4locus.util.SpannedFix;
+import com.arcao.geocaching4locus.util.HtmlUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.oshkimaadziig.george.androidutils.SpanFormatter;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
+	public static final String VALUE_HTML_FORMAT = "<font color=\"#FF8000\"><b>%s</b></font>";
 	protected SharedPreferences mPrefs;
 
 	@SuppressWarnings("unchecked")
@@ -42,15 +45,21 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	}
 
 	protected void preparePreference() {
-		// empty
+		if (!getResources().getBoolean(R.bool.preferences_prefer_dual_pane))
+			getActivity().setTitle(getPreferenceScreen().getTitle());
 	}
+
 	protected CharSequence preparePreferenceSummary(CharSequence value, int resId) {
-		String summary = "";
+		CharSequence summary = null;
 		if (resId != 0)
-			summary = getText(resId).toString();
+			summary = getText(resId);
 
 		if (value != null && value.length() > 0)
-			return SpannedFix.fromHtml("<font color=\"#FF8000\"><b>(" + value.toString() + ")</b></font> " + StringUtils.defaultString(summary));
-		return SpannedFix.fromHtml(StringUtils.defaultString(summary));
+			return SpanFormatter.format("%s %s", stylizedValue(value), StringUtils.defaultIfEmpty(summary, ""));
+		return StringUtils.defaultIfEmpty(summary, "");
+	}
+
+	protected CharSequence stylizedValue(CharSequence value) {
+		return SpanFormatter.format(HtmlUtil.fromHtml(VALUE_HTML_FORMAT), value);
 	}
 }

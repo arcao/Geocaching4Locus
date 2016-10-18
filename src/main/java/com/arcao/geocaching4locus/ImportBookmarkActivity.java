@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,12 +14,13 @@ import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.fragment.BookmarkCachesFragment;
 import com.arcao.geocaching4locus.fragment.BookmarkListFragment;
 import com.arcao.geocaching4locus.fragment.dialog.BookmarkImportDialogFragment;
+import com.arcao.geocaching4locus.fragment.dialog.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.util.LocusTesting;
-import timber.log.Timber;
-
+import com.arcao.geocaching4locus.util.PermissionUtil;
 import java.util.HashSet;
 import java.util.Set;
+import timber.log.Timber;
 
 public class ImportBookmarkActivity extends AppCompatActivity implements BookmarkListFragment.ListListener, BookmarkCachesFragment.ListListener, BookmarkImportDialogFragment.DialogListener {
   private static final int REQUEST_SIGN_ON = 1;
@@ -55,7 +57,10 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
       return;
     }
 
-    if (savedInstanceState == null)
+    if (savedInstanceState != null)
+      return;
+
+    if (PermissionUtil.requestExternalStoragePermission(this))
       showBookmarkList();
   }
 
@@ -74,7 +79,6 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
   @Override
   public void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll) {
     if (selectAll) {
-      AnalyticsUtil.actionImportBookmarks(bookmarkList.getItemCount(), true);
       BookmarkImportDialogFragment.newInstance(bookmarkList).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
     } else {
       showBookmarkCaches(bookmarkList);
@@ -125,9 +129,23 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     // restart update process after log in
     if (requestCode == REQUEST_SIGN_ON) {
       if (resultCode == RESULT_OK) {
-        showBookmarkList();
+        if (PermissionUtil.requestExternalStoragePermission(this))
+          showBookmarkList();
       } else {
         finish();
+      }
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
+      if (PermissionUtil.verifyPermissions(grantResults)) {
+        showBookmarkList();
+      } else {
+        NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
       }
     }
   }

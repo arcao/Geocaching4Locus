@@ -84,8 +84,8 @@
     <string name="original_coordinates_name">原始坐标</string>
     <string name="pref_title_container_type_filter">容器大小（高级用户）</string>
 
-    <string name="livemap_activated">在线地图已经激活，移动地图后即可看到藏点。</string>
-    <string name="livemap_deactivated">在线地图已经关闭。</string>
+    <string name="livemap_activated">在线地图已启用，移动地图可以看到藏点。</string>
+    <string name="livemap_deactivated">在线地图已禁用。</string>
     <string name="livemap_disabled">您没有在Locus中激活即时更新，请先在Locus中激活：设置 → 其它→ 激活即时更新。</string>
     <string name="error_location_title">定位服务没有激活</string>
     <string name="error_location_settings_button">设置</string>
@@ -106,10 +106,10 @@
 
     <string name="basic_member_warning_title">普通用户接入</string>
     <string name="premium_member_warning_title">高级用户接入</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">您已经用完了每%2$s小时下载%1$s个藏点详细信息的限额，您的每日限额将在%3$s.&lt;br>被重置。
-&lt;br>
-&lt;i>在Geocaching.com上升级为高级用户，每天最多可以下载6000个藏点的详细信息，并能享受更多权益，请访问geocaching.com升级。&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">您已经用完了每24小时下载&lt;b6000个藏点详细信息的限额，您的每日限额将在%3$s重置。</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">您已经用完了每%2$s小时下载%1$s个藏点详细信息的限额，您的每日限额将在%3$s.<br/>被重置。
+<br/>
+<i>在Geocaching.com上升级为高级用户，每天最多可以下载6000个藏点的详细信息，并能享受更多权益，请访问geocaching.com升级。</i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">您已经用完了每24小时下载6000个藏点详细信息的限额，您的每日限额将在%3$s重置。</string>
     <string name="method_quota_exceeded_title">嗨，慢一点！</string>
     <string name="method_quota_exceeded_message">您的“操作/呼叫”已经超过了每分钟允许的操作限制。</string>
 
@@ -134,14 +134,15 @@
     <string name="account_geocaching_live_title">由Geocaching Live提供服务</string>
     <string name="account_geocaching_live_message">这个插件使用Geocaching Live来提供藏点信息，更多信息请点击这里……</string>
     
-    <string name="error_invalid_api_response">Geocaching Live的应答无效：&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live的应答无效：<br/>%s</string>
 
     <string name="livemap_notification_title">Geocaching4Locus 在线地图</string>
     <string name="livemap_notification_message_enabled">在线地图已启用。</string>
     <string name="livemap_notification_message_disabled">在线地图已禁用。</string>
     <string name="livemap_notification_message_downloading">正在下载在线地图藏点：%1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">启用在线地图</string>
-    <string name="livemap_notification_action_disable">禁用在线地图</string>
+    <string name="livemap_notification_action_enable">启用</string>
+    <string name="livemap_notification_action_disable">禁用</string>
+    <string name="livemap_notification_action_settings">设置</string>
     <string name="livemap_error">Geocaching4Locus在线地图: %s</string>
     <string name="pref_livemap_show_disabled_notification">关闭通知</string>
     <string name="pref_livemap_show_disabled_notification_summary">当在线地图被禁用时请提示。此项设置仅在Locus的即时更新启用，且Locus正在运行时生效。</string>
@@ -156,30 +157,63 @@
     <string name="pref_downloading_count_of_caches_step_summary">在选择对话框中改变藏点计数步长</string>
     <string name="premium_member_for_filter_required">有些过滤选项需要有高级用户账号。应用将更改为普通用户模式，请重试。</string>
 
-    <string name="prefs_cat_account">账号</string>
-    <string name="prefs_cat_filter">筛选条件</string>
-    <string name="prefs_cat_live_map">在线地图</string>
-    <string name="prefs_cat_downloading">下载</string>
-    <string name="prefs_cat_advanced">高级</string>
-    <string name="prefs_cat_about">关于</string>
-    <string name="login_title">登录</string>
-    <string name="pref_live_map_download_hints">下载提示</string>
-    <string name="pref_live_map_download_hints_summary">会导致需要更多的数据空间，载入速度也会变慢</string>
-    <string name="pref_feedback">请反馈</string>
-    <string name="error_no_result">无法找到匹配的藏点</string>
-    <string name="error_session_expired">由于长期闲置（超过90天）你已经退出了登录，请重新登录。</string>
-    <string name="launcher_import_bookmarks">导入书签</string>
-    <string name="menu_import_bookmarks">导入书签</string>
+    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+        >账号</string>
+    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+        >筛选条件</string>
+    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+        >在线地图</string>
+    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+        >下载</string>
+    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+        >高级</string>
+    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+        >关于</string>
+    <string name="login_title" comment="Window title for sign in task."
+        >登录</string>
+    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >下载提示</string>
+    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >会导致需要更多的数据空间，载入速度也会变慢</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >请反馈</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >无法找到匹配的藏点</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >由于长期闲置（超过90天）你已经退出了登录，请重新登录。</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >导入书签</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >导入书签</string>
     <string name="import_caches_progress">下载缓存…</string>
-    <string name="error_no_location_permission">该应用程序没有权限访问到的位置服务。</string>
-    <string name="action_import_all">导入所有</string>
-    <string name="premium_feature">此功能只限于付费用户，对不起。</string>
-    <string name="error_title_locus">Locus Map错误</string>
-    <string name="error_send_error_report">发送错误报告</string>
-    <string name="error_report_sent_toast">谢谢你送的错误。</string>
-    <string name="error_continue_locus_map">你想继续使用部分接收到的数据Locus Map？</string>
-    <string name="yes_button">是</string>
-    <string name="no_button">否</string>
-    <string name="basic_member_warning_message">Geocaching.com的付费用户在使用这个插件不会受到功能的限制。普通用户仅可以下载传统藏点，活动藏点和CITO藏点。普通用户仅可以下载上述藏点的基本信息（在线页面信息、提示、日志等，无法下载属性信息或图片）。普通用户使用搜索的条件也受到限制。更多信息，请访问Geocaching4Locus网站。</string>
-    <string name="basic_member_warning_button_manual">查看操作手册</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >该应用程序没有权限访问到的位置服务。</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >导入所有</string>
+    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >此功能只限于付费用户，对不起。</string>
+    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+        >Locus Map错误</string>
+    <string name="error_send_error_report" comment="Button for Send error report action."
+        >发送错误报告</string>
+    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >谢谢你送的错误。</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >你想继续使用部分接收到的数据Locus Map？</string>
+    <string name="yes_button" comment="Button for Yes action."
+        >是</string>
+    <string name="no_button" comment="Button for No action."
+        >否</string>
+    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Geocaching.com的付费用户在使用这个插件不会受到功能的限制。普通用户仅可以下载传统藏点，活动藏点和CITO藏点。普通用户仅可以下载上述藏点的基本信息（在线页面信息、提示、日志等，无法下载属性信息或图片）。普通用户使用搜索的条件也受到限制。更多信息，请访问Geocaching4Locus网站。</string>
+    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >查看操作手册</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
+        >这个应用需要<b>写入外部存储</b> 权限，用来为Locus地图的藏点数据排序。请在下一个对话窗口中点击<b>允许</b> 。</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
+        >应用没有<b>写入外部存储</b> 权限，请许可权限，用来为Locus地图的藏点数据排序。</string>
+    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >禁用时隐藏藏点</string>
+    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >当在线地图功能禁用时，隐藏在线地图显示的藏点</string>
 </resources>

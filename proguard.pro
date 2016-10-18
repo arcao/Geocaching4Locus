@@ -3,23 +3,7 @@
 -verbose
 
 #prevent severe obfuscation
--keep,allowshrinking,allowoptimization class * { <methods>; }
-
--keepclasseswithmembernames,allowshrinking,allowoptimization class * {
-    native <methods>;
-}
-
--keepclasseswithmembers,allowshrinking,allowoptimization class * {
-	public <init>(android.content.Context);
-    public <init>(android.content.Context,android.util.AttributeSet);
-    public <init>(android.content.Context,android.util.AttributeSet,int);
-}
-
--keepclassmembers,allowoptimization class * {
-    public <init>(android.content.Context);
-    public <init>(android.content.Context,android.util.AttributeSet);
-    public <init>(android.content.Context,android.util.AttributeSet,int);
-}
+-keep,allowshrinking class * { <methods>; }
 
 # For Crashlytics
 -keep class com.crashlytics.** { *; }

@@ -18,12 +18,14 @@ import com.arcao.geocaching4locus.SettingsActivity;
 import com.arcao.geocaching4locus.authentication.helper.AccountRestrictions;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.preference.AccountsPreferenceFragment;
+import com.arcao.geocaching4locus.util.HtmlUtil;
 import com.arcao.geocaching4locus.util.ResourcesUtil;
 import com.arcao.wherigoservice.api.WherigoServiceException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import org.apache.commons.lang3.StringUtils;
+import org.oshkimaadziig.george.androidutils.SpanFormatter;
 import org.scribe.exceptions.OAuthConnectionException;
 import timber.log.Timber;
 public class ExceptionHandler {
@@ -38,12 +40,12 @@ public class ExceptionHandler {
 		Timber.e(t, t.getMessage());
 
 		Intent positiveAction = null;
-		String baseMessage = "%s";
+		CharSequence baseMessage = "%s";
 
 		if (t instanceof IntendedException) {
 			positiveAction = ((IntendedException) t).getIntent();
 			t = t.getCause();
-			baseMessage = "%s<br /><br />" + ResourcesUtil.getHtmlString(mContext, R.string.error_continue_locus_map);
+			baseMessage = SpanFormatter.format(HtmlUtil.fromHtml("%%s<br /><br />%s"), mContext.getText(R.string.error_continue_locus_map));
 		}
 
 		// special handling for some API exceptions
@@ -81,7 +83,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof InvalidResponseException) {
 			return builder
-					.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_invalid_api_response, t.getMessage()))
+					.setMessage(baseMessage, ResourcesUtil.getText(mContext, R.string.error_invalid_api_response, t.getMessage()))
 					.setException(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
@@ -90,7 +92,7 @@ public class ExceptionHandler {
 					.build();
 		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
-			builder.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.error_network));
+			builder.setMessage(baseMessage, mContext.getText(R.string.error_network));
 
 			// Allow sending error report for exceptions that not caused by timeout or unknown host
 			Throwable innerT = t.getCause();
@@ -110,13 +112,13 @@ public class ExceptionHandler {
 
 			return builder
 					.setTitle(R.string.error_title_locus)
-					.setMessage(String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.setMessage(SpanFormatter.format(HtmlUtil.fromHtml("%s<br>Exception: %s"), message, t.getClass().getSimpleName()))
 					.setException(t)
 					.build();
 		} else {
 			String message = StringUtils.defaultString(t.getMessage());
 			return builder
-					.setMessage(baseMessage, String.format("%s<br>Exception: %s", message, t.getClass().getSimpleName()))
+					.setMessage(baseMessage, SpanFormatter.format(HtmlUtil.fromHtml("%s<br>Exception: %s"), message, t.getClass().getSimpleName()))
 					.setException(t)
 					.build();
 		}
@@ -129,7 +131,7 @@ public class ExceptionHandler {
 				|| message.contains("Connection timed out"));
 	}
 
-	private Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction, String baseMessage) {
+	private Intent handleLiveGeocachingApiExceptions(LiveGeocachingApiException t, Intent positiveAction, CharSequence baseMessage) {
 		AccountRestrictions restrictions = App.get(mContext).getAuthenticatorHelper().getRestrictions();
 		ErrorActivity.IntentBuilder builder = new ErrorActivity.IntentBuilder(mContext);
 
@@ -151,9 +153,9 @@ public class ExceptionHandler {
 					periodString = mContext.getResources().getQuantityString(R.plurals.plurals_hour, period, period);
 				}
 
-				String renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
-				String cacheString = mContext.getResources().getQuantityString(R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
-				String errorText = ResourcesUtil.getHtmlString(mContext, message, cacheString, periodString, renewTime);
+				CharSequence renewTime = DateFormat.getTimeFormat(mContext).format(restrictions.getRenewFullGeocacheLimit());
+				CharSequence cacheString = ResourcesUtil.getQuantityText(mContext, R.plurals.plurals_cache, cachesPerPeriod, cachesPerPeriod);
+				CharSequence errorText = ResourcesUtil.getText(mContext, message, cacheString, periodString, renewTime);
 
 				builder
 							.setTitle(title)
@@ -171,7 +173,7 @@ public class ExceptionHandler {
 			case NumberOfCallsExceeded: // 140: too many method calls per minute
 				builder
 						.setTitle(R.string.method_quota_exceeded_title)
-						.setMessage(baseMessage, ResourcesUtil.getHtmlString(mContext, R.string.method_quota_exceeded_message));
+						.setMessage(baseMessage, mContext.getText(R.string.method_quota_exceeded_message));
 
 				if (positiveAction != null) {
 					builder

@@ -24,6 +24,7 @@ import com.arcao.geocaching4locus.util.ResourcesUtil;
 import com.crashlytics.android.Crashlytics;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
+import org.oshkimaadziig.george.androidutils.SpanFormatter;
 import timber.log.Timber;
 
 public class ErrorActivity extends AppCompatActivity {
@@ -172,8 +173,8 @@ public class ErrorActivity extends AppCompatActivity {
 			return this;
 		}
 
-		public IntentBuilder setMessage(String message, Object... params) {
-			this.message = HtmlUtil.fromHtml(String.format(message, params));
+		public IntentBuilder setMessage(CharSequence message, Object... params) {
+			this.message = SpanFormatter.format(message, params);
 			return this;
 		}
 

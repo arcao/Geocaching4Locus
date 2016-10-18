@@ -52,7 +52,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 	protected CharSequence preparePreferenceSummary(CharSequence value, int resId) {
 		CharSequence summary = null;
 		if (resId != 0)
-			summary = getString(resId);
+			summary = getText(resId);
 
 		if (value != null && value.length() > 0)
 			return SpanFormatter.format("%s %s", stylizedValue(value), StringUtils.defaultIfEmpty(summary, ""));

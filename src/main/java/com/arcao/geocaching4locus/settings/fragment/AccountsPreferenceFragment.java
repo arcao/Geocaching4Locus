@@ -7,10 +7,9 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
-import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
+import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
-import com.arcao.geocaching4locus.base.util.HtmlUtil;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 
 public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
@@ -65,7 +64,6 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 	}
 
 	private CharSequence prepareAccountSummary(CharSequence value) {
-		String summary = ResourcesUtil.getHtmlString(getActivity(), R.string.pref_logout_summary);
-		return HtmlUtil.fromHtml(String.format(summary, "<font color=\"#FF8000\"><b>" + value.toString() + "</b></font>"));
+		return ResourcesUtil.getText(getActivity(), R.string.pref_logout_summary, stylizedValue(value));
 	}
 }

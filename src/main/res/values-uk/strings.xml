@@ -84,8 +84,8 @@
     <string name="original_coordinates_name">Початкові координати</string>
     <string name="pref_title_container_type_filter">Розмір контейнера (преміум користувач)</string>
 
-    <string name="livemap_activated">Жива карта активована. Зараз можна переміщуватися по карті, щоб побачити кеш.</string>
-    <string name="livemap_deactivated">Жива карта деактивована.</string>
+    <string name="livemap_activated">Жива мапа включена. Тепер переходимо з картою, щоб побачити тайники.</string>
+    <string name="livemap_deactivated">Жива мапа вимкнена.</string>
     <string name="livemap_disabled">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
     <string name="error_location_title">Послуга розташування не дозволена</string>
     <string name="error_location_settings_button">Налаштування</string>
@@ -106,10 +106,10 @@
 
     <string name="basic_member_warning_title">Доступ базового користувача</string>
     <string name="premium_member_warning_title">Доступ преміум користувача</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації &lt;b>%1$s за %2$s &lt;/b>. Ваша щоденна квота буде обнулена о %3$s.&lt;br>
-&lt;br>
-&lt;i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. &lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Ви досягнули обмеження для завантаження повної інформації &lt;b>6000 кешів за 24 години&lt;/b> Ваша щоденна квота буде обнулена о %3$s.</string>
+    <string name="basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації <b>%1$s за %2$s </b>. Ваша щоденна квота буде обнулена о %3$s.<br/>
+<br/>
+<i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. </i></string>
+    <string name="premium_member_full_geocaching_quota_exceeded_message">Ви досягнули обмеження для завантаження повної інформації <b>6000 кешів за 24 години</b> Ваша щоденна квота буде обнулена о %3$s.</string>
     <string name="method_quota_exceeded_title">Гей, повільніше!</string>
     <string name="method_quota_exceeded_message">Ви досягнули обмеження на максимальну кількість дій/дзвінків за хвилину.</string>
 
@@ -134,14 +134,15 @@
     <string name="account_geocaching_live_title">Підтримується Geocaching Live</string>
     <string name="account_geocaching_live_message">Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
     
-    <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:&lt;br>%s</string>
+    <string name="error_invalid_api_response">Geocaching Live  повертає невірну відповідь:<br/>%s</string>
 
     <string name="livemap_notification_title">Жива мапа Geocaching4Locus</string>
     <string name="livemap_notification_message_enabled">Жива мапа увімкнена.</string>
     <string name="livemap_notification_message_disabled">Жива мапа вимкнена.</string>
     <string name="livemap_notification_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Увімкнути живу мапу</string>
-    <string name="livemap_notification_action_disable">Вимкнути живу мапу</string>
+    <string name="livemap_notification_action_enable">Увімкнути</string>
+    <string name="livemap_notification_action_disable">Вимкнути</string>
+    <string name="livemap_notification_action_settings">Налаштування</string>
     <string name="livemap_error">Жива мапа Geocaching4Locus: %s</string>
     <string name="pref_livemap_show_disabled_notification">Сповіщення вимкнено</string>
     <string name="pref_livemap_show_disabled_notification_summary">Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
@@ -156,30 +157,63 @@
     <string name="pref_downloading_count_of_caches_step_summary">Змінити розмір кешу обраного діялоґу</string>
     <string name="premium_member_for_filter_required">Деякі фільтри потребують преміюм-акаунт, який Ви не маєте. Застосунок перемикається на основний режим. Будь ласка, спробуйте ще раз.</string>
 
-    <string name="prefs_cat_account">Акаунт</string>
-    <string name="prefs_cat_filter">Фільтр</string>
-    <string name="prefs_cat_live_map">Жива карта</string>
-    <string name="prefs_cat_downloading">Завантаження…</string>
-    <string name="prefs_cat_advanced">Додатково</string>
-    <string name="prefs_cat_about">Про</string>
-    <string name="login_title">Увійти</string>
-    <string name="pref_live_map_download_hints">Стягнути поради</string>
-    <string name="pref_live_map_download_hints_summary">Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
-    <string name="pref_feedback">Надіслати відозву</string>
-    <string name="error_no_result">Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
-    <string name="error_session_expired">У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
-    <string name="launcher_import_bookmarks">Імпорт закладок</string>
-    <string name="menu_import_bookmarks">Імпорт закладок</string>
+    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+        >Акаунт</string>
+    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+        >Фільтр</string>
+    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+        >Жива карта</string>
+    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+        >Завантаження…</string>
+    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+        >Додатково</string>
+    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+        >Про</string>
+    <string name="login_title" comment="Window title for sign in task."
+        >Увійти</string>
+    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+        >Стягнути поради</string>
+    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+        >Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
+        >Надіслати відозву</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
+        >Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >У зв\'язку з тривалим байдикуванням (більше 90 днів), Ви вийшли з системи. Будь ласка, увійдіть знову.</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
+        >Імпорт закладок</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
+        >Імпорт закладок</string>
     <string name="import_caches_progress">Завантаження кешу…</string>
-    <string name="error_no_location_permission">Додаток не має дозволу на доступ до служби місцезнаходження.</string>
-    <string name="action_import_all">Імпортувати всі</string>
-    <string name="premium_feature">Ця функція призначена для елітних членів тільки, вибачте.</string>
-    <string name="error_title_locus">Помилка Locus Map</string>
-    <string name="error_send_error_report">Відправити звіт про помилку</string>
-    <string name="error_report_sent_toast">Спасибі за відправку помилку.</string>
-    <string name="error_continue_locus_map">Ви хочете продовжити з частково отриманих даних в Locus Map?</string>
-    <string name="yes_button">Так</string>
-    <string name="no_button">Ні</string>
-    
-    
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
+        >Додаток не має дозволу на доступ до служби місцезнаходження.</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
+        >Імпортувати всі</string>
+    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+        >Ця функція призначена для елітних членів тільки, вибачте.</string>
+    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+        >Помилка Locus Map</string>
+    <string name="error_send_error_report" comment="Button for Send error report action."
+        >Відправити звіт про помилку</string>
+    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+        >Спасибі за відправку помилку.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
+        >Ви хочете продовжити з частково отриманих даних в Locus Map?</string>
+    <string name="yes_button" comment="Button for Yes action."
+        >Так</string>
+    <string name="no_button" comment="Button for No action."
+        >Ні</string>
+    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Це розширення повністю працює тільки з преміум-членство. В якості основного елемента ви можете завантажити традиційні, події і ЦІТО тайники з базової інфо (он-лайн список, натяк на он-лайн список, ніяких ознак, ніяких зображень, не входить в систему он-лайн лістингу, і т.д.) і використовувати лише деякі фільтри в пошуку схованок. Для отримання додаткової інформації, будь ласка, прочитайте інструкцію на сайті Geocaching4Locus.</string>
+    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+        >Покажіть мені інструкцію</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
+        >Застосування вимагає дозвіл <b>записи зовнішній пристрій</b> для зберігання даних схованок для Locus Map. Будь ласка, <b>дозвольте</b> це дозвіл в наступному діалоговому вікні.</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
+        >Застосування не має дозволу на <b>записи зовнішній пристрій</b>. Цей дозвіл необхідно для зберігання даних геокешинга для Locus Map.</string>
+    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Приховати тайники на інвалідів</string>
+    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+        >Приховати тайники живої мапи при відключенні Жива мапа функції</string>
 </resources>

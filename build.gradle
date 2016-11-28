@@ -4,7 +4,7 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.1'
+        classpath 'com.android.tools.build:gradle:2.2.2'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
         classpath 'io.fabric.tools:gradle:1.22.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -24,11 +24,11 @@ repositories {
 
 dependencies {
     // from Android local maven repository
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:cardview-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:2.0.1') {
@@ -83,8 +83,8 @@ if (!project.hasProperty('geocachingApiStaging')) {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.1'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -94,7 +94,7 @@ android {
 
     defaultConfig {
         minSdkVersion hasProperty('devMinSdk') ? devMinSdk.toInteger() : 15
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode gitVersionCode()
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'

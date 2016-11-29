@@ -30,7 +30,7 @@ public class GeocachingApiFactory {
 		return jsonDownloader;
 	}
 
-	private static OkHttpClient getOkHttpClient() {
+	public static OkHttpClient getOkHttpClient() {
 		if (client == null) {
 			GeocachingApiConfiguration apiConfiguration = getApiConfiguration();
 			client = new OkHttpClient.Builder()

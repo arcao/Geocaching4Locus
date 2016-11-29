@@ -24,6 +24,7 @@ import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.oauth.OAuth10aService;
+import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
 
 import java.lang.ref.WeakReference;
 
@@ -48,6 +49,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 						.apiKey(BuildConfig.GEOCACHING_API_KEY)
 						.apiSecret(BuildConfig.GEOCACHING_API_SECRET)
 						.callback(AppConstants.OAUTH_CALLBACK_URL)
+						.httpClient(new OkHttpHttpClient(GeocachingApiFactory.getOkHttpClient()))
 						.debug();
 
 		if (BuildConfig.GEOCACHING_API_STAGING) {
@@ -65,14 +67,14 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		AccountRestrictions accountRestrictions = helper.getRestrictions();
 
 		if (params.length == 0) {
-			OAuth1RequestToken requestToken = service.getRequestToken();
+			OAuth1RequestToken requestToken = service.getRequestTokenAsync(null).get();
 			helper.setOAuthRequestToken(requestToken);
 			String authUrl = service.getAuthorizationUrl(requestToken);
 			Timber.i("AuthorizationUrl: " + authUrl);
 			return new String[]{authUrl};
 		} else {
 			OAuth1RequestToken requestToken = helper.getOAuthRequestToken();
-			OAuth1AccessToken accessToken = service.getAccessToken(requestToken, params[0]);
+			OAuth1AccessToken accessToken = service.getAccessTokenAsync(requestToken, params[0], null).get();
 
 			// get account name
 			GeocachingApi api = GeocachingApiFactory.create();

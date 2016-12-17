@@ -1,13 +1,8 @@
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
+-optimizations !field/*,!class/merging/*,!code/allocation/variable
 -optimizationpasses 6
--verbose
 
 #prevent severe obfuscation
 -keep,allowshrinking class * { <methods>; }
-
-# For Crashlytics
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
 
 # For Feedback info from Locus Map
 -keepnames class locus.api.android.utils.LocusInfo {
@@ -29,17 +24,6 @@
 
 -keep class com.arcao.geocaching4locus.fragment.**
 
-# ButterKnife support
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
--keep class **$$ViewBinder { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
-
 # OkHTTP
 -dontwarn okio.**
 
@@ -47,9 +31,6 @@
 -dontwarn com.github.scribejava.core.services.DatatypeConverterEncoder
 -dontwarn org.apache.commons.codec.binary.**
 -dontwarn com.ning.http.client.**
-
-# SLF4J
--dontwarn org.slf4j.**
 
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable #needed
@@ -65,3 +46,21 @@
 
 # Bugfix on some devices with java.lang.NoSuchMethodError
 -keepnames class org.apache.commons.lang3.** { *; }
+
+# Suppress duplicate warning for system classes;  Blaze is passing android.jar
+# to proguard multiple times.
+-dontnote android.**
+-dontnote java.**
+-dontnote javax.**
+-dontnote junit.**
+-dontnote org.**
+-dontnote dalvik.**
+-dontnote com.android.internal.**
+
+# Suppress other notes
+-dontnote com.android.**
+-dontnote com.google.android.gms.**
+-dontnote com.google.gson.internal.**
+-dontnote okhttp3.internal.platform.Platform
+-dontnote com.afollestad.materialdialogs.internal.MDTintHelper
+-dontnote com.arcao.feedback.collector.DisplayManagerCollector

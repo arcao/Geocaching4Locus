@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.UserProfile;
@@ -25,9 +24,7 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
-
 import java.lang.ref.WeakReference;
-
 import timber.log.Timber;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {

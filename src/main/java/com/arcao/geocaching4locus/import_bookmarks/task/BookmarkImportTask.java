@@ -32,7 +32,7 @@ import java.util.List;
 
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
@@ -59,7 +59,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
   protected Boolean doInBackground(String... params) throws Exception {
     AccountManager accountManager = App.get(mContext).getAccountManager();
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-    LocusDataMapper mapper = new LocusDataMapper(mContext);
+    DataMapper mapper = new DataMapper(mContext);
 
     GeocachingApi api = GeocachingApiFactory.create();
     GeocachingApiLoginTask.create(mContext, api).perform();
@@ -125,7 +125,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
           break;
 
         PackWaypoints pw = new PackWaypoints("BookmarkImport");
-        List<Waypoint> waypoints = mapper.toLocusPoints(cachesToAdd);
+        List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
 
         for (Waypoint wpt : waypoints) {
           if (simpleCacheData) {

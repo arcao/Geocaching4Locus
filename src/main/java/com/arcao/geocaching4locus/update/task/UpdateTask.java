@@ -25,6 +25,7 @@ import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.arcao.geocaching4locus.update.task.UpdateTask.UpdateTaskData;
 
+import locus.api.mapper.WaypointMerger;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
@@ -33,9 +34,11 @@ import java.util.List;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
+
+import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
 
 public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData> {
 
@@ -52,12 +55,14 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 	private final WeakReference<TaskListener> mTaskListenerRef;
 	private final Context mContext;
-	private final LocusDataMapper mMapper;
+	private final DataMapper mMapper;
+	private final WaypointMerger mMerger;
 
 	public UpdateTask(Context context, TaskListener listener) {
 		mContext = context.getApplicationContext();
 		mTaskListenerRef = new WeakReference<>(listener);
-		mMapper = new LocusDataMapper(mContext);
+		mMapper = new DataMapper(mContext);
+		mMerger = new WaypointMerger(mContext);
 	}
 
 	@Override
@@ -84,11 +89,11 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 		}
 
 		if (result.updateLogs && !downloadLogsUpdateCache) {
-			mMapper.mergeCacheLogs(result.oldPoint, result.newPoint);
-			mMapper.applyUnavailabilityForGeocache(result.oldPoint);
+			mMerger.mergeGeocachingLogs(result.oldPoint, result.newPoint);
+			applyUnavailabilityForGeocache(prefs, result.oldPoint);
 			result.newPoint = result.oldPoint;
 		} else {
-			mMapper.mergePoints(result.newPoint, result.oldPoint);
+			mMerger.mergeWaypoint(result.newPoint, result.oldPoint);
 
 			if (replaceCache) {
 				result.newPoint.removeExtraOnDisplay();
@@ -165,7 +170,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 			if (isCancelled())
 				return null;
 
-			result.newPoint = mMapper.toLocusPoint(cache);
+			result.newPoint = mMapper.createLocusWaypoint(cache);
 
 			if (basicMember) {
 				// add trackables

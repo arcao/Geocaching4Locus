@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference;
 
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
@@ -71,7 +71,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 	protected Boolean doInBackground(String... params) throws Exception {
 		AccountManager accountManager = App.get(mContext).getAccountManager();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		LocusDataMapper mapper = new LocusDataMapper(mContext);
+		DataMapper mapper = new DataMapper(mContext);
 
 		String cacheId = params[0];
 
@@ -108,7 +108,7 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 			try {
 				writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream(mContext));
 
-				Waypoint waypoint = mapper.toLocusPoint(cache);
+				Waypoint waypoint = mapper.createLocusWaypoint(cache);
 				PackWaypoints pack = new PackWaypoints("import");
 				pack.addWaypoint(waypoint);
 

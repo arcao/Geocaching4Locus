@@ -48,7 +48,7 @@ import java.util.Vector;
 
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
@@ -102,7 +102,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     Timber.i("source=search;coordinates=" + mCoordinates + ";count=" + mCount);
 
     AccountManager accountManager = App.get(mContext).getAccountManager();
-    LocusDataMapper mapper = new LocusDataMapper(mContext);
+    DataMapper mapper = new DataMapper(mContext);
     ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName(mContext));
 
     StoreableWriter writer = null;
@@ -154,7 +154,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         }
 
         PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-        List<Waypoint> waypoints = mapper.toLocusPoints(cachesToAdd);
+        List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
 
         for (Waypoint wpt : waypoints) {
           if (simpleCacheData) {

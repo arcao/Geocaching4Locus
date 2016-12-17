@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class BadBBCodeFixer {
+final class BadBBCodeFixer {
 	private static final Map<Pattern, String> BBCODE_MAP = new HashMap<>();
 	private static final int BBCODE_PATTERN_FLAGS = Pattern.CASE_INSENSITIVE | Pattern.DOTALL;
 
@@ -17,7 +17,10 @@ public class BadBBCodeFixer {
 		BBCODE_MAP.put(Pattern.compile("\\[url=(.+?)\\](.+?)\\[/url=[^\\]]+\\]", BBCODE_PATTERN_FLAGS), "<a href='$1'>$2</a>");
 	}
 
-	public static String fix(String text) {
+	private BadBBCodeFixer() {
+	}
+
+	static String fix(String text) {
 		if (text == null)
 			return null;
 

@@ -46,7 +46,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
@@ -197,7 +197,7 @@ public class LiveMapService extends IntentService {
 	private void sendCaches(double latitude, double longitude, double topLeftLatitude, double topLeftLongitude, double bottomRightLatitude, double bottomRightLongitude) throws GeocachingApiException, RequiredVersionMissingException {
 		AccountManager accountManager = App.get(this).getAccountManager();
 		LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
-		LocusDataMapper mapper = new LocusDataMapper(this);
+		DataMapper mapper = new DataMapper(this);
 
 		int current = 0;
 		int requests = 0;
@@ -253,7 +253,7 @@ public class LiveMapService extends IntentService {
 
 				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + requests);
 				for (Geocache cache : caches) {
-					Waypoint wpt = mapper.toLocusPoint(cache);
+					Waypoint wpt = mapper.createLocusWaypoint(cache);
 					if (wpt == null)
 						continue;
 

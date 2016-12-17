@@ -29,7 +29,8 @@ import java.util.Locale;
 
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
-import locus.api.mapper.LocusDataMapper;
+import locus.api.mapper.DataMapper;
+import locus.api.mapper.WaypointMerger;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
@@ -67,7 +68,8 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 	protected Boolean doInBackground(long[]... params) throws Exception {
 		AccountManager accountManager = App.get(mContext).getAccountManager();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		LocusDataMapper mapper = new LocusDataMapper(mContext);
+		DataMapper mapper = new DataMapper(mContext);
+		WaypointMerger merger = new WaypointMerger(mContext);
 
 		LocusUtils.LocusVersion locusVersion;
 		try {
@@ -118,14 +120,14 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 				if (cachesToAdd.isEmpty())
 					break;
 
-				List<Waypoint> points = mapper.toLocusPoints(cachesToAdd);
+				List<Waypoint> points = mapper.createLocusWaypoints(cachesToAdd);
 				for (Waypoint p : points) {
 					if (p == null || p.gcData == null)
 						continue;
 
 					// Geocaching API can return caches in a different order
 					Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
-					mapper.mergePoints(p, oldPoint);
+					merger.mergeWaypoint(p, oldPoint);
 
 					// update new point data in Locus
 					ActionTools.updateLocusWaypoint(mContext, locusVersion, p, false);

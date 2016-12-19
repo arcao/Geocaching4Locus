@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="downloading">下载藏点……</string>
+    <string name="progress_download_geocaches">下载藏点……</string>
     <string name="error_locus_not_found">没有找到Locus Map应用，Geocaching4Locus需要依靠Locus Map才能正常工作。请先安装Locus Map。</string>
-    <string name="error_location">请在“设置”中允许无线设备或GPS的定位功能。</string>
-    <string name="acquiring_gps_location">正在从GPS获取位置信息</string>
-    <string name="acquiring_network_location">正在从无线网络中获取位置信息……</string>
+    <string name="error_location_disabled">请在“设置”中允许无线设备或GPS的定位功能。</string>
+    <string name="progress_acquire_gps_location">正在从GPS获取位置信息</string>
+    <string name="progress_acquire_network_location">正在从无线网络中获取位置信息……</string>
     
-    <string name="preferences">偏好设置</string>
-    <string name="wrong_coordinates">坐标格式错误</string>
-    <string name="coordinates">坐标</string>
+    <string name="action_settings">偏好设置</string>
+    <string name="error_coordinates_format">坐标格式错误</string>
+    <string name="title_coordinates">坐标</string>
     
     <string name="pref_distance">距离</string>
     <string name="pref_distance_summary_km">距离（公里）</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">英制单位</string>
     <string name="pref_imperial_units_summary">用英里代替公里</string>
     
-    <string name="error_credentials">无效的用户名或密码，请在偏好设置中查看您的登录状态。</string>
+    <string name="error_no_account">无效的用户名或密码，请在偏好设置中查看您的登录状态。</string>
 
-    <string name="ok_button">确定</string>
+    <string name="button_ok">确定</string>
     
-    <string name="error_locus_old">您安装的Locus版本过低。Geocaching4Locus需要%s或更高的版本才能正常工作。</string>
+    <string name="error_old_locus_map">您安装的Locus版本过低。Geocaching4Locus需要%s或更高的版本才能正常工作。</string>
     
-    <string name="cancel_button">取消</string>
+    <string name="button_cancel">取消</string>
     
     <string name="pref_show_found">显示找到的</string>
     <string name="pref_show_found_summary">显示找到的藏点</string>
     <string name="pref_show_own">显示自己藏的</string>
     <string name="pref_show_own_summary">显示自己的藏点（你藏的）</string>
-    <string name="pref_menu_select_all">全选</string>
-    <string name="pref_menu_deselect_all">全不选</string>
+    <string name="menu_select_all">全选</string>
+    <string name="menu_deselect_all">全不选</string>
     
-    <string name="update_cache_progress">正在更新藏点……</string>
+    <string name="progress_update_geocache">正在更新藏点……</string>
     
-    <string name="pref_count_of_logs">日志计数</string>
-    <string name="pref_count_of_logs_summary">和藏点一起下载的日志计数</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">日志计数</string>
+    <string name="pref_logs_count_summary">和藏点一起下载的日志计数</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">显示失效的</string>
     <string name="pref_show_disabled_summary">显示暂时失效的藏点</string>
     
-    <string name="import_cache_progress">正在下载藏点……</string>
+    <string name="progress_import_geocache">正在下载藏点……</string>
     
     <string name="pref_version">版本</string>
     <string name="pref_website">网站，论坛，等等</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">支持今后的开发…</string>
     <string name="pref_donate_paypal_choose_currency">请选择您的货币类型</string>
     
-    <string name="pref_title_cache_type_filter">藏点类型（高级用户）</string>
-    <string name="pref_title_difficulty_filter">总体难度（高级用户）</string>
-    <string name="pref_title_terrain_filter">地形难度（高级用户）</string>
+    <string name="pref_geocache_type">藏点类型（高级用户）</string>
+    <string name="pref_difficulty">总体难度（高级用户）</string>
+    <string name="pref_terrain">地形难度（高级用户）</string>
     <string name="pref_difficulty_min">最低难度</string>
     <string name="pref_difficulty_max">最高难度</string>
     <string name="pref_terrain_min">最低地形难度</string>
@@ -68,52 +68,52 @@
     <string name="menu_live_map">在线地图</string>
     <string name="menu_nearest">最近的</string>
     <string name="menu_manual">帮助手册</string>
-    <string name="menu_preferences">偏好设置</string>
+    <string name="menu_settings">偏好设置</string>
     
-    <string name="user_waypoint_name">用户航点%1$d</string>
-    <string name="final_location_name">最终位置</string>
+    <string name="var_user_waypoint_name">用户航点%1$d</string>
+    <string name="var_final_location_name">最终位置</string>
     
-    <string name="pref_account_login">登录</string>
-    <string name="pref_account_login_summary">登录Geocaching.com账号</string>
-    <string name="pref_account_logout">退出</string>
-    <string name="pref_account_logout_summary">作为%s登录</string>
+    <string name="pref_login">登录</string>
+    <string name="pref_login_summary">登录Geocaching.com账号</string>
+    <string name="pref_logout">退出</string>
+    <string name="pref_logout_summary">作为%s登录</string>
 
-    <string name="error_network">网络无法连接，请检查你的网络。</string>
+    <string name="error_network_unavailable">网络无法连接，请检查你的网络。</string>
 
-    <string name="update_caches_progress">藏点更新中……</string>
-    <string name="original_coordinates_name">原始坐标</string>
-    <string name="pref_title_container_type_filter">容器大小（高级用户）</string>
+    <string name="progress_update_geocaches">藏点更新中……</string>
+    <string name="var_original_coordinates_name">原始坐标</string>
+    <string name="pref_container_size">容器大小（高级用户）</string>
 
-    <string name="livemap_activated">在线地图已经激活，移动地图后即可看到藏点。</string>
-    <string name="livemap_deactivated">在线地图已经关闭。</string>
-    <string name="livemap_disabled">您没有在Locus中激活即时更新，请先在Locus中激活：设置 → 其它→ 激活即时更新。</string>
-    <string name="error_location_title">定位服务没有激活</string>
-    <string name="error_location_settings_button">设置</string>
+    <string name="toast_live_map_enabled">在线地图已经激活，移动地图后即可看到藏点。</string>
+    <string name="toast_live_map_disabled">在线地图已经关闭。</string>
+    <string name="error_live_map_periodic_updates">您没有在Locus中激活即时更新，请先在Locus中激活：设置 → 其它→ 激活即时更新。</string>
+    <string name="error_location_not_allowed">定位服务没有激活</string>
+    <string name="button_settings">设置</string>
     
     <string name="menu_import_from_gc">导入藏点</string>
-    <string name="dialog_gc_number_input_title">通过GC号导入</string>
-    <string name="error_input_gc">无效GC号</string>
-    <string name="error_cache_not_found">没有找到藏点%s </string>
+    <string name="title_import_from_gc">通过GC号导入</string>
+    <string name="error_gc_code_invalid">无效GC号</string>
+    <string name="error_geocache_not_found">没有找到藏点%s </string>
     
-    <string name="dialog_count_of_caches_title">藏点计数</string>
-    <string name="launcher_nearest_caches">最近的藏点</string>
-    <string name="launcher_import_cache">将藏点导入Locus</string>
-    <string name="launcher_update_cache">更新藏点</string>    
-    <string name="launcher_update_more_caches">更新藏点</string>
+    <string name="title_geocache_count">藏点计数</string>
+    <string name="launcher_nearest_geocaches">最近的藏点</string>
+    <string name="launcher_import_geocache">将藏点导入Locus</string>
+    <string name="launcher_update_geocache">更新藏点</string>
+    <string name="launcher_update_geocaches">更新藏点</string>
     <string name="launcher_import_from_gc">通过GC号导入</string>
     
     <string name="title_count_of_caches">藏点计数</string>
 
-    <string name="basic_member_warning_title">普通用户接入</string>
-    <string name="premium_member_warning_title">高级用户接入</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">您已经用完了每%2$s小时下载%1$s个藏点详细信息的限额，您的每日限额将在%3$s.&lt;br>被重置。
+    <string name="title_basic_member_warning">普通用户接入</string>
+    <string name="title_premium_member_warning">高级用户接入</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">您已经用完了每%2$s小时下载%1$s个藏点详细信息的限额，您的每日限额将在%3$s.&lt;br>被重置。
 &lt;br>
 &lt;i>在Geocaching.com上升级为高级用户，每天最多可以下载6000个藏点的详细信息，并能享受更多权益，请访问geocaching.com升级。&lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">您已经用完了每24小时下载&lt;b6000个藏点详细信息的限额，您的每日限额将在%3$s重置。</string>
-    <string name="method_quota_exceeded_title">嗨，慢一点！</string>
-    <string name="method_quota_exceeded_message">您的“操作/呼叫”已经超过了每分钟允许的操作限制。</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">您已经用完了每24小时下载&lt;b6000个藏点详细信息的限额，您的每日限额将在%3$s重置。</string>
+    <string name="title_method_quota_exceeded">嗨，慢一点！</string>
+    <string name="error_method_quota_exceeded">您的“操作/呼叫”已经超过了每分钟允许的操作限制。</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d 个藏点</item>
         <item quantity="few">%d 个藏点</item>
         <item quantity="other">%d 个藏点</item>
@@ -131,53 +131,55 @@
         <item quantity="other">%d 分钟</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">由Geocaching Live提供服务</string>
-    <string name="account_geocaching_live_message">这个插件使用Geocaching Live来提供藏点信息，更多信息请点击这里……</string>
+    <string name="pref_geocaching_live">由Geocaching Live提供服务</string>
+    <string name="pref_geocaching_live_message">这个插件使用Geocaching Live来提供藏点信息，更多信息请点击这里……</string>
     
     <string name="error_invalid_api_response">Geocaching Live的应答无效：&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus 在线地图</string>
-    <string name="livemap_notification_message_enabled">在线地图已启用。</string>
-    <string name="livemap_notification_message_disabled">在线地图已禁用。</string>
-    <string name="livemap_notification_message_downloading">正在下载在线地图藏点：%1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">启用在线地图</string>
-    <string name="livemap_notification_action_disable">禁用在线地图</string>
-    <string name="livemap_error">Geocaching4Locus在线地图: %s</string>
-    <string name="pref_livemap_show_disabled_notification">关闭通知</string>
-    <string name="pref_livemap_show_disabled_notification_summary">当在线地图被禁用时请提示。此项设置仅在Locus的即时更新启用，且Locus正在运行时生效。</string>
-    <string name="pref_cache_type_all">所有</string>
+    <string name="notify_live_map">Geocaching4Locus 在线地图</string>
+    <string name="notify_live_map_message_enabled">在线地图已启用。</string>
+    <string name="notify_live_map_message_disabled">在线地图已禁用。</string>
+    <string name="notify_live_map_message_downloading">正在下载在线地图藏点：%1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">启用在线地图</string>
+    <string name="notify_live_map_action_disable">禁用在线地图</string>
+    <string name="error_live_map">Geocaching4Locus在线地图: %s</string>
+    <string name="pref_disabled_notification">关闭通知</string>
+    <string name="pref_disabled_notification_summary">当在线地图被禁用时请提示。此项设置仅在Locus的即时更新启用，且Locus正在运行时生效。</string>
+    <string name="pref_geocache_type_all">所有</string>
     <string name="button_filter">过滤器</string>
-    <string name="download_logs_progress">正在下载日志……</string>
+    <string name="progress_download_logs">正在下载日志……</string>
     <string name="launcher_download_logs">下载日志</string>
 
-    <string name="pref_download_logs_update_cache">下载日志更新藏点</string>
-    <string name="pref_download_logs_update_cache_summary">“下载日志”动作也会同时更新藏点数据</string>
-    <string name="pref_downloading_count_of_caches_step">藏点计数步长</string>
-    <string name="pref_downloading_count_of_caches_step_summary">在选择对话框中改变藏点计数步长</string>
-    <string name="premium_member_for_filter_required">有些过滤选项需要有高级用户账号。应用将更改为普通用户模式，请重试。</string>
+    <string name="pref_download_logs_update_geocache">下载日志更新藏点</string>
+    <string name="pref_download_logs_update_geocache_summary">“下载日志”动作也会同时更新藏点数据</string>
+    <string name="pref_step_geocaching_count">藏点计数步长</string>
+    <string name="pref_step_geocaching_count_summary">在选择对话框中改变藏点计数步长</string>
+    <string name="error_premium_filter">有些过滤选项需要有高级用户账号。应用将更改为普通用户模式，请重试。</string>
 
-    <string name="prefs_cat_account">账号</string>
-    <string name="prefs_cat_filter">筛选条件</string>
-    <string name="prefs_cat_live_map">在线地图</string>
-    <string name="prefs_cat_downloading">下载</string>
-    <string name="prefs_cat_advanced">高级</string>
-    <string name="prefs_cat_about">关于</string>
-    <string name="login_title">登录</string>
-    <string name="pref_live_map_download_hints">下载提示</string>
-    <string name="pref_live_map_download_hints_summary">会导致需要更多的数据空间，载入速度也会变慢</string>
+    <string name="pref_account">账号</string>
+    <string name="pref_filter">筛选条件</string>
+    <string name="pref_live_map">在线地图</string>
+    <string name="pref_downloading">下载</string>
+    <string name="pref_advanced">高级</string>
+    <string name="pref_about">关于</string>
+    <string name="title_login">登录</string>
+    <string name="pref_download_hints">下载提示</string>
+    <string name="pref_download_hints_summary">会导致需要更多的数据空间，载入速度也会变慢</string>
     <string name="pref_feedback">请反馈</string>
     <string name="error_no_result">无法找到匹配的藏点</string>
     <string name="error_session_expired">由于长期闲置（超过90天）你已经退出了登录，请重新登录。</string>
     <string name="launcher_import_bookmarks">导入书签</string>
     <string name="menu_import_bookmarks">导入书签</string>
-    <string name="import_caches_progress">下载缓存…</string>
+    <string name="progress_import_geocaches">下载缓存…</string>
     <string name="error_no_location_permission">该应用程序没有权限访问到的位置服务。</string>
     <string name="action_import_all">导入所有</string>
-    <string name="premium_feature">此功能只限于付费用户，对不起。</string>
-    <string name="error_title_locus">Locus Map错误</string>
-    <string name="error_send_error_report">发送错误报告</string>
-    <string name="error_report_sent_toast">谢谢你送的错误。</string>
+    <string name="error_premium_feature">此功能只限于付费用户，对不起。</string>
+    <string name="title_locus_map_error">Locus Map错误</string>
+    <string name="button_send_error_report">发送错误报告</string>
+    <string name="toast_error_report_sent">谢谢你送的错误。</string>
     <string name="error_continue_locus_map">你想继续使用部分接收到的数据Locus Map？</string>
-    <string name="yes_button">是</string>
-    <string name="no_button">否</string>
+    <string name="button_yes">是</string>
+    <string name="button_no">否</string>
+    <string name="warning_basic_member">Geocaching.com的付费用户在使用这个插件不会受到功能的限制。普通用户仅可以下载传统藏点，活动藏点和CITO藏点。普通用户仅可以下载上述藏点的基本信息（在线页面信息、提示、日志等，无法下载属性信息或图片）。普通用户使用搜索的条件也受到限制。更多信息，请访问Geocaching4Locus网站。</string>
+    <string name="button_show_manual">查看操作手册</string>
 </resources>

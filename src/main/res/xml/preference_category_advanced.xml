@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/prefs_cat_advanced">
+    android:title="@string/pref_advanced">
     <CheckBoxPreference
         android:key="imperial_units"
         android:title="@string/pref_imperial_units"

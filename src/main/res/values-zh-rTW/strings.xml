@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="downloading">正在下載藏寶點…</string>
+    <string name="progress_download_geocaches">正在下載藏寶點…</string>
     <string name="error_locus_not_found">Locus Map應用程序沒有發現，但Geocaching4Locus它要求才能正常工作。請安裝Locus Map。</string>
-    <string name="error_location">請在 \'選項\' 中允許無線網路或 GPS 定位服務</string>
-    <string name="acquiring_gps_location">正在從 GPS 取得位置…</string>
-    <string name="acquiring_network_location">正在從無線網路取得位置…</string>
+    <string name="error_location_disabled">請在 \'選項\' 中允許無線網路或 GPS 定位服務</string>
+    <string name="progress_acquire_gps_location">正在從 GPS 取得位置…</string>
+    <string name="progress_acquire_network_location">正在從無線網路取得位置…</string>
     
-    <string name="preferences">偏好設定</string>
-    <string name="wrong_coordinates">錯誤的座標格式！</string>
-    <string name="coordinates">座標</string>
+    <string name="action_settings">偏好設定</string>
+    <string name="error_coordinates_format">錯誤的座標格式！</string>
+    <string name="title_coordinates">座標</string>
     
     <string name="pref_distance">距離</string>
     <string name="pref_distance_summary_km">距離 (km)</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">英制</string>
     <string name="pref_imperial_units_summary">只用英哩而不使用公里</string>
     
-    <string name="error_credentials">無效的使用者名稱或密碼。請在偏好設定中確認您的登入狀態。</string>
+    <string name="error_no_account">無效的使用者名稱或密碼。請在偏好設定中確認您的登入狀態。</string>
 
-    <string name="ok_button">確定</string>
+    <string name="button_ok">確定</string>
     
-    <string name="error_locus_old">您已安裝的 Locus 過舊。Geocaching4Locus 需要版本至少為 %s 的 Locus 才能正常運作。</string>
+    <string name="error_old_locus_map">您已安裝的 Locus 過舊。Geocaching4Locus 需要版本至少為 %s 的 Locus 才能正常運作。</string>
     
-    <string name="cancel_button">取消</string>
+    <string name="button_cancel">取消</string>
     
     <string name="pref_show_found">顯示已尋獲</string>
     <string name="pref_show_found_summary">顯示已尋獲的寶藏</string>
     <string name="pref_show_own">顯示寶主的藏匿</string>
     <string name="pref_show_own_summary">顯示寶主的寶藏(您藏匿的)</string>
-    <string name="pref_menu_select_all">全選</string>
-    <string name="pref_menu_deselect_all">取消全選</string>
+    <string name="menu_select_all">全選</string>
+    <string name="menu_deselect_all">取消全選</string>
     
-    <string name="update_cache_progress">更新寶藏 …</string>
+    <string name="progress_update_geocache">更新寶藏 …</string>
     
-    <string name="pref_count_of_logs">日誌數量</string>
-    <string name="pref_count_of_logs_summary">下載寶藏時的日誌數量</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">日誌數量</string>
+    <string name="pref_logs_count_summary">下載寶藏時的日誌數量</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">顯示已關閉的</string>
     <string name="pref_show_disabled_summary">顯示已暫時關閉的寶藏</string>
     
-    <string name="import_cache_progress">正在下載寶藏…</string>
+    <string name="progress_import_geocache">正在下載寶藏…</string>
     
     <string name="pref_version">版本</string>
     <string name="pref_website">網站、論壇…等</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">支援未來開發</string>
     <string name="pref_donate_paypal_choose_currency">選擇幣別</string>
     
-    <string name="pref_title_cache_type_filter">寶藏類型(高級會員)</string>
-    <string name="pref_title_difficulty_filter">難度(高級會員)</string>
-    <string name="pref_title_terrain_filter">地形(高級會員)</string>
+    <string name="pref_geocache_type">寶藏類型(高級會員)</string>
+    <string name="pref_difficulty">難度(高級會員)</string>
+    <string name="pref_terrain">地形(高級會員)</string>
     <string name="pref_difficulty_min">最小尋獲難度</string>
     <string name="pref_difficulty_max">最大尋獲難度</string>
     <string name="pref_terrain_min">最小地形難度</string>
@@ -68,52 +68,52 @@
     <string name="menu_live_map">即時地圖</string>
     <string name="menu_nearest">附近的</string>
     <string name="menu_manual">手冊</string>
-    <string name="menu_preferences">偏好設定</string>
+    <string name="menu_settings">偏好設定</string>
     
-    <string name="user_waypoint_name">使用者航點 %1$d</string>
-    <string name="final_location_name">最終位置</string>
+    <string name="var_user_waypoint_name">使用者航點 %1$d</string>
+    <string name="var_final_location_name">最終位置</string>
     
-    <string name="pref_account_login">登入</string>
-    <string name="pref_account_login_summary">登入至 Geocaching.com 帳號</string>
-    <string name="pref_account_logout">登出</string>
-    <string name="pref_account_logout_summary">以登入為 %s</string>
+    <string name="pref_login">登入</string>
+    <string name="pref_login_summary">登入至 Geocaching.com 帳號</string>
+    <string name="pref_logout">登出</string>
+    <string name="pref_logout_summary">以登入為 %s</string>
 
-    <string name="error_network">無可用的網路。請檢查您是否已經連線。</string>
+    <string name="error_network_unavailable">無可用的網路。請檢查您是否已經連線。</string>
 
-    <string name="update_caches_progress">更新寶藏 …</string>
-    <string name="original_coordinates_name">原始座標</string>
-    <string name="pref_title_container_type_filter">寶盒尺寸(高級會員)</string>
+    <string name="progress_update_geocaches">更新寶藏 …</string>
+    <string name="var_original_coordinates_name">原始座標</string>
+    <string name="pref_container_size">寶盒尺寸(高級會員)</string>
 
-    <string name="livemap_activated">即時地圖執行中，現在可移動地圖查看寶藏</string>
-    <string name="livemap_deactivated">即時地圖已關閉</string>
-    <string name="livemap_disabled">您沒有允許從 Locus 發送定期更新，請先到 Locuc 開啟 : 選項 → 其它選項 → 開啟定期更新</string>
-    <string name="error_location_title">沒有允許定位服務</string>
-    <string name="error_location_settings_button">設定</string>
+    <string name="toast_live_map_enabled">即時地圖執行中，現在可移動地圖查看寶藏</string>
+    <string name="toast_live_map_disabled">即時地圖已關閉</string>
+    <string name="error_live_map_periodic_updates">您沒有允許從 Locus 發送定期更新，請先到 Locuc 開啟 : 選項 → 其它選項 → 開啟定期更新</string>
+    <string name="error_location_not_allowed">沒有允許定位服務</string>
+    <string name="button_settings">設定</string>
     
     <string name="menu_import_from_gc">匯入寶藏</string>
-    <string name="dialog_gc_number_input_title">從寶藏代碼匯入</string>
-    <string name="error_input_gc">無效的寶藏代碼</string>
-    <string name="error_cache_not_found">沒有發現 %s 寶藏</string>
+    <string name="title_import_from_gc">從寶藏代碼匯入</string>
+    <string name="error_gc_code_invalid">無效的寶藏代碼</string>
+    <string name="error_geocache_not_found">沒有發現 %s 寶藏</string>
     
-    <string name="dialog_count_of_caches_title">寶藏數量</string>
-    <string name="launcher_nearest_caches">附近寶藏</string>
-    <string name="launcher_import_cache">匯入寶藏到 Locus</string>
-    <string name="launcher_update_cache">更新寶藏</string>    
-    <string name="launcher_update_more_caches">更新寶藏</string>
+    <string name="title_geocache_count">寶藏數量</string>
+    <string name="launcher_nearest_geocaches">附近寶藏</string>
+    <string name="launcher_import_geocache">匯入寶藏到 Locus</string>
+    <string name="launcher_update_geocache">更新寶藏</string>
+    <string name="launcher_update_geocaches">更新寶藏</string>
     <string name="launcher_import_from_gc">從寶藏代碼匯入</string>
     
     <string name="title_count_of_caches">寶藏數量</string>
 
-    <string name="basic_member_warning_title">基本會員資格</string>
-    <string name="premium_member_warning_title">高級會員資格</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">您已經到達 %2$s 內下載 &lt;b>%1$s 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置
+    <string name="title_basic_member_warning">基本會員資格</string>
+    <string name="title_premium_member_warning">高級會員資格</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">您已經到達 %2$s 內下載 &lt;b>%1$s 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置
 &lt;br>
 &lt;i>到地理藏寶官網升級為高級會員之後可每天下載 6000 個寶藏的詳細資訊，查閱 Geocaching.com &lt;/i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">您已經到達 24 小時內下載 &lt;b>6000 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置</string>
-    <string name="method_quota_exceeded_title">嘿，慢一點！</string>
-    <string name="method_quota_exceeded_message">您已經到達每分鐘內最大的動作限制</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">您已經到達 24 小時內下載 &lt;b>6000 個寶藏詳細資訊的限制&lt;/b>，您每天的限額將會在 %3$s.&lt;br> 重置</string>
+    <string name="title_method_quota_exceeded">嘿，慢一點！</string>
+    <string name="error_method_quota_exceeded">您已經到達每分鐘內最大的動作限制</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d 寶藏</item>
         <item quantity="few">%d 寶藏</item>
         <item quantity="other">%d 寶藏</item>
@@ -131,53 +131,55 @@
         <item quantity="other">%d 分鐘</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">基於 Geocaching Live</string>
-    <string name="account_geocaching_live_message">這個外掛程式基於 Geocaching Live 來擷取地理寶藏資訊，點選這裡有更多資訊 …</string>
+    <string name="pref_geocaching_live">基於 Geocaching Live</string>
+    <string name="pref_geocaching_live_message">這個外掛程式基於 Geocaching Live 來擷取地理寶藏資訊，點選這裡有更多資訊 …</string>
     
     <string name="error_invalid_api_response">Geocaching Live 傳回無效的回應：&lt;br>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus 即時地圖</string>
-    <string name="livemap_notification_message_enabled">即時地圖已開啟</string>
-    <string name="livemap_notification_message_disabled">即時地圖已關閉</string>
-    <string name="livemap_notification_message_downloading">下載即時地圖的寶藏 : %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">開啟即時地圖</string>
-    <string name="livemap_notification_action_disable">關閉即時地圖</string>
-    <string name="livemap_error">Geocaching4Locus 即時地圖 : %s</string>
-    <string name="pref_livemap_show_disabled_notification">已關閉通知</string>
-    <string name="pref_livemap_show_disabled_notification_summary">當即時地圖關閉時發出通知，這只有在 Locus 執行時並且已開啟定期更新選項</string>
-    <string name="pref_cache_type_all">全部</string>
+    <string name="notify_live_map">Geocaching4Locus 即時地圖</string>
+    <string name="notify_live_map_message_enabled">即時地圖已開啟</string>
+    <string name="notify_live_map_message_disabled">即時地圖已關閉</string>
+    <string name="notify_live_map_message_downloading">下載即時地圖的寶藏 : %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">開啟即時地圖</string>
+    <string name="notify_live_map_action_disable">關閉即時地圖</string>
+    <string name="error_live_map">Geocaching4Locus 即時地圖 : %s</string>
+    <string name="pref_disabled_notification">已關閉通知</string>
+    <string name="pref_disabled_notification_summary">當即時地圖關閉時發出通知，這只有在 Locus 執行時並且已開啟定期更新選項</string>
+    <string name="pref_geocache_type_all">全部</string>
     <string name="button_filter">過濾器</string>
-    <string name="download_logs_progress">下載日誌中 …</string>
+    <string name="progress_download_logs">下載日誌中 …</string>
     <string name="launcher_download_logs">下載日誌</string>
 
-    <string name="pref_download_logs_update_cache">下載日誌更新寶藏</string>
-    <string name="pref_download_logs_update_cache_summary">下載日誌並更新地理寶藏資料</string>
-    <string name="pref_downloading_count_of_caches_step">寶藏計次的區間</string>
-    <string name="pref_downloading_count_of_caches_step_summary">在寶藏計次對話框中變更區間</string>
-    <string name="premium_member_for_filter_required">有些過濾器需要高級會員可使用，現在程式切換到基本會員模式，請再次嘗試</string>
+    <string name="pref_download_logs_update_geocache">下載日誌更新寶藏</string>
+    <string name="pref_download_logs_update_geocache_summary">下載日誌並更新地理寶藏資料</string>
+    <string name="pref_step_geocaching_count">寶藏計次的區間</string>
+    <string name="pref_step_geocaching_count_summary">在寶藏計次對話框中變更區間</string>
+    <string name="error_premium_filter">有些過濾器需要高級會員可使用，現在程式切換到基本會員模式，請再次嘗試</string>
 
-    <string name="prefs_cat_account">帳號</string>
-    <string name="prefs_cat_filter">篩選器</string>
-    <string name="prefs_cat_live_map">即時地圖</string>
-    <string name="prefs_cat_downloading">下載</string>
-    <string name="prefs_cat_advanced">進階</string>
-    <string name="prefs_cat_about">關於</string>
-    <string name="login_title">登入</string>
-    <string name="pref_live_map_download_hints">下載提示</string>
-    <string name="pref_live_map_download_hints_summary">在資料運用時載入較慢並且更為嚴苛</string>
+    <string name="pref_account">帳號</string>
+    <string name="pref_filter">篩選器</string>
+    <string name="pref_live_map">即時地圖</string>
+    <string name="pref_downloading">下載</string>
+    <string name="pref_advanced">進階</string>
+    <string name="pref_about">關於</string>
+    <string name="title_login">登入</string>
+    <string name="pref_download_hints">下載提示</string>
+    <string name="pref_download_hints_summary">在資料運用時載入較慢並且更為嚴苛</string>
     <string name="pref_feedback">發送回報</string>
     <string name="error_no_result">找不到符合您需求的地理寶藏</string>
     <string name="error_session_expired">由於長期閒置(超過 90 天)，您已經登出，請再次登入。</string>
     <string name="launcher_import_bookmarks">匯入書籤</string>
     <string name="menu_import_bookmarks">匯入書籤</string>
-    <string name="import_caches_progress">下載寶藏中 …</string>
+    <string name="progress_import_geocaches">下載寶藏中 …</string>
     <string name="error_no_location_permission">軟體沒有權限訪問定位服務</string>
     <string name="action_import_all">匯入全部</string>
-    <string name="premium_feature">這項功能只提供給付費會員，抱歉</string>
-    <string name="error_title_locus">Locus 地圖異常</string>
-    <string name="error_send_error_report">發送異常報告</string>
-    <string name="error_report_sent_toast">感謝您發送這個異常報告</string>
+    <string name="error_premium_feature">這項功能只提供給付費會員，抱歉</string>
+    <string name="title_locus_map_error">Locus 地圖異常</string>
+    <string name="button_send_error_report">發送異常報告</string>
+    <string name="toast_error_report_sent">感謝您發送這個異常報告</string>
     <string name="error_continue_locus_map">您要在 Locus 地圖上使用未完整接收的資料嗎?</string>
-    <string name="yes_button">是</string>
-    <string name="no_button">否</string>
+    <string name="button_yes">是</string>
+    <string name="button_no">否</string>
+    <string name="warning_basic_member">這個功能只適用於付費會員，基本會員只能下載傳統寶藏、網聚寶藏的基本訊息(寶藏內文、提示、日誌，但是沒有寶藏屬性和相關圖片)，另外只能使用較少的過濾條件來搜尋寶藏，更多訊息請查閱 Geocaching4Locus 網站。</string>
+    <string name="button_show_manual">顯示選單</string>
 </resources>

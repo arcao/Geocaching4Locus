@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/prefs_cat_live_map">
+    android:title="@string/pref_live_map">
     <CheckBoxPreference
         android:key="show_live_map_disabled_notification"
-        android:title="@string/pref_livemap_show_disabled_notification"
-        android:summary="@string/pref_livemap_show_disabled_notification_summary"
+        android:title="@string/pref_disabled_notification"
+        android:summary="@string/pref_disabled_notification_summary"
         android:defaultValue="false" />
     <CheckBoxPreference
         android:key="live_map_download_hints"
-        android:title="@string/pref_live_map_download_hints"
-        android:summary="@string/pref_live_map_download_hints_summary"
+        android:title="@string/pref_download_hints"
+        android:summary="@string/pref_download_hints_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="live_map_hide_caches_on_disabled"
+        android:title="@string/pref_hide_geocaches_on_disabled"
+        android:summary="@string/pref_hide_geocaches_on_disabled_summary"
         android:defaultValue="false" />
 </PreferenceScreen>

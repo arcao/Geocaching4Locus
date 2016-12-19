@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
-public class DataFileWriterBigEndian extends DataWriterBigEndian {
-	private long mStoredPosition = 0;
+class DataFileWriterBigEndian extends DataWriterBigEndian {
+	private long mStoredPosition;
 
 	private final OutputStream mOut;
 	private final FileChannel mChannel;
 
-	public DataFileWriterBigEndian(FileOutputStream out) {
+	DataFileWriterBigEndian(FileOutputStream out) {
 		super(0);
 		this.mOut = new BufferedOutputStream(out);
 		mChannel = out.getChannel();
@@ -93,7 +93,7 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 		}
 	}
 
-	public synchronized int getPosition() {
+	synchronized int getPosition() {
 		try {
 			mOut.flush();
 			return (int) mChannel.position();
@@ -102,18 +102,18 @@ public class DataFileWriterBigEndian extends DataWriterBigEndian {
 		}
 	}
 
-	public synchronized void flush() throws IOException {
+	synchronized void flush() throws IOException {
 		mOut.flush();
 	}
 
-	public synchronized void close() throws IOException {
+	synchronized void close() throws IOException {
 		mOut.close();
 	}
 
-	public static class DataFileWriterException extends RuntimeException {
+	static class DataFileWriterException extends RuntimeException {
 		private static final long serialVersionUID = 2678019269077897465L;
 
-		public DataFileWriterException(IOException throwable) {
+		DataFileWriterException(IOException throwable) {
 			super(throwable);
 		}
 

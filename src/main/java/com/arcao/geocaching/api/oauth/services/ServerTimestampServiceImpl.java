@@ -1,8 +1,9 @@
 package com.arcao.geocaching.api.oauth.services;
 
 import com.arcao.wherigoservice.api.WherigoApiFactory;
+import com.github.scribejava.core.services.TimestampServiceImpl;
+
 import java.util.Random;
-import org.scribe.services.TimestampServiceImpl;
 import timber.log.Timber;
 
 public class ServerTimestampServiceImpl extends TimestampServiceImpl {

@@ -6,7 +6,8 @@
     android:orientation="horizontal"
     android:minHeight="?attr/listPreferredItemHeight"
     android:gravity="center_vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:theme="@style/AppTheme.DialogWhenLarge">
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/checkbox"
@@ -27,9 +28,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:fontFamily="sans-serif-light"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="marquee"
-            tools:text="Title" />
+            tools:text="Title"
+            tools:ignore="UnusedAttribute"/>
         <TextView
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
@@ -37,8 +39,9 @@
             android:textAppearance="?attr/textAppearanceListItemSecondary"
             android:fontFamily="sans-serif-light"
             android:textColor="?android:attr/textColorSecondary"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="end"
-            tools:text="GC12345" />
+            tools:text="GC12345"
+            tools:ignore="UnusedAttribute"/>
     </LinearLayout>
 </LinearLayout>

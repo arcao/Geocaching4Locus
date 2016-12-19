@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:paddingTop="4dp"
-    android:paddingBottom="4dp">
+    android:paddingBottom="4dp"
+    tools:theme="@style/AppTheme.Dialog">
 
     <TextView
         android:layout_width="match_parent"

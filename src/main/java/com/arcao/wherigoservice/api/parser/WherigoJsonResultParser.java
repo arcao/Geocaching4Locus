@@ -1,7 +1,7 @@
 package com.arcao.wherigoservice.api.parser;
 
 
-import com.arcao.geocaching.api.impl.live_geocaching_api.parser.JsonReader;
+import com.arcao.geocaching.api.parser.JsonReader;
 
 import java.io.IOException;
 
@@ -28,8 +28,8 @@ public class WherigoJsonResultParser {
 	}
 
 	public static class Result {
-		private int statusCode;
-		private String statusMessage;
+		int statusCode;
+		String statusMessage;
 
 		public int getStatusCode() {
 			return statusCode;

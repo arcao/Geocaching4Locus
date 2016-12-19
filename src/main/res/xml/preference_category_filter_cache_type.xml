@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_title_cache_type_filter">
+    android:title="@string/pref_geocache_type">
     <CheckBoxPreference
         android:key="filter_0"
         android:title="Traditional Cache"

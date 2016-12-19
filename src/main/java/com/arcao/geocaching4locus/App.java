@@ -1,31 +1,43 @@
 package com.arcao.geocaching4locus;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
-import com.arcao.geocaching4locus.authentication.helper.PreferenceAuthenticatorHelper;
-import com.arcao.geocaching4locus.constants.CrashlyticsConstants;
-import com.arcao.geocaching4locus.util.CrashlyticsTree;
-import com.arcao.geocaching4locus.util.LocusTesting;
+
+import com.arcao.geocaching4locus.authentication.util.Account;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager;
+import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
+import com.arcao.geocaching4locus.base.util.CrashlyticsTree;
+import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-import io.fabric.sdk.android.Fabric;
-import java.util.UUID;
-import locus.api.android.utils.LocusUtils;
+
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.UUID;
+
+import io.fabric.sdk.android.Fabric;
+import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
-public class App extends android.app.Application {
-	private AuthenticatorHelper mAuthenticatorHelper;
+public class App extends Application {
+	private AccountManager mAccountManager;
 	private String mDeviceId;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		if (BuildConfig.DEBUG) {
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());
+			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
+		}
 
 		// Set up Crashlytics, disabled for debug builds
 		Crashlytics crashlyticsKit = new Crashlytics.Builder()
@@ -38,11 +50,13 @@ public class App extends android.app.Application {
 
 		Crashlytics.setUserIdentifier(getDeviceId());
 
-	 	mAuthenticatorHelper = new PreferenceAuthenticatorHelper(this);
-		if (mAuthenticatorHelper.hasAccount()) {
+	 	mAccountManager = new PreferenceAccountManager(this);
+
+		Account account = mAccountManager.getAccount();
+		if (account != null) {
 			//noinspection ConstantConditions
-			Crashlytics.setUserName(mAuthenticatorHelper.getAccount().name);
-			Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, mAuthenticatorHelper.getRestrictions().isPremiumMember());
+			Crashlytics.setUserName(account.name());
+			Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
 		}
 
 		try {
@@ -60,8 +74,8 @@ public class App extends android.app.Application {
 		return (App) context.getApplicationContext();
 	}
 
-	public AuthenticatorHelper getAuthenticatorHelper() {
-		return mAuthenticatorHelper;
+	public AccountManager getAccountManager() {
+		return mAccountManager;
 	}
 
 	public String getDeviceId() {

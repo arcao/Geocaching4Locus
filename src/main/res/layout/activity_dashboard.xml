@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              tools:context="com.arcao.geocaching4locus.DashboardActivity">
+              tools:context=".dashboard.DashboardActivity">
 
     <include layout="@layout/toolbar" />
 
@@ -17,53 +17,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_live_map"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_live_map_48dp"
                 android:text="@string/menu_live_map"
                 app:toggleable="true"/>
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_import_gc"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_gc_input_48dp"
                 android:text="@string/menu_import_from_gc" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_search_nearest"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_search_48dp"
                 android:text="@string/menu_nearest" />
         </LinearLayout>
 
-        <ImageView style="@style/SeparatorHorizontal.Dark" />
+        <ImageView style="@style/SeparatorHorizontal.Dark"
+            tools:ignore="ContentDescription" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_import_bookmark"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_bookmark_border_48dp"
                 android:text="@string/menu_import_bookmarks" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_preferences"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_settings_48dp"
-                android:text="@string/menu_preferences" />
+                android:text="@string/menu_settings" />
 
-            <ImageView style="@style/SeparatorVertical.Dark" />
+            <ImageView style="@style/SeparatorVertical.Dark"
+                tools:ignore="ContentDescription" />
 
-            <com.arcao.geocaching4locus.widget.DashboardButton
+            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_manual"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_help_48dp"

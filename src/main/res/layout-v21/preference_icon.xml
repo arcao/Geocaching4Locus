@@ -9,16 +9,17 @@
               android:paddingStart="?android:attr/listPreferredItemPaddingStart"
               android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
               android:paddingTop="?attr/listPreferredItemPaddingTop"
-              android:clipToPadding="false">
+              android:clipToPadding="false"
+              tools:theme="@style/AppTheme.Settings">
 
     <TextView
         android:id="@android:id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:singleLine="true"
         android:textAppearance="?attr/textAppearanceListItem"
-        tools:text="@string/account_geocaching_live_title"/>
+        android:maxLines="1"
+        tools:text="@string/pref_geocaching_live"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="8dp"
-            tools:src="@drawable/geocaching_live_icon"/>
+            tools:src="@drawable/geocaching_live_icon"
+            tools:ignore="ContentDescription"/>
 
         <TextView
             android:id="@android:id/summary"
@@ -38,7 +40,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItemSecondary"
             android:textColor="?android:attr/textColorSecondary"
-            tools:text="@string/account_geocaching_live_message"/>
+            tools:text="@string/pref_geocaching_live_message"/>
     </LinearLayout>
 
 </LinearLayout>

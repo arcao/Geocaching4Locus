@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.dashboard.DashboardActivity;
+import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
@@ -181,11 +183,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			state = mContext.getText(R.string.notify_live_map_message_disabled);
 			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.notify_live_map_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
 		}
-		nb.addAction(R.drawable.ic_stat_livemap_settings,
-				mContext.getText(R.string.notify_live_map_action_settings),
-				PendingIntent.getActivity(mContext, 0,
-						SettingsActivity.createIntent(mContext, LiveMapPreferenceFragment.class),
-						PendingIntent.FLAG_UPDATE_CURRENT));
+		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0,
+				SettingsActivity.createIntent(mContext, LiveMapPreferenceFragment.class),
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		nb.addAction(R.drawable.ic_stat_livemap_settings, mContext.getText(R.string.notify_live_map_action_settings), pendingIntent);
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
 			nb.setContentTitle(mContext.getText(R.string.notify_live_map));
@@ -228,7 +229,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		if (enabled && !periodicUpdateEnabled) {
 			enabled = false;
 
-			Toast.makeText(mContext, mContext.getText(R.string.error_live_map_periodic_updates), Toast.LENGTH_LONG).show();
+			showError(R.string.error_live_map_periodic_updates);
 		} else if (enabled) {
 			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_enabled), Toast.LENGTH_LONG).show();
 		} else {
@@ -236,6 +237,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 
 		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
+	}
+
+	private void showError(@StringRes int message) {
+		mContext.startActivity(new ErrorActivity.IntentBuilder(mContext).message(message).build().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 	}
 
 	public boolean isLiveMapEnabled() {

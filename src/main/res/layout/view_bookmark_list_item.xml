@@ -31,7 +31,8 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:clickable="false"
-                tools:text="Bookmark name"/>
+                tools:text="Bookmark name"
+                tools:targetApi="jelly_bean"/>
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
@@ -66,7 +67,8 @@
                 android:textColor="?android:attr/textColorSecondary"
                 android:maxLines="1"
                 android:clickable="false"
-                tools:text="3 caches"/>
+                tools:text="3 caches"
+                tools:targetApi="jelly_bean"/>
             <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content"

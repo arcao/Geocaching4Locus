@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.UserProfile;
 import com.arcao.geocaching.api.data.apilimits.ApiLimitsResponse;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
+import com.arcao.geocaching.api.exception.NetworkException;
 import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.BuildConfig;
@@ -16,6 +18,7 @@ import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory;
+import com.arcao.geocaching4locus.authentication.util.OAuthAsyncRequestCallbackAdapter;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
@@ -24,7 +27,9 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
+
 import java.lang.ref.WeakReference;
+
 import timber.log.Timber;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {
@@ -35,6 +40,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
 	private final Context mContext;
 	private final WeakReference<TaskListener> mTaskListenerRef;
+	@SuppressWarnings("WeakerAccess") Throwable tokenRequestThrowable;
 
 	public OAuthLoginTask(Context context, TaskListener listener) {
 		mContext = context.getApplicationContext();
@@ -64,14 +70,31 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 		AccountRestrictions accountRestrictions = helper.getRestrictions();
 
 		if (params.length == 0) {
-			OAuth1RequestToken requestToken = service.getRequestTokenAsync(null).get();
+			OAuth1RequestToken requestToken = service.getRequestTokenAsync(new OAuthAsyncRequestCallbackAdapter<OAuth1RequestToken>() {
+				@Override
+				public void onThrowable(Throwable t) {
+					tokenRequestThrowable = t;
+				}
+			}).get();
+
+			if (tokenRequestThrowable != null)
+				throw new NetworkException(tokenRequestThrowable.getMessage(), tokenRequestThrowable);
+
 			helper.setOAuthRequestToken(requestToken);
 			String authUrl = service.getAuthorizationUrl(requestToken);
 			Timber.i("AuthorizationUrl: " + authUrl);
 			return new String[]{authUrl};
 		} else {
 			OAuth1RequestToken requestToken = helper.getOAuthRequestToken();
-			OAuth1AccessToken accessToken = service.getAccessTokenAsync(requestToken, params[0], null).get();
+			OAuth1AccessToken accessToken = service.getAccessTokenAsync(requestToken, params[0], new OAuthAsyncRequestCallbackAdapter<OAuth1AccessToken>() {
+				@Override
+				public void onThrowable(Throwable t) {
+					tokenRequestThrowable = t;
+				}
+			}).get();
+
+			if (tokenRequestThrowable != null)
+				throw new NetworkException(tokenRequestThrowable.getMessage(), tokenRequestThrowable);
 
 			// get account name
 			GeocachingApi api = GeocachingApiFactory.create();

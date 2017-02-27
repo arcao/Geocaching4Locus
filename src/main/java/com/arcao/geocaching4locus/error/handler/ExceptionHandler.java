@@ -26,7 +26,6 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
-import com.github.scribejava.core.exceptions.OAuthConnectionException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
@@ -100,7 +99,7 @@ public class ExceptionHandler {
 			return builder
 					.message(R.string.error_geocache_not_found, ((CacheNotFoundException) t).getCacheCode())
 					.build();
-		} else if (t instanceof NetworkException || t instanceof OAuthConnectionException ||
+		} else if (t instanceof NetworkException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			builder.message(baseMessage, mContext.getText(R.string.error_network_unavailable));
 

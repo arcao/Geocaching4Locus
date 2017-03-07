@@ -29,9 +29,9 @@
         <provider
             android:name="com.arcao.feedback.FeedbackFileProvider"
             android:authorities="${applicationId}.provider.feedback"
-            android:exported="true"
             android:enabled="true"
-            android:grantUriPermissions="true"/>
+            android:grantUriPermissions="true"
+            android:exported="false"/>
 
         <service android:name=".live_map.LiveMapService"/>
         

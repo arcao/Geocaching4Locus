@@ -5,13 +5,19 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.util.ReverseListIterator;
+
+import org.apache.commons.collections4.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingLog;
 import locus.api.objects.geocaching.GeocachingWaypoint;
-import org.apache.commons.collections4.CollectionUtils;
 
 import static locus.api.mapper.Util.GSAK_USERNAME;
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
@@ -35,7 +41,7 @@ final public class WaypointMerger {
 			return;
 
 		copyArchivedGeocacheLocation(dstWaypoint, srcWaypoint);
-		copyGsakGeocachingLogs(dstWaypoint, srcWaypoint);
+		copyGsakGeocachingLogs(dstWaypoint.gcData.logs, srcWaypoint.gcData.logs);
 		copyComputedCoordinates(dstWaypoint, srcWaypoint);
 		copyWaypointId(dstWaypoint, srcWaypoint);
 		copyGcVote(dstWaypoint, srcWaypoint);
@@ -47,18 +53,23 @@ final public class WaypointMerger {
 		if (srcWaypoint == null || srcWaypoint.gcData == null)
 			return;
 
-		copyGsakGeocachingLogs(dstWaypoint, srcWaypoint);
+		// store original logs
+		List<GeocachingLog> originalLogs = new ArrayList<>(dstWaypoint.gcData.logs);
+
+		// replace logs with new one
+		dstWaypoint.gcData.logs.clear();
+		dstWaypoint.gcData.logs.addAll(srcWaypoint.gcData.logs);
+
+		// copy GSAK logs from original logs
+		copyGsakGeocachingLogs(dstWaypoint.gcData.logs, originalLogs);
 	}
 
 	// issue #14: Keep cache logs from GSAK when updating cache
-	private void copyGsakGeocachingLogs(@NonNull Waypoint dstWaypoint, @NonNull Waypoint srcWaypoint) {
-		if (srcWaypoint.gcData == null || CollectionUtils.isEmpty(srcWaypoint.gcData.logs))
-			return;
-
-		for(GeocachingLog fromLog : new ReverseListIterator<>(srcWaypoint.gcData.logs)) {
+	private void copyGsakGeocachingLogs(@NonNull List<GeocachingLog> dstLogs, @NonNull List<GeocachingLog> srcLogs) {
+		for(GeocachingLog fromLog : new ReverseListIterator<>(srcLogs)) {
 			if (GSAK_USERNAME.equalsIgnoreCase(fromLog.getFinder())) {
 				fromLog.setDate(System.currentTimeMillis());
-				dstWaypoint.gcData.logs.add(0, fromLog);
+				dstLogs.add(0, fromLog);
 			}
 		}
 	}

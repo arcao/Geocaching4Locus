@@ -114,7 +114,7 @@ public class LocusDataMapper {
 
 		d.setDateHidden(toSafeDateLong(cache.getPlaceDate()));
 		d.setDatePublished(toSafeDateLong(cache.getPublishDate()));
- 	  d.setDateUpdated(toSafeDateLong(cache.getLastUpdateDate()));
+		d.setDateUpdated(toSafeDateLong(cache.getLastUpdateDate()));
 
 		d.setContainer(toLocusContainerType(cache.getContainerType()));
 		d.setFound(cache.isFoundByUser());
@@ -123,7 +123,7 @@ public class LocusDataMapper {
 		d.setState(cache.getStateName());
 
 		d.setDescriptions(BadBBCodeFixer.fix(cache.getShortDescription()), cache.isShortDescriptionHtml(),
-			BadBBCodeFixer.fix(cache.getLongDescription()), cache.isLongDescriptionHtml());
+				BadBBCodeFixer.fix(cache.getLongDescription()), cache.isLongDescriptionHtml());
 		d.setEncodedHints(cache.getHint());
 		d.setNotes(cache.getPersonalNote());
 		d.setFavoritePoints(cache.getFavoritePoints());
@@ -569,22 +569,34 @@ public class LocusDataMapper {
 			return;
 
 		fixArchivedCacheLocation(toPoint, fromPoint);
-		mergeCacheLogs(toPoint, fromPoint);
+		copyGsakGeocachingLogs(toPoint.gcData.logs, fromPoint.gcData.logs);
 		fixComputedCoordinates(toPoint, fromPoint);
 		copyWaypointId(toPoint, fromPoint);
 		copyGcVote(toPoint, fromPoint);
 		fixEditedWaypoints(toPoint, fromPoint);
 	}
 
-	// issue #14: Keep cache logs from GSAK when updating cache
-	public void mergeCacheLogs(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
-		if (fromPoint.gcData == null || CollectionUtils.isEmpty(fromPoint.gcData.logs))
+	public void mergeCacheLogs(@NonNull Waypoint dstWaypoint, @Nullable Waypoint srcWaypoint) {
+		if (srcWaypoint == null || srcWaypoint.gcData == null)
 			return;
 
-		for(GeocachingLog fromLog : new ReverseListIterator<>(fromPoint.gcData.logs)) {
+		// store original logs
+		List<GeocachingLog> originalLogs = new ArrayList<>(dstWaypoint.gcData.logs);
+
+		// replace logs with new one
+		dstWaypoint.gcData.logs.clear();
+		dstWaypoint.gcData.logs.addAll(srcWaypoint.gcData.logs);
+
+		// copy GSAK logs from original logs
+		copyGsakGeocachingLogs(dstWaypoint.gcData.logs, originalLogs);
+	}
+
+	// issue #14: Keep cache logs from GSAK when updating cache
+	private void copyGsakGeocachingLogs(@NonNull List<GeocachingLog> dstLogs, @NonNull List<GeocachingLog> srcLogs) {
+		for(GeocachingLog fromLog : new ReverseListIterator<>(srcLogs)) {
 			if (GSAK_USERNAME.equalsIgnoreCase(fromLog.getFinder())) {
 				fromLog.setDate(System.currentTimeMillis());
-				toPoint.gcData.logs.add(0, fromLog);
+				dstLogs.add(0, fromLog);
 			}
 		}
 	}

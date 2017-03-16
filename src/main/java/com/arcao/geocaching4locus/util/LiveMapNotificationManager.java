@@ -111,7 +111,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		if (!mNotificationShown)
 			return;
 
-		NotificationCompat.Builder nb = createBaseNotification();
+		NotificationCompat.Builder nb = createNotification();
 
 		if (current == 0) {
 			nb.setProgress(0, 0, true);
@@ -143,7 +143,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		//noinspection AssignmentToStaticFieldFromInstanceMethod
 		mNotificationShown = true;
 
-		NotificationCompat.Builder builder = createBaseNotification();
+		NotificationCompat.Builder builder = createNotification();
 		mNotificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, builder.build());
 	}
 
@@ -158,7 +158,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		mNotificationManager.cancel(AppConstants.NOTIFICATION_ID_LIVEMAP);
 	}
 
-	private NotificationCompat.Builder createBaseNotification() {
+	public NotificationCompat.Builder createNotification() {
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
 
 		nb.setOngoing(true);

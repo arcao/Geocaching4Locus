@@ -36,7 +36,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         // Not working in Android, slf4j-timber used instead
     }
-    compile 'com.asamm:locus-api-android:0.2.6'
+    compile 'com.asamm:locus-api-android:0.2.7'
 
     // from JCenter repository
     compile 'com.arcao:slf4j-timber:3.0'
@@ -47,12 +47,12 @@ dependencies {
     compile 'com.github.scribejava:scribejava-httpclient-okhttp:4.0.0'
     compile 'com.jakewharton:butterknife:8.5.1'
     apt     'com.jakewharton:butterknife-compiler:8.5.1'
-    compile 'com.afollestad.material-dialogs:core:0.9.3.0'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.6.6'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.1'
+    compile 'com.crashlytics.sdk.android:crashlytics:2.6.7'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
 
-    apt     'com.google.auto.value:auto-value:1.4-rc2'
-    provided 'com.google.auto.value:auto-value:1.4-rc2'
+    apt     'com.google.auto.value:auto-value:1.4-rc3'
+    provided 'com.google.auto.value:auto-value:1.4-rc3'
     apt     'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
     compile 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.5'
 }

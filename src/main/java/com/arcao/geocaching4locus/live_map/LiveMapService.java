@@ -31,6 +31,7 @@ import com.arcao.geocaching.api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.update.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
@@ -118,6 +119,8 @@ public class LiveMapService extends IntentService {
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 
 		try {
+			startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, LiveMapNotificationManager.get(this).createNotification().build());
+
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (LocusMapRuntimeException e) {
 			Timber.e(e, e.getMessage());
@@ -137,6 +140,8 @@ public class LiveMapService extends IntentService {
 		} catch (Exception e) {
 			Timber.e(e, e.getMessage());
 		} finally {
+			stopForeground(false);
+
 			Timber.d("Job finished.");
 		}
 	}

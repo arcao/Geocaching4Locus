@@ -2,5 +2,9 @@
 <resources>
   <dimen name="text_size_tiny">12.0sp</dimen>
   <dimen name="cardview_space">8dp</dimen>
-  <dimen name="fab_outer_height">88dp</dimen><!-- 56dp (height) + 2 * 16dp (margin) -->
+  <dimen name="fab_outer_height">88dp</dimen>
+
+  <dimen name="open_with_header_height">146.0dip</dimen>
+  <dimen name="open_with_separator_height">1.0dip</dimen>
+  <dimen name="bottom_sheet_max_width">480.0dip</dimen>
 </resources>

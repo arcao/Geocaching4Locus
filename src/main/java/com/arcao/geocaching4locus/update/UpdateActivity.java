@@ -79,7 +79,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
 		Timber.i("source: update;" + cacheId);
 
-		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
+		boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_ACTIVITY.equals(getIntent().getComponent().getClassName());
 
 		AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs,
 				App.get(this).getAccountManager().isPremium());

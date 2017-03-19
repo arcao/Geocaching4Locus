@@ -5,6 +5,7 @@
     <color name="btn_disabled">#80aaaaaa</color>
     <color name="foreground1">#ff355689</color>
     <color name="card_window_background">#e5e5e5</color>
+    <color name="white">#ffffffff</color>
 
     <color name="primary">@color/material_blue_grey_900</color> <!-- 500 -->
     <color name="primary_dark">@color/material_blue_grey_950</color> <!-- 700 -->

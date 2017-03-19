@@ -219,4 +219,8 @@
         >Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
         >How many last logs to check</string>
+    
+    <string name="launcher_preview_geocache" comment="Action when you try to open geocache website link, which display preview window with information about geocache."
+        >Preview geocache</string>
+    <string name="title_open_with">Open with</string>
 </resources>

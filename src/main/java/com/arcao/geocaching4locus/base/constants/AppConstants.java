@@ -42,7 +42,9 @@ public interface AppConstants {
 
 	long LOW_MEMORY_THRESHOLD = 16777216;
 
-	String UPDATE_WITH_LOGS_COMPONENT = "com.arcao.geocaching4locus.UpdateWithLogsActivity";
+	String UPDATE_WITH_LOGS_ACTIVITY = "com.arcao.geocaching4locus.update.UpdateWithLogsActivity";
+	String GEOCACHE_PREVIEW_ACTIVITY = "com.arcao.geocaching4locus.import.GeocachePreviewActivity";
+
 	int LOGS_PER_REQUEST = 30;
 	int LOGS_TO_UPDATE_MAX = 100;
 

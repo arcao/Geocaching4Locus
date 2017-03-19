@@ -104,6 +104,17 @@
     </style>
     <style name="Widget.AppTheme.Button" parent="Widget.AppCompat.Button" />
 
+    <style name="Widget.AppTheme.BottomSheet" />
+    <style name="Widget.AppTheme.BottomSheet.Title">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:gravity">start|center</item>
+        <item name="android:paddingLeft">16.0dip</item>
+        <item name="android:paddingTop">12.0dip</item>
+        <item name="android:paddingRight">?dialogPreferredPadding</item>
+        <item name="android:paddingBottom">12.0dip</item>
+    </style>
+
     <!-- Dashboard styles -->
     <style name="SeparatorVertical">
         <item name="android:background">@color/title_separator</item>

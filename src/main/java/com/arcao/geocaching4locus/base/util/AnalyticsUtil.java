@@ -34,6 +34,11 @@ public final class AnalyticsUtil {
 						.putCustomAttribute("premium member", Boolean.toString(premiumMember)));
 	}
 
+	public static void actionPreview(boolean premiumMember) {
+		Answers.getInstance().logCustom(new CustomEvent("Preview")
+				.putCustomAttribute("premium member", Boolean.toString(premiumMember)));
+	}
+
 	public static void actionSearchNearest(String coordinatesSource, boolean useFilter, int count, boolean premiumMember) {
 		Answers.getInstance().logCustom(new CustomEvent("Search nearest")
 						.putCustomAttribute("coordinates source", coordinatesSource == null ? COORDINATES_SOURCE_MANUAL : coordinatesSource)

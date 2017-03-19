@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.import_gc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -12,13 +13,14 @@ import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
+import com.arcao.geocaching4locus.import_gc.fragment.PreviewDialogFragment;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
+public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, PreviewDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 	private final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 
@@ -69,8 +71,8 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
 		AnalyticsUtil.actionImport(App.get(this).getAccountManager().isPremium());
 
-		Timber.i("source: import;" + cacheId);
-		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+		Timber.i("source: preview;" + cacheId);
+		PreviewDialogFragment.newInstance(cacheId, getIntent().getData()).show(getFragmentManager(), PreviewDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
@@ -78,6 +80,23 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		Timber.d("onImportFinished result: " + success);
 		setResult(success ? RESULT_OK : RESULT_CANCELED);
 		finish();
+	}
+
+	@Override
+	public void onImport(@Nullable String cacheId) {
+		Timber.d("onImport result: " + cacheId);
+
+		Timber.i("source: import;" + cacheId);
+		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+	}
+
+	@Override
+	public void onClose() {
+		Timber.d("onClose");
+
+		setResult(RESULT_CANCELED);
+		finish();
+		overridePendingTransition(0, 0);
 	}
 
 	@Override

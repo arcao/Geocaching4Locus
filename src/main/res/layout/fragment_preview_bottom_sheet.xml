@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/root"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider"
+                android:background="@color/card_window_background"/>
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:minHeight="@dimen/open_with_header_height"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Widget.AppTheme.BottomSheet.Title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_open_with"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/app_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/open_with_separator_height"
+                android:layout_below="@+id/header"
+                android:background="?android:dividerVertical"/>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</FrameLayout>

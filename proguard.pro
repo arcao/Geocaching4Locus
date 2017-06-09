@@ -26,6 +26,8 @@
 
 # OkHTTP
 -dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
 
 # Scribe
 -dontwarn com.github.scribejava.core.services.DatatypeConverterEncoder
@@ -61,6 +63,5 @@
 -dontnote com.android.**
 -dontnote com.google.android.gms.**
 -dontnote com.google.gson.internal.**
--dontnote okhttp3.internal.platform.Platform
 -dontnote com.afollestad.materialdialogs.internal.MDTintHelper
 -dontnote com.arcao.feedback.collector.DisplayManagerCollector

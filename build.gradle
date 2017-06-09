@@ -105,6 +105,13 @@ android {
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
+
+        // required for Google Auto Value annotation processor
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     compileOptions {

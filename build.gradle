@@ -5,10 +5,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha1'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
-        classpath 'io.fabric.tools:gradle:1.22.1'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'io.fabric.tools:gradle:1.22.2'
     }
 }
 
@@ -24,13 +23,15 @@ repositories {
 }
 
 dependencies {
-    // from Android local maven repository
+    def sdkVer = '25.4.0'
+    //def sdkVer = '26.0.0-beta2'
+
     //noinspection GradleCompatible
-    implementation 'com.android.support:support-v4:25.3.1'
-    implementation 'com.android.support:appcompat-v7:25.3.1'
-    implementation 'com.android.support:recyclerview-v7:25.3.1'
-    implementation 'com.android.support:cardview-v7:25.3.1'
-    implementation 'com.android.support:design:25.3.1'
+    implementation "com.android.support:support-v4:$sdkVer"
+    implementation "com.android.support:appcompat-v7:$sdkVer"
+    implementation "com.android.support:recyclerview-v7:$sdkVer"
+    implementation "com.android.support:cardview-v7:$sdkVer"
+    implementation "com.android.support:design:$sdkVer"
 
     // from maven.arcao.com repository
     implementation('com.arcao:geocaching-api:2.0.1') {
@@ -86,7 +87,7 @@ if (!project.hasProperty('geocachingApiStaging')) {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '25.0.3'
 
     dexOptions {
@@ -95,7 +96,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion hasProperty('devBuild') ? 21 : 15
+        minSdkVersion hasProperty('devBuild') ? 25 : 15
         targetSdkVersion 25
         versionCode gitVersionCode()
         buildConfigField 'String', 'GIT_SHA', 'null'
@@ -161,15 +162,15 @@ android {
 }
 
 // dependencyUpdates: suggest only released artifacts
-dependencyUpdates.resolutionStrategy = {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
-            if (rejected)
-                selection.reject('Release candidate')
-        }
-    }
-}
+//dependencyUpdates.resolutionStrategy = {
+//    componentSelection { rules ->
+//        rules.all { ComponentSelection selection ->
+//            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+//            if (rejected)
+//                selection.reject('Release candidate')
+//        }
+//    }
+//}
 
 if (project.hasProperty('storeFile') &&
         project.hasProperty('storePassword') &&

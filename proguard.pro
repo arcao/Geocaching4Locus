@@ -34,6 +34,9 @@
 -dontwarn org.apache.commons.codec.binary.**
 -dontwarn com.ning.http.client.**
 
+# Fabric.io
+-dontwarn io.fabric.sdk.android.services.common.**
+
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable #needed
 -keepattributes Signature # Needed by google-api-client #to make XStream work with obfuscation?

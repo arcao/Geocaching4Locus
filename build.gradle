@@ -23,15 +23,15 @@ repositories {
 }
 
 dependencies {
-    def sdkVer = '25.4.0'
-    //def sdkVer = '26.0.0-beta2'
+    //def supportVersion = '25.4.0'
+    def supportVersion = '26.0.0-beta2'
 
     //noinspection GradleCompatible
-    implementation "com.android.support:support-v4:$sdkVer"
-    implementation "com.android.support:appcompat-v7:$sdkVer"
-    implementation "com.android.support:recyclerview-v7:$sdkVer"
-    implementation "com.android.support:cardview-v7:$sdkVer"
-    implementation "com.android.support:design:$sdkVer"
+    implementation "com.android.support:support-v4:$supportVersion"
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.android.support:cardview-v7:$supportVersion"
+    implementation "com.android.support:design:$supportVersion"
 
     // from maven.arcao.com repository
     implementation('com.arcao:geocaching-api:2.0.1') {
@@ -42,7 +42,7 @@ dependencies {
 
     // from JCenter repository
     implementation 'com.arcao:slf4j-timber:3.0'
-    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.apache.commons:commons-collections4:4.1'
     implementation 'commons-io:commons-io:2.5'
     implementation 'com.github.scribejava:scribejava-core:4.1.1'
@@ -97,7 +97,8 @@ android {
 
     defaultConfig {
         minSdkVersion hasProperty('devBuild') ? 25 : 15
-        targetSdkVersion 25
+        //noinspection OldTargetApi
+        targetSdkVersion 25 // SDK 26 breaks Live map feature (changes in how Broadcast Intents works between apps)
         versionCode gitVersionCode()
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'
@@ -106,13 +107,6 @@ android {
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
-
-        // required for Google Auto Value annotation processor
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
     }
 
     compileOptions {
@@ -159,6 +153,11 @@ android {
         exclude 'log4j.xml'
     }
     lintOptions { abortOnError false }
+
+    // use new PNG cruncher which doesn't increase PNG file size if is already optimized
+    aaptOptions {
+        cruncherEnabled = false
+    }
 }
 
 // dependencyUpdates: suggest only released artifacts

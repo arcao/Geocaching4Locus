@@ -87,7 +87,7 @@ if (!project.hasProperty('geocachingApiStaging')) {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '25.0.3'
 
     dexOptions {

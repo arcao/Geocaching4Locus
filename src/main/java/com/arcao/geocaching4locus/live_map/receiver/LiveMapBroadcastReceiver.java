@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
+
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
@@ -97,7 +99,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				Location l = update.getLocMapCenter();
 
 				// Start service to download caches
-				context.startService(LiveMapService.createIntent(
+				ContextCompat.startForegroundService(context, LiveMapService.createIntent(
 						context,
 						l.getLatitude(),
 						l.getLongitude(),

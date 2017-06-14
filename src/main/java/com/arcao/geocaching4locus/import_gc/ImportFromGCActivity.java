@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.import_gc;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import timber.log.Timber;
 
 public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
 	private static final int REQUEST_SIGN_ON = 1;
+	private static final String PARAM_CACHE_CODE = "CACHE_CODE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 	}
 
 	private void showGCNumberInputDialog() {
+		if (getIntent().hasExtra(PARAM_CACHE_CODE)) {
+			startImport(getIntent().getStringExtra(PARAM_CACHE_CODE));
+			return;
+		}
+
 		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
@@ -94,4 +101,9 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 			}
 		}
 	}
+
+    public static Intent createIntent(Context context, String code) {
+		return new Intent(context, ImportFromGCActivity.class)
+				.putExtra(PARAM_CACHE_CODE, code);
+    }
 }

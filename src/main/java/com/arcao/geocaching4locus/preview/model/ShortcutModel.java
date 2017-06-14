@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.model;
+package com.arcao.geocaching4locus.preview.model;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

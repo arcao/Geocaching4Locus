@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.task;
+package com.arcao.geocaching4locus.preview.task;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
-import com.arcao.geocaching4locus.import_gc.ImportActivity;
+import com.arcao.geocaching4locus.preview.PreviewActivity;
 import com.arcao.geocaching4locus.import_gc.util.ParcelableGeocache;
 import com.arcao.wherigoservice.api.WherigoApiFactory;
 import com.arcao.wherigoservice.api.WherigoService;
@@ -61,7 +61,7 @@ public class RetrieveGeocacheTask extends UserTask<String, Void, ParcelableGeoca
         String cacheId = params[0];
 
         // if it's guid we need to convert to cache code
-        if (!ImportActivity.CACHE_CODE_PATTERN.matcher(cacheId).find()) {
+        if (!PreviewActivity.CACHE_CODE_PATTERN.matcher(cacheId).find()) {
             WherigoService wherigoService = WherigoApiFactory.create();
             cacheId = wherigoService.getCacheCodeFromGuid(cacheId);
         }

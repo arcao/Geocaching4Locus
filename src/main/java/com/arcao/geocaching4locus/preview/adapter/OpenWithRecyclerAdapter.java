@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.adapter;
+package com.arcao.geocaching4locus.preview.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.import_gc.data.ShortcutResolver;
-import com.arcao.geocaching4locus.import_gc.model.ShortcutModel;
+import com.arcao.geocaching4locus.preview.data.ShortcutResolver;
+import com.arcao.geocaching4locus.preview.model.ShortcutModel;
 
 import java.util.List;
 
@@ -19,11 +19,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OpenWithRecyclerAdapter extends RecyclerView.Adapter<OpenWithRecyclerAdapter.ViewHolder> {
+
     public interface OnItemClickListener {
         void onAppListItemClick(Intent intent);
     }
 
     private final List<ShortcutModel> list;
+    private boolean hasDefaultAction;
     OnItemClickListener onItemClickListener;
 
     public OpenWithRecyclerAdapter(Context context, Intent intent) {
@@ -42,6 +44,15 @@ public class OpenWithRecyclerAdapter extends RecyclerView.Adapter<OpenWithRecycl
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.bind(list.get(position));
+    }
+
+    public void setDefaultAction(ShortcutModel model) {
+        if (hasDefaultAction) {
+            list.set(0, model);
+        } else {
+            list.add(0, model);
+            hasDefaultAction = true;
+        }
     }
 
     @Override

@@ -1,9 +1,9 @@
-package com.arcao.geocaching4locus.import_gc;
+package com.arcao.geocaching4locus.preview;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -13,14 +13,15 @@ import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
-import com.arcao.geocaching4locus.import_gc.fragment.PreviewDialogFragment;
+import com.arcao.geocaching4locus.preview.fragment.PreviewDialogFragment;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, PreviewDialogFragment.DialogListener {
+@SuppressLint("GoogleAppIndexingApiWarning")
+public class PreviewActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, PreviewDialogFragment.DialogListener {
 	public final static Pattern CACHE_CODE_PATTERN = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE);
 	private final static Pattern GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE);
 
@@ -83,14 +84,6 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 	}
 
 	@Override
-	public void onImport(@Nullable String cacheId) {
-		Timber.d("onImport result: " + cacheId);
-
-		Timber.i("source: import;" + cacheId);
-		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
-	}
-
-	@Override
 	public void onClose() {
 		Timber.d("onClose");
 
@@ -107,7 +100,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		if (requestCode == REQUEST_SIGN_ON) {
 			if (resultCode == RESULT_OK) {
 				if (PermissionUtil.requestExternalStoragePermission(this))
-				showImportDialog();
+					showImportDialog();
 			} else {
 				onImportFinished(false);
 			}

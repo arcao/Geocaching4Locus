@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.fragment;
+package com.arcao.geocaching4locus.preview.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,17 +11,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment;
 import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.SpacesItemDecoration;
-import com.arcao.geocaching4locus.import_gc.adapter.OpenWithRecyclerAdapter;
-import com.arcao.geocaching4locus.import_gc.task.RetrieveGeocacheTask;
+import com.arcao.geocaching4locus.import_gc.ImportFromGCActivity;
+import com.arcao.geocaching4locus.preview.adapter.OpenWithRecyclerAdapter;
+import com.arcao.geocaching4locus.preview.model.ShortcutModel;
+import com.arcao.geocaching4locus.preview.task.RetrieveGeocacheTask;
 
 import java.lang.ref.WeakReference;
 
@@ -33,15 +37,18 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
 
     private static final String PARAM_URI = "CACHE_URI";
     private static final String PARAM_CACHE_ID = "CACHE_ID";
-    private Geocache geocache = null;
 
     public interface DialogListener {
-        void onImport(@Nullable String cacheId);
         void onClose();
     }
 
-    @Nullable private RetrieveGeocacheTask mTask;
     WeakReference<DialogListener> mDialogListenerRef;
+
+    @Nullable private RetrieveGeocacheTask mTask;
+    private Geocache geocache;
+    private OpenWithRecyclerAdapter openWithAdapter;
+
+    @BindView(R.id.app_list) RecyclerView openWithView;
 
     //Bottom Sheet Callback
     private final BottomSheetBehavior.BottomSheetCallback mBottomSheetBehaviorCallback = new BottomSheetBehavior.BottomSheetCallback() {
@@ -75,13 +82,14 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-        String geocacheCode = getArguments().getString(PARAM_CACHE_ID);
-
-        mTask = new RetrieveGeocacheTask(getActivity(), this);
-        mTask.execute(geocacheCode);
+        try {
+            mDialogListenerRef = new WeakReference<>((DialogListener) activity);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement DialogListener");
+        }
     }
 
     @Override
@@ -96,29 +104,30 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
+        if (!(behavior instanceof BottomSheetBehavior))
+            throw new IllegalStateException("Bottom sheet Behavior expected.");
+
+        BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) behavior;
+
         //Set callback
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
-            ((BottomSheetBehavior) behavior).setBottomSheetCallback(mBottomSheetBehaviorCallback);
-        }
+        bottomSheetBehavior.setBottomSheetCallback(mBottomSheetBehaviorCallback);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         ButterKnife.bind(this, contentView);
 
         setupOpenWith();
 
-        if (geocache != null) {
-            setupPreview();
-        }
-
         // fix width for larger screens like tablets
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                View decorView = dialog.getWindow().getDecorView();
-                int width = decorView == null ? 0 : decorView.getWidth();
-                int maxWidth = getResources().getDimensionPixelSize(R.dimen.bottom_sheet_max_width);
-                if (width > maxWidth) {
-                    dialog.getWindow().setLayout(maxWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-                }
+        dialog.setOnShowListener(dialogInterface -> {
+            Window window = dialog.getWindow();
+            if (window == null)
+                return;
+
+            View decorView = window.getDecorView();
+            int width = decorView == null ? 0 : decorView.getWidth();
+            int maxWidth = getResources().getDimensionPixelSize(R.dimen.bottom_sheet_max_width);
+            if (width > maxWidth) {
+                window.setLayout(maxWidth, ViewGroup.LayoutParams.MATCH_PARENT);
             }
         });
 
@@ -126,15 +135,15 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        try {
-            mDialogListenerRef = new WeakReference<>((DialogListener) activity);
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement DialogListener");
-        }
+        String geocacheCode = getArguments().getString(PARAM_CACHE_ID);
+
+        mTask = new RetrieveGeocacheTask(getActivity(), this);
+        mTask.execute(geocacheCode);
     }
+
 
 
     @Override
@@ -156,25 +165,12 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
         }
     }
 
-    public void onImportClick() {
-        dismiss();
-
-        String geocacheCode = getArguments().getString(PARAM_CACHE_ID);
-
-        if (geocache != null) {
-            geocacheCode = geocache.code();
-        }
-
-        DialogListener listener = mDialogListenerRef.get();
-        if (listener != null) {
-            listener.onImport(geocacheCode);
-        }
-    }
-
     @Override
     public void onTaskFinished(Geocache geocache) {
         this.geocache = geocache;
-        setupPreview();
+
+        if (getDialog() != null)
+            setupPreview();
     }
 
     @Override
@@ -188,23 +184,27 @@ public class PreviewDialogFragment extends AbstractDialogFragment implements Ret
         }
     }
 
-
-    @BindView(R.id.app_list) RecyclerView recyclerView;
-
     private void setupOpenWith() {
         Uri url = getArguments().getParcelable(PARAM_URI);
         Intent intent = new Intent(Intent.ACTION_VIEW, url);
 
-        OpenWithRecyclerAdapter adapter = new OpenWithRecyclerAdapter(getActivity(), intent);
-        adapter.setOnItemClickListener(this);
+        openWithAdapter = new OpenWithRecyclerAdapter(getActivity(), intent);
+        openWithAdapter.setOnItemClickListener(this);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.addItemDecoration(new SpacesItemDecoration((int)getResources().getDimension(R.dimen.cardview_space)));
+        openWithView.setAdapter(openWithAdapter);
+        openWithView.setNestedScrollingEnabled(false);
+        openWithView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        openWithView.addItemDecoration(new SpacesItemDecoration((int)getResources().getDimension(R.dimen.cardview_space)));
     }
 
 
     private void setupPreview() {
+        ShortcutModel importShortcut = ShortcutModel.builder()
+                .icon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_launcher))
+                .title(getString(R.string.launcher_import_geocache))
+                .intent(ImportFromGCActivity.createIntent(getActivity(), geocache.code()))
+                .build();
+
+        openWithAdapter.setDefaultAction(importShortcut);
     }
 }

@@ -11,16 +11,13 @@ import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
-import com.arcao.geocaching4locus.import_gc.ImportActivity;
-import com.arcao.wherigoservice.api.WherigoApiFactory;
-import com.arcao.wherigoservice.api.WherigoService;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,12 +71,6 @@ public class ImportTask extends UserTask<String, Void, Boolean> {
 		DataMapper mapper = new DataMapper(mContext);
 
 		String cacheId = params[0];
-
-		// if it's guid we need to convert to cache code
-		if (!ImportActivity.CACHE_CODE_PATTERN.matcher(cacheId).find()) {
-			WherigoService wherigoService = WherigoApiFactory.create();
-			cacheId = wherigoService.getCacheCodeFromGuid(cacheId);
-		}
 
 		try {
 			GeocachingApi api = GeocachingApiFactory.create();

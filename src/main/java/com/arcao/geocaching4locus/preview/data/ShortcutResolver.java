@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.data;
+package com.arcao.geocaching4locus.preview.data;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.res.ResourcesCompat;
 
-import com.arcao.geocaching4locus.import_gc.model.ShortcutModel;
+import com.arcao.geocaching4locus.preview.model.ShortcutModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,10 @@ public class ShortcutResolver {
         List<ShortcutModel> list = new ArrayList<>(infoList.size());
 
         for (ResolveInfo info: infoList) {
+            // exclude current app
+            if (info.activityInfo.packageName.equals(context.getPackageName()))
+                continue;
+
             list.add(createModel(info, forIntent));
         }
 

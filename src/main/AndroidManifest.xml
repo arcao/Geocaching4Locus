@@ -77,7 +77,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/launcher_preview_geocache">
+        <activity android:name=".preview.PreviewActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/launcher_preview_geocache">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

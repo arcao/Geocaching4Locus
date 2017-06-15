@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:orientation="vertical"
-                    android:layout_gravity="top|left"
+                    android:layout_gravity="top|start"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
                     <include layout="@layout/view_search_nearest_coordinates" />
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:orientation="vertical"
-                    android:layout_gravity="top|left"
+                    android:layout_gravity="top|start"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp">
                         <include layout="@layout/view_search_nearest_geocache_count" />

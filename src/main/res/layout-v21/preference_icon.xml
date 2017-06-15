@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:maxLines="1"
+        android:singleLine="true"
         tools:text="@string/pref_geocaching_live"/>
 
     <LinearLayout

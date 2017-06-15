@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -188,7 +187,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
   }
 
   private int getMaxCountOfCaches() {
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB || Runtime.getRuntime().maxMemory() <= AppConstants.LOW_MEMORY_THRESHOLD)
+    if (Runtime.getRuntime().maxMemory() <= AppConstants.LOW_MEMORY_THRESHOLD)
       return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX_LOW_MEMORY;
 
     return AppConstants.DOWNLOADING_COUNT_OF_CACHES_MAX;

@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.dashboard.widget;
 
 import android.content.Context;
+import android.support.v13.view.ViewCompat;
 import android.support.v7.appcompat.R;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.method.MovementMethod;
@@ -19,7 +20,7 @@ public class SpinnerTextView extends AppCompatEditText {
 	public SpinnerTextView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 
-		setSupportBackgroundTintList(ColorUtil.getDefaultColorStateList(context));
+		ViewCompat.setBackgroundTintList(this, ColorUtil.getDefaultColorStateList(context));
 	}
 
 	@Override

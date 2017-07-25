@@ -4,9 +4,9 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'io.fabric.tools:gradle:1.22.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
+        classpath 'io.fabric.tools:gradle:1.23.0'
     }
 }
 
@@ -23,11 +23,11 @@ repositories {
 
 dependencies {
     // from Android local maven repository
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 
     // from maven.arcao.com repository
     compile('com.arcao:geocaching-api:1.6.3') {
@@ -37,26 +37,24 @@ dependencies {
     compile 'menion:locus-api-android:1.38.42'
 
     // from JCenter repository
-    compile 'com.arcao:slf4j-timber:2.1'
-    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'com.arcao:slf4j-timber:3.0'
+    compile 'org.apache.commons:commons-lang3:3.6'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'commons-io:commons-io:2.5'
     compile('org.scribe:scribe:1.3.7') {
         exclude group: 'commons-codec', module: 'commons-codec' // already in Android
     }
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile('com.github.afollestad.material-dialogs:core:0.9.0.1@aar') {
-        transitive = true
-    }
-    compile 'com.crashlytics.sdk.android:crashlytics:2.6.5'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.github.afollestad.material-dialogs:core:0.9.4.5'
+    compile 'com.crashlytics.sdk.android:crashlytics:2.6.8'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
 }
 
 def gitSha() {
     return 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim();
 }
 
-def buildTime() {
+static def buildTime() {
     return new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZ", TimeZone.getTimeZone('UTC'));
 }
 
@@ -64,8 +62,8 @@ def gitVersionCode() {
     return 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim().toInteger();
 }
 
-def isTravis = 'true'.equals(System.getenv('TRAVIS'))
-def preDexEnabled = 'true'.equals(System.getProperty('pre-dex', 'true'))
+def isTravis = 'true' == System.getenv('TRAVIS')
+def preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
 
 // set Geocaching API staging key and secret if production key and secret is not set
 // Note: Staging server is slow and not for production use!!!!
@@ -80,8 +78,8 @@ if (!project.hasProperty('geocachingApiStaging')) {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.3'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -144,6 +142,17 @@ android {
         exclude 'log4j.xml'
     }
     lintOptions { abortOnError false }
+}
+
+// dependencyUpdates: suggest only released artifacts
+dependencyUpdates.resolutionStrategy = {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+            if (rejected)
+                selection.reject('Release candidate')
+        }
+    }
 }
 
 if (project.hasProperty('storeFile') &&

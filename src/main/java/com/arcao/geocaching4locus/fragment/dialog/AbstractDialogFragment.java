@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.fragment.dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
@@ -45,10 +44,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	public void dismiss() {
 		// this fix IllegalStateException when App is hidden
 		if (!isAdded() || getFragmentManager() == null) {
-			if (getArguments() == null)
-				setArguments(new Bundle());
+			if (getArguments() != null)
+				getArguments().putBoolean(PARAM_DISMISS_LATER, true);
 
-			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
 			return;
 		}
 

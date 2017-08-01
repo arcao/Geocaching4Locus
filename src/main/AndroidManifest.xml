@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.arcao.geocaching4locus"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.arcao.geocaching4locus"
       android:versionName="2.1.5.2"
       android:installLocation="auto">
     
@@ -10,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="24"/>
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="25"/>
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
 
     <uses-feature android:name="android.hardware.location" android:required="false" />
@@ -32,11 +33,15 @@
             android:authorities="${applicationId}.provider.feedback"
             android:exported="true"
             android:enabled="true"
-            android:grantUriPermissions="true"/>
+            android:grantUriPermissions="true"
+            tools:ignore="ExportedContentProvider" />
 
         <service android:name=".service.LiveMapService"/>
         
-        <receiver android:name=".receiver.LiveMapBroadcastReceiver" android:exported="true">
+        <receiver
+            android:name=".receiver.LiveMapBroadcastReceiver"
+            android:enabled="false"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="locus.api.android.ACTION_PERIODIC_UPDATE" />
             </intent-filter>

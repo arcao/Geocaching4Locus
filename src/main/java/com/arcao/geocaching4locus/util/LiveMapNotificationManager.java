@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
+import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -206,8 +207,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 	public void setLiveMapEnabled(boolean enabled) {
 		boolean periodicUpdateEnabled = true;
+		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
+
 		try {
-			LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
+			LocusInfo info = ActionTools.getLocusInfo(mContext, locusVersion);
 			if (info != null) {
 				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
 			}
@@ -230,11 +233,20 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			Toast.makeText(mContext, mContext.getText(R.string.livemap_deactivated), Toast.LENGTH_LONG).show();
 		}
 
-		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
+		try {
+			if (enabled) {
+				ActionTools.enablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
+			} else {
+				ActionTools.disablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
+			}
+			mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
+		} catch (Throwable e) {
+			Timber.e(e, "Unable to enable or disable LiveMapBroadcastReceiver.");
+		}
 	}
 
 	public boolean isLiveMapEnabled() {
-		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);
+		return PackageManagerUtil.isComponentEnabled(mContext, LiveMapBroadcastReceiver.class);
 	}
 
 	public void addLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {

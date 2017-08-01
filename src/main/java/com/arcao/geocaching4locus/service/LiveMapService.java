@@ -34,6 +34,7 @@ import com.arcao.geocaching4locus.authentication.helper.AuthenticatorHelper;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.exception.LocusMapRuntimeException;
+import com.arcao.geocaching4locus.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.util.ResourcesUtil;
 import java.util.Arrays;
@@ -138,6 +139,7 @@ public class LiveMapService extends IntentService {
 		} catch (Exception e) {
 			Timber.e(e, e.getMessage());
 		} finally {
+			LiveMapBroadcastReceiver.completeWakefulIntent(intent);
 			stopForeground(false);
 
 			Timber.d("Job finished.");

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.content.WakefulBroadcastReceiver;
+
 import com.arcao.geocaching4locus.constants.PrefConstants;
 import com.arcao.geocaching4locus.service.LiveMapService;
 import com.arcao.geocaching4locus.util.LiveMapNotificationManager;
@@ -14,7 +16,7 @@ import locus.api.android.features.periodicUpdates.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Location;
 
-public class LiveMapBroadcastReceiver extends BroadcastReceiver {
+public class LiveMapBroadcastReceiver extends WakefulBroadcastReceiver {
 	private static final String VAR_B_MAP_USER_TOUCHES = ("1306");
 	private static final String VAR_LOC_MAP_CENTER = ("1302");
 	private static final String VAR_LOC_MAP_BBOX_TOP_LEFT = ("1303");
@@ -97,7 +99,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 				Location l = update.getLocMapCenter();
 
 				// Start service to download caches
-				context.startService(LiveMapService.createIntent(
+				startWakefulService(context, LiveMapService.createIntent(
 						context,
 						l.getLatitude(),
 						l.getLongitude(),

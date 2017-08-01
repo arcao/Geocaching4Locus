@@ -48,14 +48,13 @@ import timber.log.Timber;
 public class LocusDataMapper {
 	private static final DateFormat GPX_TIME_FMT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
 	private static final String GSAK_USERNAME = "gsak";
-	private static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
 	private static final Pattern FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]+[l|ł]", Pattern.CASE_INSENSITIVE);
 	private static final String GEOCACHE_GUID_LINK_PREFIX = "http://www.geocaching.com/seek/cache_details.aspx?guid=";
 
 	private static final Pattern NOTE__COORDINATE_PATTERN = Pattern.compile("\\b[nNsS]\\s*\\d"); // begin of coordinates
 	private static final Pattern NOTE__NAME_PATTERN = Pattern.compile("^(.+):\\s*\\z");
 	private static final long WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0");
-	public static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
+	private static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
 			+ "<p><a href=\"%1$s#ctl00_ContentBody_ShortDescription\">%2$s</a></p>";
 
 	static {
@@ -235,19 +234,6 @@ public class LocusDataMapper {
 		p.gcData.setComputed(true);
 		p.gcData.setLatOriginal(location.getLatitude());
 		p.gcData.setLonOriginal(location.getLongitude());
-
-		// store original location to waypoint
-		GeocachingWaypoint waypoint = getWaypointByNamePrefix(p, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
-		if (waypoint == null) {
-			waypoint = new GeocachingWaypoint();
-			p.gcData.waypoints.add(waypoint);
-		}
-
-		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.gcData.getCacheID().substring(2));
-		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
-		waypoint.setLat(location.getLatitude());
-		waypoint.setLon(location.getLongitude());
 
 		// update coordinates to new location
 		Location newLocation = new Location(location.getProvider());
@@ -639,45 +625,15 @@ public class LocusDataMapper {
 		toPoint.gcData.setLonOriginal(location.getLongitude());
 		toPoint.gcData.setComputed(true);
 
-		// store original location to waypoint
-		GeocachingWaypoint waypoint = getWaypointByNamePrefix(toPoint, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
-		if (waypoint == null) {
-			waypoint = new GeocachingWaypoint();
-			toPoint.gcData.waypoints.add(waypoint);
-		}
-
-		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + toPoint.gcData.getCacheID().substring(2));
-		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-		waypoint.setName(mContext.getString(R.string.original_coordinates_name));
-		waypoint.setLat(location.getLatitude());
-		waypoint.setLon(location.getLongitude());
-
 		// update coordinates to new location
 		location.set(fromPoint.getLocation());
 	}
 
 	private void copyWaypointId(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {
-		if (fromPoint.id == 0)
+		if (fromPoint.getId() == 0)
 			return;
 
-		toPoint.id = fromPoint.id;
-	}
-
-
-	@Nullable
-	private GeocachingWaypoint getWaypointByNamePrefix(@NonNull Waypoint fromPoint, @NonNull String prefix) {
-		if (fromPoint.gcData == null || CollectionUtils.isEmpty(fromPoint.gcData.waypoints))
-			return null;
-
-		for (GeocachingWaypoint waypoint : fromPoint.gcData.waypoints) {
-			if (waypoint == null || StringUtils.isEmpty(waypoint.getCode()))
-				continue;
-
-			if (waypoint.getCode().startsWith(prefix))
-				return waypoint;
-		}
-
-		return null;
+		toPoint.setId(fromPoint.getId());
 	}
 
 	private void copyGcVote(@NonNull Waypoint toPoint, @NonNull Waypoint fromPoint) {

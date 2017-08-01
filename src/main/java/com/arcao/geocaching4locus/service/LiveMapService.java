@@ -100,24 +100,24 @@ public class LiveMapService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		int jobId = countOfJobs.get();
-		Timber.d("Handling job, count=" + jobId);
-
-		// we skip all jobs before last one
-		if (countOfJobs.getAndDecrement() > 1)
-			return;
-
-		loadConfiguration(prefs);
-
-		double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
-		double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
-		double topLeftLatitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
-		double topLeftLongitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LONGITUDE, 0D);
-		double bottomRightLatitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
-		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
-
 		try {
 			startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, LiveMapNotificationManager.get(this).createNotification().build());
+
+			int jobId = countOfJobs.get();
+			Timber.d("Handling job, count=" + jobId);
+
+			// we skip all jobs before last one
+			if (countOfJobs.getAndDecrement() > 1)
+				return;
+
+			loadConfiguration(prefs);
+
+			double latitude = intent.getDoubleExtra(PARAM_LATITUDE, 0D);
+			double longitude = intent.getDoubleExtra(PARAM_LONGITUDE, 0D);
+			double topLeftLatitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
+			double topLeftLongitude = intent.getDoubleExtra(PARAM_TOP_LEFT_LONGITUDE, 0D);
+			double bottomRightLatitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
+			double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
 		} catch (LocusMapRuntimeException e) {

@@ -10,8 +10,12 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";
 
 	public AbstractDialogFragment() {
-		if (getArguments() == null)
-			setArguments(new Bundle());
+		try {
+			if (getArguments() == null)
+				setArguments(new Bundle());
+		} catch (Exception e) {
+			// do nothing
+		}
 	}
 
 	// This is work around for the situation when method show is called after saving
@@ -52,7 +56,9 @@ public abstract class AbstractDialogFragment extends DialogFragment {
 	public void dismiss() {
 		// this fix IllegalStateException when App is hidden
 		if (!isAdded() || getFragmentManager() == null) {
-			getArguments().putBoolean(PARAM_DISMISS_LATER, true);
+			if (getArguments() != null)
+				getArguments().putBoolean(PARAM_DISMISS_LATER, true);
+
 			return;
 		}
 

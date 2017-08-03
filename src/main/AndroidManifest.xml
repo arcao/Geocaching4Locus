@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
       package="com.arcao.geocaching4locus"
       android:versionName="2.2"
       android:installLocation="auto">
@@ -9,6 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
 
@@ -35,7 +37,10 @@
 
         <service android:name=".live_map.LiveMapService"/>
         
-        <receiver android:name=".live_map.receiver.LiveMapBroadcastReceiver" android:exported="true">
+        <receiver
+            android:name=".live_map.receiver.LiveMapBroadcastReceiver"
+            android:enabled="false"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="locus.api.android.ACTION_PERIODIC_UPDATE" />
             </intent-filter>

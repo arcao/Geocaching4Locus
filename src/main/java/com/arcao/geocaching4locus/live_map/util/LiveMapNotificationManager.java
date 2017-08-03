@@ -12,11 +12,11 @@ import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.PackageManagerUtil;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.dashboard.DashboardActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
@@ -24,12 +24,11 @@ import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
-
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
+import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -212,8 +211,10 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 	public void setLiveMapEnabled(boolean enabled) {
 		boolean periodicUpdateEnabled = true;
+		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
+
 		try {
-			LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
+			LocusInfo info = ActionTools.getLocusInfo(mContext, locusVersion);
 			if (info != null) {
 				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
 			}
@@ -236,7 +237,16 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_disabled), Toast.LENGTH_LONG).show();
 		}
 
+		try {
+			if (enabled) {
+				ActionTools.enablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
+			} else {
+				ActionTools.disablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
+			}
 		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
+		} catch (Throwable e) {
+			Timber.e(e, "Unable to enable or disable LiveMapBroadcastReceiver.");
+	}
 	}
 
 	private void showError(@StringRes int message) {
@@ -244,7 +254,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	public boolean isLiveMapEnabled() {
-		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);
+		return PackageManagerUtil.isComponentEnabled(mContext, LiveMapBroadcastReceiver.class);
 	}
 
 	public void addLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {

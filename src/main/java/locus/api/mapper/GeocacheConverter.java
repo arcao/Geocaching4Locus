@@ -32,13 +32,11 @@ import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
 import locus.api.objects.geocaching.GeocachingData;
-import locus.api.objects.geocaching.GeocachingWaypoint;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
-import static locus.api.mapper.Util.getWaypointByNamePrefix;
 import static locus.api.mapper.Util.safeDateLong;
 
 final class GeocacheConverter {
@@ -269,19 +267,6 @@ final class GeocacheConverter {
     p.gcData.setLatOriginal(location.getLatitude());
     p.gcData.setLonOriginal(location.getLongitude());
 
-    // store original location to waypoint
-    GeocachingWaypoint waypoint = getWaypointByNamePrefix(p, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
-    if (waypoint == null) {
-      waypoint = new GeocachingWaypoint();
-      p.gcData.waypoints.add(waypoint);
-    }
-
-    waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + p.gcData.getCacheID().substring(2));
-    waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-    waypoint.setName(context.getString(R.string.var_original_coordinates_name));
-    waypoint.setLat(location.getLatitude());
-    waypoint.setLon(location.getLongitude());
-
     // update coordinates to new location
     Location newLocation = new Location(location.getProvider());
     newLocation.setLatitude(correctedCoordinateUserWaypoint.coordinates().latitude());
@@ -329,7 +314,7 @@ final class GeocacheConverter {
 
     int count = 0;
     int nameCount = 0;
-    String namePrefix = "";
+    StringBuilder namePrefix = new StringBuilder();
 
     Matcher matcher = NOTE__COORDINATE_PATTERN.matcher(note);
     while (matcher.find()) {
@@ -370,12 +355,12 @@ final class GeocacheConverter {
             .waypointType(waypointType)
             .build());
 
-        namePrefix = "";
+        namePrefix.setLength(0);
       } catch (ParseException e) {
         Timber.w(e, e.getMessage());
 
         // fix for "S1: N 49 ..."
-        namePrefix += note.substring(0, matcher.start() + 1);
+        namePrefix.append(note.substring(0, matcher.start() + 1));
       }
 
       note = note.substring(matcher.start() + 1);

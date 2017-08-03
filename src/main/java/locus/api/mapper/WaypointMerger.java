@@ -5,33 +5,23 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.util.ReverseListIterator;
-
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingLog;
 import locus.api.objects.geocaching.GeocachingWaypoint;
+import org.apache.commons.collections4.CollectionUtils;
 
 import static locus.api.mapper.Util.GSAK_USERNAME;
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
-import static locus.api.mapper.Util.getWaypointByNamePrefix;
 
 final public class WaypointMerger {
-	private static final String ORIGINAL_COORDINATES_WAYPOINT_PREFIX = "RX";
-
-	private final Context mContext;
 	private final SharedPreferences mPrefs;
 
 	public WaypointMerger(@NonNull Context context) {
-		mContext = context.getApplicationContext();
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 	}
 
 	public void mergeWaypoint(@NonNull Waypoint dstWaypoint, @Nullable Waypoint srcWaypoint) {
@@ -109,29 +99,15 @@ final public class WaypointMerger {
 		dstWaypoint.gcData.setLonOriginal(location.getLongitude());
 		dstWaypoint.gcData.setComputed(true);
 
-		// store original location to waypoint
-		GeocachingWaypoint
-				waypoint = getWaypointByNamePrefix(dstWaypoint, ORIGINAL_COORDINATES_WAYPOINT_PREFIX);
-		if (waypoint == null) {
-			waypoint = new GeocachingWaypoint();
-			dstWaypoint.gcData.waypoints.add(waypoint);
-		}
-
-		waypoint.setCode(ORIGINAL_COORDINATES_WAYPOINT_PREFIX + dstWaypoint.gcData.getCacheID().substring(2));
-		waypoint.setType(GeocachingWaypoint.CACHE_WAYPOINT_TYPE_REFERENCE);
-		waypoint.setName(mContext.getString(R.string.var_original_coordinates_name));
-		waypoint.setLat(location.getLatitude());
-		waypoint.setLon(location.getLongitude());
-
 		// update coordinates to new location
 		location.set(srcWaypoint.getLocation());
 	}
 
 	private void copyWaypointId(@NonNull Waypoint dstWaypoint, @NonNull Waypoint srcWaypoint) {
-		if (srcWaypoint.id == 0)
+		if (srcWaypoint.getId() == 0)
 			return;
 
-		dstWaypoint.id = srcWaypoint.id;
+		dstWaypoint.setId(srcWaypoint.getId());
 	}
 
 	private void copyGcVote(@NonNull Waypoint dstWaypoint, @NonNull Waypoint srcWaypoint) {

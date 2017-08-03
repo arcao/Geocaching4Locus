@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.settings.fragment;
 
 import android.os.Bundle;
 import android.preference.Preference;
-
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.Account;
@@ -28,20 +27,17 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		final Preference accountPreference = findPreference(ACCOUNT, Preference.class);
 		final AccountManager accountManager = App.get(getActivity()).getAccountManager();
 
-		accountPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				if (accountManager.getAccount() != null) {
-					accountManager.removeAccount();
-					accountPreference.setTitle(R.string.pref_login);
-					accountPreference.setSummary(R.string.pref_login_summary);
-				} else {
-					accountManager.requestSignOn(getActivity(), 0);
-				}
+		accountPreference.setOnPreferenceClickListener(preference -> {
+      if (accountManager.getAccount() != null) {
+        accountManager.removeAccount();
+        accountPreference.setTitle(R.string.pref_login);
+        accountPreference.setSummary(R.string.pref_login_summary);
+      } else {
+        accountManager.requestSignOn(getActivity(), 0);
+      }
 
-				return true;
-			}
-		});
+      return true;
+    });
 
 		Account account = accountManager.getAccount();
 		if (account != null) {
@@ -54,13 +50,10 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
 		}
 
 		final Preference geocachingLivePreference = findPreference(ACCOUNT_GEOCACHING_LIVE, Preference.class);
-		geocachingLivePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				IntentUtil.showWebPage(getActivity(), AppConstants.GEOCACHING_LIVE_URI);
-				return true;
-			}
-		});
+		geocachingLivePreference.setOnPreferenceClickListener(preference -> {
+      IntentUtil.showWebPage(getActivity(), AppConstants.GEOCACHING_LIVE_URI);
+      return true;
+    });
 	}
 
 	private CharSequence prepareAccountSummary(CharSequence value) {

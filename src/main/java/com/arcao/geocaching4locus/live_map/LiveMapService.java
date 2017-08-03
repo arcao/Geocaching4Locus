@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -31,19 +30,18 @@ import com.arcao.geocaching.api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
-import com.arcao.geocaching4locus.base.constants.AppConstants;
-import com.arcao.geocaching4locus.base.util.ResourcesUtil;
-import com.arcao.geocaching4locus.update.UpdateActivity;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
+import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
+import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
-
+import com.arcao.geocaching4locus.update.UpdateActivity;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
-
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -104,6 +102,9 @@ public class LiveMapService extends IntentService {
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
+		try {
+			startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, LiveMapNotificationManager.get(this).createNotification().build());
+
 		int jobId = countOfJobs.get();
 		Timber.d("Handling job, count=" + jobId);
 
@@ -118,7 +119,6 @@ public class LiveMapService extends IntentService {
 		double bottomRightLatitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
 		double bottomRightLongitude = intent.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 
-		try {
 			startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, LiveMapNotificationManager.get(this).createNotification().build());
 
 			sendCaches(latitude, longitude, topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude);
@@ -140,6 +140,7 @@ public class LiveMapService extends IntentService {
 		} catch (Exception e) {
 			Timber.e(e, e.getMessage());
 		} finally {
+			LiveMapBroadcastReceiver.completeWakefulIntent(intent);
 			stopForeground(false);
 
 			Timber.d("Job finished.");
@@ -309,11 +310,8 @@ public class LiveMapService extends IntentService {
 	}
 
 	private void showMessage(final String message) {
-		new Handler(Looper.getMainLooper()).post(new Runnable() {
-			@Override
-			public void run() {
-				Toast.makeText(getApplicationContext(), ResourcesUtil.getText(getApplicationContext(), R.string.error_live_map, message), Toast.LENGTH_LONG).show();}
-		});
+		new Handler(Looper.getMainLooper()).post(
+				() -> Toast.makeText(getApplicationContext(), ResourcesUtil.getText(getApplicationContext(), R.string.error_live_map, message), Toast.LENGTH_LONG).show());
 	}
 
 	public static void cleanLiveMapItems(Context context) {

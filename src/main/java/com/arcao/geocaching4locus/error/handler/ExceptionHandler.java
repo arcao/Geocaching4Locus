@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
-
 import com.arcao.geocaching.api.StatusCode;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
@@ -26,15 +25,12 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.oshkimaadziig.george.androidutils.SpanFormatter;
-
 import java.io.EOFException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
-
+import org.apache.commons.lang3.StringUtils;
+import org.oshkimaadziig.george.androidutils.SpanFormatter;
 import timber.log.Timber;
 
 public class ExceptionHandler {

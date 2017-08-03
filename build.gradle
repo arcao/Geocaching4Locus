@@ -7,7 +7,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
-        classpath 'io.fabric.tools:gradle:1.22.2'
+        classpath 'io.fabric.tools:gradle:1.23.0'
     }
 }
 
@@ -23,8 +23,7 @@ repositories {
 }
 
 dependencies {
-    //def sdkVer = '25.4.0'
-    def sdkVer = '26.0.0-beta2'
+    def sdkVer = '26.0.0'
 
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:$sdkVer"
@@ -45,13 +44,13 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.apache.commons:commons-collections4:4.1'
     implementation 'commons-io:commons-io:2.5'
-    implementation 'com.github.scribejava:scribejava-core:4.1.1'
-    implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.1.1'
-    implementation 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation 'com.github.scribejava:scribejava-core:4.2.0'
+    implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.2.0'
+    implementation 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.6.8'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 
     annotationProcessor 'com.google.auto.value:auto-value:1.4.1'
     compileOnly 'com.google.auto.value:auto-value:1.4.1'
@@ -88,7 +87,7 @@ if (!project.hasProperty('geocachingApiStaging')) {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '25.0.3'
+    buildToolsVersion '26.0.1'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -96,8 +95,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion hasProperty('devBuild') ? 25 : 15
-        targetSdkVersion 25
+        minSdkVersion hasProperty('devBuild') ? 26 : 15
+        targetSdkVersion 26
         versionCode gitVersionCode()
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'

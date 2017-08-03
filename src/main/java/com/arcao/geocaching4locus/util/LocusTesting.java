@@ -3,21 +3,23 @@ package com.arcao.geocaching4locus.util;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.constants.AppConstants;
 import com.arcao.geocaching4locus.fragment.dialog.LocusTestingErrorDialogFragment;
+
 import locus.api.android.utils.LocusUtils;
-import org.osgi.framework.Version;
 import timber.log.Timber;
 
 public class LocusTesting {
 	public static boolean isLocusInstalled(Context context) {
 		LocusUtils.LocusVersion lv = getActiveVersion(context);
 
-		Version locusVersion = Version.parseVersion(lv != null ? lv.getVersionName() : null);
+		String locusVersion = lv != null ? lv.getVersionName() : "";
+
 		Timber.v("Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
 
-		return locusVersion.compareTo(AppConstants.LOCUS_MIN_VERSION) >= 0;
+		return lv != null && lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE);
 	}
 
 	public static void showLocusMissingError(final FragmentActivity activity) {

@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.constants;
 
 import android.net.Uri;
-
 import android.util.Base64;
-import org.osgi.framework.Version;
+
+import locus.api.android.utils.LocusUtils;
 
 public interface AppConstants {
 	String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
@@ -21,7 +21,8 @@ public interface AppConstants {
 			"aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1hcmNhbyUlNDBhcmNhbyUlMmVjb20mbGM9Q1omaXRlbV9uYW1lPUdlb2NhY2hpbmc0TG9jdXMmaXRlbV9udW1iZXI9ZzRsJmN1cnJlbmN5X2NvZGU9JXMmYm49UFAlJTJkRG9uYXRpb25zQkYlJTNhYnRuX2RvbmF0ZUNDX0xHJSUyZWdpZiUlM2FOb25Ib3N0ZWQ=",
 			Base64.DEFAULT));
 
-	Version LOCUS_MIN_VERSION = Version.parseVersion("3.7.0");
+	String LOCUS_MIN_VERSION = "3.8.0";
+	LocusUtils.VersionCode LOCUS_MIN_VERSION_CODE = LocusUtils.VersionCode.UPDATE_09;
 
 	/* Adaptive downloading configuration */
 	int CACHES_PER_REQUEST = 5;

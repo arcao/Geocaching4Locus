@@ -234,19 +234,17 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 
 		try {
-			if (enabled) {
-				ActionTools.enablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
-			} else {
-				ActionTools.disablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
-			}
-			mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
+			// make sure Live Map broadcast receiver is always enabled
+			ActionTools.enablePeriodicUpdatesReceiver(mContext, locusVersion, LiveMapBroadcastReceiver.class);
 		} catch (Throwable e) {
-			Timber.e(e, "Unable to enable or disable LiveMapBroadcastReceiver.");
+			Timber.e(e, "Unable to enable LiveMapBroadcastReceiver.");
 		}
+
+		mSharedPrefs.edit().putBoolean(PrefConstants.LIVE_MAP, enabled).apply();
 	}
 
 	public boolean isLiveMapEnabled() {
-		return PackageManagerUtil.isComponentEnabled(mContext, LiveMapBroadcastReceiver.class);
+		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);
 	}
 
 	public void addLiveMapStateChangeListener(LiveMapStateChangeListener liveMapStateChangeListener) {

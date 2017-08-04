@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.arcao.geocaching4locus"
-      android:versionName="2.1.5.3"
+      android:versionName="2.1.5.4"
       android:installLocation="auto">
     
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -41,7 +41,7 @@
         
         <receiver
             android:name=".receiver.LiveMapBroadcastReceiver"
-            android:enabled="false"
+            android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="locus.api.android.ACTION_PERIODIC_UPDATE" />

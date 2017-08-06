@@ -39,7 +39,7 @@
         
         <receiver
             android:name=".live_map.receiver.LiveMapBroadcastReceiver"
-            android:enabled="false"
+            android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="locus.api.android.ACTION_PERIODIC_UPDATE" />

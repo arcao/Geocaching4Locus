@@ -48,8 +48,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 	}
 
 	private OAuth10aService createOAuthService() {
-		ServiceBuilder serviceBuilder = new ServiceBuilder()
-						.apiKey(BuildConfig.GEOCACHING_API_KEY)
+		ServiceBuilder serviceBuilder = new ServiceBuilder(BuildConfig.GEOCACHING_API_KEY)
 						.apiSecret(BuildConfig.GEOCACHING_API_SECRET)
 						.callback(AppConstants.OAUTH_CALLBACK_URL)
 						.httpClient(new OkHttpHttpClient(GeocachingApiFactory.getOkHttpClient()))

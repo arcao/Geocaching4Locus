@@ -4,6 +4,7 @@ apply plugin: 'io.fabric'
 dependencies {
     def supportVer = '26.0.0'
 
+    // support libraries
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:$supportVer"
     implementation "com.android.support:appcompat-v7:$supportVer"
@@ -16,25 +17,36 @@ dependencies {
         // Not working in Android, slf4j-timber used instead
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    compile 'com.asamm:locus-api-android:0.2.10'
 
-    // from JCenter repository
-    compile 'com.arcao:slf4j-timber:3.0'
+    // Locus API
+    implementation 'com.asamm:locus-api-android:0.2.10'
+
+    // Logging API
+    implementation 'com.arcao:slf4j-timber:3.0'
+    implementation 'com.jakewharton.timber:timber:4.5.1'
+
+    // Apache commons
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.apache.commons:commons-collections4:4.1'
     implementation 'commons-io:commons-io:2.5'
+
+    // ScribeJava
     implementation 'com.github.scribejava:scribejava-core:4.2.0'
     implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.2.0'
-    implementation 'com.jakewharton:butterknife:8.8.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.0'
+
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.6.8'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 
-    annotationProcessor 'com.google.auto.value:auto-value:1.4.1'
+    // Annotation processor dependencies
+    implementation 'com.jakewharton:butterknife:8.8.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.0'
+
     compileOnly 'com.google.auto.value:auto-value:1.4.1'
-    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
+    annotationProcessor 'com.google.auto.value:auto-value:1.4.1'
+
     implementation 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.5'
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
 }
 
 android {
@@ -57,6 +69,15 @@ android {
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                    // TODO remove when http://b.android.com/187527 is supported by ButterKnife.
+                    'butterknife.minSdk': getMinSdkVersion().getApiString()
+                ]
+            }
+        }
     }
 
     compileOptions {

@@ -6,9 +6,9 @@ import android.net.Uri;
 import android.widget.Toast;
 
 public class IntentUtil {
-	public static void showWebPage(Activity activity, Uri uri) {
+	public static boolean showWebPage(Activity activity, Uri uri) {
 		if (activity == null)
-			return;
+			return false;
 
 		final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
@@ -18,8 +18,10 @@ public class IntentUtil {
 
 		if (intent.resolveActivity(activity.getPackageManager()) != null) {
 			activity.startActivity(intent);
+			return true;
 		} else {
 			Toast.makeText(activity, "Web page cannot be opened. No application found to handle web pages.", Toast.LENGTH_LONG).show();
+			return false;
 		}
 	}
 }

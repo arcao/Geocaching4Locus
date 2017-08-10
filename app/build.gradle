@@ -69,6 +69,7 @@ android {
         minSdkVersion hasProperty('devBuild') ? 26 : 15
         targetSdkVersion 26
         versionCode gitVersionCode()
+        archivesBaseName = parent.name
         buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
         buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""

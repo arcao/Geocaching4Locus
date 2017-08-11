@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="downloading">Téléchargement des caches…</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="progress_download_geocaches">Téléchargement des caches…</string>
     <string name="error_locus_not_found">L\'application Locus Map n\'a pas été trouvée. Geocaching4Locus en a besoin pour fonctionnner correctement. Merci d\'installer Locus Map.</string>
-    <string name="error_location">Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
-    <string name="acquiring_gps_location">En cours de localisation par GPS…</string>
-    <string name="acquiring_network_location">En cours de localisation par le réseau </string>
+    <string name="error_location_disabled">Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
+    <string name="progress_acquire_gps_location">En cours de localisation par GPS…</string>
+    <string name="progress_acquire_network_location">En cours de localisation par le réseau </string>
     
-    <string name="preferences">Paramètres</string>
-    <string name="wrong_coordinates">Mauvais format de coordonnées</string>
-    <string name="coordinates">Coordonnées</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="error_coordinates_format">Mauvais format de coordonnées</string>
+    <string name="title_coordinates">Coordonnées</string>
     
     <string name="pref_distance">Distance</string>
     <string name="pref_distance_summary_km">Distance en Km</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">Unités Impériales</string>
     <string name="pref_imperial_units_summary">Utiliser les miles au lieu des kilomètres</string>
     
-    <string name="error_credentials">Pseudo ou mot de passe invalide. Merci de vérifier vos identifiants dans les préférences.</string>
+    
 
-    <string name="ok_button">OK</string>
+    <string name="button_ok">OK</string>
     
-    <string name="error_locus_old">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>
+    <string name="error_old_locus_map">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>
     
-    <string name="cancel_button">Annuler</string>
+    <string name="button_cancel">Annuler</string>
     
     <string name="pref_show_found">Montrer trouvées</string>
     <string name="pref_show_found_summary">Montrer les caches trouvées</string>
     <string name="pref_show_own">Montrer mes caches </string>
     <string name="pref_show_own_summary">Montrer vos propres caches </string>
-    <string name="pref_menu_select_all">Tous les sélectionner</string>
-    <string name="pref_menu_deselect_all">Tout désélectionner</string>
+    <string name="menu_select_all">Tous les sélectionner</string>
+    <string name="menu_deselect_all">Tout désélectionner</string>
     
-    <string name="update_cache_progress">Mise à jour de la cache</string>
+    <string name="progress_update_geocache">Mise à jour de la cache</string>
     
-    <string name="pref_count_of_logs">Nombre de logs</string>
-    <string name="pref_count_of_logs_summary">Nombre de logs à télécharger par cache</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">Nombre de logs</string>
+    <string name="pref_logs_count_summary">Nombre de logs à télécharger par cache</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">Montrer les caches désactivées</string>
     <string name="pref_show_disabled_summary">Montrer les caches temporairement désactivées</string>
     
-    <string name="import_cache_progress">Téléchargement de la cache…</string>
+    <string name="progress_import_geocache">Téléchargement de la cache…</string>
     
     <string name="pref_version">Version</string>
     <string name="pref_website">Site internet, forum, etc…</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Encourager les futures évolutions…</string>
     <string name="pref_donate_paypal_choose_currency">Choisissez votre devise</string>
     
-    <string name="pref_title_cache_type_filter">Types de cache (Membres Premium)</string>
-    <string name="pref_title_difficulty_filter">Difficulté (Membre Premium)</string>
-    <string name="pref_title_terrain_filter">Terrain (Membre Premium)</string>
+    <string name="pref_geocache_type">Types de caches</string>
+    <string name="pref_difficulty">Difficulté</string>
+    <string name="pref_terrain">Terrain</string>
     <string name="pref_difficulty_min">Min. difficulté</string>
     <string name="pref_difficulty_max">Difficulté Max.</string>
     <string name="pref_terrain_min">Min. terrain</string>
@@ -68,52 +68,50 @@
     <string name="menu_live_map">Carte en live</string>
     <string name="menu_nearest">Plus proches</string>
     <string name="menu_manual">Manuel</string>
-    <string name="menu_preferences">Paramètres</string>
+    <string name="menu_settings">Paramètres</string>
     
-    <string name="user_waypoint_name">Waypoint de l\'utilisateur %1$d</string>
-    <string name="final_location_name">Localisation finale</string>
+    <string name="var_user_waypoint_name">Waypoint de l\'utilisateur %1$d</string>
+    <string name="var_final_location_name">Localisation finale</string>
     
-    <string name="pref_account_login">Connexion</string>
-    <string name="pref_account_login_summary">Connexion avec le compte de Geocaching.com</string>
-    <string name="pref_account_logout">Déconnexion</string>
-    <string name="pref_account_logout_summary">Connecté en tant que %s</string>
+    <string name="pref_login">Connexion</string>
+    <string name="pref_login_summary">Rrenseigner votre identifiant Geocaching.com</string>
+    <string name="pref_logout">Déconnexion</string>
+    <string name="pref_logout_summary">Connecté en tant que %s</string>
 
-    <string name="error_network">Accès internet indisponible. Veuillez vérifier votre connexion. </string>
+    <string name="error_network_unavailable">Accès internet impossible. Merci de vérifier votre connection.</string>
 
-    <string name="update_caches_progress">Mise à jour des caches…</string>
-    <string name="original_coordinates_name">Coordonnées d\'origine</string>
-    <string name="pref_title_container_type_filter">Taille de la cache (Membre Premium)</string>
+    <string name="progress_update_geocaches">Mise à jour des caches…</string>
+    <string name="var_original_coordinates_name">Coordonnées d\'origine</string>
+    <string name="pref_container_size">Taille de la cache</string>
 
-    <string name="livemap_activated">La carte en direct est activée. Bougez la carte pour voir les caches.</string>
-    <string name="livemap_deactivated">Carte en direct désactivée.</string>
-    <string name="livemap_disabled">Vous n\'avez pas autorisé la mise à jour périodique dans Locus. Commencez par l\'autoriser dans Locus: Paramètres->Divers->Mises à jour périodiques</string>
-    <string name="error_location_title">Aucun service de localisation activé</string>
-    <string name="error_location_settings_button">Paramètres</string>
+    <string name="toast_live_map_enabled">La carte en direct est activée. Bougez la carte pour voir les caches.</string>
+    <string name="toast_live_map_disabled">Carte en direct désactivée.</string>
+    <string name="error_live_map_periodic_updates">Vous n\'avez pas autorisé la mise à jour périodique dans Locus. Commencez par l\'autoriser dans Locus: Paramètres->Divers->Mises à jour périodiques</string>
+    <string name="error_location_not_allowed">Aucun service de localisation activé</string>
+    <string name="button_settings">Paramètres</string>
     
     <string name="menu_import_from_gc">Importer GC</string>
-    <string name="dialog_gc_number_input_title">Importer depuis un code GC</string>
-    <string name="error_input_gc">Le code GC n\'est pas valide</string>
-    <string name="error_cache_not_found">La cache %s n\'a pas été trouvée</string>
+    <string name="title_import_from_gc">Importer GC</string>
+    <string name="error_gc_code_invalid">Le code GC n\'est pas valide</string>
+    <string name="error_geocache_not_found">La cache %s n\'a pas été trouvée</string>
     
-    <string name="dialog_count_of_caches_title">Nombre de caches</string>
-    <string name="launcher_nearest_caches">Caches les plus proches</string>
-    <string name="launcher_import_cache">Importer les caches vers Locus</string>
-    <string name="launcher_update_cache">Mise à jour de la cache</string>    
-    <string name="launcher_update_more_caches">Mise à jour des caches</string>
+    <string name="title_geocache_count">Nombre de caches</string>
+    <string name="launcher_nearest_geocaches">Caches les plus proches</string>
+    <string name="launcher_import_geocache">Importer les caches vers Locus</string>
+    <string name="launcher_update_geocache">Mise à jour de la cache</string>
+    <string name="launcher_update_geocaches">Mise à jour des caches</string>
     <string name="launcher_import_from_gc">Importer depuis un code GC</string>
     
-    <string name="title_count_of_caches">Nombre de caches</string>
-
-    <string name="basic_member_warning_title">Accès pour membre basic</string>
-    <string name="premium_member_warning_title">Accès pour membre Premium</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Vous avez atteind la limite de téléchargement de <b>%1$s per %2$s period</b>. Votre quota sera remis à zéro à %3$s.<br/>
+    <string name="title_basic_member_warning">Accès pour membre basic</string>
+    <string name="title_premium_member_warning">Accès pour membre Premium</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">Vous avez atteind la limite de téléchargement de <b>%1$s per %2$s period</b>. Votre quota sera remis à zéro à %3$s.<br/>
 <br/>
 <i>Upgradez pour devenir membre Premium et télécharger les détails de plus de 6000 caches par jour et d\'autres avantages. Visitez geocaching.com pour  upgrader.</i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Vous avez atteint la limite de téléchargement des <b>6000 caches par 24 heures</b>. Votre quota sera remis à zéro à %3$s.</string>
-    <string name="method_quota_exceeded_title">Ho, ralentissez !</string>
-    <string name="method_quota_exceeded_message">Vous avez atteins la limite maximale d\'actions/demandes par minute</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">Vous avez atteint la limite de téléchargement des <b>6000 caches par 24 heures</b>. Votre quota sera remis à zéro à %3$s.</string>
+    <string name="title_method_quota_exceeded">Ho, ralentissez !</string>
+    <string name="error_method_quota_exceeded">Vous avez atteind la limite maximale d\'actions/demandes par minute</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d caches</item>
         <item quantity="other">%d caches</item>
@@ -131,49 +129,49 @@
         <item quantity="other">%d minutes</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Propulsé par Geocaching Live</string>
-    <string name="account_geocaching_live_message">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Pressez ici pour plus d\'information…</string>
+    <string name="pref_geocaching_live">Propulsé par Geocaching Live</string>
+    <string name="pref_geocaching_live_message">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Pressez ici pour plus d\'information…</string>
     
     <string name="error_invalid_api_response">Geocaching Live a envoyé une réponse invalide:<br/>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus carte en direct</string>
-    <string name="livemap_notification_message_enabled">Carte en direct activée</string>
-    <string name="livemap_notification_message_disabled">Carte en direct désactivée.</string>
-    <string name="livemap_notification_message_downloading">Téléchargement des caches en direct: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Activer</string>
-    <string name="livemap_notification_action_disable">Désactiver</string>
-    <string name="livemap_notification_action_settings">Paramètres</string>
-    <string name="livemap_error">Geocaching4Locus carte en direct: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Notifications désactivées</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Montrer les notifications quand la carte active est désactivée. Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
-    <string name="pref_cache_type_all">Tous</string>
+    <string name="notify_live_map">Geocaching4Locus carte en direct</string>
+    <string name="notify_live_map_message_enabled">Carte en direct activée</string>
+    <string name="notify_live_map_message_disabled">Carte en direct désactivée.</string>
+    <string name="notify_live_map_message_downloading">Téléchargement des caches en direct: %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">Activer</string>
+    <string name="notify_live_map_action_disable">Désactiver</string>
+    <string name="notify_live_map_action_settings">Paramètres</string>
+    <string name="error_live_map">Geocaching4Locus carte en direct: %s</string>
+    <string name="pref_disabled_notification">Notifications désactivées</string>
+    <string name="pref_disabled_notification_summary">Montrer les notifications quand la carte active est désactivée. Ne fonctionne que si la mise à jour périodique est activée dans Locus.</string>
+    <string name="pref_geocache_type_all">Tous</string>
     <string name="button_filter">Tous</string>
-    <string name="download_logs_progress">Téléchargements des logs</string>
+    <string name="progress_download_logs">Téléchargements des logs</string>
     <string name="launcher_download_logs">Télécharger les logs</string>
 
-    <string name="pref_download_logs_update_cache">Télécharger les nouveaux logs</string>
-    <string name="pref_download_logs_update_cache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
-    <string name="pref_downloading_count_of_caches_step">Echelle de comptage du nombre de caches</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Boite de dialogue de changement de l\'echelle de comptage du nombre de caches</string>
-    <string name="premium_member_for_filter_required">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez…</string>
+    <string name="pref_download_logs_update_geocache">Télécharger les nouveaux logs</string>
+    <string name="pref_download_logs_update_geocache_summary">"Télécharger les logs" mets aussi à jour les données de la cache</string>
+    <string name="pref_step_geocaching_count">Echelle de comptage du nombre de caches</string>
+    <string name="pref_step_geocaching_count_summary">Boite de dialogue de changement de l\'echelle de comptage du nombre de caches</string>
+    <string name="error_premium_filter">Certains filtre nécessitent un accès "Premium" que vous n\'avez pas. L\'application passe en mode  "basic".  S\'il vous plait, réessayez…</string>
 
-    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+    <string name="pref_account" comment="Title of category preference for Account settings."
         >Compte</string>
-    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+    <string name="pref_filter" comment="Title of category preference for Filter settings."
         >Filtrer</string>
-    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+    <string name="pref_live_map" comment="Title of category preference for Live Map settings."
         >Carte en live</string>
-    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+    <string name="pref_downloading" comment="Title of category preference for Downloading settings."
         >Téléchargement</string>
-    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+    <string name="pref_advanced" comment="Title of category preference for Advanced settings."
         >Avancé</string>
-    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+    <string name="pref_about" comment="Title of category preference for About settings."
         >A propos</string>
-    <string name="login_title" comment="Window title for sign in task."
+    <string name="title_login" comment="Window title for sign in task."
         >S\'identifier</string>
-    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings."
         >Télécharger les hints</string>
-    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
         >Chargement plus long et quantité de données augmentée</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
         >Donnez votre avis</string>
@@ -185,35 +183,40 @@
         >Importer les signets</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
         >Importer les signets</string>
-    <string name="import_caches_progress">Télécharger les caches</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
         >L\'appli n\'a pas les permissions pour accéder à la localisation</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
         >Tout importer</string>
-    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
         >Cette possibilité est réservée aux membres premium, désolé.</string>
-    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs."
         >Erreur de Locus Map</string>
-    <string name="error_send_error_report" comment="Button for Send error report action."
+    <string name="button_send_error_report" comment="Button for Send error report action."
         >Envoyer un rapport d\'erreur</string>
-    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
         >Merci d\'avoir envoyé le rapport d\'erreur.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
         >Souhaitez-vous continuer avec un téléchargement partiel des données vers Locus Map?</string>
-    <string name="yes_button" comment="Button for Yes action."
+    <string name="button_yes" comment="Button for Yes action."
         >Oui</string>
-    <string name="no_button" comment="Button for No action."
+    <string name="button_no" comment="Button for No action."
         >Non</string>
-    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Cet add-on ne fonctionne pleinement qu\'avec une adhésion premium. En tant que membre de base que vous pouvez télécharger, événement et CITO géocaches traditionnels avec informations de base (inscription en ligne, hint, pas d\'attributs, pas d\'images, derniers logs en ligne, etc) et utilisent seulement quelques filtres dans la recherchePour plus d\'informations merci de lire le manuel sur le site Geocaching Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Lien vers le manuel</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >L\'application nécessite l\'autorisation <b>d\'écrire sur la carte SD</b> pour mettre en mémoire les données. Merci <b>de l\'autoriser</b> dans la prochaine fenêtre.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
         >L\'application n\'a pas la permission  <b> d\'écrire sur la carte SD</b> Cette permission est nécessaire pour stocker les données de Geocaching pour Locus Map.</string>
-    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Masquer géocaches sur désactivés</string>
-    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Masquer la carte en direct géocaches lorsque la fonction en direct de la carte est désactivée</string>
+    
+    
+    
+    
+    
+    
 </resources>

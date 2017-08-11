@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="downloading">Skidam caheove…</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="progress_download_geocaches">Skidam caheove…</string>
     <string name="error_locus_not_found">Locus Map aplikacija nije pronađena, ali Geocaching4Locus zahtijeva da rade ispravno. Molimo Vas instalirajte Locus Map.</string>
-    <string name="error_location">Molimo Vas, aktivirajte Wi-Fi ili GPS u Postavkama.</string>
-    <string name="acquiring_gps_location">Dobivanje lokacija putem GPS-a…</string>
-    <string name="acquiring_network_location">Dobivanje lokacije putem Wi-Fi mreže…</string>
+    <string name="error_location_disabled">Molimo Vas, aktivirajte Wi-Fi ili GPS u Postavkama.</string>
+    <string name="progress_acquire_gps_location">Dobivanje lokacija putem GPS-a…</string>
+    <string name="progress_acquire_network_location">Dobivanje lokacije putem Wi-Fi mreže…</string>
     
-    <string name="preferences">Preference</string>
-    <string name="wrong_coordinates">Kriv format koordinata.</string>
-    <string name="coordinates">Koordinate</string>
+    <string name="action_settings">Postavke</string>
+    <string name="error_coordinates_format">Kriv format koordinata.</string>
+    <string name="title_coordinates">Koordinate</string>
     
     <string name="pref_distance">Udaljenost</string>
     <string name="pref_distance_summary_km">Udaljenost u km</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">Imperijske jedinice</string>
     <string name="pref_imperial_units_summary">Koristi milje umjesto kilometara,</string>
     
-    <string name="error_credentials">Nepostojeće korisničko ime ili lozinka. Provjerite Vaše podatke u Preferencama.</string>
+    
 
-    <string name="ok_button">OK</string>
+    <string name="button_ok">OK</string>
     
-    <string name="error_locus_old">Instalirana verzija Vašeg Locusa je prestara. Geocaching4Locus zahtijeva verziju %s ili veću za ispravan rad.</string>
+    <string name="error_old_locus_map">Instalirana verzija Vašeg Locusa je prestara. Geocaching4Locus zahtijeva verziju %s ili veću za ispravan rad.</string>
     
-    <string name="cancel_button">Odustani</string>
+    <string name="button_cancel">Odustani</string>
     
     <string name="pref_show_found">Pokaži pronađeno</string>
     <string name="pref_show_found_summary">Pokaži pronađene cacheove</string>
     <string name="pref_show_own">Prikaži vlastite, sakrivene</string>
     <string name="pref_show_own_summary">Pokaži vlastite cacheove (one sakrivene od Vas)</string>
-    <string name="pref_menu_select_all">Odaberi sve</string>
-    <string name="pref_menu_deselect_all">Ododaberi sve</string>
+    <string name="menu_select_all">Odaberi sve</string>
+    <string name="menu_deselect_all">Ododaberi sve</string>
     
-    <string name="update_cache_progress">Ažuriram cache…</string>
+    <string name="progress_update_geocache">Ažuriram cache…</string>
     
-    <string name="pref_count_of_logs">Broj zapisnika </string>
-    <string name="pref_count_of_logs_summary">Broj zapisnika za skidanje s cacheom</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">Broj zapisnika </string>
+    <string name="pref_logs_count_summary">Broj zapisnika za skidanje s cacheom</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">Pokaži onemogućeno</string>
     <string name="pref_show_disabled_summary">Pokaži privremeno onemogućene cacheove</string>
     
-    <string name="import_cache_progress">Skidam cache…</string>
+    <string name="progress_import_geocache">Skidam cache…</string>
     
     <string name="pref_version">Verzija</string>
     <string name="pref_website">Website, forum, itd.</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Podržite razvoj u budućnosti…</string>
     <string name="pref_donate_paypal_choose_currency">Odaberite valutu</string>
     
-    <string name="pref_title_cache_type_filter">Vrste cacheova (Premium korisnici)</string>
-    <string name="pref_title_difficulty_filter">Težina (Premium korisnici)</string>
-    <string name="pref_title_terrain_filter">Teren (Premium korisnici)</string>
+    <string name="pref_geocache_type">Vrste cacheova</string>
+    <string name="pref_difficulty">Težina</string>
+    <string name="pref_terrain">Teren</string>
     <string name="pref_difficulty_min">Min. težina</string>
     <string name="pref_difficulty_max">Max. težina</string>
     <string name="pref_terrain_min">MIn. teren</string>
@@ -68,52 +68,50 @@
     <string name="menu_live_map">Živa mapa</string>
     <string name="menu_nearest">Najbliže</string>
     <string name="menu_manual">Priručnik</string>
-    <string name="menu_preferences">Preference</string>
+    <string name="menu_settings">Postavke</string>
     
-    <string name="user_waypoint_name">Korisnička točka %1$d</string>
-    <string name="final_location_name">Konačna lokacija</string>
+    <string name="var_user_waypoint_name">Korisnička točka %1$d</string>
+    <string name="var_final_location_name">Konačna lokacija</string>
     
-    <string name="pref_account_login">Prijavi se</string>
-    <string name="pref_account_login_summary">Prijavite se u Vaš geocaching,com račun</string>
-    <string name="pref_account_logout">Odjavi se</string>
-    <string name="pref_account_logout_summary">Prijavljen kao %s</string>
+    <string name="pref_login">Prijavi se</string>
+    <string name="pref_login_summary">Prijavite se u Vaš geocaching,com račun</string>
+    <string name="pref_logout">Odjavi se</string>
+    <string name="pref_logout_summary">Prijavljen kao %s</string>
 
-    <string name="error_network">Mreža nedostupna. Molimo Vas, provjerite vezu.</string>
+    <string name="error_network_unavailable">Mreža nedostupna. Molimo Vas, provjerite vezu.</string>
 
-    <string name="update_caches_progress">Ažuriram caheove…</string>
-    <string name="original_coordinates_name">Originalne koordinate</string>
-    <string name="pref_title_container_type_filter">Veličina spremnika (Premium korisnici)</string>
+    <string name="progress_update_geocaches">Ažuriram caheove…</string>
+    <string name="var_original_coordinates_name">Originalne koordinate</string>
+    <string name="pref_container_size">Veličina spremnika</string>
 
-    <string name="livemap_activated">Živa karta omogućen. Sada premjestite s karte da vidi sprema.</string>
-    <string name="livemap_deactivated">Živa karta je onemogućen.</string>
-    <string name="livemap_disabled">Nemate dozvoljeno slanje periodičnog ažuriranja od Locus Map. Molimo, omogućite to najprije u Locus Map pod: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
-    <string name="error_location_title">Nije dopuštena lokacijska usluga</string>
-    <string name="error_location_settings_button">Postavke</string>
+    <string name="toast_live_map_enabled">Živa karta omogućen. Sada premjestite s karte da vidi sprema.</string>
+    <string name="toast_live_map_disabled">Živa karta je onemogućen.</string>
+    <string name="error_live_map_periodic_updates">Nemate dozvoljeno slanje periodičnog ažuriranja od Locus Map. Molimo, omogućite to najprije u Locus Map pod: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
+    <string name="error_location_not_allowed">Nije dopuštena lokacijska usluga</string>
+    <string name="button_settings">Postavke</string>
     
     <string name="menu_import_from_gc">Uvezi GC</string>
-    <string name="dialog_gc_number_input_title">Uvezi iz GC koda</string>
-    <string name="error_input_gc">GC kod nije valjan</string>
-    <string name="error_cache_not_found">Cache %s nije pronađen.</string>
+    <string name="title_import_from_gc">Uvezi iz GC koda</string>
+    <string name="error_gc_code_invalid">GC kod nije valjan</string>
+    <string name="error_geocache_not_found">Cache %s nije pronađen.</string>
     
-    <string name="dialog_count_of_caches_title">Broj cacheova</string>
-    <string name="launcher_nearest_caches">Najbliži cacheovi</string>
-    <string name="launcher_import_cache">Uvezi cache u Locus</string>
-    <string name="launcher_update_cache">Ažuriraj cache</string>    
-    <string name="launcher_update_more_caches">Ažururaj caheove</string>
+    <string name="title_geocache_count">Broj cacheova</string>
+    <string name="launcher_nearest_geocaches">Najbliži cacheovi</string>
+    <string name="launcher_import_geocache">Uvezi cache u Locus</string>
+    <string name="launcher_update_geocache">Ažuriraj cache</string>
+    <string name="launcher_update_geocaches">Ažururaj caheove</string>
     <string name="launcher_import_from_gc">Uvezi iz GC koda</string>
     
-    <string name="title_count_of_caches">Broj cacheova</string>
-
-    <string name="basic_member_warning_title">Pristup Basic korisnik</string>
-    <string name="premium_member_warning_title">Pristup Premium korisnik</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Dostigli ste limit za skidanje sve pojedinosti <b>%1$s po razdoblju od %2$s</b>. Vaša dnevna kvota će se resetirati pri %3$s.<br/> 
+    <string name="title_basic_member_warning">Pristup Basic korisnik</string>
+    <string name="title_premium_member_warning">Pristup Premium korisnik</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">Dostigli ste limit za skidanje sve pojedinosti <b>%1$s po razdoblju od %2$s</b>. Vaša dnevna kvota će se resetirati pri %3$s.<br/> 
 <br/>
 <i>Nadogradnja na geocaching.com premium članstvo danas preuzeti sve pojedinosti do 6000 sprema dnevno i pristup mnogo više prednosti. Posjetite geocaching.com za nadogradnju.</i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Dostigli ste limit za skidanje sve pojedinosti o <b>6000 sprema po razdoblju od 24 sata</b>. Vaša dnevna kvota će biti vraćena pri %3$s.</string>
-    <string name="method_quota_exceeded_title">Hej, usporite!</string>
-    <string name="method_quota_exceeded_message">Dosegli ste maksimum akcija/poziva po minuti</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">Dostigli ste limit za skidanje sve pojedinosti o <b>6000 sprema po razdoblju od 24 sata</b>. Vaša dnevna kvota će biti vraćena pri %3$s.</string>
+    <string name="title_method_quota_exceeded">Hej, usporite!</string>
+    <string name="error_method_quota_exceeded">Dosegli ste maksimum akcija/poziva po minuti</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d cache</item>
         <item quantity="few">%d cachea</item>
         <item quantity="other">%d cachea</item>
@@ -131,49 +129,49 @@
         <item quantity="other">%d minute</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
-    <string name="account_geocaching_live_message">Ovo proširenje korištenje Geocaching Live za dobivanje informacija o sprema. Dodirnite ovdje za više informacija…</string>
+    <string name="pref_geocaching_live">Powered by Geocaching Live</string>
+    <string name="pref_geocaching_live_message">Ovo proširenje korištenje Geocaching Live za dobivanje informacija o sprema. Dodirnite ovdje za više informacija…</string>
     
     <string name="error_invalid_api_response">Geocaching Live vraća nevažeći odgovor:<br/>%s</string>
 
-    <string name="livemap_notification_title">Geocaching4Locus živa mapa</string>
-    <string name="livemap_notification_message_enabled">Živa karta je omogućen.</string>
-    <string name="livemap_notification_message_disabled">Živa karta je onemogućen.</string>
-    <string name="livemap_notification_message_downloading">Preuzimanje sprema žive karti: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Omogućiti</string>
-    <string name="livemap_notification_action_disable">Onemogućiti</string>
-    <string name="livemap_notification_action_settings">Postavke</string>
-    <string name="livemap_error">Geocaching4Locus živa mapa: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Onemogućene obavijesti</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Pokaži obavijesti kad je Karta uživo onemogućena. Ovo radi isključivo ako su omogućena periodička ažuriranja u Locusu i Locus je pokrenut.</string>
-    <string name="pref_cache_type_all">Sve</string>
+    <string name="notify_live_map">Geocaching4Locus živa mapa</string>
+    <string name="notify_live_map_message_enabled">Živa karta je omogućen.</string>
+    <string name="notify_live_map_message_disabled">Živa karta je onemogućen.</string>
+    <string name="notify_live_map_message_downloading">Preuzimanje sprema žive karti: %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">Omogućiti</string>
+    <string name="notify_live_map_action_disable">Onemogućiti</string>
+    <string name="notify_live_map_action_settings">Postavke</string>
+    <string name="error_live_map">Geocaching4Locus živa mapa: %s</string>
+    <string name="pref_disabled_notification">Onemogućene obavijesti</string>
+    <string name="pref_disabled_notification_summary">Pokaži obavijesti kad je Karta uživo onemogućena. Ovo radi isključivo ako su omogućena periodička ažuriranja u Locusu i Locus je pokrenut.</string>
+    <string name="pref_geocache_type_all">Sve</string>
     <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Preuzimam zapisnike</string>
+    <string name="progress_download_logs">Preuzimam zapisnike</string>
     <string name="launcher_download_logs">Preuzmi zapisnike</string>
 
-    <string name="pref_download_logs_update_cache">Preuzmi zapisnike, ažuriraj pričuvnu memoriju</string>
-    <string name="pref_download_logs_update_cache_summary">Radnja "Preuzmi zapisnike" također ažurira geocache podatke</string>
-    <string name="pref_downloading_count_of_caches_step">Korak preskoka za broj cacheova</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Promjeni korak preskoka za broj cacheova</string>
-    <string name="premium_member_for_filter_required">Neki filtri zahtjevaju premium račun kojeg nemate. Aplikacija će se sada prebaciti na osnovni način korištenja. Molimo, pokušajte ponovno.</string>
+    <string name="pref_download_logs_update_geocache">Preuzmi zapisnike, ažuriraj pričuvnu memoriju</string>
+    <string name="pref_download_logs_update_geocache_summary">Radnja "Preuzmi zapisnike" također ažurira geocache podatke</string>
+    <string name="pref_step_geocaching_count">Korak preskoka za broj cacheova</string>
+    <string name="pref_step_geocaching_count_summary">Promjeni korak preskoka za broj cacheova</string>
+    <string name="error_premium_filter">Neki filtri zahtjevaju premium račun kojeg nemate. Aplikacija će se sada prebaciti na osnovni način korištenja. Molimo, pokušajte ponovno.</string>
 
-    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+    <string name="pref_account" comment="Title of category preference for Account settings."
         >Račun</string>
-    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+    <string name="pref_filter" comment="Title of category preference for Filter settings."
         >Filter</string>
-    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+    <string name="pref_live_map" comment="Title of category preference for Live Map settings."
         >Živa mapa</string>
-    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+    <string name="pref_downloading" comment="Title of category preference for Downloading settings."
         >Preuzimanje</string>
-    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+    <string name="pref_advanced" comment="Title of category preference for Advanced settings."
         >Napredno</string>
-    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+    <string name="pref_about" comment="Title of category preference for About settings."
         >O</string>
-    <string name="login_title" comment="Window title for sign in task."
+    <string name="title_login" comment="Window title for sign in task."
         >Prijavi se</string>
-    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings."
         >Preuzmi savjete</string>
-    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
         >Sporije učitavanj i više opterećuje mobilni promet</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
         >Pošaljite povratnu informaciju</string>
@@ -185,35 +183,40 @@
         >Uvezite oznake</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
         >Uvezite oznake</string>
-    <string name="import_caches_progress">Preuzimam caheove…</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
         >Aplikacija nema dopuštenje da pristupi usluzi lociranja.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
         >Uvezi sve</string>
-    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
         >Žao nam je, ali ova odlika je samo za Premium članove.</string>
-    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs."
         >Locus Map greška</string>
-    <string name="error_send_error_report" comment="Button for Send error report action."
+    <string name="button_send_error_report" comment="Button for Send error report action."
         >Pošalji izvješće o greški</string>
-    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
         >Hvala Vam što ste poslali grešku.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
         >Želite li nastaviti s djelomično primljenim podacima ka Locus Map?</string>
-    <string name="yes_button" comment="Button for Yes action."
+    <string name="button_yes" comment="Button for Yes action."
         >Da</string>
-    <string name="no_button" comment="Button for No action."
+    <string name="button_no" comment="Button for No action."
         >Ne</string>
-    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Ovo proširenje u potpunosti surađuje sa samo premium članstvo. Kao osnovni član ste u mogućnosti preuzeti tradicionalne, događaju i CITO sprema osnovne info (on-line popis, aludira na on-line popis, bez atributa, nema slike, prijavljuje on-line popis, itd) i koristiti samo nekoliko filtri u potrazi geocache. Za više informacija pročitajte priručnik o Geocaching4Locus web stranice.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Pokaži mi priručniku</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikacija zahtijeva <b>pisanje vanjsku pohranu</b> dozvolu za pohranu sprema podatke za Locus Map. <b>Dozvolite</b> ovu dozvolu u sljedećem dijalogu.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
         >Aplikacija nema dozvolu za <b>pisanje vanjsku pohranu</b>. Dopuštenje je potrebno za spremanje sprema podatke za Locus Map.</string>
-    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Sakrij sprema na onemogućen</string>
-    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Sakrij sprema žive karti kada se značajka karta živa je onemogućen</string>
+    
+    
+    
+    
+    
+    
 </resources>

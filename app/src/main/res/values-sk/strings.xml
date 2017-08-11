@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="downloading">Sťahujem skrýše…</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="progress_download_geocaches">Sťahujem skrýše…</string>
     <string name="error_locus_not_found">Aplikácia Locus Map nebola nájdená, ale Geocaching4Locus ju vyžaduje, aby fungoval správne. Prosím nainštalujte Locus Map.</string>
-    <string name="error_location">Prosím povoľte službu určenie polohy z bezdrôtovej siete alebo zo satelitov GPS v "Nastavenia".</string>
-    <string name="acquiring_gps_location">Získavam polohu z GPS…</string>
-    <string name="acquiring_network_location">Získavam polohu z bezdrôtovej siete…</string>
+    <string name="error_location_disabled">Prosím povoľte službu určenie polohy z bezdrôtovej siete alebo zo satelitov GPS v "Nastavenia".</string>
+    <string name="progress_acquire_gps_location">Získavam polohu z GPS…</string>
+    <string name="progress_acquire_network_location">Získavam polohu z bezdrôtovej siete…</string>
     
-    <string name="preferences">Nastavenia</string>
-    <string name="wrong_coordinates">Zlý formát súradníc!</string>
-    <string name="coordinates">Súradnice</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="error_coordinates_format">Zlý formát súradníc!</string>
+    <string name="title_coordinates">Súradnice</string>
     
     <string name="pref_distance">Vzdialenosť</string>
     <string name="pref_distance_summary_km">Vzdialenosť v km</string>
@@ -16,30 +16,30 @@
     <string name="pref_imperial_units">Imperiálne jednotky</string>
     <string name="pref_imperial_units_summary">Použitie míľ namiesto kilometrov</string>
     
-    <string name="error_credentials">Chybné užívateľské meno alebo heslo. Prosím skontrolujte stav prihlásenia v nastaveniach.</string>
+    
 
-    <string name="ok_button">OK</string>
+    <string name="button_ok">OK</string>
     
-    <string name="error_locus_old">Nainštalovaná verzia Locus Map je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
+    <string name="error_old_locus_map">Nainštalovaná verzia Locus Map je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
     
-    <string name="cancel_button">Zrušiť</string>
+    <string name="button_cancel">Zrušiť</string>
     
     <string name="pref_show_found">Zobraziť najdené</string>
     <string name="pref_show_found_summary">Zobraziť nájdené skrýše</string>
     <string name="pref_show_own">Zobraziť vlastné skrýše</string>
     <string name="pref_show_own_summary">Zobraziť vlastné skrýše</string>
-    <string name="pref_menu_select_all">Vybrať všetko</string>
-    <string name="pref_menu_deselect_all">Odznačiť všetko</string>
+    <string name="menu_select_all">Vybrať všetko</string>
+    <string name="menu_deselect_all">Odznačiť všetko</string>
     
-    <string name="update_cache_progress">Aktualizujem skrýšu…</string>
+    <string name="progress_update_geocache">Aktualizujem skrýšu…</string>
     
-    <string name="pref_count_of_logs">Počet záznamov</string>
-    <string name="pref_count_of_logs_summary">Počet záznamov k stiahnutiu</string>
-    <string name="gps">GPS</string>
+    <string name="pref_logs_count">Počet záznamov</string>
+    <string name="pref_logs_count_summary">Počet záznamov k stiahnutiu</string>
+    <string name="button_gps">GPS</string>
     <string name="pref_show_disabled">Zobraziť zrušené</string>
     <string name="pref_show_disabled_summary">Zobraziť dočasne zrušené skrýše</string>
     
-    <string name="import_cache_progress">Sťahujem skrýšu…</string>
+    <string name="progress_import_geocache">Sťahujem skrýšu…</string>
     
     <string name="pref_version">Verzia</string>
     <string name="pref_website">Stránky, diskusné fórum, atď</string>
@@ -47,9 +47,9 @@
     <string name="pref_donate_paypal_summary">Podpora ďalšieho vývoja…</string>
     <string name="pref_donate_paypal_choose_currency">Vyberte Vašu menu</string>
     
-    <string name="pref_title_cache_type_filter">Typy skrýš (Premium member)</string>
-    <string name="pref_title_difficulty_filter">Obtiažnosť (Premium member)</string>
-    <string name="pref_title_terrain_filter">Terén (Premium member)</string>
+    <string name="pref_geocache_type">Typy skrýš</string>
+    <string name="pref_difficulty">Obtiažnosť</string>
+    <string name="pref_terrain">Terén</string>
     <string name="pref_difficulty_min">Min. obtiažnosť</string>
     <string name="pref_difficulty_max">Max. obtiažnosť</string>
     <string name="pref_terrain_min">Min. terén</string>
@@ -68,52 +68,50 @@
     <string name="menu_live_map">Aktívna mapa</string>
     <string name="menu_nearest">Najbližšie</string>
     <string name="menu_manual">Manuál</string>
-    <string name="menu_preferences">Nastavenia</string>
+    <string name="menu_settings">Nastavenia</string>
     
-    <string name="user_waypoint_name">Užívateľský bod trasy %1$d</string>
-    <string name="final_location_name">Konečné umiestnenie</string>
+    <string name="var_user_waypoint_name">Užívateľský bod trasy %1$d</string>
+    <string name="var_final_location_name">Konečné umiestnenie</string>
     
-    <string name="pref_account_login">Prihlásiť</string>
-    <string name="pref_account_login_summary">Prihlásiť k Geocaching.com účtu</string>
-    <string name="pref_account_logout">Odhlásiť</string>
-    <string name="pref_account_logout_summary">Prihlásený ako %s</string>
+    <string name="pref_login">Prihlásiť</string>
+    <string name="pref_login_summary">Prihlásiť k Geocaching.com účtu</string>
+    <string name="pref_logout">Odhlásiť</string>
+    <string name="pref_logout_summary">Prihlásený ako %s</string>
 
-    <string name="error_network">Sieť nie je k dispozícií. Skontrolujte pripojenie.</string>
+    <string name="error_network_unavailable">Sieť nie je k dispozícií. Skontrolujte pripojenie.</string>
 
-    <string name="update_caches_progress">Aktualizujem skrýše…</string>
-    <string name="original_coordinates_name">Pôvodné súradnice</string>
-    <string name="pref_title_container_type_filter">Veľkosť schránky (Premium member)</string>
+    <string name="progress_update_geocaches">Aktualizujem skrýše…</string>
+    <string name="var_original_coordinates_name">Pôvodné súradnice</string>
+    <string name="pref_container_size">Veľkosť schránky</string>
 
-    <string name="livemap_activated">Aktívna mapa povolená. Teraz pohnite s mapou, aby sa zobrazili skrýše.</string>
-    <string name="livemap_deactivated">Aktívna mapa je zakázaná.</string>
-    <string name="livemap_disabled">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
-    <string name="error_location_title">Služba na určenie polohy nie je povolená</string>
-    <string name="error_location_settings_button">Nastavenia</string>
+    <string name="toast_live_map_enabled">Aktívna mapa povolená. Teraz pohnite s mapou, aby sa zobrazili skrýše.</string>
+    <string name="toast_live_map_disabled">Aktívna mapa je zakázaná.</string>
+    <string name="error_live_map_periodic_updates">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
+    <string name="error_location_not_allowed">Služba na určenie polohy nie je povolená</string>
+    <string name="button_settings">Nastavenia</string>
     
     <string name="menu_import_from_gc">Importovať GC</string>
-    <string name="dialog_gc_number_input_title">Importovať z GC kódu</string>
-    <string name="error_input_gc">GC kód nie je správny.</string>
-    <string name="error_cache_not_found">Skrýša %s nebola nájdená.</string>
+    <string name="title_import_from_gc">Importovať z GC kódu</string>
+    <string name="error_gc_code_invalid">GC kód nie je správny.</string>
+    <string name="error_geocache_not_found">Skrýša %s nebola nájdená.</string>
     
-    <string name="dialog_count_of_caches_title">Počet skrýš</string>
-    <string name="launcher_nearest_caches">Najbližšie skrýše</string>
-    <string name="launcher_import_cache">Importovať skrýšu do Locus Map</string>
-    <string name="launcher_update_cache">Aktualizovať skrýšu</string>    
-    <string name="launcher_update_more_caches">Aktualizovať skrýše</string>
+    <string name="title_geocache_count">Počet skrýš</string>
+    <string name="launcher_nearest_geocaches">Najbližšie skrýše</string>
+    <string name="launcher_import_geocache">Importovať skrýšu do Locus Map</string>
+    <string name="launcher_update_geocache">Aktualizovať skrýšu</string>
+    <string name="launcher_update_geocaches">Aktualizovať skrýše</string>
     <string name="launcher_import_from_gc">Importovať z GC kódu</string>
     
-    <string name="title_count_of_caches">Počet skrýš</string>
-
-    <string name="basic_member_warning_title">Prístup pre bežných užívateľov</string>
-    <string name="premium_member_warning_title">Prístup pre prémiových užívateľov</string>
-    <string name="basic_member_full_geocaching_quota_exceeded">Dosiahol si limit stiahnutia plných detailov pre <b>%1$s za %2$s</b>. Vaša denná kvóta bude obnovená v %3$s.<br/>
+    <string name="title_basic_member_warning">Prístup pre bežných užívateľov</string>
+    <string name="title_premium_member_warning">Prístup pre prémiových užívateľov</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded">Dosiahol si limit stiahnutia plných detailov pre <b>%1$s za %2$s</b>. Vaša denná kvóta bude obnovená v %3$s.<br/>
 <br/>
 <i>Kúpte si ešte dnes prémiový účet (Premium member) na geocaching.com, aby ste mohli stiahnuť plné detaily až 6000 skrýší za deň a využívať ďalšie benefity. Navštívte geocaching.com…</i></string>
-    <string name="premium_member_full_geocaching_quota_exceeded_message">Dosiahol si limit stiahnutia plných detailov pre <b>6000 skrýš za 24  hodin</b>. Vaša denná kvóta bude obnovená v %3$s.</string>
-    <string name="method_quota_exceeded_title">Hej, spomaľ!</string>
-    <string name="method_quota_exceeded_message">Dosiahol si limit počtu vykonaných akcií/volaní za minútu.</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded">Dosiahol si limit stiahnutia plných detailov pre <b>6000 skrýš za 24  hodin</b>. Vaša denná kvóta bude obnovená v %3$s.</string>
+    <string name="title_method_quota_exceeded">Hej, spomaľ!</string>
+    <string name="error_method_quota_exceeded">Dosiahol si limit počtu vykonaných akcií/volaní za minútu.</string>
 
-    <plurals name="plurals_cache">
+    <plurals name="plurals_geocache">
         <item quantity="one">%d skrýša</item>
         <item quantity="few">%d skrýše</item>
         <item quantity="other">%d skrýš</item>
@@ -131,49 +129,49 @@
         <item quantity="other">%d minúty</item>
     </plurals>
     
-    <string name="account_geocaching_live_title">Powered by Geocaching Live</string>
-    <string name="account_geocaching_live_message">Toto rozšírenie využíva Geocaching Live na získavanie informácií o skrýšach. Klepnite tu pre viac informácií…</string>
+    <string name="pref_geocaching_live">Powered by Geocaching Live</string>
+    <string name="pref_geocaching_live_message">Toto rozšírenie využíva Geocaching Live na získavanie informácií o skrýšach. Klepnite tu pre viac informácií…</string>
     
     <string name="error_invalid_api_response">Geocaching Live vrátil neplatnú odpoveď:<br/>%s</string>
 
-    <string name="livemap_notification_title">Aktívna mapa Geocaching4Locus</string>
-    <string name="livemap_notification_message_enabled">Aktívna mapa je povolená.</string>
-    <string name="livemap_notification_message_disabled">Aktívna mapa je zakázaná.</string>
-    <string name="livemap_notification_message_downloading">Sťahujem skrýše pre aktívnu mapu: %1$d / %2$d (%3$d%%)</string>
-    <string name="livemap_notification_action_enable">Povoliť</string>
-    <string name="livemap_notification_action_disable">Zakázať</string>
-    <string name="livemap_notification_action_settings">Nastavenia</string>
-    <string name="livemap_error">Aktívna mapa Geocaching4Locus: %s</string>
-    <string name="pref_livemap_show_disabled_notification">Notifikácie zakázané</string>
-    <string name="pref_livemap_show_disabled_notification_summary">Zobraziť notifikáciu, keď je aktívna mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locus Map a Locus Map beží.</string>
-    <string name="pref_cache_type_all">Všetko</string>
+    <string name="notify_live_map">Aktívna mapa Geocaching4Locus</string>
+    <string name="notify_live_map_message_enabled">Aktívna mapa je povolená.</string>
+    <string name="notify_live_map_message_disabled">Aktívna mapa je zakázaná.</string>
+    <string name="notify_live_map_message_downloading">Sťahujem skrýše pre aktívnu mapu: %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_action_enable">Povoliť</string>
+    <string name="notify_live_map_action_disable">Zakázať</string>
+    <string name="notify_live_map_action_settings">Nastavenia</string>
+    <string name="error_live_map">Aktívna mapa Geocaching4Locus: %s</string>
+    <string name="pref_disabled_notification">Notifikácie zakázané</string>
+    <string name="pref_disabled_notification_summary">Zobraziť notifikáciu, keď je aktívna mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locus Map a Locus Map beží.</string>
+    <string name="pref_geocache_type_all">Všetko</string>
     <string name="button_filter">Filter</string>
-    <string name="download_logs_progress">Sťahujem záznamy…</string>
+    <string name="progress_download_logs">Sťahujem záznamy…</string>
     <string name="launcher_download_logs">Stiahnuť záznamy</string>
 
-    <string name="pref_download_logs_update_cache">Stiahnuť záznamy aktualizuje skrýš</string>
-    <string name="pref_download_logs_update_cache_summary">Akcia "Stiahnuť záznamy" tiež aktualizuje dáta skrýše</string>
-    <string name="pref_downloading_count_of_caches_step">Veľkosť kroku pre počet skrýš</string>
-    <string name="pref_downloading_count_of_caches_step_summary">Zmení veľkosť kroku u dialógu na vybranie počtu skrýš</string>
-    <string name="premium_member_for_filter_required">Niektoré filtre vyžadujú prémiový účet, ktorý nemáte. Aplikácia sa prepne do režimu pre základný účet. Prosím, skúste to znova.</string>
+    <string name="pref_download_logs_update_geocache">Stiahnuť záznamy aktualizuje skrýš</string>
+    <string name="pref_download_logs_update_geocache_summary">Akcia "Stiahnuť záznamy" tiež aktualizuje dáta skrýše</string>
+    <string name="pref_step_geocaching_count">Veľkosť kroku pre počet skrýš</string>
+    <string name="pref_step_geocaching_count_summary">Zmení veľkosť kroku u dialógu na vybranie počtu skrýš</string>
+    <string name="error_premium_filter">Niektoré filtre vyžadujú prémiový účet, ktorý nemáte. Aplikácia sa prepne do režimu pre základný účet. Prosím, skúste to znova.</string>
 
-    <string name="prefs_cat_account" comment="Title of category preference for Account settings."
+    <string name="pref_account" comment="Title of category preference for Account settings."
         >Účet</string>
-    <string name="prefs_cat_filter" comment="Title of category preference for Filter settings."
+    <string name="pref_filter" comment="Title of category preference for Filter settings."
         >Filter</string>
-    <string name="prefs_cat_live_map" comment="Title of category preference for Live Map settings."
+    <string name="pref_live_map" comment="Title of category preference for Live Map settings."
         >Aktívna mapa</string>
-    <string name="prefs_cat_downloading" comment="Title of category preference for Downloading settings."
+    <string name="pref_downloading" comment="Title of category preference for Downloading settings."
         >Sťahovanie</string>
-    <string name="prefs_cat_advanced" comment="Title of category preference for Advanced settings."
+    <string name="pref_advanced" comment="Title of category preference for Advanced settings."
         >Pokročilé</string>
-    <string name="prefs_cat_about" comment="Title of category preference for About settings."
+    <string name="pref_about" comment="Title of category preference for About settings."
         >O aplikácií</string>
-    <string name="login_title" comment="Window title for sign in task."
+    <string name="title_login" comment="Window title for sign in task."
         >Prihlásiť</string>
-    <string name="pref_live_map_download_hints" comment="Title of checkbox preference in Live Map settings."
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings."
         >Stiahnuť nápovedu</string>
-    <string name="pref_live_map_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
         >Pomalšie načítanie a náročnejšie na využitie dát</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
         >Odoslať spätnú väzbu</string>
@@ -185,35 +183,40 @@
         >Importovať záložky</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
         >Importovať záložky</string>
-    <string name="import_caches_progress">Sťahujem skrýše…</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
         >Aplikácia nemá práva pristupovať k službe polohy.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
         >Importovať všetko</string>
-    <string name="premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
         >Táto funkcia je len pre prémiových členov, prepáčte.</string>
-    <string name="error_title_locus" comment="Error dialog title when Locus Map error occurs."
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs."
         >Chyba Locus Map</string>
-    <string name="error_send_error_report" comment="Button for Send error report action."
+    <string name="button_send_error_report" comment="Button for Send error report action."
         >Odoslať chybové hlásenie</string>
-    <string name="error_report_sent_toast" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
         >Ďakujeme za odoslanie chyby.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
         >Chcete pokračovať s čiastočne prijatými dátami do Locus Map?</string>
-    <string name="yes_button" comment="Button for Yes action."
+    <string name="button_yes" comment="Button for Yes action."
         >Áno</string>
-    <string name="no_button" comment="Button for No action."
+    <string name="button_no" comment="Button for No action."
         >Nie</string>
-    <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Toto rozšírenie je plne funkčné len s prémiovým členstvom. Ako základný člen budete môcť stiahnuť tradičné, eventy a CITO skrýše so základnými informáciami (online listing, nápoveda v online listingu, žiadne atribúty, žiadne obrázky, záznamy v online listingu, atď.) a používať iba niekoľko filtrov pre hľadaní skrýš. Pre viac informácií si prosím prečítajte manuál na webe Geocaching4Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Ukáž mi manuál</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikácia vyžaduje oprávnenie <b>zápisu do externého úložiska</b> na ukladanie dát o skrýšach pre Locus Map. Prosím, <b>povoľte</b> toto oprávnenie v nasledujúcom dialógu.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
         >Aplikácia nemá povolenie na <b>zápis do externého úložiska</b>. Toto oprávnenie je potreba pre ukladanie dát o skrýšach pre Locus Map.</string>
-    <string name="live_map_hide_caches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Skryť skrýše pri zakázané</string>
-    <string name="live_map_hide_caches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Schovať skrýše aktívne mapy, keď je aktívna mapa zakázaná</string>
+    
+    
+    
+    
+    
+    
 </resources>

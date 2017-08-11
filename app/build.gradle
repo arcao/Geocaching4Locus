@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 dependencies {
-    def supportVer = '26.0.0'
+    def supportVer = '26.0.1'
 
     // Android Support
     //noinspection GradleCompatible

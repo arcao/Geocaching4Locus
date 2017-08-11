@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
+import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.weblink.fragment.RefreshWebLinkDialogFragment;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
 import locus.api.android.utils.LocusUtils;
@@ -22,9 +24,20 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
     return false;
   }
 
+  protected boolean isPremiumMemberRequired() {
+    return false;
+  }
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    if (isPremiumMemberRequired() && !App.get(this).getAccountManager().isPremium()) {
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build());
+      setResult(RESULT_CANCELED);
+      finish();
+      return;
+    }
 
     try {
       if (LocusUtils.isIntentPointTools(getIntent())) {

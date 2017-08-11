@@ -42,6 +42,11 @@ public class BookmarkGeocacheWebLinkActivity extends AbstractWebLinkActivity {
   }
 
   @Override
+  protected boolean isPremiumMemberRequired() {
+    return true;
+  }
+
+  @Override
   protected Uri getWebLink(Waypoint waypoint) {
     if (waypoint == null || waypoint.gcData == null || TextUtils.isEmpty(waypoint.gcData.getCacheUrl()))
       return null;

@@ -8,6 +8,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
+import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import locus.api.android.features.periodicUpdates.PeriodicUpdatesHandler;
 import locus.api.android.features.periodicUpdates.UpdateContainer;
@@ -34,6 +35,8 @@ public class LiveMapBroadcastReceiver extends WakefulBroadcastReceiver {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
 		final LiveMapNotificationManager liveMapNotificationManager = LiveMapNotificationManager.get(context);
+
+		LastLiveMapData.getInstance().update(intent);
 
 		if (liveMapNotificationManager.handleBroadcastIntent(intent)) {
 			//noinspection AssignmentToStaticFieldFromInstanceMethod

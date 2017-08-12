@@ -49,6 +49,11 @@ import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_PER_REQUEST;
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_REQUESTS;
+
 public class LiveMapService extends IntentService {
 	private static final String PARAM_LATITUDE = "LATITUDE";
 	private static final String PARAM_LONGITUDE = "LONGITUDE";
@@ -57,12 +62,7 @@ public class LiveMapService extends IntentService {
 	private static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
 	private static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
 
-	private static final int REQUESTS = 5;
-	private static final int CACHES_PER_REQUEST = 50;
-	private static final int CACHES_COUNT = REQUESTS * CACHES_PER_REQUEST;
-
 	private static final String PACK_WAYPOINT_PREFIX = "LiveMap|";
-	private static final int LIVEMAP_DISTANCE = 60000;
 
 	private final AtomicInteger countOfJobs = new AtomicInteger(0);
 
@@ -216,10 +216,10 @@ public class LiveMapService extends IntentService {
 			//noinspection ConstantConditions
 			String username = accountManager.getAccount().name();
 
-			notificationManager.setDownloadingProgress(0, CACHES_COUNT);
+			notificationManager.setDownloadingProgress(0, LIVEMAP_CACHES_COUNT);
 
-			while (current < CACHES_COUNT) {
-				int perPage = (CACHES_COUNT - current < CACHES_PER_REQUEST) ? CACHES_COUNT - current : CACHES_PER_REQUEST;
+			while (current < LIVEMAP_CACHES_COUNT) {
+				int perPage = (LIVEMAP_CACHES_COUNT - current < LIVEMAP_CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current : LIVEMAP_CACHES_PER_REQUEST;
 
 				if (countOfJobs.get() > 0) {
 					Timber.d("New job found, skipped downloading next caches ...");
@@ -273,7 +273,7 @@ public class LiveMapService extends IntentService {
 					throw new LocusMapRuntimeException(t);
 				}
 
-				notificationManager.setDownloadingProgress(current, CACHES_COUNT);
+				notificationManager.setDownloadingProgress(current, LIVEMAP_CACHES_COUNT);
 
 				if (caches.size() != perPage)
 					break;
@@ -287,10 +287,10 @@ public class LiveMapService extends IntentService {
 			Timber.i("Count of caches sent to Locus: " + current);
 		}
 
-		notificationManager.setDownloadingProgress(CACHES_COUNT, CACHES_COUNT);
+		notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);
 
 		// HACK we must remove old PackWaypoints from the map
-		for (int i = requests + 1; i < REQUESTS; i++) {
+		for (int i = requests + 1; i < LIVEMAP_REQUESTS; i++) {
 			PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
 			ActionDisplayPoints.sendPackSilent(this, pw, false);
 		}
@@ -316,7 +316,7 @@ public class LiveMapService extends IntentService {
 
 	public static void cleanLiveMapItems(Context context) {
 		try {
-			for (int i = 1; i < REQUESTS; i++) {
+			for (int i = 1; i < LIVEMAP_REQUESTS; i++) {
 				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
 				ActionDisplayPoints.sendPackSilent(context, pw, false);
 			}

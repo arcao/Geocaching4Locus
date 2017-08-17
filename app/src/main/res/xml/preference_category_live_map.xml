@@ -16,9 +16,4 @@
         android:title="@string/pref_hide_geocaches_on_disabled"
         android:summary="@string/pref_hide_geocaches_on_disabled_summary"
         android:defaultValue="false" />
-    <CheckBoxPreference
-        android:key="live_map_hide_caches_on_disabled"
-        android:title="@string/live_map_hide_caches_on_disabled"
-        android:summary="@string/live_map_hide_caches_on_disabled_summary"
-        android:defaultValue="false" />
 </PreferenceScreen>

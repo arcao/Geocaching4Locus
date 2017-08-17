@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.download_rectangle.fragment.DownloadRectangleDialogFragment;
+import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
-import locus.api.objects.extra.Location;
+import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 
-/**
- * Created by Arcao on 11.08.2017.
- */
+import locus.api.objects.extra.Location;
 
 public class DownloadRectangleActivity extends AbstractActionBarActivity implements
     DownloadRectangleDialogFragment.DialogListener {
@@ -42,7 +42,11 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
   }
 
   private void showDownloadDialog() {
-    // TODO check validity
+    if (!LastLiveMapData.getInstance().isValid()) {
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_enable_livemap_first).build());
+      finish();
+      return;
+    }
 
     DownloadRectangleDialogFragment.newInstance().show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
   }
@@ -77,11 +81,19 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
 
   @Override
   public void onDownloadFinished(Intent intent) {
-
+    setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
+    if (intent != null) {
+      startActivity(intent);
+    }
+    finish();
   }
 
   @Override
   public void onDownloadError(Intent errorIntent) {
-
+    setResult(RESULT_CANCELED);
+    if (errorIntent != null) {
+      startActivity(errorIntent);
+    }
+    finish();
   }
 }

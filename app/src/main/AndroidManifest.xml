@@ -137,6 +137,12 @@
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
+        <activity android:name=".download_rectangle.DownloadRectangleActivity"  android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_download" android:label="@string/launcher_download_rectangle">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- Backward compatibility with Locus Map -->
         <activity-alias android:name=".DashboardActivity" android:targetActivity=".dashboard.DashboardActivity" android:exported="true" />

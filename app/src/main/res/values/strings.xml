@@ -224,4 +224,6 @@
         >Watch geocache</string>
     <string name="launcher_bookmark_geocache" comment="Share button item name in geocache detail in Locus Map, which add geocache to bookmark list."
         >Bookmark geocache</string>
+    <string name="launcher_download_rectangle">Download map geocaches</string>
+    <string name="error_enable_livemap_first">Please, enable Live map first.</string>
 </resources>

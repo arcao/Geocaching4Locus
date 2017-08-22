@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.2.0'
 
     // Material dialogs
-    implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
 
     // Crashlytics
     implementation 'com.crashlytics.sdk.android:crashlytics:2.6.8'

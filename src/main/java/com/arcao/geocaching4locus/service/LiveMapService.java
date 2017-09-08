@@ -334,7 +334,7 @@ public class LiveMapService extends IntentService {
 
 	public static void cleanLiveMapItems(Context context) {
 		try {
-			for (int i = 1; i < REQUESTS; i++) {
+			for (int i = 1; i <= REQUESTS; i++) {
 				PackWaypoints pw = new PackWaypoints(PACK_WAYPOINT_PREFIX + i);
 				ActionDisplayPoints.sendPackSilent(context, pw, false);
 			}

@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.StringRes;
@@ -249,6 +251,17 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private void showError(@StringRes int message) {
 		mContext.startActivity(new ErrorActivity.IntentBuilder(mContext).message(message).build().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 	}
+
+	public void showLiveMapError(@StringRes int message) {
+		showLiveMapError(mContext.getText(message));
+	}
+
+	public void showLiveMapError(final CharSequence message) {
+		new Handler(Looper.getMainLooper()).post(() ->
+				Toast.makeText(mContext, ResourcesUtil.getText(mContext, R.string.error_live_map, message), Toast.LENGTH_LONG).show()
+		);
+	}
+
 
 	public boolean isLiveMapEnabled() {
 		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);

@@ -50,12 +50,12 @@ import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
 public class LiveMapService extends IntentService {
-	private static final String PARAM_LATITUDE = "LATITUDE";
-	private static final String PARAM_LONGITUDE = "LONGITUDE";
-	private static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
-	private static final String PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE";
-	private static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
-	private static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
+	public static final String PARAM_LATITUDE = "LATITUDE";
+	public static final String PARAM_LONGITUDE = "LONGITUDE";
+	public static final String PARAM_TOP_LEFT_LATITUDE = "TOP_LEFT_LATITUDE";
+	public static final String PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE";
+	public static final String PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE";
+	public static final String PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE";
 
 	private static final int REQUESTS = 5;
 	private static final int CACHES_PER_REQUEST = 50;

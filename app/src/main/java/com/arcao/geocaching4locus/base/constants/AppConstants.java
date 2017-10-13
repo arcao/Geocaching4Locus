@@ -56,5 +56,5 @@ public interface AppConstants {
 
 	String PREMIUM_CHARACTER = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) ? new String(Character.toChars(0x1F451)) : "(PM)";
 
-	int NOTIFICATION_ID_LIVEMAP = 0;
+	int NOTIFICATION_ID_LIVEMAP = 1;
 }

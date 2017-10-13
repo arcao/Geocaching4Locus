@@ -76,11 +76,12 @@ public class LiveMapDownloadTask extends Thread {
   private final Queue<Intent> taskQueue = new LinkedList<>();
   private boolean terminated = false;
 
-  public LiveMapDownloadTask(Context context) {
+  public LiveMapDownloadTask(Context context, LiveMapNotificationManager notificationManager) {
     this.context = context;
+    this.notificationManager = notificationManager;
+
     preferences = PreferenceManager.getDefaultSharedPreferences(context);
     accountManager = App.get(context).getAccountManager();
-    notificationManager = LiveMapNotificationManager.get(context);
     mapper = new DataMapper(context);
   }
 
@@ -96,6 +97,11 @@ public class LiveMapDownloadTask extends Thread {
   public void destroy() {
     terminated = true;
     taskQueue.notify();
+  }
+
+  @WorkerThread
+  public void onTaskFinished(Intent task) {
+    // do nothing
   }
 
   public static void cleanMapItems(Context context) {
@@ -121,6 +127,9 @@ public class LiveMapDownloadTask extends Thread {
         synchronized (taskQueue) {
           // chose latest
           while (!taskQueue.isEmpty()) {
+            if (task != null)
+              onTaskFinished(task);
+
             task = taskQueue.poll();
           }
 
@@ -135,6 +144,8 @@ public class LiveMapDownloadTask extends Thread {
           downloadTask(task);
         } catch (Exception e) {
           handleTaskException(e);
+        } finally {
+          onTaskFinished(task);
         }
       }
     } catch (InterruptedException e) {

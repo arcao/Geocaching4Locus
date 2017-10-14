@@ -109,7 +109,7 @@ public class SpanFormatter {
 
           Object argItem = args[argIdx];
 
-          if (typeTerm.equals("s") && argItem instanceof Spanned) {
+          if ("s".equals(typeTerm) && argItem instanceof Spanned) {
             cookedArg = (Spanned) argItem;
           } else {
             cookedArg = String.format(locale, "%" + modTerm + typeTerm, argItem);

@@ -1,14 +1,18 @@
 package com.arcao.geocaching4locus.live_map.util;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
@@ -21,6 +25,7 @@ import com.arcao.geocaching4locus.dashboard.DashboardActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
+import com.arcao.geocaching4locus.live_map.task.LiveMapDownloadTask;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
 import java.util.Collection;
@@ -37,11 +42,13 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
 	private static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
 	private static final long NOTIFICATION_TIMEOUT_MS = 2000;
+	private static final String NOTIFICATION_CHANNEL_ID = "LIVE_MAP_NOTIFICATION_CHANNEL";
 
 	private static boolean mNotificationShown;
 	private static boolean mLastLiveMapState;
 
 	private final Context mContext;
+	private final AlarmManager alarmManager;
 	private final NotificationManager mNotificationManager;
 	private final SharedPreferences mSharedPrefs;
 	private final boolean mShowLiveMapDisabledNotification;
@@ -58,13 +65,29 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+		alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 
 		mShowLiveMapDisabledNotification = mSharedPrefs.getBoolean(PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION, false);
 		mShowLiveMapVisibleOnlyNotification = true;
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			createChannel();
+		}
+	}
+
+	@RequiresApi(Build.VERSION_CODES.O)
+	private void createChannel() {
+		NotificationChannel notificationChannel = new NotificationChannel(
+				NOTIFICATION_CHANNEL_ID,
+				mContext.getText(R.string.menu_live_map),
+				NotificationManager.IMPORTANCE_DEFAULT
+		);
+
+		mNotificationManager.createNotificationChannel(notificationChannel);
 	}
 
 	public boolean handleBroadcastIntent(Intent intent) {
-		if (intent == null)
+		if (intent == null || intent.getAction() == null)
 			return false;
 
 		Timber.i(intent.getAction());
@@ -137,7 +160,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private void updateNotificationHideAlarm() {
-		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
 
 		alarmManager.cancel(pendingIntent);
@@ -145,7 +167,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private void showNotification() {
-		//noinspection AssignmentToStaticFieldFromInstanceMethod
 		mNotificationShown = true;
 
 		NotificationCompat.Builder builder = createNotification();
@@ -153,18 +174,15 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	}
 
 	private void hideNotification() {
-		//noinspection AssignmentToStaticFieldFromInstanceMethod
 		mNotificationShown = false;
 
-		AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent pendingIntent = createPendingIntent(ACTION_HIDE_NOTIFICATION);
-
-		alarmManager.cancel(pendingIntent);
+		alarmManager.cancel(createPendingIntent(ACTION_HIDE_NOTIFICATION));
+		LiveMapService.stop(mContext);
 		mNotificationManager.cancel(AppConstants.NOTIFICATION_ID_LIVEMAP);
 	}
 
 	public NotificationCompat.Builder createNotification() {
-		NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext);
+		NotificationCompat.Builder nb = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
 
 		nb.setOngoing(true);
 		nb.setWhen(0); // this fix redraw issue while refreshing
@@ -223,7 +241,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 		// hide visible geocaches when live map is disabling
 		if (!enabled && isLiveMapEnabled() && mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP_HIDE_CACHES_ON_DISABLED, false)) {
-			LiveMapService.cleanLiveMapItems(mContext);
+			LiveMapDownloadTask.cleanMapItems(mContext);
 		}
 
 		if (enabled && !periodicUpdateEnabled) {
@@ -249,6 +267,17 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private void showError(@StringRes int message) {
 		mContext.startActivity(new ErrorActivity.IntentBuilder(mContext).message(message).build().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 	}
+
+	public void showLiveMapError(@StringRes int message) {
+		showLiveMapError(mContext.getText(message));
+	}
+
+	public void showLiveMapError(final CharSequence message) {
+		new Handler(Looper.getMainLooper()).post(() ->
+				Toast.makeText(mContext, ResourcesUtil.getText(mContext, R.string.error_live_map, message), Toast.LENGTH_LONG).show()
+		);
+	}
+
 
 	public boolean isLiveMapEnabled() {
 		return mSharedPrefs.getBoolean(PrefConstants.LIVE_MAP, false);

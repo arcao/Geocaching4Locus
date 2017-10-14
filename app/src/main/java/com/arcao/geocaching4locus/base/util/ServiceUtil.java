@@ -6,11 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
-import android.util.Log;
 import android.util.SparseArray;
 import timber.log.Timber;
 
-public class ServiceUtil {
+public final class ServiceUtil {
   private static final String EXTRA_WAKE_LOCK_ID = ServiceUtil.class.getCanonicalName() +".WAKE_LOCK_ID";
 
   private static final SparseArray<WakeLockContainer> sActiveWakeLocks = new SparseArray<>();
@@ -88,7 +87,7 @@ public class ServiceUtil {
       // We just log a warning here if there is no wake lock found, which could
       // happen for example if this function is called twice on the same
       // intent or the process is killed and restarted before processing the intent.
-      Log.w("WakefulBroadcastReceiv.", "No active wake lock id #" + id);
+      Timber.w("No active wake lock id #%d", id);
       return true;
     }
   }
@@ -107,11 +106,11 @@ public class ServiceUtil {
         container.wakeLock.release();
         sActiveWakeLocks.remove(id);
       }
-      Timber.w("WakeLock remaining: %d", sActiveWakeLocks.size());
+      Timber.w("Remaining WakeLocks: %d", sActiveWakeLocks.size());
     }
   }
 
-  private static class WakeLockContainer {
+  private static final class WakeLockContainer {
     final String tag;
     final PowerManager.WakeLock wakeLock;
 

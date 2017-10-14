@@ -57,6 +57,7 @@ public final class ServiceUtil {
       wl.setReferenceCounted(false);
       wl.acquire(60 * 1000);
       sActiveWakeLocks.put(id, new WakeLockContainer(tag, wl));
+      Timber.w("Created WakeLock #%d", id);
       return comp;
     }
   }
@@ -79,6 +80,8 @@ public final class ServiceUtil {
       if (container != null) {
         container.wakeLock.release();
         sActiveWakeLocks.remove(id);
+        Timber.w("Released WakeLock #%d", id);
+        Timber.w("Remaining WakeLocks: %d", sActiveWakeLocks.size());
         return true;
       }
       // We return true whether or not we actually found the wake lock

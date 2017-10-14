@@ -95,8 +95,10 @@ public class LiveMapDownloadTask extends Thread {
 
   @UiThread
   public void destroy() {
-    terminated = true;
-    taskQueue.notify();
+    synchronized (taskQueue) {
+      terminated = true;
+      taskQueue.notify();
+    }
   }
 
   @WorkerThread

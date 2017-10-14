@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import locus.api.android.features.periodicUpdates.PeriodicUpdatesHandler;
@@ -44,14 +43,6 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
 		if (!prefs.getBoolean(PrefConstants.LIVE_MAP, false)) {
 			return;
-		}
-
-		// Test if correct Locus version is installed
-		if (!LocusTesting.isLocusInstalled(context)) {
-			LocusTesting.showLocusTooOldToast(context);
-
-			// disable live map
-			notificationManager.setLiveMapEnabled(false);
 		}
 
 		// ignore onTouch events

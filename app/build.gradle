@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 dependencies {
-    def supportVer = '26.0.1'
+    def supportVer = '26.1.0'
 
     // Android Support
-    //noinspection GradleCompatible
     implementation "com.android.support:support-v4:$supportVer"
+    implementation "com.android.support:support-v13:$supportVer"
     implementation "com.android.support:appcompat-v7:$supportVer"
     implementation "com.android.support:recyclerview-v7:$supportVer"
     implementation "com.android.support:cardview-v7:$supportVer"
@@ -19,7 +19,7 @@ dependencies {
     }
 
     // Locus API
-    implementation 'com.asamm:locus-api-android:0.2.10'
+    implementation 'com.asamm:locus-api-android:0.2.11'
 
     // Logging API
     implementation 'com.arcao:slf4j-timber:3.0'
@@ -35,30 +35,32 @@ dependencies {
     implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.2.0'
 
     // Material dialogs
-    implementation 'com.afollestad.material-dialogs:core:0.9.4.7'
+    implementation('com.afollestad.material-dialogs:core:0.9.4.7') {
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
 
     // Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.6.8'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.7.0'
 
     // Networking
-    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 
     // ButterKnife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // Auto-Value
-    compileOnly 'com.google.auto.value:auto-value:1.5'
-    annotationProcessor 'com.google.auto.value:auto-value:1.5'
+    compileOnly 'com.google.auto.value:auto-value:1.5.1'
+    annotationProcessor 'com.google.auto.value:auto-value:1.5.1'
 
     // Auto-Value Parcelable
-    compileOnly 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.5'
+    implementation 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.5'
     annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -66,7 +68,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion hasProperty('devBuild') ? 26 : 15
+        minSdkVersion hasProperty('devBuild') ? 24 : 15
         targetSdkVersion 26
         versionCode gitVersionCode()
         archivesBaseName = parent.name

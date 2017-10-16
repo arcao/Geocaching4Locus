@@ -148,7 +148,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		}
 
 		if (current < count) {
-			nb.setSmallIcon(R.drawable.ic_stat_location_map_downloading_anim);
+			nb.setSmallIcon(R.drawable.ic_stat_live_map_downloading_anim);
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
 				nb.setContentText(ResourcesUtil.getText(mContext, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
 			} else {
@@ -191,18 +191,18 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 		CharSequence state;
 		if (isLiveMapEnabled()) {
-			nb.setSmallIcon(R.drawable.ic_stat_location_map);
+			nb.setSmallIcon(R.drawable.ic_stat_live_map);
 			state = mContext.getText(R.string.notify_live_map_message_enabled);
 			nb.addAction(R.drawable.ic_stat_navigation_cancel, mContext.getText(R.string.notify_live_map_action_disable), createPendingIntent(ACTION_LIVE_MAP_DISABLE));
 		} else {
-			nb.setSmallIcon(R.drawable.ic_stat_location_map_disabled);
+			nb.setSmallIcon(R.drawable.ic_stat_live_map_disabled);
 			state = mContext.getText(R.string.notify_live_map_message_disabled);
 			nb.addAction(R.drawable.ic_stat_navigation_accept, mContext.getText(R.string.notify_live_map_action_enable), createPendingIntent(ACTION_LIVE_MAP_ENABLE));
 		}
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0,
 				SettingsActivity.createIntent(mContext, LiveMapPreferenceFragment.class),
 				PendingIntent.FLAG_UPDATE_CURRENT);
-		nb.addAction(R.drawable.ic_stat_livemap_settings, mContext.getText(R.string.notify_live_map_action_settings), pendingIntent);
+		nb.addAction(R.drawable.ic_stat_live_map_settings, mContext.getText(R.string.notify_live_map_action_settings), pendingIntent);
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
 			nb.setContentTitle(mContext.getText(R.string.notify_live_map));

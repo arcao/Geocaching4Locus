@@ -23,6 +23,7 @@
 
     <declare-styleable name="DashboardButton">
         <attr name="toggleable" format="boolean" />
+        <attr name="compoundDrawableTint" format="color|reference"/>
     </declare-styleable>
 
     <!-- Base attributes available to ListPreference. -->

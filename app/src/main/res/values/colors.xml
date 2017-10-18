@@ -9,4 +9,7 @@
     <color name="primary">@color/material_blue_grey_900</color> <!-- 500 -->
     <color name="primary_dark">@color/material_blue_grey_950</color> <!-- 700 -->
     <color name="accent">@color/material_deep_teal_500</color> <!-- A200 -->
+    <color name="textColorSecondary">@color/abc_secondary_text_material_light</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 </resources>

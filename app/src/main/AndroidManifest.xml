@@ -62,22 +62,22 @@
         </activity>
         <activity android:name=".settings.SettingsActivity" android:label="@string/action_settings" android:theme="@style/AppTheme.Settings"/>
         <activity android:name=".error.ErrorActivity" android:theme="@style/AppTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
-        <activity android:name=".update.UpdateActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocache">
+        <activity android:name=".update.UpdateActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocache">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
-        <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".update.UpdateActivity" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_download_logs" android:label="@string/launcher_download_logs">
+        <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".update.UpdateActivity" android:exported="true" android:icon="@drawable/ic_action_download_logs" android:label="@string/launcher_download_logs">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity-alias>
-        <activity android:name=".update.UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocaches">
+        <activity android:name=".update.UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocaches">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -104,15 +104,15 @@
                 <data android:scheme="https" android:host="*.geocaching.com" android:pathPrefix="/geocache/GC" />
             </intent-filter>
         </activity>
-        <activity android:name=".dashboard.DashboardActivity" android:theme="@style/AppTheme.Dialog.NoTitle" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+        <activity android:name=".dashboard.DashboardActivity" android:theme="@style/AppTheme.Dialog.NoTitle" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".authentication.LoginActivity" android:label="@string/title_login" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+        <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -123,21 +123,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".weblink.WatchGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_watch_geocache" android:label="@string/launcher_watch_geocache">
+        <activity android:name=".weblink.WatchGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_watch_geocache" android:label="@string/launcher_watch_geocache">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
-        <activity android:name=".weblink.BookmarkGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true">
-            <intent-filter android:icon="@drawable/ic_action_bookmark_geocache" android:label="@string/launcher_bookmark_geocache">
+        <activity android:name=".weblink.BookmarkGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_bookmark_geocache" android:label="@string/launcher_bookmark_geocache">
+            <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
             </intent-filter>
         </activity>
-        <activity android:name=".download_rectangle.DownloadRectangleActivity"  android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_download" android:label="@string/launcher_download_rectangle">
+        <activity android:name=".download_rectangle.DownloadRectangleActivity"  android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_live_map_download_caches" android:label="@string/launcher_download_rectangle">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />

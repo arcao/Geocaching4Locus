@@ -38,7 +38,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
 		LastLiveMapData.getInstance().update(intent);
 
-		if (liveMapNotificationManager.handleBroadcastIntent(intent)) {
+		if (notificationManager.handleBroadcastIntent(intent)) {
 			//noinspection AssignmentToStaticFieldFromInstanceMethod
 			mForceUpdate = notificationManager.isForceUpdateRequiredInFuture();
 			return;

@@ -16,6 +16,7 @@ import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
+
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
@@ -28,8 +29,10 @@ import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.live_map.task.LiveMapDownloadTask;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
+
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
+
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;
@@ -41,7 +44,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private static final String ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION";
 	private static final String ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE";
 	private static final String ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE";
-	private static final long NOTIFICATION_TIMEOUT_MS = 2000;
+	private static final long NOTIFICATION_TIMEOUT_MS = 2200;
 	private static final String NOTIFICATION_CHANNEL_ID = "LIVE_MAP_NOTIFICATION_CHANNEL";
 
 	private static boolean mNotificationShown;
@@ -77,10 +80,14 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 	@RequiresApi(Build.VERSION_CODES.O)
 	private void createChannel() {
+		if (mNotificationManager.getNotificationChannel(NOTIFICATION_CHANNEL_ID) != null) {
+			return;
+		}
+
 		NotificationChannel notificationChannel = new NotificationChannel(
 				NOTIFICATION_CHANNEL_ID,
 				mContext.getText(R.string.menu_live_map),
-				NotificationManager.IMPORTANCE_DEFAULT
+				NotificationManager.IMPORTANCE_LOW
 		);
 
 		mNotificationManager.createNotificationChannel(notificationChannel);
@@ -169,8 +176,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 	private void showNotification() {
 		mNotificationShown = true;
 
-		NotificationCompat.Builder builder = createNotification();
-		mNotificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, builder.build());
+		mNotificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, createNotification().build());
 	}
 
 	private void hideNotification() {
@@ -187,7 +193,8 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		nb.setOngoing(true);
 		nb.setWhen(0); // this fix redraw issue while refreshing
 		nb.setLocalOnly(true);
-		nb.setCategory(NotificationCompat.CATEGORY_SERVICE);
+		nb.setCategory(NotificationCompat.CATEGORY_STATUS);
+		nb.setPriority(NotificationCompat.PRIORITY_MIN);
 
 		CharSequence state;
 		if (isLiveMapEnabled()) {
@@ -212,7 +219,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			nb.setContentTitle(state);
 
 		}
-		nb.setPriority(NotificationCompat.PRIORITY_MAX); // always show button
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 			nb.setContentIntent(PendingIntent.getActivity(mContext, 0, new Intent(mContext, DashboardActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));

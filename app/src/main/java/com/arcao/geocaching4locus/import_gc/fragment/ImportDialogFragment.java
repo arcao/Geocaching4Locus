@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.import_gc.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,18 +18,20 @@ import java.lang.ref.WeakReference;
 public final class ImportDialogFragment extends AbstractDialogFragment implements TaskListener {
 	public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
 
-	private static final String PARAM_CACHE_ID = "CACHE_ID";
+	private static final String PARAM_CACHE_IDS = "CACHE_IDS";
 
 	public interface DialogListener {
-		void onImportFinished(boolean success);
+		void onImportFinished(Intent intent);
+		void onImportError(Intent intent);
 	}
 
 	@Nullable private ImportTask mTask;
 	private WeakReference<DialogListener> mDialogListenerRef;
+	private String[] cacheIds;
 
-	public static ImportDialogFragment newInstance(String cacheId) {
+	public static ImportDialogFragment newInstance(String[] cacheIds) {
 		Bundle args = new Bundle();
-		args.putString(PARAM_CACHE_ID, cacheId);
+		args.putStringArray(PARAM_CACHE_IDS, cacheIds);
 
 		ImportDialogFragment fragment = new ImportDialogFragment();
 		fragment.setArguments(args);
@@ -42,10 +45,10 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 		setRetainInstance(true);
 		setCancelable(false);
 
-		String cacheId = getArguments().getString(PARAM_CACHE_ID);
+		cacheIds = getArguments().getStringArray(PARAM_CACHE_IDS);
 
 		mTask = new ImportTask(getActivity(), this);
-		mTask.execute(cacheId);
+		mTask.execute(cacheIds);
 	}
 
 	@Override
@@ -60,14 +63,33 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	}
 
 	@Override
-	public void onTaskFinished(boolean success) {
+	public void onTaskFinished(Intent intent) {
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
-			listener.onImportFinished(success);
+			listener.onImportFinished(intent);
 		}
 	}
+
+	@Override
+	public void onTaskError(@NonNull Intent errorIntent) {
+		dismiss();
+
+		DialogListener listener = mDialogListenerRef.get();
+		if (listener != null) {
+			listener.onImportError(errorIntent);
+		}
+	}
+
+	@Override
+	public void onProgressUpdate(int current, int count) {
+		MaterialDialog dialog = (MaterialDialog) getDialog();
+		if (dialog != null) {
+			dialog.setProgress(current);
+		}
+	}
+
 
 	@Override
 	public void onDismiss(DialogInterface dialog) {
@@ -82,9 +104,9 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new MaterialDialog.Builder(getActivity())
-						.content(R.string.progress_import_geocache)
+						.content(cacheIds.length > 1 ? R.string.progress_download_geocaches : R.string.progress_download_geocache)
 						.negativeText(R.string.button_cancel)
-						.progress(true, 0)
+						.progress(false, cacheIds.length, true)
 						.build();
 	}
 }

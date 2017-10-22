@@ -70,14 +70,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 		AnalyticsUtil.actionImport(App.get(this).getAccountManager().isPremium());
 
 		Timber.i("source: import;" + cacheId);
-		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
-	}
-
-	@Override
-	public void onImportFinished(boolean success) {
-		Timber.d("onImportFinished result: " + success);
-		setResult(success ? RESULT_OK : RESULT_CANCELED);
-		finish();
+		ImportDialogFragment.newInstance(new String[] {cacheId}).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
@@ -90,7 +83,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 				if (PermissionUtil.requestExternalStoragePermission(this))
 				showImportDialog();
 			} else {
-				onImportFinished(false);
+				onImportFinished(null);
 			}
 		}
 	}
@@ -106,5 +99,21 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 				NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
 			}
 		}
+	}
+
+	@Override
+	public void onImportFinished(Intent intent) {
+		Timber.d("onImportFinished result: " + (intent != null));
+		setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
+		startActivity(intent);
+		finish();
+	}
+
+	@Override
+	public void onImportError(Intent intent) {
+		Timber.d("onImportError called");
+		setResult(RESULT_CANCELED);
+		startActivity(intent);
+		finish();
 	}
 }

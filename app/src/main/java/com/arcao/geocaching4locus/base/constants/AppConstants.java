@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.base.constants;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
+import java.util.regex.Pattern;
 import locus.api.android.utils.LocusUtils;
 
 public interface AppConstants {

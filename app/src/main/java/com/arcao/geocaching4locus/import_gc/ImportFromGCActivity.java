@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.LocusTesting;
@@ -12,11 +11,12 @@ import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.GCNumberInputDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
-
+import java.util.Arrays;
 import timber.log.Timber;
 
 public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener  {
 	private static final int REQUEST_SIGN_ON = 1;
+	private static final int REQUEST_IMPORT_ERROR = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +43,21 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 		GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
 	}
 
-	private void startImport(String cacheId) {
-		Timber.i("source: importFromGC;" + cacheId);
+	private void startImport(String[] cacheIds) {
+		Timber.i("source: importFromGC;" + Arrays.toString(cacheIds));
 
 		AnalyticsUtil.actionImportGC(App.get(this).getAccountManager().isPremium());
 
-		ImportDialogFragment.newInstance(cacheId).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+		ImportDialogFragment.newInstance(cacheIds).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
 	}
 
 	@Override
-	public void onInputFinished(String input) {
-		if (input != null) {
+	public void onInputFinished(@NonNull String[] input) {
+		if (input.length > 0) {
 			startImport(input);
 		} else {
-			onImportFinished(false);
+			onImportFinished(null);
 		}
-	}
-
-	@Override
-	public void onImportFinished(boolean success) {
-		Timber.d("onImportFinished result: " + success);
-		setResult(success ? RESULT_OK : RESULT_CANCELED);
-		finish();
 	}
 
 	@Override
@@ -77,8 +70,11 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 				if (PermissionUtil.requestExternalStoragePermission(this))
 				showGCNumberInputDialog();
 			} else {
-				onImportFinished(false);
+				onImportFinished(null);
 			}
+		} else if (requestCode == REQUEST_IMPORT_ERROR) {
+			setResult(resultCode);
+			finish();
 		}
 	}
 
@@ -94,4 +90,24 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 			}
 		}
 	}
+
+
+	@Override
+	public void onImportFinished(Intent intent) {
+		Timber.d("onImportFinished result: " + (intent != null));
+		setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
+
+		if (intent != null) {
+			startActivity(intent);
+		}
+		finish();
+	}
+
+	@Override
+	public void onImportError(Intent intent) {
+		Timber.d("onImportError called");
+		startActivityForResult(intent, REQUEST_IMPORT_ERROR);
+	}
+
+
 }

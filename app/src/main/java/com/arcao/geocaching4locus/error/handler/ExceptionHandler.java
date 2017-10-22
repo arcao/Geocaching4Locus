@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.error.handler;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import com.arcao.geocaching.api.StatusCode;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
@@ -92,9 +93,14 @@ public class ExceptionHandler {
 					.exception(t)
 					.build();
 		} else if (t instanceof CacheNotFoundException) {
+			String[] geocacheCodes = ((CacheNotFoundException) t).getCacheCodes();
 			return builder
-					.message(R.string.error_geocache_not_found, ((CacheNotFoundException) t).getCacheCode())
-					.build();
+					.message(baseMessage,
+					    ResourcesUtil.getQuantityText(mContext,
+									R.plurals.plural_error_geocache_not_found,
+									geocacheCodes.length, TextUtils.join(", ", geocacheCodes)
+							)
+					).build();
 		} else if (t instanceof NetworkException ||
 				(t instanceof WherigoServiceException && ((WherigoServiceException) t).getCode() == WherigoServiceException.ERROR_CONNECTION_ERROR)) {
 			builder.message(baseMessage, mContext.getText(R.string.error_network_unavailable));

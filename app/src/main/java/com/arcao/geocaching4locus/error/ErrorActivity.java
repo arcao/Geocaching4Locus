@@ -16,12 +16,11 @@ import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment;
-import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.base.util.HtmlUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.crashlytics.android.Crashlytics;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
@@ -47,6 +46,7 @@ public class ErrorActivity extends AppCompatActivity {
 	private void showErrorDialog () {
 		Bundle args = getIntent().getExtras();
 		if (args == null) {
+			setResult(RESULT_CANCELED);
 			finish();
 			return;
 		}
@@ -76,7 +76,7 @@ public class ErrorActivity extends AppCompatActivity {
 
 			final CharSequence title = args != null ? args.getCharSequence(KEY_TITLE) : null;
 			final CharSequence message = args != null ? args.getCharSequence(KEY_MESSAGE) : StringUtils.EMPTY;
-			final Intent positiveAction = args != null ? args.<Intent>getParcelable(KEY_POSITIVE_ACTION) : null;
+			final Intent positiveAction = args != null ? args.getParcelable(KEY_POSITIVE_ACTION) : null;
 			final CharSequence positiveButtonText = args != null ? args.getCharSequence(KEY_POSITIVE_BUTTON_TEXT) : null;
 			final CharSequence negativeButtonText = args != null ? args.getCharSequence(KEY_NEGATIVE_BUTTON_TEXT) : null;
 			final Throwable t = (Throwable) (args != null ? args.getSerializable(KEY_EXCEPTION) : null);
@@ -96,38 +96,32 @@ public class ErrorActivity extends AppCompatActivity {
 				builder.negativeText(negativeButtonText);
 			}
 
-			builder.onPositive(new MaterialDialog.SingleButtonCallback() {
-				@Override
-				public void onClick(@NonNull MaterialDialog materialDialog,
-						@NonNull DialogAction dialogAction) {
-					if (materialDialog.getCustomView() != null) {
-						final Checkable checkBox = (Checkable) materialDialog.getCustomView().findViewById(R.id.checkbox);
-						if (checkBox != null && checkBox.isChecked()) {
-							Crashlytics.logException(t);
-							Toast.makeText(materialDialog.getContext(), R.string.toast_error_report_sent, Toast.LENGTH_LONG)
-											.show();
-						}
-					}
+			builder.onPositive((materialDialog, dialogAction) -> {
+        if (materialDialog.getCustomView() != null) {
+          final Checkable checkBox = materialDialog.getCustomView().findViewById(R.id.checkbox);
+          if (checkBox != null && checkBox.isChecked()) {
+            Crashlytics.logException(t);
+            Toast.makeText(materialDialog.getContext(), R.string.toast_error_report_sent, Toast.LENGTH_LONG)
+                    .show();
+          }
+        }
 
-					if (positiveAction != null) {
-						startActivity(positiveAction);
-					}
-					getActivity().finish();
-				}
-			});
-			builder.onNegative(new MaterialDialog.SingleButtonCallback() {
-				@Override
-				public void onClick(@NonNull MaterialDialog materialDialog,
-						@NonNull DialogAction dialogAction) {
-					getActivity().finish();
-				}
-			});
+        if (positiveAction != null) {
+          startActivity(positiveAction);
+        }
+        getActivity().setResult(RESULT_OK);
+        getActivity().finish();
+      });
+			builder.onNegative((materialDialog, dialogAction) -> {
+        getActivity().setResult(RESULT_CANCELED);
+        getActivity().finish();
+      });
 
 			final MaterialDialog dialog = builder.build();
 			View rootView = dialog.getCustomView();
 			if (rootView != null) {
-				TextView content = (TextView) rootView.findViewById(R.id.content);
-				CheckBox checkBox = (CheckBox) rootView.findViewById(R.id.checkbox);
+				TextView content = rootView.findViewById(R.id.content);
+				CheckBox checkBox = rootView.findViewById(R.id.checkbox);
 
 				// add paddingTop for untitled dialogs
 				if (TextUtils.isEmpty(title)) {

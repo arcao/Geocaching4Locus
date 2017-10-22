@@ -5,26 +5,26 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDButton;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment;
-
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.ref.WeakReference;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 
@@ -33,9 +33,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 	private static final String PARAM_INPUT = "INPUT";
 	private static final String PARAM_ERROR_MESSAGE = "ERROR_MESSAGE";
+	private static final Pattern PATTERN_CACHE_ID_SEPARATOR = Pattern.compile("[\\W]+");
 
 	public interface DialogListener {
-		void onInputFinished(String input);
+		void onInputFinished(@NonNull String[] input);
 	}
 
 	@BindView(R.id.input) EditText mEditText;
@@ -68,10 +69,10 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 		}
 	}
 
-	void fireOnInputFinished(String input) {
+	void fireOnInputFinished(@Nullable String input) {
 		DialogListener listener = mDialogListenerRef.get();
 		if (listener != null) {
-			listener.onInputFinished(input);
+			listener.onInputFinished(!TextUtils.isEmpty(input) ? PATTERN_CACHE_ID_SEPARATOR.split(input) : new String[0]);
 		}
 	}
 
@@ -90,26 +91,18 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 				.negativeText(R.string.button_cancel)
 				.customView(R.layout.dialog_gc_number_input, false)
 				.autoDismiss(false)
-				.onPositive(new MaterialDialog.SingleButtonCallback() {
-					@Override
-					public void onClick(@NonNull MaterialDialog materialDialog,
-							@NonNull DialogAction dialogAction) {
-						if (validateInput(mEditText)) {
-							fireOnInputFinished(mEditText.getText().toString());
-							materialDialog.dismiss();
-						} else {
-							mLayout.setError(getText(R.string.error_gc_code_invalid));
-						}
-					}
-				})
-				.onNegative(new MaterialDialog.SingleButtonCallback() {
-					@Override
-					public void onClick(@NonNull MaterialDialog materialDialog,
-							@NonNull DialogAction dialogAction) {
-						fireOnInputFinished(null);
-						materialDialog.dismiss();
-					}
-				}).build();
+				.onPositive((materialDialog, dialogAction) -> {
+          if (validateInput(mEditText)) {
+            fireOnInputFinished(mEditText.getText().toString());
+            materialDialog.dismiss();
+          } else {
+            mLayout.setError(getText(R.string.error_gc_code_invalid));
+          }
+        })
+				.onNegative((materialDialog, dialogAction) -> {
+          fireOnInputFinished(null);
+          materialDialog.dismiss();
+        }).build();
 
 		final Window window = dialog.getWindow();
 		if (window != null)
@@ -121,6 +114,9 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 
 		ButterKnife.bind(this, customView);
 
+		MDButton positiveButton = dialog.getActionButton(DialogAction.POSITIVE);
+
+		mEditText.setNextFocusDownId(positiveButton.getId());
 		mEditText.setText(R.string.prefix_gc);
 		mEditText.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -157,11 +153,18 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
 			return false;
 		}
 
-		try {
-			return GeocachingUtils.cacheCodeToCacheId(value) > 0;
-		} catch (IllegalArgumentException e) {
-			Timber.e(e, e.getMessage());
-			return false;
+		String[] cacheIds = PATTERN_CACHE_ID_SEPARATOR.split(value);
+
+		for (String cacheId : cacheIds) {
+			try {
+				if (GeocachingUtils.cacheCodeToCacheId(cacheId) <= 0)
+					return false;
+			} catch (IllegalArgumentException e) {
+				Timber.e(e, e.getMessage());
+				return false;
+			}
 		}
+
+		return true;
 	}
 }

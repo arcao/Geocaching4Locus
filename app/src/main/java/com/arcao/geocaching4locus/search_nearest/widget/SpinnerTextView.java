@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.dashboard.widget;
+package com.arcao.geocaching4locus.search_nearest.widget;
 
 import android.content.Context;
 import android.support.v13.view.ViewCompat;

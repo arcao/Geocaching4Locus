@@ -37,7 +37,7 @@ import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
-import com.arcao.geocaching4locus.dashboard.widget.SpinnerTextView;
+import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.LocationUpdateDialogFragment;

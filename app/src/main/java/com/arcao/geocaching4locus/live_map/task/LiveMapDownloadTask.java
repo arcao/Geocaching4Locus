@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -61,6 +63,8 @@ import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_
 import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_LONGITUDE;
 
 public class LiveMapDownloadTask extends Thread {
+  private static final Executor CLEAN_MAP_EXECUTOR = Executors.newSingleThreadExecutor();
+
   private final Context context;
   private final SharedPreferences preferences;
   private final AccountManager accountManager;
@@ -100,16 +104,21 @@ public class LiveMapDownloadTask extends Thread {
     // do nothing
   }
 
+  @UiThread
   public static void cleanMapItems(Context context) {
-    try {
-      for (int i = 1; i < LIVEMAP_REQUESTS; i++) {
-        PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
-        ActionDisplayPoints.sendPackSilent(context, pw, false);
+    final Context appContext = context.getApplicationContext();
+
+    CLEAN_MAP_EXECUTOR.execute(() -> {
+      try {
+        for (int i = 1; i < LIVEMAP_REQUESTS; i++) {
+          PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
+          ActionDisplayPoints.sendPackSilent(appContext, pw, false);
+        }
+      } catch (Throwable t) {
+        t = new LocusMapRuntimeException(t);
+        Timber.e(t, t.getMessage());
       }
-    } catch (Throwable t) {
-      t = new LocusMapRuntimeException(t);
-      Timber.e(t, t.getMessage());
-    }
+    });
   }
 
 

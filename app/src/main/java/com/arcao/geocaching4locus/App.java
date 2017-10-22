@@ -8,22 +8,17 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
 import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager;
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.UUID;
-
 import io.fabric.sdk.android.Fabric;
+import java.util.UUID;
 import locus.api.android.utils.LocusUtils;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class App extends Application {
@@ -60,10 +55,13 @@ public class App extends Application {
 		}
 
 		try {
-			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(this);
+			LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(this);
 			if (lv != null) {
 				Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, lv.getVersionName());
 				Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, lv.getPackageName());
+			} else {
+				Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, "");
+				Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, "");
 			}
 		} catch (Throwable t) {
 			Timber.e(t, t.getMessage());

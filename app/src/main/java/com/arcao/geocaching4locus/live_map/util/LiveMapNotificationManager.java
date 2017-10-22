@@ -16,11 +16,9 @@ import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
-
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.dashboard.DashboardActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
@@ -29,10 +27,8 @@ import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.live_map.task.LiveMapDownloadTask;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
-
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;
@@ -234,15 +230,20 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
 	public void setLiveMapEnabled(boolean enabled) {
 		boolean periodicUpdateEnabled = true;
-		LocusUtils.LocusVersion locusVersion = LocusTesting.getActiveVersion(mContext);
+		LocusUtils.LocusVersion locusVersion = LocusUtils.getActiveVersion(mContext);
 
-		try {
-			LocusInfo info = ActionTools.getLocusInfo(mContext, locusVersion);
-			if (info != null) {
-				periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
+		if (locusVersion != null) {
+			try {
+				LocusInfo info = ActionTools.getLocusInfo(mContext, locusVersion);
+				if (info != null) {
+					periodicUpdateEnabled = info.isPeriodicUpdatesEnabled();
+				}
+			} catch (Throwable e) {
+				Timber.e(e,
+						"Unable to receive info about current state of periodic update events from Locus.");
 			}
-		} catch (Throwable e) {
-			Timber.e(e, "Unable to receive info about current state of periodic update events from Locus.");
+		} else {
+			periodicUpdateEnabled = false;
 		}
 
 		// hide visible geocaches when live map is disabling

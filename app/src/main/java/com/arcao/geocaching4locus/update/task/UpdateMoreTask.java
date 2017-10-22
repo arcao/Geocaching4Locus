@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -12,21 +11,18 @@ import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.filter.CacheCodeFilter;
 import com.arcao.geocaching.api.filter.Filter;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.DataMapper;
@@ -73,7 +69,10 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
 		LocusUtils.LocusVersion locusVersion;
 		try {
-			locusVersion = LocusTesting.getActiveVersion(mContext);
+			locusVersion = LocusUtils.getActiveVersion(mContext);
+			if (locusVersion == null) {
+				throw new IllegalStateException("Locus is not installed.");
+			}
 		} catch (Throwable t) {
 			throw new LocusMapRuntimeException(t);
 		}

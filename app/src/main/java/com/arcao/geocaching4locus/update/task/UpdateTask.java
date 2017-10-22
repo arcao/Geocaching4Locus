@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -14,28 +13,24 @@ import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.data.Trackable;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.arcao.geocaching4locus.update.task.UpdateTask.UpdateTaskData;
-
-import locus.api.mapper.WaypointMerger;
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
-
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.DataMapper;
+import locus.api.mapper.WaypointMerger;
 import locus.api.objects.extra.Waypoint;
+import org.apache.commons.lang3.ArrayUtils;
 import timber.log.Timber;
 
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
@@ -75,7 +70,10 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
 		LocusUtils.LocusVersion locusVersion;
 		try {
-			locusVersion = LocusTesting.getActiveVersion(mContext);
+			locusVersion = LocusUtils.getActiveVersion(mContext);
+			if (locusVersion == null) {
+				throw new IllegalStateException("Locus is not installed.");
+			}
 		} catch (Throwable t) {
 			throw new LocusMapRuntimeException(t);
 		}

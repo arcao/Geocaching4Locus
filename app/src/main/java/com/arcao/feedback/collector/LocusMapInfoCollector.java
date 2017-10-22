@@ -1,7 +1,6 @@
 package com.arcao.feedback.collector;
 
 import android.content.Context;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;
@@ -23,12 +22,12 @@ public class LocusMapInfoCollector extends Collector {
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			LocusUtils.LocusVersion lv = LocusTesting.getActiveVersion(mContext);
+			LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(mContext);
 			if (lv != null) {
 				sb.append("Locus Version = ").append(lv.getVersionName());
 				sb.append("\nLocus Package = ").append(lv.getPackageName());
 
-				LocusInfo info = ActionTools.getLocusInfo(mContext, LocusTesting.getActiveVersion(mContext));
+				LocusInfo info = ActionTools.getLocusInfo(mContext, lv);
 				if (info != null) {
 					sb.append("\nLocus info:\n").append(info.toString());
 				}

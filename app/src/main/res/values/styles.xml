@@ -63,9 +63,11 @@
     </style>
     <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge">
     </style>
-    <style name="AppTheme.Dialog.NoTitle">
+    <style name="AppTheme.Dashboard" parent="AppTheme.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="windowFixedWidthMinor">320dp</item>
+        <item name="windowFixedWidthMajor">320dp</item>
     </style>
     <style name="AppTheme.Settings">
         <item name="windowNoTitle">false</item>
@@ -135,16 +137,14 @@
         <item name="android:textColor">@color/btn_dashboard_fg</item>
         <item name="android:gravity">center|top</item>
 
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">0dp</item>
-
-        <item name="android:minWidth">88dp</item>
+        <item name="android:minWidth">120dp</item>
         <item name="android:minHeight">88dp</item>
         <item name="android:maxLines">2</item>
 
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
+
+        <item name="android:paddingTop">5dp</item>
 
         <item name="android:textOn">@null</item>
         <item name="android:textOff">@null</item>

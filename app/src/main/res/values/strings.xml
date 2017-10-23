@@ -230,4 +230,5 @@
         >Bookmark geocache</string>
     <string name="launcher_download_rectangle">Download map geocaches</string>
     <string name="error_enable_livemap_first">Please, enable Live map first.</string>
+    <string name="menu_live_map_download_caches">Import Live map GC</string>
 </resources>

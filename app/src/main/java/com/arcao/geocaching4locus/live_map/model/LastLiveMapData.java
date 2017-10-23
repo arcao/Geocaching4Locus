@@ -5,10 +5,6 @@ import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Location;
 
-/**
- * Created by Arcao on 12.08.2017.
- */
-
 public class LastLiveMapData {
   private static final String VAR_LOC_MAP_CENTER = "1302";
   private static final String VAR_LOC_MAP_BBOX_TOP_LEFT = "1303";
@@ -49,6 +45,12 @@ public class LastLiveMapData {
 
   public boolean isValid() {
     return mapCenterCoordinates != null && mapTopLeftCoordinates != null && mapBottomRightCoordinates != null;
+  }
+
+  public void remove() {
+    mapCenterCoordinates = null;
+    mapTopLeftCoordinates = null;
+    mapBottomRightCoordinates = null;
   }
 
   private Coordinates getCoordinatesFromIntent(Intent intent, String extraName) {

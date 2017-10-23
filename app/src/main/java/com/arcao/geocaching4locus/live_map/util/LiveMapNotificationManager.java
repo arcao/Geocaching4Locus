@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.dashboard.DashboardActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
+import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.live_map.task.LiveMapDownloadTask;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
@@ -213,7 +214,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		} else {
 			nb.setSubText(mContext.getText(R.string.menu_live_map));
 			nb.setContentTitle(state);
-
 		}
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -259,6 +259,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_enabled), Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(mContext, mContext.getText(R.string.toast_live_map_disabled), Toast.LENGTH_LONG).show();
+			LastLiveMapData.getInstance().remove();
 		}
 
 		try {

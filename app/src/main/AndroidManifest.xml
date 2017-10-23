@@ -104,7 +104,7 @@
                 <data android:scheme="https" android:host="*.geocaching.com" android:pathPrefix="/geocache/GC" />
             </intent-filter>
         </activity>
-        <activity android:name=".dashboard.DashboardActivity" android:theme="@style/AppTheme.Dialog.NoTitle" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+        <activity android:name=".dashboard.DashboardActivity" android:theme="@style/AppTheme.Dashboard" android:exported="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

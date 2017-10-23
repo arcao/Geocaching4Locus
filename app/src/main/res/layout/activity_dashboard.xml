@@ -1,81 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              tools:context=".dashboard.DashboardActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".dashboard.DashboardActivity"
+    tools:layout_editor_absoluteX="16dp"
+    tools:layout_editor_absoluteY="16dp">
 
-    <include layout="@layout/toolbar" />
-
-    <LinearLayout
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_search_nearest"
+        style="@style/Widget.AppTheme.DashboardButton"
+        layout_constraintHorizontal_chainStyle="spread"
+        android:layout_width="0dp"
+        android:layout_marginTop="8dp"
+        android:drawableTop="@drawable/ic_action_search"
+        android:text="@string/menu_nearest"
+        app:layout_constraintEnd_toStartOf="@+id/db_import_gc"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_live_map"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_live_map"
-                android:text="@string/menu_live_map"
-                app:toggleable="true"/>
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_import_gc"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
+        android:drawableTop="@drawable/ic_action_gc_input"
+        android:text="@string/menu_import_from_gc"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
+        app:layout_constraintEnd_toStartOf="@+id/db_import_bookmark"
+        app:layout_constraintTop_toTopOf="@+id/db_search_nearest" />
 
-            <ImageView style="@style/Widget.AppTheme.Separator.Vertical.Dark"
-                tools:ignore="ContentDescription" />
 
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_import_gc"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_gc_input"
-                android:text="@string/menu_import_from_gc" />
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_import_bookmark"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
+        android:drawableTop="@drawable/ic_action_import_bookmark"
+        android:text="@string/menu_import_bookmarks"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/db_import_gc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/db_search_nearest" />
 
-            <ImageView style="@style/Widget.AppTheme.Separator.Vertical.Dark"
-                tools:ignore="ContentDescription" />
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_live_map"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
+        android:drawableTop="@drawable/ic_action_live_map"
+        android:text="@string/menu_live_map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/db_search_nearest"
+        app:layout_constraintTop_toBottomOf="@+id/db_search_nearest"
+        app:toggleable="true" />
 
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_search_nearest"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_search"
-                android:text="@string/menu_nearest" />
-        </LinearLayout>
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_live_map_download_caches"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
+        android:drawableTop="@drawable/ic_action_live_map_download_caches"
+        android:text="@string/menu_live_map_download_caches"
+        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
+        app:layout_constraintEnd_toStartOf="@+id/db_import_bookmark"
+        app:layout_constraintTop_toBottomOf="@+id/db_search_nearest" />
 
-        <ImageView style="@style/Widget.AppTheme.Separator.Horizontal.Dark"
-            tools:ignore="ContentDescription" />
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_preferences"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
+        android:drawableTop="@drawable/ic_action_settings"
+        android:text="@string/menu_settings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/db_live_map_download_caches"
+        app:layout_constraintTop_toBottomOf="@+id/db_live_map" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+    <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
+        android:id="@+id/db_manual"
+        style="@style/Widget.AppTheme.DashboardButton"
+        android:drawableTop="@drawable/ic_action_help"
+        android:text="@string/menu_manual"
+        app:layout_constraintStart_toStartOf="@+id/db_live_map_download_caches"
+        app:layout_constraintEnd_toEndOf="@+id/db_live_map_download_caches"
+        app:layout_constraintTop_toTopOf="@+id/db_preferences" />
 
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_import_bookmark"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_import_bookmark"
-                android:text="@string/menu_import_bookmarks" />
-
-            <ImageView style="@style/Widget.AppTheme.Separator.Vertical.Dark"
-                tools:ignore="ContentDescription" />
-
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_preferences"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_settings"
-                android:text="@string/menu_settings" />
-
-            <ImageView style="@style/Widget.AppTheme.Separator.Vertical.Dark"
-                tools:ignore="ContentDescription" />
-
-            <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
-                android:id="@+id/db_manual"
-                style="@style/Widget.AppTheme.DashboardButton"
-                android:drawableTop="@drawable/ic_action_help"
-                android:text="@string/menu_manual" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

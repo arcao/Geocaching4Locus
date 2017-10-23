@@ -107,6 +107,7 @@ android {
         debug {
             ext.enableCrashlytics = false
             versionNameSuffix '-dev'
+            crunchPngs false
         }
         release {
             versionNameSuffix ''
@@ -114,6 +115,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
+            crunchPngs false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                 './proguard-rules/proguard-autovalue.pro',
                 './proguard-rules/proguard-crashlytics-2.pro',

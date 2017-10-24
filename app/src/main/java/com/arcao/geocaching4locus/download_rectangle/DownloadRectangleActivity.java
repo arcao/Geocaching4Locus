@@ -14,8 +14,6 @@ import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErro
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 
-import locus.api.objects.extra.Location;
-
 public class DownloadRectangleActivity extends AbstractActionBarActivity implements
     DownloadRectangleDialogFragment.DialogListener {
   private static final int REQUEST_SIGN_ON = 1;
@@ -43,7 +41,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
 
   private void showDownloadDialog() {
     if (!LastLiveMapData.getInstance().isValid()) {
-      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_enable_livemap_first).build());
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_enable_live_map_first).build());
       finish();
       return;
     }

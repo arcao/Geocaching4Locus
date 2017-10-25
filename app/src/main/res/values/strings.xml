@@ -113,9 +113,9 @@
     <string name="launcher_update_geocaches">Update caches</string>
     <string name="launcher_import_from_gc">Import from GC code</string>
     
-    <string name="title_basic_member_warning" comment="Title of Basic member error/warnig dialog"
+    <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog"
         >Basic member access</string>
-    <string name="title_premium_member_warning" comment="Title of Premium member error/warnig dialog"
+    <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog"
         >Premium member access</string>
     <string name="error_basic_member_full_geocaching_quota_exceeded"  comment="Error dialog message when basic member reach limit of full geocache details per day. The '%1$s' is replaced with count of full detail geocache limit (eg. '3 geocaches'), '%2$s' with period length (eg. '24 hours'), '%3$s' with time when quota will be fulfilled/reset (eg. '09:10')."
         >You reached the limit for downloading full details of <b>%1$s per %2$s period</b>. Your daily quota will be reset at %3$s.<br/>

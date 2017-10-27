@@ -63,7 +63,7 @@ Other links
 Licenses
 ========
 Source code
-***********
+-----------
 
     Copyright (C) 2012 Martin Sloup, arcao.com
 
@@ -81,5 +81,5 @@ Source code
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Graphics
-********
+--------
 * Some icon graphics are made by [Freepik](http://www.freepik.com/) from www.flaticon.com

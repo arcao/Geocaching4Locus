@@ -11,107 +11,178 @@
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network."
         >Acquiring location from wireless network…</string>
     
-    <string name="action_settings">Settings</string>
-    <string name="error_coordinates_format">Wrong coordinates format!</string>
-    <string name="title_coordinates">Coordinates</string>
+    <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings."
+        >Settings</string>
+    <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button."
+        >Wrong coordinates format!</string>
+    <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen."
+        >Coordinates</string>
     
-    <string name="pref_distance">Distance</string>
-    <string name="pref_distance_summary_km">Distance in km</string>
-    <string name="pref_distance_summary_miles">Distance in miles</string>
-    <string name="pref_imperial_units">Imperial units</string>
-    <string name="pref_imperial_units_summary">Use miles instead of kilometers</string>
+    <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings."
+        >Distance</string>
+    <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked."
+        >Distance in km</string>
+    <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked."
+        >Distance in miles</string>
+    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
+        >Imperial units</string>
+    <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
+        >Use miles instead of kilometers</string>
     
-    <string name="error_no_account">You are not signed in. Please sign in first in account settings.</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in."
+        >You are not signed in. Please sign in first in account settings.</string>
 
     <string name="button_ok" comment="Dialog button for OK action."
         >OK</string>
     
-    <string name="error_old_locus_map">Your installed version of Locus Map is too old. Geocaching4Locus require version %s or greater to work properly.</string>
+    <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']"
+        >Your installed version of Locus Map is too old. Geocaching4Locus require version %s or greater to work properly.</string>
     
     <string name="button_cancel" comment="Dialog button for cancel action."
         >Cancel</string>
     
-    <string name="pref_show_found">Show found</string>
-    <string name="pref_show_found_summary">Show found caches</string>
-    <string name="pref_show_own">Show own hidden</string>
-    <string name="pref_show_own_summary">Show own caches (hidden by you)</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_deselect_all">Deselect all</string>
+    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings."
+        >Show found</string>
+    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings."
+        >Show found caches</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
+        >Show own hidden</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
+        >Show own caches (hidden by you)</string>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter."
+        >Select all</string>
+    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter."
+        >Deselect all</string>
     
-    <string name="progress_update_geocache">Updating cache…</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache."
+        >Updating cache…</string>
     
-    <string name="pref_logs_count">Count of logs</string>
-    <string name="pref_logs_count_summary">Count of logs to download with cache</string>
-    <string name="button_gps">GPS</string>
-    <string name="pref_show_disabled">Show disabled</string>
-    <string name="pref_show_disabled_summary">Show temporarily disabled caches</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
+        >Count of logs</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
+        >Count of logs to download with cache</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen."
+        >GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings."
+        >Show disabled</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings."
+        >Show temporarily disabled caches</string>
     
-    <string name="progress_download_geocache">Downloading cache…</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map."
+        >Downloading cache…</string>
 
-    <string name="pref_version">Version</string>
-    <string name="pref_website">Website, forum, etc.</string>
-    <string name="pref_donate_paypal">Donate via Paypal</string>
-    <string name="pref_donate_paypal_summary">Support the future development…</string>
-    <string name="pref_donate_paypal_choose_currency">Choose your currency</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings."
+        >Version</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings."
+        >Website, forum, etc.</string>
+    <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
+        >Donate via Paypal</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
+        >Support the future development…</string>
+    <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings."
+        >Choose your currency</string>
     
-    <string name="pref_geocache_type">Cache types</string>
-    <string name="pref_difficulty">Difficulty</string>
-    <string name="pref_terrain">Terrain</string>
-    <string name="pref_difficulty_min">Min. difficulty</string>
-    <string name="pref_difficulty_max">Max. difficulty</string>
-    <string name="pref_terrain_min">Min. terrain</string>
-    <string name="pref_terrain_max">Max. terrain</string>
+    <string name="pref_geocache_type" comment=""
+        >Cache types</string>
+    <string name="pref_difficulty" comment=""
+        >Difficulty</string>
+    <string name="pref_terrain" comment=""
+        >Terrain</string>
+    <string name="pref_difficulty_min" comment=""
+        >Min. difficulty</string>
+    <string name="pref_difficulty_max" comment=""
+        >Max. difficulty</string>
+    <string name="pref_terrain_min" comment=""
+        >Min. terrain</string>
+    <string name="pref_terrain_max" comment=""
+        >Max. terrain</string>
     
-    <string name="pref_download_basic">Basic info only</string>
-    <string name="pref_download_basic_summary">Download only basic information about cache</string>
-    <string name="pref_download_on_show">Download rest info on show</string>
-    <string name="pref_download_on_show_summary">Download rest information about cache when the cache content is shown in Locus Map</string>
-    <string-array name="pref_download_on_show_entries">
+    <string name="pref_download_basic" comment=""
+        >Basic info only</string>
+    <string name="pref_download_basic_summary" comment=""
+        >Download only basic information about cache</string>
+    <string name="pref_download_on_show" comment=""
+        >Download rest info on show</string>
+    <string name="pref_download_on_show_summary" comment=""
+        >Download rest information about cache when the cache content is shown in Locus Map</string>
+    <string-array name="pref_download_on_show_entries" comment=""
+        >
         <item>once</item>
         <item>every</item>
         <item>never</item>
     </string-array>
     
-    <string name="menu_live_map">Live map</string>
-    <string name="menu_nearest">Nearest</string>
-    <string name="menu_manual">Manual</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_live_map" comment=""
+        >Live map</string>
+    <string name="menu_nearest" comment=""
+        >Nearest</string>
+    <string name="menu_manual" comment=""
+        >Manual</string>
+    <string name="menu_settings" comment=""
+        >Settings</string>
     
-    <string name="var_user_waypoint_name">User waypoint %1$d</string>
-    <string name="var_final_location_name">Final location</string>
+    <string name="var_user_waypoint_name" comment=""
+        >User waypoint %1$d</string>
+    <string name="var_final_location_name" comment=""
+        >Final location</string>
     
-    <string name="pref_login">Sign in</string>
-    <string name="pref_login_summary">Sign in to Geocaching.com account</string>
-    <string name="pref_logout">Sign out</string>
-    <string name="pref_logout_summary">Signed in as %s</string>
+    <string name="pref_login" comment=""
+        >Sign in</string>
+    <string name="pref_login_summary" comment=""
+        >Sign in to Geocaching.com account</string>
+    <string name="pref_logout" comment=""
+        >Sign out</string>
+    <string name="pref_logout_summary" comment=""
+        >Signed in as %s</string>
 
-    <string name="error_network_unavailable">Network unavailable. Please check your connection.</string>
+    <string name="error_network_unavailable" comment=""
+        >Network unavailable. Please check your connection.</string>
 
-    <string name="progress_update_geocaches">Updating caches…</string>
-    <string name="var_original_coordinates_name">Original coordinates</string>
-    <string name="pref_container_size">Container size</string>
+    <string name="progress_update_geocaches" comment=""
+        >Updating caches…</string>
+    <string name="var_original_coordinates_name" comment=""
+        >Original coordinates</string>
+    <string name="pref_container_size" comment=""
+        >Container size</string>
 
-    <string name="toast_live_map_enabled">Live map enabled. Now move with map to see caches.</string>
-    <string name="toast_live_map_disabled">Live map disabled.</string>
-    <string name="error_live_map_periodic_updates">You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
-    <string name="error_location_not_allowed">No location service allowed</string>
-    <string name="button_settings">Settings</string>
+    <string name="toast_live_map_enabled" comment=""
+        >Live map enabled. Now move with map to see caches.</string>
+    <string name="toast_live_map_disabled" comment=""
+        >Live map disabled.</string>
+    <string name="error_live_map_periodic_updates" comment=""
+        >You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
+    <string name="error_location_not_allowed" comment=""
+        >No location service allowed</string>
+    <string name="button_settings" comment=""
+        >Settings</string>
     
-    <string name="menu_import_from_gc">Import GC</string>
-    <string name="title_import_from_gc">Import from GC code</string>
-    <string name="error_gc_code_invalid">GC code is not valid.</string>
+    <string name="menu_import_from_gc" comment=""
+        >Import GC</string>
+    <string name="title_import_from_gc" comment=""
+        >Import from GC code</string>
+    <string name="error_gc_code_invalid" comment=""
+        >GC code is not valid.</string>
 
-    <plurals name="plural_error_geocache_not_found">
-        <item quantity="one">Cache %s was not found.</item>
-        <item quantity="other">Caches %s were not found.</item>
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Cache %s was not found.</item>
+        <item quantity="other" comment=""
+        >Caches %s were not found.</item>
     </plurals>
 
-    <string name="title_geocache_count">Count of caches</string>
-    <string name="launcher_nearest_geocaches">Nearest caches</string>
-    <string name="launcher_import_geocache">Import cache to Locus Map</string>
-    <string name="launcher_update_geocache">Update cache</string>
-    <string name="launcher_update_geocaches">Update caches</string>
-    <string name="launcher_import_from_gc">Import from GC code</string>
+    <string name="title_geocache_count" comment=""
+        >Count of caches</string>
+    <string name="launcher_nearest_geocaches" comment=""
+        >Nearest caches</string>
+    <string name="launcher_import_geocache" comment=""
+        >Import cache to Locus Map</string>
+    <string name="launcher_update_geocache" comment=""
+        >Update cache</string>
+    <string name="launcher_update_geocaches" comment=""
+        >Update caches</string>
+    <string name="launcher_import_from_gc" comment=""
+        >Import from GC code</string>
     
     <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog"
         >Basic member access</string>
@@ -183,8 +254,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Download logs</string>
 
-    <string name="pref_download_logs_update_geocache">Download logs update cache</string>
-    <string name="pref_download_logs_update_geocache_summary"
+    <string name="pref_download_logs_update_geocache" comment=""
+        >Download logs update cache</string>
+    <string name="pref_download_logs_update_geocache_summary" comment=""
         >Action “Download logs” also update geocache data</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Step size for Count of caches</string>

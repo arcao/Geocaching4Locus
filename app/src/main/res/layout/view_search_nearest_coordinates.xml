@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             tools:showIn="@layout/activity_search_nearest">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/activity_search_nearest"
+    >
 
     <TextView
         android:id="@+id/lbl_coordinates"
         style="@style/Widget.AppTheme.Header"
-        android:layout_width="352dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/title_coordinates"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/latitude"
@@ -23,42 +28,40 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toStartOf="@+id/gps"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_coordinates"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_coordinates"/>
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
 
     <Button
         android:id="@+id/gps"
         style="@style/Widget.AppTheme.Button"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:minHeight="0dp"
         android:text="@string/button_gps"
-        app:layout_constraintBottom_toBottomOf="@+id/latitude"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/latitude"
-        app:layout_constraintTop_toTopOf="@+id/latitude"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/latitude"
+        android:layout_marginStart="8dp"
+        />
 
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/longitude"
         style="@style/Widget.AppTheme.EditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:inputType="textNoSuggestions"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gps"
-        app:layout_constraintStart_toStartOf="@+id/latitude"
-        app:layout_constraintTop_toBottomOf="@+id/gps"/>
+        app:layout_constraintTop_toBottomOf="@+id/gps"
+        />
 
 
 </android.support.constraint.ConstraintLayout>

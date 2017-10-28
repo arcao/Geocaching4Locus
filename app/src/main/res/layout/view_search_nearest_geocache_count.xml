@@ -1,32 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:showIn="@layout/activity_search_nearest">
+    tools:showIn="@layout/activity_search_nearest"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/Widget.AppTheme.Header"
-        android:text="@string/title_geocache_count" />
+        android:text="@string/title_geocache_count"
+        android:id="@+id/lbl_count_of_caches"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView
+        android:id="@+id/counter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppTheme.SpinnerTextView"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_count_of_caches"
+        app:layout_constraintEnd_toStartOf="@+id/filter"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="10"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        />
 
-        <com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView
-            android:id="@+id/counter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.AppTheme.SpinnerTextView"/>
+    <Button
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppTheme.Button"
+        android:text="@string/button_filter"
+        app:layout_constraintStart_toEndOf="@+id/counter"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/counter"
+        />
 
-        <Button
-            android:id="@+id/filter"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:minHeight="0dp"
-            style="@style/Widget.AppTheme.Button"
-            android:text="@string/button_filter" />
-    </LinearLayout>
-</merge>
+</android.support.constraint.ConstraintLayout>

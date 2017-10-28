@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".search_nearest.SearchNearestActivity"
     android:orientation="vertical"
-    tools:context=".search_nearest.SearchNearestActivity">
-
-    <include layout="@layout/toolbar" />
-
-    <FrameLayout
+    >
+    <include
+        layout="@layout/toolbar"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
+        android:id="@+id/toolbar"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="false"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="@dimen/fab_outer_height">
-
-                <include layout="@layout/view_search_nearest_coordinates" />
-
-                <include layout="@layout/view_search_nearest_geocache_count" />
-
-            </LinearLayout>
-        </ScrollView>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:src="@drawable/ic_action_download"
-            app:elevation="4dp" />
-    </FrameLayout>
+            >
+            <include
+                layout="@layout/view_search_nearest_coordinates"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/inc_coordinates"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <include
+                layout="@layout/view_search_nearest_geocache_count"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/inc_geocache_count"
+                app:layout_constraintTop_toBottomOf="@+id/inc_coordinates"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_download"
+                app:elevation="4dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
 </LinearLayout>
+

@@ -3,14 +3,13 @@ package com.arcao.geocaching4locus.base.constants;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Base64;
-import java.util.regex.Pattern;
 import locus.api.android.utils.LocusUtils;
 
 public interface AppConstants {
-	String OAUTH_CALLBACK_URL = "x-locus://oauth.callback/callback/geocaching";
+	String OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth";
 
-	Uri MANUAL_URI = Uri.parse("http://geocaching4locus.eu/manual/");
-	Uri WEBSITE_URI = Uri.parse("http://geocaching4locus.eu/");
+	Uri MANUAL_URI = Uri.parse("https://geocaching4locus.eu/manual/");
+	Uri WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/");
 	Uri FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus");
 	Uri GPLUS_URI = Uri.parse("https://plus.google.com/+Geocaching4locusEu");
 	Uri GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live");

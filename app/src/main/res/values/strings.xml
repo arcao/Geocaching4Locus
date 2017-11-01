@@ -288,7 +288,7 @@
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
         >Could not find any geocaches that match your search.</string>
     <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
-        >Due to token expiry (after 90 days of inactivity) you have been signed out. Please sign in again.</string>
+        >Due to token expiry (after 90 days) you have been signed out. Please sign in again.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
         >Import bookmarks</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."

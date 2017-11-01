@@ -191,7 +191,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		nb.setWhen(0); // this fix redraw issue while refreshing
 		nb.setLocalOnly(true);
 		nb.setCategory(NotificationCompat.CATEGORY_STATUS);
-		nb.setPriority(NotificationCompat.PRIORITY_MIN);
+		nb.setPriority(NotificationCompat.PRIORITY_LOW);
 
 		CharSequence state;
 		if (isLiveMapEnabled()) {

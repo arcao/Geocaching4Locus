@@ -1,171 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
-    <string name="progress_download_geocaches">Скачивание кэшей…</string>
-    <string name="error_locus_not_found">Приложение Locus Map не найдена, но она требует Geocaching4Locus чтобы работать должным образом. Пожалуйста, установите Locus Map.</string>
-    <string name="error_location_disabled">Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
-    <string name="progress_acquire_gps_location">Местоположение определяется по GPS…</string>
-    <string name="progress_acquire_network_location">Местоположение определяется через беспроводную сеть…</string>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
+        >Скачивание кэшей…</string>
+    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
+        >Приложение Locus Map не найдена, но она требует Geocaching4Locus чтобы работать должным образом. Пожалуйста, установите Locus Map.</string>
+    <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS."
+        >Пожалуйста активируйте беспроводную сеть или GPS в \'Settings\'.</string>
+    <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS."
+        >Местоположение определяется по GPS…</string>
+    <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network."
+        >Местоположение определяется через беспроводную сеть…</string>
     
-    <string name="action_settings">Настройки</string>
-    <string name="error_coordinates_format">Неправильный формат координат!</string>
-    <string name="title_coordinates">Координаты</string>
+    <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings."
+        >Настройки</string>
+    <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button."
+        >Неправильный формат координат!</string>
+    <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen."
+        >Координаты</string>
     
-    <string name="pref_distance">Дистанция</string>
-    <string name="pref_distance_summary_km">Дистанция в км</string>
-    <string name="pref_distance_summary_miles">Дистанция в милях</string>
-    <string name="pref_imperial_units">Британские единицы</string>
-    <string name="pref_imperial_units_summary">Использовать мили вместо километров</string>
+    <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings."
+        >Дистанция</string>
+    <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked."
+        >Дистанция в км</string>
+    <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked."
+        >Дистанция в милях</string>
+    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
+        >Британские единицы</string>
+    <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
+        >Использовать мили вместо километров</string>
     
     
 
-    <string name="button_ok">OK</string>
+    <string name="button_ok" comment="Dialog button for OK action."
+        >OK</string>
     
-    <string name="error_old_locus_map">Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
+    <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']"
+        >Установленная вами версия Locus устарела. Geocaching4Locus необходима версия %s или более новая.</string>
     
-    <string name="button_cancel">Отмена</string>
+    <string name="button_cancel" comment="Dialog button for cancel action."
+        >Отмена</string>
     
-    <string name="pref_show_found">Показать найденное</string>
-    <string name="pref_show_found_summary">Показать найденные кэши</string>
-    <string name="pref_show_own">Показать свои спрятанные</string>
-    <string name="pref_show_own_summary">Показать свои кэши (спрятанные тобой)</string>
-    <string name="menu_select_all">Выбрать всё</string>
-    <string name="menu_deselect_all">Отменить всё выбранное</string>
+    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings."
+        >Показать найденное</string>
+    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings."
+        >Показать найденные кэши</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
+        >Показать свои спрятанные</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
+        >Показать свои кэши (спрятанные тобой)</string>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter."
+        >Выбрать всё</string>
+    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter."
+        >Отменить всё выбранное</string>
     
-    <string name="progress_update_geocache">Обновление кэша…</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache."
+        >Обновление кэша…</string>
     
-    <string name="pref_logs_count">Количество записей</string>
-    <string name="pref_logs_count_summary">Количество записей для скачивания с кэшем</string>
-    <string name="button_gps">GPS</string>
-    <string name="pref_show_disabled">Показать неактивные</string>
-    <string name="pref_show_disabled_summary">Показать временно неактивные кэши</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
+        >Количество записей</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
+        >Количество записей для скачивания с кэшем</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen."
+        >GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings."
+        >Показать неактивные</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings."
+        >Показать временно неактивные кэши</string>
     
-    <string name="progress_import_geocache">Скачивание кэша…</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map."
+        >Скачивание кэша…</string>
+
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings."
+        >Версия</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings."
+        >Сайт, форум, итд.</string>
+    <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
+        >Пожетвовать через Paypal</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
+        >Поддержать дальнейшую разработку</string>
+    <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings."
+        >Выбрать валюту</string>
     
-    <string name="pref_version">Версия</string>
-    <string name="pref_website">Сайт, форум, итд.</string>
-    <string name="pref_donate_paypal">Пожетвовать через Paypal</string>
-    <string name="pref_donate_paypal_summary">Поддержать дальнейшую разработку</string>
-    <string name="pref_donate_paypal_choose_currency">Выбрать валюту</string>
+    <string name="pref_geocache_type" comment=""
+        >Тип кэша</string>
+    <string name="pref_difficulty" comment=""
+        >Сложность</string>
+    <string name="pref_terrain" comment=""
+        >Рельеф</string>
+    <string name="pref_difficulty_min" comment=""
+        >Мин. сложность</string>
+    <string name="pref_difficulty_max" comment=""
+        >Макс. сложность</string>
+    <string name="pref_terrain_min" comment=""
+        >Мин. проходимость</string>
+    <string name="pref_terrain_max" comment=""
+        >Макс. проходимость</string>
     
-    <string name="pref_geocache_type">Тип кэша</string>
-    <string name="pref_difficulty">Сложность</string>
-    <string name="pref_terrain">Рельеф</string>
-    <string name="pref_difficulty_min">Мин. сложность</string>
-    <string name="pref_difficulty_max">Макс. сложность</string>
-    <string name="pref_terrain_min">Мин. проходимость</string>
-    <string name="pref_terrain_max">Макс. проходимость</string>
-    
-    <string name="pref_download_basic">Только основная информация</string>
-    <string name="pref_download_basic_summary">Скачать только основную информацию о кэше</string>
-    <string name="pref_download_on_show">Скачать остальную информацию при показе</string>
-    <string name="pref_download_on_show_summary">Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
-    <string-array name="pref_download_on_show_entries">
+    <string name="pref_download_basic" comment=""
+        >Только основная информация</string>
+    <string name="pref_download_basic_summary" comment=""
+        >Скачать только основную информацию о кэше</string>
+    <string name="pref_download_on_show" comment=""
+        >Скачать остальную информацию при показе</string>
+    <string name="pref_download_on_show_summary" comment=""
+        >Скачать остальную информацию о кэше когда содержание кэша показано в Locus</string>
+    <string-array name="pref_download_on_show_entries" comment=""
+        >
         <item>один раз</item>
         <item>каждый раз</item>
         <item>никогда</item>
     </string-array>
     
-    <string name="menu_live_map">Live карта</string>
-    <string name="menu_nearest">Ближайшие</string>
-    <string name="menu_manual">Руководство</string>
+    <string name="menu_live_map" comment=""
+        >Live карта</string>
+    <string name="menu_nearest" comment=""
+        >Ближайшие</string>
+    <string name="menu_manual" comment=""
+        >Руководство</string>
     
     
-    <string name="var_user_waypoint_name">Точка нахождения пользователя %1$d</string>
-    <string name="var_final_location_name">Точка назначения</string>
+    <string name="var_user_waypoint_name" comment=""
+        >Точка нахождения пользователя %1$d</string>
+    <string name="var_final_location_name" comment=""
+        >Точка назначения</string>
     
-    <string name="pref_login">Логин</string>
-    <string name="pref_login_summary">Зайти на аккаунт Geocaching.com</string>
-    <string name="pref_logout">Выйти</string>
-    <string name="pref_logout_summary">Залогинен как %s</string>
+    <string name="pref_login" comment=""
+        >Логин</string>
+    <string name="pref_login_summary" comment=""
+        >Зайти на аккаунт Geocaching.com</string>
+    <string name="pref_logout" comment=""
+        >Выйти</string>
+    <string name="pref_logout_summary" comment=""
+        >Залогинен как %s</string>
 
-    <string name="error_network_unavailable">Сеть недоступна. Проверьте пожалуйста подключение.</string>
+    <string name="error_network_unavailable" comment=""
+        >Сеть недоступна. Проверьте пожалуйста подключение.</string>
 
-    <string name="progress_update_geocaches">Кэш обновляется…</string>
-    <string name="var_original_coordinates_name">Оригинальные координаты</string>
-    <string name="pref_container_size">Размер контейнера</string>
+    <string name="progress_update_geocaches" comment=""
+        >Кэш обновляется…</string>
+    <string name="var_original_coordinates_name" comment=""
+        >Оригинальные координаты</string>
+    <string name="pref_container_size" comment=""
+        >Размер контейнера</string>
 
     
     
-    <string name="error_live_map_periodic_updates">Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
-    <string name="error_location_not_allowed">Сервис локации недоступен</string>
-    <string name="button_settings">Настройки</string>
+    <string name="error_live_map_periodic_updates" comment=""
+        >Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
+    <string name="error_location_not_allowed" comment=""
+        >Сервис локации недоступен</string>
+    <string name="button_settings" comment=""
+        >Настройки</string>
     
-    <string name="menu_import_from_gc">Импортировать GC</string>
-    <string name="title_import_from_gc">Импортировать из GC кода</string>
-    <string name="error_gc_code_invalid">Неверный GC код.</string>
-    <string name="error_geocache_not_found">Кэш %s не найден</string>
+    <string name="menu_import_from_gc" comment=""
+        >Импортировать GC</string>
+    <string name="title_import_from_gc" comment=""
+        >Импортировать из GC кода</string>
+    <string name="error_gc_code_invalid" comment=""
+        >Неверный GC код.</string>
+
     
-    <string name="title_geocache_count">Количество кэшей</string>
-    <string name="launcher_nearest_geocaches">Ближайшие кэши</string>
-    <string name="launcher_import_geocache">Импортировать кэши в Locus</string>
-    <string name="launcher_update_geocache">Обновить кэш</string>
-    <string name="launcher_update_geocaches">Обновить кэши</string>
-    <string name="launcher_import_from_gc">Импортировать из GC кода</string>
+
+    <string name="title_geocache_count" comment=""
+        >Количество кэшей</string>
+    <string name="launcher_nearest_geocaches" comment=""
+        >Ближайшие кэши</string>
+    <string name="launcher_import_geocache" comment=""
+        >Импортировать кэши в Locus</string>
+    <string name="launcher_update_geocache" comment=""
+        >Обновить кэш</string>
+    <string name="launcher_update_geocaches" comment=""
+        >Обновить кэши</string>
+    <string name="launcher_import_from_gc" comment=""
+        >Импортировать из GC кода</string>
     
-    <string name="title_basic_member_warning">Доступ базового пользователя</string>
-    <string name="title_premium_member_warning">Доступ премиум пользователя</string>
-    <string name="error_basic_member_full_geocaching_quota_exceeded">Ви досягнули обмеження для завантаження повної інформації <b>%1$s за %2$s </b>. Ваша щоденна квота буде обнулена о %3$s.<br/>
+    <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog"
+        >Доступ базового пользователя</string>
+    <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog"
+        >Доступ премиум пользователя</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded"  comment="Error dialog message when basic member reach limit of full geocache details per day. The '%1$s' is replaced with count of full detail geocache limit (eg. '3 geocaches'), '%2$s' with period length (eg. '24 hours'), '%3$s' with time when quota will be fulfilled/reset (eg. '09:10')."
+        >Ви досягнули обмеження для завантаження повної інформації <b>%1$s за %2$s </b>. Ваша щоденна квота буде обнулена о %3$s.<br/>
 <br/>
 <i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. </i></string>
-    <string name="error_premium_member_full_geocaching_quota_exceeded">Вы достигли ограничения для загрузки полной информации <b>6000 кэшей за 24 часа</b>.  Ваша ежедневная квота будет обнулена на %3$s.</string>
-    <string name="title_method_quota_exceeded">Эй, помедленнее!</string>
-    <string name="error_method_quota_exceeded">Вы достигли максимального количества действий/звонков в минуту.</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10')."
+        >Вы достигли ограничения для загрузки полной информации <b>6000 кэшей за 24 часа</b>.  Ваша ежедневная квота будет обнулена на %3$s.</string>
+    <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call."
+        >Эй, помедленнее!</string>
+    <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call."
+        >Вы достигли максимального количества действий/звонков в минуту.</string>
 
-    <plurals name="plurals_geocache">
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
         <item quantity="one">%d кэш</item>
         <item quantity="few">%d кэши</item>
         <item quantity="other">%d кэши</item>
     </plurals>
     
-    <plurals name="plurals_hour">
+    <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d час</item>
         <item quantity="few">%d часа</item>
         <item quantity="other">%d часов</item>
     </plurals>
     
-    <plurals name="plurals_minute">
+    <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
         <item quantity="one">%d минута</item>
         <item quantity="few">%d минуты</item>
         <item quantity="other">%d минут</item>
     </plurals>
     
-    <string name="pref_geocaching_live">При поддержке Geocaching Live</string>
-    <string name="pref_geocaching_live_message">Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации …</string>
+    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API."
+        >При поддержке Geocaching Live</string>
+    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings."
+        >Это дополнение использует Geocaching Live для получения информации о Тайниках. Нажмите здесь для получения дополнительной информации …</string>
     
-    <string name="error_invalid_api_response">Geocaching Live возвращает неверный ответ:<br/>%s</string>
+    <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response."
+        >Geocaching Live возвращает неверный ответ:<br/>%s</string>
 
     
-    <string name="notify_live_map_message_enabled">Жива мапа увімкнена.</string>
-    <string name="notify_live_map_message_disabled">Жива мапа вимкнена.</string>
-    <string name="notify_live_map_message_downloading">Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled."
+        >Жива мапа увімкнена.</string>
+    <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled."
+        >Жива мапа вимкнена.</string>
+    <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char."
+        >Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
     
     
-    <string name="notify_live_map_action_settings">Настройки</string>
-    <string name="error_live_map">Жива мапа Geocaching4Locus: %s</string>
-    <string name="pref_disabled_notification">Уведомление об отключении</string>
-    <string name="pref_disabled_notification_summary">Показывать уведомление, когда Живая карта отключена. Это работает, только если в Locus разрешены периодические обновления и Locus запущен.</string>
-    <string name="pref_geocache_type_all">Все</string>
-    <string name="button_filter">Фильтр</string>
-    <string name="progress_download_logs">Загрузка логов…</string>
-    <string name="launcher_download_logs">Загрузить логи</string>
-
-    <string name="pref_download_logs_update_geocache">Загрузить логи обновляет кэш</string>
-    <string name="pref_download_logs_update_geocache_summary">Действие "Загрузить логи" Также обновлять данные кэша</string>
-    <string name="pref_step_geocaching_count">Размер шага для количество кэшей</string>
-    <string name="pref_step_geocaching_count_summary">Изменить размер шага для количество кэшей выбрать диалог</string>
-    <string name="error_premium_filter">Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
-
-    <string name="pref_account" comment="Title of category preference for Account settings."
-        >Учетная запись</string>
-    <string name="pref_filter" comment="Title of category preference for Filter settings."
+    <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings."
+        >Настройки</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message."
+        >Жива мапа Geocaching4Locus: %s</string>
+    <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
+        >Уведомление об отключении</string>
+    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
+        >Показывать уведомление, когда Живая карта отключена. Это работает, только если в Locus разрешены периодические обновления и Locus запущен.</string>
+    <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected."
+        >Все</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings."
         >Фильтр</string>
-    <string name="pref_live_map" comment="Title of category preference for Live Map settings."
+    <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs."
+        >Загрузка логов…</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
+        >Загрузить логи</string>
+
+    <string name="pref_download_logs_update_geocache" comment=""
+        >Загрузить логи обновляет кэш</string>
+    <string name="pref_download_logs_update_geocache_summary" comment=""
+        >Действие "Загрузить логи" Также обновлять данные кэша</string>
+    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
+        >Размер шага для количество кэшей</string>
+    <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings."
+        >Изменить размер шага для количество кэшей выбрать диалог</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side."
+        >Некоторые фильтры требуют наличия премиум аккаунта, которого у вас нет.  Сейчас приложение переключено в режим для простых пользователей. Пожалуйста, попробуйте еще раз.</string>
+
+    <string name="pref_account" comment="Title of preference category for Account settings."
+        >Учетная запись</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings."
+        >Фильтр</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings."
         >Живая карта</string>
-    <string name="pref_downloading" comment="Title of category preference for Downloading settings."
+    <string name="pref_downloading" comment="Title of preference category for Downloading settings."
         >Загрузка</string>
-    <string name="pref_advanced" comment="Title of category preference for Advanced settings."
+    <string name="pref_advanced" comment="Title of preference category for Advanced settings."
         >Дополнительно</string>
-    <string name="pref_about" comment="Title of category preference for About settings."
+    <string name="pref_about" comment="Title of preference category for About settings."
         >О программе</string>
     <string name="title_login" comment="Window title for sign in task."
         >Логин</string>
@@ -177,8 +274,7 @@
         >Отправить отзыв</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
         >Не удалось найти кэшей, соответствующих параметрам поиска.</string>
-    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
-        >Благодаря большому бездействия (более 90 дней), вы вышли из системы. Пожалуйста, войдите в систему снова.</string>
+    
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
         >Импорт закладок</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
@@ -197,10 +293,13 @@
         >Спасибо за отправку ошибку.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
         >Вы хотите продолжить с частично полученных данных в Locus Map?</string>
-    <string name="button_yes" comment="Button for Yes action."
+    <string name="button_yes" comment="Dialog button for Yes action."
         >Да</string>
-    <string name="button_no" comment="Button for No action."
+    <string name="button_no" comment="Dialog button for No action."
         >Нет</string>
+    
+    
+    
     
     
     

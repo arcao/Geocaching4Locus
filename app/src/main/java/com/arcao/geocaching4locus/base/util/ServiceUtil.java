@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
 import android.util.SparseArray;
+import com.crashlytics.android.Crashlytics;
 import timber.log.Timber;
 
 public final class ServiceUtil {
@@ -55,9 +56,9 @@ public final class ServiceUtil {
       String tag = "wake:" + comp.flattenToShortString();
       PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, tag);
       wl.setReferenceCounted(false);
-      wl.acquire(60 * 1000);
+      wl.acquire(300 * 1000);
       sActiveWakeLocks.put(id, new WakeLockContainer(tag, wl));
-      Timber.w("Created WakeLock #%d", id);
+      Timber.w("Created WakeLock #%d for tag %s", id, tag);
       return comp;
     }
   }
@@ -98,6 +99,10 @@ public final class ServiceUtil {
   public static void releaseAllWakeLocks(ComponentName component) {
     String tag = "wake:" + component.flattenToShortString();
 
+    Timber.w("Releasing all WakeLocks for: %s", component.flattenToShortString());
+
+    int releasedCounter = 0;
+
     synchronized (sActiveWakeLocks) {
       for (int i = 0; i < sActiveWakeLocks.size(); i++) {
         int id = sActiveWakeLocks.keyAt(i);
@@ -108,9 +113,15 @@ public final class ServiceUtil {
 
         container.wakeLock.release();
         sActiveWakeLocks.remove(id);
-        Timber.w("Released WakeLock #%d", id);
+        Timber.e("Released forgotten WakeLock #%d", id);
+        releasedCounter++;
       }
+
       Timber.w("Remaining WakeLocks: %d", sActiveWakeLocks.size());
+    }
+
+    if (releasedCounter > 0) {
+      Crashlytics.logException(new IllegalStateException("Not all WakeLocks are released for tag " + tag));
     }
   }
 

@@ -81,7 +81,7 @@ public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment i
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new MaterialDialog.Builder(getActivity())
-						.content(R.string.progress_import_geocache)
+						.content(R.string.progress_download_geocache)
 						.negativeText(R.string.button_cancel)
 						.progress(true, 0)
 						.build();

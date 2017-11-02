@@ -110,7 +110,7 @@ public class LiveMapDownloadTask extends Thread {
 
     CLEAN_MAP_EXECUTOR.execute(() -> {
       try {
-        for (int i = 1; i < LIVEMAP_REQUESTS; i++) {
+        for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
           PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
           ActionDisplayPoints.sendPackSilent(appContext, pw, false);
         }

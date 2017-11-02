@@ -20,6 +20,9 @@
     public <init>(android.content.Context,android.util.AttributeSet,int);
 }
 
+# Keep setting fragments
+-keep class com.arcao.geocaching4locus.settings.fragment.** { *; }
+
 -renamesourcefileattribute SourceFile
 -keepattributes SourceFile,LineNumberTable #needed
 -keepattributes Signature # Needed by google-api-client #to make XStream work with obfuscation?

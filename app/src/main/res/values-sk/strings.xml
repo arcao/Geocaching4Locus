@@ -29,7 +29,8 @@
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
         >Použitie míľ namiesto kilometrov</string>
     
-    
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in."
+        >Nie ste prihlásený. Prihláste sa prosím najprv v nastavení účtu.</string>
 
     <string name="button_ok" comment="Dialog button for OK action."
         >OK</string>
@@ -162,7 +163,13 @@
     <string name="error_gc_code_invalid" comment=""
         >GC kód nie je správny.</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Skrýša %s nebola nájdená.</item>
+        <item quantity="other" comment=""
+        >Skrýše %s sa nenašli.</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
         >Počet skrýš</string>
@@ -280,7 +287,8 @@
         >Odoslať spätnú väzbu</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
         >Nepodarilo sa nájsť žiadne skrýše zodpovedajúce zadaným parametrom.</string>
-    
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >Dôsledku uplynutia tokenu (po 90 dňoch) ste bol odhlásený. Prosím, prihláste sa znovu.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
         >Importovať záložky</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
@@ -315,13 +323,21 @@
         >Skryť skrýše pri zakázané</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Schovať skrýše aktívne mapy, keď je aktívna mapa zakázaná</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Znedostupniť DNF, NM a NA skrýše</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Označiť skrýši ako nedostupnú, ak obsahuje viac logov typu <i>Nenájdené</i>, <i>Vyžaduje údržbu</i> alebo <i>Vyžaduje archiváciu</i></string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
+        >Koľko posledných záznamov kontrolovať</string>
     
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list."
+        >Sledovať keš</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
+        >Pridať skrýši do obľúbených</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
+        >Importovať skrýše aktívny mapy</string>
+    <string name="error_enable_live_map_first" comment="Error message when user wants to import Live map geocaches, but Live map is disabled."
+        >Prosím, najprv povoliť aktívnu mapu.</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
+        >Importovať GC aktívny mapy</string>
 </resources>

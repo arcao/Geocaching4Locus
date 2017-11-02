@@ -163,7 +163,13 @@
     <string name="error_gc_code_invalid" comment=""
         >Nieprawidłowy kod GC.</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Skrzynka %s nie została znaleziona.</item>
+        <item quantity="other" comment=""
+        >Skrzynki %s nie zostały odnalezione.</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
         >Liczba skrzynek</string>
@@ -281,7 +287,8 @@
         >Wyślij opinię</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
         >Nie znaleziono skrzynek spełniających kryteria wyszukiwania.</string>
-    
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >Z powodu wygaśnięcia tokenu (po 90 dniach) zostałeś wylogowany. Proszę się ponownie zalogować.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
         >Importuj zakładki</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
@@ -327,7 +334,10 @@
         >Obserwuj skrzynkę</string>
     <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
         >Zakładka skrzynki</string>
-    
-    
-    
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
+        >Zaimportuj skrzynki "mapy na żywo"</string>
+    <string name="error_enable_live_map_first" comment="Error message when user wants to import Live map geocaches, but Live map is disabled."
+        >Proszę najpierw włączyć "mapę na żywo".</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
+        >Importuj GC "mapy na żywo"</string>
 </resources>

@@ -324,9 +324,9 @@
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Schovat keše živé mapy, když je živá mapa zakázána</string>
     <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
-        >Disablovat DNF, NM a NA keše</string>
+        >Znedostupnit DNF, NM a NA keše</string>
     <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
-        >Označit keš jako nedostupnou pokud obsahuje více logů typu <i>Nenalezeno</i>, <i>Vyžaduje údržbu</i> nebo <i>Vyžaduje archivaci</i></string>
+        >Označit keš jako nedostupnou, pokud obsahuje více logů typu <i>Nenalezeno</i>, <i>Vyžaduje údržbu</i> nebo <i>Vyžaduje archivaci</i></string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
         >Kolik posledních logů kontrolovat </string>
     

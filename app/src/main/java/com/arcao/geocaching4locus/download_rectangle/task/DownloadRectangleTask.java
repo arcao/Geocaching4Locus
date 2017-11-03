@@ -175,7 +175,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
         cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
       }
 
-      Timber.i("found caches: " + current);
+      Timber.i("found caches: %s", current);
     } catch (Exception e) {
       throw handleException(e, writer, dataFile);
     } finally {

@@ -336,8 +336,7 @@
         >Zakładka skrzynki</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Zaimportuj skrzynki "mapy na żywo"</string>
-    <string name="error_enable_live_map_first" comment="Error message when user wants to import Live map geocaches, but Live map is disabled."
-        >Proszę najpierw włączyć "mapę na żywo".</string>
+    
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importuj GC "mapy na żywo"</string>
 </resources>

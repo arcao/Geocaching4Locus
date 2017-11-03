@@ -336,8 +336,7 @@
         >Plaats bladwijzer op gecocache</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Importeer live map geocaches</string>
-    <string name="error_enable_live_map_first" comment="Error message when user wants to import Live map geocaches, but Live map is disabled."
-        >AUB live map eerst activeren</string>
+    
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importeer live map GC</string>
 </resources>

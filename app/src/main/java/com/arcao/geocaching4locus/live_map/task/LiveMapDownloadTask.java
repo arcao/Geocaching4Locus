@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
 import com.arcao.geocaching.api.GeocachingApiFactory;
@@ -37,12 +38,14 @@ import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.update.UpdateActivity;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
 import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
@@ -50,7 +53,6 @@ import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
-import static com.arcao.geocaching4locus.base.constants.AppConstants.CACHES_PER_REQUEST;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_PER_REQUEST;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
@@ -117,7 +119,7 @@ public class LiveMapDownloadTask extends Thread {
         }
       } catch (Throwable t) {
         t = new LocusMapRuntimeException(t);
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
       }
     });
   }
@@ -161,22 +163,22 @@ public class LiveMapDownloadTask extends Thread {
 
   private void handleTaskException(@NonNull Exception e) {
     if (e instanceof LocusMapRuntimeException) {
-      Timber.e(e, e.getMessage());
+      Timber.e(e);
       notificationManager.showLiveMapError("Locus Map Error: " + e.getMessage());
 
       // disable live map
       preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
     } else if (e instanceof InvalidCredentialsException) {
-      Timber.e(e, e.getMessage());
+      Timber.e(e);
       notificationManager.showLiveMapError(R.string.error_no_account);
 
       // disable live map
       preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
     } else if (e instanceof NetworkException) {
-      Timber.e(e, e.getMessage());
+      Timber.e(e);
       notificationManager.showLiveMapError(R.string.error_network_unavailable);
     } else {
-      Timber.e(e, e.getMessage());
+      Timber.e(e);
     }
   }
 
@@ -196,7 +198,7 @@ public class LiveMapDownloadTask extends Thread {
 
       while (current < LIVEMAP_CACHES_COUNT) {
         int perPage = (LIVEMAP_CACHES_COUNT - current < LIVEMAP_CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current
-            : CACHES_PER_REQUEST;
+            : LIVEMAP_CACHES_PER_REQUEST;
 
         if (!taskQueue.isEmpty()) {
           Timber.d("New task found, skipped downloading next caches ...");
@@ -242,12 +244,12 @@ public class LiveMapDownloadTask extends Thread {
         if (caches.size() != perPage) break;
       }
     } catch (InvalidSessionException e) {
-      Timber.e(e, e.getMessage());
+      Timber.e(e);
       accountManager.invalidateOAuthToken();
 
       throw e;
     } finally {
-      Timber.i("Count of caches sent to Locus: " + current);
+      Timber.i("Count of caches sent to Locus: %s", current);
     }
 
     notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);

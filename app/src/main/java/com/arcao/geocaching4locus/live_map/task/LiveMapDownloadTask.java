@@ -196,7 +196,7 @@ public class LiveMapDownloadTask extends Thread {
       notificationManager.setDownloadingProgress(0, LIVEMAP_CACHES_COUNT);
 
       while (current < LIVEMAP_CACHES_COUNT) {
-        int perPage = (LIVEMAP_CACHES_COUNT - current < CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current
+        int perPage = (LIVEMAP_CACHES_COUNT - current < LIVEMAP_CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current
             : CACHES_PER_REQUEST;
 
         if (!taskQueue.isEmpty()) {

@@ -52,6 +52,7 @@ import timber.log.Timber;
 
 import static com.arcao.geocaching4locus.base.constants.AppConstants.CACHES_PER_REQUEST;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_PER_REQUEST;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_REQUESTS;
@@ -110,7 +111,8 @@ public class LiveMapDownloadTask extends Thread {
 
     CLEAN_MAP_EXECUTOR.execute(() -> {
       try {
-        for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
+        int count = (int) Math.ceil(((double) LIVEMAP_CACHES_COUNT) / LIVEMAP_CACHES_PER_REQUEST);
+        for (int i = 1; i <= count; i++) {
           PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
           ActionDisplayPoints.sendPackSilent(appContext, pw, false);
         }

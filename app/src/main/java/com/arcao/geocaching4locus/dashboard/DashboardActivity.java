@@ -19,7 +19,6 @@ import com.arcao.geocaching4locus.dashboard.widget.DashboardButton;
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity;
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity;
 import com.arcao.geocaching4locus.import_gc.ImportFromGCActivity;
-import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
@@ -76,7 +75,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 			mImportBookmarkButton.setText(R.string.menu_import_bookmarks);
 		}
 
-		mLiveMapDownloadCachesButton.setEnabled(LastLiveMapData.getInstance().isValid());
+		mLiveMapDownloadCachesButton.setEnabled(mLiveMapNotificationManager.isLiveMapEnabled());
 	}
 
 	@Override

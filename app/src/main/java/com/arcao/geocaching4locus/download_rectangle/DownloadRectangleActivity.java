@@ -41,7 +41,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
 
   private void showDownloadDialog() {
     if (!LastLiveMapData.getInstance().isValid()) {
-      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_enable_live_map_first).build());
+      startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_live_map_geocaches_not_visible).build());
       finish();
       return;
     }

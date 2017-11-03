@@ -332,5 +332,5 @@
     <string name="error_enable_live_map_first" comment="Error message when user wants to import Live map geocaches, but Live map is disabled."
         >Bitte schalte zuerst die Live Karte an</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
-        >Importiert Caches mit der Live Karte</string>
+        >Importiert Caches der Live Karte</string>
 </resources>

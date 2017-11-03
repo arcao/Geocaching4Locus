@@ -111,8 +111,7 @@ public class LiveMapDownloadTask extends Thread {
 
     CLEAN_MAP_EXECUTOR.execute(() -> {
       try {
-        int count = (int) Math.ceil(((double) LIVEMAP_CACHES_COUNT) / LIVEMAP_CACHES_PER_REQUEST);
-        for (int i = 1; i <= count; i++) {
+        for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
           PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
           ActionDisplayPoints.sendPackSilent(appContext, pw, false);
         }
@@ -254,7 +253,7 @@ public class LiveMapDownloadTask extends Thread {
     notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);
 
     // HACK we must remove old PackWaypoints from the map
-    for (int i = requests + 1; i < LIVEMAP_REQUESTS; i++) {
+    for (int i = requests + 1; i <= LIVEMAP_REQUESTS; i++) {
       PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
       ActionDisplayPoints.sendPackSilent(context, pw, false);
     }

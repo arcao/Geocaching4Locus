@@ -20,11 +20,11 @@ dependencies {
     }
 
     // Locus API
-    implementation 'com.asamm:locus-api-android:0.2.11'
+    implementation 'com.asamm:locus-api-android:0.2.12'
 
     // Logging API
     implementation 'com.arcao:slf4j-timber:3.0'
-    implementation 'com.jakewharton.timber:timber:4.5.1'
+    implementation 'com.jakewharton.timber:timber:4.6.0'
 
     // Apache commons
     implementation 'org.apache.commons:commons-lang3:3.6'
@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.github.scribejava:scribejava-httpclient-okhttp:4.2.0'
 
     // Material dialogs
-    implementation('com.afollestad.material-dialogs:core:0.9.4.7') {
+    implementation('com.afollestad.material-dialogs:core:0.9.5.0') {
         exclude group: 'com.android.support', module: 'support-v13'
     }
 

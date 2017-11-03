@@ -52,6 +52,7 @@ import locus.api.utils.StoreableWriter;
 import locus.api.utils.Utils;
 import timber.log.Timber;
 
+import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
 import static com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_LOGS;
 import static com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA;
@@ -141,7 +142,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
 
         if (current == 0) {
           cachesToAdd = api.searchForGeocaches(resultQuality, Math.min(cachesPerRequest, count - current), logCount, 0, createFilters(), null);
-          count = api.getLastSearchResultsFound();
+          count = Math.min(api.getLastSearchResultsFound(), LIVEMAP_CACHES_COUNT);
         } else {
           cachesToAdd = api.getMoreGeocaches(resultQuality, current, Math.min(cachesPerRequest, count - current), logCount, 0);
         }

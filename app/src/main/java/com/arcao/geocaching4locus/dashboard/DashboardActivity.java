@@ -67,15 +67,17 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 
 		mLiveMapNotificationManager.addLiveMapStateChangeListener(this);
 
-		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
+		boolean liveMapEnabled = mLiveMapNotificationManager.isLiveMapEnabled();
+
+		mLiveMapButton.setChecked(liveMapEnabled);
+		mLiveMapDownloadCachesButton.setEnabled(liveMapEnabled);
+
 		mImportBookmarkButton.setEnabled(premiumMember);
 		if (!premiumMember) {
 			mImportBookmarkButton.setText(String.format("%s %s", getString(R.string.menu_import_bookmarks), AppConstants.PREMIUM_CHARACTER));
 		} else {
 			mImportBookmarkButton.setText(R.string.menu_import_bookmarks);
 		}
-
-		mLiveMapDownloadCachesButton.setEnabled(mLiveMapNotificationManager.isLiveMapEnabled());
 	}
 
 	@Override
@@ -99,7 +101,10 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
 		}
 
 		mLiveMapNotificationManager.setLiveMapEnabled(!mLiveMapNotificationManager.isLiveMapEnabled());
-		mLiveMapButton.setChecked(mLiveMapNotificationManager.isLiveMapEnabled());
+
+		boolean enabled = mLiveMapNotificationManager.isLiveMapEnabled();
+		mLiveMapButton.setChecked(enabled);
+		mLiveMapDownloadCachesButton.setEnabled(enabled);
 
 		// hide dialog only when was started from Locus
 		if (mCalledFromLocus) {

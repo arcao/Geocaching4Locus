@@ -15,6 +15,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
@@ -192,6 +193,8 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 		nb.setLocalOnly(true);
 		nb.setCategory(NotificationCompat.CATEGORY_STATUS);
 		nb.setPriority(NotificationCompat.PRIORITY_LOW);
+
+		nb.setColor(ContextCompat.getColor(mContext, R.color.primary));
 
 		CharSequence state;
 		if (isLiveMapEnabled()) {

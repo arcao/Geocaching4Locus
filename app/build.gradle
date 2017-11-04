@@ -69,15 +69,19 @@ android {
     }
 
     defaultConfig {
+        archivesBaseName = parent.name
+
         minSdkVersion hasProperty('devBuild') ? 24 : 15
         targetSdkVersion 27
-        versionCode gitVersionCode()
-        archivesBaseName = parent.name
-        buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
-        buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
+        versionCode hasProperty('devBuild') ? 1 : gitVersionCode()
+        buildConfigField 'String', 'GIT_SHA', 'null'
+        buildConfigField 'String', 'BUILD_TIME', 'null'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
         buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
+
+        buildConfigField 'String', 'TEST_USER', 'null'
+        buildConfigField 'String', 'TEST_PASSWORD', 'null'
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
 
@@ -112,10 +116,14 @@ android {
         release {
             versionNameSuffix ''
 
+            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
+            buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
+
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             crunchPngs false
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                 './proguard-rules/proguard-autovalue.pro',
                 './proguard-rules/proguard-crashlytics-2.pro',

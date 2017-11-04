@@ -4,6 +4,19 @@ buildscript {
     ext.isTravis = 'true' == System.getenv('TRAVIS')
     ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
 
+
+    ext.gitSha = {
+        return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
+    }
+
+    ext.gitTimestamp = {
+        return  'git log -n 1 --format=%aI'.execute([], rootDir).text.trim()
+    }
+
+    ext.gitVersionCode = {
+        return 'git rev-list --count HEAD'.execute([], rootDir).text.trim().toInteger()
+    }
+
     // set Geocaching API staging key and secret if production key and secret is not set
     // Note: Staging server is slow and not for production use!!!!
     if (!project.hasProperty('geocachingApiKey')) {
@@ -48,16 +61,4 @@ allprojects {
     //        }
     //    }
     //}
-}
-
-def gitSha() {
-    return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
-}
-
-def gitTimestamp() {
-    return  'git log -n 1 --format=%aI'.execute([], rootDir).text.trim()
-}
-
-def gitVersionCode() {
-    return 'git rev-list --count HEAD'.execute([], rootDir).text.trim().toInteger()
 }

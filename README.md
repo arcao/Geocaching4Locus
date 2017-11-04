@@ -20,7 +20,7 @@ AssembleRelease task will try to sign APK with a private key. To sign it, create
 
 The key name in a keystore must be `geocaching4locus` (or modify application `build.gradle` script). **If the configuration for signing is missing, Gradle build script use ADK debug private key for signing.**
 
-The created APKs will use **Geocaching Live Staging server** (OAuth key and secret are placed in `build.gradle` file). This is OK for a **testing purposes only** (server is really slow and has old database). For production use it must be switched to production server creating `gradle.properties` file in a project root with bellow content:
+The created APKs will use **Geocaching Live Staging server** (OAuth key and secret are placed in `build.gradle` file). This is OK for a **testing purposes only** (server is really slow and has old database). For production use it must be switched to production server creating `gradle.properties` file in a project root (or placing them in your global `gradle.properties`) with bellow content:
 
     geocachingApiKey=<production_api_key>
     geocachingApiSecret=<production_api_secret>
@@ -30,21 +30,26 @@ The `<production_api_key>` and `<production_api_secret>` is provided via [Ground
 
 Dependencies
 ============
+* [Android Support Library](https://developer.android.com/topic/libraries/support-library/)
 * [Apache Commons Lang](http://commons.apache.org/lang/)
 * [Apache Commons IO](http://commons.apache.org/io/)
-* [Butter Knife](https://github.com/JakeWharton/butterknife)
+* [AutoValue - Immutable value-type code generation for Java 1.6+](https://github.com/google/auto/tree/master/value)
+* [AutoValue: Parcel Extension - An Android Parcelable extension for Google's AutoValue](https://github.com/rharter/auto-value-parcel)
+* [Butter Knife - Field and method binding for Android views](http://jakewharton.github.io/butterknife/)
 * [Crashlytics](https://www.crashlytics.com)
-* [Geocaching API for Java](https://github.com/arcao/geocaching-api)
-* [Locus API](http://docs.locusmap.eu/doku.php?id=manual:advanced:locus_api)
-* [Scrible - Simple OAuth library for Java](https://github.com/fernandezpablo85/scribe-java)
+* [Geocaching API for Java - Java implementation of Groundspeak's Geocaching Live API](https://github.com/arcao/geocaching-api)
+* [Locus API - Core library for Android "Locus Map" application](https://github.com/asamm/locus-api)
+* [OkHttp - An HTTP & HTTP/2 client for Android and Java applications](http://square.github.io/okhttp/)
+* [Scrible Java - Simple OAuth library for Java](https://github.com/fernandezpablo85/scribe-java)
 * [SLF4J - Simple Logging Facade for Java](http://www.slf4j.org/)
 * [SLF4J-Timber - SLF4J binding for Jake Wharton's Timber logging library](https://github.com/arcao/slf4j-timber)
 * [Material Dialogs](https://github.com/afollestad/material-dialogs)
-* [Timber](https://github.com/JakeWharton/timber)
+* [Timber - A logger with a small, extensible API which provides utility on top of Android's normal Log class](https://github.com/JakeWharton/timber)
 
 Developed by
 ============
 * [Martin Sloup (Arcao)](http://arcao.com)
+* and [other contributors](https://github.com/arcao/Geocaching4Locus/graphs/contributors)
 
 Other links
 ===========
@@ -55,22 +60,26 @@ Other links
 * [Google+ page](https://plus.google.com/+Geocaching4LocusEu)
 * [Facebook page](https://www.facebook.com/Geocaching4Locus)
 
-License
-=======
+Licenses
+========
+Source code
+-----------
+
     Copyright (C) 2012 Martin Sloup, arcao.com
 
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
-    
-    This program comes with ABSOLUTELY NO WARRANTY!
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Graphics
+--------
+* Some icon graphics are made by [Freepik](http://www.freepik.com/) from www.flaticon.com

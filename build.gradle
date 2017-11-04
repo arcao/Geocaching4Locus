@@ -1,179 +1,63 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
+    ext.isTravis = 'true' == System.getenv('TRAVIS')
+    ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
+
+    // set Geocaching API staging key and secret if production key and secret is not set
+    // Note: Staging server is slow and not for production use!!!!
+    if (!project.hasProperty('geocachingApiKey')) {
+        ext.geocachingApiKey = '9C7552E1-3C04-4D04-A395-230D8931E494'
+    }
+    if (!project.hasProperty('geocachingApiSecret')) {
+        ext.geocachingApiSecret = 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685'
+    }
+    if (!project.hasProperty('geocachingApiStaging')) {
+        ext.geocachingApiStaging = true
+    }
+
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.13.0'
-        classpath 'io.fabric.tools:gradle:1.21.7'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'io.fabric.tools:gradle:1.24.4'
     }
 }
 
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'io.fabric'
+allprojects {
+    apply plugin: 'com.github.ben-manes.versions'
 
-repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url 'http://maven.arcao.com' }
-}
-
-dependencies {
-    // from Android local maven repository
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-
-    // from maven.arcao.com repository
-    compile('com.arcao:geocaching-api:2.0.1') {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        // Not working in Android, slf4j-timber used instead
+    repositories {
+        jcenter()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://maven.arcao.com' }
     }
-    compile 'menion:locus-api-android:1.38.42'
 
-    // from JCenter repository
-    compile 'com.arcao:slf4j-timber:2.1'
-    compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'org.apache.commons:commons-collections4:4.1'
-    compile 'commons-io:commons-io:2.5'
-    compile 'com.github.scribejava:scribejava-core:3.2.0'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt     'com.jakewharton:butterknife-compiler:8.4.0'
-    compile 'com.afollestad.material-dialogs:core:0.9.0.1'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.6.3'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-
-    apt     'com.google.auto.value:auto-value:1.3'
-    provided 'com.google.auto.value:auto-value:1.3'
-    apt     'com.ryanharter.auto.value:auto-value-parcel:0.2.4-rc2'
-    compile 'com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.4-rc2'
-
-    // tests
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    // Set this dependency to use JUnit 4 rules
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    // Set this dependency to build and run Espresso tests
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    // Set this dependency to build and run UI Automator tests
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'com.android.support:support-annotations:23.2.1'
-    }
+    // dependencyUpdates: suggest only released artifacts
+    //dependencyUpdates.resolutionStrategy = {
+    //    componentSelection { rules ->
+    //        rules.all { ComponentSelection selection ->
+    //            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+    //            if (rejected)
+    //                selection.reject('Release candidate')
+    //        }
+    //    }
+    //}
 }
 
 def gitSha() {
-    return 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim();
+    return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
 }
 
-def buildTime() {
-    return new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZ", TimeZone.getTimeZone('UTC'));
+def gitTimestamp() {
+    return  'git log -n 1 --format=%aI'.execute([], rootDir).text.trim()
 }
 
 def gitVersionCode() {
-    return 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim().toInteger();
-}
-
-def isTravis = 'true'.equals(System.getenv('TRAVIS'))
-def preDexEnabled = 'true'.equals(System.getProperty('pre-dex', 'true'))
-
-// set Geocaching API staging key and secret if production key and secret is not set
-// Note: Staging server is slow and not for production use!!!!
-if (!project.hasProperty('geocachingApiKey')) {
-    ext.geocachingApiKey = '9C7552E1-3C04-4D04-A395-230D8931E494'
-}
-if (!project.hasProperty('geocachingApiSecret')) {
-    ext.geocachingApiSecret = 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685'
-}
-if (!project.hasProperty('geocachingApiStaging')) {
-    ext.geocachingApiStaging = true
-}
-
-android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
-
-    dexOptions {
-        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
-        preDexLibraries preDexEnabled && !isTravis
-        //dexInProcess = true
-    }
-
-    defaultConfig {
-        minSdkVersion hasProperty('devMinSdk') ? devMinSdk.toInteger() : 15
-        targetSdkVersion 24
-        versionCode gitVersionCode()
-        buildConfigField 'String', 'GIT_SHA', 'null'
-        buildConfigField 'String', 'BUILD_TIME', 'null'
-        buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
-        buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
-        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
-
-        resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        encoding 'UTF-8'
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    signingConfigs {
-        release {
-            keyAlias = 'geocaching4locus'
-        }
-    }
-
-    buildTypes {
-        debug {
-            ext.enableCrashlytics = false
-            versionNameSuffix '-dev'
-        }
-        release {
-            versionNameSuffix ''
-
-            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
-            buildConfigField 'String', 'BUILD_TIME', '"' + buildTime() + '"'
-
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
-            proguardFile 'proguard.pro'
-        }
-    }
-
-    packagingOptions {
-        // removed because of conflict in creating package
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-        // unused files, removed to minimize APK file
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'org/apache/http/version.properties'
-        exclude 'templates/release-notes.vm'
-        exclude 'log4j.xml'
-    }
-    lintOptions { abortOnError false }
-}
-
-if (project.hasProperty('storeFile') &&
-        project.hasProperty('storePassword') &&
-        project.hasProperty('keyPassword')) {
-    android.signingConfigs.release.storeFile = file(storeFile)
-    android.signingConfigs.release.storePassword = storePassword
-    android.signingConfigs.release.keyPassword = keyPassword
-} else {
-    android.buildTypes.release.signingConfig = android.signingConfigs.debug
+    return 'git rev-list --count HEAD'.execute([], rootDir).text.trim().toInteger()
 }

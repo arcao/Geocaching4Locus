@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true"
+        android:state_focused="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/accent"/>
+        </shape>
+    </item>
+
+    <item android:state_checked="true"
+        android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/accent"/>
+            <stroke android:color="@color/textColorSecondary"
+                android:width="2dp"
+                android:dashGap="5dp"
+                android:dashWidth="5dp"/>
+        </shape>
+    </item>
+
+    <item>
+        <color android:color="@android:color/transparent"/>
+    </item>
+</selector>

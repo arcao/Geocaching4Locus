@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_geocache_type">
+    <CheckBoxPreference
+        android:key="filter_0"
+        android:title="Traditional Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_1"
+        android:title="Multi-cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_2"
+        android:title="Mystery Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_3"
+        android:title="Virtual Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_4"
+        android:title="Earthcache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_5"
+        android:title="Project APE Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_6"
+        android:title="Letterbox Hybrid"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_7"
+        android:title="Wherigo Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_8"
+        android:title="Event Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_9"
+        android:title="Mega-Event Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_10"
+        android:title="Cache In Trash Out Event"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_11"
+        android:title="GPS Adventures Exhibit"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_12"
+        android:title="Webcam Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_13"
+        android:title="Locationless (Reverse) Cache"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_14"
+        android:title="Lost and Found Event"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_15"
+        android:title="Groundspeak HQ"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_16"
+        android:title="Groundspeak Lost and Found Celebration"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_17"
+        android:title="Groundspeak Block Party"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="filter_18"
+        android:title="Giga-Event Cache"
+        android:defaultValue="true" />
+</PreferenceScreen>

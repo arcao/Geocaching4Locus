@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_filter">
+    <Preference
+        android:key="cache_type_filter"
+        android:title="@string/pref_geocache_type"
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.filter.CacheTypeFilterPreferenceFragment"/>
+    <Preference
+        android:key="container_type_filter"
+        android:title="@string/pref_container_size"
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.filter.ContainerTypeFilterPreferenceFragment"/>
+    <Preference
+        android:key="difficulty_filter"
+        android:title="@string/pref_difficulty"
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.filter.DifficultyFilterPreferenceFragment"/>
+    <Preference
+        android:key="terrain_filter"
+        android:title="@string/pref_terrain"
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.filter.TerrainFilterPreferenceFragment"/>
+    <CheckBoxPreference
+        android:key="filter_show_found"
+        android:title="@string/pref_show_found"
+        android:summary="@string/pref_show_found_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="filter_show_own"
+        android:title="@string/pref_show_own"
+        android:summary="@string/pref_show_own_summary"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="filter_show_disabled"
+        android:title="@string/pref_show_disabled"
+        android:summary="@string/pref_show_disabled_summary"
+        android:defaultValue="false" />
+    <EditTextPreference
+        android:key="filter_distance"
+        android:title="@string/pref_distance"
+        android:summary="@string/pref_distance_summary_km"
+        android:dialogTitle="@string/pref_distance"
+        android:dialogMessage="@string/pref_distance_summary_km"
+        android:defaultValue="50.0"
+        android:numeric="decimal" />
+</PreferenceScreen>

@@ -98,6 +98,7 @@ android {
                 ]
             }
         }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {

@@ -31,11 +31,11 @@ public final class SearchNearestTest extends AbstractBaseTest {
 
         // cancel acquiring GPS waiting dialog
         assertTrue(mDevice.wait(Until.hasObject(By.text(
-                InstrumentationRegistry.getTargetContext().getString(R.string.acquiring_gps_location))), 500));
+                InstrumentationRegistry.getTargetContext().getString(R.string.progress_acquire_gps_location))), 500));
         mDevice.findObject(By.res(UiUtil.APP_PACKAGE, "md_buttonDefaultNegative")).click();
 
         // check window title
-        assertTrue(mDevice.wait(Until.hasObject(By.text(InstrumentationRegistry.getTargetContext().getString(R.string.launcher_nearest_caches))), 500));
+        assertTrue(mDevice.wait(Until.hasObject(By.text(InstrumentationRegistry.getTargetContext().getString(R.string.launcher_nearest_geocaches))), 500));
     }
 
 
@@ -59,7 +59,7 @@ public final class SearchNearestTest extends AbstractBaseTest {
         LocusUiUtil.setLocation(mDevice, latitude, longitude);
 
         // run function Nearest caches
-        LocusUiUtil.startFunction(mDevice, InstrumentationRegistry.getTargetContext().getString(R.string.launcher_nearest_caches));
+        LocusUiUtil.startFunction(mDevice, InstrumentationRegistry.getTargetContext().getString(R.string.launcher_nearest_geocaches));
 
         // wait for app
         UiUtil.waitForApp(mDevice, UiUtil.APP_PACKAGE);

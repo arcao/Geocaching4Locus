@@ -27,7 +27,7 @@ public final class ImportFromGcTest extends AbstractBaseTest {
 
         mDevice.findObject(By.res(UiUtil.APP_PACKAGE, "db_import_gc")).click();
 
-        assertEquals(InstrumentationRegistry.getTargetContext().getString(R.string.dialog_gc_number_input_title),
+        assertEquals(InstrumentationRegistry.getTargetContext().getString(R.string.title_import_from_gc),
                 mDevice.wait(Until.findObject(By.res(UiUtil.APP_PACKAGE, "md_title")), 500).getText());
     }
 
@@ -48,7 +48,7 @@ public final class ImportFromGcTest extends AbstractBaseTest {
 
         UiUtil.waitForApp(mDevice, UiUtil.APP_PACKAGE);
 
-        assertEquals(InstrumentationRegistry.getTargetContext().getString(R.string.dialog_gc_number_input_title),
+        assertEquals(InstrumentationRegistry.getTargetContext().getString(R.string.title_import_from_gc),
                 mDevice.wait(Until.findObject(By.res(UiUtil.APP_PACKAGE, "md_title")), 500).getText());
     }
 }

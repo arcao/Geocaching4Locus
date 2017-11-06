@@ -29,6 +29,14 @@ buildscript {
         ext.geocachingApiStaging = true
     }
 
+    // default user/pass for instrumentation tests only
+    if (!project.hasProperty('geocachingUser')) {
+        ext.geocachingUser = 'user'
+    }
+    if (!project.hasProperty('geocachingPassword')) {
+        ext.geocachingPassword = 'pass'
+    }
+
     repositories {
         jcenter()
         maven { url 'https://maven.google.com' }

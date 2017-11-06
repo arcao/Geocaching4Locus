@@ -122,6 +122,9 @@ android {
             ext.enableCrashlytics = false
             versionNameSuffix '-dev'
             crunchPngs false
+
+            buildConfigField 'String', 'TEST_USER', '"' + geocachingUser +'"'
+            buildConfigField 'String', 'TEST_PASSWORD', '"' + geocachingPassword + '"'
         }
         release {
             versionNameSuffix ''

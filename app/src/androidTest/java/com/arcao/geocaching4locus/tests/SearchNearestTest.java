@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 public final class SearchNearestTest extends AbstractBaseTest {
     @Test
-    public void searchNearestFromAppLauncher() throws UiObjectNotFoundException {
+    public void openSearchNearestFromAppLauncher() throws UiObjectNotFoundException {
         // Launch the app
         Context context = InstrumentationRegistry.getContext();
         context.startActivity(UiUtil.createAppIntent());
@@ -40,7 +40,7 @@ public final class SearchNearestTest extends AbstractBaseTest {
 
 
     @Test
-    public final void searchNearestFromLocusMapTest() throws UiObjectNotFoundException {
+    public final void openSearchNearestFromLocusMapTest() throws UiObjectNotFoundException {
         // generate random point around N50, E14
         double latitude = Coordinates.roundDouble(50D + Math.random(), 3);
         double longitude = Coordinates.roundDouble(14D + Math.random(), 3);

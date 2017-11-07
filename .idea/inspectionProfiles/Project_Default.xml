@@ -1,7 +1,6 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
-    <option name="myLocal" value="true" />
     <inspection_tool class="AndroidLintAppLinksAutoVerifyError" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="AndroidLintAppLinksAutoVerifyWarning" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="AndroidLintBackButton" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -26,10 +25,6 @@
     </inspection_tool>
     <inspection_tool class="ListIndexOfReplaceableByContains" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="LiteralAsArgToStringEquals" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="LoggerInitializedWithForeignClass" enabled="false" level="WARNING" enabled_by_default="false">
-      <option name="loggerClassName" value="org.apache.log4j.Logger,org.slf4j.LoggerFactory,org.apache.commons.logging.LogFactory,java.util.logging.Logger" />
-      <option name="loggerFactoryMethodName" value="getLogger,getLogger,getLog,getLogger" />
-    </inspection_tool>
     <inspection_tool class="MultiplyOrDivideByPowerOfTwo" enabled="false" level="WARNING" enabled_by_default="false">
       <option name="checkDivision" value="true" />
     </inspection_tool>
@@ -38,6 +33,27 @@
     <inspection_tool class="RedundantImplements" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoreSerializable" value="false" />
       <option name="ignoreCloneable" value="false" />
+    </inspection_tool>
+    <inspection_tool class="SSBasedInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <searchConfiguration name="Don't use Hungarian notation." text="$FieldType$ $FieldName$ = $Init$;" recursive="false" caseInsensitive="true" type="JAVA">
+        <constraint name="Class" within="" contains="" />
+        <constraint name="FieldType" within="" contains="" />
+        <constraint name="Init" minCount="0" within="" contains="" />
+        <constraint name="__context__" target="true" within="" contains="" />
+        <constraint name="FieldName" regexp="[msp][A-Z].*" within="" contains="" />
+      </searchConfiguration>
+      <replaceConfiguration name="Use Timber instead" text="android.util.Log.$method$($TAG$, $MESSAGE$, $EXCETPION$);" recursive="false" caseInsensitive="true" type="JAVA" reformatAccordingToStyle="true" shortenFQN="true" replacement="Timber.$method$($EXCETPION$, $MESSAGE$);">
+        <constraint name="Class" within="" contains="" />
+        <constraint name="FieldType" within="" contains="" />
+        <constraint name="Init" minCount="0" within="" contains="" />
+        <constraint name="__context__" target="true" within="" contains="" />
+        <constraint name="FieldName" regexp="[msp][A-Z].*" within="" contains="" />
+        <constraint name="method" regexp="e|i|w|d|v" within="" contains="" />
+        <constraint name="TAG" within="" contains="" />
+        <constraint name="MESSAGE" within="" contains="" />
+        <constraint name="EXCETPION" minCount="0" within="" contains="" />
+        <variableDefinition name="NewFieldName" script="&quot;String name = FieldName.getText().substring(1)&#10;name[0].toLowerCase() + name.substring(1) &quot;" />
+      </replaceConfiguration>
     </inspection_tool>
     <inspection_tool class="SerialVersionUIDNotStaticFinal" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SerializableHasSerialVersionUIDField" enabled="true" level="WARNING" enabled_by_default="true">

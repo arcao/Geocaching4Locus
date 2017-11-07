@@ -7,119 +7,119 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 class DataFileWriterBigEndian extends DataWriterBigEndian {
-	private long mStoredPosition;
+    private long storedPosition;
 
-	private final OutputStream mOut;
-	private final FileChannel mChannel;
+    private final OutputStream out;
+    private final FileChannel channel;
 
-	DataFileWriterBigEndian(FileOutputStream out) {
-		super(0);
-		this.mOut = new BufferedOutputStream(out);
-		mChannel = out.getChannel();
-	}
+    DataFileWriterBigEndian(FileOutputStream out) {
+        super(0);
+        this.out = new BufferedOutputStream(out);
+        channel = out.getChannel();
+    }
 
-	@Override
-	public synchronized void write(int b) {
-		try {
-			mOut.write(b);
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    @Override
+    public synchronized void write(int b) {
+        try {
+            out.write(b);
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	@Override
-	public synchronized void write(byte[] b, int off, int len) {
-		try {
-			mOut.write(b, off, len);
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    @Override
+    public synchronized void write(byte[] b, int off, int len) {
+        try {
+            out.write(b, off, len);
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	@Override
-	public void storePosition() {
-		try {
-			mOut.flush();
-			mStoredPosition = mChannel.position();
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    @Override
+    public void storePosition() {
+        try {
+            out.flush();
+            storedPosition = channel.position();
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	@Override
-	public void restorePosition() {
-		try {
-			mOut.flush();
-			mChannel.position(mStoredPosition);
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    @Override
+    public void restorePosition() {
+        try {
+            out.flush();
+            channel.position(storedPosition);
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	@Override
-	public void moveTo(int index) {
-		try {
-			mOut.flush();
+    @Override
+    public void moveTo(int index) {
+        try {
+            out.flush();
 
-			// check index
-			if (index < 0 || index > mChannel.size()) {
-				throw new IllegalArgumentException(
-								"Invalid move index:" + index + ", count:" + mChannel.size());
-			}
+            // check index
+            if (index < 0 || index > channel.size()) {
+                throw new IllegalArgumentException(
+                        "Invalid move index:" + index + ", count:" + channel.size());
+            }
 
-			mChannel.position(index);
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+            channel.position(index);
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	@Override
-	public synchronized void writeTo(OutputStream out) throws IOException {
-		throw new UnsupportedOperationException("Not supported");
-	}
+    @Override
+    public synchronized void writeTo(OutputStream out) throws IOException {
+        throw new UnsupportedOperationException("Not supported");
+    }
 
-	@Override
-	public synchronized byte[] toByteArray() {
-		throw new UnsupportedOperationException("Not supported");
-	}
+    @Override
+    public synchronized byte[] toByteArray() {
+        throw new UnsupportedOperationException("Not supported");
+    }
 
-	@Override
-	public synchronized int size() {
-		try {
-			mOut.flush();
-			return (int) mChannel.size();
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    @Override
+    public synchronized int size() {
+        try {
+            out.flush();
+            return (int) channel.size();
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	synchronized int getPosition() {
-		try {
-			mOut.flush();
-			return (int) mChannel.position();
-		} catch (IOException e) {
-			throw new DataFileWriterException(e);
-		}
-	}
+    synchronized int getPosition() {
+        try {
+            out.flush();
+            return (int) channel.position();
+        } catch (IOException e) {
+            throw new DataFileWriterException(e);
+        }
+    }
 
-	synchronized void flush() throws IOException {
-		mOut.flush();
-	}
+    synchronized void flush() throws IOException {
+        out.flush();
+    }
 
-	synchronized void close() throws IOException {
-		mOut.close();
-	}
+    synchronized void close() throws IOException {
+        out.close();
+    }
 
-	static class DataFileWriterException extends RuntimeException {
-		private static final long serialVersionUID = 2678019269077897465L;
+    static class DataFileWriterException extends RuntimeException {
+        private static final long serialVersionUID = 2678019269077897465L;
 
-		DataFileWriterException(IOException throwable) {
-			super(throwable);
-		}
+        DataFileWriterException(IOException throwable) {
+            super(throwable);
+        }
 
-		@Override
-		public IOException getCause() {
-			return (IOException) super.getCause();
-		}
-	}
+        @Override
+        public IOException getCause() {
+            return (IOException) super.getCause();
+        }
+    }
 }

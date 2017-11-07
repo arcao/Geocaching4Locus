@@ -16,50 +16,51 @@ import java.util.List;
 import timber.log.Timber;
 
 public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Bookmark>> {
-	public interface TaskListener {
-		void onTaskFinished(List<Bookmark> bookmarks);
-		void onTaskFailed(Intent errorIntent);
-	}
+    public interface TaskListener {
+        void onTaskFinished(List<Bookmark> bookmarks);
 
-	private final Context mContext;
-	private final WeakReference<TaskListener> mTaskListenerRef;
+        void onTaskFailed(Intent errorIntent);
+    }
 
-	public BookmarkCachesRetrieveTask(Context context, TaskListener listener) {
-		mContext = context.getApplicationContext();
-		mTaskListenerRef = new WeakReference<>(listener);
-	}
+    private final Context context;
+    private final WeakReference<TaskListener> taskListenerRef;
 
-	@Override
-	protected List<Bookmark> doInBackground(String... params) throws Exception {
-		GeocachingApi api = GeocachingApiFactory.create();
-		GeocachingApiLoginTask.create(mContext, api).perform();
-		return api.getBookmarkListByGuid(params[0]);
-	}
+    public BookmarkCachesRetrieveTask(Context context, TaskListener listener) {
+        this.context = context.getApplicationContext();
+        taskListenerRef = new WeakReference<>(listener);
+    }
 
-	@Override
-	protected void onPostExecute(List<Bookmark> result) {
-		super.onPostExecute(result);
+    @Override
+    protected List<Bookmark> doInBackground(String... params) throws Exception {
+        GeocachingApi api = GeocachingApiFactory.create();
+        GeocachingApiLoginTask.create(context, api).perform();
+        return api.getBookmarkListByGuid(params[0]);
+    }
 
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null) {
-			listener.onTaskFinished(result);
-		}
-	}
+    @Override
+    protected void onPostExecute(List<Bookmark> result) {
+        super.onPostExecute(result);
 
-	@Override
-	protected void onException(Throwable t) {
-		super.onException(t);
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null) {
+            listener.onTaskFinished(result);
+        }
+    }
 
-		if (isCancelled())
-			return;
+    @Override
+    protected void onException(Throwable t) {
+        super.onException(t);
 
-		Timber.e(t, t.getMessage());
+        if (isCancelled())
+            return;
 
-		Intent intent = new ExceptionHandler(mContext).handle(t);
+        Timber.e(t, t.getMessage());
 
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null) {
-			listener.onTaskFailed(intent);
-		}
-	}
+        Intent intent = new ExceptionHandler(context).handle(t);
+
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null) {
+            listener.onTaskFailed(intent);
+        }
+    }
 }

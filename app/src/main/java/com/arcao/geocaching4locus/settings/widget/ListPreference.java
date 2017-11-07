@@ -42,258 +42,255 @@ import com.arcao.geocaching4locus.R;
  * @attr ref android.R.styleable#ListPreference_entryValues
  */
 public class ListPreference extends DialogPreference {
-	private CharSequence[] mEntries;
-	private CharSequence[] mEntryValues;
-	private String mValue;
-	int mClickedDialogEntryIndex;
+    private CharSequence[] entries;
+    private CharSequence[] entryValues;
+    private String value;
+    int clickedDialogEntryIndex;
 
-	public ListPreference(Context context, AttributeSet attrs) {
-		super(context, attrs);
+    public ListPreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListPreference, 0, 0);
-		mEntries = a.getTextArray(R.styleable.ListPreference_android_entries);
-		mEntryValues = a.getTextArray(R.styleable.ListPreference_android_entryValues);
-		a.recycle();
-	}
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListPreference, 0, 0);
+        entries = a.getTextArray(R.styleable.ListPreference_android_entries);
+        entryValues = a.getTextArray(R.styleable.ListPreference_android_entryValues);
+        a.recycle();
+    }
 
-	public ListPreference(Context context) {
-		this(context, null);
-	}
+    public ListPreference(Context context) {
+        this(context, null);
+    }
 
-	/**
-	 * Sets the human-readable entries to be shown in the list. This will be
-	 * shown in subsequent dialogs.
-	 * <p>
-	 * Each entry must have a corresponding index in
-	 * {@link #setEntryValues(CharSequence[])}.
-	 *
-	 * @param entries The entries.
-	 * @see #setEntryValues(CharSequence[])
-	 */
-	public void setEntries(CharSequence[] entries) {
-		mEntries = entries;
-	}
+    /**
+     * Sets the human-readable entries to be shown in the list. This will be
+     * shown in subsequent dialogs.
+     * <p>
+     * Each entry must have a corresponding index in
+     * {@link #setEntryValues(CharSequence[])}.
+     *
+     * @param entries The entries.
+     * @see #setEntryValues(CharSequence[])
+     */
+    public void setEntries(CharSequence[] entries) {
+        this.entries = entries;
+    }
 
-	/**
-	 * @see #setEntries(CharSequence[])
-	 * @param entriesResId The entries array as a resource.
-	 */
-	public void setEntries(int entriesResId) {
-		setEntries(getContext().getResources().getTextArray(entriesResId));
-	}
+    /**
+     * @param entriesResId The entries array as a resource.
+     * @see #setEntries(CharSequence[])
+     */
+    public void setEntries(int entriesResId) {
+        setEntries(getContext().getResources().getTextArray(entriesResId));
+    }
 
-	/**
-	 * The list of entries to be shown in the list in subsequent dialogs.
-	 *
-	 * @return The list as an array.
-	 */
-	public CharSequence[] getEntries() {
-		return mEntries;
-	}
+    /**
+     * The list of entries to be shown in the list in subsequent dialogs.
+     *
+     * @return The list as an array.
+     */
+    public CharSequence[] getEntries() {
+        return entries;
+    }
 
-	/**
-	 * The array to find the value to save for a preference when an entry from
-	 * entries is selected. If a user clicks on the second item in entries, the
-	 * second item in this array will be saved to the preference.
-	 *
-	 * @param entryValues The array to be used as values to save for the preference.
-	 */
-	public void setEntryValues(CharSequence[] entryValues) {
-		mEntryValues = entryValues;
-	}
+    /**
+     * The array to find the value to save for a preference when an entry from
+     * entries is selected. If a user clicks on the second item in entries, the
+     * second item in this array will be saved to the preference.
+     *
+     * @param entryValues The array to be used as values to save for the preference.
+     */
+    public void setEntryValues(CharSequence[] entryValues) {
+        this.entryValues = entryValues;
+    }
 
-	/**
-	 * @see #setEntryValues(CharSequence[])
-	 * @param entryValuesResId The entry values array as a resource.
-	 */
-	public void setEntryValues(int entryValuesResId) {
-		setEntryValues(getContext().getResources().getTextArray(entryValuesResId));
-	}
+    /**
+     * @param entryValuesResId The entry values array as a resource.
+     * @see #setEntryValues(CharSequence[])
+     */
+    public void setEntryValues(int entryValuesResId) {
+        setEntryValues(getContext().getResources().getTextArray(entryValuesResId));
+    }
 
-	/**
-	 * Returns the array of values to be saved for the preference.
-	 *
-	 * @return The array of values.
-	 */
-	public CharSequence[] getEntryValues() {
-		return mEntryValues;
-	}
+    /**
+     * Returns the array of values to be saved for the preference.
+     *
+     * @return The array of values.
+     */
+    public CharSequence[] getEntryValues() {
+        return entryValues;
+    }
 
-	/**
-	 * Sets the value of the key. This should be one of the entries in
-	 * {@link #getEntryValues()}.
-	 *
-	 * @param value The value to set for the key.
-	 */
-	public void setValue(String value) {
-		mValue = value;
+    /**
+     * Sets the value of the key. This should be one of the entries in
+     * {@link #getEntryValues()}.
+     *
+     * @param value The value to set for the key.
+     */
+    public void setValue(String value) {
+        this.value = value;
 
-		persistString(value);
-	}
+        persistString(value);
+    }
 
-	/**
-	 * Sets the value to the given index from the entry values.
-	 *
-	 * @param index The index of the value to set.
-	 */
-	public void setValueIndex(int index) {
-		if (mEntryValues != null) {
-			setValue(mEntryValues[index].toString());
-		}
-	}
+    /**
+     * Sets the value to the given index from the entry values.
+     *
+     * @param index The index of the value to set.
+     */
+    public void setValueIndex(int index) {
+        if (entryValues != null) {
+            setValue(entryValues[index].toString());
+        }
+    }
 
-	/**
-	 * Returns the value of the key. This should be one of the entries in
-	 * {@link #getEntryValues()}.
-	 *
-	 * @return The value of the key.
-	 */
-	public String getValue() {
-		return mValue;
-	}
+    /**
+     * Returns the value of the key. This should be one of the entries in
+     * {@link #getEntryValues()}.
+     *
+     * @return The value of the key.
+     */
+    public String getValue() {
+        return value;
+    }
 
-	/**
-	 * Returns the entry corresponding to the current value.
-	 *
-	 * @return The entry corresponding to the current value, or null.
-	 */
-	public CharSequence getEntry() {
-		int index = getValueIndex();
-		return index >= 0 && mEntries != null ? mEntries[index] : null;
-	}
+    /**
+     * Returns the entry corresponding to the current value.
+     *
+     * @return The entry corresponding to the current value, or null.
+     */
+    public CharSequence getEntry() {
+        int index = getValueIndex();
+        return index >= 0 && entries != null ? entries[index] : null;
+    }
 
-	/**
-	 * Returns the index of the given value (in the entry values array).
-	 *
-	 * @param value The value whose index should be returned.
-	 * @return The index of the value, or -1 if not found.
-	 */
-	public int findIndexOfValue(String value) {
-		if (value != null && mEntryValues != null) {
-			for (int i = mEntryValues.length - 1; i >= 0; i--) {
-				if (mEntryValues[i].equals(value)) {
-					return i;
-				}
-			}
-		}
-		return -1;
-	}
+    /**
+     * Returns the index of the given value (in the entry values array).
+     *
+     * @param value The value whose index should be returned.
+     * @return The index of the value, or -1 if not found.
+     */
+    public int findIndexOfValue(String value) {
+        if (value != null && entryValues != null) {
+            for (int i = entryValues.length - 1; i >= 0; i--) {
+                if (entryValues[i].equals(value)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 
-	private int getValueIndex() {
-		return findIndexOfValue(mValue);
-	}
+    private int getValueIndex() {
+        return findIndexOfValue(value);
+    }
 
-	@Override
-	protected void onPrepareDialogBuilder(Builder builder) {
-		super.onPrepareDialogBuilder(builder);
+    @Override
+    protected void onPrepareDialogBuilder(Builder builder) {
+        super.onPrepareDialogBuilder(builder);
 
-		if (mEntries == null || mEntryValues == null) {
-			throw new IllegalStateException(
-				"ListPreference requires an entries array and an entryValues array.");
-		}
+        if (entries == null || entryValues == null) {
+            throw new IllegalStateException(
+                    "ListPreference requires an entries array and an entryValues array.");
+        }
 
-		mClickedDialogEntryIndex = getValueIndex();
-		builder.setSingleChoiceItems(mEntries, mClickedDialogEntryIndex,
-			new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				mClickedDialogEntryIndex = which;
+        clickedDialogEntryIndex = getValueIndex();
+        builder.setSingleChoiceItems(entries, clickedDialogEntryIndex,
+                (dialog, which) -> {
+                    clickedDialogEntryIndex = which;
 
-				/*
-				 * Clicking on an item simulates the positive button
-				 * click, and dismisses the dialog.
-				 */
-				ListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-				dialog.dismiss();
-			}
-		});
+            /*
+             * Clicking on an item simulates the positive button
+             * click, and dismisses the dialog.
+             */
+                    ListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                    dialog.dismiss();
+                });
 
 		/*
 		 * The typical interaction for list-based dialogs is to have
 		 * click-on-an-item dismiss the dialog instead of the user having to
 		 * press 'Ok'.
 		 */
-		builder.setPositiveButton(null, null);
-	}
+        builder.setPositiveButton(null, null);
+    }
 
-	@Override
-	protected void onDialogClosed(boolean positiveResult) {
-		super.onDialogClosed(positiveResult);
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
 
-		if (positiveResult && mClickedDialogEntryIndex >= 0 && mEntryValues != null) {
-			String value = mEntryValues[mClickedDialogEntryIndex].toString();
-			if (callChangeListener(value)) {
-				setValue(value);
-			}
-		}
-	}
+        if (positiveResult && clickedDialogEntryIndex >= 0 && entryValues != null) {
+            String value = entryValues[clickedDialogEntryIndex].toString();
+            if (callChangeListener(value)) {
+                setValue(value);
+            }
+        }
+    }
 
-	@Override
-	protected Object onGetDefaultValue(TypedArray a, int index) {
-		return a.getString(index);
-	}
+    @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getString(index);
+    }
 
-	@Override
-	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-		setValue(restoreValue ? getPersistedString(mValue) : (String) defaultValue);
-	}
+    @Override
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+        setValue(restoreValue ? getPersistedString(value) : (String) defaultValue);
+    }
 
-	@Override
-	protected Parcelable onSaveInstanceState() {
-		final Parcelable superState = super.onSaveInstanceState();
-		if (isPersistent()) {
-			// No need to save instance state since it's persistent
-			return superState;
-		}
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Parcelable superState = super.onSaveInstanceState();
+        if (isPersistent()) {
+            // No need to save instance state since it's persistent
+            return superState;
+        }
 
-		final SavedState myState = new SavedState(superState);
-		myState.value = getValue();
-		return myState;
-	}
+        final SavedState myState = new SavedState(superState);
+        myState.value = getValue();
+        return myState;
+    }
 
-	@Override
-	protected void onRestoreInstanceState(Parcelable state) {
-		if (state == null || !state.getClass().equals(SavedState.class)) {
-			// Didn't save state for us in onSaveInstanceState
-			super.onRestoreInstanceState(state);
-			return;
-		}
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state == null || !state.getClass().equals(SavedState.class)) {
+            // Didn't save state for us in onSaveInstanceState
+            super.onRestoreInstanceState(state);
+            return;
+        }
 
-		SavedState myState = (SavedState) state;
-		super.onRestoreInstanceState(myState.getSuperState());
-		setValue(myState.value);
-	}
+        SavedState myState = (SavedState) state;
+        super.onRestoreInstanceState(myState.getSuperState());
+        setValue(myState.value);
+    }
 
-	private static class SavedState extends BaseSavedState {
-		String value;
+    private static class SavedState extends BaseSavedState {
+        String value;
 
-		public SavedState(Parcel source) {
-			super(source);
-			value = source.readString();
-		}
+        SavedState(Parcel source) {
+            super(source);
+            value = source.readString();
+        }
 
-		@Override
-		public void writeToParcel(@NonNull Parcel dest, int flags) {
-			super.writeToParcel(dest, flags);
-			dest.writeString(value);
-		}
+        @Override
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeString(value);
+        }
 
-		public SavedState(Parcelable superState) {
-			super(superState);
-		}
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
 
-		@SuppressWarnings("unused")
-		public static final Parcelable.Creator<SavedState> CREATOR =
-		new Parcelable.Creator<SavedState>() {
-			@Override
-			public SavedState createFromParcel(Parcel in) {
-				return new SavedState(in);
-			}
+        @SuppressWarnings("unused")
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    @Override
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
 
-			@Override
-			public SavedState[] newArray(int size) {
-				return new SavedState[size];
-			}
-		};
-	}
+                    @Override
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
+    }
 }

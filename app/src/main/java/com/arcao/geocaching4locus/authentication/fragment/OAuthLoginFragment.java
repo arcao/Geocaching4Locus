@@ -18,226 +18,228 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.R;
-import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.authentication.task.OAuthLoginTask;
 import com.arcao.geocaching4locus.authentication.task.OAuthLoginTask.TaskListener;
+import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
-import timber.log.Timber;
+import com.arcao.geocaching4locus.error.ErrorActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
+import timber.log.Timber;
+
 public class OAuthLoginFragment extends Fragment implements TaskListener {
-	private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
-	private static final String OAUTH_VERIFIER = "oauth_verifier";
+    private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
+    private static final String OAUTH_VERIFIER = "oauth_verifier";
 
-	public interface DialogListener {
-		void onLoginFinished(Intent errorIntent);
-	}
+    public interface DialogListener {
+        void onLoginFinished(Intent errorIntent);
+    }
 
-	@Nullable OAuthLoginTask mTask;
-	private WeakReference<DialogListener> mDialogListenerRef;
-	private WebView mWebView;
-	View mProgressHolder;
-	private Bundle mLastInstanceState;
+    @Nullable OAuthLoginTask task;
+    private WeakReference<DialogListener> dialogListenerRef;
+    private WebView webView;
+    View progressLayout;
+    private Bundle lastInstanceState;
 
-	public static OAuthLoginFragment newInstance() {
-		return new OAuthLoginFragment();
-	}
+    public static OAuthLoginFragment newInstance() {
+        return new OAuthLoginFragment();
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setRetainInstance(true);
+        setRetainInstance(true);
 
-		// clear geocaching.com cookies
-		App.get(getActivity()).clearGeocachingCookies();
+        // clear geocaching.com cookies
+        App.get(getActivity()).clearGeocachingCookies();
 
-		mTask = new OAuthLoginTask(getActivity(), this);
-		mTask.execute();
-	}
+        task = new OAuthLoginTask(getActivity(), this);
+        task.execute();
+    }
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-		try {
-			mDialogListenerRef = new WeakReference<>((DialogListener) activity);
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
-		}
-	}
+        try {
+            dialogListenerRef = new WeakReference<>((DialogListener) activity);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
+        }
+    }
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-		if (mTask != null) {
-			mTask.cancel(true);
-			mTask = null;
-		}
-	}
+        if (task != null) {
+            task.cancel(true);
+            task = null;
+        }
+    }
 
-	@Override
-	public void onLoginUrlAvailable(@NonNull String url) {
-		if (mWebView != null) {
-			mWebView.loadUrl(url);
-		}
-	}
+    @Override
+    public void onLoginUrlAvailable(@NonNull String url) {
+        if (webView != null) {
+            webView.loadUrl(url);
+        }
+    }
 
-	@Override
-	public void onTaskFinished(Intent errorIntent) {
-		DialogListener listener = mDialogListenerRef.get();
-		if (listener != null) {
-			listener.onLoginFinished(errorIntent);
-		}
-	}
+    @Override
+    public void onTaskFinished(Intent errorIntent) {
+        DialogListener listener = dialogListenerRef.get();
+        if (listener != null) {
+            listener.onLoginFinished(errorIntent);
+        }
+    }
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-		if (mWebView != null) {
-			mWebView.saveState(outState);
-		}
+        if (webView != null) {
+            webView.saveState(outState);
+        }
 
-		if (mProgressHolder != null) {
-			outState.putInt(STATE_PROGRESS_VISIBLE, mProgressHolder.getVisibility());
-			Timber.d("setVisibility: " + mProgressHolder.getVisibility());
-		}
+        if (progressLayout != null) {
+            outState.putInt(STATE_PROGRESS_VISIBLE, progressLayout.getVisibility());
+            Timber.d("setVisibility: %d", progressLayout.getVisibility());
+        }
 
-		mLastInstanceState = outState;
-	}
+        lastInstanceState = outState;
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// FIX savedInstanceState is null after rotation change
-		if (savedInstanceState != null)
-			mLastInstanceState = savedInstanceState;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // FIX savedInstanceState is null after rotation change
+        if (savedInstanceState != null)
+            lastInstanceState = savedInstanceState;
 
-		View view = inflater.inflate(R.layout.fragment_login_oauth, container, false);
-		mProgressHolder = view.findViewById(R.id.progressHolder);
-		mProgressHolder.setVisibility(View.VISIBLE);
+        View view = inflater.inflate(R.layout.fragment_login_oauth, container, false);
+        progressLayout = view.findViewById(R.id.progressHolder);
+        progressLayout.setVisibility(View.VISIBLE);
 
-		if (mLastInstanceState != null) {
-			//noinspection ResourceType
-			mProgressHolder.setVisibility(mLastInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
-		}
+        if (lastInstanceState != null) {
+            //noinspection ResourceType
+            progressLayout.setVisibility(lastInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
+        }
 
-		mWebView = createWebView(mLastInstanceState);
+        webView = createWebView(lastInstanceState);
 
-		FrameLayout webViewHolder = (FrameLayout) view.findViewById(R.id.webViewPlaceholder);
-		webViewHolder.addView(mWebView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        FrameLayout webViewHolder = view.findViewById(R.id.webViewPlaceholder);
+        webViewHolder.addView(webView, new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 
-		return view;
-	}
+        return view;
+    }
 
-	@SuppressLint("SetJavaScriptEnabled")
-	private WebView createWebView(Bundle savedInstanceState) {
-		WebView webView = new FixedWebView(getActivity());
+    @SuppressLint("SetJavaScriptEnabled")
+    private WebView createWebView(Bundle savedInstanceState) {
+        WebView webView = new FixedWebView(getActivity());
 
-		webView.setHorizontalScrollBarEnabled(false);
-		webView.setWebViewClient(new DialogWebViewClient());
-		webView.getSettings().setJavaScriptEnabled(true);
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.setWebViewClient(new DialogWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
 
-		if (savedInstanceState != null)
-			webView.restoreState(savedInstanceState);
+        if (savedInstanceState != null)
+            webView.restoreState(savedInstanceState);
 
-		return webView;
-	}
+        return webView;
+    }
 
-	private class DialogWebViewClient extends WebViewClient {
-		DialogWebViewClient() {
-		}
+    private class DialogWebViewClient extends WebViewClient {
+        DialogWebViewClient() {
+        }
 
-		@Override
-		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
-				Uri uri = Uri.parse(url);
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
+                Uri uri = Uri.parse(url);
 
-				if (mProgressHolder != null) {
-					mProgressHolder.setVisibility(View.VISIBLE);
-				}
+                if (progressLayout != null) {
+                    progressLayout.setVisibility(View.VISIBLE);
+                }
 
-				mTask = new OAuthLoginTask(getActivity(), OAuthLoginFragment.this);
-				mTask.execute(uri.getQueryParameter(OAUTH_VERIFIER));
-				return true;
-			}
+                task = new OAuthLoginTask(getActivity(), OAuthLoginFragment.this);
+                task.execute(uri.getQueryParameter(OAUTH_VERIFIER));
+                return true;
+            }
 
-			if (!isOAuthUrl(url)) {
-				Timber.d("External URL: " + url);
+            if (!isOAuthUrl(url)) {
+                Timber.d("External URL: " + url);
 
-				// launch external URLs in a full browser
-				IntentUtil.showWebPage(getActivity(), Uri.parse(url));
-				return true;
-			}
+                // launch external URLs in a full browser
+                IntentUtil.showWebPage(getActivity(), Uri.parse(url));
+                return true;
+            }
 
-			return false;
-		}
+            return false;
+        }
 
-		private boolean isOAuthUrl(String url) {
-			String urlLowerCase = url.toLowerCase(Locale.US);
+        private boolean isOAuthUrl(String url) {
+            String urlLowerCase = url.toLowerCase(Locale.US);
 
-			return urlLowerCase.contains("/oauth/") ||
-							urlLowerCase.contains("/mobileoauth/") ||
-							urlLowerCase.contains("/mobilesignin/") ||
-							urlLowerCase.contains("/mobilecontent/") ||
-							urlLowerCase.contains("//m.facebook") ||
-							urlLowerCase.contains("/login/fbc.aspx");
-		}
+            return urlLowerCase.contains("/oauth/") ||
+                    urlLowerCase.contains("/mobileoauth/") ||
+                    urlLowerCase.contains("/mobilesignin/") ||
+                    urlLowerCase.contains("/mobilecontent/") ||
+                    urlLowerCase.contains("//m.facebook") ||
+                    urlLowerCase.contains("/login/fbc.aspx");
+        }
 
-		@Override
-		@SuppressWarnings("deprecation")
-		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-			super.onReceivedError(view, errorCode, description, failingUrl);
+        @Override
+        @SuppressWarnings("deprecation")
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
 
-			if (getActivity() != null)
-				onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).message(description).build());
-		}
+            if (getActivity() != null)
+                onTaskFinished(new ErrorActivity.IntentBuilder(getActivity()).message(description).build());
+        }
 
-		@Override
-		public void onPageStarted(WebView view, String url, Bitmap favicon) {
-			super.onPageStarted(view, url, favicon);
-			if (mProgressHolder != null) {
-				mProgressHolder.setVisibility(View.VISIBLE);
-			}
-		}
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            if (progressLayout != null) {
+                progressLayout.setVisibility(View.VISIBLE);
+            }
+        }
 
-		@Override
-		public void onPageFinished(WebView view, String url) {
-			super.onPageFinished(view, url);
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
 
-			if (mProgressHolder != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
-				mProgressHolder.setVisibility(View.GONE);
-			}
-		}
-	}
+            if (progressLayout != null && !url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
+                progressLayout.setVisibility(View.GONE);
+            }
+        }
+    }
 
-	private static class FixedWebView extends WebView {
-		public FixedWebView(Context context) {
-			super (context);
-		}
+    private static class FixedWebView extends WebView {
+        public FixedWebView(Context context) {
+            super(context);
+        }
 
-		public FixedWebView(Context context, AttributeSet attrs, int defStyle) {
-			super (context, attrs, defStyle);
-		}
+        public FixedWebView(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
 
-		public FixedWebView(Context context, AttributeSet attrs) {
-			super (context, attrs);
-		}
+        public FixedWebView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
 
-		@Override
-		public void onWindowFocusChanged(boolean hasWindowFocus) {
-			try {
-				super.onWindowFocusChanged(hasWindowFocus);
-			} catch (NullPointerException e) {
-				// Catch null pointer exception
-				// suggested workaround from Web
-			}
-		}
-	}
+        @Override
+        public void onWindowFocusChanged(boolean hasWindowFocus) {
+            try {
+                super.onWindowFocusChanged(hasWindowFocus);
+            } catch (NullPointerException e) {
+                // Catch null pointer exception
+                // suggested workaround from Web
+            }
+        }
+    }
 }

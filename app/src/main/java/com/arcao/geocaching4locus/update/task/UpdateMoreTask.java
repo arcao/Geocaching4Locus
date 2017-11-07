@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.filter.CacheCodeFilter;
-import com.arcao.geocaching.api.filter.Filter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
@@ -18,11 +18,13 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.DataMapper;
@@ -31,216 +33,217 @@ import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
 public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
-	public interface TaskListener {
-		void onTaskFinished(boolean success);
-		void onProgressUpdate(int count);
-	}
+    public interface TaskListener {
+        void onTaskFinished(boolean success);
 
-	private final Context mContext;
-	private final WeakReference<TaskListener> mTaskListenerRef;
+        void onProgressUpdate(int count);
+    }
 
-	public UpdateMoreTask(Context context, TaskListener listener) {
-		mContext = context.getApplicationContext();
-		mTaskListenerRef = new WeakReference<>(listener);
-	}
+    private final Context context;
+    private final WeakReference<TaskListener> taskListenerRef;
 
-	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
+    public UpdateMoreTask(Context context, TaskListener listener) {
+        this.context = context.getApplicationContext();
+        taskListenerRef = new WeakReference<>(listener);
+    }
 
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null)
-			listener.onTaskFinished(result);
-	}
+    @Override
+    protected void onPostExecute(Boolean result) {
+        super.onPostExecute(result);
 
-	@Override
-	protected void onProgressUpdate(Integer... values) {
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null)
-			listener.onProgressUpdate(values[0]);
-	}
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null)
+            listener.onTaskFinished(result);
+    }
 
-	@Override
-	protected Boolean doInBackground(long[]... params) throws Exception {
-		AccountManager accountManager = App.get(mContext).getAccountManager();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-		DataMapper mapper = new DataMapper(mContext);
-		WaypointMerger merger = new WaypointMerger(mContext);
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null)
+            listener.onProgressUpdate(values[0]);
+    }
 
-		LocusUtils.LocusVersion locusVersion;
-		try {
-			locusVersion = LocusUtils.getActiveVersion(mContext);
-			if (locusVersion == null) {
-				throw new IllegalStateException("Locus is not installed.");
-			}
-		} catch (Throwable t) {
-			throw new LocusMapRuntimeException(t);
-		}
+    @Override
+    protected Boolean doInBackground(long[]... params) throws Exception {
+        AccountManager accountManager = App.get(context).getAccountManager();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        DataMapper mapper = new DataMapper(context);
+        WaypointMerger merger = new WaypointMerger(context);
 
-		try {
-			GeocachingApi api = GeocachingApiFactory.create();
-			GeocachingApiLoginTask.create(mContext, api).perform();
+        LocusUtils.LocusVersion locusVersion;
+        try {
+            locusVersion = LocusUtils.getActiveVersion(context);
+            if (locusVersion == null) {
+                throw new IllegalStateException("Locus is not installed.");
+            }
+        } catch (Throwable t) {
+            throw new LocusMapRuntimeException(t);
+        }
 
-			int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+        try {
+            GeocachingApi api = GeocachingApiFactory.create();
+            GeocachingApiLoginTask.create(context, api).perform();
 
-			GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
-			if (!accountManager.isPremium()) {
-				resultQuality = GeocachingApi.ResultQuality.LITE;
-				logCount = 0;
-			}
+            int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 
-			long[] pointIndexes = params[0];
+            GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
+            if (!accountManager.isPremium()) {
+                resultQuality = GeocachingApi.ResultQuality.LITE;
+                logCount = 0;
+            }
 
-			int current = 0;
-			int count = pointIndexes.length;
-			int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-			while (current < count) {
-				long startTime = System.currentTimeMillis();
+            long[] pointIndexes = params[0];
 
-				// prepare old cache data
-				List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(mContext, locusVersion, pointIndexes, current, cachesPerRequest);
+            int current = 0;
+            int count = pointIndexes.length;
+            int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
+            while (current < count) {
+                long startTime = System.currentTimeMillis();
 
-				if (oldPoints.isEmpty()) {
-					// all are Waypoints without geocaching data
-					current += Math.min(pointIndexes.length - current, cachesPerRequest);
-					publishProgress(current);
-					continue;
-				}
+                // prepare old cache data
+                List<Waypoint> oldPoints = prepareOldWaypointsFromIndexes(context, locusVersion, pointIndexes, current, cachesPerRequest);
 
-				List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Collections.singletonList(
-								(Filter) new CacheCodeFilter(getCachesIds(oldPoints))
-				), null);
+                if (oldPoints.isEmpty()) {
+                    // all are Waypoints without geocaching data
+                    current += Math.min(pointIndexes.length - current, cachesPerRequest);
+                    publishProgress(current);
+                    continue;
+                }
 
-				accountManager.getRestrictions().updateLimits(api.getLastGeocacheLimits());
+                List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Collections.singletonList(
+                        new CacheCodeFilter(getCachesIds(oldPoints))
+                ), null);
 
-				if (isCancelled())
-					return false;
+                accountManager.getRestrictions().updateLimits(api.getLastGeocacheLimits());
 
-				if (cachesToAdd.isEmpty())
-					break;
+                if (isCancelled())
+                    return false;
 
-				List<Waypoint> points = mapper.createLocusWaypoints(cachesToAdd);
-				for (Waypoint p : points) {
-					if (p == null || p.gcData == null)
-						continue;
+                if (cachesToAdd.isEmpty())
+                    break;
 
-					// Geocaching API can return caches in a different order
-					Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
-					merger.mergeWaypoint(p, oldPoint);
+                List<Waypoint> points = mapper.createLocusWaypoints(cachesToAdd);
+                for (Waypoint p : points) {
+                    if (p == null || p.gcData == null)
+                        continue;
 
-					// update new point data in Locus
-					ActionTools.updateLocusWaypoint(mContext, locusVersion, p, false);
-				}
+                    // Geocaching API can return caches in a different order
+                    Waypoint oldPoint = searchOldPointByGCCode(oldPoints, p.gcData.getCacheID());
+                    merger.mergeWaypoint(p, oldPoint);
 
-				current += Math.min(pointIndexes.length - current, cachesPerRequest);
-				publishProgress(current);
+                    // update new point data in Locus
+                    ActionTools.updateLocusWaypoint(context, locusVersion, p, false);
+                }
 
-				long requestDuration = System.currentTimeMillis() - startTime;
-				cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
-			}
+                current += Math.min(pointIndexes.length - current, cachesPerRequest);
+                publishProgress(current);
 
-			Timber.i("updated caches: " + current);
+                long requestDuration = System.currentTimeMillis() - startTime;
+                cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
+            }
 
-			publishProgress(current);
-			return current > 0;
-		} catch (InvalidSessionException e) {
-			Timber.e(e, e.getMessage());
-			accountManager.invalidateOAuthToken();
+            Timber.i("updated caches: " + current);
 
-			throw e;
-		}
-	}
+            publishProgress(current);
+            return current > 0;
+        } catch (InvalidSessionException e) {
+            Timber.e(e, e.getMessage());
+            accountManager.invalidateOAuthToken();
 
-	private Waypoint searchOldPointByGCCode(Iterable<Waypoint> oldPoints, String gcCode) {
-		if (gcCode == null || gcCode.isEmpty())
-			return null;
+            throw e;
+        }
+    }
 
-		for (Waypoint oldPoint : oldPoints) {
-			if (oldPoint.gcData != null && gcCode.equals(oldPoint.gcData.getCacheID())) {
-				return oldPoint;
-			}
-		}
+    private Waypoint searchOldPointByGCCode(Iterable<Waypoint> oldPoints, String gcCode) {
+        if (gcCode == null || gcCode.isEmpty())
+            return null;
 
-		return null;
-	}
+        for (Waypoint oldPoint : oldPoints) {
+            if (oldPoint.gcData != null && gcCode.equals(oldPoint.gcData.getCacheID())) {
+                return oldPoint;
+            }
+        }
 
-	private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, LocusUtils.LocusVersion locusVersion, long[] pointIndexes, int current, int cachesPerRequest) {
-		int count = Math.min(pointIndexes.length - current, cachesPerRequest);
-		List<Waypoint> waypoints = new ArrayList<>(count);
+        return null;
+    }
 
-		for (int i = 0; i < count; i++) {
-			try {
-				// get old waypoint from Locus
-				Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, pointIndexes[current + i]);
-				if (wpt == null || wpt.gcData == null || wpt.gcData.getCacheID() == null
-						|| !wpt.gcData.getCacheID().toUpperCase(Locale.US).startsWith("GC")) {
-					Timber.w("Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
-					continue;
-				}
+    private List<Waypoint> prepareOldWaypointsFromIndexes(Context context, LocusUtils.LocusVersion locusVersion, long[] pointIndexes, int current, int cachesPerRequest) {
+        int count = Math.min(pointIndexes.length - current, cachesPerRequest);
+        List<Waypoint> waypoints = new ArrayList<>(count);
 
-				waypoints.add(wpt);
-			} catch (Throwable t) {
-				throw new LocusMapRuntimeException(t);
-			}
-		}
+        for (int i = 0; i < count; i++) {
+            try {
+                // get old waypoint from Locus
+                Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, pointIndexes[current + i]);
+                if (wpt == null || wpt.gcData == null || wpt.gcData.getCacheID() == null
+                        || !wpt.gcData.getCacheID().toUpperCase(Locale.US).startsWith("GC")) {
+                    Timber.w("Waypoint " + (current + i) + " with id " + pointIndexes[current + i] + " isn't cache. Skipped...");
+                    continue;
+                }
 
-		return waypoints;
-	}
+                waypoints.add(wpt);
+            } catch (Throwable t) {
+                throw new LocusMapRuntimeException(t);
+            }
+        }
 
-	private String[] getCachesIds(List<Waypoint> caches) {
-		int count = caches.size();
+        return waypoints;
+    }
 
-		String[] ret = new String[count];
+    private String[] getCachesIds(List<Waypoint> caches) {
+        int count = caches.size();
 
-		for (int i = 0; i < count; i++) {
-			ret[i] = caches.get(i).gcData.getCacheID();
-		}
+        String[] ret = new String[count];
 
-		return ret;
-	}
+        for (int i = 0; i < count; i++) {
+            ret[i] = caches.get(i).gcData.getCacheID();
+        }
 
-	@Override
-	protected void onCancelled() {
-		super.onCancelled();
+        return ret;
+    }
 
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null)
-			listener.onTaskFinished(false);
-	}
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
 
-	@Override
-	protected void onException(Throwable t) {
-		super.onException(t);
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null)
+            listener.onTaskFinished(false);
+    }
 
-		if (isCancelled())
-			return;
+    @Override
+    protected void onException(Throwable t) {
+        super.onException(t);
 
-		Timber.e(t, t.getMessage());
+        if (isCancelled())
+            return;
 
-		Intent intent = new ExceptionHandler(mContext).handle(t);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
+        Timber.e(t, t.getMessage());
 
-		TaskListener listener = mTaskListenerRef.get();
-		if (listener != null)
-			listener.onTaskFinished(false);
+        Intent intent = new ExceptionHandler(context).handle(t);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		mContext.startActivity(intent);
-	}
+        TaskListener listener = taskListenerRef.get();
+        if (listener != null)
+            listener.onTaskFinished(false);
 
-	private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
-		int cachesPerRequest = currentCachesPerRequest;
+        context.startActivity(intent);
+    }
 
-		// keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
-		if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
-			cachesPerRequest+= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+    private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
+        int cachesPerRequest = currentCachesPerRequest;
 
-		if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
-			cachesPerRequest-= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
+        // keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
+        if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
+            cachesPerRequest += AppConstants.ADAPTIVE_DOWNLOADING_STEP;
 
-		// keep the value in a range
-		cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
-		cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
+        if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
+            cachesPerRequest -= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
 
-		return cachesPerRequest;
-	}
+        // keep the value in a range
+        cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
+        cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
+
+        return cachesPerRequest;
+    }
 }

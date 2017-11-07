@@ -8,29 +8,39 @@ import com.arcao.geocaching.api.data.User;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 
 public interface AccountManager {
-	@Nullable
-	Account getAccount();
-	@NonNull
-	Account createAccount(@NonNull User user);
-	void addAccount(@NonNull Account account);
-	void removeAccount();
-	boolean isPremium();
+    @Nullable
+    Account getAccount();
 
-	@Nullable
-	String getOAuthToken();
-	void setOAuthToken(@Nullable String authToken);
-	void invalidateOAuthToken();
+    @NonNull
+    Account createAccount(@NonNull User user);
 
-	boolean isAccountUpdateRequired();
-	void updateAccountNextTime();
-	void updateAccount(@NonNull Account account);
+    void addAccount(@NonNull Account account);
 
-	@NonNull
-	AccountRestrictions getRestrictions();
+    void removeAccount();
 
-	boolean requestSignOn(@NonNull Activity activity, int requestCode);
+    boolean isPremium();
 
-	void setOAuthRequestToken(@Nullable OAuth1RequestToken token);
-	OAuth1RequestToken getOAuthRequestToken();
-	void deleteOAuthRequestToken();
+    @Nullable
+    String getOAuthToken();
+
+    void setOAuthToken(@Nullable String authToken);
+
+    void invalidateOAuthToken();
+
+    boolean isAccountUpdateRequired();
+
+    void updateAccountNextTime();
+
+    void updateAccount(@NonNull Account account);
+
+    @NonNull
+    AccountRestrictions getRestrictions();
+
+    boolean requestSignOn(@NonNull Activity activity, int requestCode);
+
+    void setOAuthRequestToken(@Nullable OAuth1RequestToken token);
+
+    OAuth1RequestToken getOAuthRequestToken();
+
+    void deleteOAuthRequestToken();
 }

@@ -20,69 +20,69 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkListRecyclerAdapter.ViewHolder> {
-  public interface OnItemClickListener {
-    void onItemClick(BookmarkList bookmarkList, boolean importAll);
-  }
-
-  private final List<BookmarkList> items = new ArrayList<>();
-  OnItemClickListener onItemClickListener;
-
-  @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_bookmark_list_item, parent, false));
-  }
-
-  @Override
-  public void onBindViewHolder(ViewHolder holder, int position) {
-    holder.bind(items.get(position));
-  }
-
-  @Override
-  public int getItemCount() {
-    return items.size();
-  }
-
-  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-    this.onItemClickListener = onItemClickListener;
-  }
-
-  public void setBookmarkLists(Collection<BookmarkList> bookmarkLists) {
-    items.clear();
-    items.addAll(bookmarkLists);
-    notifyDataSetChanged();
-  }
-
-  protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    @BindView(R.id.title) TextView title;
-    @BindView(R.id.description) TextView description;
-    @BindView(R.id.count) TextView count;
-    @BindView(R.id.button) Button button;
-
-    private BookmarkList bookmarkList;
-
-    public ViewHolder(View itemView) {
-      super(itemView);
-      ButterKnife.bind(this, itemView);
+    public interface OnItemClickListener {
+        void onItemClick(BookmarkList bookmarkList, boolean importAll);
     }
 
-    public void bind(final BookmarkList bookmarkList) {
-      this.bookmarkList = bookmarkList;
+    private final List<BookmarkList> items = new ArrayList<>();
+    OnItemClickListener onItemClickListener;
 
-      title.setText(bookmarkList.name());
-      count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_geocache,
-              bookmarkList.itemCount(), bookmarkList.itemCount()));
-      description.setText(bookmarkList.description());
-      description.setVisibility(
-              StringUtils.isEmpty(bookmarkList.description()) ? View.GONE : View.VISIBLE);
-
-      button.setOnClickListener(this);
-      itemView.setOnClickListener(this);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_bookmark_list_item, parent, false));
     }
 
     @Override
-    public void onClick(View v) {
-      if (onItemClickListener != null)
-        onItemClickListener.onItemClick(bookmarkList, v instanceof Button);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.bind(items.get(position));
     }
-  }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setBookmarkLists(Collection<BookmarkList> bookmarkLists) {
+        items.clear();
+        items.addAll(bookmarkLists);
+        notifyDataSetChanged();
+    }
+
+    protected class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.description) TextView description;
+        @BindView(R.id.count) TextView count;
+        @BindView(R.id.button) Button button;
+
+        private BookmarkList bookmarkList;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void bind(final BookmarkList bookmarkList) {
+            this.bookmarkList = bookmarkList;
+
+            title.setText(bookmarkList.name());
+            count.setText(itemView.getResources().getQuantityString(R.plurals.plurals_geocache,
+                    bookmarkList.itemCount(), bookmarkList.itemCount()));
+            description.setText(bookmarkList.description());
+            description.setVisibility(
+                    StringUtils.isEmpty(bookmarkList.description()) ? View.GONE : View.VISIBLE);
+
+            button.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (onItemClickListener != null)
+                onItemClickListener.onItemClick(bookmarkList, v instanceof Button);
+        }
+    }
 }

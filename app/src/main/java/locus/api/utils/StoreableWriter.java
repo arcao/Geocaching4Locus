@@ -7,62 +7,63 @@ import java.io.IOException;
 import locus.api.objects.Storable;
 
 public class StoreableWriter implements Closeable {
-	private boolean mClosed;
-	private int mCount;
-	private final int mCounterPosition;
+    private boolean closed;
+    private int count;
+    private final int counterPosition;
 
-	private final DataFileWriterBigEndian mWriter;
+    private final DataFileWriterBigEndian writer;
 
-	public StoreableWriter(FileOutputStream out) throws IOException {
-		try {
-			mCount = 0;
-			mWriter = new DataFileWriterBigEndian(out);
-			mCounterPosition = mWriter.getPosition();
-			mWriter.writeInt(mCount);
-		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
-			throw e.getCause();
-		}
+    public StoreableWriter(FileOutputStream out) throws IOException {
+        try {
+            count = 0;
+            writer = new DataFileWriterBigEndian(out);
+            counterPosition = writer.getPosition();
+            writer.writeInt(count);
+        } catch (DataFileWriterBigEndian.DataFileWriterException e) {
+            throw e.getCause();
+        }
 
-	}
+    }
 
-	/**
-	 * Return count of written Storeable objects
-	 * @return count of written Storeable objects
+    /**
+     * Return count of written Storeable objects
+     *
+     * @return count of written Storeable objects
      */
-	public int getSize() {
-		return mCount;
-	}
+    public int getSize() {
+        return count;
+    }
 
-	public synchronized void write(Storable obj) throws IOException {
-		if (mClosed)
-			throw new IOException("Output stream closed.");
+    public synchronized void write(Storable obj) throws IOException {
+        if (closed)
+            throw new IOException("Output stream closed.");
 
-		try {
-			obj.write(mWriter);
-			mCount++;
-		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
-			throw e.getCause();
-		}
-	}
+        try {
+            obj.write(writer);
+            count++;
+        } catch (DataFileWriterBigEndian.DataFileWriterException e) {
+            throw e.getCause();
+        }
+    }
 
-	@Override
-	public synchronized void close() throws IOException {
-		try {
-			if (mClosed)
-				throw new IOException("Output stream already closed.");
+    @Override
+    public synchronized void close() throws IOException {
+        try {
+            if (closed)
+                throw new IOException("Output stream already closed.");
 
-			mClosed = true;
+            closed = true;
 
-			int lastPosition = mWriter.getPosition();
+            int lastPosition = writer.getPosition();
 
-			mWriter.moveTo(mCounterPosition);
-			mWriter.writeInt(mCount);
-			mWriter.moveTo(lastPosition);
+            writer.moveTo(counterPosition);
+            writer.writeInt(count);
+            writer.moveTo(lastPosition);
 
-			mWriter.flush();
-			mWriter.close();
-		} catch (DataFileWriterBigEndian.DataFileWriterException e) {
-			throw e.getCause();
-		}
-	}
+            writer.flush();
+            writer.close();
+        } catch (DataFileWriterBigEndian.DataFileWriterException e) {
+            throw e.getCause();
+        }
+    }
 }

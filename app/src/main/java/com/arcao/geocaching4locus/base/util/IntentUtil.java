@@ -6,22 +6,22 @@ import android.net.Uri;
 import android.widget.Toast;
 
 public class IntentUtil {
-	public static boolean showWebPage(Activity activity, Uri uri) {
-		if (activity == null)
-			return false;
+    public static boolean showWebPage(Activity activity, Uri uri) {
+        if (activity == null)
+            return false;
 
-		final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-		//noinspection deprecation
-		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY| Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        //noinspection deprecation
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-		if (intent.resolveActivity(activity.getPackageManager()) != null) {
-			activity.startActivity(intent);
-			return true;
-		} else {
-			Toast.makeText(activity, "Web page cannot be opened. No application found to handle web pages.", Toast.LENGTH_LONG).show();
-			return false;
-		}
-	}
+        if (intent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivity(intent);
+            return true;
+        } else {
+            Toast.makeText(activity, "Web page cannot be opened. No application found to handle web pages.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
 }

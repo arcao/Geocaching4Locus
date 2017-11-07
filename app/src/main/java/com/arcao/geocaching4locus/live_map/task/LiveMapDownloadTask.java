@@ -66,279 +66,283 @@ import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_
 import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_LONGITUDE;
 
 public class LiveMapDownloadTask extends Thread {
-  private static final Executor CLEAN_MAP_EXECUTOR = Executors.newSingleThreadExecutor();
+    private static final Executor CLEAN_MAP_EXECUTOR = Executors.newSingleThreadExecutor();
 
-  private final Context context;
-  private final SharedPreferences preferences;
-  private final AccountManager accountManager;
-  private final LiveMapNotificationManager notificationManager;
-  private final DataMapper mapper;
+    private final Context context;
+    private final SharedPreferences preferences;
+    private final AccountManager accountManager;
+    private final LiveMapNotificationManager notificationManager;
+    private final DataMapper mapper;
 
-  private final Queue<Intent> taskQueue = new LinkedList<>();
-  private boolean terminated;
+    private final Queue<Intent> taskQueue = new LinkedList<>();
+    private boolean terminated;
 
-  protected LiveMapDownloadTask(Context context, LiveMapNotificationManager notificationManager) {
-    this.context = context;
-    this.notificationManager = notificationManager;
+    protected LiveMapDownloadTask(Context context, LiveMapNotificationManager notificationManager) {
+        this.context = context;
+        this.notificationManager = notificationManager;
 
-    preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    accountManager = App.get(context).getAccountManager();
-    mapper = new DataMapper(context);
-  }
-
-  @UiThread
-  public void addTask(Intent intent) {
-    synchronized (taskQueue) {
-      taskQueue.add(intent);
-      taskQueue.notify();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        accountManager = App.get(context).getAccountManager();
+        mapper = new DataMapper(context);
     }
-  }
 
-  @UiThread
-  public void destroy() {
-    synchronized (taskQueue) {
-      terminated = true;
-      taskQueue.notify();
-    }
-  }
-
-  @WorkerThread
-  public void onTaskFinished(Intent task) {
-    // do nothing
-  }
-
-  @UiThread
-  public static void cleanMapItems(Context context) {
-    final Context appContext = context.getApplicationContext();
-
-    CLEAN_MAP_EXECUTOR.execute(() -> {
-      try {
-        for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
-          PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
-          ActionDisplayPoints.sendPackSilent(appContext, pw, false);
-        }
-      } catch (Throwable t) {
-        t = new LocusMapRuntimeException(t);
-        Timber.e(t);
-      }
-    });
-  }
-
-
-  @WorkerThread
-  @Override
-  public void run() {
-    try {
-      while (!terminated) {
-        Intent task = null;
-
+    @UiThread
+    public void addTask(Intent intent) {
         synchronized (taskQueue) {
-          // chose latest
-          while (!taskQueue.isEmpty()) {
-            if (task != null)
-              onTaskFinished(task);
-
-            task = taskQueue.poll();
-          }
-
-          // if nothing in queue, wait
-          if (task == null) {
-            taskQueue.wait();
-            continue;
-          }
+            taskQueue.add(intent);
+            taskQueue.notify();
         }
+    }
 
+    @UiThread
+    public void destroy() {
+        synchronized (taskQueue) {
+            terminated = true;
+            taskQueue.notify();
+        }
+    }
+
+    @WorkerThread
+    public void onTaskFinished(Intent task) {
+        // do nothing
+    }
+
+    @UiThread
+    public static void cleanMapItems(Context context) {
+        final Context appContext = context.getApplicationContext();
+
+        CLEAN_MAP_EXECUTOR.execute(() -> {
+            try {
+                for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
+                    PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
+                    ActionDisplayPoints.sendPackSilent(appContext, pw, false);
+                }
+            } catch (Throwable t) {
+                t = new LocusMapRuntimeException(t);
+                Timber.e(t);
+            }
+        });
+    }
+
+
+    @WorkerThread
+    @Override
+    public void run() {
         try {
-          downloadTask(task);
-        } catch (Exception e) {
-          handleTaskException(e);
-        } finally {
-          onTaskFinished(task);
+            while (!terminated) {
+                Intent task = null;
+
+                synchronized (taskQueue) {
+                    // chose latest
+                    while (!taskQueue.isEmpty()) {
+                        if (task != null)
+                            onTaskFinished(task);
+
+                        task = taskQueue.poll();
+                    }
+
+                    // if nothing in queue, wait
+                    if (task == null) {
+                        taskQueue.wait();
+                        continue;
+                    }
+                }
+
+                try {
+                    downloadTask(task);
+                } catch (Exception e) {
+                    handleTaskException(e);
+                } finally {
+                    onTaskFinished(task);
+                }
+            }
+        } catch (InterruptedException e) {
+            Timber.e(e);
         }
-      }
-    } catch (InterruptedException e) {
-      Timber.e(e);
     }
-  }
 
-  private void handleTaskException(@NonNull Exception e) {
-    if (e instanceof LocusMapRuntimeException) {
-      Timber.e(e);
-      notificationManager.showLiveMapError("Locus Map Error: " + e.getMessage());
+    private void handleTaskException(@NonNull Exception e) {
+        if (e instanceof LocusMapRuntimeException) {
+            Timber.e(e);
+            notificationManager.showLiveMapError("Locus Map Error: " + e.getMessage());
 
-      // disable live map
-      preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
-    } else if (e instanceof InvalidCredentialsException) {
-      Timber.e(e);
-      notificationManager.showLiveMapError(R.string.error_no_account);
+            // disable live map
+            preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
+        } else if (e instanceof InvalidCredentialsException) {
+            Timber.e(e);
+            notificationManager.showLiveMapError(R.string.error_no_account);
 
-      // disable live map
-      preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
-    } else if (e instanceof NetworkException) {
-      Timber.e(e);
-      notificationManager.showLiveMapError(R.string.error_network_unavailable);
-    } else {
-      Timber.e(e);
-    }
-  }
-
-  @WorkerThread
-  private void downloadTask(@NonNull Intent task)
-      throws GeocachingApiException, RequiredVersionMissingException {
-
-    boolean downloadHints = preferences.getBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false);
-
-    int current = 0;
-    int requests = 0;
-    try {
-      GeocachingApi api = GeocachingApiFactory.create();
-      GeocachingApiLoginTask.create(context, api).perform();
-
-      notificationManager.setDownloadingProgress(0, LIVEMAP_CACHES_COUNT);
-
-      while (current < LIVEMAP_CACHES_COUNT) {
-        int perPage = (LIVEMAP_CACHES_COUNT - current < LIVEMAP_CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current
-            : LIVEMAP_CACHES_PER_REQUEST;
-
-        if (!taskQueue.isEmpty()) {
-          Timber.d("New task found, skipped downloading next caches ...");
-          return;
-        }
-
-        ResultQuality resultQuality = downloadHints ? ResultQuality.SUMMARY : ResultQuality.LITE;
-
-        List<Geocache> caches;
-
-        if (current == 0) {
-          List<Filter> filters = createFilters(task);
-          caches = api.searchForGeocaches(resultQuality, perPage, 0, 0, filters, null);
+            // disable live map
+            preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
+        } else if (e instanceof NetworkException) {
+            Timber.e(e);
+            notificationManager.showLiveMapError(R.string.error_network_unavailable);
         } else {
-          caches = api.getMoreGeocaches(resultQuality, current, perPage, 0, 0);
+            Timber.e(e);
         }
+    }
 
-        if (caches.isEmpty()) break;
+    @WorkerThread
+    private void downloadTask(@NonNull Intent task)
+            throws GeocachingApiException, RequiredVersionMissingException {
 
-        if (!notificationManager.isLiveMapEnabled()) break;
+        boolean downloadHints = preferences.getBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false);
 
-        current += caches.size();
-        requests++;
-
-        PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
-        for (Geocache cache : caches) {
-          Waypoint wpt = mapper.createLocusWaypoint(cache);
-          if (wpt == null) continue;
-
-          wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
-              UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.code());
-          pw.addWaypoint(wpt);
-        }
-
+        int current = 0;
+        int requests = 0;
         try {
-          ActionDisplayPoints.sendPackSilent(context, pw, false);
-        } catch (Throwable t) {
-          throw new LocusMapRuntimeException(t);
+            GeocachingApi api = GeocachingApiFactory.create();
+            GeocachingApiLoginTask.create(context, api).perform();
+
+            notificationManager.setDownloadingProgress(0, LIVEMAP_CACHES_COUNT);
+
+            while (current < LIVEMAP_CACHES_COUNT) {
+                int perPage = (LIVEMAP_CACHES_COUNT - current < LIVEMAP_CACHES_PER_REQUEST) ? LIVEMAP_CACHES_COUNT - current
+                        : LIVEMAP_CACHES_PER_REQUEST;
+
+                if (!taskQueue.isEmpty()) {
+                    Timber.d("New task found, skipped downloading next caches ...");
+                    return;
+                }
+
+                ResultQuality resultQuality = downloadHints ? ResultQuality.SUMMARY : ResultQuality.LITE;
+
+                List<Geocache> caches;
+
+                if (current == 0) {
+                    List<Filter> filters = createFilters(task);
+                    caches = api.searchForGeocaches(resultQuality, perPage, 0, 0, filters, null);
+                } else {
+                    caches = api.getMoreGeocaches(resultQuality, current, perPage, 0, 0);
+                }
+
+                if (caches.isEmpty())
+                    break;
+
+                if (!notificationManager.isLiveMapEnabled())
+                    break;
+
+                current += caches.size();
+                requests++;
+
+                PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
+                for (Geocache cache : caches) {
+                    Waypoint wpt = mapper.createLocusWaypoint(cache);
+                    if (wpt == null)
+                        continue;
+
+                    wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
+                            UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.code());
+                    pw.addWaypoint(wpt);
+                }
+
+                try {
+                    ActionDisplayPoints.sendPackSilent(context, pw, false);
+                } catch (Throwable t) {
+                    throw new LocusMapRuntimeException(t);
+                }
+
+                notificationManager.setDownloadingProgress(current, LIVEMAP_CACHES_COUNT);
+
+                if (caches.size() != perPage)
+                    break;
+            }
+        } catch (InvalidSessionException e) {
+            Timber.e(e);
+            accountManager.invalidateOAuthToken();
+
+            throw e;
+        } finally {
+            Timber.i("Count of caches sent to Locus: %s", current);
         }
 
-        notificationManager.setDownloadingProgress(current, LIVEMAP_CACHES_COUNT);
+        notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);
 
-        if (caches.size() != perPage) break;
-      }
-    } catch (InvalidSessionException e) {
-      Timber.e(e);
-      accountManager.invalidateOAuthToken();
-
-      throw e;
-    } finally {
-      Timber.i("Count of caches sent to Locus: %s", current);
+        // HACK we must remove old PackWaypoints from the map
+        for (int i = requests + 1; i <= LIVEMAP_REQUESTS; i++) {
+            PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
+            ActionDisplayPoints.sendPackSilent(context, pw, false);
+        }
     }
 
-    notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);
+    @NonNull
+    private List<Filter> createFilters(@NonNull Intent task) {
+        List<Filter> filters = new ArrayList<>(10);
 
-    // HACK we must remove old PackWaypoints from the map
-    for (int i = requests + 1; i <= LIVEMAP_REQUESTS; i++) {
-      PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
-      ActionDisplayPoints.sendPackSilent(context, pw, false);
-    }
-  }
+        @SuppressWarnings("ConstantConditions")
+        String userName = accountManager.getAccount().name();
+        boolean premiumMember = accountManager.isPremium();
 
-  @NonNull
-  private List<Filter> createFilters(@NonNull Intent task) {
-    List<Filter> filters = new ArrayList<>(10);
+        double latitude = task.getDoubleExtra(PARAM_LATITUDE, 0D);
+        double longitude = task.getDoubleExtra(PARAM_LONGITUDE, 0D);
+        double topLeftLatitude = task.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
+        double topLeftLongitude = task.getDoubleExtra(PARAM_TOP_LEFT_LONGITUDE, 0D);
+        double bottomRightLatitude = task.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
+        double bottomRightLongitude = task.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
 
-    @SuppressWarnings("ConstantConditions")
-    String userName = accountManager.getAccount().name();
-    boolean premiumMember = accountManager.isPremium();
+        filters.add(new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE));
+        filters.add(new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude));
 
-    double latitude = task.getDoubleExtra(PARAM_LATITUDE, 0D);
-    double longitude = task.getDoubleExtra(PARAM_LONGITUDE, 0D);
-    double topLeftLatitude = task.getDoubleExtra(PARAM_TOP_LEFT_LATITUDE, 0D);
-    double topLeftLongitude = task.getDoubleExtra(PARAM_TOP_LEFT_LONGITUDE, 0D);
-    double bottomRightLatitude = task.getDoubleExtra(PARAM_BOTTOM_RIGHT_LATITUDE, 0D);
-    double bottomRightLongitude = task.getDoubleExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, 0D);
+        boolean showDisabled = preferences.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
+        filters.add(
+                new GeocacheExclusionsFilter(false, showDisabled ? null : true, null, null, null, null));
 
-    filters.add(new PointRadiusFilter(latitude, longitude, LIVEMAP_DISTANCE));
-    filters.add(new ViewportFilter(topLeftLatitude, topLeftLongitude, bottomRightLatitude, bottomRightLongitude));
+        boolean showFound = preferences.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
+        if (!showFound) {
+            filters.add(new NotFoundByUsersFilter(userName));
+        }
 
-    boolean showDisabled = preferences.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false);
-    filters.add(
-        new GeocacheExclusionsFilter(false, showDisabled ? null : true, null, null, null, null));
+        boolean showOwn = preferences.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
+        if (!showOwn) {
+            filters.add(new NotHiddenByUsersFilter(userName));
+        }
 
-    boolean showFound = preferences.getBoolean(PrefConstants.FILTER_SHOW_FOUND, false);
-    if (!showFound) {
-      filters.add(new NotFoundByUsersFilter(userName));
-    }
+        if (premiumMember) {
+            filters.add(new GeocacheTypeFilter(getSelectedGeocacheTypes()));
+            filters.add(new GeocacheContainerSizeFilter(getSelectedContainerTypes()));
 
-    boolean showOwn = preferences.getBoolean(PrefConstants.FILTER_SHOW_OWN, false);
-    if (!showOwn) {
-      filters.add(new NotHiddenByUsersFilter(userName));
-    }
+            float difficultyMin = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_DIFFICULTY_MIN, 1);
+            float difficultyMax = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_DIFFICULTY_MAX, 5);
+            if (difficultyMin > 1 || difficultyMax < 5) {
+                filters.add(new DifficultyFilter(difficultyMin, difficultyMax));
+            }
 
-    if (premiumMember) {
-      filters.add(new GeocacheTypeFilter(getSelectedGeocacheTypes()));
-      filters.add(new GeocacheContainerSizeFilter(getSelectedContainerTypes()));
+            float terrainMin = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_TERRAIN_MIN, 1);
+            float terrainMax = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_TERRAIN_MAX, 5);
+            if (terrainMin > 1 || terrainMax < 5) {
+                filters.add(new TerrainFilter(terrainMin, terrainMax));
+            }
 
-      float difficultyMin = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_DIFFICULTY_MIN, 1);
-      float difficultyMax = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_DIFFICULTY_MAX, 5);
-      if (difficultyMin > 1 || difficultyMax < 5) {
-        filters.add(new DifficultyFilter(difficultyMin, difficultyMax));
-      }
+            // TODO: 3. 9. 2015 Move it to configuration
+            filters.add(new BookmarksExcludeFilter(true));
+        }
 
-      float terrainMin = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_TERRAIN_MIN, 1);
-      float terrainMax = PreferenceUtil.getParsedFloat(preferences, PrefConstants.FILTER_TERRAIN_MAX, 5);
-      if (terrainMin > 1 || terrainMax < 5) {
-        filters.add(new TerrainFilter(terrainMin, terrainMax));
-      }
-
-      // TODO: 3. 9. 2015 Move it to configuration
-      filters.add(new BookmarksExcludeFilter(true));
+        return filters;
     }
 
-    return filters;
-  }
+    private GeocacheType[] getSelectedGeocacheTypes() {
+        List<GeocacheType> filter = new ArrayList<>(GeocacheType.values().length);
 
-  private GeocacheType[] getSelectedGeocacheTypes() {
-    List<GeocacheType> filter = new ArrayList<>(GeocacheType.values().length);
+        final int len = GeocacheType.values().length;
+        for (int i = 0; i < len; i++) {
+            if (preferences.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
+                filter.add(GeocacheType.values()[i]);
+            }
+        }
 
-    final int len = GeocacheType.values().length;
-    for (int i = 0; i < len; i++) {
-      if (preferences.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
-        filter.add(GeocacheType.values()[i]);
-      }
+        return filter.toArray(new GeocacheType[filter.size()]);
     }
 
-    return filter.toArray(new GeocacheType[filter.size()]);
-  }
+    private ContainerType[] getSelectedContainerTypes() {
+        List<ContainerType> filter = new ArrayList<>(ContainerType.values().length);
 
-  private ContainerType[] getSelectedContainerTypes() {
-    List<ContainerType> filter = new ArrayList<>(ContainerType.values().length);
+        final int len = ContainerType.values().length;
+        for (int i = 0; i < len; i++) {
+            if (preferences.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
+                filter.add(ContainerType.values()[i]);
+            }
+        }
 
-    final int len = ContainerType.values().length;
-    for (int i = 0; i < len; i++) {
-      if (preferences.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
-        filter.add(ContainerType.values()[i]);
-      }
+        return filter.toArray(new ContainerType[filter.size()]);
     }
-
-    return filter.toArray(new ContainerType[filter.size()]);
-  }
 }

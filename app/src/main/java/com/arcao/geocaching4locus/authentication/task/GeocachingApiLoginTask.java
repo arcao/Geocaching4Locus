@@ -13,12 +13,12 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory;
 
 public class GeocachingApiLoginTask {
-    private final Context mContext;
-    private final GeocachingApi mApi;
+    private final Context context;
+    private final GeocachingApi api;
 
     private GeocachingApiLoginTask(Context context, GeocachingApi api) {
-        mContext = context.getApplicationContext();
-        mApi = api;
+        this.context = context.getApplicationContext();
+        this.api = api;
     }
 
     public static GeocachingApiLoginTask create(Context context, GeocachingApi api) {
@@ -26,7 +26,7 @@ public class GeocachingApiLoginTask {
     }
 
     public void perform() throws GeocachingApiException {
-        AccountManager manager = App.get(mContext).getAccountManager();
+        AccountManager manager = App.get(context).getAccountManager();
 
         Account account = manager.getAccount();
         if (account == null)
@@ -38,10 +38,10 @@ public class GeocachingApiLoginTask {
             throw new InvalidCredentialsException("Account not found.");
         }
 
-        mApi.openSession(token);
+        api.openSession(token);
 
         if (manager.isAccountUpdateRequired()) {
-            UserProfile userProfile = mApi.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(mContext));
+            UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(context));
 
             if (userProfile == null)
                 throw new InvalidResponseException("User profile is null");

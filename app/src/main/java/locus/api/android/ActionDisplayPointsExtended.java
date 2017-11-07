@@ -15,95 +15,81 @@ import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import timber.log.Timber;
 
 public class ActionDisplayPointsExtended extends ActionDisplayPoints {
-	private static final String LOCUS_CACHE_FILENAME = "data.locus";
+    private static final String LOCUS_CACHE_FILENAME = "data.locus";
 
-	public static boolean sendPacksFile(Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
-		return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center,
-				intentFlags);
-	}
+    public static boolean sendPacksFile(Context context, File file, boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
+        return sendPacksFile(LocusConst.ACTION_DISPLAY_DATA, context, file, callImport, center,
+                intentFlags);
+    }
 
-	private static boolean sendPacksFile(String action, Context context, File file,
-			boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
-		if (!file.exists())
-			return false;
+    private static boolean sendPacksFile(String action, Context context, File file,
+                                         boolean callImport, boolean center, int intentFlags) throws RequiredVersionMissingException {
+        if (!file.exists())
+            return false;
 
-		Intent intent = new Intent();
-		intent.addFlags(intentFlags);
-		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
+        Intent intent = new Intent();
+        intent.addFlags(intentFlags);
+        intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
 
-		return sendData(action, context, intent, callImport, center);
-	}
+        return sendData(action, context, intent, callImport, center);
+    }
 
-	@Nullable
-	public static Intent createSendPacksIntent(File file, boolean callImport, boolean center) {
-		if (!file.exists())
-			return null;
+    @Nullable
+    public static Intent createSendPacksIntent(File file, boolean callImport, boolean center) {
+        if (!file.exists())
+            return null;
 
-		Intent intent = new Intent(LocusConst.ACTION_DISPLAY_DATA);
+        Intent intent = new Intent(LocusConst.ACTION_DISPLAY_DATA);
 
-		intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
+        intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.getAbsolutePath());
 
-		// set centering tag
-		intent.putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center);
+        // set centering tag
+        intent.putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center);
 
-		// set import tag
-		intent.putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport);
+        // set import tag
+        intent.putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport);
 
-		return intent;
-	}
+        return intent;
+    }
 
-	/**
-	 * Is external storage available for writing file?
-	 * @return true if we can write to storage otherwise false
-	 */
-	private static boolean isExternalStorageWritable() {
-		String state = Environment.getExternalStorageState();
+    /**
+     * Get a path including file name to save data for Locus
+     *
+     * @return path to file
+     */
+    public static File getCacheFileName() {
+        File cacheFile = new File(Environment.getExternalStorageDirectory(), String.format("/Geocaching4Locus/%s", LOCUS_CACHE_FILENAME));
 
-		// We can read and write the media
-		// Something else is wrong. It may be one of many other states, but all we
-		// need to know is we can neither read nor write
-		return Environment.MEDIA_MOUNTED.equals(state);
-	}
+        Timber.d("Cache file for Locus: " + cacheFile.toString());
 
-	/**
-	 * Get a path including file name to save data for Locus
-	 * @param context	Context
-	 * @return	path to file
-	 */
-	public static File getCacheFileName(Context context) {
-		//if (!isExternalStorageWritable())
-		//	throw new IllegalStateException("External storage (or SD Card) is not available.");
+        File parentDirectory = cacheFile.getParentFile();
 
-		File cacheFile = new File(Environment.getExternalStorageDirectory(), String.format("/Geocaching4Locus/%s", LOCUS_CACHE_FILENAME));
+        if (!parentDirectory.mkdirs()) {
+            Timber.w("Directory '%s' not created.", parentDirectory);
+        }
 
-		Timber.d("Cache file for Locus: " + cacheFile.toString());
-
-		File parentDirectory = cacheFile.getParentFile();
-
-		parentDirectory.mkdirs();
-
-		if (!parentDirectory.isDirectory())
-			throw new IllegalStateException("External storage (or SD Card) is not writable.");
+        if (!parentDirectory.isDirectory())
+            throw new IllegalStateException("External storage (or SD Card) is not writable.");
 
 
-		return cacheFile;
-	}
+        return cacheFile;
+    }
 
-	/**
-	 * Get a OutputFileStream to save data for Locus
-	 * @param context Context
-	 * @return OutputFileStream object for world readable file returned by getCacheFileName method
-	 * @throws IOException If I/O error occurs
-	 */
-	@SuppressLint("SetWorldReadable")
-	public static FileOutputStream getCacheFileOutputStream(Context context) throws IOException {
-			File file = getCacheFileName(context);
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.flush(); // create empty file
-			if (!file.setReadable(true, false)) { // file has to be readable for Locus
-				Timber.e("Unable to set readable all for: " + file);
-			}
+    /**
+     * Get a OutputFileStream to save data for Locus
+     *
+     * @return OutputFileStream object for world readable file returned by getCacheFileName method
+     * @throws IOException If I/O error occurs
+     */
+    @SuppressLint("SetWorldReadable")
+    public static FileOutputStream getCacheFileOutputStream() throws IOException {
+        File file = getCacheFileName();
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.flush(); // create empty file
+        if (!file.setReadable(true, false)) { // file has to be readable for Locus
+            Timber.e("Unable to set readable all for: " + file);
+        }
 
-			return fos;
-		}
+        return fos;
+    }
 }

@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.import_gc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
@@ -93,7 +94,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 
 
 	@Override
-	public void onImportFinished(Intent intent) {
+	public void onImportFinished(@Nullable Intent intent) {
 		Timber.d("onImportFinished result: " + (intent != null));
 		setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
 
@@ -104,7 +105,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 	}
 
 	@Override
-	public void onImportError(Intent intent) {
+	public void onImportError(@NonNull Intent intent) {
 		Timber.d("onImportError called");
 		startActivityForResult(intent, REQUEST_IMPORT_ERROR);
 	}

@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.import_gc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -102,15 +103,18 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 	}
 
 	@Override
-	public void onImportFinished(Intent intent) {
+	public void onImportFinished(@Nullable Intent intent) {
 		Timber.d("onImportFinished result: " + (intent != null));
 		setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
-		startActivity(intent);
+
+		if (intent != null) {
+			startActivity(intent);
+		}
 		finish();
 	}
 
 	@Override
-	public void onImportError(Intent intent) {
+	public void onImportError(@NonNull Intent intent) {
 		Timber.d("onImportError called");
 		setResult(RESULT_CANCELED);
 		startActivity(intent);

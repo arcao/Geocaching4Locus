@@ -21,8 +21,8 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	private static final String PARAM_CACHE_IDS = "CACHE_IDS";
 
 	public interface DialogListener {
-		void onImportFinished(Intent intent);
-		void onImportError(Intent intent);
+		void onImportFinished(@Nullable Intent intent);
+		void onImportError(@NonNull Intent intent);
 	}
 
 	@Nullable private ImportTask mTask;
@@ -63,7 +63,7 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
 	}
 
 	@Override
-	public void onTaskFinished(Intent intent) {
+	public void onTaskFinished(@Nullable Intent intent) {
 		dismiss();
 
 		DialogListener listener = mDialogListenerRef.get();

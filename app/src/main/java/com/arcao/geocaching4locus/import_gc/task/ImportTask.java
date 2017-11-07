@@ -46,7 +46,7 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
   private static final String PACK_WAYPOINTS_NAME = "IMPORT";
 
   public interface TaskListener {
-    void onTaskFinished(Intent intent);
+    void onTaskFinished(@Nullable Intent intent);
     void onTaskError(@NonNull Intent errorIntent);
     void onProgressUpdate(int current, int count);
   }

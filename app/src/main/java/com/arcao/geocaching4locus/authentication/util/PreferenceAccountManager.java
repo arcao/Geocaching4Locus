@@ -183,6 +183,7 @@ public class PreferenceAccountManager implements AccountManager {
         int prefVersion = preferences.getInt(PrefConstants.PREF_VERSION, 0);
         if (prefVersion < 1) {
             // remove user name, password and session from old storage
+            //noinspection deprecation
             defaultPref.edit()
                     .remove(PrefConstants.ACCOUNT_USERNAME)
                     .remove(PrefConstants.ACCOUNT_PASSWORD)

@@ -7,10 +7,10 @@ import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 public class AccountInfoCollector extends Collector {
-	private final Context mContext;
+	private final Context context;
 
 	public AccountInfoCollector(Context context) {
-		this.mContext = context.getApplicationContext();
+		this.context = context.getApplicationContext();
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class AccountInfoCollector extends Collector {
 	protected String collect() {
 		final StringBuilder sb = new StringBuilder();
 
-		Account account = App.get(mContext).getAccountManager().getAccount();
+		Account account = App.get(context).getAccountManager().getAccount();
 		if (account == null) {
 			sb.append("No Account").append("\n");
 		} else {
@@ -30,7 +30,7 @@ public class AccountInfoCollector extends Collector {
 			sb.append("NAME=").append(account.name()).append("\n");
 
 			sb.append("\n--- RESTRICTIONS ---\n");
-			sb.append(new SharedPreferencesCollector(mContext, PrefConstants.RESTRICTION_STORAGE_NAME).collect());
+			sb.append(new SharedPreferencesCollector(context, PrefConstants.RESTRICTION_STORAGE_NAME).collect());
 		}
 		return sb.toString();
 	}

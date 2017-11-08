@@ -139,8 +139,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Ažuriram caheove…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Originalne koordinate</string>
     <string name="pref_container_size" comment=""
         >Veličina spremnika</string>
 

@@ -23,6 +23,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
 
+import java.util.Formatter;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,7 +45,7 @@ public class SpanFormatter {
      * Due to the way {@link Spannable}s work, any argument's spans will can only be included <b>once</b> in the result.
      * Any duplicates will appear as text only.
      *
-     * @param format the format string (see {@link java.util.Formatter#format})
+     * @param format the format string (see {@link Formatter#format})
      * @param args   the list of arguments passed to the formatter. If there are
      *               more arguments than required by {@code format},
      *               additional arguments are ignored.
@@ -61,7 +62,7 @@ public class SpanFormatter {
      * Any duplicates will appear as text only.
      *
      * @param locale the locale to apply; {@code null} value means no localization.
-     * @param format the format string (see {@link java.util.Formatter#format})
+     * @param format the format string (see {@link Formatter#format})
      * @param args   the list of arguments passed to the formatter.
      * @return the formatted string (with spans).
      * @see String#format(Locale, String, Object...)

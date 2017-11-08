@@ -140,8 +140,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >藏点更新中……</string>
-    <string name="var_original_coordinates_name" comment=""
-        >原始坐标</string>
     <string name="pref_container_size" comment=""
         >容器大小</string>
 

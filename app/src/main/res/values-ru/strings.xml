@@ -138,8 +138,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Кэш обновляется…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Оригинальные координаты</string>
     <string name="pref_container_size" comment=""
         >Размер контейнера</string>
 

@@ -38,10 +38,7 @@ public class BookmarkGeocacheWebLinkActivity extends AbstractWebLinkActivity {
 
     @Override
     protected boolean isRefreshRequired(Waypoint waypoint) {
-        if (waypoint == null || waypoint.gcData == null || TextUtils.isEmpty(waypoint.gcData.getCacheUrl()))
-            return false;
-
-        return getGuid(waypoint.gcData.getCacheUrl()) == null;
+        return !(waypoint == null || waypoint.gcData == null || TextUtils.isEmpty(waypoint.gcData.getCacheUrl())) && getGuid(waypoint.gcData.getCacheUrl()) == null;
     }
 
     @Override

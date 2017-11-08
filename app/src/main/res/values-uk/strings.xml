@@ -139,8 +139,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Оновлення кешу…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Початкові координати</string>
     <string name="pref_container_size" comment=""
         >Розмір контейнера</string>
 

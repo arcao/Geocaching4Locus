@@ -140,8 +140,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Aktualizacja skrzynek…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Pierwotne współrzędne</string>
     <string name="pref_container_size" comment=""
         >Rozmiar</string>
 

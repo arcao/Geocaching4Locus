@@ -138,8 +138,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >更新寶藏 …</string>
-    <string name="var_original_coordinates_name" comment=""
-        >原始座標</string>
     <string name="pref_container_size" comment=""
         >寶盒尺寸</string>
 

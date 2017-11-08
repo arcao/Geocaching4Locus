@@ -140,8 +140,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Aktualizuji keše…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Původní souřadnice</string>
     <string name="pref_container_size" comment=""
         >Velikost schránky</string>
 

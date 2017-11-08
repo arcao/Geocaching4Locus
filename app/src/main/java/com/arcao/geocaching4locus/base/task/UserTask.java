@@ -27,10 +27,21 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.support.annotation.NonNull;
-import timber.log.Timber;
 
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import timber.log.Timber;
 
 /**
  * <p>
@@ -288,6 +299,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #doInBackground(Object[])
 	 */
 	protected void onPreExecute() {
+		// override me
 	}
 
 	/**
@@ -303,6 +315,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #doInBackground(Object[])
 	 */
 	protected void onPostExecute(Result result) {
+		// override me
 	}
 
 	/**
@@ -317,6 +330,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #doInBackground(Object[])
 	 */
 	protected void onProgressUpdate(Progress... values) {
+		// override me
 	}
 
 	/**
@@ -326,6 +340,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #isCancelled()
 	 */
 	protected void onCancelled() {
+		// override me
 	}
 
 	/**
@@ -371,6 +386,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #onCancelled()
 	 */
 	protected void onFinally() {
+		// override me
 	}
 
 	/**
@@ -383,6 +399,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #doInBackground(Object...)
 	 */
 	protected void onException(Throwable e) {
+		// override me
 	}
 
 	/**

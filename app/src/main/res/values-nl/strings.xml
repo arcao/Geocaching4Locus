@@ -140,8 +140,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Bezig met updaten van caches…</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Oorspronkelijke coördinaten</string>
     <string name="pref_container_size" comment=""
         >Grootte van container</string>
 

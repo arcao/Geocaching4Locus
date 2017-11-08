@@ -140,8 +140,6 @@
 
     <string name="progress_update_geocaches" comment=""
         >Caches werden aktualisiert …</string>
-    <string name="var_original_coordinates_name" comment=""
-        >Ursprüngliche Koordinaten</string>
     <string name="pref_container_size" comment=""
         >Behältergröße</string>
 

@@ -27,7 +27,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.6.0'
 
     // Apache commons
-    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'org.apache.commons:commons-lang3:3.7'
     implementation 'org.apache.commons:commons-collections4:4.1'
     implementation 'commons-io:commons-io:2.6'
 

@@ -116,8 +116,8 @@
         <item name="android:gravity">center|top</item>
 
         <item name="android:minWidth">120dp</item>
-        <item name="android:minHeight">88dp</item>
-        <item name="android:maxLines">2</item>
+        <item name="android:minHeight">100dp</item>
+        <item name="android:maxLines">3</item>
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

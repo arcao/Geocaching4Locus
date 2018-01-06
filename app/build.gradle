@@ -43,8 +43,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-v13'
     }
 
-    // Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.8.0'
+    // Crashlytics & Firebase
+    implementation 'com.google.firebase:firebase-core:11.8.0'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+        transitive = true
+    }
 
     // Networking
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
@@ -160,3 +163,5 @@ if (project.hasProperty('storeFile') &&
 } else {
     android.buildTypes.release.signingConfig = android.signingConfigs.debug
 }
+
+apply plugin: 'com.google.gms.google-services'

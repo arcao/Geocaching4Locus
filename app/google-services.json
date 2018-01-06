@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "642919137623",
+    "firebase_url": "https://geocaching4locus.firebaseio.com",
+    "project_id": "geocaching4locus",
+    "storage_bucket": "geocaching4locus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642919137623:android:26d65eebdc2f0671",
+        "android_client_info": {
+          "package_name": "com.arcao.geocaching4locus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642919137623-ii1qgmgove6cahdodl7ep87hqf1978kj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4DBesZK9Cas2oT48XGBz8RdvZwpDLXOU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

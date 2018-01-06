@@ -47,7 +47,7 @@ public class ExceptionHandler {
 
     @NonNull
     public Intent handle(@NonNull Throwable t) {
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent positiveAction = null;
         CharSequence baseMessage = "%s";

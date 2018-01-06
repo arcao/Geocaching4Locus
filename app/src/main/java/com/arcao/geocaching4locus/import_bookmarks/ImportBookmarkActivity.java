@@ -38,7 +38,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             LocusTesting.showLocusMissingError(this);
             return;
         }
@@ -162,7 +162,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
     @Override
     public void onImportFinished(Intent errorIntent) {
-        Timber.d("onImportFinished result: " + errorIntent);
+        Timber.d("onImportFinished result: %s", errorIntent);
 
         if (errorIntent == null) {
             setResult(RESULT_OK);

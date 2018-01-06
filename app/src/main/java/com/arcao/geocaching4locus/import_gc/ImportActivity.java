@@ -29,7 +29,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             LocusTesting.showLocusMissingError(this);
             return;
         }
@@ -59,7 +59,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
         if (!m.find()) {
             m = GUID_PATTERN.matcher(url);
             if (!m.find()) {
-                Timber.e("Cache code / guid not found in url: " + url);
+                Timber.e("Cache code / guid not found in url: %s", url);
                 Toast.makeText(this, "Cache code or GUID isn't found in URL: " + url, Toast.LENGTH_LONG).show();
                 finish();
                 return;
@@ -70,7 +70,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
         AnalyticsUtil.actionImport(App.get(this).getAccountManager().isPremium());
 
-        Timber.i("source: import;" + cacheId);
+        Timber.i("source: import;%s", cacheId);
         ImportDialogFragment.newInstance(new String[]{cacheId}).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
     }
 
@@ -104,7 +104,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
 
     @Override
     public void onImportFinished(@Nullable Intent intent) {
-        Timber.d("onImportFinished result: " + (intent != null));
+        Timber.d("onImportFinished result: %b", (intent != null));
         setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
 
         if (intent != null) {

@@ -105,7 +105,7 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
     }
 
     @Override
-    public void onTaskFinished(boolean success) {
+    public void onTaskFinished() {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();

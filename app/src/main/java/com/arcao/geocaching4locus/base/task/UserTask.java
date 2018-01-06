@@ -166,32 +166,33 @@ public abstract class UserTask<Params, Progress, Result> {
 	private static final int MAXIMUM_POOL_SIZE = 10;
 	private static final int KEEP_ALIVE = 10;
 
-	private static final BlockingQueue<Runnable> sWorkQueue =
+	private static final BlockingQueue<Runnable> WORK_QUEUE =
 						new LinkedBlockingQueue<>();
 
-	private static final ThreadFactory sThreadFactory = new ThreadFactory() {
-		private final AtomicInteger mCount = new AtomicInteger(1);
+	private static final ThreadFactory THREAD_FACTORY = new ThreadFactory() {
+		private final AtomicInteger count = new AtomicInteger(1);
 
 		@Override
 		public Thread newThread(@NonNull Runnable r) {
-			return new Thread(r, "UserTask #" + mCount.getAndIncrement());
+			return new Thread(r, "UserTask #" + count.getAndIncrement());
 		}
 	};
 
-	private static final Executor sExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE,
-						MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sWorkQueue, sThreadFactory);
+	private static final Executor EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE,
+						MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, WORK_QUEUE, THREAD_FACTORY);
 
 	private static final int MESSAGE_POST_RESULT = 0x1;
 	private static final int MESSAGE_POST_PROGRESS = 0x2;
 	private static final int MESSAGE_POST_CANCEL = 0x3;
 	private static final int MESSAGE_POST_EXCEPTION = 0x4;
 
-	@SuppressWarnings("rawtypes") static final Handler sHandler = new InternalHandler();
+	@SuppressWarnings({"rawtypes", "WeakerAccess"})
+	static final Handler HANDLER = new InternalHandler();
 
-	private final WorkerRunnable<Params, Result> mWorker;
-	private final FutureTask<Result> mFuture;
+	private final WorkerRunnable<Params, Result> worker;
+	private final FutureTask<Result> future;
 
-	private volatile Status mStatus = Status.PENDING;
+	private volatile Status status = Status.PENDING;
 
 	/**
 	 * Indicates the current status of the task. Each status will be set only once
@@ -216,16 +217,16 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * Creates a new user task. This constructor must be invoked on the UI thread.
 	 */
 	public UserTask() {
-		mWorker = new WorkerRunnable<Params, Result>() {
+		worker = new WorkerRunnable<Params, Result>() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public Result call() throws Exception {
 				Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-				return doInBackground(mParams);
+				return doInBackground(params);
 			}
 		};
 
-		mFuture = new FutureTask<Result>(mWorker) {
+		future = new FutureTask<Result>(worker) {
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void done() {
@@ -235,15 +236,15 @@ public abstract class UserTask<Params, Progress, Result> {
 				try {
 					result = get();
 				} catch (InterruptedException e) {
-					Timber.w(e, e.getMessage());
+					Timber.w(e);
 				} catch (ExecutionException e) {
 					Timber.e(e.getCause(), "An error occurred while executing doInBackground()");
-					message = sHandler.obtainMessage(MESSAGE_POST_EXCEPTION,
+					message = HANDLER.obtainMessage(MESSAGE_POST_EXCEPTION,
 														new UserTaskResult<>(UserTask.this, e.getCause(), (Result[]) null));
 					message.sendToTarget();
 					return;
 				} catch (CancellationException e) {
-					message = sHandler.obtainMessage(MESSAGE_POST_CANCEL,
+					message = HANDLER.obtainMessage(MESSAGE_POST_CANCEL,
 														new UserTaskResult<>(UserTask.this, null, (Result[]) null));
 					message.sendToTarget();
 					return;
@@ -252,7 +253,7 @@ public abstract class UserTask<Params, Progress, Result> {
 														+ "doInBackground()", t);
 				}
 
-				message = sHandler.obtainMessage(MESSAGE_POST_RESULT,
+				message = HANDLER.obtainMessage(MESSAGE_POST_RESULT,
 												new UserTaskResult<>(UserTask.this, null, result));
 				message.sendToTarget();
 			}
@@ -264,8 +265,9 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *
 	 * @return The current status.
 	 */
+	@SuppressWarnings({"WeakerAccess", "unused"})
 	public final Status getStatus() {
-		return mStatus;
+		return status;
 	}
 
 	/**
@@ -290,6 +292,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #publishProgress(Object[])
 	 * @see #onException(Throwable)
 	 */
+	@SuppressWarnings("unchecked")
 	protected abstract Result doInBackground(Params... params) throws Exception;
 
 	/**
@@ -329,6 +332,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #publishProgress(Object[])
 	 * @see #doInBackground(Object[])
 	 */
+	@SuppressWarnings("unchecked")
 	protected void onProgressUpdate(Progress... values) {
 		// override me
 	}
@@ -352,7 +356,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #cancel(boolean)
 	 */
 	public final boolean isCancelled() {
-		return mFuture.isCancelled();
+		return future.isCancelled();
 	}
 
 	/**
@@ -375,7 +379,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #onCancelled()
 	 */
 	public final boolean cancel(boolean mayInterruptIfRunning) {
-		return mFuture.cancel(mayInterruptIfRunning);
+		return future.cancel(mayInterruptIfRunning);
 	}
 
 	/**
@@ -385,6 +389,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @see #onPostExecute(Object)
 	 * @see #onCancelled()
 	 */
+	@SuppressWarnings("WeakerAccess")
 	protected void onFinally() {
 		// override me
 	}
@@ -416,7 +421,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *           If the current thread was interrupted while waiting.
 	 */
 	public final Result get() throws InterruptedException, ExecutionException {
-		return mFuture.get();
+		return future.get();
 	}
 
 	/**
@@ -441,7 +446,7 @@ public abstract class UserTask<Params, Progress, Result> {
 	 */
 	public final Result get(long timeout, TimeUnit unit) throws InterruptedException,
 						ExecutionException, TimeoutException {
-		return mFuture.get(timeout, unit);
+		return future.get(timeout, unit);
 	}
 
 	/**
@@ -460,9 +465,10 @@ public abstract class UserTask<Params, Progress, Result> {
 	 *           {@link UserTask.Status#RUNNING} or
 	 *           {@link UserTask.Status#FINISHED}.
 	 */
+	@SafeVarargs
 	public final UserTask<Params, Progress, Result> execute(Params... params) {
-		if (mStatus != Status.PENDING) {
-			switch (mStatus) {
+		if (status != Status.PENDING) {
+			switch (status) {
 				case RUNNING:
 					throw new IllegalStateException("Cannot execute task:"
 														+ " the task is already running.");
@@ -474,12 +480,12 @@ public abstract class UserTask<Params, Progress, Result> {
 			}
 		}
 
-		mStatus = Status.RUNNING;
+		status = Status.RUNNING;
 
 		onPreExecute();
 
-		mWorker.mParams = params;
-		sExecutor.execute(mFuture);
+		worker.params = params;
+		EXECUTOR.execute(future);
 
 		return this;
 	}
@@ -493,27 +499,28 @@ public abstract class UserTask<Params, Progress, Result> {
 	 * @param values
 	 *          The progress values to update the UI with.
 	 *
-	 * @see # onProgressUpdate (Object[])
+	 * @see #onProgressUpdate(Object[])
 	 * @see #doInBackground(Object[])
 	 */
+	@SafeVarargs
 	protected final void publishProgress(Progress... values) {
-		sHandler.obtainMessage(MESSAGE_POST_PROGRESS,
+		HANDLER.obtainMessage(MESSAGE_POST_PROGRESS,
 								new UserTaskResult<>(this, null, values)).sendToTarget();
 	}
 
 	void finish(Result result) {
 		onPostExecute(result);
-		mStatus = Status.FINISHED;
+		status = Status.FINISHED;
 	}
 
 	void exception(Throwable e) {
 	  onException(e);
-	  mStatus = Status.FINISHED;
+	  status = Status.FINISHED;
 	}
 
 	void cancel() {
 	  onCancelled();
-	  mStatus = Status.FINISHED;
+	  status = Status.FINISHED;
 	}
 
 	private static class InternalHandler<Params, Progress, Result> extends Handler {
@@ -527,40 +534,41 @@ public abstract class UserTask<Params, Progress, Result> {
 			switch (msg.what) {
 				case MESSAGE_POST_RESULT:
 					// There is only one result
-					result.mTask.finish((Result) result.mData[0]);
-					result.mTask.onFinally();
+					result.task.finish((Result) result.data[0]);
+					result.task.onFinally();
 					break;
 				case MESSAGE_POST_PROGRESS:
-					result.mTask.onProgressUpdate((Progress[]) result.mData);
+					result.task.onProgressUpdate((Progress[]) result.data);
 					break;
 				case MESSAGE_POST_CANCEL:
-					result.mTask.cancel();
-					result.mTask.onFinally();
+					result.task.cancel();
+					result.task.onFinally();
 					break;
 				case MESSAGE_POST_EXCEPTION:
-					result.mTask.exception(result.mException);
-					result.mTask.onFinally();
+					result.task.exception(result.exception);
+					result.task.onFinally();
 					break;
 			}
 		}
 	}
 
 	private static abstract class WorkerRunnable<Params, Result> implements Callable<Result> {
-		Params[] mParams;
+		Params[] params;
 
 		WorkerRunnable() {
 		}
 	}
 
 	private static class UserTaskResult<Task, Data> {
-		final Task mTask;
-		final Data[] mData;
-		final Throwable mException;
+		final Task task;
+		final Data[] data;
+		final Throwable exception;
 
+		@SafeVarargs
 		UserTaskResult(Task task, Throwable exception, Data... data) {
-			mTask = task;
-			mData = data;
-			mException = exception;
+			this.task = task;
+			this.data = data;
+			this.exception = exception;
 		}
 	}
 }

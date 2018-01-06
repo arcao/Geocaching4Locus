@@ -57,7 +57,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
                     oldPoint = p;
                 }
             } catch (Throwable t) {
-                Timber.e(t, t.getMessage());
+                Timber.e(t);
             }
         } else if (getIntent().hasExtra(PARAM_SIMPLE_CACHE_ID)) {
             cacheId = getIntent().getStringExtra(PARAM_SIMPLE_CACHE_ID);
@@ -79,9 +79,9 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
             return;
         }
 
-        Timber.i("source: update;" + cacheId);
+        Timber.i("source: update;%s", cacheId);
 
-        boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent().getClassName());
+        boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent() != null ? getIntent().getComponent().getClassName() : null);
 
         AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs,
                 App.get(this).getAccountManager().isPremium());
@@ -91,7 +91,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
     @Override
     public void onUpdateFinished(Intent result) {
-        Timber.d("onUpdateFinished result: " + result);
+        Timber.d("onUpdateFinished result: %s", result);
         setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
         finish();
     }

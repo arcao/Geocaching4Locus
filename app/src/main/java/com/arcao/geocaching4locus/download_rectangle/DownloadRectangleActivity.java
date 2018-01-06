@@ -23,7 +23,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             LocusTesting.showLocusMissingError(this);
             return;
         }

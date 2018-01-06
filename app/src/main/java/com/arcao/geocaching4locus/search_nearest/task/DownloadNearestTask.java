@@ -175,7 +175,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
                 cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
             }
 
-            Timber.i("found caches: " + current);
+            Timber.i("found caches: %d", current);
         } catch (InvalidSessionException e) {
             accountManager.invalidateOAuthToken();
 
@@ -222,7 +222,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
         //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

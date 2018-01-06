@@ -82,7 +82,7 @@ public class RefreshWebLinkTask extends
 
             return new ParcelableWaypoint(mapper.createLocusWaypoint(cache));
         } catch (InvalidSessionException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             accountManager.invalidateOAuthToken();
 
             throw e;
@@ -96,7 +96,7 @@ public class RefreshWebLinkTask extends
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -121,7 +121,7 @@ public class RefreshWebLinkTask extends
                 if (ArrayUtils.isNotEmpty(data))
                     waypoint = new Waypoint(data);
             } catch (IOException e) {
-                Timber.e(e, e.getMessage());
+                Timber.e(e);
             }
         }
 

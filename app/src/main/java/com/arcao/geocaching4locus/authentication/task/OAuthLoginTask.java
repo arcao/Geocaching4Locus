@@ -82,7 +82,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
             helper.setOAuthRequestToken(requestToken);
             String authUrl = service.getAuthorizationUrl(requestToken);
-            Timber.i("AuthorizationUrl: " + authUrl);
+            Timber.i("AuthorizationUrl: %s", authUrl);
             return new String[]{authUrl};
         } else {
             OAuth1RequestToken requestToken = helper.getOAuthRequestToken();
@@ -139,7 +139,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

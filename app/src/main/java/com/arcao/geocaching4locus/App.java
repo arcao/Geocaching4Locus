@@ -68,7 +68,7 @@ public class App extends Application {
                 Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, "");
             }
         } catch (Throwable t) {
-            Timber.e(t, t.getMessage());
+            Timber.e(t);
         }
     }
 
@@ -98,7 +98,7 @@ public class App extends Application {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (NameNotFoundException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             return "1.0";
         }
     }

@@ -179,8 +179,8 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
                 geocachesPerRequest = computeCachesPerRequest(geocachesPerRequest, requestDuration);
             }
 
-            Timber.i("found geocaches: " + current);
-            Timber.i("not found geocaches: " + notFoundCacheIds);
+            Timber.i("found geocaches: %d", current);
+            Timber.i("not found geocaches: %d", notFoundCacheIds);
 
             // throw error if some geocache was not found
             if (!notFoundCacheIds.isEmpty()) {
@@ -233,7 +233,7 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

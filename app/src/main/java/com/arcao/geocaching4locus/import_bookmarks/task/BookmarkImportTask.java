@@ -39,7 +39,7 @@ import timber.log.Timber;
 
 public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
     public interface TaskListener {
-        void onTaskFinished(boolean result);
+        void onTaskFinished();
 
         void onTaskFailed(Intent errorIntent);
 
@@ -72,7 +72,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         if (params.length == 1 && isGuid(params[0])) {
             String guid = params[0];
 
-            Timber.d("source: import_from_bookmark;guid=" + guid);
+            Timber.d("source: import_from_bookmark;guid=%s", guid);
 
             // retrieve Bookmark list geocaches
             List<Bookmark> bookmarks = api.getBookmarkListByGuid(guid);
@@ -84,7 +84,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
             Collections.addAll(geocacheCodes, params);
         }
 
-        Timber.d("source: import_from_bookmark;gccodes=" + geocacheCodes);
+        Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes);
 
         max = geocacheCodes.size();
         if (max <= 0)
@@ -145,7 +145,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
                 cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
             }
 
-            Timber.i("found caches: " + progress);
+            Timber.i("found caches: %d", progress);
 
             if (progress > 0) {
                 try {
@@ -158,7 +158,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
                 throw new NoResultFoundException();
             }
         } catch (IOException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             throw new GeocachingApiException(e.getMessage(), e);
         } finally {
             Utils.closeStream(writer);
@@ -175,7 +175,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
         TaskListener listener = taskListenerRef.get();
         if (listener != null)
-            listener.onTaskFinished(result);
+            listener.onTaskFinished();
     }
 
     @Override
@@ -193,7 +193,7 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

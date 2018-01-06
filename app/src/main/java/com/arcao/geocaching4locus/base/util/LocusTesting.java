@@ -10,14 +10,14 @@ import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
 public class LocusTesting {
-    public static boolean isLocusInstalled(Context context) {
+    public static boolean isLocusNotInstalled(Context context) {
         LocusUtils.LocusVersion lv = LocusUtils.getActiveVersion(context);
 
         String locusVersion = lv != null ? lv.getVersionName() : "";
 
         Timber.v("Locus version: " + locusVersion + "; Required version: " + AppConstants.LOCUS_MIN_VERSION);
 
-        return lv != null && lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE);
+        return lv == null || !lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE);
     }
 
     public static void showLocusMissingError(final FragmentActivity activity) {

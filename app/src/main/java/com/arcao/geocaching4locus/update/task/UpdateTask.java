@@ -213,7 +213,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
             return result;
         } catch (InvalidSessionException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             accountManager.invalidateOAuthToken();
 
             throw e;
@@ -227,7 +227,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -260,7 +260,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
                 if (ArrayUtils.isNotEmpty(data))
                     oldPoint = new Waypoint(data);
             } catch (IOException e) {
-                Timber.e(e, e.getMessage());
+                Timber.e(e);
             }
 
             try {
@@ -268,7 +268,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
                 if (ArrayUtils.isNotEmpty(data))
                     newPoint = new Waypoint(data);
             } catch (IOException e) {
-                Timber.e(e, e.getMessage());
+                Timber.e(e);
             }
 
             updateLogs = in.readInt() == 1;

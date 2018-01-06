@@ -90,7 +90,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
     @OnClick(R.id.db_live_map)
     public void onClickLiveMap() {
         // test if Locus Map is installed
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             LocusTesting.showLocusMissingError(this);
             return;
         }

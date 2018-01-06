@@ -13,7 +13,7 @@ public class PreferenceUtil {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             return defaultValue;
         }
     }
@@ -26,7 +26,7 @@ public class PreferenceUtil {
         try {
             return Double.parseDouble(value);
         } catch (NumberFormatException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             return defaultValue;
         }
     }
@@ -39,7 +39,7 @@ public class PreferenceUtil {
         try {
             return Float.parseFloat(value);
         } catch (NumberFormatException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             return defaultValue;
         }
     }

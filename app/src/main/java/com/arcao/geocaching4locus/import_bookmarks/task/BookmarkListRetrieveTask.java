@@ -55,7 +55,7 @@ public class BookmarkListRetrieveTask extends UserTask<Void, Void, List<Bookmark
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

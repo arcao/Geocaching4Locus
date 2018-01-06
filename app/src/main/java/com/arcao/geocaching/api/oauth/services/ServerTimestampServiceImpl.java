@@ -15,10 +15,10 @@ public class ServerTimestampServiceImpl extends TimestampServiceImpl {
         long time;
         try {
             time = WherigoApiFactory.create().getTime();
-            Timber.i("server time received (ms): " + time);
+            Timber.i("server time received (ms): %d", time);
         } catch (Exception e) {
             time = System.currentTimeMillis();
-            Timber.e(e, "No server time received. Used system time (ms): " + time);
+            Timber.e(e, "No server time received. Used system time (ms): %d", time);
         }
 
         // timestamp in seconds

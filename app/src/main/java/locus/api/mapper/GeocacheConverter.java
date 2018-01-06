@@ -360,7 +360,7 @@ final class GeocacheConverter {
 
                 namePrefix.setLength(0);
             } catch (ParseException e) {
-                Timber.w(e, e.getMessage());
+                Timber.w(e);
 
                 // fix for "S1: N 49 ..."
                 namePrefix.append(note.substring(0, matcher.start() + 1));

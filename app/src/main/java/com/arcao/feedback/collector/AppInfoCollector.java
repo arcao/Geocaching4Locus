@@ -41,7 +41,7 @@ public class AppInfoCollector extends Collector {
         try {
             return pm.getPackageInfo(context.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
-            Timber.v("Failed to find PackageInfo for current App : " + context.getPackageName());
+            Timber.v("Failed to find PackageInfo for current App : %s", context.getPackageName());
             return null;
         } catch (RuntimeException e) {
             // To catch RuntimeException("Package manager has died") that can occur on some version of Android,

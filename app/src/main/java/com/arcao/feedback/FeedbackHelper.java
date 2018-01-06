@@ -67,7 +67,7 @@ public class FeedbackHelper {
                 }
             }
         } catch (IOException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
         }
 
         context.startActivity(createEmailOnlyChooserIntent(context, intent, null));
@@ -81,7 +81,7 @@ public class FeedbackHelper {
             }
         }
 
-        Timber.d("Creating report to " + reportFile);
+        Timber.d("Creating report to %s", reportFile);
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(reportFile))) {
             writeCollectors(zos, context);
         }
@@ -132,7 +132,7 @@ public class FeedbackHelper {
         try {
             return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             return "0.0";
         }
     }

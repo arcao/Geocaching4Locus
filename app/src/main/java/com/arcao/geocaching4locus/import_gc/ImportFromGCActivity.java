@@ -26,7 +26,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             LocusTesting.showLocusMissingError(this);
             return;
         }
@@ -48,7 +48,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
     }
 
     private void startImport(String[] cacheIds) {
-        Timber.i("source: importFromGC;" + Arrays.toString(cacheIds));
+        Timber.i("source: importFromGC;%s", Arrays.toString(cacheIds));
 
         AnalyticsUtil.actionImportGC(App.get(this).getAccountManager().isPremium());
 
@@ -98,7 +98,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 
     @Override
     public void onImportFinished(@Nullable Intent intent) {
-        Timber.d("onImportFinished result: " + (intent != null));
+        Timber.d("onImportFinished result: %b", (intent != null));
         setResult(intent != null ? RESULT_OK : RESULT_CANCELED);
 
         if (intent != null) {

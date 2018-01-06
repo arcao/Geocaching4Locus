@@ -19,7 +19,7 @@ public class PreferencesBackupAgent extends BackupAgentHelper {
 
     private static String getDefaultSharedPreferencesName(Context context) {
         String name = context.getPackageName() + "_preferences";
-        Timber.i("getDefaultSharedPreferencesName: " + name);
+        Timber.i("getDefaultSharedPreferencesName: %s", name);
         return name;
     }
 }

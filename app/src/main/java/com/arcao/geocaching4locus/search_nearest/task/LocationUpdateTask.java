@@ -66,7 +66,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
             return;
         }
 
-        Timber.i("Searching location via " + provider);
+        Timber.i("Searching location via %s", provider);
         fireOnProviderChanged(provider);
         locationManager.requestLocationUpdates(provider, 0, 0, this);
     }
@@ -98,7 +98,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
             location.setLongitude(prefs.getFloat(PrefConstants.LAST_LONGITUDE, 0));
         }
 
-        Timber.i("Last location found for: " + location.toString());
+        Timber.i("Last location found for: %s", location);
 
         return location;
     }
@@ -139,14 +139,14 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
     }
 
     private void fireOnProviderChanged(String provider) {
-        Timber.i("fireOnProviderChanged: " + provider);
+        Timber.i("fireOnProviderChanged: %s", provider);
         TaskListener listener = taskListenerRef.get();
         if (listener != null)
             listener.onProviderChanged(provider);
     }
 
     private void fireOnTaskFinished(Location location) {
-        Timber.i("fireOnTaskFinished: " + location);
+        Timber.i("fireOnTaskFinished: %s", location);
         TaskListener listener = taskListenerRef.get();
         if (listener != null)
             listener.onTaskFinished(location);
@@ -155,7 +155,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
     // --------------------- LocationListener methods ---------------------
     @Override
     public void onLocationChanged(Location location) {
-        Timber.i("onLocationChanged: " + location);
+        Timber.i("onLocationChanged: %s", location);
 
         bestLocation = location;
         try {
@@ -167,7 +167,7 @@ public class LocationUpdateTask extends UserTask<Void, Void, Location> implement
 
     @Override
     public void onProviderDisabled(String provider) {
-        Timber.i("onProviderDisabled: " + provider);
+        Timber.i("onProviderDisabled: %s", provider);
 
         // No permission? Cancel task
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED

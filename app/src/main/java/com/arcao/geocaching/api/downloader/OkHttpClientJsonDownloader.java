@@ -43,16 +43,19 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 
             if (!response.isSuccessful()) {
                 // read error response
-                throw new InvalidResponseException(response.code() + " " + response.message() + "\n\n" + body.string());
+                throw new InvalidResponseException(response.code(), response.message(), (body != null ? body.string() : null));
             }
+
+            if (body == null)
+                throw new InvalidResponseException("Body is null!");
 
             reader = body.charStream();
             return new JsonReader(reader);
         } catch (InvalidResponseException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             throw e;
         } catch (Throwable e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
         }
     }
@@ -76,16 +79,19 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
 
             if (!response.isSuccessful()) {
                 // read error response
-                throw new InvalidResponseException(response.code() + " " + response.message() + "\n\n" + body.string());
+                throw new InvalidResponseException(response.code(), response.message(), body != null ? body.string() : null);
             }
+
+            if (body == null)
+                throw new InvalidResponseException("Body is null!");
 
             reader = body.charStream();
             return new JsonReader(reader);
         } catch (InvalidResponseException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             throw e;
         } catch (Throwable e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + "): " + e.getMessage(), e);
         }
     }

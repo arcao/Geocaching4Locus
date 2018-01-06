@@ -164,7 +164,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
                 if (GeocachingUtils.cacheCodeToCacheId(cacheId) <= 0)
                     return false;
             } catch (IllegalArgumentException e) {
-                Timber.e(e, e.getMessage());
+                Timber.e(e);
                 return false;
             }
         }

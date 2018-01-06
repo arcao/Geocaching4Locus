@@ -171,7 +171,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
             }
 
             if (!isOAuthUrl(url)) {
-                Timber.d("External URL: " + url);
+                Timber.d("External URL: %s", url);
 
                 // launch external URLs in a full browser
                 IntentUtil.showWebPage(getActivity(), Uri.parse(url));

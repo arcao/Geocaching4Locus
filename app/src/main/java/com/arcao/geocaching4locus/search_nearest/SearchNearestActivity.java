@@ -101,7 +101,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         latitude = preferences.getFloat(PrefConstants.LAST_LATITUDE, 0);
         longitude = preferences.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 
-        if (!LocusTesting.isLocusInstalled(this)) {
+        if (LocusTesting.isLocusNotInstalled(this)) {
             updateCoordinates();
             LocusTesting.showLocusMissingError(this);
             return; // skip retrieving Waypoint, it can crash because of old Locus API
@@ -115,7 +115,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
                             p.getLocation());
                 }
             } catch (RequiredVersionMissingException e) {
-                Timber.e(e, e.getMessage());
+                Timber.e(e);
             }
         } else if (getIntent().hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)) {
             onReceived(

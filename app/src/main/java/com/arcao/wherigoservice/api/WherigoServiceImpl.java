@@ -58,15 +58,15 @@ public class WherigoServiceImpl implements WherigoService {
             }
             r.endObject();
             r.close();
-            Timber.i("Cache code: " + cacheCode);
+            Timber.i("Cache code: %s", cacheCode);
 
         } catch (NetworkException e) {
             throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
         } catch (InvalidResponseException e) {
             throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: " + e.getMessage(), e);
         } catch (IOException e) {
-            Timber.e(e, e.toString());
-            if (!isGsonException(e)) {
+            Timber.e(e);
+            if (isNotGsonException(e)) {
                 throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
             }
 
@@ -105,15 +105,15 @@ public class WherigoServiceImpl implements WherigoService {
             }
             r.endObject();
             r.close();
-            Timber.i("Time: " + time);
+            Timber.i("Time: %d", time);
 
         } catch (NetworkException e) {
             throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
         } catch (InvalidResponseException e) {
             throw new WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: " + e.getMessage(), e);
         } catch (IOException e) {
-            Timber.e(e, e.toString());
-            if (!isGsonException(e)) {
+            Timber.e(e);
+            if (isNotGsonException(e)) {
                 throw new WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.getMessage(), e);
             }
 
@@ -180,8 +180,8 @@ public class WherigoServiceImpl implements WherigoService {
         return postBody;
     }
 
-    private boolean isGsonException(Throwable t) {
+    private boolean isNotGsonException(Throwable t) {
         // This IOException mess will be fixed in a next GSON release
-        return (IOException.class.equals(t.getClass()) && t.getMessage() != null && t.getMessage().startsWith("Expected JSON document")) || t instanceof MalformedJsonException || t instanceof IllegalStateException || t instanceof NumberFormatException;
+        return (!IOException.class.equals(t.getClass()) || t.getMessage() == null || !t.getMessage().startsWith("Expected JSON document")) && !(t instanceof MalformedJsonException) && !(t instanceof IllegalStateException) && !(t instanceof NumberFormatException);
     }
 }

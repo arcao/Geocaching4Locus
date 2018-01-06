@@ -142,12 +142,12 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
                 cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
             }
 
-            Timber.i("updated caches: " + current);
+            Timber.i("updated caches: %d", current);
 
             publishProgress(current);
             return current > 0;
         } catch (InvalidSessionException e) {
-            Timber.e(e, e.getMessage());
+            Timber.e(e);
             accountManager.invalidateOAuthToken();
 
             throw e;
@@ -218,7 +218,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);

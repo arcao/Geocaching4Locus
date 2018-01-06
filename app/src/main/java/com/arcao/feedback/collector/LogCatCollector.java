@@ -30,7 +30,7 @@ public class LogCatCollector extends Collector {
 
     @Override
     protected String collect() {
-        if (!hasPermission(Manifest.permission.READ_LOGS)
+        if (!hasReadLogPermission()
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             return "N/A";
         }
@@ -74,14 +74,14 @@ public class LogCatCollector extends Collector {
         return buffer.toString();
     }
 
-    private boolean hasPermission(String permission) {
+    private boolean hasReadLogPermission() {
         final PackageManager pm = context.getPackageManager();
         if (pm == null) {
             return false;
         }
 
         try {
-            return pm.checkPermission(permission, context.getPackageName())
+            return pm.checkPermission(Manifest.permission.READ_LOGS, context.getPackageName())
                     == PackageManager.PERMISSION_GRANTED;
         } catch (RuntimeException e) {
             // To catch RuntimeException("Package manager has died") that can occur on some version of Android,

@@ -99,7 +99,7 @@ public class ConfigurationCollector extends Collector {
             final Configuration crashConf = context.getResources().getConfiguration();
             return ConfigurationCollector.toString(crashConf);
         } catch (RuntimeException e) {
-            Timber.w(e, "Couldn't retrieve ConfigurationCollector for : " + context.getPackageName());
+            Timber.w(e, "Couldn't retrieve ConfigurationCollector for : %s", context.getPackageName());
             return "Couldn't retrieve crash config";
         }
     }

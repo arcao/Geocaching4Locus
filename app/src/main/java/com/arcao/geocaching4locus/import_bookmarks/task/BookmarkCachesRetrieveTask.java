@@ -54,7 +54,7 @@ public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Book
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

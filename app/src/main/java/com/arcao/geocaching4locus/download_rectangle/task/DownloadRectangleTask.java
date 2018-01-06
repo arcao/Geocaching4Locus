@@ -227,7 +227,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
         if (isCancelled())
             return;
 
-        Timber.e(t, t.getMessage());
+        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

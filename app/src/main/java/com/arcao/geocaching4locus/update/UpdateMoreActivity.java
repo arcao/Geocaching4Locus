@@ -43,13 +43,13 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
         AnalyticsUtil.actionUpdateMore(pointIndexes.length,
                 App.get(this).getAccountManager().isPremium());
 
-        Timber.i("source: update;count=" + pointIndexes.length);
+        Timber.i("source: update;count=%d", pointIndexes.length);
         UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
     public void onUpdateFinished(boolean success) {
-        Timber.d("onUpdateFinished result: " + success);
+        Timber.d("onUpdateFinished result: %b", success);
         setResult(success ? RESULT_OK : RESULT_CANCELED);
         finish();
     }

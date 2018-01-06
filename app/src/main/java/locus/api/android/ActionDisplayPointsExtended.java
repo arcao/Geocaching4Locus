@@ -60,7 +60,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
     public static File getCacheFileName() {
         File cacheFile = new File(Environment.getExternalStorageDirectory(), String.format("/Geocaching4Locus/%s", LOCUS_CACHE_FILENAME));
 
-        Timber.d("Cache file for Locus: " + cacheFile.toString());
+        Timber.d("Cache file for Locus: %s", cacheFile.toString());
 
         File parentDirectory = cacheFile.getParentFile();
 
@@ -87,7 +87,7 @@ public class ActionDisplayPointsExtended extends ActionDisplayPoints {
         FileOutputStream fos = new FileOutputStream(file);
         fos.flush(); // create empty file
         if (!file.setReadable(true, false)) { // file has to be readable for Locus
-            Timber.e("Unable to set readable all for: " + file);
+            Timber.e("Unable to set readable all for: %s", file);
         }
 
         return fos;

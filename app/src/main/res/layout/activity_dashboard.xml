@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".dashboard.DashboardActivity"
-    tools:layout_editor_absoluteX="16dp"
-    tools:layout_editor_absoluteY="16dp">
+    tools:context=".dashboard.DashboardActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -20,13 +18,11 @@
     <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
         android:id="@+id/db_search_nearest"
         style="@style/Widget.AppTheme.DashboardButton"
-        layout_constraintHorizontal_chainStyle="spread"
         android:layout_width="0dp"
         android:layout_marginTop="8dp"
         android:drawableTop="@drawable/ic_action_search"
         android:text="@string/menu_nearest"
         app:layout_constraintEnd_toStartOf="@+id/db_import_gc"
-        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -36,9 +32,8 @@
         android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_gc_input"
         android:text="@string/menu_import_from_gc"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
         app:layout_constraintEnd_toStartOf="@+id/db_import_bookmark"
+        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
         app:layout_constraintTop_toTopOf="@+id/db_search_nearest" />
 
 
@@ -48,9 +43,8 @@
         android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_import_bookmark"
         android:text="@string/menu_import_bookmarks"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toEndOf="@+id/db_import_gc"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/db_import_gc"
         app:layout_constraintTop_toTopOf="@+id/db_search_nearest" />
 
     <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
@@ -59,8 +53,8 @@
         android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_live_map"
         android:text="@string/menu_live_map"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/db_search_nearest"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/db_search_nearest"
         app:toggleable="true" />
 
@@ -70,8 +64,8 @@
         android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_live_map_download_caches"
         android:text="@string/menu_live_map_download_caches"
-        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
         app:layout_constraintEnd_toStartOf="@+id/db_import_bookmark"
+        app:layout_constraintStart_toEndOf="@+id/db_search_nearest"
         app:layout_constraintTop_toBottomOf="@+id/db_search_nearest" />
 
     <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
@@ -80,8 +74,8 @@
         android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_settings"
         android:text="@string/menu_settings"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/db_live_map_download_caches"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/db_live_map" />
 
     <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
@@ -89,8 +83,8 @@
         style="@style/Widget.AppTheme.DashboardButton"
         android:drawableTop="@drawable/ic_action_help"
         android:text="@string/menu_manual"
-        app:layout_constraintStart_toStartOf="@+id/db_live_map_download_caches"
         app:layout_constraintEnd_toEndOf="@+id/db_live_map_download_caches"
+        app:layout_constraintStart_toStartOf="@+id/db_live_map_download_caches"
         app:layout_constraintTop_toTopOf="@+id/db_preferences" />
 
 </android.support.constraint.ConstraintLayout>

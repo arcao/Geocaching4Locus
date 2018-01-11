@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:paddingBottom="4dp"
-    android:paddingTop="4dp"
-    tools:theme="@style/AppTheme.Dialog">
+    android:paddingTop="4dp">
 
     <TextView
         android:id="@+id/message"
@@ -26,10 +25,10 @@
         android:layout_height="0dp"
         android:layout_marginLeft="12dp"
         android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/input"
         app:layout_constraintEnd_toStartOf="@+id/input"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/input"
-        app:layout_constraintBottom_toBottomOf="@+id/input"/>
+        app:layout_constraintTop_toTopOf="@+id/input" />
 
     <EditText
         android:id="@+id/input"

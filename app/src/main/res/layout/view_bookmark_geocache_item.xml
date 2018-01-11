@@ -1,49 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:minHeight="?attr/listPreferredItemHeight"
     android:gravity="center_vertical"
-    android:padding="16dp"
-    tools:theme="@style/AppTheme.DialogWhenLarge">
+    android:minHeight="?attr/listPreferredItemHeight"
+    tools:showIn="@layout/fragment_bookmark_geocaches">
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:focusable="false"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:clickable="false"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        />
+        android:duplicateParentState="true"
+        android:focusable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:orientation="vertical"
+
+    <TextView
+        android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:fontFamily="sans-serif-light"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            tools:text="Title"
-            tools:ignore="UnusedAttribute"/>
-        <TextView
-            android:id="@+id/subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceListItemSecondary"
-            android:fontFamily="sans-serif-light"
-            android:textColor="?android:attr/textColorSecondary"
-            android:maxLines="1"
-            android:ellipsize="end"
-            tools:text="GC12345"
-            tools:ignore="UnusedAttribute"/>
-    </LinearLayout>
-</LinearLayout>
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="marquee"
+        android:fontFamily="sans-serif-light"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        app:layout_constraintBottom_toTopOf="@+id/subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkbox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="UnusedAttribute"
+        tools:text="Title" />
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="1"
+        android:textAppearance="?attr/textAppearanceListItemSecondary"
+        android:textColor="?android:attr/textColorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:ignore="UnusedAttribute"
+        tools:text="GC12345" />
+
+</android.support.constraint.ConstraintLayout>

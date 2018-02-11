@@ -14,6 +14,7 @@ public interface AppConstants {
     Uri FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus");
     Uri GPLUS_URI = Uri.parse("https://plus.google.com/+Geocaching4locusEu");
     Uri GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live");
+    Uri POWER_SAVE_INFO_URI = Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue");
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.
     // This will prevent it to autodetect by robot.

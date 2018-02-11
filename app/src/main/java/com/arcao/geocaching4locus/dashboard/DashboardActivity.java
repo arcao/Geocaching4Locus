@@ -19,6 +19,7 @@ import com.arcao.geocaching4locus.dashboard.widget.DashboardButton;
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity;
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity;
 import com.arcao.geocaching4locus.import_gc.ImportFromGCActivity;
+import com.arcao.geocaching4locus.live_map.fragment.PowerSaveWarningDialogFragment;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
@@ -29,7 +30,7 @@ import butterknife.OnClick;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 
-public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener {
+public class DashboardActivity extends AbstractActionBarActivity implements LiveMapNotificationManager.LiveMapStateChangeListener, PowerSaveWarningDialogFragment.OnPowerSaveWarningConfirmedListener {
     private static final int REQUEST_SIGN_ON = 1;
 
     private LiveMapNotificationManager notificationManager;
@@ -100,6 +101,13 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
             return;
         }
 
+        if (!notificationManager.isLiveMapEnabled() && !PowerSaveWarningDialogFragment.showIfNeeded(this)) {
+            onPowerSaveWarningConfirmed();
+        }
+    }
+
+    @Override
+    public void onPowerSaveWarningConfirmed() {
         notificationManager.setLiveMapEnabled(!notificationManager.isLiveMapEnabled());
 
         boolean enabled = notificationManager.isLiveMapEnabled();
@@ -111,6 +119,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
             finish();
         }
     }
+
 
     @OnClick(R.id.db_live_map_download_caches)
     public void onClickLiveMapDownloadCaches() {

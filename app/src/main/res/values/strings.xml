@@ -338,4 +338,12 @@
         >Please, make sure Live map is enabled and Locus Map shows Live map geocaches.</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Import Live map GC</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Do not show this message again</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Warning</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Your android device contains manufacturer custom battery saver app which prevents Live map functionality to work correctly. Please add an exception to battery saver app for Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >More info</string>
 </resources>

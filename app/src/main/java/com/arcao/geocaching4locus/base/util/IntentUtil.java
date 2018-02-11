@@ -1,7 +1,9 @@
 package com.arcao.geocaching4locus.base.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -20,8 +22,13 @@ public class IntentUtil {
             activity.startActivity(intent);
             return true;
         } else {
-            Toast.makeText(activity, "Web page cannot be opened. No application found to handle web pages.", Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, "Web page cannot be opened. No application found to show web pages.", Toast.LENGTH_LONG).show();
             return false;
         }
     }
+
+    public static boolean isIntentCallable(Context context, Intent intent) {
+        return !context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).isEmpty();
+    }
+
 }

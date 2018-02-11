@@ -75,6 +75,8 @@ public interface PrefConstants {
     String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1";
     String DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2";
 
+    String HIDE_POWER_MANAGEMENT_WARNING = "hide_power_management_warning";
+
     String UNIT_KM = "km";
     String UNIT_MILES = "mi";
 

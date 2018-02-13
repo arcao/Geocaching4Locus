@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.update.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,9 +25,11 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
 
     public interface DialogListener {
         void onUpdateFinished(boolean success);
+        void onUpdateError(Intent intent);
     }
 
-    @Nullable private UpdateMoreTask task;
+    @Nullable
+    private UpdateMoreTask task;
     private WeakReference<DialogListener> dialogListenerRef;
 
     public static UpdateMoreDialogFragment newInstance(long[] pointIndexes) {
@@ -67,18 +70,21 @@ public final class UpdateMoreDialogFragment extends AbstractDialogFragment imple
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onUpdateFinished(success);
-        }
+        if (listener != null) listener.onUpdateFinished(success);
+    }
+
+    @Override
+    public void onTaskError(Intent intent) {
+        dismiss();
+
+        DialogListener listener = dialogListenerRef.get();
+        if (listener != null) listener.onUpdateError(intent);
     }
 
     @Override
     public void onProgressUpdate(int count) {
         MaterialDialog dialog = (MaterialDialog) getDialog();
-        if (dialog != null) {
-            dialog.setProgress(count);
-        }
-
+        if (dialog != null) dialog.setProgress(count);
     }
 
     @Override

@@ -6,10 +6,10 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical"
     android:paddingBottom="?attr/listPreferredItemPaddingBottom"
-    android:paddingEnd="?attr/listPreferredItemPaddingRight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?attr/listPreferredItemPaddingRight"
-    android:paddingStart="?attr/listPreferredItemPaddingLeft"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingRight"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+    android:paddingStart="?android:attr/listPreferredItemPaddingLeft"
     android:paddingTop="?attr/listPreferredItemPaddingTop"
     tools:context="com.arcao.geocaching4locus.settings.SettingsActivity">
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         tools:text="@string/pref_geocaching_live" />
 
     <LinearLayout

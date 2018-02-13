@@ -8,7 +8,7 @@ import android.support.v4.graphics.ColorUtils;
 import android.support.v7.appcompat.R;
 import android.util.TypedValue;
 
-public class ColorUtil {
+public final class ColorUtil {
     private static final ThreadLocal<TypedValue> TL_TYPED_VALUE = new ThreadLocal<>();
 
     private static final int[] DISABLED_STATE_SET = {-android.R.attr.state_enabled};
@@ -22,6 +22,9 @@ public class ColorUtil {
     private static final int[] TEMP_ARRAY = new int[1];
 
     private static ColorStateList defaultColorStateList;
+
+    private ColorUtil() {
+    }
 
     public static ColorStateList getDefaultColorStateList(Context context) {
         if (defaultColorStateList == null) {

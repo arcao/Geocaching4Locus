@@ -9,6 +9,9 @@ public final class AnalyticsUtil {
     public static final String COORDINATES_SOURCE_GPS = "GPS";
     public static final String COORDINATES_SOURCE_MANUAL = "MANUAL";
 
+    private AnalyticsUtil() {
+    }
+
     public static void actionLogin(boolean success, boolean premiumMember) {
         Answers.getInstance().logLogin(new LoginEvent().putSuccess(success)
                 .putCustomAttribute("premium member", Boolean.toString(premiumMember)));

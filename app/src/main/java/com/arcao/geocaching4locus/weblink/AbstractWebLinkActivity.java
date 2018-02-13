@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.weblink.fragment.RefreshWebLinkDialogFragment;
@@ -34,7 +35,9 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (isPremiumMemberRequired() && !App.get(this).getAccountManager().isPremium()) {
+        final AccountManager accountManager = App.get(this).getAccountManager();
+
+        if (isPremiumMemberRequired() && !accountManager.isPremium()) {
             startActivity(new ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build());
             setResult(RESULT_CANCELED);
             finish();
@@ -51,7 +54,7 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
                 }
 
                 // test if user is logged in
-                if (App.get(this).getAccountManager().requestSignOn(this, REQUEST_SIGN_ON)) {
+                if (accountManager.requestSignOn(this, REQUEST_SIGN_ON)) {
                     return;
                 }
 
@@ -88,6 +91,13 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
         }
 
         showWebPage(waypoint);
+    }
+
+    @Override
+    public void onRefreshError(Intent intent) {
+        startActivity(intent);
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     private void showRefreshDialog() {

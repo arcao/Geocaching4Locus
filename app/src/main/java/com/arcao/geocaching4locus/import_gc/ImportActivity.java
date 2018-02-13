@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
@@ -29,8 +29,8 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (LocusTesting.isLocusNotInstalled(this)) {
-            LocusTesting.showLocusMissingError(this);
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
+            LocusMapUtil.showLocusMissingError(this);
             return;
         }
 
@@ -46,7 +46,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
             showImportDialog();
     }
 
-    protected void showImportDialog() {
+    private void showImportDialog() {
         if (getIntent().getDataString() == null) {
             Timber.e("Data uri is null!!!");
             finish();

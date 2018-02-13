@@ -197,19 +197,19 @@ public class ListPreference extends DialogPreference {
                 (dialog, which) -> {
                     clickedDialogEntryIndex = which;
 
-            /*
-             * Clicking on an item simulates the positive button
-             * click, and dismisses the dialog.
-             */
+                    /*
+                     * Clicking on an item simulates the positive button
+                     * click, and dismisses the dialog.
+                     */
                     ListPreference.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
                     dialog.dismiss();
                 });
 
-		/*
-		 * The typical interaction for list-based dialogs is to have
-		 * click-on-an-item dismiss the dialog instead of the user having to
-		 * press 'Ok'.
-		 */
+        /*
+         * The typical interaction for list-based dialogs is to have
+         * click-on-an-item dismiss the dialog instead of the user having to
+         * press 'Ok'.
+         */
         builder.setPositiveButton(null, null);
     }
 

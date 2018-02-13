@@ -91,7 +91,7 @@ public class SliderDialogFragment extends AbstractDialogFragment implements Seek
         }
     }
 
-    void fireDialogClose() {
+    private void fireDialogClose() {
         DialogListener listener = dialogListenerRef.get();
         if (listener != null) {
             listener.onDialogClosed(this);

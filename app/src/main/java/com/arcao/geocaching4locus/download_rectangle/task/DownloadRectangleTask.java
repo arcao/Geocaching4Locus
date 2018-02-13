@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.SearchForGeocachesRequest;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -31,6 +31,7 @@ import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.DownloadingUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.error.exception.IntendedException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
@@ -52,7 +53,6 @@ import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
-import locus.api.utils.Utils;
 import timber.log.Timber;
 
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
@@ -75,6 +75,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
     private final Context context;
     private final SharedPreferences preferences;
     private final WeakReference<TaskListener> taskListenerRef;
+    private final AccountManager accountManager;
 
     public interface TaskListener {
         void onTaskFinished(Intent intent);
@@ -88,6 +89,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
         this.context = context.getApplicationContext();
         taskListenerRef = new WeakReference<>(listener);
 
+        accountManager = App.get(context).getAccountManager();
         preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
     }
 
@@ -111,18 +113,15 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
     @Override
     protected Intent doInBackground(Void... params) throws Exception {
         LastLiveMapData liveMapData = LastLiveMapData.getInstance();
+        DataMapper mapper = new DataMapper(context);
+        ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName());
 
         Timber.i("source=download_rectangle;center=%s;topLeft=%s;bottomRight=%s",
                 liveMapData.getMapCenterCoordinates().toString(), liveMapData.getMapTopLeftCoordinates().toString(), liveMapData.getMapBottomRightCoordinates().toString());
 
-        AccountManager accountManager = App.get(context).getAccountManager();
-        DataMapper mapper = new DataMapper(context);
-        ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName());
-
-        StoreableWriter writer = null;
         int current = 0;
 
-        try {
+        try (StoreableWriter writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream())) {
             GeocachingApi api = GeocachingApiFactory.create();
             GeocachingApiLoginTask.create(context, api).perform();
 
@@ -135,18 +134,22 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
                 logCount = 0;
             }
 
-            writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream());
-
-            int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-            int count = AppConstants.CACHES_PER_REQUEST;
+            int cachesPerRequest = AppConstants.ITEMS_PER_REQUEST;
+            int count = AppConstants.ITEMS_PER_REQUEST;
 
             while (current < count) {
-                long startTime = System.currentTimeMillis();
+                long startTimeMillis = System.currentTimeMillis();
 
                 List<Geocache> cachesToAdd;
 
                 if (current == 0) {
-                    cachesToAdd = api.searchForGeocaches(resultQuality, Math.min(cachesPerRequest, count - current), logCount, 0, createFilters(), null);
+                    cachesToAdd = api.searchForGeocaches(SearchForGeocachesRequest.builder()
+                            .resultQuality(resultQuality)
+                            .maxPerPage(Math.min(cachesPerRequest, count - current))
+                            .geocacheLogCount(logCount)
+                            .addFilters(createFilters())
+                            .build()
+                    );
                     count = Math.min(api.getLastSearchResultsFound(), LIVEMAP_CACHES_COUNT);
                 } else {
                     cachesToAdd = api.getMoreGeocaches(resultQuality, current, Math.min(cachesPerRequest, count - current), logCount, 0);
@@ -161,9 +164,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
                     break;
 
                 PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-                List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
-
-                for (Waypoint wpt : waypoints) {
+                for (Waypoint wpt : mapper.createLocusWaypoints(cachesToAdd)) {
                     if (simpleCacheData) {
                         wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
                     }
@@ -176,15 +177,12 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
                 current += cachesToAdd.size();
                 publishProgress(current, count);
 
-                long requestDuration = System.currentTimeMillis() - startTime;
-                cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
+                cachesPerRequest = DownloadingUtil.computeItemsPerRequest(cachesPerRequest, startTimeMillis);
             }
 
             Timber.i("found caches: %s", current);
         } catch (Exception e) {
-            throw handleException(e, writer, dataFile);
-        } finally {
-            Utils.closeStream(writer);
+            throw handleException(e, dataFile, current);
         }
 
         if (current > 0) {
@@ -198,15 +196,10 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
         }
     }
 
-    private Exception handleException(@NonNull Exception e, @Nullable StoreableWriter writer, @Nullable File dataFile) {
-        if (e instanceof InvalidSessionException)
-            App.get(context).getAccountManager().invalidateOAuthToken();
-
-        if (e instanceof IOException)
-            e = new GeocachingApiException(e.getMessage(), e);
-
-        if (writer == null || dataFile == null || writer.getSize() == 0)
-            return e;
+    private Exception handleException(@NonNull Exception e, @NonNull File dataFile, int itemsStored) {
+        if (e instanceof InvalidSessionException) accountManager.invalidateOAuthToken();
+        if (e instanceof IOException) e = new GeocachingApiException(e.getMessage(), e);
+        if (itemsStored == 0) return e;
 
         return new IntendedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));
     }
@@ -310,22 +303,5 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
         }
 
         return filter.toArray(new ContainerType[filter.size()]);
-    }
-
-    private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
-        int cachesPerRequest = currentCachesPerRequest;
-
-        // keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
-        if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
-            cachesPerRequest += AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
-            cachesPerRequest -= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        // keep the value in a range
-        cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
-        cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
-
-        return cachesPerRequest;
     }
 }

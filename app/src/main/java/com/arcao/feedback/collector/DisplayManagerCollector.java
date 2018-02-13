@@ -63,7 +63,6 @@ public class DisplayManagerCollector extends Collector {
         return result.toString();
     }
 
-    @SuppressWarnings("deprecation")
     private static Object collectDisplayData(Display display) {
         final DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics);

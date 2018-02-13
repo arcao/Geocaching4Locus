@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.SearchForGeocachesRequest;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
@@ -26,11 +26,13 @@ import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
 import com.arcao.geocaching.api.filter.PointRadiusFilter;
 import com.arcao.geocaching.api.filter.TerrainFilter;
 import com.arcao.geocaching4locus.App;
-import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.authentication.util.Account;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.DownloadingUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.error.exception.IntendedException;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
@@ -51,8 +53,10 @@ import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
-import locus.api.utils.Utils;
 import timber.log.Timber;
+
+import static com.arcao.geocaching.api.GeocachingApi.ResultQuality.FULL;
+import static com.arcao.geocaching.api.GeocachingApi.ResultQuality.LITE;
 
 public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     private static final String PACK_WAYPOINTS_NAME = DownloadNearestTask.class.getName();
@@ -63,11 +67,12 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     private final Coordinates coordinates;
     private final int count;
     private final double distance;
+    private final AccountManager accountManager;
 
     public interface TaskListener {
-        void onTaskFinished(Intent intent);
+        void onTaskFinish(Intent intent);
 
-        void onTaskError(@NonNull Intent errorIntent);
+        void onTaskError(@NonNull Intent intent);
 
         void onProgressUpdate(int current, int count);
     }
@@ -79,6 +84,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         this.count = count;
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+        accountManager = App.get(context).getAccountManager();
         distance = getDistance();
     }
 
@@ -87,15 +93,13 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         super.onPostExecute(result);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null)
-            listener.onTaskFinished(result);
+        if (listener != null) listener.onTaskFinish(result);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
         TaskListener listener = taskListenerRef.get();
-        if (listener != null)
-            listener.onProgressUpdate(values[0], count);
+        if (listener != null) listener.onProgressUpdate(values[0], count);
     }
 
 
@@ -103,40 +107,37 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
     protected Intent doInBackground(Void... params) throws Exception {
         Timber.i("source=search;coordinates=" + coordinates + ";count=" + count);
 
-        AccountManager accountManager = App.get(context).getAccountManager();
         DataMapper mapper = new DataMapper(context);
         ParcelFile dataFile = new ParcelFile(ActionDisplayPointsExtended.getCacheFileName());
 
-        StoreableWriter writer = null;
         int current = 0;
-        try {
+
+        try (StoreableWriter writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream())) {
+
             GeocachingApi api = GeocachingApiFactory.create();
             GeocachingApiLoginTask.create(context, api).perform();
 
-            GeocachingApi.ResultQuality resultQuality = accountManager.isPremium() ?
-                    GeocachingApi.ResultQuality.FULL : GeocachingApi.ResultQuality.LITE;
-
-            int logCount = preferences.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
             boolean simpleCacheData = preferences.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
-            if (simpleCacheData) {
-                resultQuality = GeocachingApi.ResultQuality.LITE;
-                logCount = 0;
-            }
 
-            writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream());
+            SearchForGeocachesRequest request = SearchForGeocachesRequest.builder()
+                    .resultQuality(accountManager.isPremium() && !simpleCacheData ? FULL : LITE)
+                    .addFilters(createFilters())
+                    .geocacheLogCount(simpleCacheData ? 0 : preferences.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5))
+                    .maxPerPage(Math.min(AppConstants.ITEMS_PER_REQUEST, count))
+                    .build();
 
             publishProgress(current);
 
-            int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
+            int itemsPerRequest = AppConstants.ITEMS_PER_REQUEST;
             while (current < count) {
-                long startTime = System.currentTimeMillis();
+                long startTimeMillis = System.currentTimeMillis();
 
-                List<Geocache> cachesToAdd;
+                List<Geocache> geocacheList;
 
                 if (current == 0) {
-                    cachesToAdd = api.searchForGeocaches(resultQuality, Math.min(cachesPerRequest, count - current), logCount, 0, createFilters(), null);
+                    geocacheList = api.searchForGeocaches(request);
                 } else {
-                    cachesToAdd = api.getMoreGeocaches(resultQuality, current, Math.min(cachesPerRequest, count - current), logCount, 0);
+                    geocacheList = api.getMoreGeocaches(request.resultQuality(), current, Math.min(itemsPerRequest, count - current), request.geocacheLogCount(), request.trackableLogCount());
                 }
 
                 accountManager.getRestrictions().updateLimits(api.getLastGeocacheLimits());
@@ -144,63 +145,55 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
                 if (isCancelled())
                     return null;
 
-                if (cachesToAdd.isEmpty())
+                if (geocacheList.isEmpty())
                     break;
 
                 // FIX for not working distance filter
-                if (computeDistance(coordinates, cachesToAdd.get(cachesToAdd.size() - 1)) > distance) {
-                    removeCachesOverDistance(cachesToAdd, coordinates, distance);
+                if (computeDistance(coordinates, geocacheList.get(geocacheList.size() - 1)) > distance) {
+                    removeCachesOverDistance(geocacheList, coordinates, distance);
 
-                    if (cachesToAdd.isEmpty())
+                    if (geocacheList.isEmpty())
                         break;
                 }
 
                 PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-                List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
-
-                for (Waypoint wpt : waypoints) {
+                for (Waypoint wpt : mapper.createLocusWaypoints(geocacheList)) {
                     if (simpleCacheData) {
                         wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
                     }
 
                     pw.addWaypoint(wpt);
                 }
-
                 writer.write(pw);
 
-                current += cachesToAdd.size();
+                current += geocacheList.size();
                 publishProgress(current);
 
-                long requestDuration = System.currentTimeMillis() - startTime;
-                cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
+                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis);
             }
 
             Timber.i("found caches: %d", current);
-        } catch (InvalidSessionException e) {
-            accountManager.invalidateOAuthToken();
-
-            throw handleException(e, writer, dataFile);
-        } catch (IOException e) {
-            throw handleException(new GeocachingApiException(e.getMessage(), e), writer, dataFile);
         } catch (Exception e) {
-            throw handleException(e, writer, dataFile);
-        } finally {
-            Utils.closeStream(writer);
+            throw handleException(e, dataFile, current);
         }
 
-        if (current > 0) {
-            try {
+        try {
+            if (current > 0)
                 return ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true);
-            } catch (Throwable t) {
-                throw new LocusMapRuntimeException(t);
-            }
-        } else {
-            throw new NoResultFoundException();
+        } catch (Throwable t) {
+            throw new LocusMapRuntimeException(t);
         }
+        throw new NoResultFoundException();
     }
 
-    private Exception handleException(@NonNull Exception e, @Nullable StoreableWriter writer, @Nullable File dataFile) {
-        if (writer == null || dataFile == null || writer.getSize() == 0)
+    private Exception handleException(@NonNull Exception e, @NonNull File dataFile, int itemsStored) {
+        if (e instanceof InvalidSessionException)
+            accountManager.invalidateOAuthToken();
+
+        if (e instanceof IOException)
+            e = new GeocachingApiException(e.getMessage(), e);
+
+        if (itemsStored == 0)
             return e;
 
         return new IntendedException(e, ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true));
@@ -212,7 +205,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
         TaskListener listener = taskListenerRef.get();
         if (listener != null)
-            listener.onTaskFinished(null);
+            listener.onTaskFinish(null);
     }
 
     @Override
@@ -222,26 +215,20 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
         if (isCancelled())
             return;
 
-        Timber.e(t);
-
         Intent intent = new ExceptionHandler(context).handle(t);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null)
-            listener.onTaskError(intent);
-
-        //context.startActivity(intent);
+        if (listener != null) listener.onTaskError(intent);
     }
 
 
     private List<Filter> createFilters() {
         List<Filter> filters = new ArrayList<>(9);
 
-        AccountManager accountManager = App.get(context).getAccountManager();
-        //noinspection ConstantConditions
-        String userName = accountManager.getAccount().name();
-        boolean premiumMember = accountManager.isPremium();
+        final Account account = accountManager.getAccount();
+
+        String userName = account != null ? account.name() : null;
+        boolean premiumMember = account != null && account.premium();
 
         filters.add(new PointRadiusFilter(coordinates.latitude(), coordinates.longitude(), (long) (distance * 1000)));
 
@@ -336,22 +323,5 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
     private double computeDistance(@NonNull Coordinates coordinates, @NonNull Geocache cache) {
         return cache.coordinates().distanceTo(coordinates) / 1000;
-    }
-
-    private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
-        int cachesPerRequest = currentCachesPerRequest;
-
-        // keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
-        if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
-            cachesPerRequest += AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
-            cachesPerRequest -= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        // keep the value in a range
-        cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
-        cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
-
-        return cachesPerRequest;
     }
 }

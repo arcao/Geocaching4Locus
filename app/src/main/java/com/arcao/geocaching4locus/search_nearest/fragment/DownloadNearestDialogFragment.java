@@ -25,11 +25,11 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
 
     public interface DialogListener {
         void onDownloadFinished(Intent intent);
-
-        void onDownloadError(Intent errorIntent);
+        void onDownloadError(Intent intent);
     }
 
-    @Nullable private DownloadNearestTask task;
+    @Nullable
+    private DownloadNearestTask task;
     private WeakReference<DialogListener> dialogListenerRef;
 
     public static DownloadNearestDialogFragment newInstance(double latitude, double longitude, int count) {
@@ -72,23 +72,19 @@ public class DownloadNearestDialogFragment extends AbstractDialogFragment implem
 
 
     @Override
-    public void onTaskFinished(Intent intent) {
+    public void onTaskFinish(Intent intent) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onDownloadFinished(intent);
-        }
+        if (listener != null) listener.onDownloadFinished(intent);
     }
 
     @Override
-    public void onTaskError(@NonNull Intent errorIntent) {
+    public void onTaskError(@NonNull Intent intent) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onDownloadError(errorIntent);
-        }
+        if (listener != null) listener.onDownloadError(intent);
     }
 
     @Override

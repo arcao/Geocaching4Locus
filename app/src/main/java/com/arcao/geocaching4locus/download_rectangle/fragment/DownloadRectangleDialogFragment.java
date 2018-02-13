@@ -35,7 +35,6 @@ public class DownloadRectangleDialogFragment extends AbstractDialogFragment impl
         return fragment;
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
+import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.update.fragment.UpdateDialogFragment;
@@ -25,6 +26,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
     private static final int REQUEST_SIGN_ON = 1;
 
     private SharedPreferences preferences;
+    private AccountManager accountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,8 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // test if user is logged in
-        if (App.get(this).getAccountManager().requestSignOn(this, REQUEST_SIGN_ON)) {
+        accountManager = App.get(this).getAccountManager();
+        if (accountManager.requestSignOn(this, REQUEST_SIGN_ON)) {
             return;
         }
 
@@ -41,7 +44,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
             showUpdateDialog();
     }
 
-    public void showUpdateDialog() {
+    private void showUpdateDialog() {
         String cacheId = null;
         Waypoint oldPoint = null;
 
@@ -67,7 +70,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
                     PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER);
 
             if (PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER.equals(repeatUpdate)) {
-                Timber.i("Updating simple cache on displaying is not allowed!");
+                Timber.d("Updating simple cache on displaying is not allowed!");
                 onUpdateFinished(null);
                 return;
             }
@@ -83,16 +86,23 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
         boolean updateLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT.equals(getIntent().getComponent() != null ? getIntent().getComponent().getClassName() : null);
 
-        AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs,
-                App.get(this).getAccountManager().isPremium());
+        AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs, accountManager.isPremium());
 
         UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
-    public void onUpdateFinished(Intent result) {
-        Timber.d("onUpdateFinished result: %s", result);
-        setResult(result != null ? RESULT_OK : RESULT_CANCELED, result);
+    public void onUpdateFinished(Intent intent) {
+        Timber.d("onUpdateFinished intent: %s", intent);
+        setResult(intent != null ? RESULT_OK : RESULT_CANCELED, intent);
+        finish();
+    }
+
+    @Override
+    public void onUpdateError(Intent intent) {
+        Timber.d("onUpdateError intent: %s", intent);
+        startActivity(intent);
+        setResult(RESULT_CANCELED);
         finish();
     }
 

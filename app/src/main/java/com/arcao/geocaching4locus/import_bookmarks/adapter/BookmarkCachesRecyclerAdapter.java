@@ -96,7 +96,7 @@ public class BookmarkCachesRecyclerAdapter
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final Bookmark bookmark) {
+        void bind(final Bookmark bookmark) {
             final int pos = getAdapterPosition();
 
             title.setText(bookmark.cacheTitle());

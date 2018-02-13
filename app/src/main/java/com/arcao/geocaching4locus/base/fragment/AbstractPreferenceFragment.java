@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
 
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
-    public static final String VALUE_HTML_FORMAT = "<font color=\"#FF8000\"><b>%s</b></font>";
+    private static final String VALUE_HTML_FORMAT = "<font color=\"#FF8000\"><b>%s</b></font>";
     protected SharedPreferences preferences;
 
     @SuppressWarnings({"unchecked", "unused"})

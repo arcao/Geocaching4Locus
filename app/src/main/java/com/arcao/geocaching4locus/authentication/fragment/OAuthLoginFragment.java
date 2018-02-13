@@ -126,7 +126,6 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
         progressLayout.setVisibility(View.VISIBLE);
 
         if (lastInstanceState != null) {
-            //noinspection ResourceType
             progressLayout.setVisibility(lastInstanceState.getInt(STATE_PROGRESS_VISIBLE, View.VISIBLE));
         }
 
@@ -193,7 +192,6 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
         }
 
         @Override
-        @SuppressWarnings("deprecation")
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
 

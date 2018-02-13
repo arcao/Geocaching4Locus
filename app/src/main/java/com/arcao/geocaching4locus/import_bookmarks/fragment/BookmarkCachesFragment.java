@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,8 +24,7 @@ import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkCachesRecyclerAdapter;
 import com.arcao.geocaching4locus.import_bookmarks.task.BookmarkCachesRetrieveTask;
-import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.BottomMarginItemDecorator;
-import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.DividerItemDecoration;
+import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.BottomMarginLastItemDecorator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -36,23 +36,26 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRetrieveTask.TaskListener {
-
-    public static final String STATE_BOOKMARKS = "BOOKMARKS";
-
     public interface ListListener {
         void onTitleChanged(String title);
 
         void onBookmarksSelected(Bookmark[] bookmarksList);
     }
 
+    private static final String STATE_BOOKMARKS = "BOOKMARKS";
     private static final String PARAM_TITLE = "TITLE";
     private static final String PARAM_GUID = "GUID";
 
-    @BindView(R.id.list) RecyclerView recyclerView;
-    @BindView(R.id.progressContainer) View progressContainer;
-    @BindView(R.id.listContainer) View listContainer;
-    @BindView(R.id.textEmpty) TextView textEmpty;
-    @BindView(R.id.fab) FloatingActionButton fab;
+    @BindView(R.id.list)
+    RecyclerView recyclerView;
+    @BindView(R.id.progressContainer)
+    View progressContainer;
+    @BindView(R.id.listContainer)
+    View listContainer;
+    @BindView(R.id.textEmpty)
+    TextView textEmpty;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private WeakReference<ListListener> listListenerRef;
     private final BookmarkCachesRecyclerAdapter adapter = new BookmarkCachesRecyclerAdapter();
@@ -111,8 +114,8 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(
-                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        recyclerView.addItemDecoration(new BottomMarginItemDecorator(getActivity(), R.dimen.fab_outer_height));
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new BottomMarginLastItemDecorator(getActivity(), R.dimen.fab_outer_height));
 
         setEmptyText("");
         setListShown(adapter.getItemCount() > 0);
@@ -175,9 +178,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        if (task != null)
-            task.cancel(true);
+        if (task != null) task.cancel(true);
     }
 
     @Override
@@ -188,14 +189,15 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
     }
 
     @Override
-    public void onTaskFailed(Intent errorIntent) {
-        startActivity(errorIntent);
+    public void onTaskError(Intent intent) {
+        startActivity(intent);
         getActivity().finish();
     }
 
     @OnClick(R.id.fab)
     public void onFabClicked() {
         ListListener listener = listListenerRef.get();
+
         if (listener != null && adapter.isAnyChecked()) {
             List<Bookmark> checkedBookmarks = adapter.getCheckedBookmarks();
             listener.onBookmarksSelected(checkedBookmarks.toArray(new Bookmark[checkedBookmarks.size()]));

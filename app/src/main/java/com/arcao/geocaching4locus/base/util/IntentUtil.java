@@ -7,14 +7,16 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.widget.Toast;
 
-public class IntentUtil {
+public final class IntentUtil {
+    private IntentUtil() {
+    }
+
     public static boolean showWebPage(Activity activity, Uri uri) {
         if (activity == null)
             return false;
 
         final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-        //noinspection deprecation
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 

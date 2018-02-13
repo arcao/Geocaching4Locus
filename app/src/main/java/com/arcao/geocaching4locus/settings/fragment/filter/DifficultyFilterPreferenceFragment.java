@@ -62,7 +62,7 @@ public class DifficultyFilterPreferenceFragment extends AbstractPreferenceFragme
         }
     }
 
-    CharSequence prepareRatingSummary(CharSequence value) {
+    private CharSequence prepareRatingSummary(CharSequence value) {
         return preparePreferenceSummary(value, 0);
     }
 }

@@ -12,6 +12,7 @@ import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.SearchForGeocachesRequest;
 import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
@@ -32,9 +33,11 @@ import com.arcao.geocaching.api.filter.ViewportFilter;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
+import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.update.UpdateActivity;
@@ -162,30 +165,25 @@ public class LiveMapDownloadTask extends Thread {
     }
 
     private void handleTaskException(@NonNull Exception e) {
+        Timber.e(e);
+
         if (e instanceof LocusMapRuntimeException) {
-            Timber.e(e);
-            notificationManager.showLiveMapError("Locus Map Error: " + e.getMessage());
+            notificationManager.showLiveMapError(ResourcesUtil.getText(context, R.string.error_locus_map, e.getMessage()));
 
             // disable live map
             preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
         } else if (e instanceof InvalidCredentialsException) {
-            Timber.e(e);
             notificationManager.showLiveMapError(R.string.error_no_account);
 
             // disable live map
             preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
         } else if (e instanceof NetworkException) {
-            Timber.e(e);
             notificationManager.showLiveMapError(R.string.error_network_unavailable);
-        } else {
-            Timber.e(e);
         }
     }
 
     @WorkerThread
-    private void downloadTask(@NonNull Intent task)
-            throws GeocachingApiException, RequiredVersionMissingException {
-
+    private void downloadTask(@NonNull Intent task) throws GeocachingApiException, RequiredVersionMissingException {
         boolean downloadHints = preferences.getBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false);
 
         int current = 0;
@@ -210,8 +208,13 @@ public class LiveMapDownloadTask extends Thread {
                 List<Geocache> caches;
 
                 if (current == 0) {
-                    List<Filter> filters = createFilters(task);
-                    caches = api.searchForGeocaches(resultQuality, perPage, 0, 0, filters, null);
+                    caches = api.searchForGeocaches(SearchForGeocachesRequest.builder()
+                            .resultQuality(downloadHints ? ResultQuality.SUMMARY : ResultQuality.LITE)
+                            .addFilters(createFilters(task))
+                            .geocacheLogCount(0)
+                            .maxPerPage(perPage)
+                            .build()
+                    );
                 } else {
                     caches = api.getMoreGeocaches(resultQuality, current, perPage, 0, 0);
                 }
@@ -226,13 +229,9 @@ public class LiveMapDownloadTask extends Thread {
                 requests++;
 
                 PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
-                for (Geocache cache : caches) {
-                    Waypoint wpt = mapper.createLocusWaypoint(cache);
-                    if (wpt == null)
-                        continue;
-
+                for (Waypoint wpt : mapper.createLocusWaypoints(caches)) {
                     wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
-                            UpdateActivity.PARAM_SIMPLE_CACHE_ID, cache.code());
+                            UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
                     pw.addWaypoint(wpt);
                 }
 
@@ -269,9 +268,10 @@ public class LiveMapDownloadTask extends Thread {
     private List<Filter> createFilters(@NonNull Intent task) {
         List<Filter> filters = new ArrayList<>(10);
 
-        @SuppressWarnings("ConstantConditions")
-        String userName = accountManager.getAccount().name();
-        boolean premiumMember = accountManager.isPremium();
+        final Account account = accountManager.getAccount();
+
+        String userName = account != null ? account.name() : null;
+        boolean premiumMember = account != null && account.premium();
 
         double latitude = task.getDoubleExtra(PARAM_LATITUDE, 0D);
         double longitude = task.getDoubleExtra(PARAM_LONGITUDE, 0D);

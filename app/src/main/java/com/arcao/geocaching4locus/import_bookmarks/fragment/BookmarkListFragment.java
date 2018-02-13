@@ -16,7 +16,7 @@ import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkListRecyclerAdapter;
 import com.arcao.geocaching4locus.import_bookmarks.task.BookmarkListRetrieveTask;
-import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.SpacesItemDecoration;
+import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDecoration;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
             task = new BookmarkListRetrieveTask(getActivity(), this);
             task.execute();
         } else {
-            onTaskFinished(bookmarkLists);
+            onTaskFinish(bookmarkLists);
         }
     }
 
@@ -108,7 +108,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new SpacesItemDecoration((int) getResources().getDimension(R.dimen.cardview_space)));
+        recyclerView.addItemDecoration(new MarginItemDecoration(getActivity(), R.dimen.cardview_space));
 
         setEmptyText("");
         setListShown(adapter.getItemCount() > 0);
@@ -138,15 +138,15 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
     }
 
     @Override
-    public void onTaskFinished(List<BookmarkList> bookmarkLists) {
+    public void onTaskFinish(List<BookmarkList> bookmarkLists) {
         this.bookmarkLists = new ArrayList<>(bookmarkLists);
         adapter.setBookmarkLists(this.bookmarkLists);
         setListShown(true);
     }
 
     @Override
-    public void onTaskFailed(Intent errorIntent) {
-        getActivity().startActivity(errorIntent);
+    public void onTaskError(Intent intent) {
+        getActivity().startActivity(intent);
         getActivity().finish();
     }
 

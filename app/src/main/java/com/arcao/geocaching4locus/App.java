@@ -53,7 +53,6 @@ public class App extends Application {
 
         Account account = accountManager.getAccount();
         if (account != null) {
-            //noinspection ConstantConditions
             Crashlytics.setUserName(account.name());
             Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
         }
@@ -103,7 +102,6 @@ public class App extends Application {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public void clearGeocachingCookies() {
         // required to call
         CookieSyncManager.createInstance(this).sync();

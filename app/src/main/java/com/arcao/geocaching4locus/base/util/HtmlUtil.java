@@ -7,7 +7,10 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
 
-public class HtmlUtil {
+public final class HtmlUtil {
+    private HtmlUtil() {
+    }
+
     public static CharSequence fromHtml(@NonNull String source) {
         return applyFix(Html.fromHtml(source));
     }

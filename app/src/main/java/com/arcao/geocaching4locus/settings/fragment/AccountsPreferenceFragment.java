@@ -43,7 +43,6 @@ public class AccountsPreferenceFragment extends AbstractPreferenceFragment {
         Account account = accountManager.getAccount();
         if (account != null) {
             accountPreference.setTitle(R.string.pref_logout);
-            //noinspection ConstantConditions
             accountPreference.setSummary(prepareAccountSummary(account.name()));
         } else {
             accountPreference.setTitle(R.string.pref_login);

@@ -30,7 +30,8 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
         void onImportFinished(Intent errorIntent);
     }
 
-    @Nullable private BookmarkImportTask task;
+    @Nullable
+    private BookmarkImportTask task;
     private WeakReference<DialogListener> dialogListenerRef;
     private int count;
 
@@ -86,13 +87,11 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
     }
 
     @Override
-    public void onTaskFailed(Intent errorIntent) {
+    public void onTaskError(Intent intent) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onImportFinished(errorIntent);
-        }
+        if (listener != null) listener.onImportFinished(intent);
     }
 
     @Override
@@ -105,18 +104,17 @@ public class BookmarkImportDialogFragment extends AbstractDialogFragment impleme
     }
 
     @Override
-    public void onTaskFinished() {
+    public void onTaskFinish() {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onImportFinished(null);
-        }
+        if (listener != null) listener.onImportFinished(null);
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
+
         if (task != null) {
             task.cancel(true);
             task = null;

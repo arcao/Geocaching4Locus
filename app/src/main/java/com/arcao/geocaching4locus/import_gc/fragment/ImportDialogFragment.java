@@ -18,16 +18,15 @@ import java.lang.ref.WeakReference;
 
 public final class ImportDialogFragment extends AbstractDialogFragment implements TaskListener {
     public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
-
     private static final String PARAM_CACHE_IDS = "CACHE_IDS";
 
     public interface DialogListener {
         void onImportFinished(@Nullable Intent intent);
-
         void onImportError(@NonNull Intent intent);
     }
 
-    @Nullable private ImportTask task;
+    @Nullable
+    private ImportTask task;
     private WeakReference<DialogListener> dialogListenerRef;
     private String[] cacheIds;
 
@@ -65,31 +64,25 @@ public final class ImportDialogFragment extends AbstractDialogFragment implement
     }
 
     @Override
-    public void onTaskFinished(@Nullable Intent intent) {
+    public void onTaskFinish(@Nullable Intent intent) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onImportFinished(intent);
-        }
+        if (listener != null) listener.onImportFinished(intent);
     }
 
     @Override
-    public void onTaskError(@NonNull Intent errorIntent) {
+    public void onTaskError(@NonNull Intent intent) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onImportError(errorIntent);
-        }
+        if (listener != null) listener.onImportError(intent);
     }
 
     @Override
-    public void onProgressUpdate(int current, int count) {
+    public void onProgressUpdate(int current) {
         MaterialDialog dialog = (MaterialDialog) getDialog();
-        if (dialog != null) {
-            dialog.setProgress(current);
-        }
+        if (dialog != null) dialog.setProgress(current);
     }
 
 

@@ -1,17 +1,13 @@
 package locus.api.mapper;
 
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 import java.util.Date;
 import java.util.List;
 
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingLog;
-import timber.log.Timber;
 
 final public class Util {
     static final String GSAK_USERNAME = "gsak";
@@ -23,12 +19,8 @@ final public class Util {
         return date != null ? date.getTime() : 0;
     }
 
-    public static void applyUnavailabilityForGeocache(SharedPreferences preferences, @NonNull Waypoint toPoint) {
+    public static void applyUnavailabilityForGeocache(@NonNull Waypoint toPoint, int threshold) {
         int counter = 0;
-
-        // only when this feature is enabled
-        if (!preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false))
-            return;
 
         // only when there is any log
         if (toPoint.gcData == null || toPoint.gcData.logs == null || toPoint.gcData.logs.isEmpty())
@@ -40,10 +32,9 @@ final public class Util {
 
         // go through all logs (must be sorted by visited date, newest first)
         List<GeocachingLog> geocachingLogs = toPoint.gcData.logs;
+
         loop:
         for (GeocachingLog log : geocachingLogs) {
-            Timber.d("Analyzing log with date: %d", log.getDate());
-
             // skip GSAK log
             if (GSAK_USERNAME.equalsIgnoreCase(log.getFinder()))
                 continue;
@@ -62,8 +53,8 @@ final public class Util {
             }
         }
 
-        // if counter contains required count
-        if (counter >= preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)) {
+        // if counter contains required threshold
+        if (counter >= threshold) {
             // set geocache as not available
             toPoint.gcData.setAvailable(false);
         }

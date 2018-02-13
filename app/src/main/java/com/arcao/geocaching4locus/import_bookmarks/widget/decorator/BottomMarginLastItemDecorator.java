@@ -6,11 +6,11 @@ import android.support.annotation.DimenRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class BottomMarginItemDecorator extends RecyclerView.ItemDecoration {
+public class BottomMarginLastItemDecorator extends RecyclerView.ItemDecoration {
     private final int bottomMargin;
 
-    public BottomMarginItemDecorator(Context context, @DimenRes int bottomMarginRes) {
-        this.bottomMargin = context.getResources().getDimensionPixelSize(bottomMarginRes);
+    public BottomMarginLastItemDecorator(Context context, @DimenRes int dimen) {
+        this.bottomMargin = context.getResources().getDimensionPixelSize(dimen);
     }
 
     @Override

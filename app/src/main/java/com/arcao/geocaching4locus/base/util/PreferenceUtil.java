@@ -4,7 +4,10 @@ import android.content.SharedPreferences;
 
 import timber.log.Timber;
 
-public class PreferenceUtil {
+public final class PreferenceUtil {
+    private PreferenceUtil() {
+    }
+
     public static int getParsedInt(SharedPreferences preferences, String key, int defaultValue) {
         String value = preferences.getString(key, null);
         if (value == null)

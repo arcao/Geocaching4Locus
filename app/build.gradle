@@ -25,7 +25,7 @@ dependencies {
 
     // Logging API
     implementation 'com.arcao:slf4j-timber:3.0'
-    implementation 'com.jakewharton.timber:timber:4.6.0'
+    implementation 'com.jakewharton.timber:timber:4.6.1'
 
     // Apache commons
     implementation 'org.apache.commons:commons-lang3:3.7'

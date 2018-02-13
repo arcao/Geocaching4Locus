@@ -3,7 +3,10 @@ package com.arcao.geocaching4locus.base.util;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ParcelableUtil {
+public final class ParcelableUtil {
+    private ParcelableUtil() {
+    }
+
     public static byte[] marshall(Parcelable parcelable) {
         Parcel parcel = Parcel.obtain();
         parcelable.writeToParcel(parcel, 0);

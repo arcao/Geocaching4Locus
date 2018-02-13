@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.GCNumberInputDialogFragment;
@@ -26,8 +26,8 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (LocusTesting.isLocusNotInstalled(this)) {
-            LocusTesting.showLocusMissingError(this);
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
+            LocusMapUtil.showLocusMissingError(this);
             return;
         }
 

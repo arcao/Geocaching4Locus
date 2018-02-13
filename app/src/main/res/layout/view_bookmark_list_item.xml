@@ -73,7 +73,7 @@
             android:maxLines="1"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:textAppearance="?attr/textAppearanceListItem"
+            android:textAppearance="?android:attr/textAppearanceListItem"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

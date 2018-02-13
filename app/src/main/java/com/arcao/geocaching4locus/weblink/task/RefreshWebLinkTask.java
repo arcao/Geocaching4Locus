@@ -25,18 +25,23 @@ import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
 
-public class RefreshWebLinkTask extends
-        UserTask<String, Void, RefreshWebLinkTask.ParcelableWaypoint> {
+public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTask.ParcelableWaypoint> {
+
     public interface TaskListener {
-        void onTaskFinished(Waypoint waypoint);
+        void onTaskFinish(Waypoint waypoint);
+
+        void onTaskError(Intent intent);
     }
 
     private final Context context;
     private final WeakReference<TaskListener> taskListenerRef;
+    private final AccountManager accountManager;
 
     public RefreshWebLinkTask(Context context, TaskListener listener) {
         this.taskListenerRef = new WeakReference<>(listener);
         this.context = context.getApplicationContext();
+
+        accountManager = App.get(context).getAccountManager();
     }
 
     @Override
@@ -44,9 +49,7 @@ public class RefreshWebLinkTask extends
         super.onPostExecute(result);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(result.waypoint);
-        }
+        if (listener != null) listener.onTaskFinish(result.waypoint);
     }
 
     @Override
@@ -54,14 +57,11 @@ public class RefreshWebLinkTask extends
         super.onCancelled();
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(null);
-        }
+        if (listener != null) listener.onTaskFinish(null);
     }
 
     @Override
     protected ParcelableWaypoint doInBackground(String... params) throws Exception {
-        AccountManager accountManager = App.get(context).getAccountManager();
         DataMapper mapper = new DataMapper(context);
 
         String cacheId = params[0];
@@ -82,9 +82,7 @@ public class RefreshWebLinkTask extends
 
             return new ParcelableWaypoint(mapper.createLocusWaypoint(cache));
         } catch (InvalidSessionException e) {
-            Timber.e(e);
             accountManager.invalidateOAuthToken();
-
             throw e;
         }
     }
@@ -96,19 +94,10 @@ public class RefreshWebLinkTask extends
         if (isCancelled())
             return;
 
-        Timber.e(t);
-
         Intent intent = new ExceptionHandler(context).handle(t);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
-                | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(null);
-        }
-
-        context.startActivity(intent);
+        if (listener != null) listener.onTaskError(intent);
     }
 
     static final class ParcelableWaypoint implements Parcelable {

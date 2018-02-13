@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment;
 
-public class PermissionUtil {
+public final class PermissionUtil {
     private static final int REQUEST_PERMISSION_BASE = 100;
     public static final int REQUEST_LOCATION_PERMISSION = REQUEST_PERMISSION_BASE + 1;
     public static final int REQUEST_EXTERNAL_STORAGE_PERMISSION = REQUEST_PERMISSION_BASE + 2;
@@ -20,6 +20,9 @@ public class PermissionUtil {
             {Manifest.permission.ACCESS_COARSE_LOCATION};
     public static final String[] PERMISSION_EXTERNAL_STORAGE =
             {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private PermissionUtil() {
+    }
 
     public static boolean verifyPermissions(@NonNull int[] grantResults) {
         for (int result : grantResults) {

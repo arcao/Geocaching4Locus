@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:colorBackground">@android:color/white</item>
         <item name="colorPrimary">@color/primary</item>
@@ -45,9 +46,9 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme">
-    </style>
-	<style name="AppTheme.Invisible">
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="AppTheme.Invisible">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -59,21 +60,24 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog">
-    </style>
-    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge">
-    </style>
+
+    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog"></style>
+
+    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge"></style>
+
     <style name="AppTheme.Dashboard" parent="AppTheme.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowFixedWidthMinor">320dp</item>
         <item name="windowFixedWidthMajor">320dp</item>
     </style>
+
     <style name="AppTheme.Settings">
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
 
-        <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium.Primary</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium.Primary
+        </item>
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
     </style>
 
@@ -81,7 +85,7 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="Widget"/>
+    <style name="Widget" />
 
     <style name="Widget.AppTheme.Header" parent="android:Widget.TextView">
         <item name="android:background">@drawable/list_section_divider_holo_light</item>
@@ -95,14 +99,17 @@
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
     </style>
+
     <style name="Widget.AppTheme.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:maxLines">1</item>
         <item name="android:inputType">text</item>
     </style>
+
     <style name="Widget.AppTheme.SpinnerTextView" parent="Widget.AppCompat.EditText">
         <item name="android:focusableInTouchMode">false</item>
         <item name="android:background">@drawable/spinner_textfield_background</item>
     </style>
+
     <style name="Widget.AppTheme.Button" parent="Widget.AppCompat.Button" />
 
     <!-- Dashboard styles -->

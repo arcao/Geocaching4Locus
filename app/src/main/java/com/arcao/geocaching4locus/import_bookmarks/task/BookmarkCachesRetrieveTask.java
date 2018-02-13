@@ -13,13 +13,10 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import timber.log.Timber;
-
 public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Bookmark>> {
     public interface TaskListener {
         void onTaskFinished(List<Bookmark> bookmarks);
-
-        void onTaskFailed(Intent errorIntent);
+        void onTaskError(Intent intent);
     }
 
     private final Context context;
@@ -42,9 +39,7 @@ public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Book
         super.onPostExecute(result);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(result);
-        }
+        if (listener != null) listener.onTaskFinished(result);
     }
 
     @Override
@@ -54,13 +49,9 @@ public class BookmarkCachesRetrieveTask extends UserTask<String, Void, List<Book
         if (isCancelled())
             return;
 
-        Timber.e(t);
-
         Intent intent = new ExceptionHandler(context).handle(t);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFailed(intent);
-        }
+        if (listener != null) listener.onTaskError(intent);
     }
 }

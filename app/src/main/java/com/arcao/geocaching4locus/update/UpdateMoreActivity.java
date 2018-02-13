@@ -55,6 +55,14 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
     }
 
     @Override
+    public void onUpdateError(Intent intent) {
+        Timber.d("onUpdateError intent: %s", intent);
+        startActivity(intent);
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
@@ -39,9 +40,8 @@ public class PowerSaveWarningDialogFragment extends AbstractErrorDialogFragment 
     protected void onDialogBuild(MaterialDialog.Builder builder) {
         super.onDialogBuild(builder);
 
-        builder.neutralText(R.string.button_more_info).onNeutral((dialog, which) -> {
-            IntentUtil.showWebPage(getActivity(), AppConstants.POWER_SAVE_INFO_URI);
-        });
+        builder.neutralText(R.string.button_more_info).onNeutral((dialog, which) ->
+                IntentUtil.showWebPage(getActivity(), AppConstants.POWER_SAVE_INFO_URI));
 
         builder.checkBoxPromptRes(R.string.checkbox_do_not_show_again, false, (buttonView, isChecked) -> {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(buttonView.getContext());

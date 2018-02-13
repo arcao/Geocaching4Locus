@@ -18,6 +18,7 @@ import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
+import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -64,17 +65,21 @@ final class GeocacheConverter {
 
     private final Context context;
     private final boolean premiumMember;
-    private final SharedPreferences preferences;
 
     private final ImageDataConverter imageDataConverter;
     private final GeocacheLogConverter geocacheLogConverter;
     private final TrackableConverter trackableConverter;
     private final WaypointConverter waypointConverter;
+    private final boolean disableDnfNmNaGeocaches;
+    private final int disableDnfNmNaGeocachesThreshold;
 
     GeocacheConverter(@NonNull Context context) {
         this.context = context.getApplicationContext();
         premiumMember = App.get(this.context).getAccountManager().isPremium();
-        preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false);
+        disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1);
 
         imageDataConverter = new ImageDataConverter();
         geocacheLogConverter = new GeocacheLogConverter(imageDataConverter);
@@ -160,7 +165,8 @@ final class GeocacheConverter {
         if (!premiumMember)
             applyListingForBasicMembers(p);
 
-        applyUnavailabilityForGeocache(preferences, p);
+        if (disableDnfNmNaGeocaches)
+            applyUnavailabilityForGeocache(p, disableDnfNmNaGeocachesThreshold);
 
         return p;
     }

@@ -65,7 +65,7 @@ public class BookmarkListRecyclerAdapter extends RecyclerView.Adapter<BookmarkLi
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final BookmarkList bookmarkList) {
+        void bind(final BookmarkList bookmarkList) {
             this.bookmarkList = bookmarkList;
 
             title.setText(bookmarkList.name());

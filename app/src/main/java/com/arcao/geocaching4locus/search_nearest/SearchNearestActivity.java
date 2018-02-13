@@ -30,7 +30,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.Coordinates;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
@@ -101,9 +101,9 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         latitude = preferences.getFloat(PrefConstants.LAST_LATITUDE, 0);
         longitude = preferences.getFloat(PrefConstants.LAST_LONGITUDE, 0);
 
-        if (LocusTesting.isLocusNotInstalled(this)) {
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
             updateCoordinates();
-            LocusTesting.showLocusMissingError(this);
+            LocusMapUtil.showLocusMissingError(this);
             return; // skip retrieving Waypoint, it can crash because of old Locus API
         }
 
@@ -405,7 +405,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     }
 
     @Override
-    public void onDownloadError(Intent errorIntent) {
-        startActivity(errorIntent);
+    public void onDownloadError(Intent intent) {
+        startActivity(intent);
     }
 }

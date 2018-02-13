@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
+import com.arcao.geocaching.api.data.SearchForGeocachesRequest;
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.filter.CacheCodeFilter;
@@ -17,6 +18,7 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
+import com.arcao.geocaching4locus.base.util.DownloadingUtil;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
@@ -34,39 +36,42 @@ import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Waypoint;
 import locus.api.utils.StoreableWriter;
-import locus.api.utils.Utils;
 import timber.log.Timber;
 
 public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
     public interface TaskListener {
-        void onTaskFinished();
+        void onTaskFinish();
 
-        void onTaskFailed(Intent errorIntent);
+        void onTaskError(Intent intent);
 
         void onProgressUpdate(int count, int max);
     }
 
     private final Context context;
     private final WeakReference<TaskListener> taskListenerRef;
+    private final AccountManager accountManager;
+    private final SharedPreferences preferences;
+
     private int progress;
-    private int max;
+    private int count;
 
     public BookmarkImportTask(Context context, TaskListener listener) {
         this.context = context.getApplicationContext();
         taskListenerRef = new WeakReference<>(listener);
+        accountManager = App.get(context).getAccountManager();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
     protected Boolean doInBackground(String... params) throws Exception {
-        AccountManager accountManager = App.get(context).getAccountManager();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        File dataFile = ActionDisplayPointsExtended.getCacheFileName();
         DataMapper mapper = new DataMapper(context);
 
         GeocachingApi api = GeocachingApiFactory.create();
         GeocachingApiLoginTask.create(context, api).perform();
 
-        boolean simpleCacheData = prefs.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
-        int logCount = prefs.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
+        boolean simpleCacheData = preferences.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false);
+        int logCount = preferences.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5);
 
         final List<String> geocacheCodes = new ArrayList<>();
         if (params.length == 1 && isGuid(params[0])) {
@@ -86,8 +91,8 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
 
         Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes);
 
-        max = geocacheCodes.size();
-        if (max <= 0)
+        count = geocacheCodes.size();
+        if (count <= 0)
             throw new NoResultFoundException();
 
         GeocachingApi.ResultQuality resultQuality = GeocachingApi.ResultQuality.FULL;
@@ -96,25 +101,24 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
             logCount = 0;
         }
 
-        StoreableWriter writer = null;
-
-        try {
-            File dataFile = ActionDisplayPointsExtended.getCacheFileName();
-            writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream());
-
+        try (StoreableWriter writer = new StoreableWriter(ActionDisplayPointsExtended.getCacheFileOutputStream())){
             publishProgress();
 
             progress = 0;
-            int cachesPerRequest = AppConstants.CACHES_PER_REQUEST;
-            while (progress < max) {
-                long startTime = System.currentTimeMillis();
+            int itemsPerRequest = AppConstants.ITEMS_PER_REQUEST;
+            while (progress < count) {
+                long startTimeMillis = System.currentTimeMillis();
 
                 List<String> requestedCaches = geocacheCodes.subList(progress,
-                        Math.min(max, progress + cachesPerRequest));
+                        Math.min(count, progress + itemsPerRequest));
 
-                List<Geocache> cachesToAdd = api.searchForGeocaches(resultQuality, cachesPerRequest, logCount, 0, Collections.singletonList(
-                        new CacheCodeFilter(requestedCaches.toArray(new String[requestedCaches.size()]))
-                ), null);
+                List<Geocache> cachesToAdd = api.searchForGeocaches(SearchForGeocachesRequest.builder()
+                        .resultQuality(resultQuality)
+                        .maxPerPage(itemsPerRequest)
+                        .geocacheLogCount(logCount)
+                        .addFilter(new CacheCodeFilter(requestedCaches.toArray(new String[requestedCaches.size()])))
+                        .build()
+                );
 
                 if (!simpleCacheData)
                     accountManager.getRestrictions().updateLimits(api.getLastGeocacheLimits());
@@ -126,23 +130,19 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
                     break;
 
                 PackWaypoints pw = new PackWaypoints("BookmarkImport");
-                List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
-
-                for (Waypoint wpt : waypoints) {
+                for (Waypoint wpt : mapper.createLocusWaypoints(cachesToAdd)) {
                     if (simpleCacheData) {
                         wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
                     }
 
                     pw.addWaypoint(wpt);
                 }
-
                 writer.write(pw);
 
                 progress += cachesToAdd.size();
                 publishProgress();
 
-                long requestDuration = System.currentTimeMillis() - startTime;
-                cachesPerRequest = computeCachesPerRequest(cachesPerRequest, requestDuration);
+                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis);
             }
 
             Timber.i("found caches: %d", progress);
@@ -160,8 +160,6 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         } catch (IOException e) {
             Timber.e(e);
             throw new GeocachingApiException(e.getMessage(), e);
-        } finally {
-            Utils.closeStream(writer);
         }
     }
 
@@ -174,15 +172,13 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         super.onPostExecute(result);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null)
-            listener.onTaskFinished();
+        if (listener != null) listener.onTaskFinish();
     }
 
     @Override
     protected void onProgressUpdate(Void... values) {
         TaskListener listener = taskListenerRef.get();
-        if (listener != null)
-            listener.onProgressUpdate(progress, max);
+        if (listener != null) listener.onProgressUpdate(progress, count);
     }
 
 
@@ -193,30 +189,9 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
         if (isCancelled())
             return;
 
-        Timber.e(t);
-
         Intent intent = new ExceptionHandler(context).handle(t);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFailed(intent);
-        }
-    }
-
-    private int computeCachesPerRequest(int currentCachesPerRequest, long requestDuration) {
-        int cachesPerRequest = currentCachesPerRequest;
-
-        // keep the request time between ADAPTIVE_DOWNLOADING_MIN_TIME_MS and ADAPTIVE_DOWNLOADING_MAX_TIME_MS
-        if (requestDuration < AppConstants.ADAPTIVE_DOWNLOADING_MIN_TIME_MS)
-            cachesPerRequest += AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        if (requestDuration > AppConstants.ADAPTIVE_DOWNLOADING_MAX_TIME_MS)
-            cachesPerRequest -= AppConstants.ADAPTIVE_DOWNLOADING_STEP;
-
-        // keep the value in a range
-        cachesPerRequest = Math.max(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MIN_CACHES);
-        cachesPerRequest = Math.min(cachesPerRequest, AppConstants.ADAPTIVE_DOWNLOADING_MAX_CACHES);
-
-        return cachesPerRequest;
+        if (listener != null) listener.onTaskError(intent);
     }
 }

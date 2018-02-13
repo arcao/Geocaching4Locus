@@ -41,7 +41,7 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
     private final Context context;
     private final WeakReference<TaskListener> taskListenerRef;
-    @SuppressWarnings("WeakerAccess") Throwable tokenRequestThrowable;
+    Throwable tokenRequestThrowable;
 
     public OAuthLoginTask(Context context, TaskListener listener) {
         this.context = context.getApplicationContext();
@@ -64,10 +64,10 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
     @Override
     protected String[] doInBackground(String... params) throws Exception {
+        AccountManager accountManager = App.get(context).getAccountManager();
+        AccountRestrictions accountRestrictions = accountManager.getRestrictions();
+
         OAuth10aService service = createOAuthService();
-        App app = App.get(context);
-        AccountManager helper = app.getAccountManager();
-        AccountRestrictions accountRestrictions = helper.getRestrictions();
 
         if (params.length == 0) {
             OAuth1RequestToken requestToken = service.getRequestTokenAsync(new OAuthAsyncRequestCallbackAdapter<OAuth1RequestToken>() {
@@ -80,12 +80,12 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
             if (tokenRequestThrowable != null)
                 throw new NetworkException(tokenRequestThrowable.getMessage(), tokenRequestThrowable);
 
-            helper.setOAuthRequestToken(requestToken);
+            accountManager.setOAuthRequestToken(requestToken);
             String authUrl = service.getAuthorizationUrl(requestToken);
             Timber.i("AuthorizationUrl: %s", authUrl);
             return new String[]{authUrl};
         } else {
-            OAuth1RequestToken requestToken = helper.getOAuthRequestToken();
+            OAuth1RequestToken requestToken = accountManager.getOAuthRequestToken();
             OAuth1AccessToken accessToken = service.getAccessTokenAsync(requestToken, params[0], new OAuthAsyncRequestCallbackAdapter<OAuth1AccessToken>() {
                 @Override
                 public void onThrowable(Throwable t) {
@@ -106,10 +106,10 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
             if (userProfile == null)
                 throw new InvalidResponseException("User profile is null");
 
-            Account account = helper.createAccount(userProfile.user());
-            helper.addAccount(account);
-            helper.setOAuthToken(api.getSession());
-            helper.deleteOAuthRequestToken();
+            Account account = accountManager.createAccount(userProfile.user());
+            accountManager.addAccount(account);
+            accountManager.setOAuthToken(api.getSession());
+            accountManager.deleteOAuthRequestToken();
 
             // update restrictions
             accountRestrictions.updateLimits(apiLimitsResponse.apiLimits());
@@ -142,11 +142,8 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
         Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(intent);
-        }
+        if (listener != null) listener.onTaskFinished(intent);
     }
 }

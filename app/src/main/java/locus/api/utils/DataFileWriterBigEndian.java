@@ -74,7 +74,7 @@ class DataFileWriterBigEndian extends DataWriterBigEndian {
     }
 
     @Override
-    public synchronized void writeTo(OutputStream out) throws IOException {
+    public synchronized void writeTo(OutputStream out) {
         throw new UnsupportedOperationException("Not supported");
     }
 

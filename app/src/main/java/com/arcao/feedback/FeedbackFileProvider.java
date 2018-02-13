@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
+import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
@@ -45,8 +46,9 @@ public class FeedbackFileProvider extends ContentProvider {
 
     // UriMatcher used to match against incoming requests
     private UriMatcher uriMatcher;
+    private File reportFile;
 
-    public static File getReportFile(Context context) {
+    public static File getReportFile(@NonNull Context context) {
         return new File(context.getCacheDir(), REPORT_FILE_NAME);
     }
 
@@ -63,20 +65,33 @@ public class FeedbackFileProvider extends ContentProvider {
     }
 
     @Override
+    public void attachInfo(Context context, ProviderInfo info) {
+        super.attachInfo(context, info);
+
+        // Sanity check our security
+        if (info.exported) {
+            throw new SecurityException("Provider must not be exported");
+        }
+        if (!info.grantUriPermissions) {
+            throw new SecurityException("Provider must grant uri permissions");
+        }
+
+        reportFile = getReportFile(context);
+    }
+
+    @Override
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
         Timber.v("openFile: Called with uri: '" + uri + "'.");
 
         // Check incoming Uri against the matcher
         switch (uriMatcher.match(uri)) {
             case REPORT_FILE_ID:
-                File reportFile = getReportFile(getContext());
-
                 if (!reportFile.exists()) {
                     Timber.e("File '" + reportFile + "' for uri '" + uri + "' not found");
                     throw new FileNotFoundException(reportFile.toString());
                 }
 
-                return ParcelFileDescriptor.open(getReportFile(getContext()), ParcelFileDescriptor.MODE_READ_ONLY);
+                return ParcelFileDescriptor.open(reportFile, ParcelFileDescriptor.MODE_READ_ONLY);
 
             default:
                 Timber.e("Unsupported uri: '" + uri + "'.");
@@ -104,10 +119,10 @@ public class FeedbackFileProvider extends ContentProvider {
 
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String s, String[] as1, String s1) {
+        assert getContext() != null;
+
         switch (uriMatcher.match(uri)) {
             case REPORT_FILE_ID:
-                final File file = getReportFile(getContext());
-
                 String[] columns = projection != null ? projection : COLUMNS;
                 String[] cols = new String[columns.length];
                 Object[] values = new Object[columns.length];
@@ -116,11 +131,11 @@ public class FeedbackFileProvider extends ContentProvider {
                 for (String col : columns) {
                     if (OpenableColumns.DISPLAY_NAME.equals(col)) {
                         cols[i] = OpenableColumns.DISPLAY_NAME;
-                        values[i] = file.getName();
+                        values[i] = reportFile.getName();
                         i++;
                     } else if (OpenableColumns.SIZE.equals(col)) {
                         cols[i] = OpenableColumns.SIZE;
-                        values[i] = file.length();
+                        values[i] = reportFile.length();
                         i++;
                     }
                 }

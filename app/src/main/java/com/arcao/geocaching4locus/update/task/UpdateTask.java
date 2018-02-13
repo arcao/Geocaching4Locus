@@ -48,8 +48,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
         }
 
         void onUpdateState(State state, int progress, int max);
-
         void onTaskFinished(Intent result);
+        void onTaskError(Intent intent);
     }
 
 
@@ -69,9 +69,11 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
     protected void onPostExecute(UpdateTaskData result) {
         super.onPostExecute(result);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(prefs.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
-        boolean downloadLogsUpdateCache = prefs.getBoolean(PrefConstants.DOWNLOAD_LOGS_UPDATE_CACHE, true);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean replaceCache = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE.equals(preferences.getString(PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW, PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE));
+        boolean downloadLogsUpdateCache = preferences.getBoolean(PrefConstants.DOWNLOAD_LOGS_UPDATE_CACHE, true);
+        boolean disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false);
+        int disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1);
 
         LocusUtils.LocusVersion locusVersion;
         try {
@@ -93,7 +95,11 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
         if (result.updateLogs && !downloadLogsUpdateCache) {
             merger.mergeGeocachingLogs(result.oldPoint, result.newPoint);
-            applyUnavailabilityForGeocache(prefs, result.oldPoint);
+
+            // only when this feature is enabled
+            if (disableDnfNmNaGeocaches)
+                applyUnavailabilityForGeocache(result.oldPoint, disableDnfNmNaGeocachesThreshold);
+
             result.newPoint = result.oldPoint;
         } else {
             merger.mergeWaypoint(result.newPoint, result.oldPoint);
@@ -213,7 +219,6 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
             return result;
         } catch (InvalidSessionException e) {
-            Timber.e(e);
             accountManager.invalidateOAuthToken();
 
             throw e;
@@ -227,17 +232,10 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
         if (isCancelled())
             return;
 
-        Timber.e(t);
-
         Intent intent = new ExceptionHandler(context).handle(t);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) {
-            listener.onTaskFinished(null);
-        }
-
-        context.startActivity(intent);
+        if (listener != null)             listener.onTaskError(intent);
     }
 
     public static class UpdateTaskData implements Parcelable {

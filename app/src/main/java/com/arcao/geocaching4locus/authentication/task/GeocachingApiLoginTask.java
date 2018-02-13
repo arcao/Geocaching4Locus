@@ -26,28 +26,35 @@ public class GeocachingApiLoginTask {
     }
 
     public void perform() throws GeocachingApiException {
-        AccountManager manager = App.get(context).getAccountManager();
+        AccountManager accountManager = App.get(context).getAccountManager();
 
-        Account account = manager.getAccount();
-        if (account == null)
-            throw new InvalidCredentialsException("Account not found.");
+        Account account = accountManager.getAccount();
+        if (account == null) throw new InvalidCredentialsException("Account not found.");
 
-        String token = manager.getOAuthToken();
+        String token = accountManager.getOAuthToken();
         if (token == null) {
-            manager.removeAccount();
+            accountManager.removeAccount();
             throw new InvalidCredentialsException("Account not found.");
         }
 
         api.openSession(token);
 
-        if (manager.isAccountUpdateRequired()) {
-            UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(context));
+        if (accountManager.isAccountUpdateRequired()) {
+            UserProfile userProfile = api.getYourUserProfile(
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    DeviceInfoFactory.create(context)
+            );
 
             if (userProfile == null)
                 throw new InvalidResponseException("User profile is null");
 
-            account = manager.createAccount(userProfile.user());
-            manager.updateAccount(account);
+            account = accountManager.createAccount(userProfile.user());
+            accountManager.updateAccount(account);
         }
     }
 }

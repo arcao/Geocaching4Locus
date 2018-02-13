@@ -25,9 +25,11 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
 
     public interface DialogListener {
         void onUpdateFinished(Intent result);
+        void onUpdateError(Intent intent);
     }
 
-    @Nullable private UpdateTask task;
+    @Nullable
+    private UpdateTask task;
     private WeakReference<DialogListener> dialogListenerRef;
 
     public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
@@ -69,9 +71,15 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onUpdateFinished(intent);
-        }
+        if (listener != null) listener.onUpdateFinished(intent);
+    }
+
+    @Override
+    public void onTaskError(Intent intent) {
+        dismiss();
+
+        DialogListener listener = dialogListenerRef.get();
+        if (listener != null) listener.onUpdateError(intent);
     }
 
     @Override
@@ -86,9 +94,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
     @Override
     public void onUpdateState(State state, int progress, int max) {
         MaterialDialog dialog = (MaterialDialog) getDialog();
-        if (dialog != null) {
-            updateDialog(state, progress, max, dialog);
-        }
+        if (dialog != null) updateDialog(state, progress, max, dialog);
     }
 
     private void updateDialog(State state, int progress, int max, MaterialDialog dialog) {
@@ -98,6 +104,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
                 dialog.setProgress(-1);
                 dialog.setMaxProgress(1);
                 break;
+
             case LOGS:
                 dialog.setContent(R.string.progress_download_logs);
                 dialog.setMaxProgress(max);

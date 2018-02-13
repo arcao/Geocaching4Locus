@@ -62,7 +62,7 @@ public class TerrainFilterPreferenceFragment extends AbstractPreferenceFragment 
         }
     }
 
-    CharSequence prepareRatingSummary(CharSequence value) {
+    private CharSequence prepareRatingSummary(CharSequence value) {
         return preparePreferenceSummary(value, 0);
     }
 }

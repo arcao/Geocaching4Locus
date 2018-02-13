@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.dashboard.widget.DashboardButton;
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity;
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity;
@@ -91,8 +91,8 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
     @OnClick(R.id.db_live_map)
     public void onClickLiveMap() {
         // test if Locus Map is installed
-        if (LocusTesting.isLocusNotInstalled(this)) {
-            LocusTesting.showLocusMissingError(this);
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
+            LocusMapUtil.showLocusMissingError(this);
             return;
         }
 

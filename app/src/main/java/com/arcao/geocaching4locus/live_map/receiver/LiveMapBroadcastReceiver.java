@@ -16,7 +16,6 @@ import locus.api.android.features.periodicUpdates.UpdateContainer;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Location;
 
-@SuppressWarnings("deprecation")
 public class LiveMapBroadcastReceiver extends BroadcastReceiver {
     private static final String VAR_B_MAP_USER_TOUCHES = ("1306");
     private static final String VAR_LOC_MAP_CENTER = ("1302");

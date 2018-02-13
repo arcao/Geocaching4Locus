@@ -15,7 +15,7 @@ import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
 public class FilterPreferenceFragment extends AbstractPreferenceFragment {
-    public static final String TEXT_VALUE_SEPARATOR = ", ";
+    private static final String TEXT_VALUE_SEPARATOR = ", ";
 
     private boolean premiumMember;
     private boolean imperialUnits;

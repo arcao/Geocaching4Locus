@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
@@ -38,8 +38,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (LocusTesting.isLocusNotInstalled(this)) {
-            LocusTesting.showLocusMissingError(this);
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
+            LocusMapUtil.showLocusMissingError(this);
             return;
         }
 
@@ -72,13 +72,13 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
             showBookmarkList();
     }
 
-    protected void showBookmarkList() {
+    private void showBookmarkList() {
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment, BookmarkListFragment.newInstance())
                 .commit();
     }
 
-    protected void showBookmarkCaches(BookmarkList bookmarkList) {
+    private void showBookmarkCaches(BookmarkList bookmarkList) {
         getFragmentManager().beginTransaction().addToBackStack(null)
                 .replace(R.id.fragment, BookmarkCachesFragment.newInstance(bookmarkList))
                 .commit();

@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
-import com.arcao.geocaching4locus.base.util.LocusTesting;
+import com.arcao.geocaching4locus.base.util.LocusMapUtil;
 import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.download_rectangle.fragment.DownloadRectangleDialogFragment;
 import com.arcao.geocaching4locus.error.ErrorActivity;
@@ -23,8 +23,8 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (LocusTesting.isLocusNotInstalled(this)) {
-            LocusTesting.showLocusMissingError(this);
+        if (LocusMapUtil.isLocusNotInstalled(this)) {
+            LocusMapUtil.showLocusMissingError(this);
             return;
         }
 

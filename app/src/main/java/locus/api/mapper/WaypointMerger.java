@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.ReverseListIterator;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,10 +23,13 @@ import static locus.api.mapper.Util.GSAK_USERNAME;
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
 
 final public class WaypointMerger {
-    private final SharedPreferences preferences;
+    private final boolean disableDnfNmNaGeocaches;
+    private final int disableDnfNmNaGeocachesThreshold;
 
     public WaypointMerger(@NonNull Context context) {
-        preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false);
+        disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1);
     }
 
     public void mergeWaypoint(@NonNull Waypoint dstWaypoint, @Nullable Waypoint srcWaypoint) {
@@ -40,7 +44,9 @@ final public class WaypointMerger {
         copyWaypointId(dstWaypoint, srcWaypoint);
         copyGcVote(dstWaypoint, srcWaypoint);
         copyEditedGeocachingWaypointLocation(dstWaypoint, srcWaypoint);
-        applyUnavailabilityForGeocache(preferences, dstWaypoint);
+
+        // only when this feature is enabled
+        if (disableDnfNmNaGeocaches) applyUnavailabilityForGeocache(dstWaypoint, disableDnfNmNaGeocachesThreshold);
     }
 
     public void mergeGeocachingLogs(@NonNull Waypoint dstWaypoint, @Nullable Waypoint srcWaypoint) {

@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.weblink.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,9 +24,11 @@ public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment i
 
     public interface DialogListener {
         void onRefreshFinished(Waypoint waypoint);
+        void onRefreshError(Intent intent);
     }
 
-    @Nullable private RefreshWebLinkTask task;
+    @Nullable
+    private RefreshWebLinkTask task;
     private WeakReference<DialogListener> dialogListenerRef;
 
     public static RefreshWebLinkDialogFragment newInstance(String cacheId) {
@@ -62,13 +65,19 @@ public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment i
     }
 
     @Override
-    public void onTaskFinished(Waypoint waypoint) {
+    public void onTaskFinish(Waypoint waypoint) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) {
-            listener.onRefreshFinished(waypoint);
-        }
+        if (listener != null) listener.onRefreshFinished(waypoint);
+    }
+
+    @Override
+    public void onTaskError(Intent intent) {
+        dismiss();
+
+        DialogListener listener = dialogListenerRef.get();
+        if (listener != null) listener.onRefreshError(intent);
     }
 
     @Override

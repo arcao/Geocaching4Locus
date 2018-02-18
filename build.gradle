@@ -4,7 +4,6 @@ buildscript {
     ext.isTravis = 'true' == System.getenv('TRAVIS')
     ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
 
-
     ext.gitSha = {
         return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
     }
@@ -30,15 +29,15 @@ buildscript {
     }
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0-beta2'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
-        classpath 'com.google.gms:google-services:3.2.0'
-        classpath 'io.fabric.tools:gradle:1.25.1'
+        classpath BuildDeps.android_gradle_plugin
+        classpath BuildDeps.gradle_versions_plugin
+        classpath BuildDeps.google_services_plugin
+        classpath BuildDeps.fabric_io_plugin
     }
 }
 
@@ -46,8 +45,8 @@ allprojects {
     apply plugin: 'com.github.ben-manes.versions'
 
     repositories {
-        jcenter()
         google()
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.arcao.com' }
     }
@@ -62,4 +61,8 @@ allprojects {
     //        }
     //    }
     //}
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

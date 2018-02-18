@@ -115,7 +115,7 @@
         >Live kort</string>
     <string name="menu_nearest" comment=""
         >Nærmeste</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Manual</string>
     <string name="menu_settings" comment=""
         >Indstillinger</string>
@@ -303,7 +303,7 @@
         >Nej</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Denne add-on er fuldt arbejder med kun en præmie medlemskab. Som et grundlæggende medlem du er i stand til at hente de traditionelle, event og CITO geocaches med grundlæggende info (online notering, antyder i online-notering, ingen attributter, ingen billeder, logger på online-notering, osv) og brug kun få filtre i søgningen geocaches. For mere information kan du læse manualen på Geocaching4Locus hjemmeside.</string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Vis mig manual</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Den app kræver <b>skrive ekstern lagring</b> tilladelse til lagring af geocache data for Locus Map. Venligst <b>tillade</b> denne tilladelse i en næste dialogboks.</string>

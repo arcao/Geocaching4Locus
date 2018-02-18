@@ -157,9 +157,9 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
         startActivity(SettingsActivity.createIntent(this));
     }
 
-    @OnClick(R.id.db_manual)
+    @OnClick(R.id.db_users_guide)
     public void onClickManual() {
-        IntentUtil.showWebPage(this, AppConstants.MANUAL_URI);
+        IntentUtil.showWebPage(this, AppConstants.USERS_GUIDE_URI);
     }
 
     @Override

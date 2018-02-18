@@ -116,7 +116,7 @@
         >Live Karte</string>
     <string name="menu_nearest" comment=""
         >Nahe Caches</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Beschreibung</string>
     <string name="menu_settings" comment=""
         >Einstellungen</string>
@@ -304,7 +304,7 @@
         >Nein</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Nur Premium Member können die volle Leistungsfähigkeit dieser Erweiterung ausschöpfen. Als Basic Member kannst Du nur Traditionals, Events und CITOs mit Basisinformationen (Beschreibungen und Hints, keine Attribute, Bilder und Logs) mit nur wenigen Such-Filtern herunterladen. Weitere Informationen erhälst Du auf der Website von Geocaching4Locus. </string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Zeige die Anleitung</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Die App benötigt Schreibrechte <b>für die externe Speicherkarte</b>, um Geocachedaten für Locus Map zu speichern. Bitte <b>erlaube</b> diese Berechtigung im nächsten Schritt.</string>

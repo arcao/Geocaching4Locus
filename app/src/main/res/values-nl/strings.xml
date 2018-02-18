@@ -116,7 +116,7 @@
         >Live kaart</string>
     <string name="menu_nearest" comment=""
         >Dichtsbijzijnde</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Handleiding</string>
     <string name="menu_settings" comment=""
         >Instellingen</string>
@@ -311,7 +311,7 @@
         >Nee</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Deze add-on werkt alleen compleet met een premium lidmaatschap. Als basic lid kun je traditional caches downloaden en ook event en CITO caches met basis info (…) en slechts een paar filters toepassen tijdens zoeken naar geocaches. Voor meer informatie lees aub de handleiding op de Geocaching4Locus website.</string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Toon handleiding</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >De app heeft toestemming nodig om te <b>schrijven op externe opslag</b> om Geocaching gegevens op te slaan voor de Locus Map app. Dit aub <b>toestaan</b> in het volgende scherm.</string>

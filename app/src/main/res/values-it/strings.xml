@@ -115,7 +115,7 @@
         >Mappa dal vivo</string>
     <string name="menu_nearest" comment=""
         >Il più vicino</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Manuale</string>
     <string name="menu_settings" comment=""
         >Impostazioni</string>
@@ -303,7 +303,7 @@
         >No</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Questo add-on è completamente funzionante solo con un abbonamento premium. Come membro di base si è in grado di scaricare, geocache eventi e CITO tradizionali con informazioni di base (elenco on-line, accennare in elenco on-line, senza attributi, senza immagini, si collega on-line profilo, ecc) e utilizzare solo poche filtri in ricerca geocache. Per maggiori informazioni si prega di leggere il manuale sul sito Geocaching4Locus.</string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Mostrami manuale</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >L\'applicazione richiede il permesso di <b>scrittura di archiviazione esterna</b> per la memorizzazione di dati per Geocache Locus Map. Si prega di <b>consentire</b> questo permesso in una successiva finestra di dialogo.</string>

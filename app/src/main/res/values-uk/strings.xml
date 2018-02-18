@@ -115,7 +115,7 @@
         >Жива карта</string>
     <string name="menu_nearest" comment=""
         >Найближче</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Вручну</string>
     <string name="menu_settings" comment=""
         >Налаштування</string>
@@ -303,7 +303,7 @@
         >Ні</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Це розширення повністю працює тільки з преміум-членство. В якості основного елемента ви можете завантажити традиційні, події і ЦІТО тайники з базової інфо (он-лайн список, натяк на он-лайн список, ніяких ознак, ніяких зображень, не входить в систему он-лайн лістингу, і т.д.) і використовувати лише деякі фільтри в пошуку схованок. Для отримання додаткової інформації, будь ласка, прочитайте інструкцію на сайті Geocaching4Locus.</string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Покажіть мені інструкцію</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Застосування вимагає дозвіл <b>записи зовнішній пристрій</b> для зберігання даних схованок для Locus Map. Будь ласка, <b>дозвольте</b> це дозвіл в наступному діалоговому вікні.</string>

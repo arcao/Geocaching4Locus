@@ -9,7 +9,7 @@ import locus.api.android.utils.LocusUtils;
 public interface AppConstants {
     String OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth";
 
-    Uri MANUAL_URI = Uri.parse("https://geocaching4locus.eu/manual/");
+    Uri USERS_GUIDE_URI = Uri.parse("https://geocaching4locus.eu/users-guide/");
     Uri WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/");
     Uri FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus");
     Uri GPLUS_URI = Uri.parse("https://plus.google.com/+Geocaching4locusEu");

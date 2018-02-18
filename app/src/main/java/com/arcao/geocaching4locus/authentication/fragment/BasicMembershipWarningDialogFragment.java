@@ -29,7 +29,7 @@ public class BasicMembershipWarningDialogFragment extends AbstractErrorDialogFra
         // disable auto dismiss
         builder.autoDismiss(false);
 
-        builder.neutralText(R.string.button_show_manual)
-                .onNeutral((dialog, which) -> IntentUtil.showWebPage(getActivity(), AppConstants.MANUAL_URI));
+        builder.neutralText(R.string.button_show_users_guide)
+                .onNeutral((dialog, which) -> IntentUtil.showWebPage(getActivity(), AppConstants.USERS_GUIDE_URI));
     }
 }

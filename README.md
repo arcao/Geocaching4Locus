@@ -55,7 +55,7 @@ Other links
 ===========
 * [Official Website](http://geocaching4locus.eu/)
 * [Google Play](https://play.google.com/store/apps/details?id=com.arcao.geocaching4locus)
-* [Manual](http://geocaching4locus.eu/manual/)
+* [User's guide](http://geocaching4locus.eu/users-guide/)
 * [Discussion forum](http://forum.asamm.cz/viewtopic.php?f=26&t=549)
 * [Google+ page](https://plus.google.com/+Geocaching4LocusEu)
 * [Facebook page](https://www.facebook.com/Geocaching4Locus)

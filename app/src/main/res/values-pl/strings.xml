@@ -116,7 +116,7 @@
         >Mapa "na żywo"</string>
     <string name="menu_nearest" comment=""
         >Najbliższe</string>
-    <string name="menu_manual" comment=""
+    <string name="menu_users_guide" comment=""
         >Instrukcja</string>
     <string name="menu_settings" comment=""
         >Ustawienia</string>
@@ -311,7 +311,7 @@
         >Nie</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
         >Ten dodatek działa w pełni jedynie z kontami premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event, CITO tylko wraz z podstawowymi informacjami (opis online, podpowiedź w opisie online, bez obrazków, wpisy w opisie online itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
-    <string name="button_show_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Pokaż instrukcję użytkownika</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Ta aplikacja potrzebuje <b>uprawnienia zapis na zewnętrznym magazynie danych</b> w celu przechowywania danych skrzynek dla Locus Map. Proszę <b>zezwolić</b> na dodanie tych uprawnień w kolejnym oknie dialogowym.</string>

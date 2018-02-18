@@ -310,7 +310,7 @@
     <string name="button_no" comment="Dialog button for No action."
         >No</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic info (on-line listing, hint in on-line listing, no attributes, no images, logs in on-line listing, etc) and use only few filters in searching geocaches. For more information please read the User\'s guide on Geocaching4Locus website.</string>
+        >This add-on is fully working with a premium membership only. As a basic member you are able to download traditional, event and CITO geocaches with basic geocache data (no listing, no hint, no attributes, no images, no logs, etc) and use only few filters in searching geocaches. For more information please read the User\'s guide on Geocaching4Locus website.</string>
     <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
         >Show me User\'s guide</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."

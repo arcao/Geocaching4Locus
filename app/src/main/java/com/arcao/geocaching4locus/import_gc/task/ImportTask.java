@@ -178,18 +178,14 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
             if (!notFoundGeocacheCodes.isEmpty()) {
                 throw new CacheNotFoundException(notFoundGeocacheCodes.toArray(new String[notFoundGeocacheCodes.size()]));
             }
-        } catch (Exception e) {
-            throw handleException(e, dataFile, current);
-        }
 
-        if (current > 0) {
             try {
                 return ActionDisplayPointsExtended.createSendPacksIntent(dataFile, true, true);
             } catch (Throwable t) {
                 throw new LocusMapRuntimeException(t);
             }
-        } else {
-            return null;
+        } catch (Exception e) {
+            throw handleException(e, dataFile, current);
         }
     }
 

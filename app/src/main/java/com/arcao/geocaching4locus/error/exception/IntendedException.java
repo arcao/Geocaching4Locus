@@ -36,9 +36,7 @@ public class IntendedException extends Exception {
         int len = in.readInt();
         byte[] data = new byte[len];
 
-        if (in.read(data) != len)
-            return;
-
+        if (in.read(data) != len) return;
         intent = ParcelableUtil.unmarshall(data, Intent.CREATOR);
     }
 }

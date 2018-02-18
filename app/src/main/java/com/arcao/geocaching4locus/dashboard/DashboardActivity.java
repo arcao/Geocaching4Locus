@@ -101,7 +101,7 @@ public class DashboardActivity extends AbstractActionBarActivity implements Live
             return;
         }
 
-        if (!notificationManager.isLiveMapEnabled() && !PowerSaveWarningDialogFragment.showIfNeeded(this)) {
+        if (notificationManager.isLiveMapEnabled() || !PowerSaveWarningDialogFragment.showIfNeeded(this)) {
             onPowerSaveWarningConfirmed();
         }
     }

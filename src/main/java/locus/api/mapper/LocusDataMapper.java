@@ -3,6 +3,7 @@ package locus.api.mapper;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
 import com.arcao.geocaching.api.data.Geocache;
 import com.arcao.geocaching.api.data.GeocacheLog;
 import com.arcao.geocaching.api.data.ImageData;
@@ -17,9 +18,12 @@ import com.arcao.geocaching.api.data.type.GeocacheLogType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
-import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.util.ReverseListIterator;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,6 +37,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import locus.api.objects.extra.Location;
 import locus.api.objects.extra.Waypoint;
 import locus.api.objects.geocaching.GeocachingAttribute;
@@ -41,8 +46,6 @@ import locus.api.objects.geocaching.GeocachingImage;
 import locus.api.objects.geocaching.GeocachingLog;
 import locus.api.objects.geocaching.GeocachingTrackable;
 import locus.api.objects.geocaching.GeocachingWaypoint;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class LocusDataMapper {
@@ -55,19 +58,15 @@ public class LocusDataMapper {
 	private static final Pattern NOTE__COORDINATE_PATTERN = Pattern.compile("\\b[nNsS]\\s*\\d"); // begin of coordinates
 	private static final Pattern NOTE__NAME_PATTERN = Pattern.compile("^(.+):\\s*\\z");
 	private static final long WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0");
-	public static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
-			+ "<p><a href=\"%1$s#ctl00_ContentBody_ShortDescription\">%2$s</a></p>";
 
 	static {
 		GPX_TIME_FMT.setTimeZone(TimeZone.getTimeZone("GMT+00:00"));
 	}
 
 	private final Context mContext;
-	private final boolean mPremiumMember;
 
 	public LocusDataMapper(@NonNull Context context) {
 		mContext = context.getApplicationContext();
-		mPremiumMember = App.get(mContext).getAuthenticatorHelper().getRestrictions().isPremiumMember();
 	}
 
 	@NonNull
@@ -161,9 +160,6 @@ public class LocusDataMapper {
 
 		updateCacheLocationByCorrectedCoordinates(p, cache.getUserWaypoints());
 
-		if (!mPremiumMember)
-			applyListingForBasicMembers(p);
-
 		return p;
 	}
 
@@ -175,14 +171,6 @@ public class LocusDataMapper {
 		for (Trackable trackable : trackables) {
 			CollectionUtils.addIgnoreNull(toPoint.gcData.trackables, toLocusTrackable(trackable, trackableLightData));
 		}
-	}
-
-	private void applyListingForBasicMembers(@NonNull Waypoint toPoint) {
-		if (toPoint.gcData == null)
-			return;
-
-		String longDescription = String.format(LITE_GEOCACHE_LISTING_HTML, toPoint.gcData.getCacheUrlFull(), toPoint.getName());
-		toPoint.gcData.setDescriptions("", false, longDescription, true);
 	}
 
 	private void sortCacheLogsByCreated(@Nullable List<GeocacheLog> cacheLogs) {

@@ -343,7 +343,7 @@
     <string name="title_warning" comment="Warning dialog title"
         >Warning</string>
     <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
-        >Your android device contains manufacturer\'s custom battery saver app which prevents Live map functionality to work correctly. Please add an exception to battery saver app for Geocaching4Locus.</string>
+        >Your Android device contains custom battery saver app from device manufacturer which prevents Live Map to work correctly. Please add an exception to battery saver app for Geocaching4Locus.</string>
     <string name="button_more_info" comment="Dialog button for More info action"
         >More info</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."

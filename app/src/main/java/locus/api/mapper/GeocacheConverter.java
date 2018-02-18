@@ -16,7 +16,6 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.data.type.WaypointType;
 import com.arcao.geocaching.api.util.GeocachingUtils;
-import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 
@@ -46,8 +45,6 @@ import static locus.api.mapper.Util.safeDateLong;
 
 final class GeocacheConverter {
     private static final String GEOCACHE_GUID_LINK_PREFIX = "http://www.geocaching.com/seek/cache_details.aspx?guid=";
-    private static final String LITE_GEOCACHE_LISTING_HTML = "<meta http-equiv=\"refresh\" content=\"0;url=%1$s#ctl00_ContentBody_ShortDescription\" />"
-            + "<p><a href=\"%1$s#ctl00_ContentBody_ShortDescription\">%2$s</a></p>";
     private static final long WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0");
 
     private static final DateFormat
@@ -64,7 +61,6 @@ final class GeocacheConverter {
 
 
     private final Context context;
-    private final boolean premiumMember;
 
     private final ImageDataConverter imageDataConverter;
     private final GeocacheLogConverter geocacheLogConverter;
@@ -75,7 +71,6 @@ final class GeocacheConverter {
 
     GeocacheConverter(@NonNull Context context) {
         this.context = context.getApplicationContext();
-        premiumMember = App.get(this.context).getAccountManager().isPremium();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false);
@@ -162,9 +157,6 @@ final class GeocacheConverter {
 
         updateGeocacheLocationByCorrectedCoordinates(p, cache.userWaypoints());
 
-        if (!premiumMember)
-            applyListingForBasicMembers(p);
-
         if (disableDnfNmNaGeocaches)
             applyUnavailabilityForGeocache(p, disableDnfNmNaGeocachesThreshold);
 
@@ -242,15 +234,6 @@ final class GeocacheConverter {
                 return GeocachingData.CACHE_SIZE_NOT_CHOSEN;
         }
     }
-
-    private void applyListingForBasicMembers(@NonNull Waypoint p) {
-        if (p.gcData == null)
-            return;
-
-        String longDescription = String.format(LITE_GEOCACHE_LISTING_HTML, p.gcData.getCacheUrlFull(), p.getName());
-        p.gcData.setDescriptions("", false, longDescription, true);
-    }
-
 
     private void updateGeocacheLocationByCorrectedCoordinates(@NonNull Waypoint p, @Nullable Collection<UserWaypoint> userWaypoints) {
         if (p.gcData == null || CollectionUtils.isEmpty(userWaypoints))

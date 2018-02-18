@@ -30,7 +30,7 @@ public class BasicMembershipWarningDialogFragment extends AbstractErrorDialogFra
     // disable auto dismiss
     builder.autoDismiss(false);
 
-    builder.neutralText(R.string.basic_member_warning_button_manual)
+    builder.neutralText(R.string.button_users_guide)
         .onNeutral(new MaterialDialog.SingleButtonCallback() {
           @Override
           public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

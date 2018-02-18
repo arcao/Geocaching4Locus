@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Carte en live</string>
     <string name="menu_nearest">Plus proches</string>
-    <string name="menu_manual">Manuel</string>
+    <string name="menu_users_guide">Manuel</string>
     <string name="menu_preferences">Paramètres</string>
     
     <string name="user_waypoint_name">Waypoint de l\'utilisateur %1$d</string>
@@ -206,7 +206,7 @@
         >Non</string>
     <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
         >Cet add-on ne fonctionne pleinement qu\'avec une adhésion premium. En tant que membre de base que vous pouvez télécharger, événement et CITO géocaches traditionnels avec informations de base (inscription en ligne, hint, pas d\'attributs, pas d\'images, derniers logs en ligne, etc) et utilisent seulement quelques filtres dans la recherchePour plus d\'informations merci de lire le manuel sur le site Geocaching Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Lien vers le manuel</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >L\'application nécessite l\'autorisation <b>d\'écrire sur la carte SD</b> pour mettre en mémoire les données. Merci <b>de l\'autoriser</b> dans la prochaine fenêtre.</string>

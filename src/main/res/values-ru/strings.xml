@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Live карта</string>
     <string name="menu_nearest">Ближайшие</string>
-    <string name="menu_manual">Руководство</string>
+    <string name="menu_users_guide">Руководство</string>
     <string name="menu_preferences">Настройки</string>
     
     <string name="user_waypoint_name">Точка нахождения пользователя %1$d</string>

@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Živá mapa</string>
     <string name="menu_nearest">Nejbližší</string>
-    <string name="menu_manual">Manuál</string>
+    <string name="menu_users_guide">Manuál</string>
     <string name="menu_preferences">Nastavení</string>
     
     <string name="user_waypoint_name">Uživatelský waypoint %1$d</string>
@@ -206,7 +206,7 @@
         >Ne</string>
     <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
         >Toto rozšíření je plně funkční pouze s prémiovým členstvím. Jako základní člen budete moct stáhnout tradiční, eventy a CITO keše se základními informacemi (on-line listing, nápověda v on-line listingu, žádné atributy, žádné obrázky, logy v on-line listingu, atd.) a používat pouze několik filtrů při hledání keší. Pro více informací si prosím přečtěte manuál na webu Geocaching4Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Ukaž mi manuál</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikace vyžaduje oprávnění <b>zápisu do externího úložiště</b> k ukládání dat o keši pro Locus Map. Prosím, <b>povolte</b> toto oprávnění v následujícím dialogu.</string>

@@ -67,7 +67,7 @@
                 android:id="@+id/db_manual"
                 style="@style/MainMenuButton"
                 android:drawableTop="@drawable/ic_action_help"
-                android:text="@string/menu_manual" />
+                android:text="@string/menu_users_guide" />
 
         </LinearLayout>
     </LinearLayout>

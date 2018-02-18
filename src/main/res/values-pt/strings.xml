@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Mapa ao vivo</string>
     <string name="menu_nearest">Mais perto</string>
-    <string name="menu_manual">Manual</string>
+    <string name="menu_users_guide">Manual</string>
     <string name="menu_preferences">Configuração</string>
     
     <string name="user_waypoint_name">Waypoint de utilizador %1$d</string>
@@ -206,7 +206,7 @@
         >Não</string>
     <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
         >Este add-on é totalmente funcional com apenas uma conta premium. Como um membro básico que você é capaz de baixar tradicionais, evento e CITO geocaches com informação básica (lista on-line, sugestão na listagem on-line, sem atributos, sem imagens, registra em on-line perfil, etc) e usar apenas alguns filtros em busca geocaches. Para mais informações, por favor leia o manual no site Geocaching4Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Mostre-me o manual</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >O aplicativo requer permissão de <b>gravação de armazenamento externo</b> para armazenar Geocache dados para Locus Map. Por favor, <b>permita</b> essa permissão em um diálogo seguinte.</string>

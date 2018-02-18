@@ -67,7 +67,7 @@
     
     <string name="menu_live_map">Aktívna mapa</string>
     <string name="menu_nearest">Najbližšie</string>
-    <string name="menu_manual">Manuál</string>
+    <string name="menu_users_guide">Manuál</string>
     <string name="menu_preferences">Nastavenia</string>
     
     <string name="user_waypoint_name">Užívateľský bod trasy %1$d</string>
@@ -206,7 +206,7 @@
         >Nie</string>
     <string name="basic_member_warning_message" comment="Warning dialog message which is shown after the basic user is signed in."
         >Toto rozšírenie je plne funkčné len s prémiovým členstvom. Ako základný člen budete môcť stiahnuť tradičné, eventy a CITO skrýše so základnými informáciami (online listing, nápoveda v online listingu, žiadne atribúty, žiadne obrázky, záznamy v online listingu, atď.) a používať iba niekoľko filtrov pre hľadaní skrýš. Pre viac informácií si prosím prečítajte manuál na webe Geocaching4Locus.</string>
-    <string name="basic_member_warning_button_manual" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
+    <string name="button_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
         >Ukáž mi manuál</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikácia vyžaduje oprávnenie <b>zápisu do externého úložiska</b> na ukladanie dát o skrýšach pre Locus Map. Prosím, <b>povoľte</b> toto oprávnenie v nasledujúcom dialógu.</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Stahuji keše…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -117,7 +117,7 @@
     <string name="menu_nearest" comment=""
         >Nejbližší</string>
     <string name="menu_users_guide" comment=""
-        >Manuál</string>
+        >Uživatelská příručka</string>
     <string name="menu_settings" comment=""
         >Nastavení</string>
     
@@ -165,6 +165,8 @@
         >
         <item quantity="one" comment=""
         >Keš %s nebyla nalezena.</item>
+        <item quantity="few" comment=""
+        >Keše %s nebyly nalezeny.</item>
         <item quantity="other" comment=""
         >Keše %s nebyly nalezeny.</item>
     </plurals>
@@ -310,9 +312,9 @@
     <string name="button_no" comment="Dialog button for No action."
         >Ne</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Toto rozšíření je plně funkční pouze s prémiovým členstvím. Jako základní člen budete moct stáhnout tradiční, eventy a CITO keše se základními informacemi (on-line listing, nápověda v on-line listingu, žádné atributy, žádné obrázky, logy v on-line listingu, atd.) a používat pouze několik filtrů při hledání keší. Pro více informací si prosím přečtěte manuál na webu Geocaching4Locus.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Ukaž mi manuál</string>
+        >Toto rozšíření je plně funkční pouze s prémiovým členstvím. Jako základní člen budete moct stáhnout tradiční, eventy a CITO keše se základními informacemi (bez listingu, nápovědy, atributů, obrázků, logů, atd.) a používat pouze několik filtrů při hledání keší. Pro více informací si prosím přečtěte uživatelskou příručku na webu Geocaching4Locus.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
+        >Ukaž mi uživatelskou příručku</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikace vyžaduje oprávnění <b>zápisu do externího úložiště</b> k ukládání dat o keši pro Locus Map. Prosím, <b>povolte</b> toto oprávnění v následujícím dialogu.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -338,4 +340,14 @@
         >Prosím ujistěte se, že živá mapa je povolena a Locus Map zobrazuje keše živé mapy.</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importovat GC živé mapy</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Příště nezobrazovat tuto zprávu</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Varování</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Vaše Android zařízení obsahuje vlastní aplikaci spořiče baterie od výrobce zařízení, která zabraňuje, aby Živá mapa fungovala správně. Přidejte prosím výjimku do aplikace spořiče baterie pro Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >Více informací</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
+        >Chyba Locus Map: %s</string>
 </resources>

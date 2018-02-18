@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Скачивание кэшей…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -115,8 +115,7 @@
         >Live карта</string>
     <string name="menu_nearest" comment=""
         >Ближайшие</string>
-    <string name="menu_users_guide" comment=""
-        >Руководство</string>
+    
     
     
     <string name="var_user_waypoint_name" comment=""
@@ -295,6 +294,11 @@
         >Да</string>
     <string name="button_no" comment="Dialog button for No action."
         >Нет</string>
+    
+    
+    
+    
+    
     
     
     

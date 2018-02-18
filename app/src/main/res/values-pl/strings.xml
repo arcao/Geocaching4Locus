@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Pobieranie skrzynek…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -30,7 +30,7 @@
         >Używaj mil zamiast kilometrów</string>
     
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in."
-        >Nie jesteś zalogowany. Proszę zaloguj się najpierw w ustawieniach konta.</string>
+        >Nie jesteś zalogowany. Proszę najpierw zalogować się w ustawieniach konta.</string>
 
     <string name="button_ok" comment="Dialog button for OK action."
         >OK</string>
@@ -117,7 +117,7 @@
     <string name="menu_nearest" comment=""
         >Najbliższe</string>
     <string name="menu_users_guide" comment=""
-        >Instrukcja</string>
+        >Podręcznik użytkownika</string>
     <string name="menu_settings" comment=""
         >Ustawienia</string>
     
@@ -161,13 +161,7 @@
     <string name="error_gc_code_invalid" comment=""
         >Nieprawidłowy kod GC.</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
-        >
-        <item quantity="one" comment=""
-        >Skrzynka %s nie została znaleziona.</item>
-        <item quantity="other" comment=""
-        >Skrzynki %s nie zostały odnalezione.</item>
-    </plurals>
+    
 
     <string name="title_geocache_count" comment=""
         >Liczba skrzynek</string>
@@ -310,9 +304,9 @@
     <string name="button_no" comment="Dialog button for No action."
         >Nie</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Ten dodatek działa w pełni jedynie z kontami premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event, CITO tylko wraz z podstawowymi informacjami (opis online, podpowiedź w opisie online, bez obrazków, wpisy w opisie online itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Pokaż instrukcję użytkownika</string>
+        >Ten dodatek działa w pełni jedynie z kontami typu premium. Posiadając standardowe konto możesz pobrać skrzynki typów tradycyjna, event i CITO tylko wraz z podstawowymi informacjami (brak opisu, brak podpowiedzi, brak atrybutów, brak obrazów, brak wpisów itp.) oraz wykorzystywać je tylko z kilkoma filtrami wyszukiwania. Więcej informacji jest dostępnych w instrukcji użytkownika zamieszczonej na stronie Geocaching4Locus.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
+        >Pokaż podręcznik użytkownika</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Ta aplikacja potrzebuje <b>uprawnienia zapis na zewnętrznym magazynie danych</b> w celu przechowywania danych skrzynek dla Locus Map. Proszę <b>zezwolić</b> na dodanie tych uprawnień w kolejnym oknie dialogowym.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -334,7 +328,18 @@
         >Zakładka skrzynki</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Zaimportuj skrzynki "mapy na żywo"</string>
-    
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."
+        >Proszę upewnić się, że Mapa na żywo jest włączona, aby Locus Map pokazywał skrzynki na mapie.</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importuj GC "mapy na żywo"</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Nie pokazuj więcej tej wiadomości</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Ostrzeżenie </string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Twoje urządzenia Android posiada dostarczoną przez producenta niestandardową aplikację oszczędzania energii, to uniemożliwia poprawne działanie mapy na żywo. Dodaj wyjątek dla Geocaching4Locus w aplikacji oszczędzania energii.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >Więcej informacji</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
+        >Błąd mapy Locus: %s</string>
 </resources>

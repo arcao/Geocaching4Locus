@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Skidam caheove…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -115,8 +115,7 @@
         >Živa mapa</string>
     <string name="menu_nearest" comment=""
         >Najbliže</string>
-    <string name="menu_users_guide" comment=""
-        >Priručnik</string>
+    
     <string name="menu_settings" comment=""
         >Postavke</string>
     
@@ -301,10 +300,8 @@
         >Da</string>
     <string name="button_no" comment="Dialog button for No action."
         >Ne</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Ovo proširenje u potpunosti surađuje sa samo premium članstvo. Kao osnovni član ste u mogućnosti preuzeti tradicionalne, događaju i CITO sprema osnovne info (on-line popis, aludira na on-line popis, bez atributa, nema slike, prijavljuje on-line popis, itd) i koristiti samo nekoliko filtri u potrazi geocache. Za više informacija pročitajte priručnik o Geocaching4Locus web stranice.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Pokaži mi priručniku</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Aplikacija zahtijeva <b>pisanje vanjsku pohranu</b> dozvolu za pohranu sprema podatke za Locus Map. <b>Dozvolite</b> ovu dozvolu u sljedećem dijalogu.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -313,6 +310,11 @@
         >Sakrij sprema na onemogućen</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Sakrij sprema žive karti kada se značajka karta živa je onemogućen</string>
+    
+    
+    
+    
+    
     
     
     

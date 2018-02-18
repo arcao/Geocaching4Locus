@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >A descarregar caches…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -115,8 +115,7 @@
         >Mapa ao vivo</string>
     <string name="menu_nearest" comment=""
         >Mais perto</string>
-    <string name="menu_users_guide" comment=""
-        >Manual</string>
+    
     <string name="menu_settings" comment=""
         >Definições</string>
     
@@ -301,10 +300,8 @@
         >Sim</string>
     <string name="button_no" comment="Dialog button for No action."
         >Não</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Este add-on é totalmente funcional com apenas uma conta premium. Como um membro básico que você é capaz de baixar tradicionais, evento e CITO geocaches com informação básica (lista on-line, sugestão na listagem on-line, sem atributos, sem imagens, registra em on-line perfil, etc) e usar apenas alguns filtros em busca geocaches. Para mais informações, por favor leia o manual no site Geocaching4Locus.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Mostre-me o manual</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >O aplicativo requer permissão de <b>gravação de armazenamento externo</b> para armazenar Geocache dados para Locus Map. Por favor, <b>permita</b> essa permissão em um diálogo seguinte.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -313,6 +310,11 @@
         >Esconder geocaches sobre desligado</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Esconder geocaches mapa ao vivo quando o recurso de mapa ao vivo é desligado</string>
+    
+    
+    
+    
+    
     
     
     

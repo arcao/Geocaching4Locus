@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >下载藏点……</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -116,8 +116,7 @@
         >在线地图</string>
     <string name="menu_nearest" comment=""
         >最近的</string>
-    <string name="menu_users_guide" comment=""
-        >帮助手册</string>
+    
     <string name="menu_settings" comment=""
         >设置</string>
     
@@ -302,10 +301,8 @@
         >是</string>
     <string name="button_no" comment="Dialog button for No action."
         >否</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Geocaching.com的付费用户在使用这个插件不会受到功能的限制。普通用户仅可以下载传统藏点，活动藏点和CITO藏点。普通用户仅可以下载上述藏点的基本信息（在线页面信息、提示、日志等，无法下载属性信息或图片）。普通用户使用搜索的条件也受到限制。更多信息，请访问Geocaching4Locus网站。</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >查看操作手册</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >这个应用需要<b>写入外部存储</b> 权限，用来为Locus地图的藏点数据排序。请在下一个对话窗口中点击<b>允许</b> 。</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -325,6 +322,11 @@
         >查看藏点</string>
     <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
         >将藏点加入书签</string>
+    
+    
+    
+    
+    
     
     
     

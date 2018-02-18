@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Завантаження кешу…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -115,8 +115,7 @@
         >Жива карта</string>
     <string name="menu_nearest" comment=""
         >Найближче</string>
-    <string name="menu_users_guide" comment=""
-        >Вручну</string>
+    
     <string name="menu_settings" comment=""
         >Налаштування</string>
     
@@ -301,10 +300,8 @@
         >Так</string>
     <string name="button_no" comment="Dialog button for No action."
         >Ні</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Це розширення повністю працює тільки з преміум-членство. В якості основного елемента ви можете завантажити традиційні, події і ЦІТО тайники з базової інфо (он-лайн список, натяк на он-лайн список, ніяких ознак, ніяких зображень, не входить в систему он-лайн лістингу, і т.д.) і використовувати лише деякі фільтри в пошуку схованок. Для отримання додаткової інформації, будь ласка, прочитайте інструкцію на сайті Geocaching4Locus.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Покажіть мені інструкцію</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Застосування вимагає дозвіл <b>записи зовнішній пристрій</b> для зберігання даних схованок для Locus Map. Будь ласка, <b>дозвольте</b> це дозвіл в наступному діалоговому вікні.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -313,6 +310,11 @@
         >Приховати тайники на інвалідів</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Приховати тайники живої мапи при відключенні Жива мапа функції</string>
+    
+    
+    
+    
+    
     
     
     

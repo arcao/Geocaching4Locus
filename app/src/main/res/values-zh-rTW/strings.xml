@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >正在下載藏寶點…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -115,8 +115,7 @@
         >即時地圖</string>
     <string name="menu_nearest" comment=""
         >附近的</string>
-    <string name="menu_users_guide" comment=""
-        >手冊</string>
+    
     
     
     <string name="var_user_waypoint_name" comment=""
@@ -296,10 +295,13 @@
         >是</string>
     <string name="button_no" comment="Dialog button for No action."
         >否</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >這個功能只適用於付費會員，基本會員只能下載傳統寶藏、網聚寶藏的基本訊息(寶藏內文、提示、日誌，但是沒有寶藏屬性和相關圖片)，另外只能使用較少的過濾條件來搜尋寶藏，更多訊息請查閱 Geocaching4Locus 網站。</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >顯示選單</string>
+    
+    
+    
+    
+    
+    
+    
     
     
     

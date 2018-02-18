@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Bezig met downloaden van caches…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -116,8 +116,7 @@
         >Live kaart</string>
     <string name="menu_nearest" comment=""
         >Dichtsbijzijnde</string>
-    <string name="menu_users_guide" comment=""
-        >Handleiding</string>
+    
     <string name="menu_settings" comment=""
         >Instellingen</string>
     
@@ -161,13 +160,7 @@
     <string name="error_gc_code_invalid" comment=""
         >Geen geldige GC code.</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
-        >
-        <item quantity="one" comment=""
-        >Cache %s niet gevonden.</item>
-        <item quantity="other" comment=""
-        >Caches %s zijn niet gevonden</item>
-    </plurals>
+    
 
     <string name="title_geocache_count" comment=""
         >Aantal caches</string>
@@ -309,10 +302,8 @@
         >Ja</string>
     <string name="button_no" comment="Dialog button for No action."
         >Nee</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Deze add-on werkt alleen compleet met een premium lidmaatschap. Als basic lid kun je traditional caches downloaden en ook event en CITO caches met basis info (…) en slechts een paar filters toepassen tijdens zoeken naar geocaches. Voor meer informatie lees aub de handleiding op de Geocaching4Locus website.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Toon handleiding</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >De app heeft toestemming nodig om te <b>schrijven op externe opslag</b> om Geocaching gegevens op te slaan voor de Locus Map app. Dit aub <b>toestaan</b> in het volgende scherm.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -337,4 +328,9 @@
     
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importeer live map GC</string>
+    
+    
+    
+    
+    
 </resources>

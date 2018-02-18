@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
         >Lade caches…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
@@ -116,8 +116,7 @@
         >Live Karte</string>
     <string name="menu_nearest" comment=""
         >Nahe Caches</string>
-    <string name="menu_users_guide" comment=""
-        >Beschreibung</string>
+    
     <string name="menu_settings" comment=""
         >Einstellungen</string>
     
@@ -302,10 +301,8 @@
         >Ja</string>
     <string name="button_no" comment="Dialog button for No action."
         >Nein</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
-        >Nur Premium Member können die volle Leistungsfähigkeit dieser Erweiterung ausschöpfen. Als Basic Member kannst Du nur Traditionals, Events und CITOs mit Basisinformationen (Beschreibungen und Hints, keine Attribute, Bilder und Logs) mit nur wenigen Such-Filtern herunterladen. Weitere Informationen erhälst Du auf der Website von Geocaching4Locus. </string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus manual web page."
-        >Zeige die Anleitung</string>
+    
+    
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Die App benötigt Schreibrechte <b>für die externe Speicherkarte</b>, um Geocachedaten für Locus Map zu speichern. Bitte <b>erlaube</b> diese Berechtigung im nächsten Schritt.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -326,8 +323,13 @@
     <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
         >Setze ein Lesezeichen für diesen Geocache</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
-        >Importiert Caches mit der Live Karte</string>
+        >Importiert Caches der Live Karte</string>
     
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importiert Caches der Live Karte</string>
+    
+    
+    
+    
+    
 </resources>

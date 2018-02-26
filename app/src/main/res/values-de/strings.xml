@@ -116,7 +116,8 @@
         >Live Karte</string>
     <string name="menu_nearest" comment=""
         >Nahe Caches</string>
-    
+    <string name="menu_users_guide" comment=""
+        >Benutzerhandbuch</string>
     <string name="menu_settings" comment=""
         >Einstellungen</string>
     
@@ -154,9 +155,9 @@
         >Einstellungen</string>
     
     <string name="menu_import_from_gc" comment=""
-        >Importiere GC</string>
+        >Import mit GC Code</string>
     <string name="title_import_from_gc" comment=""
-        >Import via GC code</string>
+        >Import mit GC Code</string>
     <string name="error_gc_code_invalid" comment=""
         >Ungültiger GC code</string>
 
@@ -278,7 +279,8 @@
         >Feedback senden</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
         >Keine der Suche entsprechenden Geocaches gefunden.</string>
-    
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >Aufgrund längerer Inaktivität (mehr als 90 Tage) wurden sie abgemeldet. Bitte melden sie sich erneut an.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
         >Listen importieren</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
@@ -302,7 +304,8 @@
     <string name="button_no" comment="Dialog button for No action."
         >Nein</string>
     
-    
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
+        >Zeige mir das Benutzerhandbuch</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >Die App benötigt Schreibrechte <b>für die externe Speicherkarte</b>, um Geocachedaten für Locus Map zu speichern. Bitte <b>erlaube</b> diese Berechtigung im nächsten Schritt.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -324,12 +327,17 @@
         >Setze ein Lesezeichen für diesen Geocache</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Importiert Caches der Live Karte</string>
-    
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."
+        >Versichere dich daß die Live Karte aktiviert ist, bewege nun die Karte um Caches zu sehen</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importiert Caches der Live Karte</string>
-    
-    
-    
-    
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Zeige diese Nachricht nicht mehr an</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Warnung</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Ihr Android-Gerät enthält eine benutzerdefinierte Energiesparfunktion vom Gerätehersteller, die verhindert, dass Live Map ordnungsgemäß funktioniert. Bitte fügen Sie eine Ausnahme für Geocaching4Locus hinzu.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >Weitere Infos</string>
     
 </resources>

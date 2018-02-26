@@ -161,7 +161,15 @@
     <string name="error_gc_code_invalid" comment=""
         >Nieprawidłowy kod GC.</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Skrzynka %s nie została znaleziona.</item>
+        <item quantity="few" comment=""
+        >Skrzynki %s nie zostały odnalezione.</item>
+        <item quantity="other" comment=""
+        >Skrzynki %s nie zostały odnalezione.</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
         >Liczba skrzynek</string>

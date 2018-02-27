@@ -3,7 +3,7 @@ object Versions {
     const val target_sdk = 27
     const val compile_sdk = target_sdk;
 
-    const val android_gradle_plugin = "3.1.0-beta3"
+    const val android_gradle_plugin = "3.1.0-beta4"
     const val gradle_versions_plugin = "0.17.0"
     const val google_services_plugin = "3.2.0"
     const val fabric_io_plugin = "1.25.1"
@@ -21,7 +21,7 @@ object Versions {
     const val material_dialogs = "0.9.6.0"
     const val firebase = "11.8.0"
     const val crashlytics = "2.9.0"
-    const val okhttp = "3.9.1"
+    const val okhttp = "3.10.0"
     const val butterknife = "8.8.1"
     const val auto_value = "1.5.3"
     const val auto_value_parcel = "0.2.6"

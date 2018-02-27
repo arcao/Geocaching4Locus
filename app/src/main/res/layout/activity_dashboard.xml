@@ -81,6 +81,7 @@
     <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
         android:id="@+id/db_users_guide"
         style="@style/Widget.AppTheme.DashboardButton"
+        android:layout_width="0dp"
         android:drawableTop="@drawable/ic_action_help"
         android:text="@string/menu_users_guide"
         app:layout_constraintEnd_toEndOf="@+id/db_live_map_download_caches"

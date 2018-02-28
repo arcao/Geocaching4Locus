@@ -57,7 +57,7 @@ public class GeocachingOAuthProvider extends DefaultApi10a {
         return getOAuthUrl() + "?oauth_token=" + OAuthEncoder.encode(requestToken.getToken());
     }
 
-    private static void checkError(Response response) throws IOException {
+    static void checkError(Response response) throws IOException {
         Matcher matcher = ERROR_MESSAGE_REGEX.matcher(response.getBody());
         if (matcher.find() && matcher.groupCount() >= 1) {
             throw new OAuthException(OAuthEncoder.decode(matcher.group(1)));

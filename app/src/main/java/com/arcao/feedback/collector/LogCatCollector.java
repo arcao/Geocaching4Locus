@@ -3,19 +3,17 @@ package com.arcao.feedback.collector;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import timber.log.Timber;
 
 public class LogCatCollector extends Collector {
     private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
+    private static final String[] COMMAND_LINE = {"logcat", "-t", "10000", "-v", "time"};
 
     private final Context context;
 
@@ -30,23 +28,15 @@ public class LogCatCollector extends Collector {
 
     @Override
     protected String collect() {
-        if (!hasReadLogPermission()
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        if (!hasReadLogPermission()) {
             return "N/A";
         }
 
         final StringBuilder buffer = new StringBuilder();
 
-        final List<String> commandLine = new ArrayList<>();
-        commandLine.add("logcat");
-        commandLine.add("-t");
-        commandLine.add("10000");
-        commandLine.add("-v");
-        commandLine.add("time");
-
         try {
             final Process process =
-                    Runtime.getRuntime().exec(commandLine.toArray(new String[commandLine.size()]));
+                    Runtime.getRuntime().exec(COMMAND_LINE);
             try (BufferedReader bufferedReader = new BufferedReader(
                     new InputStreamReader(process.getInputStream()))) {
 

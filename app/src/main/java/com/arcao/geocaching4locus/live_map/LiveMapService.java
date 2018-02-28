@@ -72,7 +72,7 @@ public class LiveMapService extends Service {
     @Override
     public void onDestroy() {
         stopForeground(true);
-        downloadTask.destroy();
+        downloadTask.cancel();
         ServiceUtil.releaseAllWakeLocks(new ComponentName(this, LiveMapService.class));
         super.onDestroy();
     }

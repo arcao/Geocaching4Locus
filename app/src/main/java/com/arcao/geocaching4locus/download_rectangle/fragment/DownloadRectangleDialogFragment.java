@@ -16,7 +16,6 @@ import com.arcao.geocaching4locus.download_rectangle.task.DownloadRectangleTask;
 import java.lang.ref.WeakReference;
 
 public class DownloadRectangleDialogFragment extends AbstractDialogFragment implements DownloadRectangleTask.TaskListener {
-    public static final String FRAGMENT_TAG = DownloadRectangleDialogFragment.class.getName();
 
     public interface DialogListener {
         void onDownloadFinished(Intent intent);

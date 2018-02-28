@@ -98,7 +98,7 @@ public class LiveMapDownloadTask extends Thread {
     }
 
     @UiThread
-    public void destroy() {
+    public void cancel() {
         synchronized (taskQueue) {
             terminated = true;
             taskQueue.notify();

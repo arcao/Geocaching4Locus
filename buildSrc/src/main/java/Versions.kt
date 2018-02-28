@@ -1,7 +1,7 @@
 object Versions {
     const val min_sdk = 16
     const val target_sdk = 27
-    const val compile_sdk = target_sdk;
+    const val compile_sdk = target_sdk
 
     const val android_gradle_plugin = "3.1.0-beta4"
     const val gradle_versions_plugin = "0.17.0"

@@ -9,7 +9,7 @@
 }
 
 -keepclasseswithmembers,allowshrinking,allowoptimization class * {
-	public <init>(android.content.Context);
+    public <init>(android.content.Context);
     public <init>(android.content.Context,android.util.AttributeSet);
     public <init>(android.content.Context,android.util.AttributeSet,int);
 }

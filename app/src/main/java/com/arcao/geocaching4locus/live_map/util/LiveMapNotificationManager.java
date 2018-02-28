@@ -22,7 +22,6 @@ import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
-import com.arcao.geocaching4locus.dashboard.DashboardActivity;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
@@ -220,10 +219,6 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
         } else {
             nb.setSubText(context.getText(R.string.menu_live_map));
             nb.setContentTitle(state);
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            nb.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, DashboardActivity.class), PendingIntent.FLAG_UPDATE_CURRENT));
         }
 
         return nb;

@@ -81,7 +81,7 @@ public class LiveMapDownloadTask extends Thread {
     private boolean terminated;
 
     protected LiveMapDownloadTask(Context context, LiveMapNotificationManager notificationManager) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.notificationManager = notificationManager;
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -222,7 +222,7 @@ public class LiveMapDownloadTask extends Thread {
                 if (caches.isEmpty())
                     break;
 
-                if (!notificationManager.isLiveMapEnabled())
+                if (terminated || !notificationManager.isLiveMapEnabled())
                     break;
 
                 current += caches.size();

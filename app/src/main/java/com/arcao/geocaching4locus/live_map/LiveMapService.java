@@ -60,13 +60,16 @@ public class LiveMapService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (ACTION_START.equals(intent.getAction())) {
-            downloadTask.addTask(intent);
-        } else {
-            stopSelf(startId);
+        if (intent != null) {
+            if (ACTION_START.equals(intent.getAction())) {
+                downloadTask.addTask(intent);
+            } else if (ACTION_STOP.equals(intent.getAction())) {
+                downloadTask.cancel();
+                stopSelf(startId);
+            }
         }
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
     @Override

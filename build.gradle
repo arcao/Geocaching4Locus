@@ -52,15 +52,15 @@ allprojects {
     }
 
     // dependencyUpdates: suggest only released artifacts
-    //dependencyUpdates.resolutionStrategy = {
-    //    componentSelection { rules ->
-    //        rules.all { ComponentSelection selection ->
-    //            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
-    //            if (rejected)
-    //                selection.reject('Release candidate')
-    //        }
-    //    }
-    //}
+    dependencyUpdates.resolutionStrategy = {
+        componentSelection { rules ->
+            rules.all { ComponentSelection selection ->
+                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+                if (rejected)
+                    selection.reject('Release candidate')
+            }
+        }
+    }
 }
 
 task clean(type: Delete) {

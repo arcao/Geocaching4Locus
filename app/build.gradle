@@ -54,7 +54,7 @@ dependencies {
     annotationProcessor Deps.butterknife_compiler
 
     // Auto-Value
-    compileOnly Deps.auto_value
+    implementation Deps.auto_value_annotations
     annotationProcessor Deps.auto_value
 
     // Auto-Value Parcelable

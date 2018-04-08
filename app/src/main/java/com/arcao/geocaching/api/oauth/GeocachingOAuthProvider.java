@@ -53,8 +53,8 @@ public class GeocachingOAuthProvider extends DefaultApi10a {
     }
 
     @Override
-    public String getAuthorizationUrl(OAuth1RequestToken requestToken) {
-        return getOAuthUrl() + "?oauth_token=" + OAuthEncoder.encode(requestToken.getToken());
+    protected String getAuthorizationBaseUrl() {
+        return getOAuthUrl();
     }
 
     static void checkError(Response response) throws IOException {

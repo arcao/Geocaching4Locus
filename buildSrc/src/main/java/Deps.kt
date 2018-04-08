@@ -44,6 +44,7 @@ object Deps {
 
     // Auto-Value
     const val auto_value = "com.google.auto.value:auto-value:${Versions.auto_value}"
+    const val auto_value_annotations = "com.google.auto.value:auto-value-annotations:${Versions.auto_value}"
 
     // Auto-Value Parcelable
     const val auto_value_parcel = "com.ryanharter.auto.value:auto-value-parcel:${Versions.auto_value_parcel}"

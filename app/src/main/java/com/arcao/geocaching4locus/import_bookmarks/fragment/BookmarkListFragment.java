@@ -40,12 +40,11 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
     @BindView(R.id.listContainer) View listContainer;
     @BindView(R.id.textEmpty) TextView textEmpty;
 
-    WeakReference<ListListener> listListenerRef;
-    private final BookmarkListRecyclerAdapter adapter = new BookmarkListRecyclerAdapter();
+    private BookmarkListRecyclerAdapter adapter;
+    private WeakReference<ListListener> listListenerRef;
     @Nullable private BookmarkListRetrieveTask task;
     private ArrayList<BookmarkList> bookmarkLists;
     private Unbinder unbinder;
-
 
     public static BookmarkListFragment newInstance() {
         Bundle args = new Bundle();
@@ -100,7 +99,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
     }
 
     private void prepareRecyclerView() {
-        adapter.setOnItemClickListener((bookmarkList, selectAll) -> {
+        adapter = new BookmarkListRecyclerAdapter((bookmarkList, selectAll) -> {
             ListListener listener = listListenerRef.get();
             if (listener != null)
                 listener.onBookmarkListSelected(bookmarkList, selectAll);
@@ -140,7 +139,7 @@ public class BookmarkListFragment extends Fragment implements BookmarkListRetrie
     @Override
     public void onTaskFinish(List<BookmarkList> bookmarkLists) {
         this.bookmarkLists = new ArrayList<>(bookmarkLists);
-        adapter.setBookmarkLists(this.bookmarkLists);
+        adapter.submitList(this.bookmarkLists);
         setListShown(true);
     }
 

@@ -117,6 +117,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         recyclerView.addItemDecoration(new BottomMarginLastItemDecorator(getActivity(), R.dimen.fab_outer_height));
 
+
         setEmptyText("");
         setListShown(adapter.getItemCount() > 0);
     }
@@ -184,7 +185,7 @@ public class BookmarkCachesFragment extends Fragment implements BookmarkCachesRe
     @Override
     public void onTaskFinished(List<Bookmark> bookmarkList) {
         this.bookmarkList = new ArrayList<>(bookmarkList);
-        adapter.setBookmarks(this.bookmarkList);
+        adapter.submitList(this.bookmarkList);
         setListShown(true);
     }
 

@@ -1,5 +1,8 @@
 package com.arcao.geocaching4locus.import_bookmarks.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,56 +15,68 @@ import com.arcao.geocaching4locus.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BookmarkCachesRecyclerAdapter
-        extends RecyclerView.Adapter<BookmarkCachesRecyclerAdapter.ViewHolder> {
+public class BookmarkCachesRecyclerAdapter extends ListAdapter<Bookmark, BookmarkCachesRecyclerAdapter.ViewHolder> {
+    private static final DiffUtil.ItemCallback<Bookmark> DIFF_CALLBACK = new DiffUtil.ItemCallback<Bookmark>() {
+        @Override
+        public boolean areItemsTheSame(Bookmark oldItem, Bookmark newItem) {
+            return oldItem.cacheCode().equals(newItem.cacheCode());
+        }
 
-    private final List<Bookmark> items = new ArrayList<>();
-    boolean[] checked = new boolean[0];
+        @Override
+        public boolean areContentsTheSame(Bookmark oldItem, Bookmark newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 
+    private boolean[] checked = new boolean[0];
+
+    public BookmarkCachesRecyclerAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_bookmark_geocache_item, parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new ViewHolder(inflater.inflate(R.layout.view_bookmark_geocache_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.bind(items.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(getItem(position), checked[position], view -> {
+            checked[position] = !checked[position];
+            notifyItemChanged(position);
+        });
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    public void setBookmarks(Collection<Bookmark> bookmarks) {
-        items.clear();
-        items.addAll(bookmarks);
-        checked = new boolean[items.size()];
-        notifyDataSetChanged();
+    public void submitList(List<Bookmark> list) {
+        checked = new boolean[list.size()];
+        super.submitList(list);
     }
 
     public List<Bookmark> getCheckedBookmarks() {
         List<Bookmark> result = new ArrayList<>(checkedCount());
 
-        int count = items.size();
-        for (int i = 0; i < count; i++)
-            if (checked[i])
-                result.add(items.get(i));
+        int count = getItemCount();
+        for (int i = 0; i < count; i++) {
+            if (checked[i]) {
+                result.add(getItem(i));
+            }
+        }
 
         return result;
     }
 
     private int checkedCount() {
         int count = 0;
-        for (boolean item : checked) {
-            if (item)
-                count++;
+        for (boolean checkedItem : checked) {
+            if (checkedItem) count++;
         }
 
         return count;
@@ -69,44 +84,40 @@ public class BookmarkCachesRecyclerAdapter
 
     public void selectAll() {
         Arrays.fill(checked, true);
-        notifyItemRangeChanged(0, items.size());
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     public void selectNone() {
         Arrays.fill(checked, false);
-        notifyItemRangeChanged(0, items.size());
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     public boolean isAnyChecked() {
-        for (boolean item : checked) {
-            if (item)
-                return true;
+        for (boolean checkedItem : checked) {
+            if (checkedItem) return true;
         }
 
         return false;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.title) TextView title;
-        @BindView(R.id.subtitle) TextView subtitle;
-        @BindView(R.id.checkbox) CheckBox checkbox;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.subtitle)
+        TextView subtitle;
+        @BindView(R.id.checkbox)
+        CheckBox checkbox;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(final Bookmark bookmark) {
-            final int pos = getAdapterPosition();
-
+        void bind(final Bookmark bookmark, boolean checked, View.OnClickListener clickListener) {
             title.setText(bookmark.cacheTitle());
             subtitle.setText(bookmark.cacheCode());
-            checkbox.setChecked(checked[pos]);
-
-            itemView.setOnClickListener(v -> {
-                checked[pos] = !checked[pos];
-                notifyItemChanged(pos);
-            });
+            checkbox.setChecked(checked);
+            itemView.setOnClickListener(clickListener);
         }
     }
 }

@@ -8,10 +8,10 @@ object Versions {
     const val google_services_plugin = "3.2.1"
     const val fabric_io_plugin = "1.25.2"
 
-    const val support = "27.1.0"
+    const val support = "27.1.1"
     const val constraint_layout = "1.1.0-beta6"
     const val geocaching_api = "2.0.2"
-    const val locus_api_android = "0.2.20"
+    const val locus_api_android = "0.2.21"
     const val slf4j_timber = "3.0"
     const val timber = "4.7.0"
     const val commons_lang3 = "3.7"

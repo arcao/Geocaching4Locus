@@ -3,7 +3,7 @@ object Versions {
     const val target_sdk = 27
     const val compile_sdk = target_sdk
 
-    const val android_gradle_plugin = "3.1.0"
+    const val android_gradle_plugin = "3.1.1"
     const val gradle_versions_plugin = "0.17.0"
     const val google_services_plugin = "3.2.1"
     const val fabric_io_plugin = "1.25.2"

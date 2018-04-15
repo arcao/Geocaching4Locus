@@ -77,45 +77,50 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
         LocusUtils.LocusVersion locusVersion;
         try {
-            locusVersion = LocusUtils.getActiveVersion(context);
-            if (locusVersion == null) {
-                throw new IllegalStateException("Locus is not installed.");
-            }
-        } catch (Throwable t) {
-            throw new LocusMapRuntimeException(t);
-        }
-
-        if (result == null || result.newPoint == null) {
-            TaskListener listener = taskListenerRef.get();
-            if (listener != null) {
-                listener.onTaskFinished(null);
-            }
-            return;
-        }
-
-        if (result.updateLogs && !downloadLogsUpdateCache) {
-            merger.mergeGeocachingLogs(result.oldPoint, result.newPoint);
-
-            // only when this feature is enabled
-            if (disableDnfNmNaGeocaches)
-                applyUnavailabilityForGeocache(result.oldPoint, disableDnfNmNaGeocachesThreshold);
-
-            result.newPoint = result.oldPoint;
-        } else {
-            merger.mergeWaypoint(result.newPoint, result.oldPoint);
-
-            if (replaceCache) {
-                result.newPoint.removeExtraOnDisplay();
-            }
-        }
-
-        // if Waypoint is already in DB we must update it manually
-        if (result.oldPoint != null) {
             try {
-                ActionTools.updateLocusWaypoint(context, locusVersion, result.newPoint, false);
+                locusVersion = LocusUtils.getActiveVersion(context);
+                if (locusVersion == null) {
+                    throw new IllegalStateException("Locus is not installed.");
+                }
             } catch (Throwable t) {
                 throw new LocusMapRuntimeException(t);
             }
+
+            if (result == null || result.newPoint == null) {
+                TaskListener listener = taskListenerRef.get();
+                if (listener != null) {
+                    listener.onTaskFinished(null);
+                }
+                return;
+            }
+
+            if (result.updateLogs && !downloadLogsUpdateCache) {
+                merger.mergeGeocachingLogs(result.oldPoint, result.newPoint);
+
+                // only when this feature is enabled
+                if (disableDnfNmNaGeocaches)
+                    applyUnavailabilityForGeocache(result.oldPoint, disableDnfNmNaGeocachesThreshold);
+
+                result.newPoint = result.oldPoint;
+            } else {
+                merger.mergeWaypoint(result.newPoint, result.oldPoint);
+
+                if (replaceCache) {
+                    result.newPoint.removeExtraOnDisplay();
+                }
+            }
+
+            // if Waypoint is already in DB we must update it manually
+            if (result.oldPoint != null) {
+                try {
+                    ActionTools.updateLocusWaypoint(context, locusVersion, result.newPoint, false);
+                } catch (Throwable t) {
+                    throw new LocusMapRuntimeException(t);
+                }
+            }
+        } catch (LocusMapRuntimeException e) {
+            onException(e);
+            return;
         }
 
         TaskListener listener = taskListenerRef.get();

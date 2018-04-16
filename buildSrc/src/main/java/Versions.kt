@@ -9,7 +9,7 @@ object Versions {
     const val fabric_io_plugin = "1.25.2"
 
     const val support = "27.1.1"
-    const val constraint_layout = "1.1.0-beta6"
+    const val constraint_layout = "1.1.0"
     const val geocaching_api = "2.0.2"
     const val locus_api_android = "0.2.21"
     const val slf4j_timber = "3.0"
@@ -19,7 +19,7 @@ object Versions {
     const val commons_io = "2.6"
     const val scribejava = "5.3.0"
     const val material_dialogs = "0.9.6.0"
-    const val firebase = "12.0.1"
+    const val firebase = "15.0.0"
     const val crashlytics = "2.9.1"
     const val okhttp = "3.10.0"
     const val butterknife = "8.8.1"

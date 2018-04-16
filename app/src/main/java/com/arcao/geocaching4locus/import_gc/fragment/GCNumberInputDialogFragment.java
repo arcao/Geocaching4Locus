@@ -22,8 +22,6 @@ import com.arcao.geocaching.api.util.GeocachingUtils;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.lang.ref.WeakReference;
 import java.util.regex.Pattern;
 
@@ -153,7 +151,7 @@ public class GCNumberInputDialogFragment extends AbstractDialogFragment {
     static boolean validateInput(EditText editText) {
         String value = editText.getText().toString();
 
-        if (StringUtils.isEmpty(value)) {
+        if (TextUtils.isEmpty(value)) {
             return false;
         }
 

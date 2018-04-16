@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -16,8 +17,6 @@ import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 
@@ -85,7 +84,7 @@ public class App extends Application {
         if (deviceId == null)
             deviceId = pref.getString("device_id", null);
 
-        if (StringUtils.isEmpty(deviceId)) {
+        if (TextUtils.isEmpty(deviceId)) {
             deviceId = UUID.randomUUID().toString();
             pref.edit().putString("device_id", deviceId).apply();
         }

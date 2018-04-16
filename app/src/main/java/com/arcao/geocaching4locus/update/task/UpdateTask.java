@@ -215,6 +215,8 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
                     mapper.addCacheLogs(result.newPoint, retrievedLogs);
 
                     startIndex += retrievedLogs.size();
+
+                    if (retrievedLogs.size() < AppConstants.LOGS_PER_REQUEST) break;
                 }
                 publishProgress(maxLogs, maxLogs);
             }

@@ -142,7 +142,7 @@ public class ExceptionHandler {
     private boolean isSSLConnectionException(Throwable t) {
         String message = t.getMessage();
 
-        return StringUtils.isNotEmpty(message) && (message.contains("Connection reset by peer")
+        return !TextUtils.isEmpty(message) && (message.contains("Connection reset by peer")
                 || message.contains("Connection timed out"));
     }
 

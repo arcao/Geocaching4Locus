@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginFragment;
 import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
+import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.crashlytics.android.Crashlytics;
 
@@ -69,7 +70,7 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
         boolean premiumMember = helper.isPremium();
 
         if (account != null) {
-            Crashlytics.setUserName(account.name());
+            Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
         }
 
         AnalyticsUtil.actionLogin(account != null, premiumMember);

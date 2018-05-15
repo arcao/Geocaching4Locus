@@ -52,7 +52,6 @@ public class App extends Application {
 
         Account account = accountManager.getAccount();
         if (account != null) {
-            Crashlytics.setUserName(account.name());
             Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
         }
 

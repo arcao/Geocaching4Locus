@@ -5,8 +5,8 @@ object Versions {
 
     const val android_gradle_plugin = "3.1.2"
     const val gradle_versions_plugin = "0.17.0"
-    const val google_services_plugin = "3.2.1"
-    const val fabric_io_plugin = "1.25.2"
+    const val google_services_plugin = "3.3.1"
+    const val fabric_io_plugin = "1.25.4"
 
     const val support = "27.1.1"
     const val constraint_layout = "1.1.0"
@@ -19,7 +19,7 @@ object Versions {
     const val commons_io = "2.6"
     const val scribejava = "5.4.0"
     const val material_dialogs = "0.9.6.0"
-    const val firebase = "15.0.0"
+    const val firebase = "15.0.2"
     const val crashlytics = "2.9.2"
     const val okhttp = "3.10.0"
     const val butterknife = "8.8.1"

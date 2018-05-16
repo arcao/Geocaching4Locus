@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+      package="com.arcao.geocaching4locus"
+      android:versionName="2.2"
+      android:installLocation="auto">
+    
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
+
+    <uses-feature android:name="android.hardware.location" android:required="false" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
+
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:backupAgent=".base.util.backup.PreferencesBackupAgent" android:name=".App" android:allowBackup="true" android:largeHeap="true" android:hardwareAccelerated="true" android:fullBackupContent="@xml/full_backup_scheme">
+        <meta-data
+            android:name="com.samsung.android.icon_container.has_icon_container"
+            android:value="true"/>
+
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="d9f9c35025d01f3c5119cabffed73f1083e2c220" />
+
+        <provider
+            android:name="com.arcao.feedback.FeedbackFileProvider"
+            android:authorities="${applicationId}.provider.feedback"
+            android:enabled="true"
+            android:grantUriPermissions="true"
+            android:exported="false"/>
+
+        <service android:name=".live_map.LiveMapService"/>
+        
+        <receiver
+            android:name=".live_map.receiver.LiveMapBroadcastReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="locus.api.android.ACTION_PERIODIC_UPDATE" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:icon="@drawable/ic_action_search" android:label="@string/launcher_nearest_geocaches" android:theme="@style/AppTheme.DialogWhenLarge" android:name=".search_nearest.SearchNearestActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_SEARCH_LIST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".settings.SettingsActivity" android:label="@string/action_settings" android:theme="@style/AppTheme.Settings" android:exported="false">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".error.ErrorActivity" android:theme="@style/AppTheme.Invisible" android:launchMode="singleInstance" android:excludeFromRecents="true" android:finishOnTaskLaunch="true"/>
+        <activity android:name=".update.UpdateActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocache">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
+            </intent-filter>
+        </activity>
+        <activity-alias android:name="UpdateWithLogsActivity" android:targetActivity=".update.UpdateActivity" android:exported="true" android:icon="@drawable/ic_action_download_logs" android:label="@string/launcher_download_logs">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
+            </intent-filter>
+        </activity-alias>
+        <activity android:name=".update.UpdateMoreActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_update" android:label="@string/launcher_update_geocaches">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINTS_SCREEN_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:label="@string/launcher_import_geocache">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" android:host="coord.info" android:pathPrefix="/GC" />
+                <data android:scheme="http" android:host="*.coord.info" android:pathPrefix="/GC" />
+                <data android:scheme="https" android:host="coord.info" android:pathPrefix="/GC" />
+                <data android:scheme="https" android:host="*.coord.info" android:pathPrefix="/GC" />
+
+                <data android:scheme="http" android:host="geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
+                <data android:scheme="http" android:host="*.geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
+                <data android:scheme="https" android:host="geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
+                <data android:scheme="https" android:host="*.geocaching.com" android:pathPrefix="/seek/cache_details.aspx" />
+
+                <data android:scheme="http" android:host="geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="http" android:host="*.geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="https" android:host="geocaching.com" android:pathPrefix="/geocache/GC" />
+                <data android:scheme="https" android:host="*.geocaching.com" android:pathPrefix="/geocache/GC" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".dashboard.DashboardActivity" android:theme="@style/AppTheme.Dashboard" android:exported="true" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".authentication.LoginActivity" android:label="@string/title_login" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".import_bookmarks.ImportBookmarkActivity" android:theme="@style/AppTheme.DialogWhenLarge" android:exported="true" android:icon="@drawable/ic_action_import_bookmark" android:label="@string/launcher_import_bookmarks">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".weblink.WatchGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_watch_geocache" android:label="@string/launcher_watch_geocache">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".weblink.BookmarkGeocacheWebLinkActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_bookmark_geocache" android:label="@string/launcher_bookmark_geocache">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="locus" android:host="menion.android.locus" android:pathPrefix="/point_geocache" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".download_rectangle.DownloadRectangleActivity"  android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_live_map_download_caches" android:label="@string/launcher_download_rectangle">
+            <intent-filter>
+                <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Backward compatibility with Locus Map -->
+        <activity-alias android:name=".DashboardActivity" android:targetActivity=".dashboard.DashboardActivity" android:exported="true" />
+        <activity-alias android:name=".SearchNearestActivity" android:targetActivity=".search_nearest.SearchNearestActivity" android:exported="true" />
+        <activity-alias android:name=".ImportFromGCActivity" android:targetActivity=".import_gc.ImportFromGCActivity" android:exported="true" />
+        <activity-alias android:name=".ImportBookmarkActivity" android:targetActivity=".import_bookmarks.ImportBookmarkActivity" android:exported="true" />
+    </application>
+</manifest>

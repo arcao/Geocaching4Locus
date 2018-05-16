@@ -1,0 +1,156 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+dependencies {
+    // Android Support
+    implementation Deps.support_v4
+    implementation Deps.support_v13
+    implementation Deps.appcompat_v7
+    implementation Deps.recyclerview_v7
+    implementation Deps.cardview_v7
+    implementation Deps.design
+    implementation Deps.constraint_layout
+
+    // Geocaching API
+    implementation(Deps.geocaching_api) {
+        // Not working in Android, slf4j-timber used instead
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.jetbrains', module: 'annotations-java5'
+    }
+
+    // Locus API
+    implementation Deps.locus_api_android
+
+    // Logging API
+    implementation Deps.slf4j_timber
+    implementation Deps.timber
+
+    // Apache commons
+    implementation Deps.commons_lang3
+    implementation Deps.commons_collections4
+    implementation Deps.commons_io
+
+    // ScribeJava
+    // Don't upgrade to 5.x version, it require Java 8 Streams
+    implementation Deps.scribejava_core
+    implementation Deps.scribejava_httpclient_okhttp
+
+    // Material dialogs
+    implementation(Deps.material_dialogs) {
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    // Crashlytics & Firebase
+    implementation Deps.firebase_core
+    implementation(Deps.crashlytics) {
+        transitive = true
+    }
+
+    // Networking
+    implementation Deps.okhttp
+
+    // ButterKnife
+    implementation Deps.butterknife
+    annotationProcessor Deps.butterknife_compiler
+
+    // Auto-Value
+    implementation Deps.auto_value_annotations
+    annotationProcessor Deps.auto_value
+
+    // Auto-Value Parcelable
+    implementation Deps.auto_value_parcel_adapter
+    annotationProcessor Deps.auto_value_parcel
+}
+
+android {
+    compileSdkVersion Versions.compile_sdk
+
+    dexOptions {
+        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
+        preDexLibraries preDexEnabled && !isTravis
+    }
+
+    defaultConfig {
+        archivesBaseName = parent.name
+
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
+
+        versionCode hasProperty('devBuild') ? 1 : gitVersionCode()
+
+        buildConfigField 'String', 'GIT_SHA', 'null'
+        buildConfigField 'String', 'BUILD_TIME', 'null'
+        buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
+        buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
+        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
+
+        buildConfigField 'String', 'TEST_USER', 'null'
+        buildConfigField 'String', 'TEST_PASSWORD', 'null'
+
+        resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                    // TODO remove when http://b.android.com/187527 is supported by ButterKnife.
+                    'butterknife.minSdk': getMinSdkVersion().getApiString()
+                ]
+            }
+        }
+    }
+
+    compileOptions {
+        encoding 'UTF-8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
+        release {
+            keyAlias = 'geocaching4locus'
+        }
+    }
+
+    buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+            versionNameSuffix '-dev'
+            crunchPngs false
+        }
+        release {
+            versionNameSuffix ''
+
+            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
+            buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
+
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            crunchPngs false
+
+            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFiles fileTree(dir: 'proguard-rules', include: '*.pro') as File[]
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'org/apache/http/version.properties'
+        exclude 'templates/release-notes.vm'
+        exclude 'log4j.xml'
+    }
+    lintOptions { abortOnError false }
+}
+
+if (project.hasProperty('storeFile') &&
+        project.hasProperty('storePassword') &&
+        project.hasProperty('keyPassword')) {
+    android.signingConfigs.release.storeFile = file(storeFile)
+    android.signingConfigs.release.storePassword = storePassword
+    android.signingConfigs.release.keyPassword = keyPassword
+} else {
+    android.buildTypes.release.signingConfig = android.signingConfigs.debug
+}
+
+apply plugin: 'com.google.gms.google-services'

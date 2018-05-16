@@ -1,166 +1,68 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 buildscript {
+    ext.isTravis = 'true' == System.getenv('TRAVIS')
+    ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
+
+    ext.gitSha = {
+        return 'git rev-parse --short HEAD'.execute([], rootDir).text.trim()
+    }
+
+    ext.gitTimestamp = {
+        return  'git log -n 1 --format=%aI'.execute([], rootDir).text.trim()
+    }
+
+    ext.gitVersionCode = {
+        return 'git rev-list --count HEAD'.execute([], rootDir).text.trim().toInteger()
+    }
+
+    // set Geocaching API staging key and secret if production key and secret is not set
+    // Note: Staging server is slow and not for production use!!!!
+    if (!project.hasProperty('geocachingApiKey')) {
+        ext.geocachingApiKey = '9C7552E1-3C04-4D04-A395-230D8931E494'
+    }
+    if (!project.hasProperty('geocachingApiSecret')) {
+        ext.geocachingApiSecret = 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685'
+    }
+    if (!project.hasProperty('geocachingApiStaging')) {
+        ext.geocachingApiStaging = true
+    }
+
     repositories {
+        google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.15.0'
-        classpath 'io.fabric.tools:gradle:1.23.0'
+        classpath BuildDeps.android_gradle_plugin
+        classpath BuildDeps.gradle_versions_plugin
+        classpath BuildDeps.google_services_plugin
+        classpath BuildDeps.fabric_io_plugin
     }
 }
 
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+allprojects {
+    apply plugin: 'com.github.ben-manes.versions'
 
-repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url 'https://jitpack.io' }
-    maven { url 'http://maven.arcao.com' }
-}
-
-dependencies {
-    // from Android local maven repository
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-
-    // from maven.arcao.com repository
-    compile('com.arcao:geocaching-api:1.6.3') {
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        // Not working in Android, slf4j-timber used instead
-    }
-    compile 'com.asamm:locus-api-android:0.2.10'
-
-    // from JCenter repository
-    compile 'com.arcao:slf4j-timber:3.0'
-    compile 'org.apache.commons:commons-lang3:3.6'
-    compile 'org.apache.commons:commons-collections4:4.1'
-    compile 'commons-io:commons-io:2.5'
-    compile('org.scribe:scribe:1.3.7') {
-        exclude group: 'commons-codec', module: 'commons-codec' // already in Android
-    }
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.github.afollestad.material-dialogs:core:0.9.4.5'
-    compile 'com.crashlytics.sdk.android:crashlytics:2.6.8'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-}
-
-def gitSha() {
-    return 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim();
-}
-
-static def buildTime() {
-    return new Date().format("yyyy-MM-dd'T'HH:mm:ss.SSSZ", TimeZone.getTimeZone('UTC'));
-}
-
-def gitVersionCode() {
-    return 'git rev-list --count HEAD'.execute([], project.rootDir).text.trim().toInteger();
-}
-
-def isTravis = 'true' == System.getenv('TRAVIS')
-def preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
-
-// set Geocaching API staging key and secret if production key and secret is not set
-// Note: Staging server is slow and not for production use!!!!
-if (!project.hasProperty('geocachingApiKey')) {
-    ext.geocachingApiKey = '9C7552E1-3C04-4D04-A395-230D8931E494'
-}
-if (!project.hasProperty('geocachingApiSecret')) {
-    ext.geocachingApiSecret = 'DA7CC147-7B5B-4423-BCB4-D0C03E2BF685'
-}
-if (!project.hasProperty('geocachingApiStaging')) {
-    ext.geocachingApiStaging = true
-}
-
-android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
-
-    dexOptions {
-        // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
-        preDexLibraries preDexEnabled && !isTravis
-        //dexInProcess = true
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://maven.arcao.com' }
     }
 
-    defaultConfig {
-        versionCode gitVersionCode()
-        buildConfigField 'String', 'GIT_SHA', 'null'
-        buildConfigField 'String', 'BUILD_TIME', 'null'
-        buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
-        buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
-        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
-
-        resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
-    }
-
-    compileOptions {
-        encoding 'UTF-8'
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    signingConfigs {
-        release {
-            keyAlias = 'geocaching4locus'
-        }
-    }
-
-    buildTypes {
-        debug {
-            ext.enableCrashlytics = false
-            versionNameSuffix '-dev'
-        }
-        release {
-            versionNameSuffix ''
-
-            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
-            buildConfigField 'String', 'BUILD_TIME', '"' + buildTime() + '"'
-
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            //shrinkResources true // too aggressive
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
-            proguardFile 'proguard.cfg'
-        }
-    }
-
-    packagingOptions {
-        // removed because of conflict in creating package
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
-        // unused files, removed to minimize APK file
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'org/apache/http/version.properties'
-        exclude 'templates/release-notes.vm'
-        exclude 'log4j.xml'
-    }
-    lintOptions { abortOnError false }
-}
-
-// dependencyUpdates: suggest only released artifacts
-dependencyUpdates.resolutionStrategy = {
-    componentSelection { rules ->
-        rules.all { ComponentSelection selection ->
-            boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
-            if (rejected)
-                selection.reject('Release candidate')
+    // dependencyUpdates: suggest only released artifacts
+    dependencyUpdates.resolutionStrategy = {
+        componentSelection { rules ->
+            rules.all { ComponentSelection selection ->
+                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+                if (rejected)
+                    selection.reject('Release candidate')
+            }
         }
     }
 }
 
-if (project.hasProperty('storeFile') &&
-        project.hasProperty('storePassword') &&
-        project.hasProperty('keyPassword')) {
-    android.signingConfigs.release.storeFile = file(storeFile)
-    android.signingConfigs.release.storePassword = storePassword
-    android.signingConfigs.release.keyPassword = keyPassword
-} else {
-    android.buildTypes.release.signingConfig = android.signingConfigs.debug
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

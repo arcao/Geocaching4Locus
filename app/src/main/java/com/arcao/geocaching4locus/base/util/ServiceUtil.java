@@ -8,8 +8,6 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.util.SparseArray;
 
-import com.crashlytics.android.Crashlytics;
-
 import timber.log.Timber;
 
 public final class ServiceUtil {
@@ -104,8 +102,6 @@ public final class ServiceUtil {
 
         Timber.w("Releasing all WakeLocks for: %s", component.flattenToShortString());
 
-        int releasedCounter = 0;
-
         synchronized (ACTIVE_WAKE_LOCKS) {
             for (int i = 0; i < ACTIVE_WAKE_LOCKS.size(); i++) {
                 int id = ACTIVE_WAKE_LOCKS.keyAt(i);
@@ -117,14 +113,9 @@ public final class ServiceUtil {
                 container.wakeLock.release();
                 ACTIVE_WAKE_LOCKS.remove(id);
                 Timber.e("Released forgotten WakeLock #%d", id);
-                releasedCounter++;
             }
 
             Timber.w("Remaining WakeLocks: %d", ACTIVE_WAKE_LOCKS.size());
-        }
-
-        if (releasedCounter > 0) {
-            Crashlytics.logException(new IllegalStateException("Not all WakeLocks are released for tag " + tag));
         }
     }
 

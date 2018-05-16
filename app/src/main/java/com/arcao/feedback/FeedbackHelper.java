@@ -118,7 +118,7 @@ public class FeedbackHelper {
         collectors.add(new LocusMapInfoCollector(context));
 
         // LogCat collector has to be the latest one to receive exceptions from collectors
-        collectors.add(new LogCatCollector(context));
+        collectors.add(new LogCatCollector());
 
         return collectors;
     }

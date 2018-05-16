@@ -1,25 +1,17 @@
 package com.arcao.feedback.collector;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import timber.log.Timber;
 
 public class LogCatCollector extends Collector {
     private static final int DEFAULT_BUFFER_SIZE_IN_BYTES = 8192;
     private static final String[] COMMAND_LINE = {"logcat", "-t", "10000", "-v", "time"};
-
-    private final Context context;
-
-    public LogCatCollector(Context context) {
-        this.context = context.getApplicationContext();
-    }
 
     @Override
     public String getName() {
@@ -28,10 +20,6 @@ public class LogCatCollector extends Collector {
 
     @Override
     protected String collect() {
-        if (!hasReadLogPermission()) {
-            return "N/A";
-        }
-
         final StringBuilder buffer = new StringBuilder();
 
         try {
@@ -57,26 +45,14 @@ public class LogCatCollector extends Collector {
                     buffer.append(line).append("\n");
                 }
             }
-        } catch (IOException e) {
-            Timber.e("LogCatCollector could not retrieve data.");
+        } catch (Throwable t) {
+            Timber.e(t, "LogCatCollector could not retrieve data.");
+
+            StringWriter sw = new StringWriter();
+            t.printStackTrace(new PrintWriter(sw));
+            return "Error: " + sw.toString();
         }
 
         return buffer.toString();
-    }
-
-    private boolean hasReadLogPermission() {
-        final PackageManager pm = context.getPackageManager();
-        if (pm == null) {
-            return false;
-        }
-
-        try {
-            return pm.checkPermission(Manifest.permission.READ_LOGS, context.getPackageName())
-                    == PackageManager.PERMISSION_GRANTED;
-        } catch (RuntimeException e) {
-            // To catch RuntimeException("Package manager has died") that can occur on some version of Android,
-            // when the remote PackageManager is unavailable. I suspect this sometimes occurs when the App is being reinstalled.
-            return false;
-        }
     }
 }

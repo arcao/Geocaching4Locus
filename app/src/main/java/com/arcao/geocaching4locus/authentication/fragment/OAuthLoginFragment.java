@@ -28,7 +28,6 @@ import com.arcao.geocaching4locus.base.util.IntentUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 
 import java.lang.ref.WeakReference;
-import java.util.Locale;
 
 import timber.log.Timber;
 
@@ -181,14 +180,21 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
         }
 
         private boolean isOAuthUrl(String url) {
-            String urlLowerCase = url.toLowerCase(Locale.US);
-
-            return urlLowerCase.contains("/oauth/") ||
-                    urlLowerCase.contains("/mobileoauth/") ||
-                    urlLowerCase.contains("/mobilesignin/") ||
-                    urlLowerCase.contains("/mobilecontent/") ||
-                    urlLowerCase.contains("//m.facebook") ||
-                    urlLowerCase.contains("/login/fbc.aspx");
+            return  true;
+//            String urlLowerCase = url.toLowerCase(Locale.US);
+//
+//            return urlLowerCase.contains("/oauth/") ||
+//                    urlLowerCase.contains("/mobileoauth/") ||
+//                    urlLowerCase.contains("/mobilesignin/") ||
+//                    urlLowerCase.contains("/mobilecontent/") ||
+//                    urlLowerCase.contains("//m.facebook") ||
+//                    urlLowerCase.contains("//www.facebook") ||
+//                    urlLowerCase.contains("//facebook") ||
+//                    urlLowerCase.contains("/account/login") ||
+//                    urlLowerCase.contains("/account/register/createaccountwithfacebook") ||
+//                    urlLowerCase.contains("/api/beginfacebook") ||
+//                    urlLowerCase.contains("/account/join/fb")
+//                    ;
         }
 
         @Override

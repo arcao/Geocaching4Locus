@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "642919137623-mdt3673tiskh2jj1oavufh8ci1c5221l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arcao.geocaching4locus",
+            "certificate_hash": "40b4350745b1fc72bef9dc0a90bd3a8a352a756c"
+          }
+        },
+        {
+          "client_id": "642919137623-hs7jvlp02s79n3oo286c63l37sfkcpm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arcao.geocaching4locus",
+            "certificate_hash": "504b6af19bf5d7b8caffba01edd989e55b99a1d8"
+          }
+        },
+        {
+          "client_id": "642919137623-59ra8fdi0p43uqfq99dmtlh6cehcdn6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.arcao.geocaching4locus",
+            "certificate_hash": "d768f7e168936b791692f9b102de911c75e24709"
+          }
+        },
+        {
           "client_id": "642919137623-ii1qgmgove6cahdodl7ep87hqf1978kj.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +53,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642919137623-ii1qgmgove6cahdodl7ep87hqf1978kj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

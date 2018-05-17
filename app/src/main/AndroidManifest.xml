@@ -4,7 +4,7 @@
       package="com.arcao.geocaching4locus"
       android:versionName="2.2"
       android:installLocation="auto">
-    
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -29,8 +29,8 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
         <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="d9f9c35025d01f3c5119cabffed73f1083e2c220" />
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="false" />
 
         <provider
             android:name="com.arcao.feedback.FeedbackFileProvider"
@@ -40,7 +40,7 @@
             android:exported="false"/>
 
         <service android:name=".live_map.LiveMapService"/>
-        
+
         <receiver
             android:name=".live_map.receiver.LiveMapBroadcastReceiver"
             android:exported="true"

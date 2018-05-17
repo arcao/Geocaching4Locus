@@ -31,7 +31,6 @@ dependencies {
     implementation Deps.commons_io
 
     // ScribeJava
-    // Don't upgrade to 5.x version, it require Java 8 Streams
     implementation Deps.scribejava_core
     implementation Deps.scribejava_httpclient_okhttp
 
@@ -42,9 +41,7 @@ dependencies {
 
     // Crashlytics & Firebase
     implementation Deps.firebase_core
-    implementation(Deps.crashlytics) {
-        transitive = true
-    }
+    implementation Deps.crashlytics
 
     // Networking
     implementation Deps.okhttp

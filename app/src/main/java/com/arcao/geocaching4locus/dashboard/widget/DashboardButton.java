@@ -6,7 +6,9 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.StyleableRes;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.widget.ToggleButton;
 
@@ -21,7 +23,9 @@ public class DashboardButton extends ToggleButton {
 
         final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, defStyleRes);
         toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false);
+
         applyCompoundDrawableTint(a);
+        applyTextColorStateList(a);
 
         a.recycle();
     }
@@ -31,7 +35,9 @@ public class DashboardButton extends ToggleButton {
 
         final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, R.style.Widget_AppTheme_DashboardButton);
         toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false);
+
         applyCompoundDrawableTint(a);
+        applyTextColorStateList(a);
 
         a.recycle();
     }
@@ -44,8 +50,15 @@ public class DashboardButton extends ToggleButton {
         this(context, null);
     }
 
+    private void applyTextColorStateList(TypedArray a) {
+        // support for alpha attribute in ColorStateList
+        ColorStateList textColorStateList = getCompatColorStateList(getContext(), a, R.styleable.DashboardButton_android_textColor);
+        if (textColorStateList != null) setTextColor(textColorStateList);
+    }
+
     private void applyCompoundDrawableTint(TypedArray a) {
-        ColorStateList compoundDrawableTint = a.getColorStateList(R.styleable.DashboardButton_compoundDrawableTint);
+        // support for alpha attribute in ColorStateList
+        ColorStateList compoundDrawableTint = getCompatColorStateList(getContext(), a, R.styleable.DashboardButton_compoundDrawableTint);
         if (compoundDrawableTint != null) {
             Drawable[] compoundDrawables = getCompoundDrawables();
             for (int i = 0; i < 4; i++) {
@@ -72,5 +85,12 @@ public class DashboardButton extends ToggleButton {
             return;
 
         super.setChecked(checked);
+    }
+
+    private static ColorStateList getCompatColorStateList(Context context, TypedArray a, @StyleableRes int index) {
+        int resourceId = a.getResourceId(index, 0);
+        if (resourceId == 0) return null;
+
+        return AppCompatResources.getColorStateList(context, resourceId);
     }
 }

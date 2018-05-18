@@ -324,7 +324,7 @@
     <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list."
         >Geocache beobachten</string>
     <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
-        >Setze ein Lesezeichen für diesen Geocache</string>
+        >Lesezeichen setzen</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Importiert Caches der Live Karte</string>
     <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."

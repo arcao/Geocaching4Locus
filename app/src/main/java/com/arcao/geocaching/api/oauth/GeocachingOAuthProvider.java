@@ -1,18 +1,23 @@
 package com.arcao.geocaching.api.oauth;
 
+import com.arcao.geocaching.api.oauth.services.AndroidSafeOAuth10aService;
 import com.arcao.geocaching.api.oauth.services.ServerTimestampServiceImpl;
 import com.github.scribejava.core.builder.api.DefaultApi10a;
 import com.github.scribejava.core.exceptions.OAuthException;
 import com.github.scribejava.core.extractors.OAuth1AccessTokenExtractor;
 import com.github.scribejava.core.extractors.OAuth1RequestTokenExtractor;
 import com.github.scribejava.core.extractors.TokenExtractor;
+import com.github.scribejava.core.httpclient.HttpClient;
+import com.github.scribejava.core.httpclient.HttpClientConfig;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.model.Response;
+import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.core.services.TimestampService;
 import com.github.scribejava.core.utils.OAuthEncoder;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +25,11 @@ public class GeocachingOAuthProvider extends DefaultApi10a {
     private static final Pattern ERROR_MESSAGE_REGEX = Pattern.compile("oauth_error_message=([^&]*)");
     private static final String OAUTH_URL = "https://www.geocaching.com/oauth/mobileoauth.ashx";
     private TimestampService timestampService;
+
+    @Override
+    public OAuth10aService createService(String apiKey, String apiSecret, String callback, String scope, OutputStream debugStream, String state, String responseType, String userAgent, HttpClientConfig httpClientConfig, HttpClient httpClient) {
+        return new AndroidSafeOAuth10aService(this, apiKey, apiSecret, callback, scope, debugStream, state, responseType, userAgent, httpClientConfig, httpClient);
+    }
 
     @Override
     public TokenExtractor<OAuth1RequestToken> getRequestTokenExtractor() {

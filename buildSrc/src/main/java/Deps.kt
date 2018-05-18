@@ -24,7 +24,6 @@ object Deps {
     const val commons_io = "commons-io:commons-io:${Versions.commons_io}"
 
     // ScribeJava
-    // Don't upgrade to 5.x version, it require Java 8 Streams
     const val scribejava_core = "com.github.scribejava:scribejava-core:${Versions.scribejava}"
     const val scribejava_httpclient_okhttp = "com.github.scribejava:scribejava-httpclient-okhttp:${Versions.scribejava}"
 
@@ -33,7 +32,7 @@ object Deps {
 
     // Crashlytics & Firebase
     const val firebase_core = "com.google.firebase:firebase-core:${Versions.firebase}"
-    const val crashlytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}@aar"
+    const val crashlytics = "com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}"
 
     // Networking
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"

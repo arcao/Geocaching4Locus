@@ -121,7 +121,9 @@ final class GeocacheLogConverter {
         if (waypoint.gcData == null || CollectionUtils.isEmpty(waypoint.gcData.logs))
             return;
 
-        Collections.sort(waypoint.gcData.logs, (lhs, rhs) -> lhs.getDate() > rhs.getDate() ? 1 : lhs.getDate() == rhs.getDate() ? -1 : 0);
+        // Note: Long.compareTo was introduced in API 19
+        //noinspection UseCompareMethod
+        Collections.sort(waypoint.gcData.logs, (lhs, rhs) -> lhs.getDate() < rhs.getDate() ? 1 : lhs.getDate() == rhs.getDate() ? 0 : -1);
     }
 
 }

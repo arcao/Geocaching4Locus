@@ -47,6 +47,8 @@ public class LiveMapService extends Service {
         super.onCreate();
 
         LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
+        startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build());
+
         downloadTask = new LiveMapDownloadTask(this, notificationManager) {
             @Override
             public void onTaskFinished(Intent task) {
@@ -54,8 +56,6 @@ public class LiveMapService extends Service {
             }
         };
         downloadTask.start();
-
-        startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build());
     }
 
     @Override

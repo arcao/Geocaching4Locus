@@ -23,6 +23,7 @@ public class LiveMapService extends Service {
     private static final String ACTION_STOP = LiveMapService.class.getCanonicalName() + ".STOP";
 
     private LiveMapDownloadTask downloadTask;
+    private LiveMapNotificationManager notificationManager;
 
     public static void stop(Context context) {
         context.stopService(new Intent(context, LiveMapService.class).setAction(ACTION_STOP));
@@ -46,7 +47,7 @@ public class LiveMapService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(this);
+        notificationManager = LiveMapNotificationManager.get(this);
         startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build());
 
         downloadTask = new LiveMapDownloadTask(this, notificationManager) {
@@ -60,11 +61,16 @@ public class LiveMapService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // in case the service is already running, this must be called after each startForegroundService
+        startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build());
+
         if (intent != null) {
             if (ACTION_START.equals(intent.getAction())) {
                 downloadTask.addTask(intent);
             } else if (ACTION_STOP.equals(intent.getAction())) {
                 downloadTask.cancel();
+                stopForeground(true);
+                ServiceUtil.releaseAllWakeLocks(new ComponentName(this, LiveMapService.class));
                 stopSelf(startId);
             }
         }

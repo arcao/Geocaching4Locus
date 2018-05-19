@@ -350,4 +350,6 @@
         >More info</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
         >Locus Map Error: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
 </resources>

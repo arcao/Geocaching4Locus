@@ -1,8 +1,11 @@
 package com.arcao.geocaching4locus.base.util;
 
+import android.content.Context;
+
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.crashlytics.android.answers.LoginEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public final class AnalyticsUtil {
     public static final String COORDINATES_SOURCE_LOCUS = "LOCUS";
@@ -56,5 +59,9 @@ public final class AnalyticsUtil {
         Answers.getInstance().logCustom(new CustomEvent("Update More")
                 .putCustomAttribute("count", count)
                 .putCustomAttribute("premium member", Boolean.toString(premiumMember)));
+    }
+
+    public static void setPremiumUser(Context app, boolean premium) {
+        FirebaseAnalytics.getInstance(app).setUserProperty("premium", Boolean.toString(premium));
     }
 }

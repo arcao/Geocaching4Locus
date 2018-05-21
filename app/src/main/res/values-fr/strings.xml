@@ -5,7 +5,7 @@
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
         >L\'application Locus Map n\'a pas été trouvée. Geocaching4Locus en a besoin pour fonctionnner correctement. Merci d\'installer Locus Map.</string>
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS."
-        >Veuillez autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
+        >Merci d\' autoriser la localisation via le wifi ou le GPS dans les \'Paramètres\'</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS."
         >En cours de localisation par GPS…</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network."
@@ -327,6 +327,7 @@
         >Merci de vérifier que la Carte de direct est activée et que Locus Map indique bien les caches.</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importer les caches venant de la carte en direct</string>
+    
     
     
     

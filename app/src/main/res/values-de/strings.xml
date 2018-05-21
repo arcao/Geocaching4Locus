@@ -161,7 +161,15 @@
     <string name="error_gc_code_invalid" comment=""
         >Ungültiger GC code</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Cache %s nicht gefunden.</item>
+        <item quantity="few" comment=""
+        >Caches %s nicht gefunden.</item>
+        <item quantity="other" comment=""
+        >Caches %s nicht gefunden.</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
         >Anzahl der Caches</string>
@@ -303,7 +311,8 @@
         >Ja</string>
     <string name="button_no" comment="Dialog button for No action."
         >Nein</string>
-    
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Nur Premium Member können die volle Leistungsfähigkeit dieser Erweiterung ausschöpfen. Als Basic Member kannst Du nur Traditionals, Events und CITOs mit grundlegenden Geocachedaten herunterladen (keine Beschreibungen, keine Hints, keine Attribute, keine Bilder, keine Logs usw.) und nur wenigen Such-Filtern herunterladen. Für weitere Informationen lesen Sie bitte die Benutzeranleitung auf der Geocaching4Locus Website.</string>
     <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
         >Zeige mir das Benutzerhandbuch</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
@@ -339,5 +348,8 @@
         >Ihr Android-Gerät enthält eine benutzerdefinierte Energiesparfunktion vom Gerätehersteller, die verhindert, dass Live Map ordnungsgemäß funktioniert. Bitte fügen Sie eine Ausnahme für Geocaching4Locus hinzu.</string>
     <string name="button_more_info" comment="Dialog button for More info action"
         >Weitere Infos</string>
-    
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
+        >Locus Map fehler: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Es konnte keine Datei mit Daten für die Locus Map erstellt werden. Hast du den Zugriff auf externe Daten genehmigt?</string>
 </resources>

@@ -66,7 +66,7 @@
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings."
         >Pokazuj nieaktywne</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings."
-        >Pokaż skrzynki tymczasowo niedostępne</string>
+        >Pokazuj tymczasowo niedostępne skrytki</string>
     
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map."
         >Pobieranie skrzynki…</string>
@@ -350,4 +350,6 @@
         >Więcej informacji</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
         >Błąd mapy Locus: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Nie można utworzyć pliku danych dla Locus Map. Czy zatwierdzony zewnętrznego uprawnienie dostępu do plików?</string>
 </resources>

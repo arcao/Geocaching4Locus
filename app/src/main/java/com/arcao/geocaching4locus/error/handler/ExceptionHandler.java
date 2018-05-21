@@ -32,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
 
 import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
@@ -129,6 +130,10 @@ public class ExceptionHandler {
                     .title(R.string.title_locus_map_error)
                     .message(SpanFormatter.format(HtmlUtil.fromHtml("%s<br>Exception: %s"), message, t.getClass().getSimpleName()))
                     .exception(t)
+                    .build();
+        } else if (t instanceof FileNotFoundException || t.getCause() instanceof FileNotFoundException) {
+            return builder
+                    .message(R.string.error_no_write_file_permission)
                     .build();
         } else {
             String message = StringUtils.defaultString(t.getMessage());

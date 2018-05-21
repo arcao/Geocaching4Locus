@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager;
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -53,6 +54,7 @@ public class App extends Application {
         Account account = accountManager.getAccount();
         if (account != null) {
             Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
+            AnalyticsUtil.setPremiumUser(this, account.premium());
         }
 
         try {

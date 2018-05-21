@@ -71,6 +71,7 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
 
         if (account != null) {
             Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium());
+            AnalyticsUtil.setPremiumUser(this, account.premium());
         }
 
         AnalyticsUtil.actionLogin(account != null, premiumMember);

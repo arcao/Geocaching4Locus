@@ -350,4 +350,6 @@
         >Viac informácií</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
         >Chyba Locus Map: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Nie je možné vytvoriť dátový súbor pre Locus Map. Schválili ste povolenie na prístup k externému súboru?</string>
 </resources>

@@ -7,7 +7,7 @@
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS."
         >Toestaan van de WIFI of GPS locatie dienst in \'Instellingen\'.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS."
-        >Locatie aan het verkrijgen via GPS…</string>
+        >Ophalen locatie via GPS</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network."
         >Ophalen locatie via wifi</string>
     
@@ -116,7 +116,8 @@
         >Live kaart</string>
     <string name="menu_nearest" comment=""
         >Dichtsbijzijnde</string>
-    
+    <string name="menu_users_guide" comment=""
+        >Handleiding</string>
     <string name="menu_settings" comment=""
         >Instellingen</string>
     
@@ -160,7 +161,15 @@
     <string name="error_gc_code_invalid" comment=""
         >Geen geldige GC code.</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment=""
+        >
+        <item quantity="one" comment=""
+        >Cache %s niet gevonden.</item>
+        <item quantity="few" comment=""
+        >Caches %s zijn niet gevonden</item>
+        <item quantity="other" comment=""
+        >Caches %s zijn niet gevonden</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
         >Aantal caches</string>
@@ -302,8 +311,10 @@
         >Ja</string>
     <string name="button_no" comment="Dialog button for No action."
         >Nee</string>
-    
-    
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Deze extra app kan alleen voluit werken als je een GC premium lidmaatschap hebt. Met een basis lidmaatschap kun je alleen tradional, event en CITO geocaches downloaden, en slechts met basis informatie (geen beschrijving, hint, plaatjes, logs, etc), en met simpele filters in het zoeken naar geocaches. Voor meer informatie aub de handleiding lezen op de Geocaching4Locus website.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
+        >Toon handleiding</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
         >De app heeft toestemming nodig om te <b>schrijven op externe opslag</b> om Geocaching gegevens op te slaan voor de Locus Map app. Dit aub <b>toestaan</b> in het volgende scherm.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
@@ -325,13 +336,20 @@
         >Plaats bladwijzer op gecocache</string>
     <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
         >Importeer live map geocaches</string>
-    
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."
+        >Aub Live map activeren om Locus Map geocaches te laten zien.</string>
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
         >Importeer live map GC</string>
-    
-    
-    
-    
-    
-    
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Toon dit bericht niet meer</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Waarschuwing</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Uw Android apparaat heeft een batterij bewaar functie waardoor Live Map niet goed kan werken: aub een uitzondering toevoegen voor Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >Meer info</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
+        >Locus Map fout. %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Kan geen data file aanmaken voor Locus Map. Heeft u \'external file access\' toegestaan?</string>
 </resources>

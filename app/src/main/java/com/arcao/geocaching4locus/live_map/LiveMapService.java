@@ -68,9 +68,7 @@ public class LiveMapService extends Service {
             if (ACTION_START.equals(intent.getAction())) {
                 downloadTask.addTask(intent);
             } else if (ACTION_STOP.equals(intent.getAction())) {
-                downloadTask.cancel();
-                stopForeground(true);
-                ServiceUtil.releaseAllWakeLocks(new ComponentName(this, LiveMapService.class));
+                cancelTasks();
                 stopSelf(startId);
             }
         }
@@ -78,11 +76,15 @@ public class LiveMapService extends Service {
         return START_STICKY;
     }
 
+    private void cancelTasks() {
+        downloadTask.cancel();
+        stopForeground(true);
+        ServiceUtil.releaseAllWakeLocks(new ComponentName(this, LiveMapService.class));
+    }
+
     @Override
     public void onDestroy() {
-        stopForeground(true);
-        downloadTask.cancel();
-        ServiceUtil.releaseAllWakeLocks(new ComponentName(this, LiveMapService.class));
+        cancelTasks();
         super.onDestroy();
     }
 

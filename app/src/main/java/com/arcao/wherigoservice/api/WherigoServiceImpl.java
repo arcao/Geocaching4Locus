@@ -1,11 +1,12 @@
 package com.arcao.wherigoservice.api;
 
-import com.arcao.geocaching.api.downloader.JsonDownloader;
+import com.arcao.geocaching.api.downloader.Downloader;
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.parser.JsonReader;
+import com.arcao.geocaching.api.util.DefaultValueJsonReader;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser;
 import com.arcao.wherigoservice.api.parser.WherigoJsonResultParser.Result;
+import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.MalformedJsonException;
 
 import org.slf4j.Logger;
@@ -22,9 +23,9 @@ public class WherigoServiceImpl implements WherigoService {
     private static final Logger logger = LoggerFactory.getLogger(WherigoServiceImpl.class);
 
     private static final String BASE_URL = "https://wherigo-service.appspot.com/api";
-    private final JsonDownloader downloader;
+    private final Downloader downloader;
 
-    public WherigoServiceImpl(JsonDownloader downloader) {
+    public WherigoServiceImpl(Downloader downloader) {
         this.downloader = downloader;
     }
 
@@ -145,7 +146,7 @@ public class WherigoServiceImpl implements WherigoService {
 
         try {
             URL url = new URL(BASE_URL + "/" + function);
-            return downloader.get(url);
+            return new DefaultValueJsonReader(downloader.get(url));
         } catch (MalformedURLException e) {
             logger.error(e.toString(), e);
             throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);
@@ -160,7 +161,7 @@ public class WherigoServiceImpl implements WherigoService {
             byte[] postData = postBody.getBytes("UTF-8");
             URL url = new URL(BASE_URL + "/" + function);
 
-            return downloader.post(url, postData);
+            return new DefaultValueJsonReader(downloader.post(url, postData));
         } catch (MalformedURLException e) {
             logger.error(e.toString(), e);
             throw new NetworkException("Error while downloading data (" + e.getClass().getSimpleName() + ")", e);

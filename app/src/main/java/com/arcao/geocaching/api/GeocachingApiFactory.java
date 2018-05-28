@@ -3,8 +3,8 @@ package com.arcao.geocaching.api;
 import com.arcao.geocaching.api.configuration.GeocachingApiConfiguration;
 import com.arcao.geocaching.api.configuration.impl.DefaultProductionGeocachingApiConfiguration;
 import com.arcao.geocaching.api.configuration.impl.DefaultStagingGeocachingApiConfiguration;
-import com.arcao.geocaching.api.downloader.JsonDownloader;
-import com.arcao.geocaching.api.downloader.OkHttpClientJsonDownloader;
+import com.arcao.geocaching.api.downloader.Downloader;
+import com.arcao.geocaching.api.downloader.OkHttpClientDownloader;
 import com.arcao.geocaching4locus.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -14,20 +14,20 @@ import okhttp3.OkHttpClient;
 public class GeocachingApiFactory {
     private static GeocachingApiConfiguration apiConfiguration;
     private static OkHttpClient client;
-    private static JsonDownloader jsonDownloader;
+    private static Downloader downloader;
 
     public static GeocachingApi create() {
         return LiveGeocachingApi.builder()
                 .configuration(getApiConfiguration())
-                .downloader(getJsonDownloader())
+                .downloader(getDownloader())
                 .build();
     }
 
-    public static JsonDownloader getJsonDownloader() {
-        if (jsonDownloader == null) {
-            jsonDownloader = new OkHttpClientJsonDownloader(getOkHttpClient());
+    public static Downloader getDownloader() {
+        if (downloader == null) {
+            downloader = new OkHttpClientDownloader(getOkHttpClient());
         }
-        return jsonDownloader;
+        return downloader;
     }
 
     public static OkHttpClient getOkHttpClient() {

@@ -2,7 +2,6 @@ package com.arcao.geocaching.api.downloader;
 
 import com.arcao.geocaching.api.exception.InvalidResponseException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.parser.JsonReader;
 import com.arcao.geocaching4locus.BuildConfig;
 
 import java.io.Reader;
@@ -16,19 +15,17 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import timber.log.Timber;
 
-public class OkHttpClientJsonDownloader implements JsonDownloader {
+public class OkHttpClientDownloader implements Downloader {
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     private final OkHttpClient client;
 
-    public OkHttpClientJsonDownloader(OkHttpClient client) {
+    public OkHttpClientDownloader(OkHttpClient client) {
         this.client = client;
     }
 
     @Override
-    public JsonReader get(URL url) throws NetworkException, InvalidResponseException {
-        Reader reader;
-
+    public Reader get(URL url) throws NetworkException, InvalidResponseException {
         try {
             Request request = new Request.Builder()
                     .url(url)
@@ -49,8 +46,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
             if (body == null)
                 throw new InvalidResponseException("Body is null!");
 
-            reader = body.charStream();
-            return new JsonReader(reader);
+            return body.charStream();
         } catch (InvalidResponseException e) {
             Timber.e(e);
             throw e;
@@ -61,9 +57,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
     }
 
     @Override
-    public JsonReader post(URL url, byte[] postData) throws NetworkException, InvalidResponseException {
-        Reader reader;
-
+    public Reader post(URL url, byte[] postData) throws NetworkException, InvalidResponseException {
         try {
             Request request = new Request.Builder()
                     .url(url)
@@ -85,8 +79,7 @@ public class OkHttpClientJsonDownloader implements JsonDownloader {
             if (body == null)
                 throw new InvalidResponseException("Body is null!");
 
-            reader = body.charStream();
-            return new JsonReader(reader);
+            return body.charStream();
         } catch (InvalidResponseException e) {
             Timber.e(e);
             throw e;

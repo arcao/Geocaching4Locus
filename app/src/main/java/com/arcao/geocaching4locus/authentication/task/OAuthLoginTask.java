@@ -52,8 +52,11 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
         ServiceBuilder serviceBuilder = new ServiceBuilder(BuildConfig.GEOCACHING_API_KEY)
                 .apiSecret(BuildConfig.GEOCACHING_API_SECRET)
                 .callback(AppConstants.OAUTH_CALLBACK_URL)
-                .httpClient(new OkHttpHttpClient(GeocachingApiFactory.getOkHttpClient()))
-                .debug();
+                .httpClient(new OkHttpHttpClient(GeocachingApiFactory.getOkHttpClient()));
+
+        if (BuildConfig.DEBUG) {
+            serviceBuilder.debug();
+        }
 
         if (BuildConfig.GEOCACHING_API_STAGING) {
             return serviceBuilder.build(new GeocachingOAuthProvider.Staging());

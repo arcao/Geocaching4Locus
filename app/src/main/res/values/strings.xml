@@ -352,4 +352,14 @@
         >Locus Map Error: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
         >Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
+
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device."
+        >Version of your Android device does not support a latest transport security layer (TLS 1.1 and 1.2) in HTTPS connection for build in web browser.\n\n
+        The app will try to use 3rd party web browser instead. After approving the access to your Geocaching account, please copy authorization code and return back to paste it here.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Please paste authorization code.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Authorization code</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
+        >The entered authorization code is not valid. Please, try again.</string>
 </resources>

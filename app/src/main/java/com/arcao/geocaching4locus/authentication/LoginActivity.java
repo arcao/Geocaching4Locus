@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.authentication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,8 @@ import android.view.MenuItem;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.fragment.BasicMembershipWarningDialogFragment;
+import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginCompatFragment;
+import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginDialogListener;
 import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginFragment;
 import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
@@ -22,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class LoginActivity extends AbstractActionBarActivity implements OAuthLoginFragment.DialogListener {
+public class LoginActivity extends AbstractActionBarActivity implements OAuthLoginDialogListener {
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
@@ -58,9 +61,15 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
     }
 
     private void showLoginFragment() {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.fragment, OAuthLoginFragment.newInstance())
-                .commit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, OAuthLoginFragment.newInstance())
+                    .commit();
+        } else {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, OAuthLoginCompatFragment.newInstance())
+                    .commit();
+        }
     }
 
     @Override

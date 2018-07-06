@@ -27,6 +27,7 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment;
 import com.arcao.wherigoservice.api.WherigoServiceException;
+import com.github.scribejava.core.exceptions.OAuthException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
@@ -134,6 +135,10 @@ public class ExceptionHandler {
         } else if (t instanceof FileNotFoundException || t.getCause() instanceof FileNotFoundException) {
             return builder
                     .message(R.string.error_no_write_file_permission)
+                    .build();
+        } else if (t instanceof OAuthException && t.getMessage().equals("oauth_verifier argument was incorrect.")) {
+            return builder
+                    .message(R.string.error_invalid_authorization_code)
                     .build();
         } else {
             String message = StringUtils.defaultString(t.getMessage());

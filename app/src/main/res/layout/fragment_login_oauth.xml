@@ -14,11 +14,15 @@
 
     <RelativeLayout
         android:id="@+id/progressHolder"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignTop="@id/webViewPlaceholder"
-        android:layout_alignBottom="@id/webViewPlaceholder"
-        android:background="#cc000000" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#cc000000"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"

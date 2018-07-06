@@ -26,6 +26,7 @@ import com.arcao.geocaching4locus.authentication.task.OAuthLoginTask.TaskListene
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
+import com.github.scribejava.core.model.OAuthConstants;
 
 import java.lang.ref.WeakReference;
 
@@ -33,14 +34,9 @@ import timber.log.Timber;
 
 public class OAuthLoginFragment extends Fragment implements TaskListener {
     private static final String STATE_PROGRESS_VISIBLE = "STATE_PROGRESS_VISIBLE";
-    private static final String OAUTH_VERIFIER = "oauth_verifier";
-
-    public interface DialogListener {
-        void onLoginFinished(Intent errorIntent);
-    }
 
     @Nullable OAuthLoginTask task;
-    private WeakReference<DialogListener> dialogListenerRef;
+    private WeakReference<OAuthLoginDialogListener> dialogListenerRef;
     private WebView webView;
     View progressLayout;
     private Bundle lastInstanceState;
@@ -67,7 +63,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
         super.onAttach(activity);
 
         try {
-            dialogListenerRef = new WeakReference<>((DialogListener) activity);
+            dialogListenerRef = new WeakReference<>((OAuthLoginDialogListener) activity);
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnTaskFinishListener");
         }
@@ -92,7 +88,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
 
     @Override
     public void onTaskFinished(Intent errorIntent) {
-        DialogListener listener = dialogListenerRef.get();
+        OAuthLoginDialogListener listener = dialogListenerRef.get();
         if (listener != null) {
             listener.onLoginFinished(errorIntent);
         }
@@ -164,7 +160,7 @@ public class OAuthLoginFragment extends Fragment implements TaskListener {
                 }
 
                 task = new OAuthLoginTask(getActivity(), OAuthLoginFragment.this);
-                task.execute(uri.getQueryParameter(OAUTH_VERIFIER));
+                task.execute(uri.getQueryParameter(OAuthConstants.VERIFIER));
                 return true;
             }
 

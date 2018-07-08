@@ -354,8 +354,8 @@
         >Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
 
     <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device."
-        >The Version of your Android device does not support latest transport security layer (TLS 1.1 and 1.2) in HTTPS connection for build-in web browser.\n\n
-        This app will try to use 3rd party web browser instead. After approving an access to your Geocaching account, please copy an authorization code and return back to paste it here.</string>
+        >Your Android device version does not support the latest transport security layer (TLS 1.1 and 1.2) for build-in web browser.\n\n
+        This app will try to use 3rd party web browser instead. After approving access to your Geocaching account, please copy an authorization code, come back here and paste it here.</string>
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
         >Please paste the authorization code bellow.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."

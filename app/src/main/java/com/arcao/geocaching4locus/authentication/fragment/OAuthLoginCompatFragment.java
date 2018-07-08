@@ -73,6 +73,7 @@ public class OAuthLoginCompatFragment extends Fragment implements OAuthLoginTask
                     IntentUtil.showWebPage(getActivity(), Uri.parse(url));
                 })
                 .onNegative((dialog, which) -> getActivity().finish())
+                .cancelable(false)
                 .show();
     }
 
@@ -86,6 +87,7 @@ public class OAuthLoginCompatFragment extends Fragment implements OAuthLoginTask
                 .negativeText(R.string.button_cancel)
                 .positiveText(R.string.button_ok)
                 .onNegative((dialog, which) -> getActivity().finish())
+                .cancelable(false)
                 .show();
     }
 

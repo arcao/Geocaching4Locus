@@ -245,9 +245,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Télécharger les logs</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Télécharger les nouveaux logs</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >"Télécharger les logs" mets aussi à jour les données de la cache</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Echelle de comptage du nombre de caches</string>
@@ -329,6 +329,11 @@
         >Importer les caches venant de la carte en direct</string>
     
     
+    
+    
+    
+    
+
     
     
     

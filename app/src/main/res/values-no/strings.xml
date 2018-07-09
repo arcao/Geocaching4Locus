@@ -1,330 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches."
-        >Завантаження кешу…</string>
+        >Laster ned cache</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed."
-        >Додаток Locus Map не знайдена, але вона вимагає Geocaching4Locus щоб працювати належним чином. Будь ласка, встановіть Locus Map.</string>
+        >Locus Map-programmet er ikke funnet, men Geocaching4Locus det krever å fungere ordentlig. Vennligst installer Locus Map.</string>
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS."
-        >Будь ласка, дозвольте Послугу визначення місця знаходження на основі мобільної мережі та GPS у \'Налаштуваннях\'.</string>
+        >Vennligst slå på WiFi eller GPS posisjonering i innstillinger.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS."
-        >Отримання розташування від GPS…</string>
+        >Henter posisjon via GPS</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network."
-        >Отримання розташування з мобільної мережі…</string>
+        >Henter posisjon via trådløst nettverk…</string>
     
     <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings."
-        >Налаштування</string>
+        >Innstillinger</string>
     <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button."
-        >Неправильний формат координат!</string>
+        >Feil koordinatformat!</string>
     <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen."
-        >Координати</string>
+        >Koordinater</string>
     
     <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings."
-        >Відстань</string>
+        >Avstand</string>
     <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked."
-        >Відстань у км</string>
+        >Avstand i km</string>
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked."
-        >Відстань у милях</string>
+        >Avstand i miles</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
-        >Імперські одиниці</string>
+        >Imperial måleenheter</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles."
-        >Використовувати милі замість кілометрів</string>
+        >Bruk miles i stedet for kilometer</string>
     
-    
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in."
+        >Du er ikke pålogget. Logg på først i konto innstillinger.</string>
 
     <string name="button_ok" comment="Dialog button for OK action."
-        >Гаразд</string>
+        >OK</string>
     
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']"
-        >Ваша встановлена ​​версія Locus занадто стара. Geocaching4Locus вимагає версії %s або вище, щоб працювати належним чином.</string>
+        >Locusversjonen din er for gamal. Du må ha versjon %s eller nyare for å fungera skikkeleg.</string>
     
     <string name="button_cancel" comment="Dialog button for cancel action."
-        >Скасувати</string>
+        >Avbryt</string>
     
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings."
-        >Показати знайдене</string>
+        >Vis funne</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings."
-        >Показати знайдений кеш</string>
+        >Vis funne caches</string>
     <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
-        >Показати власний прихований</string>
+        >Vis eigne løynde</string>
     <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings."
-        >Показати власний кеш (прихований від вас)</string>
+        >Vis eigne løynde caches (løynde av deg)</string>
     <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter."
-        >Вибрати усе</string>
+        >Vel alle</string>
     <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter."
-        >Зняти усе виділення</string>
+        >Vel ingen</string>
     
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache."
-        >Оновлення кешу…</string>
+        >Hentar  ny cache…</string>
     
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
-        >Кількість журналів</string>
+        >Antal loggar</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings."
-        >Кількість журналів для завантаження з кешем</string>
+        >Antal loggar som skal lastast ned med hurtigminne</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen."
         >GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings."
-        >Показати вимкнене</string>
+        >Vis avslåtte</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings."
-        >Показати тимчасово вимкнений кеш</string>
+        >Syn midlertidig avslåtte hurtigminne</string>
     
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map."
-        >Завантаження кешу…</string>
+        >Lastar ned hurtigminne…</string>
 
     <string name="pref_version" comment="Title of Application version in About section in add-on settings."
-        >Версія</string>
+        >Versjon</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings."
-        >Веб-сайт, форум, тощо</string>
+        >Webside, forum, etc.</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
-        >Пожертва через Paypal</string>
+        >Doner via Paypal</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings."
-        >Підтримка майбутнього розвитку…</string>
+        >Støtt fremtidig utvikling...</string>
     <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings."
-        >Виберіть вашу валюту</string>
+        >Velg din valuta</string>
     
     <string name="pref_geocache_type" comment=""
-        >Типи кешу</string>
+        >Cachetyper</string>
     <string name="pref_difficulty" comment=""
-        >Складність</string>
+        >Vanskelighetsgrad</string>
     <string name="pref_terrain" comment=""
-        >Рельєф</string>
+        >Terreng</string>
     <string name="pref_difficulty_min" comment=""
-        >Мін. складність</string>
+        >Min. vanskelighetsgrad</string>
     <string name="pref_difficulty_max" comment=""
-        >Макс. складність</string>
+        >Max. vanskelighetsgrad</string>
     <string name="pref_terrain_min" comment=""
-        >Мін. рельєф</string>
+        >Min. terreng</string>
     <string name="pref_terrain_max" comment=""
-        >Макс. рельєф</string>
+        >Max. terreng</string>
     
     <string name="pref_download_basic" comment=""
-        >Лише основна інформація</string>
+        >Kun basis info</string>
     <string name="pref_download_basic_summary" comment=""
-        >Завантажувати лише основну інформацію про кеш</string>
+        >Last ned kun basis info om cachen</string>
     <string name="pref_download_on_show" comment=""
-        >Завантажувати решту інформації при показі</string>
+        >Last ned all info ved visning</string>
     <string name="pref_download_on_show_summary" comment=""
-        >Завантажувати решту інформації про кеш, коли зміст кешу показано у Locus</string>
+        >Last ned all info om cachen ved visning i Locus Map</string>
     <string-array name="pref_download_on_show_entries" comment=""
         >
-        <item>раз</item>
-        <item>кожні</item>
-        <item>ніколи</item>
+        <item>en gang</item>
+        <item>alle ganger</item>
+        <item>aldri</item>
     </string-array>
     
     <string name="menu_live_map" comment=""
-        >Жива карта</string>
+        >Live kart</string>
     <string name="menu_nearest" comment=""
-        >Найближче</string>
-    
+        >Nærmeste</string>
+    <string name="menu_users_guide" comment=""
+        >Bruksanvisning</string>
     <string name="menu_settings" comment=""
-        >Налаштування</string>
+        >Innstillinger</string>
     
     <string name="var_user_waypoint_name" comment=""
-        >Дорожня точка %1$d</string>
+        >Brukerveipunkt %1$d</string>
     <string name="var_final_location_name" comment=""
-        >Кінцеве розташування</string>
+        >Endelig lokasjon</string>
     
     <string name="pref_login" comment=""
-        >Увійти</string>
+        >Logg inn</string>
     <string name="pref_login_summary" comment=""
-        >Увійти у профіль Geocaching.com</string>
+        >Logg inn med Geocaching.com konto</string>
     <string name="pref_logout" comment=""
-        >Вийти</string>
+        >Logg ut</string>
     <string name="pref_logout_summary" comment=""
-        >Вийти як %s</string>
+        >Logget på som %s</string>
 
     <string name="error_network_unavailable" comment=""
-        >Мережа недоступна. Будь ласка, перевірте ваше з\'єднання.</string>
+        >Nettverk er utilgjengelig. Sjekk forbindelsen.</string>
 
     <string name="progress_update_geocaches" comment=""
-        >Оновлення кешу…</string>
+        >Oppdaterer cacher...</string>
     <string name="pref_container_size" comment=""
-        >Розмір контейнера</string>
+        >Boksstørrelse</string>
 
     <string name="toast_live_map_enabled" comment=""
-        >Жива мапа включена. Тепер переходимо з картою, щоб побачити тайники.</string>
+        >Live kart er påslått. Flytt på kartet for å se cacher.</string>
     <string name="toast_live_map_disabled" comment=""
-        >Жива мапа вимкнена.</string>
+        >Live kart er avslått.</string>
     <string name="error_live_map_periodic_updates" comment=""
-        >Ви не дозволили відправку періодичного оновлення Locus. Будь ласка, включіть це спочатку в Locus: Установки → Різне → Увімкнути періодичне оновлення.</string>
+        >Regelmessige oppdateringer i Locus Map er avslått. Aktiver det i Innstillinger -> Diverse -> Aktiver regelmessige oppdateringer av tilleggsprogrammer.</string>
     <string name="error_location_not_allowed" comment=""
-        >Послуга розташування не дозволена</string>
+        >Lokasjonstjenester er avslått</string>
     <string name="button_settings" comment=""
-        >Налаштування</string>
+        >Innstillinger</string>
     
     <string name="menu_import_from_gc" comment=""
-        >Імпорт GC</string>
+        >Importer GC</string>
     <string name="title_import_from_gc" comment=""
-        >Імпорт з коду GC</string>
+        >Importer via GC kode</string>
     <string name="error_gc_code_invalid" comment=""
-        >Код GC не дійсний.</string>
+        >GC kode er ikke gyldig</string>
 
-    
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma."
+        >
+        <item quantity="one" comment=""
+        >Cache %s ble ikke funnet</item>
+        <item quantity="few" comment=""
+        >Cacher %s ble ikke funnet</item>
+        <item quantity="other" comment=""
+        >Cacher %s ble ikke funnet</item>
+    </plurals>
 
     <string name="title_geocache_count" comment=""
-        >Лічильник кешів</string>
+        >Antall cacher</string>
     <string name="launcher_nearest_geocaches" comment=""
-        >Найближчі кеші</string>
+        >Nærmeste cache</string>
     <string name="launcher_import_geocache" comment=""
-        >Імпортувати кеш до Locus</string>
+        >Importer cache til Locus Map</string>
     <string name="launcher_update_geocache" comment=""
-        >Оновити кеш</string>
+        >Oppdater cache</string>
     <string name="launcher_update_geocaches" comment=""
-        >Оновити кеші</string>
+        >Oppdater cacher</string>
     <string name="launcher_import_from_gc" comment=""
-        >Імпорт з коду GC</string>
+        >Importer via GC kode</string>
     
     <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog"
-        >Доступ базового користувача</string>
+        >Basismedlem tilgang</string>
     <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog"
-        >Доступ преміум користувача</string>
+        >Premiummedlem tilgang</string>
     <string name="error_basic_member_full_geocaching_quota_exceeded"  comment="Error dialog message when basic member reach limit of full geocache details per day. The '%1$s' is replaced with count of full detail geocache limit (eg. '3 geocaches'), '%2$s' with period length (eg. '24 hours'), '%3$s' with time when quota will be fulfilled/reset (eg. '09:10')."
-        >Ви досягнули обмеження для завантаження повної інформації <b>%1$s за %2$s </b>. Ваша щоденна квота буде обнулена о %3$s.<br/>
-<br/>
-<i> Оновіть geocaching.com до преміум користувача сьогодні, щоб завантажити повну інформацію до 6000 кешів за день і щоб мати доступ до багатьох інших переваг. Відвідайте geocaching.com для оновлення. </i></string>
+        >Du har nådd grensen for full nedlasting med <b>%1$s pr %2$s periode</b>. Din daglige kvote blir nullstillt %3$s.<br/> 
+<br/> 
+<i>Oppgrader til geocaching.com premium medlemskap for å laste ned alle detaljer for opp til 6000 caches pr dag og for andre fordeler. Besøk geocaching.com for oppgradering.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10')."
-        >Ви досягнули обмеження для завантаження повної інформації <b>6000 кешів за 24 години</b> Ваша щоденна квота буде обнулена о %3$s.</string>
+        >Du har nådd grensen for <b>6000 nedlastinger pr 24 timer</b>. Din daglige kvote blir nullstillt %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call."
-        >Гей, повільніше!</string>
+        >Hei, ta det med ro!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call."
-        >Ви досягнули обмеження на максимальну кількість дій/дзвінків за хвилину.</string>
+        >Du har nådd grensen for hvor mye du kan hente innenfor et minutt.</string>
 
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
-        <item quantity="one">%d кеш</item>
-        <item quantity="few">%d кешів</item>
-        <item quantity="other">%d кешів</item>
+        <item quantity="one">%d cache</item>
+        <item quantity="few">%d cacher</item>
+        <item quantity="other">%d cacher</item>
     </plurals>
     
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
-        <item quantity="one">%d година</item>
-        <item quantity="few">%d години</item>
-        <item quantity="other">%d години</item>
+        <item quantity="one">%d time</item>
+        <item quantity="few">%d timer</item>
+        <item quantity="other">%d timer</item>
     </plurals>
     
     <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
-        <item quantity="one">%d хвилина</item>
-        <item quantity="few">%d хвилини</item>
-        <item quantity="other">%d хвилини</item>
+        <item quantity="one">%d minutt</item>
+        <item quantity="few">%d minutter</item>
+        <item quantity="other">%d minutter</item>
     </plurals>
     
     <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API."
-        >Підтримується Geocaching Live</string>
+        >Drevet av Geocaching Live</string>
     <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings."
-        >Це доповнення використовує Геокешинг Наживо для отримання інформації про Геокеші. Натисніть тут для отримання додаткової інформації …</string>
+        >Dette tillegget bruker Geocaching Live for å få informasjon om cacher. Trykk her for mer informasjon ...</string>
     
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response."
-        >Geocaching Live  повертає невірну відповідь:<br/>%s</string>
+        >Geocaching Live returnerer ugyldig informasjon: <br/>%s</string>
 
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower."
-        >Жива мапа Geocaching4Locus</string>
+        >Geocaching4Locus Live kart</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled."
-        >Жива мапа увімкнена.</string>
+        >Live kart er påslått.</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled."
-        >Жива мапа вимкнена.</string>
+        >Live kart er avslått.</string>
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char."
-        >Завантажується кеш живої мапи: %1$d / %2$d (%3$d%%)</string>
+        >Laster ned Live kart cacher: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map."
-        >Увімкнути</string>
+        >Aktiver</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map."
-        >Вимкнути</string>
+        >Deaktiver</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings."
-        >Налаштування</string>
+        >Innstillinger</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message."
-        >Жива мапа Geocaching4Locus: %s</string>
+        >Geocaching4Locus Live kart: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
-        >Сповіщення вимкнено</string>
+        >Deaktiver varslinger</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
-        >Показати сповіщення, коли Live-мапа вимкнена. Це працює лише у випадку, якщо реґулярні оновлення дозволені у Locus, та якщо й він запущений.</string>
+        >Vis melding når live kart slås av. Dette virker kun når periodiske oppdateringer er slått på i Locus Map og når Locus Map kjører.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected."
-        >Всі</string>
+        >Alle</string>
     <string name="button_filter" comment="Button title in search nearest screen which show filter settings."
-        >Фільтр</string>
+        >Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs."
-        >Стягування журналів змін…</string>
+        >Laster ned logger...</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
-        >Завантажити журнали змін</string>
+        >Last ned logger</string>
 
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
-        >Завантажити журнали змін оновленого кешу</string>
+        >Laste ned logger vil oppdatere cachen</string>
     <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
-        >Дія "Завантажити журнали" також оновлює кеш даних</string>
+        >Kommando "Last ned logger" vil også oppdatere data for geocache</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
-        >Розмір числа пакету кешів</string>
+        >Stegstørrelse for antall cacher</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings."
-        >Змінити розмір кешу обраного діялоґу</string>
+        >Endre stegstørrelse for antall cacher dialog</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side."
-        >Деякі фільтри потребують преміюм-акаунт, який Ви не маєте. Застосунок перемикається на основний режим. Будь ласка, спробуйте ще раз.</string>
+        >Noen filtre krever premium medlemskap, noe du ikke har. Dette tillegget skifter til modus for basis medlemskap. Prøv igjen.</string>
 
     <string name="pref_account" comment="Title of preference category for Account settings."
-        >Акаунт</string>
+        >Konto</string>
     <string name="pref_filter" comment="Title of preference category for Filter settings."
-        >Фільтр</string>
+        >Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings."
-        >Жива карта</string>
+        >Live kart</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings."
-        >Завантаження…</string>
+        >Lastar ned</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings."
-        >Додатково</string>
+        >Avansert</string>
     <string name="pref_about" comment="Title of preference category for About settings."
-        >Про</string>
+        >Om</string>
     <string name="title_login" comment="Window title for sign in task."
-        >Увійти</string>
+        >Logg inn</string>
     <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings."
-        >Стягнути поради</string>
+        >Last ned hint</string>
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings."
-        >Повільніше завантаження та вимогливіша поведінка щодо використання даних</string>
+        >Tregere nedlasting og mer krevende databruk</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail."
-        >Надіслати відозву</string>
+        >Send tilbakemelding</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found."
-        >Не вдалося знайти запис кеша, схожого з Вашим пошуком.</string>
-    
+        >Kan ikke finne geocacher som tilfredsstiller søk.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days."
+        >På grunn av utløpt tilgangstoken har du blitt logget av. Vennligst logg inn igjen.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks."
-        >Імпорт закладок</string>
+        >Importer bokmerker</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks."
-        >Імпорт закладок</string>
+        >Importer bokmerker</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission."
-        >Додаток не має дозволу на доступ до служби місцезнаходження.</string>
+        >Dette tillegget har ikke tilgang til din posisjon.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark."
-        >Імпортувати всі</string>
+        >Importer alt</string>
     <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users."
-        >Ця функція призначена для елітних членів тільки, вибачте.</string>
+        >Denne funksjonen er kun for premium medlemmer. Beklager.</string>
     <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs."
-        >Помилка Locus Map</string>
+        >Locus Map feil</string>
     <string name="button_send_error_report" comment="Button for Send error report action."
-        >Відправити звіт про помилку</string>
+        >Send feilrapport</string>
     <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog."
-        >Спасибі за відправку помилку.</string>
+        >Takk for at du rapporterte en feil.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error."
-        >Ви хочете продовжити з частково отриманих даних в Locus Map?</string>
+        >Vil du fortsette med delvis mottatte data til Locus Map?</string>
     <string name="button_yes" comment="Dialog button for Yes action."
-        >Так</string>
+        >Ja</string>
     <string name="button_no" comment="Dialog button for No action."
-        >Ні</string>
-    
-    
+        >Nei</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in."
+        >Dette tillegget krever premium medlemskap for full funksjonalitet. Som et basis medlem kan du laste ned tradisjonelle, eventer og CITO eventer med basis geocache data (ingen hint, ingen attributter, ingen bilder, ingen logger osv). Du kan kun bruke noen få filtre i søk. For mer informasjon, les brukermanualen på Geocaching4Locus sin webside.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page."
+        >Vis meg brukermanualen</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission."
-        >Застосування вимагає дозвіл <b>записи зовнішній пристрій</b> для зберігання даних схованок для Locus Map. Будь ласка, <b>дозвольте</b> це дозвіл в наступному діалоговому вікні.</string>
+        >Denne app\'en trenger <b>skrivetilgang til lagring</b> for å lagre geocachedata til Locus Map. Vennligst <b>gi tilgang</b> til dette i neste dialog.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission."
-        >Застосування не має дозволу на <b>записи зовнішній пристрій</b>. Цей дозвіл необхідно для зберігання даних геокешинга для Locus Map.</string>
+        >Denne app\'en har ikke <b>skrivetilgang</b> til lagring. Denne tilgangen er nødvendig for å lagre geocachedata til Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
-        >Приховати тайники на інвалідів</string>
+        >Skjul geocacher når Live kart er avslått</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
-        >Приховати тайники живої мапи при відключенні Жива мапа функції</string>
+        >Skjul Live kart geocacher når Live kart er avslått</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Deaktiver DNF, NM og NA cacher</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
+        >Merk geocacher som ikke tilgjengelige når de inneholder flere <i>ikke funnet</i>, <i>trenger vedlikehold</i> eller <i>bør arkiveres</i> logger</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
+        >Hvor mange logger å sjekke</string>
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list."
+        >Overvåk geocache</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
+        >Bokmerk geocache</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
+        >Importer Live kart geocacher</string>
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."
+        >Vennligst sørg for at Live kart er påslått og Locus Map vil vise Live kart geocachene.</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
+        >Importer Liva kart GC</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
+        >Ikke vis denne meldingen igjen</string>
+    <string name="title_warning" comment="Warning dialog title"
+        >Advarsel</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
+        >Din Android enhet har batterisparing påslått som hindrer Live kart å fungere skikkelig. Vennligst lag et unntak i batterisparing for app\'en Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action"
+        >Mer info</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
+        >Locus Map feil: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
+        >Klarer ikke å opprette datafil for Locus Map. Har du gitt skrivetilgang til lagring?</string>
 
     
     

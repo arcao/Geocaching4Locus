@@ -244,9 +244,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Descarregar logs</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Descarregar logs de atualização da cache</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Ação "Descarregar logs" também atualiza os dados da cache</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Dimensão da escala na contagem de caches</string>
@@ -321,6 +321,11 @@
     
     
     
+    
+    
+    
+    
+
     
     
     

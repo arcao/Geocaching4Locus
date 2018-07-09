@@ -239,9 +239,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >下載日誌</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >下載日誌更新寶藏</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >下載日誌並更新地理寶藏資料</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >寶藏計次的區間</string>
@@ -312,6 +312,11 @@
     
     
     
+    
+    
+    
+    
+
     
     
     

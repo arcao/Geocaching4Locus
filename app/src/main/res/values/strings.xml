@@ -161,7 +161,7 @@
     <string name="error_gc_code_invalid" comment=""
         >GC code is not valid.</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma."
         >
         <item quantity="one" comment=""
         >Cache %s was not found.</item>
@@ -254,9 +254,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Download logs</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Download logs update cache</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Action “Download logs” also update geocache data</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Step size for Count of caches</string>
@@ -352,4 +352,14 @@
         >Locus Map Error: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
         >Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
+
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs."
+        >Your Android device version does not support the latest transport security layer (TLS 1.1 and 1.2) for build-in web browser.\n\n
+        This app will try to use 3rd party web browser instead. After approving access to your Geocaching account, please copy an authorization code, come back here and paste it here.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Please, paste the authorization code.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Authorization code</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
+        >The entered authorization code is not valid. Please, try again.</string>
 </resources>

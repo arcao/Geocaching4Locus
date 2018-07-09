@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.authentication.task;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -18,7 +19,6 @@ import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.authentication.util.AccountRestrictions;
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory;
-import com.arcao.geocaching4locus.authentication.util.OAuthAsyncRequestCallbackAdapter;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.task.UserTask;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
@@ -28,6 +28,7 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import timber.log.Timber;
@@ -54,7 +55,8 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
                 .callback(AppConstants.OAUTH_CALLBACK_URL)
                 .httpClient(new OkHttpHttpClient(GeocachingApiFactory.getOkHttpClient()));
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // for debugging is required API 19
             serviceBuilder.debug();
         }
 
@@ -67,57 +69,45 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
     @Override
     protected String[] doInBackground(String... params) throws Exception {
-        AccountManager accountManager = App.get(context).getAccountManager();
-        AccountRestrictions accountRestrictions = accountManager.getRestrictions();
+        try {
+            AccountManager accountManager = App.get(context).getAccountManager();
+            AccountRestrictions accountRestrictions = accountManager.getRestrictions();
 
-        OAuth10aService service = createOAuthService();
+            OAuth10aService service = createOAuthService();
 
-        if (params.length == 0) {
-            OAuth1RequestToken requestToken = service.getRequestTokenAsync(new OAuthAsyncRequestCallbackAdapter<OAuth1RequestToken>() {
-                @Override
-                public void onThrowable(Throwable t) {
-                    tokenRequestThrowable = t;
-                }
-            }).get();
+            if (params.length == 0) {
+                OAuth1RequestToken requestToken = service.getRequestToken();
 
-            if (tokenRequestThrowable != null)
-                throw new NetworkException(tokenRequestThrowable.getMessage(), tokenRequestThrowable);
+                accountManager.setOAuthRequestToken(requestToken);
+                String authUrl = service.getAuthorizationUrl(requestToken);
+                Timber.i("AuthorizationUrl: %s", authUrl);
+                return new String[]{authUrl};
+            } else {
+                OAuth1RequestToken requestToken = accountManager.getOAuthRequestToken();
+                OAuth1AccessToken accessToken = service.getAccessToken(requestToken, params[0]);
 
-            accountManager.setOAuthRequestToken(requestToken);
-            String authUrl = service.getAuthorizationUrl(requestToken);
-            Timber.i("AuthorizationUrl: %s", authUrl);
-            return new String[]{authUrl};
-        } else {
-            OAuth1RequestToken requestToken = accountManager.getOAuthRequestToken();
-            OAuth1AccessToken accessToken = service.getAccessTokenAsync(requestToken, params[0], new OAuthAsyncRequestCallbackAdapter<OAuth1AccessToken>() {
-                @Override
-                public void onThrowable(Throwable t) {
-                    tokenRequestThrowable = t;
-                }
-            }).get();
+                // get account name
+                GeocachingApi api = GeocachingApiFactory.create();
+                api.openSession(accessToken.getToken());
 
-            if (tokenRequestThrowable != null)
-                throw new NetworkException(tokenRequestThrowable.getMessage(), tokenRequestThrowable);
+                UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(context));
+                ApiLimitsResponse apiLimitsResponse = api.getApiLimits();
 
-            // get account name
-            GeocachingApi api = GeocachingApiFactory.create();
-            api.openSession(accessToken.getToken());
+                if (userProfile == null)
+                    throw new InvalidResponseException("User profile is null");
 
-            UserProfile userProfile = api.getYourUserProfile(false, false, false, false, false, false, DeviceInfoFactory.create(context));
-            ApiLimitsResponse apiLimitsResponse = api.getApiLimits();
+                Account account = accountManager.createAccount(userProfile.user());
+                accountManager.addAccount(account);
+                accountManager.setOAuthToken(api.getSession());
+                accountManager.deleteOAuthRequestToken();
 
-            if (userProfile == null)
-                throw new InvalidResponseException("User profile is null");
+                // update restrictions
+                accountRestrictions.updateLimits(apiLimitsResponse.apiLimits());
 
-            Account account = accountManager.createAccount(userProfile.user());
-            accountManager.addAccount(account);
-            accountManager.setOAuthToken(api.getSession());
-            accountManager.deleteOAuthRequestToken();
-
-            // update restrictions
-            accountRestrictions.updateLimits(apiLimitsResponse.apiLimits());
-
-            return null;
+                return null;
+            }
+        } catch (IOException e) {
+            throw new NetworkException(e.getMessage(), e);
         }
     }
 
@@ -141,8 +131,6 @@ public class OAuthLoginTask extends UserTask<String, Void, String[]> {
 
         if (isCancelled())
             return;
-
-        Timber.e(t);
 
         Intent intent = new ExceptionHandler(context).handle(t);
 

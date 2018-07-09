@@ -161,7 +161,7 @@
     <string name="error_gc_code_invalid" comment=""
         >Geen geldige GC code.</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma."
         >
         <item quantity="one" comment=""
         >Cache %s niet gevonden.</item>
@@ -242,7 +242,7 @@
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message."
         >Geocaching4Locus Live map: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
-        >Uitgeschakeld melding</string>
+        >Gedeactiveerde melding</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running."
         >Toon een melding wanneer Live map uitgeschakeld is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus Map en Locus Map actief is.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected."
@@ -254,9 +254,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Download logs</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Download logs update cache</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Actie "Download logs" update ook geocache data</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Stap grootte voor aantal caches</string>
@@ -352,4 +352,14 @@
         >Locus Map fout. %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
         >Kan geen data file aanmaken voor Locus Map. Heeft u \'external file access\' toegestaan?</string>
+
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs."
+        >Uw Android apparaat heeft geen ondersteuning voor de laatste transport security layer (TLS 1.1 en 1.2) voor ingebouwde web browsers.\n\n
+Dit programma gaat proberen een web browser van een derde partij te gebruiken. Nadat u toegang gegeven heeft tot uw Geocaching account, gelieve de autorisatiecode te kopieren en hier te plakken.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Gelieve uw autorisatiecode te plakken.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Toegangs code</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
+        >De ingegeven autorisatiecode is ongeldig. Gelieve opnieuw te proberen.</string>
 </resources>

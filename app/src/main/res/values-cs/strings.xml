@@ -161,7 +161,7 @@
     <string name="error_gc_code_invalid" comment=""
         >GC kód není správný.</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma."
         >
         <item quantity="one" comment=""
         >Keš %s nebyla nalezena.</item>
@@ -254,9 +254,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Stáhnout logy</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Stáhnout logy aktualizuje keš</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Akce "Stáhnout logy" také aktualizuje data keše</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Velikost kroku pro počet keší</string>
@@ -352,4 +352,14 @@
         >Chyba Locus Map: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
         >Nelze vytvořit datový soubor pro Locus Map. Schválili jste oprávnění přístupu k externímu souboru?</string>
+
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs."
+        >Verze vašeho zařízení Android nepodporuje nejnovější vrstvu zabezpečení přenosu (TLS 1.1 a 1.2) pro zabudovaný webový prohlížeč.\n\n
+Tato aplikace se místo toho pokusí použít webový prohlížeč třetí strany. Po schválení přístupu k vašemu účtu Geocaching zkopírujte autorizační kód, vraťte se sem a vložte jej zde.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Prosím vložte autorizační kód.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Autorizační kód</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
+        >Zadaný autorizační kód není platný. Prosím, zkuste to znovu.</string>
 </resources>

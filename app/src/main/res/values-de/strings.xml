@@ -161,7 +161,7 @@
     <string name="error_gc_code_invalid" comment=""
         >Ungültiger GC code</string>
 
-    <plurals name="plural_error_geocache_not_found" comment=""
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma."
         >
         <item quantity="one" comment=""
         >Cache %s nicht gefunden.</item>
@@ -254,9 +254,9 @@
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache."
         >Logs herunterladen</string>
 
-    <string name="pref_download_logs_update_geocache" comment=""
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Logs werden heruntergeladen und der Cache wird aktualisiert</string>
-    <string name="pref_download_logs_update_geocache_summary" comment=""
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs."
         >Die Aktion "Download logs" aktualisiert gleichzeitig die Cachedaten</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings."
         >Cache in 1-er oder 10-er Schritten herunterladen</string>
@@ -352,4 +352,14 @@
         >Locus Map fehler: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
         >Es konnte keine Datei mit Daten für die Locus Map erstellt werden. Hast du den Zugriff auf externe Daten genehmigt?</string>
+
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs."
+        >Die Androidversion deines Gerätes unterstützt nicht die neueste Transportsicherheitsstufe (TLS 1.1 and 1.2) für den integrierten Webbrowser.\n\n
+Diese App versucht stattdessen, den Webbrowser eines Drittanbieters zu verwenden. Nachdem der Zugriff auf dein Geocaching-Konto genehmigt wurde, kopieren  bitte den Autorisierungscode, komm hierher zurück und füge diesen hier ein.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Bitte füge den Zulassungscode ein</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
+        >Zulassungscode</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
+        >Der eingegebene Zulassungscode ist nicht gültig, versuche es noch einmal</string>
 </resources>

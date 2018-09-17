@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.arcao.geocaching4locus.App;
@@ -21,6 +19,8 @@ import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.crashlytics.android.Crashlytics;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;

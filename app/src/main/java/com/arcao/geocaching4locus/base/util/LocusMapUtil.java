@@ -1,8 +1,6 @@
 package com.arcao.geocaching4locus.base.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
@@ -10,6 +8,8 @@ import com.arcao.geocaching4locus.error.fragment.LocusTestingErrorDialogFragment
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;

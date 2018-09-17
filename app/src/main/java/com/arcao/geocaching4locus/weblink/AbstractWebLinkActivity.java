@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.weblink;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;

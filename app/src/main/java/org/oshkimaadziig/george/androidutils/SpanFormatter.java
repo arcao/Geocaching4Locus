@@ -16,7 +16,7 @@
 
 package org.oshkimaadziig.george.androidutils;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;

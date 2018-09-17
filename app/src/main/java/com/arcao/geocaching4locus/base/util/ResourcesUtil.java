@@ -2,9 +2,9 @@ package com.arcao.geocaching4locus.base.util;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
-import android.support.annotation.PluralsRes;
-import android.support.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.PluralsRes;
+import androidx.annotation.StringRes;
 
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
 

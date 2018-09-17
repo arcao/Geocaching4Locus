@@ -2,9 +2,10 @@ package com.arcao.geocaching4locus.import_bookmarks.widget.decorator;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.DimenRes;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.annotation.DimenRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MarginItemDecoration extends RecyclerView.ItemDecoration {
     private final int margin;

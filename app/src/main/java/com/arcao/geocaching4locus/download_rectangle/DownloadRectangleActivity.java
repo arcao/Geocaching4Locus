@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.download_rectangle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;

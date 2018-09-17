@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.update;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;

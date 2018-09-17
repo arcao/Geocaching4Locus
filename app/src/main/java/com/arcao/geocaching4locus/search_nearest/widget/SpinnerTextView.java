@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.search_nearest.widget;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.appcompat.R;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.R;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.text.method.MovementMethod;
 import android.util.AttributeSet;
 

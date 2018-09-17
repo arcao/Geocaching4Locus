@@ -1,10 +1,10 @@
 package com.arcao.geocaching4locus.base.util;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 public final class CrashlyticsTree extends Timber.DebugTree {

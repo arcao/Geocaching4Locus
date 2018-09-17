@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arcao.geocaching.api.data.User;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
@@ -17,6 +15,9 @@ import com.github.scribejava.core.model.OAuth1RequestToken;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class PreferenceAccountManager implements AccountManager {
     private final SharedPreferences preferences;

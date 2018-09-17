@@ -1,12 +1,13 @@
 package com.arcao.geocaching4locus.authentication.util;
 
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
 import com.arcao.auto.value.parcel.CoordinatesTypeAdapter;
 import com.arcao.geocaching.api.data.coordinates.Coordinates;
 import com.google.auto.value.AutoValue;
 import com.ryanharter.auto.value.parcel.ParcelAdapter;
+
+import androidx.annotation.Nullable;
 
 @AutoValue
 public abstract class Account implements Parcelable {

@@ -4,7 +4,7 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
     private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";

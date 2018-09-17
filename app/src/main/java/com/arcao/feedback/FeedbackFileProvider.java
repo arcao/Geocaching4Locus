@@ -10,7 +10,6 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
-import android.support.annotation.NonNull;
 import android.webkit.MimeTypeMap;
 
 import com.arcao.geocaching4locus.BuildConfig;
@@ -19,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**

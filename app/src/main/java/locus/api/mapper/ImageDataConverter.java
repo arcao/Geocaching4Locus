@@ -1,6 +1,6 @@
 package locus.api.mapper;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.arcao.geocaching.api.data.ImageData;
 

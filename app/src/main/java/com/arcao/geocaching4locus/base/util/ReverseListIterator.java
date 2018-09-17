@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.base.util;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Iterator;
 import java.util.List;

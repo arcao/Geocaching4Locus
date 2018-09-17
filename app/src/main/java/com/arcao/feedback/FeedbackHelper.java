@@ -7,8 +7,6 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 
 import com.arcao.feedback.collector.AccountInfoCollector;
 import com.arcao.feedback.collector.AppInfoCollector;
@@ -33,6 +31,8 @@ import java.util.Stack;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import timber.log.Timber;
 
 public class FeedbackHelper {

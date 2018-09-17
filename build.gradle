@@ -49,6 +49,8 @@ allprojects {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.arcao.com' }
+        // for butterknife
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     // dependencyUpdates: suggest only released artifacts

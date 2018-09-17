@@ -2,15 +2,16 @@ package com.arcao.geocaching4locus.base.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 
 import org.apache.commons.lang3.StringUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 public class AbstractErrorDialogFragment extends AbstractDialogFragment {
     private static final String PARAM_TITLE = "TITLE";

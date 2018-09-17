@@ -1,7 +1,7 @@
 package locus.api.mapper;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.arcao.geocaching.api.data.Waypoint;
 import com.arcao.geocaching.api.data.type.WaypointType;

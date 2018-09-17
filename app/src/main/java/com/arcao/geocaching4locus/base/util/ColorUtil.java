@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.appcompat.R;
 import android.util.TypedValue;
+
+import androidx.appcompat.R;
+import androidx.core.graphics.ColorUtils;
 
 public final class ColorUtil {
     private static final ThreadLocal<TypedValue> TL_TYPED_VALUE = new ThreadLocal<>();

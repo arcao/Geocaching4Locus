@@ -26,10 +26,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.preference.Preference;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
 import com.arcao.geocaching4locus.R;
+
+import androidx.annotation.NonNull;
 
 /**
  * A {@link Preference} that displays a list of entries as

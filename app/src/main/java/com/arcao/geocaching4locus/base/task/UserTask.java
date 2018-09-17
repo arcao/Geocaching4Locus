@@ -26,7 +26,6 @@ package com.arcao.geocaching4locus.base.task;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
-import android.support.annotation.NonNull;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
@@ -41,6 +40,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**

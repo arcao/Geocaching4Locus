@@ -3,14 +3,13 @@ apply plugin: 'io.fabric'
 
 dependencies {
     // Android Support
-    implementation Deps.support_v4
-    implementation Deps.support_v13
-    implementation Deps.appcompat_v7
-    implementation Deps.recyclerview_v7
-    implementation Deps.cardview_v7
-    implementation Deps.design
-    implementation Deps.constraint_layout
+    implementation Deps.androidx_appcompat
+    implementation Deps.androidx_recyclerview
+    implementation Deps.androidx_cardview
+    implementation Deps.material_design
+    implementation Deps.androidx_constraint_layout
 
+    implementation Deps.multidex
     // Geocaching API
     implementation(Deps.geocaching_api) {
         // Not working in Android, slf4j-timber used instead
@@ -36,7 +35,7 @@ dependencies {
 
     // Material dialogs
     implementation(Deps.material_dialogs) {
-        exclude group: 'com.android.support', module: 'support-v13'
+        //exclude group: 'com.android.support', module: 'support-v13'
     }
 
     // Crashlytics & Firebase
@@ -75,6 +74,8 @@ android {
 
         versionCode hasProperty('devBuild') ? 1 : gitVersionCode()
 
+        multiDexEnabled true
+
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
@@ -85,15 +86,6 @@ android {
         buildConfigField 'String', 'TEST_PASSWORD', 'null'
 
         resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                    // TODO remove when http://b.android.com/187527 is supported by ButterKnife.
-                    'butterknife.minSdk': getMinSdkVersion().getApiString()
-                ]
-            }
-        }
     }
 
     compileOptions {

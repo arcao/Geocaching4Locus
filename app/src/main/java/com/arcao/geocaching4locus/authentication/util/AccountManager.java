@@ -1,11 +1,12 @@
 package com.arcao.geocaching4locus.authentication.util;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arcao.geocaching.api.data.User;
 import com.github.scribejava.core.model.OAuth1RequestToken;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public interface AccountManager {
     @Nullable

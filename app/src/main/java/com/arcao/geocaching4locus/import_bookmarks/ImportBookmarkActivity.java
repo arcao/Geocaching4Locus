@@ -2,10 +2,6 @@ package com.arcao.geocaching4locus.import_bookmarks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.arcao.geocaching.api.data.bookmarks.Bookmark;
@@ -25,6 +21,10 @@ import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment
 import java.util.HashSet;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;

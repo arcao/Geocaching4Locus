@@ -1,12 +1,12 @@
 object Deps {
     // Android Support
-    const val support_v4 = "com.android.support:support-v4:${Versions.support}"
-    const val support_v13 = "com.android.support:support-v13:${Versions.support}"
-    const val appcompat_v7 = "com.android.support:appcompat-v7:${Versions.support}"
-    const val recyclerview_v7 = "com.android.support:recyclerview-v7:${Versions.support}"
-    const val cardview_v7 = "com.android.support:cardview-v7:${Versions.support}"
-    const val design = "com.android.support:design:${Versions.support}"
-    const val constraint_layout = "com.android.support.constraint:constraint-layout:${Versions.constraint_layout}"
+    const val androidx_appcompat = "androidx.appcompat:appcompat:${Versions.androidx}"
+    const val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}"
+    const val androidx_cardview = "androidx.cardview:cardview:${Versions.androidx}"
+    const val material_design = "com.google.android.material:material:${Versions.androidx}"
+    const val androidx_constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
+
+    const val multidex = "com.android.support:multidex:${Versions.multidex}"
 
     // Geocaching API
     const val geocaching_api = "com.arcao:geocaching-api:${Versions.geocaching_api}"

@@ -3,8 +3,6 @@ package com.arcao.geocaching4locus.authentication.task;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
@@ -31,6 +29,8 @@ import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class OAuthLoginTask extends UserTask<String, Void, String[]> {

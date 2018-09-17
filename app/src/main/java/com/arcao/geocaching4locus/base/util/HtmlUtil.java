@@ -1,11 +1,12 @@
 package com.arcao.geocaching4locus.base.util;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.MetricAffectingSpan;
+
+import androidx.annotation.NonNull;
 
 public final class HtmlUtil {
     private HtmlUtil() {

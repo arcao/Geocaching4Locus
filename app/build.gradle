@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.fabric'
 
 dependencies {
@@ -10,6 +12,9 @@ dependencies {
     implementation Deps.androidx_constraint_layout
 
     implementation Deps.multidex
+
+    implementation Deps.kotlin_stdlib
+
     // Geocaching API
     implementation(Deps.geocaching_api) {
         // Not working in Android, slf4j-timber used instead

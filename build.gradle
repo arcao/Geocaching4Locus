@@ -35,6 +35,7 @@ buildscript {
     }
     dependencies {
         classpath BuildDeps.android_gradle_plugin
+        classpath BuildDeps.kotlin_gradle_plugin
         classpath BuildDeps.gradle_versions_plugin
         classpath BuildDeps.google_services_plugin
         classpath BuildDeps.fabric_io_plugin

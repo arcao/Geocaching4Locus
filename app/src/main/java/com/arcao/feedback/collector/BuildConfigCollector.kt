@@ -1,16 +1,12 @@
-package com.arcao.feedback.collector;
+package com.arcao.feedback.collector
 
-import com.arcao.geocaching4locus.BuildConfig;
+import com.arcao.geocaching4locus.BuildConfig
 
-public class BuildConfigCollector extends Collector {
-    @Override
-    public String getName() {
-        return "BuildConfig INFO";
-    }
+class BuildConfigCollector : Collector() {
+    override val name: String
+        get() = "BuildConfig INFO"
 
-    @Override
-    protected String collect() {
-
+    override fun collect(): String {
         return "APPLICATION_ID=" + BuildConfig.APPLICATION_ID +
                 "\nBUILD_TIME=" + BuildConfig.BUILD_TIME +
                 "\nBUILD_TYPE=" + BuildConfig.BUILD_TYPE +
@@ -20,6 +16,6 @@ public class BuildConfigCollector extends Collector {
                 "\nGIT_SHA=" + BuildConfig.GIT_SHA +
                 "\nVERSION_CODE=" + BuildConfig.VERSION_CODE +
                 "\nVERSION_NAME=" + BuildConfig.VERSION_NAME +
-                "\n";
+                "\n"
     }
 }

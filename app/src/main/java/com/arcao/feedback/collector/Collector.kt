@@ -9,7 +9,7 @@ abstract class Collector {
     abstract fun collect(): String
 
     override fun toString(): String {
-        return "--- " + name + " ---\n" + collect() + "\n------\n\n"
+        return "--- $name ---\n${collect()}\n------\n\n"
     }
 
     protected fun throwableToString(t: Throwable): String {

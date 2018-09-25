@@ -7,15 +7,14 @@ class BuildConfigCollector : Collector() {
         get() = "BuildConfig INFO"
 
     override fun collect(): String {
-        return "APPLICATION_ID=" + BuildConfig.APPLICATION_ID +
-                "\nBUILD_TIME=" + BuildConfig.BUILD_TIME +
-                "\nBUILD_TYPE=" + BuildConfig.BUILD_TYPE +
-                "\nDEBUG=" + BuildConfig.DEBUG +
-                "\nFLAVOR=" + BuildConfig.FLAVOR +
-                "\nGEOCACHING_API_STAGING=" + BuildConfig.GEOCACHING_API_STAGING +
-                "\nGIT_SHA=" + BuildConfig.GIT_SHA +
-                "\nVERSION_CODE=" + BuildConfig.VERSION_CODE +
-                "\nVERSION_NAME=" + BuildConfig.VERSION_NAME +
-                "\n"
+        return "APPLICATION_ID=${BuildConfig.APPLICATION_ID}\n" +
+                "BUILD_TIME=${BuildConfig.BUILD_TIME}\n" +
+                "BUILD_TYPE=${BuildConfig.BUILD_TYPE}\n" +
+                "DEBUG=${BuildConfig.DEBUG}\n" +
+                "FLAVOR=${BuildConfig.FLAVOR}\n" +
+                "GEOCACHING_API_STAGING=${BuildConfig.GEOCACHING_API_STAGING}\n" +
+                "GIT_SHA=${BuildConfig.GIT_SHA}\n" +
+                "VERSION_CODE=${BuildConfig.VERSION_CODE}\n" +
+                "VERSION_NAME=${BuildConfig.VERSION_NAME}\n"
     }
 }

@@ -3,13 +3,14 @@ object Versions {
     const val target_sdk = 28
     const val compile_sdk = target_sdk
 
-    const val kotlin_version = "1.2.70"
-    const val android_gradle_plugin = "3.2.0-rc03"
+    const val kotlin_version = "1.2.71"
+    const val kotlin_stdlib_version = "1.2.70"
+    const val android_gradle_plugin = "3.2.0"
     const val gradle_versions_plugin = "0.20.0"
     const val google_services_plugin = "4.1.0"
     const val fabric_io_plugin = "1.25.4"
 
-    const val androidx = "1.0.0-rc02"
+    const val androidx = "1.0.0"
     const val constraint_layout = "1.1.3"
     const val multidex = "1.0.3"
     const val geocaching_api = "2.1.0"

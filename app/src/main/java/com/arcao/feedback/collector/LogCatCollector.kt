@@ -8,8 +8,6 @@ class LogCatCollector : Collector() {
         get() = "LOGCAT"
 
     override fun collect(): String {
-        val buffer = StringBuilder()
-
         try {
             val process = Runtime.getRuntime().exec(COMMAND_LINE)
             process.inputStream.bufferedReader().use { reader ->

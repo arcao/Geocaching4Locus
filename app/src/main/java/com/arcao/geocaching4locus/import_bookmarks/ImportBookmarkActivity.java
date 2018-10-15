@@ -73,13 +73,13 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     }
 
     private void showBookmarkList() {
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment, BookmarkListFragment.newInstance())
                 .commit();
     }
 
     private void showBookmarkCaches(BookmarkList bookmarkList) {
-        getFragmentManager().beginTransaction().addToBackStack(null)
+        getSupportFragmentManager().beginTransaction().addToBackStack(null)
                 .replace(R.id.fragment, BookmarkCachesFragment.newInstance(bookmarkList))
                 .commit();
     }
@@ -88,7 +88,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
     public void onBookmarkListSelected(BookmarkList bookmarkList, boolean selectAll) {
         if (selectAll) {
             AnalyticsUtil.actionImportBookmarks(bookmarkList.itemCount(), true);
-            BookmarkImportDialogFragment.newInstance(bookmarkList).show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
+            BookmarkImportDialogFragment.newInstance(bookmarkList).show(getSupportFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
         } else {
             showBookmarkCaches(bookmarkList);
         }
@@ -108,8 +108,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
         for (Bookmark bookmark : bookmarksList)
             geocaches.add(bookmark.cacheCode());
 
-        BookmarkImportDialogFragment.newInstance(geocaches.toArray(new String[geocaches.size()]))
-                .show(getFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
+        BookmarkImportDialogFragment.newInstance(geocaches.toArray(new String[0]))
+                .show(getSupportFragmentManager(), BookmarkImportDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
@@ -125,8 +125,8 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
         }
@@ -155,7 +155,7 @@ public class ImportBookmarkActivity extends AppCompatActivity implements Bookmar
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 showBookmarkList();
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getSupportFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
     }

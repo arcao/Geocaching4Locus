@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.download_rectangle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
@@ -14,6 +13,8 @@ import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
+
+import androidx.annotation.NonNull;
 
 public class DownloadRectangleActivity extends AbstractActionBarActivity implements
         DownloadRectangleDialogFragment.DialogListener {
@@ -47,7 +48,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
             return;
         }
 
-        DownloadRectangleDialogFragment.newInstance().show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+        DownloadRectangleDialogFragment.newInstance().show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 showDownloadDialog();
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getSupportFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
     }

@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.update.fragment.UpdateDialogFragment;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
+import com.arcao.geocaching4locus.update.fragment.UpdateDialogFragment;
 
 import java.util.Locale;
 
+import androidx.appcompat.app.AppCompatActivity;
 import locus.api.android.utils.LocusUtils;
 import locus.api.objects.extra.Waypoint;
 import timber.log.Timber;
@@ -88,7 +88,7 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
         AnalyticsUtil.actionUpdate(oldPoint != null, updateLogs, accountManager.isPremium());
 
-        UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
+        UpdateDialogFragment.newInstance(cacheId, oldPoint, updateLogs).show(getSupportFragmentManager(), UpdateDialogFragment.FRAGMENT_TAG);
     }
 
     @Override

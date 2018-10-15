@@ -42,7 +42,7 @@ public final class LocusMapUtil {
     }
 
     public static void showLocusMissingError(final FragmentActivity activity) {
-        LocusTestingErrorDialogFragment.newInstance(activity).show(activity.getFragmentManager(), LocusTestingErrorDialogFragment.FRAGMENT_TAG);
+        LocusTestingErrorDialogFragment.newInstance(activity).show(activity.getSupportFragmentManager(), LocusTestingErrorDialogFragment.FRAGMENT_TAG);
     }
 
     public static boolean isGeocache(Waypoint wpt) {

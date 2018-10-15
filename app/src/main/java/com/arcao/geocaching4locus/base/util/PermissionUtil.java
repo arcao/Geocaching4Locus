@@ -1,13 +1,14 @@
 package com.arcao.geocaching4locus.base.util;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public final class PermissionUtil {
     private static final int REQUEST_PERMISSION_BASE = 100;
@@ -42,11 +43,11 @@ public final class PermissionUtil {
         return true;
     }
 
-    public static boolean requestExternalStoragePermission(@NonNull Activity activity) {
+    public static boolean requestExternalStoragePermission(@NonNull AppCompatActivity activity) {
         if (PermissionUtil.hasPermission(activity, PERMISSION_EXTERNAL_STORAGE)) {
             return true;
         } else {
-            ExternalStoragePermissionWarningDialogFragment.newInstance().show(activity.getFragmentManager(), ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG);
+            ExternalStoragePermissionWarningDialogFragment.newInstance().show(activity.getSupportFragmentManager(), ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG);
             return false;
         }
     }

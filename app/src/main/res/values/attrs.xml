@@ -26,12 +26,4 @@
         <attr name="compoundDrawableTint" format="color|reference"/>
         <attr name="android:textColor" />
     </declare-styleable>
-
-    <!-- Base attributes available to ListPreference. -->
-    <declare-styleable name="ListPreference" >
-        <!-- The human-readable array to present as a list. Each entry must have a corresponding index in entryValues. -->
-        <attr name="android:entries"/>
-        <!-- The array to find the value to save for a preference when an entry from entries is selected. If a user clicks on the second item in entries, the second item in this array will be saved to the preference. -->
-        <attr name="android:entryValues"/>
-    </declare-styleable>    
 </resources>

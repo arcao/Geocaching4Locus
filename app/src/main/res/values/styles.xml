@@ -46,7 +46,7 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme"></style>
+    <style name="AppTheme" parent="AppBaseTheme" />
 
     <style name="AppTheme.Invisible">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -61,9 +61,8 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog"></style>
-
-    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge"></style>
+    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog" />
+    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge" />
 
     <style name="AppTheme.Dashboard" parent="AppTheme.Dialog">
         <item name="windowNoTitle">true</item>
@@ -88,13 +87,13 @@
     <style name="Widget" />
 
     <style name="Widget.AppTheme.Header" parent="android:Widget.TextView">
-        <item name="android:background">@drawable/list_section_divider_holo_light</item>
+        <item name="background">@drawable/list_section_divider_holo_light</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">8dip</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="textAllCaps">true</item>
 
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
@@ -107,14 +106,14 @@
 
     <style name="Widget.AppTheme.SpinnerTextView" parent="Widget.AppCompat.EditText">
         <item name="android:focusableInTouchMode">false</item>
-        <item name="android:background">@drawable/spinner_textfield_background</item>
+        <item name="background">@drawable/spinner_textfield_background</item>
     </style>
 
     <style name="Widget.AppTheme.Button" parent="Widget.AppCompat.Button" />
 
     <!-- Dashboard styles -->
     <style name="Widget.AppTheme.DashboardButton" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/btn_dashboard_bg</item>
+        <item name="background">@drawable/btn_dashboard_bg</item>
         <item name="compoundDrawableTint">@color/btn_dashboard_tint</item>
 
         <item name="android:textSize">@dimen/text_size_tiny</item>

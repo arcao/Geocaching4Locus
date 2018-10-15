@@ -7,11 +7,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,9 +37,14 @@ import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDial
 import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.lang3.StringUtils;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -181,7 +181,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
             SliderDialogFragment fragment =
                     SliderDialogFragment.newInstance(R.string.title_geocache_count, 0, step, max,
                             count1, step);
-            fragment.show(getFragmentManager(), "COUNTER");
+            fragment.show(getSupportFragmentManager(), "COUNTER");
         });
     }
 
@@ -222,7 +222,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     }
 
     private void requestLocation() {
-        LocationUpdateDialogFragment.newInstance().show(getFragmentManager(), LocationUpdateDialogFragment.FRAGMENT_TAG);
+        LocationUpdateDialogFragment.newInstance().show(getSupportFragmentManager(), LocationUpdateDialogFragment.FRAGMENT_TAG);
     }
 
     @OnClick(R.id.filter)
@@ -269,7 +269,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
         AnalyticsUtil.actionSearchNearest(coordinatesSource, useFilter, count, accountManager.isPremium());
 
         DownloadNearestDialogFragment.newInstance(latitude, longitude, count).show(
-                getFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
+                getSupportFragmentManager(), DownloadNearestDialogFragment.FRAGMENT_TAG);
     }
 
     private void showError(int errorResId, String additionalMessage) {
@@ -330,7 +330,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 requestLocation();
             } else {
-                NoLocationPermissionErrorDialogFragment.newInstance().show(getFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoLocationPermissionErrorDialogFragment.newInstance().show(getSupportFragmentManager(), NoLocationPermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
 
@@ -338,7 +338,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 performDownload();
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(false).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(false).show(getSupportFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
     }
@@ -347,7 +347,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
     @Override
     public void onLocationUpdate(Location location) {
         if (location == null) {
-            NoLocationProviderDialogFragment.newInstance().show(getFragmentManager(), NoLocationProviderDialogFragment.FRAGMENT_TAG);
+            NoLocationProviderDialogFragment.newInstance().show(getSupportFragmentManager(), NoLocationProviderDialogFragment.FRAGMENT_TAG);
             return;
         }
 

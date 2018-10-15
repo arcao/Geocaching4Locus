@@ -13,6 +13,8 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.fragment.AbstractErrorDialogFragment;
 import com.arcao.geocaching4locus.base.util.IntentUtil;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class PowerSaveWarningDialogFragment extends AbstractErrorDialogFragment {
     private static final String FRAGMENT_TAG = PowerSaveWarningDialogFragment.class.getName();
 
@@ -49,7 +51,7 @@ public class PowerSaveWarningDialogFragment extends AbstractErrorDialogFragment 
         });
     }
 
-    public static boolean showIfNeeded(Activity activity) {
+    public static boolean showIfNeeded(AppCompatActivity activity) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
 
         if (preferences.getBoolean(PrefConstants.HIDE_POWER_MANAGEMENT_WARNING, false))
@@ -57,7 +59,7 @@ public class PowerSaveWarningDialogFragment extends AbstractErrorDialogFragment 
 
         if (!isPowerSaveActive(activity)) return false;
 
-        newInstance().show(activity.getFragmentManager(), FRAGMENT_TAG);
+        newInstance().show(activity.getSupportFragmentManager(), FRAGMENT_TAG);
         return true;
     }
 

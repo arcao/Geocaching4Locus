@@ -16,7 +16,6 @@
 
 package com.arcao.geocaching4locus.base
 
-import android.app.Activity
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -33,10 +32,6 @@ import androidx.appcompat.app.AppCompatDelegate
 /**
  * A [PreferenceActivity] which implements and proxies the necessary calls
  * to be used with AppCompat.
- *
- *
- * This technique can be used with an [Activity] class, not just
- * [PreferenceActivity].
  */
 abstract class AppCompatPreferenceActivity : PreferenceActivity() {
     private var mThemeId: Int = 0

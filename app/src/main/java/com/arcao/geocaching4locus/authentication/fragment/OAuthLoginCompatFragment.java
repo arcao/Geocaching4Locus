@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.authentication.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import java.lang.ref.WeakReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class OAuthLoginCompatFragment extends Fragment implements OAuthLoginTask.TaskListener {
     @Nullable
@@ -43,8 +44,10 @@ public class OAuthLoginCompatFragment extends Fragment implements OAuthLoginTask
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        Activity activity = requireActivity();
 
         try {
             dialogListenerRef = new WeakReference<>((OAuthLoginDialogListener) activity);

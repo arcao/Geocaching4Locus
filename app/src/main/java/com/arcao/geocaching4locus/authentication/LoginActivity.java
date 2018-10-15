@@ -62,11 +62,11 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
 
     private void showLoginFragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment, OAuthLoginFragment.newInstance())
                     .commit();
         } else {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment, OAuthLoginCompatFragment.newInstance())
                     .commit();
         }
@@ -98,7 +98,7 @@ public class LoginActivity extends AbstractActionBarActivity implements OAuthLog
             return;
         }
 
-        BasicMembershipWarningDialogFragment.newInstance().show(getFragmentManager(), BasicMembershipWarningDialogFragment.FRAGMENT_TAG);
+        BasicMembershipWarningDialogFragment.newInstance().show(getSupportFragmentManager(), BasicMembershipWarningDialogFragment.FRAGMENT_TAG);
     }
 
     public static Intent createIntent(Context context) {

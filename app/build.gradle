@@ -10,6 +10,12 @@ dependencies {
     implementation Deps.androidx_cardview
     implementation Deps.material_design
     implementation Deps.androidx_constraint_layout
+    implementation Deps.androidx_preference
+
+    implementation Deps.androidx_ktx_core
+    implementation Deps.androidx_ktx_collection
+    implementation Deps.androidx_ktx_fragment
+    implementation Deps.androidx_ktx_lifecycle_vm
 
     implementation Deps.multidex
 

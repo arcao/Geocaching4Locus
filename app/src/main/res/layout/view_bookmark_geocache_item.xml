@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     tools:showIn="@layout/fragment_bookmark_geocaches">
 
     <androidx.appcompat.widget.AppCompatCheckBox
@@ -31,7 +31,7 @@
         android:ellipsize="marquee"
         android:fontFamily="sans-serif-light"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toTopOf="@+id/subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/checkbox"

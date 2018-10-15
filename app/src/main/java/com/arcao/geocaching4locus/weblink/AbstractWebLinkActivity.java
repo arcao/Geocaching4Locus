@@ -3,16 +3,16 @@ package com.arcao.geocaching4locus.weblink;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
+import com.arcao.geocaching4locus.base.util.IntentUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.weblink.fragment.RefreshWebLinkDialogFragment;
-import com.arcao.geocaching4locus.base.util.IntentUtil;
 
+import androidx.annotation.Nullable;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Waypoint;
@@ -104,7 +104,7 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
         try {
             Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
             RefreshWebLinkDialogFragment.newInstance(p.gcData.getCacheID())
-                    .show(getFragmentManager(), RefreshWebLinkDialogFragment.FRAGMENT_TAG);
+                    .show(getSupportFragmentManager(), RefreshWebLinkDialogFragment.FRAGMENT_TAG);
         } catch (RequiredVersionMissingException e) {
             Timber.e(e);
             setResult(RESULT_CANCELED);

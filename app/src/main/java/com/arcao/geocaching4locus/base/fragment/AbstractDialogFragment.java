@@ -1,10 +1,11 @@
 package com.arcao.geocaching4locus.base.fragment;
 
-import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public abstract class AbstractDialogFragment extends DialogFragment {
     private static final String PARAM_DISMISS_LATER = "DISMISS_LATER";

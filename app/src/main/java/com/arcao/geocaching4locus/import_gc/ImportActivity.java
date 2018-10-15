@@ -2,9 +2,6 @@ package com.arcao.geocaching4locus.import_gc;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.App;
@@ -17,6 +14,9 @@ import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
 public class ImportActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener {
@@ -71,7 +71,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
         AnalyticsUtil.actionImport(App.get(this).getAccountManager().isPremium());
 
         Timber.i("source: import;%s", cacheId);
-        ImportDialogFragment.newInstance(new String[]{cacheId}).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+        ImportDialogFragment.newInstance(new String[]{cacheId}).show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ImportActivity extends AppCompatActivity implements ImportDialogFra
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 showImportDialog();
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getSupportFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
     }

@@ -2,12 +2,12 @@ package com.arcao.geocaching4locus.update;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
 import com.arcao.geocaching4locus.update.fragment.UpdateMoreDialogFragment;
 
+import androidx.appcompat.app.AppCompatActivity;
 import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
 
@@ -44,7 +44,7 @@ public class UpdateMoreActivity extends AppCompatActivity implements UpdateMoreD
                 App.get(this).getAccountManager().isPremium());
 
         Timber.i("source: update;count=%d", pointIndexes.length);
-        UpdateMoreDialogFragment.newInstance(pointIndexes).show(getFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
+        UpdateMoreDialogFragment.newInstance(pointIndexes).show(getSupportFragmentManager(), UpdateMoreDialogFragment.FRAGMENT_TAG);
     }
 
     @Override

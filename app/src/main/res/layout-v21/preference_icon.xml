@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="vertical"
     android:paddingBottom="?attr/listPreferredItemPaddingBottom"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textAppearance="?attr/textAppearanceListItem"
         tools:text="@string/pref_geocaching_live" />
 
     <LinearLayout

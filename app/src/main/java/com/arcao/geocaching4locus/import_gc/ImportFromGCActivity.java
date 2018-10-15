@@ -2,9 +2,6 @@ package com.arcao.geocaching4locus.import_gc;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
@@ -16,6 +13,9 @@ import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
 public class ImportFromGCActivity extends AppCompatActivity implements ImportDialogFragment.DialogListener, GCNumberInputDialogFragment.DialogListener {
@@ -44,7 +44,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
     }
 
     private void showGCNumberInputDialog() {
-        GCNumberInputDialogFragment.newInstance().show(getFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
+        GCNumberInputDialogFragment.newInstance().show(getSupportFragmentManager(), GCNumberInputDialogFragment.FRAGMENT_TAG);
     }
 
     private void startImport(String[] cacheIds) {
@@ -52,7 +52,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
 
         AnalyticsUtil.actionImportGC(App.get(this).getAccountManager().isPremium());
 
-        ImportDialogFragment.newInstance(cacheIds).show(getFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+        ImportDialogFragment.newInstance(cacheIds).show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ImportFromGCActivity extends AppCompatActivity implements ImportDia
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 showGCNumberInputDialog();
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(getSupportFragmentManager(), NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG);
             }
         }
     }

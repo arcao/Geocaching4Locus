@@ -5,7 +5,7 @@ object Versions {
 
     const val kotlin_version = "1.2.71"
     const val kotlin_stdlib_version = "1.2.70"
-    const val android_gradle_plugin = "3.2.0"
+    const val android_gradle_plugin = "3.2.1"
     const val gradle_versions_plugin = "0.20.0"
     const val google_services_plugin = "4.1.0"
     const val fabric_io_plugin = "1.25.4"
@@ -28,4 +28,6 @@ object Versions {
     const val butterknife = "9.0.0-SNAPSHOT"
     const val auto_value = "1.6.2"
     const val auto_value_parcel = "0.2.6"
+    const val androidx_ktx = "1.0.0-alpha1"
+    const val androidx_ktx_lifecycle = "2.0.0-alpha1"
 }

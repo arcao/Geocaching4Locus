@@ -1,14 +1,9 @@
 package com.arcao.geocaching4locus.error;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -28,6 +23,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.Builder;
 import org.oshkimaadziig.george.androidutils.SpanFormatter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
 public class ErrorActivity extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class ErrorActivity extends AppCompatActivity {
         }
 
         ErrorDialogFragment.newInstance(args)
-                .show(getFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
+                .show(getSupportFragmentManager(), ErrorDialogFragment.FRAGMENT_TAG);
     }
 
     public static class ErrorDialogFragment extends AbstractDialogFragment {

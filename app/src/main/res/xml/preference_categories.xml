@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings">
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_account" />
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_filter" />
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_live_map" />
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.DownloadingPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_downloading" />
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.AdvancedPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_advanced" />
+    <Preference
+        android:fragment="com.arcao.geocaching4locus.settings.fragment.AboutPreferenceFragment"
+        android:icon="@drawable/empty"
+        android:title="@string/pref_about" />
+</PreferenceScreen>

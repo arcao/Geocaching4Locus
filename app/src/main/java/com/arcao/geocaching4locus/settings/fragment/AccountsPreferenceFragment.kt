@@ -7,15 +7,15 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_GEOCACHING_LIVE
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
-import com.arcao.geocaching4locus.base.util.IntentUtil
 import com.arcao.geocaching4locus.base.util.ResourcesUtil
+import com.arcao.geocaching4locus.base.util.showWebPage
 
 class AccountsPreferenceFragment : AbstractPreferenceFragment() {
     override val preferenceResource: Int
         get() = R.xml.preference_category_accounts
 
     override fun preparePreference() {
-        val accountManager = App.get(activity).accountManager
+        val accountManager = App.get(requireContext()).accountManager
 
         preference<Preference>(ACCOUNT).apply {
             setOnPreferenceClickListener {
@@ -41,7 +41,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
         }
 
         preference<Preference>(ACCOUNT_GEOCACHING_LIVE).setOnPreferenceClickListener {
-            IntentUtil.showWebPage(activity, AppConstants.GEOCACHING_LIVE_URI)
+            requireActivity().showWebPage(AppConstants.GEOCACHING_LIVE_URI)
             true
         }
     }

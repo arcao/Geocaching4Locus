@@ -5,7 +5,6 @@ import android.preference.PreferenceManager
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.arcao.geocaching4locus.base.constants.PrefConstants
-import com.arcao.geocaching4locus.base.util.ReverseListIterator
 import locus.api.mapper.Util.GSAK_USERNAME
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Waypoint
@@ -58,7 +57,7 @@ class WaypointMerger(@NonNull context: Context) {
 
     // issue #14: Keep cache logs from GSAK when updating cache
     private fun copyGsakGeocachingLogs(@NonNull dstLogs: MutableList<GeocachingLog>, @NonNull srcLogs: List<GeocachingLog>) {
-        for (fromLog in ReverseListIterator(srcLogs)) {
+        for (fromLog in srcLogs.reversed()) {
             if (GSAK_USERNAME.equals(fromLog.finder, ignoreCase = true)) {
                 fromLog.date = System.currentTimeMillis()
                 dstLogs.add(0, fromLog)

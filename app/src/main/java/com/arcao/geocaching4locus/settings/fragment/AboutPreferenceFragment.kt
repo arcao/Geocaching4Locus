@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.*
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
-import com.arcao.geocaching4locus.base.util.IntentUtil
+import com.arcao.geocaching4locus.base.util.showWebPage
 
 class AboutPreferenceFragment : AbstractPreferenceFragment() {
     override val preferenceResource: Int
@@ -26,21 +26,21 @@ class AboutPreferenceFragment : AbstractPreferenceFragment() {
         preference<Preference>(ABOUT_WEBSITE).apply {
             summary = AppConstants.WEBSITE_URI.toString()
             setOnPreferenceClickListener {
-                IntentUtil.showWebPage(requireActivity(), AppConstants.WEBSITE_URI)
+                requireActivity().showWebPage(AppConstants.WEBSITE_URI)
             }
         }
 
         preference<Preference>(ABOUT_FACEBOOK).apply {
             summary = AppConstants.FACEBOOK_URI.toString()
             setOnPreferenceClickListener {
-                IntentUtil.showWebPage(requireActivity(), AppConstants.FACEBOOK_URI)
+                requireActivity().showWebPage(AppConstants.FACEBOOK_URI)
             }
         }
 
         preference<Preference>(ABOUT_GPLUS).apply {
             summary = AppConstants.GPLUS_URI.toString()
             setOnPreferenceClickListener {
-                IntentUtil.showWebPage(requireActivity(), AppConstants.GPLUS_URI)
+                requireActivity().showWebPage(AppConstants.GPLUS_URI)
             }
         }
 
@@ -60,8 +60,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment() {
             return AlertDialog.Builder(requireActivity())
                     .setTitle(R.string.pref_donate_paypal_choose_currency)
                     .setItems(R.array.currency) { _, which ->
-                        IntentUtil.showWebPage(
-                                requireActivity(),
+                        requireActivity().showWebPage(
                                 AppConstants.DONATE_PAYPAL_URI.format(resources.getStringArray(R.array.currency)[which]).toUri()
                         )
                     }

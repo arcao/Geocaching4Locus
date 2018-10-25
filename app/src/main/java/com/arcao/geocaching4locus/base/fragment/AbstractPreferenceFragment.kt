@@ -8,12 +8,11 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
-import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
 import org.apache.commons.lang3.StringUtils
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 
-abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener, PrefConstants {
+abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
     protected lateinit var preferences: SharedPreferences
 
     @get:XmlRes

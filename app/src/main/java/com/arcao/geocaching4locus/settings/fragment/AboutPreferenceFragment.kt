@@ -10,7 +10,12 @@ import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.BuildConfig
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
-import com.arcao.geocaching4locus.base.constants.PrefConstants.*
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_DONATE_PAYPAL
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_FACEBOOK
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_FEEDBACK
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_GPLUS
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_VERSION
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_WEBSITE
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage

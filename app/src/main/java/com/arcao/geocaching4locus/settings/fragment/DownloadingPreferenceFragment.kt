@@ -6,7 +6,12 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.constants.PrefConstants.*
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_LOGS
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW
+import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.settings.widget.SliderPreference
 

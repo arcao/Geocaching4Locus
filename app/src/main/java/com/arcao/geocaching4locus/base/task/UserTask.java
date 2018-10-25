@@ -160,7 +160,10 @@ import timber.log.Timber;
  * <li>The task can be executed only once (an exception will be thrown if a
  * second execution is attempted.)</li>
  * </ul>
+ *
+ * @deprecated Use coroutine
  */
+@Deprecated
 public abstract class UserTask<Params, Progress, Result> {
     private static final int CORE_POOL_SIZE = 1;
     private static final int MAXIMUM_POOL_SIZE = 10;

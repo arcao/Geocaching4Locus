@@ -8,7 +8,22 @@ import com.arcao.geocaching.api.data.type.ContainerType
 import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.constants.PrefConstants.*
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE_PREFIX
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CONTAINER_TYPE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CONTAINER_TYPE_PREFIX
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MAX
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MIN
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DISTANCE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MAX
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MIN
+import com.arcao.geocaching4locus.base.constants.PrefConstants.IMPERIAL_UNITS
+import com.arcao.geocaching4locus.base.constants.PrefConstants.SHORT_CACHE_TYPE_NAMES
+import com.arcao.geocaching4locus.base.constants.PrefConstants.SHORT_CONTAINER_TYPE_NAMES
+import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_KM
+import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_MILES
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 
 class FilterPreferenceFragment : AbstractPreferenceFragment() {
@@ -144,7 +159,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
                 if (preferences.getBoolean(FILTER_CACHE_TYPE_PREFIX + i, true)) {
                     if (sb.isNotEmpty())
                         sb.append(TEXT_VALUE_SEPARATOR)
-                    sb.append(shortCacheTypeName[i])
+                    sb.append(SHORT_CACHE_TYPE_NAMES[i])
                 }
             }
         }
@@ -153,11 +168,11 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun prepareCacheTypeSummaryBasicMember(): CharSequence {
-        return preparePreferenceSummary(shortCacheTypeName[GeocacheType.Traditional.ordinal] +
+        return preparePreferenceSummary(SHORT_CACHE_TYPE_NAMES[GeocacheType.Traditional.ordinal] +
                 TEXT_VALUE_SEPARATOR +
-                shortCacheTypeName[GeocacheType.Event.ordinal] +
+                SHORT_CACHE_TYPE_NAMES[GeocacheType.Event.ordinal] +
                 TEXT_VALUE_SEPARATOR +
-                shortCacheTypeName[GeocacheType.CacheInTrashOutEvent.ordinal],
+                SHORT_CACHE_TYPE_NAMES[GeocacheType.CacheInTrashOutEvent.ordinal],
                 0)
     }
 
@@ -169,7 +184,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
             if (preferences.getBoolean(FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
                 if (sb.isNotEmpty())
                     sb.append(TEXT_VALUE_SEPARATOR)
-                sb.append(shortContainerTypeName[i])
+                sb.append(SHORT_CONTAINER_TYPE_NAMES[i])
             }
         }
 
@@ -177,7 +192,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
             for (i in 0 until len) {
                 if (sb.isNotEmpty())
                     sb.append(TEXT_VALUE_SEPARATOR)
-                sb.append(shortContainerTypeName[i])
+                sb.append(SHORT_CONTAINER_TYPE_NAMES[i])
             }
         }
 
@@ -191,7 +206,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         for (i in 0 until len) {
             if (sb.isNotEmpty())
                 sb.append(TEXT_VALUE_SEPARATOR)
-            sb.append(shortContainerTypeName[i])
+            sb.append(SHORT_CONTAINER_TYPE_NAMES[i])
         }
 
         return preparePreferenceSummary(sb.toString(), 0)

@@ -3,7 +3,9 @@ package com.arcao.geocaching4locus.settings.fragment
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.constants.AppConstants.*
+import com.arcao.geocaching4locus.base.constants.AppConstants.DISTANCE_KM_DEFAULT
+import com.arcao.geocaching4locus.base.constants.AppConstants.DISTANCE_MILES_DEFAULT
+import com.arcao.geocaching4locus.base.constants.AppConstants.MILES_PER_KILOMETER
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DISTANCE
 import com.arcao.geocaching4locus.base.constants.PrefConstants.IMPERIAL_UNITS
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment

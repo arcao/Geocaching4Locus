@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.ResourcesUtil
-import org.apache.commons.lang3.StringUtils
 
 abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
 
@@ -35,7 +34,7 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
         val args = requireArguments()
 
         builder.content(ResourcesUtil.getText(requireContext(), args.getInt(PARAM_ERROR_MESSAGE),
-                StringUtils.defaultString(args.getString(PARAM_ADDITIONAL_MESSAGE))))
+                args.getString(PARAM_ADDITIONAL_MESSAGE) ?: ""))
                 .positiveText(R.string.button_ok)
                 .onPositive { _, _ -> onPositiveButtonClick() }
 

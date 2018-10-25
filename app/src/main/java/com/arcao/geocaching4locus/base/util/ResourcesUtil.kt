@@ -5,6 +5,7 @@ import android.content.res.Resources
 import androidx.annotation.NonNull
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
+import androidx.core.os.ConfigurationCompat
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 import java.util.*
 
@@ -20,7 +21,7 @@ object ResourcesUtil {
      */
     @JvmStatic
     fun getText(context: Context, @StringRes id: Int, vararg args: Any): CharSequence {
-        return HtmlUtil.applyFix(SpanFormatter.format(context.resources.configuration.locale, context.getText(id), *args))
+        return HtmlUtil.applyFix(SpanFormatter.format(getLocale(context), context.getText(id), *args))
     }
 
     /**
@@ -55,7 +56,17 @@ object ResourcesUtil {
         val resources = context.resources
         val raw = resources.getQuantityText(id, quantity)
 
-        return HtmlUtil.applyFix(SpanFormatter.format(resources.configuration.locale, raw, *formatArgs))
+        return HtmlUtil.applyFix(SpanFormatter.format(getLocale(context), raw, *formatArgs))
+    }
+
+
+    private fun getLocale(context: Context) : Locale {
+        val locales = ConfigurationCompat.getLocales(context.resources.configuration)
+        return if (locales.isEmpty) {
+            Locale.getDefault()
+        } else {
+            locales[0]
+        }
     }
 }
 

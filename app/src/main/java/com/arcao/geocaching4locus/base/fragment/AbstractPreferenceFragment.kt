@@ -9,7 +9,6 @@ import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
-import org.apache.commons.lang3.StringUtils
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 
 abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -57,9 +56,9 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPr
             summary = getText(resId)
 
         return if (!value.isNullOrEmpty()) {
-            SpanFormatter.format("%s %s", stylizedValue(value!!), StringUtils.defaultIfEmpty<CharSequence>(summary, ""))
+            SpanFormatter.format("%s %s", stylizedValue(value), summary ?: "")
         } else {
-            StringUtils.defaultIfEmpty<CharSequence>(summary, "")
+            summary ?: ""
         }
     }
 

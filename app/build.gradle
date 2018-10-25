@@ -20,6 +20,8 @@ dependencies {
     implementation Deps.multidex
 
     implementation Deps.kotlin_stdlib
+    implementation Deps.kotlin_coroutines_core
+    implementation Deps.kotlin_coroutines_android
 
     // Geocaching API
     implementation(Deps.geocaching_api) {

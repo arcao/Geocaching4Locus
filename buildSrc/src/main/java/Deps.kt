@@ -14,7 +14,9 @@ object Deps {
 
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
 
-    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_stdlib_version}"
+    const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_stdlib}"
+    const val kotlin_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
+    const val kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
 
     // Geocaching API
     const val geocaching_api = "com.arcao:geocaching-api:${Versions.geocaching_api}"

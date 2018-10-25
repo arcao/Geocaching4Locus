@@ -3,8 +3,9 @@ object Versions {
     const val target_sdk = 28
     const val compile_sdk = target_sdk
 
-    const val kotlin_version = "1.2.71"
-    const val kotlin_stdlib_version = "1.2.70"
+    const val kotlin = "1.3.0-rc-146"
+    const val kotlin_stdlib = "1.2.70"
+    const val kotlin_coroutines = "1.0.0-RC1"
     const val android_gradle_plugin = "3.2.1"
     const val gradle_versions_plugin = "0.20.0"
     const val google_services_plugin = "4.1.0"

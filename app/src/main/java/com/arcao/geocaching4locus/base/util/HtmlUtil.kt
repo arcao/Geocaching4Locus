@@ -1,22 +1,21 @@
 package com.arcao.geocaching4locus.base.util
 
 import android.os.Build
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.MetricAffectingSpan
-
 import androidx.annotation.NonNull
+import androidx.core.text.HtmlCompat
 
 object HtmlUtil {
     @JvmStatic
     fun fromHtml(@NonNull source: String): CharSequence {
-        return applyFix(Html.fromHtml(source))
+        return applyFix(HtmlCompat.fromHtml(source, HtmlCompat.FROM_HTML_MODE_LEGACY))
     }
 
     @JvmStatic
     fun toHtml(@NonNull source: CharSequence): String {
-        return if (source is Spanned) Html.toHtml(source) else source.toString()
+        return if (source is Spanned) HtmlCompat.toHtml(source, HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE) else source.toString()
     }
 
     @JvmStatic

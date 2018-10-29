@@ -16,7 +16,7 @@ class LiveMapPreferenceFragment : AbstractPreferenceFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
-        premiumMember = App.get(activity).accountManager.isPremium
+        premiumMember = App[requireContext()].accountManager.isPremium
     }
 
     override fun preparePreference() {

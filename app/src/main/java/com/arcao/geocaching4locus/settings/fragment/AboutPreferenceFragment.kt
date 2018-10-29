@@ -26,7 +26,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun preparePreference() {
         preference<Preference>(ABOUT_VERSION).summary =
-                "${App.get(activity).version} (${BuildConfig.GIT_SHA})"
+                "${App[requireContext()].version} (${BuildConfig.GIT_SHA})"
 
         preference<Preference>(ABOUT_WEBSITE).apply {
             summary = AppConstants.WEBSITE_URI.toString()

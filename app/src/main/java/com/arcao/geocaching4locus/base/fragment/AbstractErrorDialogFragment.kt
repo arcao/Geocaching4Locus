@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.base.fragment
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
@@ -11,11 +10,11 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.ResourcesUtil
 
 abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
-
-    protected fun prepareDialog(@StringRes resTitle: Int, @StringRes resErrorMessage: Int, @Nullable additionalMessage: CharSequence) {
+    @JvmOverloads
+    protected fun prepareDialog(@StringRes title: Int, @StringRes message: Int, additionalMessage: CharSequence? = null) {
         arguments = bundleOf(
-                PARAM_TITLE to resTitle,
-                PARAM_ERROR_MESSAGE to resErrorMessage,
+                PARAM_TITLE to title,
+                PARAM_MESSAGE to message,
                 PARAM_ADDITIONAL_MESSAGE to additionalMessage
         )
     }
@@ -33,7 +32,7 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
     protected open fun onDialogBuild(builder: MaterialDialog.Builder) {
         val args = requireArguments()
 
-        builder.content(ResourcesUtil.getText(requireContext(), args.getInt(PARAM_ERROR_MESSAGE),
+        builder.content(ResourcesUtil.getText(requireContext(), args.getInt(PARAM_MESSAGE),
                 args.getString(PARAM_ADDITIONAL_MESSAGE) ?: ""))
                 .positiveText(R.string.button_ok)
                 .onPositive { _, _ -> onPositiveButtonClick() }
@@ -53,7 +52,7 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
 
     companion object {
         private const val PARAM_TITLE = "TITLE"
-        private const val PARAM_ERROR_MESSAGE = "ERROR_MESSAGE"
+        private const val PARAM_MESSAGE = "MESSAGE"
         private const val PARAM_ADDITIONAL_MESSAGE = "ADDITIONAL_MESSAGE"
     }
 }

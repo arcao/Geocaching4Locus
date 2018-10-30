@@ -12,10 +12,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.StringRes;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import android.widget.Toast;
 
 import com.arcao.geocaching4locus.R;
@@ -33,6 +29,11 @@ import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
 import java.util.Collection;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;
@@ -59,11 +60,12 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
     private final Collection<LiveMapStateChangeListener> stateChangeListeners = new CopyOnWriteArraySet<>();
 
+    @Deprecated
     public static LiveMapNotificationManager get(Context context) {
         return new LiveMapNotificationManager(context);
     }
 
-    private LiveMapNotificationManager(Context context) {
+    public LiveMapNotificationManager(@NonNull Context context) {
         this.context = context.getApplicationContext();
 
         notificationManager = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);

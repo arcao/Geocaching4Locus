@@ -113,6 +113,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     signingConfigs {
         release {
             keyAlias = 'geocaching4locus'

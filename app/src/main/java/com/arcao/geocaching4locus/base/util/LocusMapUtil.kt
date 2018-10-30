@@ -1,10 +1,12 @@
 package com.arcao.geocaching4locus.base.util
 
+import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.error.fragment.LocusTestingErrorDialogFragment
+import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
 import locus.api.objects.extra.Waypoint
 import timber.log.Timber
@@ -55,3 +57,10 @@ inline fun FragmentActivity.showLocusMissingError() = LocusMapUtil.showLocusMiss
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Waypoint?.isGeocache() = LocusMapUtil.isGeocache(this)
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun Activity.isCalledFromLocusMap() : Boolean {
+    return LocusUtils.isIntentMainFunction(intent) ||
+            LocusUtils.isIntentMainFunctionGc(intent) ||
+            intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+}

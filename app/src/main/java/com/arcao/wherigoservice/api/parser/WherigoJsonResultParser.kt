@@ -1,6 +1,5 @@
 package com.arcao.wherigoservice.api.parser
 
-
 import com.google.gson.stream.JsonReader
 
 import java.io.IOException

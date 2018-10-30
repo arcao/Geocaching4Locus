@@ -20,7 +20,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
             } catch (e: IOException) {
                 throw DataFileWriterException(e)
             }
-
         }
 
     init {
@@ -35,7 +34,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     @Synchronized
@@ -45,7 +43,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     override fun storePosition() {
@@ -55,7 +52,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     override fun restorePosition() {
@@ -65,7 +61,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     override fun moveTo(index: Int) {
@@ -82,7 +77,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     @Synchronized
@@ -103,7 +97,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         } catch (e: IOException) {
             throw DataFileWriterException(e)
         }
-
     }
 
     @Synchronized

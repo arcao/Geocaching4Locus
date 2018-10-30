@@ -63,7 +63,6 @@ class App : Application() {
         }
     }
 
-
     override fun onCreate() {
         super.onCreate()
 
@@ -103,7 +102,6 @@ class App : Application() {
         } catch (t: Throwable) {
             Timber.e(t)
         }
-
     }
 
     @WorkerThread

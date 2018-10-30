@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 
-var Context.hidePowerManagementWarning : Boolean
+var Context.hidePowerManagementWarning: Boolean
     get() {
         return PreferenceManager.getDefaultSharedPreferences(this)
                 .getBoolean(PrefConstants.HIDE_POWER_MANAGEMENT_WARNING, false) ||

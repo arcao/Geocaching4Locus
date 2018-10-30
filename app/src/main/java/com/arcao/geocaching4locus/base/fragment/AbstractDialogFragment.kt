@@ -11,7 +11,7 @@ abstract class AbstractDialogFragment : DialogFragment() {
     val isShowing: Boolean
         get() = dialog != null && dialog.isShowing
 
-    fun requireArguments() : Bundle {
+    fun requireArguments(): Bundle {
         if (arguments == null) {
             throw IllegalStateException("Fragment " + this + " does not contains arguments.")
         }
@@ -28,7 +28,6 @@ abstract class AbstractDialogFragment : DialogFragment() {
             // ignore
             0
         }
-
     }
 
     override fun show(@NonNull manager: FragmentManager, tag: String) {
@@ -37,7 +36,6 @@ abstract class AbstractDialogFragment : DialogFragment() {
         } catch (e: IllegalStateException) {
             // ignore
         }
-
     }
 
     // This is to work around what is apparently a bug. If you don't have it
@@ -49,13 +47,11 @@ abstract class AbstractDialogFragment : DialogFragment() {
         super.onDestroyView()
     }
 
-
     override fun dismiss() {
         try {
             super.dismiss()
         } catch (e: IllegalStateException) {
             dismissAllowingStateLoss()
         }
-
     }
 }

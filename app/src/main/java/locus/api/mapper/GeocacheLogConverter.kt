@@ -51,7 +51,6 @@ class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
         }
     }
 
-
     private fun createLocusCacheLogType(@Nullable logType: GeocacheLogType?): Int {
         return when (logType) {
             GeocacheLogType.Announcement -> GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT
@@ -84,5 +83,4 @@ class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
         // Note: Long.compareTo was introduced in API 19
         waypoint.gcData.logs.sortWith(Comparator { lhs, rhs -> if (lhs.date < rhs.date) 1 else if (lhs.date == rhs.date) 0 else -1 })
     }
-
 }

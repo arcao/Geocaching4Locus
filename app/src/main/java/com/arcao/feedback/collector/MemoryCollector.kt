@@ -1,6 +1,6 @@
 package com.arcao.feedback.collector
 
-import android.os.Process;
+import android.os.Process
 import timber.log.Timber
 import java.io.IOException
 

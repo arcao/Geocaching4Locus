@@ -37,7 +37,7 @@ object AppConstants {
     const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 5
     const val ADAPTIVE_DOWNLOADING_MAX_ITEMS = 50
     const val ADAPTIVE_DOWNLOADING_STEP = 5
-    const val ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500  // more than time required for 30 calls per minute
+    const val ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500 // more than time required for 30 calls per minute
     const val ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000
     const val ITEMS_PER_REQUEST = ADAPTIVE_DOWNLOADING_MIN_ITEMS
 

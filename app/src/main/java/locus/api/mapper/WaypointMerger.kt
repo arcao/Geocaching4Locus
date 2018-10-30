@@ -144,7 +144,6 @@ class WaypointMerger(@NonNull context: Context) {
                         }
                     }
                 }
-
             }
         }
     }

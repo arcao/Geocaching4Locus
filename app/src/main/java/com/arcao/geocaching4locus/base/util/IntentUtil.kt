@@ -20,7 +20,6 @@ object IntentUtil {
     fun isIntentCallable(context: Context, intent: Intent): Boolean {
         return intent.isCallableWith(context)
     }
-
 }
 
 fun Activity.showWebPage(uri: Uri): Boolean {
@@ -37,7 +36,6 @@ fun Activity.showWebPage(uri: Uri): Boolean {
         false
     }
 }
-
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Intent.isCallableWith(context: Context): Boolean {

@@ -62,18 +62,18 @@ object Coordinates {
             if (ch == 'N' || ch == 'E' || ch == '+')
                 index++
 
-            while (!tmp[index].isDigit())           index++
+            while (!tmp[index].isDigit()) index++
             end = getDoubleNumberEnd(tmp, index)
             deg = tmp.substring(index, end).toDouble()
             index = end
 
-            while (index < tmp.length && !tmp[index].isDigit())                index++
+            while (index < tmp.length && !tmp[index].isDigit()) index++
             if (index < tmp.length) {
                 end = getDoubleNumberEnd(tmp, index)
                 min = tmp.substring(index, end).toDouble()
                 index = end
 
-                while (index < tmp.length && !tmp[index].isDigit())                    index++
+                while (index < tmp.length && !tmp[index].isDigit()) index++
                 if (index < tmp.length) {
                     end = getDoubleNumberEnd(tmp, index)
                     sec = tmp.substring(index, end).toDouble()
@@ -84,7 +84,6 @@ object Coordinates {
         } catch (e: Exception) {
             return Double.NaN
         }
-
     }
 
     private fun getDoubleNumberEnd(source: CharSequence, start: Int): Int {

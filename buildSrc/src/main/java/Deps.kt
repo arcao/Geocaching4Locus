@@ -64,4 +64,6 @@ object Deps {
     // Auto-Value Parcelable
     const val auto_value_parcel = "com.ryanharter.auto.value:auto-value-parcel:${Versions.auto_value_parcel}"
     const val auto_value_parcel_adapter = "com.ryanharter.auto.value:auto-value-parcel-adapter:${Versions.auto_value_parcel}"
+
+    const val ktlint = "com.github.shyiko:ktlint:${Versions.ktlint}"
 }

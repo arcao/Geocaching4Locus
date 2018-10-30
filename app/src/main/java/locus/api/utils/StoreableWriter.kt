@@ -29,7 +29,6 @@ constructor(out: FileOutputStream) : Closeable {
         } catch (e: DataFileWriterBigEndian.DataFileWriterException) {
             throw e.cause
         }
-
     }
 
     @Synchronized
@@ -44,7 +43,6 @@ constructor(out: FileOutputStream) : Closeable {
         } catch (e: DataFileWriterBigEndian.DataFileWriterException) {
             throw e.cause
         }
-
     }
 
     @Synchronized
@@ -69,6 +67,5 @@ constructor(out: FileOutputStream) : Closeable {
         } catch (e: DataFileWriterBigEndian.DataFileWriterException) {
             throw e.cause
         }
-
     }
 }

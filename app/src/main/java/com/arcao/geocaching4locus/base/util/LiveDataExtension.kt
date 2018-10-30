@@ -15,7 +15,7 @@ inline operator fun MutableLiveData<Unit>.invoke() {
     value = Unit
 }
 
-inline operator fun <reified T> MutableLiveData<T>.invoke(t : T) {
+inline operator fun <reified T> MutableLiveData<T>.invoke(t: T) {
     value = t
 }
 

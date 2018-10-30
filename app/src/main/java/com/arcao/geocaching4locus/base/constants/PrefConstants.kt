@@ -71,7 +71,6 @@ object PrefConstants {
         const val RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit"
         const val RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit"
 
-
         const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0"
         const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1"
         const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER = "2"

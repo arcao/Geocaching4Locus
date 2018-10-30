@@ -34,7 +34,6 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
             } catch (e: IllegalArgumentException) {
                 Timber.e(e, "Error while collecting DisplayManager data")
             }
-
         }
 
         displays?.forEach { display ->
@@ -221,7 +220,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
      *
      * @param valueNames The array containing the different values and names for this
      * field. Must contain mask values too.
-     * @param bitField   The bit field to inspect.
+     * @param bitField The bit field to inspect.
      * @return The names of the different values contained in the bitField,
      * separated by '+'.
      */

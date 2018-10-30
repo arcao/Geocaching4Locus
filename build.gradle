@@ -47,6 +47,7 @@ buildscript {
 
 allprojects {
     apply plugin: 'com.github.ben-manes.versions'
+    apply from: "$rootDir/ktlint.gradle"
 
     repositories {
         google()

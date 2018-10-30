@@ -24,8 +24,14 @@ object ActionDisplayPointsExtended : ActionDisplayPoints() {
 
     @JvmStatic
     @Throws(RequiredVersionMissingException::class)
-    private fun sendPacksFile(action: String, context: Context, file: File,
-                              callImport: Boolean, center: Boolean, intentFlags: Int): Boolean {
+    private fun sendPacksFile(
+        action: String,
+        context: Context,
+        file: File,
+        callImport: Boolean,
+        center: Boolean,
+        intentFlags: Int
+    ): Boolean {
         if (!file.exists())
             return false
 
@@ -70,7 +76,6 @@ object ActionDisplayPointsExtended : ActionDisplayPoints() {
 
             if (!parentDirectory.isDirectory)
                 throw IllegalStateException("External storage (or SD Card) is not writable.")
-
 
             return cacheFile
         }

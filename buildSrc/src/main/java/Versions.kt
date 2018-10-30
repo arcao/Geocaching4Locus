@@ -8,7 +8,7 @@ object Versions {
     const val kotlin_coroutines = "1.0.0-RC1"
     const val android_gradle_plugin = "3.2.1"
     const val gradle_versions_plugin = "0.20.0"
-    const val google_services_plugin = "4.1.0"
+    const val google_services_plugin = "4.2.0"
     const val fabric_io_plugin = "1.25.4"
 
     const val androidx = "1.0.0"
@@ -24,7 +24,7 @@ object Versions {
     const val commons_io = "2.6"
     const val scribejava = "5.6.0"
     const val material_dialogs = "0.9.6.0"
-    const val firebase = "16.0.3"
+    const val firebase = "16.0.4"
     const val crashlytics = "2.9.5"
     const val okhttp = "3.11.0"
     const val butterknife = "9.0.0-SNAPSHOT"
@@ -32,4 +32,6 @@ object Versions {
     const val auto_value_parcel = "0.2.6"
     const val androidx_ktx = "1.0.0-alpha1"
     const val androidx_ktx_lifecycle = "2.0.0-alpha1"
+
+    const val ktlint = "0.29.0"
 }

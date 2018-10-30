@@ -24,7 +24,7 @@ object ServiceUtil {
      * the wake lock.
      *
      * @param context The Context in which it operate.
-     * @param intent  The Intent with which to start the service, as per
+     * @param intent The Intent with which to start the service, as per
      * [                Context.startService][Context.startService].
      */
     @JvmStatic

@@ -12,7 +12,6 @@ class ConfigurationCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "CONFIGURATION"
 
-
     override fun collect(): String {
         return try {
             val crashConf = context.resources.configuration
@@ -21,7 +20,6 @@ class ConfigurationCollector(private val context: Context) : Collector() {
             Timber.w(e, "Couldn't retrieve ConfigurationCollector for : %s", context.packageName)
             "Couldn't retrieve crash config"
         }
-
     }
 
     companion object {
@@ -115,7 +113,6 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                 } catch (e: IllegalAccessException) {
                     Timber.e(e, "Error while inspecting device configuration: ")
                 }
-
             }
             return result.toString()
         }
@@ -127,7 +124,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
          *
          * @param conf The instance of [Configuration] where the value is
          * stored.
-         * @param f    The [Field] to be inspected in the [Configuration]
+         * @param f The [Field] to be inspected in the [Configuration]
          * instance.
          * @return The value of the field f in instance conf translated to its
          * constant name.
@@ -141,13 +138,11 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                 FIELD_UIMODE -> return activeFlags(VALUE_ARRAYS[PREFIX_UI_MODE]!!, f.getInt(conf))
                 FIELD_SCREENLAYOUT -> return activeFlags(VALUE_ARRAYS[PREFIX_SCREENLAYOUT]!!, f.getInt(conf))
                 else -> {
-                    val values = VALUE_ARRAYS[fieldName.toUpperCase() + '_']
-                            ?: // Unknown field, return the raw int as String
-                            return Integer.toString(f.getInt(conf))
+                    val values = VALUE_ARRAYS[fieldName.toUpperCase() + '_'] // Unknown field, return the raw int as String
+                            ?: return Integer.toString(f.getInt(conf))
 
-                    return values.get(f.getInt(conf))
-                            ?: // Unknown value, return the raw int as String
-                            return Integer.toString(f.getInt(conf))
+                    return values.get(f.getInt(conf)) // Unknown value, return the raw int as String
+                            ?: return Integer.toString(f.getInt(conf))
                 }
             }
         }
@@ -159,7 +154,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
          *
          * @param valueNames The array containing the different values and names for this
          * field. Must contain mask values too.
-         * @param bitField   The bit field to inspect.
+         * @param bitField The bit field to inspect.
          * @return The names of the different values contained in the bitField,
          * separated by '+'.
          */

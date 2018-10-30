@@ -43,7 +43,6 @@ class OkHttpClientDownloader(private val client: OkHttpClient) : Downloader {
             Timber.e(e)
             throw NetworkException("Error while downloading data (${e.javaClass.simpleName})", e)
         }
-
     }
 
     @Throws(NetworkException::class, InvalidResponseException::class)
@@ -77,7 +76,6 @@ class OkHttpClientDownloader(private val client: OkHttpClient) : Downloader {
             Timber.e(e)
             throw NetworkException("Error while downloading data (${e.javaClass.simpleName})", e)
         }
-
     }
 
     companion object {

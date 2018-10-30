@@ -36,7 +36,7 @@ object SpanFormatter {
      * Any duplicates will appear as text only.
      *
      * @param format the format string (see [Formatter.format])
-     * @param args   the list of arguments passed to the formatter. If there are
+     * @param args the list of arguments passed to the formatter. If there are
      * more arguments than required by `format`,
      * additional arguments are ignored.
      * @return the formatted string (with spans).
@@ -54,7 +54,7 @@ object SpanFormatter {
      *
      * @param locale the locale to apply; `null` value means no localization.
      * @param format the format string (see [Formatter.format])
-     * @param args   the list of arguments passed to the formatter.
+     * @param args the list of arguments passed to the formatter.
      * @return the formatted string (with spans).
      * @see String.format
      */

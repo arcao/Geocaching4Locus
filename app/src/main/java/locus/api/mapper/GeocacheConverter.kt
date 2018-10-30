@@ -84,7 +84,6 @@ class GeocacheConverter(@NonNull context: Context) {
                 notes = cache.personalNote()
                 favoritePoints = cache.favoritePoints()
 
-
                 for (image in cache.images().orEmpty()) {
                     addImage(imageDataConverter.createLocusGeocachingImage(image))
                 }
@@ -151,7 +150,6 @@ class GeocacheConverter(@NonNull context: Context) {
     private fun updateGeocacheLocationByCorrectedCoordinates(@NonNull p: LocusWaypoint, @Nullable userWaypoints: Collection<UserWaypoint>?) {
         if (p.gcData == null || userWaypoints?.isEmpty() != false)
             return
-
 
         // find corrected coordinate user waypoint
         var correctedCoordinateUserWaypoint: UserWaypoint? = null

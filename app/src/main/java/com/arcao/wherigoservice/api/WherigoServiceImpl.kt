@@ -42,7 +42,6 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
             r.endObject()
             r.close()
             Timber.i("Cache code: $cacheCode")
-
         } catch (e: NetworkException) {
             throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
         } catch (e: InvalidResponseException) {
@@ -87,7 +86,6 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
             r.endObject()
             r.close()
             Timber.i("Time: $time")
-
         } catch (e: NetworkException) {
             throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
         } catch (e: InvalidResponseException) {
@@ -132,7 +130,6 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
             Timber.e(e)
             throw NetworkException("Error while downloading data (" + e.javaClass.simpleName + ")", e)
         }
-
     }
 
     private fun maskParameterValues(function: String): String {
@@ -140,10 +137,9 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
     }
 
     private fun isGsonException(t: Throwable): Boolean {
-        return (t is MalformedJsonException || t is IllegalStateException
-                || t is NumberFormatException || t is EOFException)
+        return (t is MalformedJsonException || t is IllegalStateException ||
+                t is NumberFormatException || t is EOFException)
     }
-
 
     companion object {
         private const val BASE_URL = "https://wherigo-service.appspot.com/api"

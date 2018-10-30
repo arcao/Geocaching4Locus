@@ -65,7 +65,7 @@ class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFac
     }
 }
 
-fun OkHttpClient.Builder.enableTls12() : OkHttpClient.Builder {
+fun OkHttpClient.Builder.enableTls12(): OkHttpClient.Builder {
     if (Build.VERSION.SDK_INT in 16..21) {
         try {
             val sc = SSLContext.getInstance("TLSv1.2")

@@ -139,8 +139,8 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                     filtered = source.subSequence(start, end)
                 }
 
-                val result = (dest.subSequence(0, dstart).toString() + filtered
-                        + dest.subSequence(dend, dest.length))
+                val result = (dest.subSequence(0, dstart).toString() + filtered +
+                        dest.subSequence(dend, dest.length))
 
                 if (TextUtils.isEmpty(result)) {
                     return result
@@ -163,8 +163,8 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 if (TextUtils.isEmpty(filtered)) {
                     return StringUtils.EMPTY
                 }
-                val result = (dest.subSequence(0, dstart).toString() + filtered
-                        + dest.subSequence(dend, dest.length))
+                val result = (dest.subSequence(0, dstart).toString() + filtered +
+                        dest.subSequence(dend, dest.length))
 
                 for (value in availableValues) {
                     if (value.startsWith(result)) {

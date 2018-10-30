@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.settings.fragment
 
-
 import androidx.preference.Preference
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager

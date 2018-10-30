@@ -21,7 +21,6 @@ object LocusMapUtil {
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)
         }
-
     }
 
     @JvmStatic
@@ -59,7 +58,7 @@ inline fun FragmentActivity.showLocusMissingError() = LocusMapUtil.showLocusMiss
 inline fun Waypoint?.isGeocache() = LocusMapUtil.isGeocache(this)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun Activity.isCalledFromLocusMap() : Boolean {
+inline fun Activity.isCalledFromLocusMap(): Boolean {
     return LocusUtils.isIntentMainFunction(intent) ||
             LocusUtils.isIntentMainFunctionGc(intent) ||
             intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)

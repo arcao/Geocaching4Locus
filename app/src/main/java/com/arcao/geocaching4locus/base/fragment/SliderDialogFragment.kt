@@ -47,7 +47,6 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         return newValue
     }
 
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
@@ -202,8 +201,8 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
                     filtered = source.subSequence(start, end)
                 }
 
-                val result = (dest.subSequence(0, dstart).toString() + filtered
-                        + dest.subSequence(dend, dest.length))
+                val result = (dest.subSequence(0, dstart).toString() + filtered +
+                        dest.subSequence(dend, dest.length))
 
                 if (TextUtils.isEmpty(result)) {
                     return result
@@ -222,8 +221,8 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
                 if (TextUtils.isEmpty(filtered)) {
                     return ""
                 }
-                val result = (dest.subSequence(0, dstart).toString() + filtered
-                        + dest.subSequence(dend, dest.length))
+                val result = (dest.subSequence(0, dstart).toString() + filtered +
+                        dest.subSequence(dend, dest.length))
 
                 for (value in availableValues) {
                     if (value.startsWith(result)) {

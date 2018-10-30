@@ -128,7 +128,6 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
                 preparePreferenceSummary(text + UNIT_MILES, R.string.pref_distance_summary_miles)
             }
         }
-
     }
 
     private fun prepareRatingSummary(min: CharSequence, max: CharSequence): CharSequence {
@@ -213,5 +212,4 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
     companion object {
         private const val TEXT_VALUE_SEPARATOR = ", "
     }
-
 }

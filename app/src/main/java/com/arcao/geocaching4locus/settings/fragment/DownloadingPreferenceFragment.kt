@@ -1,11 +1,10 @@
 package com.arcao.geocaching4locus.settings.fragment
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
-import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_LOGS
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES
@@ -14,20 +13,16 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_FULL_
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.settings.widget.SliderPreference
+import org.koin.android.ext.android.get
 
 class DownloadingPreferenceFragment : AbstractPreferenceFragment() {
-    private var premiumMember: Boolean = false
 
     override val preferenceResource: Int
         get() = R.xml.preference_category_downloading
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-
-        premiumMember = App.get(requireContext()).accountManager.isPremium
-    }
-
     override fun preparePreference() {
+        val premiumMember: Boolean = get<AccountManager>().isPremium
+
         val simpleCacheDataPreference = preference<CheckBoxPreference>(DOWNLOADING_SIMPLE_CACHE_DATA)
         val fullCacheDataOnShowPreference = preference<ListPreference>(DOWNLOADING_FULL_CACHE_DATE_ON_SHOW)
         val downloadingCountOfLogsPreference = preference<SliderPreference>(DOWNLOADING_COUNT_OF_LOGS)

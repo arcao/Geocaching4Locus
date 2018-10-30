@@ -8,9 +8,7 @@ import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 import java.util.*
 
-class ConfigurationCollector(context: Context) : Collector() {
-    private val context: Context = context.applicationContext
-
+class ConfigurationCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "CONFIGURATION"
 

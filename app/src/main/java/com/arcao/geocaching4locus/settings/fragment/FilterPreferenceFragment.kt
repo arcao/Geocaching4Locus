@@ -1,13 +1,12 @@
 package com.arcao.geocaching4locus.settings.fragment
 
 import android.content.SharedPreferences
-import android.os.Bundle
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.arcao.geocaching.api.data.type.ContainerType
 import com.arcao.geocaching.api.data.type.GeocacheType
-import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE_PREFIX
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CONTAINER_TYPE
@@ -25,20 +24,19 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.SHORT_CONTAINER_T
 import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_KM
 import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_MILES
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
+import org.koin.android.ext.android.get
 
 class FilterPreferenceFragment : AbstractPreferenceFragment() {
-    private var premiumMember: Boolean = false
-    private var imperialUnits: Boolean = false
+    private val premiumMember: Boolean by lazy {
+        get<AccountManager>().isPremium
+    }
+
+    private val imperialUnits: Boolean by lazy {
+        preferences.getBoolean(IMPERIAL_UNITS, false)
+    }
 
     override val preferenceResource: Int
         get() = R.xml.preference_category_filter
-
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
-        super.onCreatePreferences(savedInstanceState, rootKey)
-
-        premiumMember = App[requireContext()].accountManager.isPremium
-        imperialUnits = preferences.getBoolean(IMPERIAL_UNITS, false)
-    }
 
     override fun preparePreference() {
         prepareCacheTypePreference()

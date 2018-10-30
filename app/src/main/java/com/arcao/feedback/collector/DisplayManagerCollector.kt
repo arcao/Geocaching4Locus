@@ -12,9 +12,7 @@ import android.view.Surface
 import android.view.WindowManager
 import timber.log.Timber
 
-class DisplayManagerCollector(context: Context) : Collector() {
-    private val context: Context = context.applicationContext
-
+class DisplayManagerCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "DisplayManager"
 

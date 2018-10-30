@@ -19,14 +19,16 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_WEBSITE
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage
+import org.koin.android.ext.android.get
 
 class AboutPreferenceFragment : AbstractPreferenceFragment() {
     override val preferenceResource: Int
         get() = R.xml.preference_category_about
 
     override fun preparePreference() {
+
         preference<Preference>(ABOUT_VERSION).summary =
-                "${App[requireContext()].version} (${BuildConfig.GIT_SHA})"
+                "${get<App>().version} (${BuildConfig.GIT_SHA})"
 
         preference<Preference>(ABOUT_WEBSITE).apply {
             summary = AppConstants.WEBSITE_URI.toString()

@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-class SharedPreferencesCollector @JvmOverloads constructor(context: Context, private val sharedPreferenceName: String? = null) : Collector() {
-    private val context: Context = context.applicationContext
-
+class SharedPreferencesCollector @JvmOverloads constructor(private val context: Context, private val sharedPreferenceName: String? = null) : Collector() {
     override val name: String
         get() = if (sharedPreferenceName == null) "SharedPreferences.default" else "SharedPreferences.$sharedPreferenceName"
 

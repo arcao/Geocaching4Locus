@@ -4,8 +4,8 @@ import android.content.Context
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 
-class AccountInfoCollector(context: Context) : Collector() {
-    private val context: Context = context.applicationContext
+class AccountInfoCollector(private val context: Context) : Collector() {
+    private val app = context.applicationContext as App
 
     override val name: String
         get() = "AccountInfo"
@@ -13,7 +13,7 @@ class AccountInfoCollector(context: Context) : Collector() {
     override fun collect(): String {
         val sb = StringBuilder()
 
-        val account = App.get(context).accountManager.account
+        val account = app.accountManager.account
         if (account == null) {
             sb.append("No Account").append("\n")
         } else {

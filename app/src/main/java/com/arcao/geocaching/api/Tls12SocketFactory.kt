@@ -1,9 +1,14 @@
 package com.arcao.geocaching.api
 
+import android.os.Build
+import okhttp3.ConnectionSpec
+import okhttp3.OkHttpClient
+import timber.log.Timber
 import java.io.IOException
 import java.net.InetAddress
 import java.net.Socket
 import java.net.UnknownHostException
+import javax.net.ssl.SSLContext
 
 import javax.net.ssl.SSLSocket
 import javax.net.ssl.SSLSocketFactory
@@ -58,4 +63,26 @@ class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFac
     companion object {
         private val TLS_V12_ONLY = arrayOf("TLSv1.2")
     }
+}
+
+fun OkHttpClient.Builder.enableTls12() : OkHttpClient.Builder {
+    if (Build.VERSION.SDK_INT in 16..21) {
+        try {
+            val sc = SSLContext.getInstance("TLSv1.2")
+            sc.init(null, null, null)
+
+            @Suppress("DEPRECATION")
+            sslSocketFactory(Tls12SocketFactory(sc.socketFactory))
+
+            connectionSpecs(listOf(
+                    ConnectionSpec.MODERN_TLS,
+                    ConnectionSpec.COMPATIBLE_TLS,
+                    ConnectionSpec.CLEARTEXT
+            ))
+        } catch (e: Exception) {
+            Timber.e(e, "Error while setting TLS 1.2")
+        }
+    }
+
+    return this
 }

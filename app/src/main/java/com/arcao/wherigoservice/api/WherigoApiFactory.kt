@@ -1,10 +1,10 @@
 package com.arcao.wherigoservice.api
 
-import com.arcao.geocaching.api.GeocachingApiFactory
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.get
 
-object WherigoApiFactory {
+@Deprecated("Use Koin")
+object WherigoApiFactory : KoinComponent {
     @JvmStatic
-    fun create(): WherigoService {
-        return WherigoServiceImpl(GeocachingApiFactory.downloader)
-    }
+    fun create() = get<WherigoService>()
 }

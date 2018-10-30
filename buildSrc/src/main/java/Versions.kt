@@ -14,6 +14,7 @@ object Versions {
     const val androidx = "1.0.0"
     const val constraint_layout = "1.1.3"
     const val multidex = "1.0.3"
+    const val koin = "1.0.1"
     const val geocaching_api = "2.1.0"
     const val locus_api_android = "0.2.25"
     const val slf4j_timber = "3.0"

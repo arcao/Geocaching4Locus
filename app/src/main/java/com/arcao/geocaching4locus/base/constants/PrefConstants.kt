@@ -21,6 +21,7 @@ object PrefConstants {
         @Deprecated("")
         const val ACCOUNT_PASSWORD = "password"
 
+        const val DEVICE_ID = "device_id"
 
         const val OAUTH_TOKEN = "OAUTH_TOKEN"
         const val OAUTH_TOKEN_SECRET = "OAUTH_TOKEN_SECRET"

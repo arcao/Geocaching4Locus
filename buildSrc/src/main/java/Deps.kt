@@ -14,9 +14,15 @@ object Deps {
 
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
 
+    // kotlin
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_stdlib}"
     const val kotlin_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlin_coroutines}"
     const val kotlin_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlin_coroutines}"
+
+    // koin
+    const val koin_android = "org.koin:koin-android:${Versions.koin}"
+    const val koin_android_viewmodel = "org.koin:koin-android-viewmodel:${Versions.koin}"
+    const val koin_android_scope = "org.koin:koin-android-scope:${Versions.koin}"
 
     // Geocaching API
     const val geocaching_api = "com.arcao:geocaching-api:${Versions.geocaching_api}"

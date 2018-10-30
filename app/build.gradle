@@ -19,9 +19,15 @@ dependencies {
 
     implementation Deps.multidex
 
+    // kotlin
     implementation Deps.kotlin_stdlib
     implementation Deps.kotlin_coroutines_core
     implementation Deps.kotlin_coroutines_android
+
+    // koin
+    implementation Deps.koin_android
+    implementation Deps.koin_android_viewmodel
+    implementation Deps.koin_android_scope
 
     // Geocaching API
     implementation(Deps.geocaching_api) {

@@ -18,6 +18,7 @@ import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+// TODO convert to class
 object FeedbackHelper {
     @JvmStatic
     fun sendFeedback(@NonNull context: Context, @StringRes resEmail: Int, @StringRes resSubject: Int, @StringRes resMessageText: Int) {

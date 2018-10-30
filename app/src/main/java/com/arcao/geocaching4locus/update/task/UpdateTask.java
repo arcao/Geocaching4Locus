@@ -33,8 +33,8 @@ import java.util.List;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils;
 import locus.api.mapper.DataMapper;
-import locus.api.mapper.WaypointMerger;
-import locus.api.objects.extra.Waypoint;
+import locus.api.mapper.PointMerger;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 import static locus.api.mapper.Util.applyUnavailabilityForGeocache;
@@ -56,13 +56,13 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
     private final WeakReference<TaskListener> taskListenerRef;
     private final Context context;
     private final DataMapper mapper;
-    private final WaypointMerger merger;
+    private final PointMerger merger;
 
     public UpdateTask(Context context, TaskListener listener) {
         this.context = context.getApplicationContext();
         taskListenerRef = new WeakReference<>(listener);
         mapper = new DataMapper(this.context);
-        merger = new WaypointMerger(this.context);
+        merger = new PointMerger(this.context);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
                 result.newPoint = result.oldPoint;
             } else {
-                merger.mergeWaypoint(result.newPoint, result.oldPoint);
+                merger.mergePoints(result.newPoint, result.oldPoint);
 
                 if (replaceCache) {
                     result.newPoint.removeExtraOnDisplay();
@@ -184,7 +184,7 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
             if (isCancelled())
                 return null;
 
-            result.newPoint = mapper.createLocusWaypoint(cache);
+            result.newPoint = mapper.createLocusPoint(cache);
 
             if (basicMember) {
                 // add trackables
@@ -247,13 +247,13 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
     public static class UpdateTaskData implements Parcelable {
         final String cacheId;
-        Waypoint oldPoint;
-        Waypoint newPoint;
+        Point oldPoint;
+        Point newPoint;
         final boolean updateLogs;
 
-        public UpdateTaskData(String cacheId, Waypoint waypoint, boolean updateLogs) {
+        public UpdateTaskData(String cacheId, Point point, boolean updateLogs) {
             this.cacheId = cacheId;
-            this.oldPoint = waypoint;
+            this.oldPoint = point;
             this.updateLogs = updateLogs;
         }
 
@@ -262,16 +262,20 @@ public class UpdateTask extends UserTask<UpdateTaskData, Integer, UpdateTaskData
 
             try {
                 byte[] data = in.createByteArray();
-                if (ArrayUtils.isNotEmpty(data))
-                    oldPoint = new Waypoint(data);
+                if (ArrayUtils.isNotEmpty(data)) {
+                    oldPoint = new Point();
+                    oldPoint.read(data);
+                }
             } catch (IOException e) {
                 Timber.e(e);
             }
 
             try {
                 byte[] data = in.createByteArray();
-                if (ArrayUtils.isNotEmpty(data))
-                    newPoint = new Waypoint(data);
+                if (ArrayUtils.isNotEmpty(data)) {
+                    newPoint = new Point();
+                    newPoint.read(data);
+                }
             } catch (IOException e) {
                 Timber.e(e);
             }

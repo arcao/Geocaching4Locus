@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 
 import static locus.api.objects.geocaching.GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT;
 import static locus.api.objects.geocaching.GeocachingData.CACHE_TYPE_EARTH;
@@ -37,8 +37,8 @@ public class BookmarkGeocacheWebLinkActivity extends AbstractWebLinkActivity {
     private static final Pattern GUID_URL_PATTERN = Pattern.compile("guid=([a-f0-9-]+)", Pattern.CASE_INSENSITIVE);
 
     @Override
-    protected boolean isRefreshRequired(Waypoint waypoint) {
-        return !(waypoint == null || waypoint.gcData == null || TextUtils.isEmpty(waypoint.gcData.getCacheUrl())) && getGuid(waypoint.gcData.getCacheUrl()) == null;
+    protected boolean isRefreshRequired(Point point) {
+        return !(point == null || point.gcData == null || TextUtils.isEmpty(point.gcData.getCacheUrl())) && getGuid(point.gcData.getCacheUrl()) == null;
     }
 
     @Override
@@ -47,12 +47,12 @@ public class BookmarkGeocacheWebLinkActivity extends AbstractWebLinkActivity {
     }
 
     @Override
-    protected Uri getWebLink(Waypoint waypoint) {
-        if (waypoint == null || waypoint.gcData == null || TextUtils.isEmpty(waypoint.gcData.getCacheUrl()))
+    protected Uri getWebLink(Point point) {
+        if (point == null || point.gcData == null || TextUtils.isEmpty(point.gcData.getCacheUrl()))
             return null;
 
-        String guid = getGuid(waypoint.gcData.getCacheUrl());
-        int cacheType = getCacheType(waypoint.gcData.getType());
+        String guid = getGuid(point.gcData.getCacheUrl());
+        int cacheType = getCacheType(point.gcData.getType());
 
         if (BuildConfig.GEOCACHING_API_STAGING) {
             return Uri.parse(String.format(Locale.ROOT, URL_FORMAT_STAGING, guid, cacheType));

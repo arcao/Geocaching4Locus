@@ -8,7 +8,7 @@ import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.error.fragment.LocusTestingErrorDialogFragment
 import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
-import locus.api.objects.extra.Waypoint
+import locus.api.objects.extra.Point
 import timber.log.Timber
 
 object LocusMapUtil {
@@ -40,7 +40,7 @@ object LocusMapUtil {
     }
 
     @JvmStatic
-    fun isGeocache(wpt: Waypoint?): Boolean {
+    fun isGeocache(wpt: Point?): Boolean {
         return wpt?.gcData?.cacheID?.startsWith("GC", true) ?: false
     }
 }
@@ -55,7 +55,7 @@ inline fun Context.isLocusNotInstalled() = LocusMapUtil.isLocusNotInstalled(this
 inline fun FragmentActivity.showLocusMissingError() = LocusMapUtil.showLocusMissingError(this)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun Waypoint?.isGeocache() = LocusMapUtil.isGeocache(this)
+inline fun Point?.isGeocache() = LocusMapUtil.isGeocache(this)
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Activity.isCalledFromLocusMap(): Boolean {

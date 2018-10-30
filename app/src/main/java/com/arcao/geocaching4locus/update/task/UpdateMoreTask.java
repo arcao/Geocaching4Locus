@@ -31,8 +31,8 @@ import java.util.List;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusUtils.LocusVersion;
 import locus.api.mapper.DataMapper;
-import locus.api.mapper.WaypointMerger;
-import locus.api.objects.extra.Waypoint;
+import locus.api.mapper.PointMerger;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 import static com.arcao.geocaching.api.GeocachingApi.ResultQuality.FULL;
@@ -79,7 +79,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
         int count = ids.length;
 
         DataMapper mapper = new DataMapper(this.context);
-        WaypointMerger merger = new WaypointMerger(this.context);
+        PointMerger merger = new PointMerger(this.context);
 
         final LocusVersion locusVersion = LocusMapUtil.getLocusVersion(context);
 
@@ -97,10 +97,10 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
                 long startTimeMillis = System.currentTimeMillis();
 
                 // prepare old cache data
-                List<Waypoint> oldWaypoints = retrieveWaypointsByIds(context, locusVersion, ids, current, itemsPerRequest);
+                List<Point> oldPoints = retrievePointsByIds(context, locusVersion, ids, current, itemsPerRequest);
 
-                if (oldWaypoints.isEmpty()) {
-                    // all Waypoints are without geocaching data
+                if (oldPoints.isEmpty()) {
+                    // all Points are without geocaching data
                     current += Math.min(ids.length - current, itemsPerRequest);
                     publishProgress(current);
                     continue;
@@ -108,7 +108,7 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
 
                 List<Geocache> cachesToAdd = api.searchForGeocaches(SearchForGeocachesRequest.builder()
                         .resultQuality(resultQuality)
-                        .addFilter(new CacheCodeFilter(getGeocacheCodes(oldWaypoints)))
+                        .addFilter(new CacheCodeFilter(getGeocacheCodes(oldPoints)))
                         .geocacheLogCount(logCount)
                         .maxPerPage(itemsPerRequest)
                         .build()
@@ -122,10 +122,10 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
                 if (cachesToAdd.isEmpty())
                     break;
 
-                for (Waypoint p : mapper.createLocusWaypoints(cachesToAdd)) {
+                for (Point p : mapper.createLocusPoints(cachesToAdd)) {
                     // Geocaching API can return caches in a different order
-                    Waypoint oldWaypoint = getWaypointByGeocacheCode(oldWaypoints, p.gcData.getCacheID());
-                    merger.mergeWaypoint(p, oldWaypoint);
+                    Point oldPoint = getPointByGeocacheCode(oldPoints, p.gcData.getCacheID());
+                    merger.mergePoints(p, oldPoint);
 
                     // update new point data in Locus
                     ActionTools.updateLocusWaypoint(context, locusVersion, p, false);
@@ -147,11 +147,11 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
         }
     }
 
-    private Waypoint getWaypointByGeocacheCode(Iterable<Waypoint> waypoints, String geocacheCode) {
+    private Point getPointByGeocacheCode(Iterable<Point> points, String geocacheCode) {
         if (TextUtils.isEmpty(geocacheCode))
             return null;
 
-        for (Waypoint oldPoint : waypoints) {
+        for (Point oldPoint : points) {
             if (oldPoint.gcData != null && geocacheCode.equals(oldPoint.gcData.getCacheID())) {
                 return oldPoint;
             }
@@ -160,33 +160,33 @@ public class UpdateMoreTask extends UserTask<long[], Integer, Boolean> {
         return null;
     }
 
-    private List<Waypoint> retrieveWaypointsByIds(Context context, LocusVersion locusVersion, long[] ids, int currentItem, int itemsPerRequest) {
+    private List<Point> retrievePointsByIds(Context context, LocusVersion locusVersion, long[] ids, int currentItem, int itemsPerRequest) {
         try {
             int count = Math.min(ids.length - currentItem, itemsPerRequest);
-            List<Waypoint> waypoints = new ArrayList<>(count);
+            List<Point> points = new ArrayList<>(count);
 
             for (int i = 0; i < count; i++) {
-                // get old waypoint from Locus
-                Waypoint wpt = ActionTools.getLocusWaypoint(context, locusVersion, ids[currentItem + i]);
+                // get old point from Locus
+                Point wpt = ActionTools.getLocusWaypoint(context, locusVersion, ids[currentItem + i]);
                 if (LocusMapUtil.isGeocache(wpt)) {
-                    Timber.w("Waypoint " + (currentItem + i) + " with id " + ids[currentItem + i] + " isn't geocache. Skipped...");
+                    Timber.w("Point " + (currentItem + i) + " with id " + ids[currentItem + i] + " isn't geocache. Skipped...");
                     continue;
                 }
 
-                waypoints.add(wpt);
+                points.add(wpt);
             }
-            return waypoints;
+            return points;
         } catch (Throwable t) {
             throw new LocusMapRuntimeException(t);
         }
     }
 
-    private String[] getGeocacheCodes(List<Waypoint> waypoints) {
-        int count = waypoints.size();
+    private String[] getGeocacheCodes(List<Point> points) {
+        int count = points.size();
         String[] ret = new String[count];
 
         for (int i = 0; i < count; i++) {
-            ret[i] = waypoints.get(i).gcData.getCacheID();
+            ret[i] = points.get(i).gcData.getCacheID();
         }
 
         return ret;

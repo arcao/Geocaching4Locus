@@ -16,7 +16,7 @@ import com.arcao.geocaching4locus.update.task.UpdateTask.UpdateTaskData;
 
 import java.lang.ref.WeakReference;
 
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 
 public final class UpdateDialogFragment extends AbstractDialogFragment implements UpdateTask.TaskListener {
     public static final String FRAGMENT_TAG = UpdateDialogFragment.class.getName();
@@ -32,7 +32,7 @@ public final class UpdateDialogFragment extends AbstractDialogFragment implement
     private UpdateTask task;
     private WeakReference<DialogListener> dialogListenerRef;
 
-    public static UpdateDialogFragment newInstance(String cacheId, Waypoint oldPoint, boolean updateLogs) {
+    public static UpdateDialogFragment newInstance(String cacheId, Point oldPoint, boolean updateLogs) {
         Bundle args = new Bundle();
         args.putParcelable(PARAM_UPDATE_DATA, new UpdateTaskData(cacheId, oldPoint, updateLogs));
 

@@ -4,18 +4,18 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.arcao.geocaching.api.data.Waypoint
 import com.arcao.geocaching.api.data.type.WaypointType
+import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingWaypoint
 import locus.api.utils.addIgnoreNull
 import locus.api.utils.isNullOrEmpty
-import locus.api.objects.extra.Waypoint as LocusWaypoint
 
 class WaypointConverter {
-    fun addWaypoints(@NonNull toPoint: LocusWaypoint, @Nullable waypoints: Collection<Waypoint?>?) {
-        if (toPoint.gcData == null || waypoints.isNullOrEmpty())
+    fun addWaypoints(@NonNull point: Point, @Nullable waypoints: Collection<Waypoint?>?) {
+        if (point.gcData == null || waypoints.isNullOrEmpty())
             return
 
         for (waypoint in waypoints!!) {
-            toPoint.gcData.waypoints.addIgnoreNull(createLocusGeocachingWaypoint(waypoint))
+            point.gcData.waypoints.addIgnoreNull(createLocusGeocachingWaypoint(waypoint))
         }
     }
 

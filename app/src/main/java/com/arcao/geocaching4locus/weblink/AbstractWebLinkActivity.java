@@ -15,15 +15,15 @@ import com.arcao.geocaching4locus.weblink.fragment.RefreshWebLinkDialogFragment;
 import androidx.annotation.Nullable;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity implements RefreshWebLinkDialogFragment.DialogListener {
     private static final int REQUEST_SIGN_ON = 1;
 
-    protected abstract Uri getWebLink(Waypoint waypoint);
+    protected abstract Uri getWebLink(Point point);
 
-    protected boolean isRefreshRequired(Waypoint waypoint) {
+    protected boolean isRefreshRequired(Point point) {
         return false;
     }
 
@@ -46,10 +46,10 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
 
         try {
             if (LocusUtils.isIntentPointTools(getIntent())) {
-                Waypoint waypoint = LocusUtils.handleIntentPointTools(this, getIntent());
+                Point point = LocusUtils.handleIntentPointTools(this, getIntent());
 
-                if (!isRefreshRequired(waypoint)) {
-                    showWebPage(waypoint);
+                if (!isRefreshRequired(point)) {
+                    showWebPage(point);
                     return;
                 }
 
@@ -84,13 +84,13 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
     }
 
     @Override
-    public void onRefreshFinished(Waypoint waypoint) {
-        if (waypoint == null) {
+    public void onRefreshFinished(Point point) {
+        if (point == null) {
             setResult(RESULT_CANCELED);
             finish();
         }
 
-        showWebPage(waypoint);
+        showWebPage(point);
     }
 
     @Override
@@ -102,7 +102,7 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
 
     private void showRefreshDialog() {
         try {
-            Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
+            Point p = LocusUtils.handleIntentPointTools(this, getIntent());
             RefreshWebLinkDialogFragment.newInstance(p.gcData.getCacheID())
                     .show(getSupportFragmentManager(), RefreshWebLinkDialogFragment.FRAGMENT_TAG);
         } catch (RequiredVersionMissingException e) {
@@ -112,8 +112,8 @@ public abstract class AbstractWebLinkActivity extends AbstractActionBarActivity 
         }
     }
 
-    private void showWebPage(Waypoint waypoint) {
-        setResult(IntentUtil.showWebPage(this, getWebLink(waypoint)) ? RESULT_OK : RESULT_CANCELED);
+    private void showWebPage(Point point) {
+        setResult(IntentUtil.showWebPage(this, getWebLink(point)) ? RESULT_OK : RESULT_CANCELED);
         finish();
     }
 }

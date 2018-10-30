@@ -37,7 +37,6 @@ object Deps {
     // Apache commons
     const val commons_lang3 = "org.apache.commons:commons-lang3:${Versions.commons_lang3}"
     const val commons_collections4 = "org.apache.commons:commons-collections4:${Versions.commons_collections4}"
-    const val commons_io = "commons-io:commons-io:${Versions.commons_io}"
 
     // ScribeJava
     const val scribejava_core = "com.github.scribejava:scribejava-core:${Versions.scribejava}"

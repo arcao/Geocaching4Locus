@@ -4,7 +4,7 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.arcao.geocaching.api.data.GeocacheLog
 import com.arcao.geocaching.api.data.type.GeocacheLogType
-import locus.api.objects.extra.Waypoint
+import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingLog
 import locus.api.utils.addIgnoreNull
 import locus.api.utils.toTime
@@ -12,15 +12,15 @@ import java.util.*
 
 class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
 
-    fun addGeocacheLogs(@NonNull waypoint: Waypoint, @Nullable logs: Collection<GeocacheLog>?) {
-        if (waypoint.gcData.logs?.isEmpty() != false || logs?.isEmpty() != false)
+    fun addGeocacheLogs(@NonNull point: Point, @Nullable logs: Collection<GeocacheLog>?) {
+        if (point.gcData.logs?.isEmpty() != false || logs?.isEmpty() != false)
             return
 
         for (log in logs) {
-            waypoint.gcData.logs.addIgnoreNull(createLocusGeocachingLog(log))
+            point.gcData.logs.addIgnoreNull(createLocusGeocachingLog(log))
         }
 
-        sortLocusGeocachingLogsByDate(waypoint)
+        sortLocusGeocachingLogsByDate(point)
     }
 
     @Nullable
@@ -76,7 +76,7 @@ class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
         }
     }
 
-    private fun sortLocusGeocachingLogsByDate(waypoint: Waypoint) {
+    private fun sortLocusGeocachingLogsByDate(waypoint: Point) {
         if (waypoint.gcData?.logs?.isEmpty() != false)
             return
 

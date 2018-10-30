@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
@@ -40,10 +38,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
 import timber.log.Timber;
 
@@ -156,9 +156,9 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
 
                 if (!cachesToAdd.isEmpty()) {
                     PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-                    List<Waypoint> waypoints = mapper.createLocusWaypoints(cachesToAdd);
+                    List<Point> points = mapper.createLocusPoints(cachesToAdd);
 
-                    for (Waypoint wpt : waypoints) {
+                    for (Point wpt : points) {
                         pw.addWaypoint(wpt);
                     }
 

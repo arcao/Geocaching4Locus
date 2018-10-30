@@ -51,7 +51,7 @@ import androidx.annotation.NonNull;
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
 import timber.log.Timber;
 
@@ -157,7 +157,7 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
                 }
 
                 PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-                for (Waypoint wpt : mapper.createLocusWaypoints(geocacheList)) {
+                for (Point wpt : mapper.createLocusPoints(geocacheList)) {
                     if (simpleCacheData) {
                         wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
                     }

@@ -53,7 +53,7 @@ import locus.api.android.ActionDisplayPoints;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
@@ -229,10 +229,10 @@ public class LiveMapDownloadTask extends Thread {
                 requests++;
 
                 PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
-                for (Waypoint wpt : mapper.createLocusWaypoints(caches)) {
-                    wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
-                            UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
-                    pw.addWaypoint(wpt);
+                for (Point p : mapper.createLocusPoints(caches)) {
+                    p.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
+                            UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.gcData.getCacheID());
+                    pw.addWaypoint(p);
                 }
 
                 try {

@@ -6,7 +6,7 @@ import androidx.annotation.Nullable
 import com.arcao.geocaching.api.data.Geocache
 import com.arcao.geocaching.api.data.GeocacheLog
 import com.arcao.geocaching.api.data.Trackable
-import locus.api.objects.extra.Waypoint
+import locus.api.objects.extra.Point
 import locus.api.utils.addIgnoreNull
 import java.util.*
 
@@ -16,28 +16,28 @@ class DataMapper(@NonNull context: Context) {
     private val trackableConverter = geocacheConverter.trackableConverter
 
     @NonNull
-    fun createLocusWaypoints(@Nullable geocaches: Collection<Geocache>): List<Waypoint> {
+    fun createLocusPoints(@Nullable geocaches: Collection<Geocache>): List<Point> {
         if (geocaches.isEmpty())
             return emptyList()
 
-        val points = ArrayList<Waypoint>(geocaches.size)
+        val points = ArrayList<Point>(geocaches.size)
         for (cache in geocaches) {
-            points.addIgnoreNull(createLocusWaypoint(cache))
+            points.addIgnoreNull(createLocusPoint(cache))
         }
 
         return points
     }
 
     @Nullable
-    fun createLocusWaypoint(@NonNull geocache: Geocache): Waypoint? {
-        return geocacheConverter.createLocusWaypoint(geocache)
+    fun createLocusPoint(@NonNull geocache: Geocache): Point? {
+        return geocacheConverter.createLocusPoint(geocache)
     }
 
-    fun addCacheLogs(@NonNull waypoint: Waypoint, @Nullable logs: Collection<GeocacheLog>?) {
+    fun addCacheLogs(@NonNull waypoint: Point, @Nullable logs: Collection<GeocacheLog>?) {
         geocacheLogConverter.addGeocacheLogs(waypoint, logs)
     }
 
-    fun addTrackables(@NonNull waypoint: Waypoint, @Nullable trackables: Collection<Trackable>?) {
+    fun addTrackables(@NonNull waypoint: Point, @Nullable trackables: Collection<Trackable>?) {
         trackableConverter.addTrackables(waypoint, trackables)
     }
 }

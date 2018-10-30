@@ -53,7 +53,7 @@ import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener, DownloadNearestDialogFragment.DialogListener {
@@ -109,7 +109,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
 
         if (LocusUtils.isIntentPointTools(getIntent())) {
             try {
-                Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
+                Point p = LocusUtils.handleIntentPointTools(this, getIntent());
                 if (p != null) {
                     onReceived(LocusUtils.createLocusVersion(this, getIntent()), p.getLocation(),
                             p.getLocation());

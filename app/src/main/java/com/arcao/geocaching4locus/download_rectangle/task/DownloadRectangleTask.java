@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
 
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
@@ -48,10 +47,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import androidx.annotation.NonNull;
 import locus.api.android.ActionDisplayPointsExtended;
 import locus.api.android.objects.PackWaypoints;
 import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
 import timber.log.Timber;
 
@@ -164,12 +164,12 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
                     break;
 
                 PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
-                for (Waypoint wpt : mapper.createLocusWaypoints(cachesToAdd)) {
+                for (Point p : mapper.createLocusPoints(cachesToAdd)) {
                     if (simpleCacheData) {
-                        wpt.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, wpt.gcData.getCacheID());
+                        p.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.gcData.getCacheID());
                     }
 
-                    pw.addWaypoint(wpt);
+                    pw.addWaypoint(p);
                 }
 
                 writer.write(pw);

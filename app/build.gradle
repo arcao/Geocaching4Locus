@@ -46,7 +46,6 @@ dependencies {
     // Apache commons
     implementation Deps.commons_lang3
     implementation Deps.commons_collections4
-    implementation Deps.commons_io
 
     // ScribeJava
     implementation Deps.scribejava_core

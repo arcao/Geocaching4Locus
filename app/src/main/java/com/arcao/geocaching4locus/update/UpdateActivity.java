@@ -16,7 +16,7 @@ import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 import locus.api.android.utils.LocusUtils;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
 public class UpdateActivity extends AppCompatActivity implements UpdateDialogFragment.DialogListener {
@@ -46,14 +46,14 @@ public class UpdateActivity extends AppCompatActivity implements UpdateDialogFra
 
     private void showUpdateDialog() {
         String cacheId = null;
-        Waypoint oldPoint = null;
+        Point oldPoint = null;
 
         if (getIntent().hasExtra(PARAM_CACHE_ID)) {
             cacheId = getIntent().getStringExtra(PARAM_CACHE_ID);
 
         } else if (LocusUtils.isIntentPointTools(getIntent())) {
             try {
-                Waypoint p = LocusUtils.handleIntentPointTools(this, getIntent());
+                Point p = LocusUtils.handleIntentPointTools(this, getIntent());
 
                 if (p != null && p.gcData != null) {
                     cacheId = p.gcData.getCacheID();

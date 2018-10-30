@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.R;
@@ -15,7 +13,9 @@ import com.arcao.geocaching4locus.weblink.task.RefreshWebLinkTask;
 
 import java.lang.ref.WeakReference;
 
-import locus.api.objects.extra.Waypoint;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import locus.api.objects.extra.Point;
 
 public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment implements RefreshWebLinkTask.TaskListener {
     public static final String FRAGMENT_TAG = RefreshWebLinkDialogFragment.class.getName();
@@ -23,7 +23,7 @@ public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment i
     private static final String PARAM_CACHE_ID = "CACHE_ID";
 
     public interface DialogListener {
-        void onRefreshFinished(Waypoint waypoint);
+        void onRefreshFinished(Point point);
         void onRefreshError(Intent intent);
     }
 
@@ -65,11 +65,11 @@ public final class RefreshWebLinkDialogFragment extends AbstractDialogFragment i
     }
 
     @Override
-    public void onTaskFinish(Waypoint waypoint) {
+    public void onTaskFinish(Point point) {
         dismiss();
 
         DialogListener listener = dialogListenerRef.get();
-        if (listener != null) listener.onRefreshFinished(waypoint);
+        if (listener != null) listener.onRefreshFinished(point);
     }
 
     @Override

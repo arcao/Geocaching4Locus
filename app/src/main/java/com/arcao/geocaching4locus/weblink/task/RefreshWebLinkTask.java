@@ -22,13 +22,13 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Waypoint;
+import locus.api.objects.extra.Point;
 import timber.log.Timber;
 
-public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTask.ParcelableWaypoint> {
+public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTask.ParcelablePoint> {
 
     public interface TaskListener {
-        void onTaskFinish(Waypoint waypoint);
+        void onTaskFinish(Point point);
 
         void onTaskError(Intent intent);
     }
@@ -45,11 +45,11 @@ public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTas
     }
 
     @Override
-    protected void onPostExecute(ParcelableWaypoint result) {
+    protected void onPostExecute(ParcelablePoint result) {
         super.onPostExecute(result);
 
         TaskListener listener = taskListenerRef.get();
-        if (listener != null) listener.onTaskFinish(result.waypoint);
+        if (listener != null) listener.onTaskFinish(result.point);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTas
     }
 
     @Override
-    protected ParcelableWaypoint doInBackground(String... params) throws Exception {
+    protected ParcelablePoint doInBackground(String... params) throws Exception {
         DataMapper mapper = new DataMapper(context);
 
         String cacheId = params[0];
@@ -80,7 +80,7 @@ public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTas
             if (cache == null)
                 throw new CacheNotFoundException(cacheId);
 
-            return new ParcelableWaypoint(mapper.createLocusWaypoint(cache));
+            return new ParcelablePoint(mapper.createLocusPoint(cache));
         } catch (InvalidSessionException e) {
             accountManager.invalidateOAuthToken();
             throw e;
@@ -100,22 +100,24 @@ public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTas
         if (listener != null) listener.onTaskError(intent);
     }
 
-    static final class ParcelableWaypoint implements Parcelable {
-        public Waypoint waypoint;
+    static final class ParcelablePoint implements Parcelable {
+        public Point point;
 
-        ParcelableWaypoint(Parcel in) {
+        ParcelablePoint(Parcel in) {
             try {
                 byte[] data = in.createByteArray();
 
-                if (ArrayUtils.isNotEmpty(data))
-                    waypoint = new Waypoint(data);
+                if (ArrayUtils.isNotEmpty(data)) {
+                    point = new Point();
+                    point.read(data);
+                }
             } catch (IOException e) {
                 Timber.e(e);
             }
         }
 
-        ParcelableWaypoint(Waypoint waypoint) {
-            this.waypoint = waypoint;
+        ParcelablePoint(Point point) {
+            this.point = point;
         }
 
         @Override
@@ -125,18 +127,18 @@ public class RefreshWebLinkTask extends UserTask<String, Void, RefreshWebLinkTas
 
         @Override
         public void writeToParcel(Parcel dest, int i) {
-            dest.writeByteArray(waypoint != null ? waypoint.getAsBytes() : null);
+            dest.writeByteArray(point != null ? point.getAsBytes() : null);
         }
 
-        public static final Creator<ParcelableWaypoint> CREATOR = new Creator<ParcelableWaypoint>() {
+        public static final Creator<ParcelablePoint> CREATOR = new Creator<ParcelablePoint>() {
             @Override
-            public ParcelableWaypoint createFromParcel(Parcel in) {
-                return new ParcelableWaypoint(in);
+            public ParcelablePoint createFromParcel(Parcel in) {
+                return new ParcelablePoint(in);
             }
 
             @Override
-            public ParcelableWaypoint[] newArray(int size) {
-                return new ParcelableWaypoint[size];
+            public ParcelablePoint[] newArray(int size) {
+                return new ParcelablePoint[size];
             }
         };
     }

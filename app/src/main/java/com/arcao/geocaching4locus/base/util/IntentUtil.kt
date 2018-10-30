@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
-import androidx.core.widget.toast
 
 object IntentUtil {
     @JvmStatic
@@ -32,7 +31,7 @@ fun Activity.showWebPage(uri: Uri): Boolean {
         startActivity(intent)
         true
     } else {
-        toast("Web page cannot be opened. No application found to show web pages.", Toast.LENGTH_LONG)
+        Toast.makeText(this, "Web page cannot be opened. No application found to show web pages.", Toast.LENGTH_LONG).show()
         false
     }
 }

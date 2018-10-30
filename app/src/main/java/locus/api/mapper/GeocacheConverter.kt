@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Location
+import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingAttribute
 import locus.api.objects.geocaching.GeocachingData
 import locus.api.utils.toTime
@@ -23,7 +24,6 @@ import timber.log.Timber
 import java.text.ParseException
 import java.util.*
 import java.util.regex.Pattern
-import locus.api.objects.extra.Waypoint as LocusWaypoint
 
 class GeocacheConverter(@NonNull context: Context) {
     private val context: Context = context.applicationContext
@@ -43,15 +43,15 @@ class GeocacheConverter(@NonNull context: Context) {
     }
 
     @Nullable
-    fun createLocusWaypoint(@Nullable cache: Geocache?): LocusWaypoint? {
+    fun createLocusPoint(@Nullable cache: Geocache?): Point? {
         if (cache == null)
             return null
 
-        val loc = Location(cache.code())
+        val loc = Location()
                 .setLatitude(cache.coordinates().latitude())
                 .setLongitude(cache.coordinates().longitude())
 
-        val p = LocusWaypoint(cache.name(), loc).apply {
+        val p = Point(cache.name(), loc).apply {
             gcData = GeocachingData().apply {
                 cacheID = cache.code()
                 id = cache.id()
@@ -147,7 +147,7 @@ class GeocacheConverter(@NonNull context: Context) {
         }
     }
 
-    private fun updateGeocacheLocationByCorrectedCoordinates(@NonNull p: LocusWaypoint, @Nullable userWaypoints: Collection<UserWaypoint>?) {
+    private fun updateGeocacheLocationByCorrectedCoordinates(@NonNull p: Point, @Nullable userWaypoints: Collection<UserWaypoint>?) {
         if (p.gcData == null || userWaypoints?.isEmpty() != false)
             return
 
@@ -174,7 +174,7 @@ class GeocacheConverter(@NonNull context: Context) {
 
         // update coordinates to new location
         location.set(
-                Location(location.provider)
+                Location()
                         .setLatitude(correctedCoordinateUserWaypoint.coordinates().latitude())
                         .setLongitude(correctedCoordinateUserWaypoint.coordinates().longitude())
         )

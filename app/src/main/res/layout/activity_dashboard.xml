@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
     <data>
-
         <import type="com.arcao.geocaching4locus.base.constants.AppConstants" />
-
         <import type="com.arcao.geocaching4locus.dashboard.DashboardViewModel" />
-
         <variable
             name="vm"
             type="DashboardViewModel" />
@@ -67,8 +63,8 @@
             android:id="@+id/db_live_map"
             style="@style/Widget.AppTheme.DashboardButton"
             android:layout_width="0dp"
-            android:drawableTop="@drawable/ic_action_live_map"
             android:checked="@{safeUnbox(vm.liveMapEnabled)}"
+            android:drawableTop="@drawable/ic_action_live_map"
             android:onClick="@{() -> vm.onClickLiveMap()}"
             android:text="@string/menu_live_map"
             app:layout_constraintEnd_toEndOf="@+id/db_search_nearest"

@@ -2,14 +2,13 @@ package com.arcao.geocaching4locus.dashboard
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.util.*
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
-import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class DashboardViewModel(private val calledFromLocusMap: Boolean) : ViewModel(), KoinComponent, LiveMapNotificationManager.LiveMapStateChangeListener {
+class DashboardViewModel(private val calledFromLocusMap: Boolean) : BaseViewModel(), LiveMapNotificationManager.LiveMapStateChangeListener {
     private val context by inject<Context>()
     private val notificationManager by inject<LiveMapNotificationManager>()
     private val accountManager by inject<AccountManager>()

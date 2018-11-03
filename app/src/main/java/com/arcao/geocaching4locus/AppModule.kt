@@ -5,7 +5,7 @@ import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.viewmodel.experimental.builder.viewModel
+import org.koin.android.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.create
 import org.koin.experimental.builder.factory
@@ -17,5 +17,7 @@ internal val appModule = module {
     factory<LiveMapNotificationManager>()
 
     // dashboard
-    viewModel<DashboardViewModel>()
+    viewModel {
+        (calledFromLocusMap : Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get())
+    }
 }

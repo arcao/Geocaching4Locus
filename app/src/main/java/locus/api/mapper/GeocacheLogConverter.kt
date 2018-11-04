@@ -1,6 +1,5 @@
 package locus.api.mapper
 
-import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.arcao.geocaching.api.data.GeocacheLog
 import com.arcao.geocaching.api.data.type.GeocacheLogType
@@ -12,8 +11,8 @@ import java.util.*
 
 class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
 
-    fun addGeocacheLogs(@NonNull point: Point, @Nullable logs: Collection<GeocacheLog>?) {
-        if (point.gcData.logs?.isEmpty() != false || logs?.isEmpty() != false)
+    fun addGeocacheLogs(point: Point, @Nullable logs: Collection<GeocacheLog>) {
+        if (point.gcData.logs?.isEmpty() != false || logs.isEmpty())
             return
 
         for (log in logs) {

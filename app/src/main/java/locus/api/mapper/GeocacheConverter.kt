@@ -25,7 +25,7 @@ import java.text.ParseException
 import java.util.*
 import java.util.regex.Pattern
 
-class GeocacheConverter(@NonNull context: Context) {
+class GeocacheConverter(context: Context) {
     private val context: Context = context.applicationContext
 
     private val imageDataConverter = ImageDataConverter()
@@ -42,11 +42,7 @@ class GeocacheConverter(@NonNull context: Context) {
         disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)
     }
 
-    @Nullable
-    fun createLocusPoint(@Nullable cache: Geocache?): Point? {
-        if (cache == null)
-            return null
-
+    fun createLocusPoint(cache: Geocache): Point {
         val loc = Location()
                 .setLatitude(cache.coordinates().latitude())
                 .setLongitude(cache.coordinates().longitude())

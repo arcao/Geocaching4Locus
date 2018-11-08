@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
@@ -14,8 +15,9 @@ import locus.api.objects.extra.Point
 abstract class WebLinkViewModel(
         private val accountManager: AccountManager,
         private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        private val exceptionHandler: ExceptionHandler
-) : BaseViewModel() {
+        private val exceptionHandler: ExceptionHandler,
+        dispatcherProvider: CoroutinesDispatcherProvider
+) : BaseViewModel(dispatcherProvider) {
 
     val progressVisible: MutableLiveData<Boolean> = MutableLiveData()
     val action: Command<WebLinkAction> = Command()
@@ -29,40 +31,50 @@ abstract class WebLinkViewModel(
         return false
     }
 
-    fun retrieveUri(point: Point) {
+    fun retrieveUri(point: Point) = launch {
         if (point.gcData == null || point.gcData.cacheID.isNullOrEmpty()) {
-            action(WebLinkAction.NavigationBack)
-            return
+            mainContext {
+                action(WebLinkAction.NavigationBack)
+            }
+            return@launch
         }
 
         if (accountManager.account == null) {
-            action(WebLinkAction.SignIn)
-            return
+            mainContext {
+                action(WebLinkAction.SignIn)
+            }
+            return@launch
         }
 
         if (isPremiumMemberRequired && !accountManager.isPremium) {
-            action(WebLinkAction.PremiumMembershipRequired)
-            return
+            mainContext {
+                action(WebLinkAction.PremiumMembershipRequired)
+            }
+            return@launch
         }
 
-        launch {
-            try {
-                val uri = if (!isRefreshRequired(point)) {
-                    getWebLink(point)
-                } else {
-                    progressVisible(true)
-                    val newPoint = getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
-                    progressVisible(false)
-                    getWebLink(newPoint)
-                }
+        try {
+            val uri = if (!isRefreshRequired(point)) {
+                getWebLink(point)
+            } else {
+                progressVisible(true)
+                val newPoint = getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
+                progressVisible(false)
+                getWebLink(newPoint)
+            }
 
-                if (uri == null) {
+            if (uri == null) {
+                mainContext {
                     action(WebLinkAction.NavigationBack)
-                    return@launch
                 }
+                return@launch
+            }
 
+            mainContext {
                 action(WebLinkAction.ResolvedUri(uri))
-            } catch (e : Throwable) {
+            }
+        } catch (e: Throwable) {
+            mainContext {
                 action(WebLinkAction.Error(exceptionHandler.handle(e)))
             }
         }

@@ -2,6 +2,8 @@ package com.arcao.geocaching4locus
 
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
@@ -19,12 +21,14 @@ internal val appModule = module {
     single { androidApplication() as App }
     single<AccountManager> { create<PreferenceAccountManager>() }
     single<DataMapper>()
+    single<CoroutinesDispatcherProvider>()
 
     factory<LiveMapNotificationManager>()
+    single<GeocachingApiLoginUseCase>()
 
     // dashboard
     viewModel {
-        (calledFromLocusMap : Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get())
+        (calledFromLocusMap : Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get())
     }
 
     // weblink

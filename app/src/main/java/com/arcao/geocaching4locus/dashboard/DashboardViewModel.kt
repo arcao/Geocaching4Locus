@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.*
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
+import kotlinx.coroutines.launch
 
 class DashboardViewModel(
         private val calledFromLocusMap: Boolean,
         private val context: Context,
         private val notificationManager: LiveMapNotificationManager,
-        private val accountManager: AccountManager
-) : BaseViewModel(), LiveMapNotificationManager.LiveMapStateChangeListener {
+        private val accountManager: AccountManager,
+        dispatcherProvider: CoroutinesDispatcherProvider
+) : BaseViewModel(dispatcherProvider), LiveMapNotificationManager.LiveMapStateChangeListener {
     val premium by lazy { accountManager.isPremium }
 
     val action = Command<DashboardAction>()
@@ -37,22 +40,38 @@ class DashboardViewModel(
         action(DashboardAction.ImportBookmarks)
     }
 
-    fun onClickLiveMap() {
+    fun onClickLiveMap() = launch {
         if (context.isLocusNotInstalled()) {
-            action(DashboardAction.LocusMapNotInstalled)
-            return
+            mainContext {
+                action(DashboardAction.LocusMapNotInstalled)
+            }
+            return@launch
         }
 
         if (accountManager.account != null) {
-            action(DashboardAction.SignIn)
-            return
+            mainContext {
+                action(DashboardAction.SignIn)
+            }
+            return@launch
         }
 
         if (!context.hidePowerManagementWarning) {
-            action(DashboardAction.WarnPowerSaveActive)
+            mainContext {
+                action(DashboardAction.WarnPowerSaveActive)
+            }
         }
 
-        onPowerSaveWarningConfirmed()
+        toggleLiveMap()
+    }
+
+    private suspend fun toggleLiveMap() {
+        notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
+
+        if (calledFromLocusMap) {
+            mainContext {
+                action(DashboardAction.NavigationBack)
+            }
+        }
     }
 
     fun onClickImportLiveMapGc() {
@@ -80,9 +99,7 @@ class DashboardViewModel(
         liveMapEnabled(newState)
     }
 
-    fun onPowerSaveWarningConfirmed() {
-        notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
-
-        if (calledFromLocusMap) action(DashboardAction.NavigationBack)
+    fun onPowerSaveWarningConfirmed() = launch {
+        toggleLiveMap()
     }
 }

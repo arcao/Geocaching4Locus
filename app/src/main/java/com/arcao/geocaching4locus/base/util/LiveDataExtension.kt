@@ -8,13 +8,16 @@ import androidx.lifecycle.Observer
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
+@MainThread
 fun <T> LiveData<T>.observe(owner: LifecycleOwner, block: (T) -> Unit) = observe(owner, Observer { block(it!!) })
 
 @Suppress("NOTHING_TO_INLINE")
+@MainThread
 inline operator fun MutableLiveData<Unit>.invoke() {
     value = Unit
 }
 
+@MainThread
 inline operator fun <reified T> MutableLiveData<T>.invoke(t: T) {
     value = t
 }
@@ -44,5 +47,8 @@ open class Command<T> : MutableLiveData<T>() {
         super.setValue(t)
     }
 
-    override fun getValue(): T = super.getValue()!!
+    override fun postValue(value: T) {
+        pending.set(true)
+        super.postValue(value)
+    }
 }

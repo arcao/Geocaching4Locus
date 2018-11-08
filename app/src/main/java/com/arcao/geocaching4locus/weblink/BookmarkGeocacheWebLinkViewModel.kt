@@ -4,6 +4,7 @@ import android.net.Uri
 import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.BuildConfig
 import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.weblink.usecase.GetPointFromGeocacheCodeUseCase
 import locus.api.objects.extra.Point
@@ -14,8 +15,9 @@ import java.util.regex.Pattern
 class BookmarkGeocacheWebLinkViewModel(
         accountManager: AccountManager,
         getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        exceptionHandler: ExceptionHandler
-) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler) {
+        exceptionHandler: ExceptionHandler,
+        dispatcherProvider: CoroutinesDispatcherProvider
+) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler, dispatcherProvider) {
 
     override val isPremiumMemberRequired: Boolean
         get() = true

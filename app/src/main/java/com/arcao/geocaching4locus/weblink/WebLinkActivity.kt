@@ -27,7 +27,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDia
             if (visible)
                 showProgressDialog()
             else
-                dismissProgresDialog()
+                dismissProgressDialog()
         }
 
         viewModel.action.observe(this, ::handleAction)
@@ -35,17 +35,13 @@ abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDia
         processIntent()
     }
 
-    private fun dismissProgresDialog() {
+    private fun dismissProgressDialog() {
         val f = supportFragmentManager.findFragmentByTag(WebLinkProgressDialogFragment.FRAGMENT_TAG) as WebLinkProgressDialogFragment?
         f?.dismiss()
     }
 
     override fun onProgressCancel() {
         viewModel.cancelRetrieveUri()
-
-        setResult(Activity.RESULT_CANCELED)
-        finish()
-        return
     }
 
     private fun showProgressDialog() {
@@ -67,7 +63,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDia
                     return
                 }
 
-                viewModel.retrieveUri(point)
+                viewModel.resolveUri(point)
             }
         } catch (e: Exception) {
             Timber.e(e)
@@ -81,14 +77,18 @@ abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDia
         when (action) {
             WebLinkAction.SignIn ->
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-            is WebLinkAction.ResolvedUri ->
+            is WebLinkAction.ShowUri -> {
                 showWebPage(action.uri)
+                finish()
+            }
             is WebLinkAction.Error -> {
                 startActivity(action.intent)
                 finish()
             }
-            WebLinkAction.NavigationBack ->
-                onBackPressed()
+            WebLinkAction.Cancel -> {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }
             WebLinkAction.PremiumMembershipRequired -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())
                 setResult(Activity.RESULT_CANCELED)

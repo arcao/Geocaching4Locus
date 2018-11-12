@@ -31,17 +31,10 @@ abstract class WebLinkViewModel(
         return false
     }
 
-    fun retrieveUri(point: Point) = launch {
+    fun resolveUri(point: Point) = launch {
         if (point.gcData == null || point.gcData.cacheID.isNullOrEmpty()) {
             mainContext {
-                action(WebLinkAction.NavigationBack)
-            }
-            return@launch
-        }
-
-        if (accountManager.account == null) {
-            mainContext {
-                action(WebLinkAction.SignIn)
+                action(WebLinkAction.Cancel)
             }
             return@launch
         }
@@ -57,6 +50,13 @@ abstract class WebLinkViewModel(
             val uri = if (!isRefreshRequired(point)) {
                 getWebLink(point)
             } else {
+                if (accountManager.account == null) {
+                    mainContext {
+                        action(WebLinkAction.SignIn)
+                    }
+                    return@launch
+                }
+
                 progressVisible(true)
                 val newPoint = getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
                 progressVisible(false)
@@ -65,23 +65,24 @@ abstract class WebLinkViewModel(
 
             if (uri == null) {
                 mainContext {
-                    action(WebLinkAction.NavigationBack)
+                    action(WebLinkAction.Cancel)
                 }
                 return@launch
             }
 
             mainContext {
-                action(WebLinkAction.ResolvedUri(uri))
+                action(WebLinkAction.ShowUri(uri))
             }
         } catch (e: Throwable) {
             mainContext {
-                action(WebLinkAction.Error(exceptionHandler.handle(e)))
+                action(WebLinkAction.Error(exceptionHandler(e)))
             }
         }
     }
 
     fun cancelRetrieveUri() {
         job.cancel()
+        action(WebLinkAction.Cancel)
     }
 }
 

@@ -5,6 +5,7 @@ import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
+import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.usecase.GetPointFromGeocacheCodeUseCase
@@ -23,6 +24,7 @@ internal val appModule = module {
     single<DataMapper>()
     single<CoroutinesDispatcherProvider>()
 
+    single<ExceptionHandler>()
     factory<LiveMapNotificationManager>()
     single<GeocachingApiLoginUseCase>()
 

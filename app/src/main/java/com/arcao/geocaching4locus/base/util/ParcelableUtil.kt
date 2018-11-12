@@ -16,7 +16,7 @@ object ParcelableUtil {
     }
 
     @JvmStatic
-    fun <T> unmarshall(bytes: ByteArray, creator: Parcelable.Creator<T>): T {
+    fun <T : Parcelable> unmarshall(bytes: ByteArray, creator: Parcelable.Creator<T>): T {
         val parcel = Parcel.obtain().apply {
             unmarshall(bytes, 0, bytes.size)
             setDataPosition(0) // this is extremely important!
@@ -33,4 +33,4 @@ object ParcelableUtil {
 inline fun Parcelable.marshall() = ParcelableUtil.marshall(this)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <reified T> ByteArray.unmarshall(creator: Parcelable.Creator<T>) = ParcelableUtil.unmarshall(this, creator)
+inline fun <reified T: Parcelable> ByteArray.unmarshall(creator: Parcelable.Creator<T>) = ParcelableUtil.unmarshall(this, creator)

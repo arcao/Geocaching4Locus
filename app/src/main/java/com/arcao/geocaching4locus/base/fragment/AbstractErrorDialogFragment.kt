@@ -11,7 +11,7 @@ import com.arcao.geocaching4locus.base.util.ResourcesUtil
 
 abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
     @JvmOverloads
-    protected fun prepareDialog(@StringRes title: Int, @StringRes message: Int, additionalMessage: CharSequence? = null) {
+    protected fun prepareDialog(@StringRes title: Int = 0, @StringRes message: Int, additionalMessage: CharSequence? = null) {
         arguments = bundleOf(
                 PARAM_TITLE to title,
                 PARAM_MESSAGE to message,

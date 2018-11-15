@@ -49,7 +49,7 @@ import java.util.Vector;
 
 import androidx.annotation.NonNull;
 import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
+import locus.api.android.objects.PackPoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
@@ -163,16 +163,16 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
                 if (cachesToAdd.isEmpty())
                     break;
 
-                PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
+                PackPoints pack = new PackPoints(PACK_WAYPOINTS_NAME);
                 for (Point p : mapper.createLocusPoints(cachesToAdd)) {
                     if (simpleCacheData) {
                         p.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.gcData.getCacheID());
                     }
 
-                    pw.addWaypoint(p);
+                    pack.addWaypoint(p);
                 }
 
-                writer.write(pw);
+                writer.write(pack);
 
                 current += cachesToAdd.size();
                 publishProgress(current, count);

@@ -50,7 +50,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.annotation.WorkerThread;
 import locus.api.android.ActionDisplayPoints;
-import locus.api.android.objects.PackWaypoints;
+import locus.api.android.objects.PackPoints;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Point;
@@ -117,8 +117,8 @@ public class LiveMapDownloadTask extends Thread {
         CLEAN_MAP_EXECUTOR.execute(() -> {
             try {
                 for (int i = 1; i <= LIVEMAP_REQUESTS; i++) {
-                    PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
-                    ActionDisplayPoints.sendPackSilent(appContext, pw, false);
+                    PackPoints pack = new PackPoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
+                    ActionDisplayPoints.sendPackSilent(appContext, pack, false);
                 }
             } catch (Throwable t) {
                 t = new LocusMapRuntimeException(t);
@@ -228,15 +228,15 @@ public class LiveMapDownloadTask extends Thread {
                 current += caches.size();
                 requests++;
 
-                PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
+                PackPoints pack = new PackPoints(LIVEMAP_PACK_WAYPOINT_PREFIX + requests);
                 for (Point p : mapper.createLocusPoints(caches)) {
                     p.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(),
                             UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.gcData.getCacheID());
-                    pw.addWaypoint(p);
+                    pack.addWaypoint(p);
                 }
 
                 try {
-                    ActionDisplayPoints.sendPackSilent(context, pw, false);
+                    ActionDisplayPoints.sendPackSilent(context, pack, false);
                 } catch (Throwable t) {
                     throw new LocusMapRuntimeException(t);
                 }
@@ -257,10 +257,10 @@ public class LiveMapDownloadTask extends Thread {
 
         notificationManager.setDownloadingProgress(LIVEMAP_CACHES_COUNT, LIVEMAP_CACHES_COUNT);
 
-        // HACK we must remove old PackWaypoints from the map
+        // HACK we must remove old PackPoints from the map
         for (int i = requests + 1; i <= LIVEMAP_REQUESTS; i++) {
-            PackWaypoints pw = new PackWaypoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
-            ActionDisplayPoints.sendPackSilent(context, pw, false);
+            PackPoints pack = new PackPoints(LIVEMAP_PACK_WAYPOINT_PREFIX + i);
+            ActionDisplayPoints.sendPackSilent(context, pack, false);
         }
     }
 

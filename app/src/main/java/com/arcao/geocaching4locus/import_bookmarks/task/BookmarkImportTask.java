@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
+import locus.api.android.objects.PackPoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
@@ -129,15 +129,15 @@ public class BookmarkImportTask extends UserTask<String, Void, Boolean> {
                 if (cachesToAdd.isEmpty())
                     break;
 
-                PackWaypoints pw = new PackWaypoints("BookmarkImport");
+                PackPoints pack = new PackPoints("BookmarkImport");
                 for (Point p : mapper.createLocusPoints(cachesToAdd)) {
                     if (simpleCacheData) {
                         p.setExtraOnDisplay(context.getPackageName(), UpdateActivity.class.getName(), UpdateActivity.PARAM_SIMPLE_CACHE_ID, p.gcData.getCacheID());
                     }
 
-                    pw.addWaypoint(p);
+                    pack.addWaypoint(p);
                 }
-                writer.write(pw);
+                writer.write(pack);
 
                 progress += cachesToAdd.size();
                 publishProgress();

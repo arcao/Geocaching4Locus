@@ -41,7 +41,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackWaypoints;
+import locus.api.android.objects.PackPoints;
 import locus.api.mapper.DataMapper;
 import locus.api.objects.extra.Point;
 import locus.api.utils.StoreableWriter;
@@ -155,14 +155,14 @@ public class ImportTask extends UserTask<String, Integer, Intent> {
                 addNotFoundCaches(notFoundGeocacheCodes, requestedCacheIds, cachesToAdd);
 
                 if (!cachesToAdd.isEmpty()) {
-                    PackWaypoints pw = new PackWaypoints(PACK_WAYPOINTS_NAME);
+                    PackPoints pack = new PackPoints(PACK_WAYPOINTS_NAME);
                     List<Point> points = mapper.createLocusPoints(cachesToAdd);
 
                     for (Point wpt : points) {
-                        pw.addWaypoint(wpt);
+                        pack.addWaypoint(wpt);
                     }
 
-                    writer.write(pw);
+                    writer.write(pack);
                 }
 
                 current += requestedCacheIds.length;

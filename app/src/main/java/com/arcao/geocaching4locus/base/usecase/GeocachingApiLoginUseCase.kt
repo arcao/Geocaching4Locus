@@ -12,9 +12,9 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import kotlinx.coroutines.withContext
 
 class GeocachingApiLoginUseCase(
-        private val app: App,
-        private val accountManager: AccountManager,
-        private val dispatcherProvider: CoroutinesDispatcherProvider
+    private val app: App,
+    private val accountManager: AccountManager,
+    private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
 
     @WorkerThread

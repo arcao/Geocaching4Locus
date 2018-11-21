@@ -39,7 +39,7 @@ internal val appModule = module {
     // ---- View models ----
     // dashboard
     viewModel {
-        (calledFromLocusMap : Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get())
+        (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get())
     }
     // web link
     viewModel<BookmarkGeocacheWebLinkViewModel>()
@@ -48,5 +48,4 @@ internal val appModule = module {
     viewModel<ImportGeocacheCodeViewModel>()
     // import url
     viewModel<ImportUrlViewModel>()
-
 }

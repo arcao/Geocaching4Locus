@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
-        val dispatcherProvider: CoroutinesDispatcherProvider
+    val dispatcherProvider: CoroutinesDispatcherProvider
 ) : ViewModel(), CoroutineScope {
     val job = Job()
     val progress: MutableLiveData<ProgressState> = MutableLiveData()
@@ -30,7 +30,7 @@ abstract class BaseViewModel(
                 this@mainContext.block()
             }
 
-    suspend fun <T : BaseViewModel, R> T.showProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = 0, maxProgress: Int = 0, block: suspend T.() -> R) : R {
+    suspend fun <T : BaseViewModel, R> T.showProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = 0, maxProgress: Int = 0, block: suspend T.() -> R): R {
         mainContext {
             progress(ProgressState.ShowProgress(message, messageArgs, progress, maxProgress))
         }

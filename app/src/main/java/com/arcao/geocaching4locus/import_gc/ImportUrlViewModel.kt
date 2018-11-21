@@ -19,14 +19,14 @@ import timber.log.Timber
 import java.util.regex.Pattern
 
 class ImportUrlViewModel(
-        private val context: Context,
-        private val accountManager: AccountManager,
-        private val exceptionHandler: ExceptionHandler,
-        private val getGeocacheCodeFromGuidUseCase: GetGeocacheCodeFromGuidUseCase,
-        private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
-        private val preferences: SharedPreferences,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    private val context: Context,
+    private val accountManager: AccountManager,
+    private val exceptionHandler: ExceptionHandler,
+    private val getGeocacheCodeFromGuidUseCase: GetGeocacheCodeFromGuidUseCase,
+    private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val preferences: SharedPreferences,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
 

@@ -10,11 +10,11 @@ import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(
-        private val calledFromLocusMap: Boolean,
-        private val context: Context,
-        private val notificationManager: LiveMapNotificationManager,
-        private val accountManager: AccountManager,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    private val calledFromLocusMap: Boolean,
+    private val context: Context,
+    private val notificationManager: LiveMapNotificationManager,
+    private val accountManager: AccountManager,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LiveMapNotificationManager.LiveMapStateChangeListener {
     val premium by lazy { accountManager.isPremium }
 

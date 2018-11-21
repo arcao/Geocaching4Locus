@@ -6,8 +6,8 @@ import com.arcao.wherigoservice.api.WherigoService
 import kotlinx.coroutines.withContext
 
 class GetGeocacheCodeFromGuidUseCase(
-        private val wherigoService: WherigoService,
-        private val dispatcherProvider: CoroutinesDispatcherProvider
+    private val wherigoService: WherigoService,
+    private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(guid: String) = withContext(dispatcherProvider.io) {
         wherigoService.getCacheCodeFromGuid(guid) ?: throw CacheNotFoundException(guid)

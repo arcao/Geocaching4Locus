@@ -92,7 +92,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
                 viewModel.init()
             } else {
                 setResult(Activity.RESULT_CANCELED)
-                finish();
+                finish()
             }
         }
     }

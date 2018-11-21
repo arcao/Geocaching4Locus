@@ -23,3 +23,11 @@ task ktlintFormat(type: JavaExec, group: "formatting") {
     main = "com.github.shyiko.ktlint.Main"
     args "-F", "src/**/*.kt"
 }
+
+task ktlintIde(type: JavaExec, group: "formatting") {
+    description = "Apply code style to IntelliJ Idea/Android Studio IDE"
+    classpath = configurations.ktlint
+    workingDir =  project.rootDir
+    main = "com.github.shyiko.ktlint.Main"
+    args "--apply-to-idea-project", "--android", "-y"
+}

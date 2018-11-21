@@ -63,7 +63,7 @@ class ProgressDialogFragment : AbstractDialogFragment() {
     companion object {
         val FRAGMENT_TAG: String = ProgressDialogFragment::class.java.name
 
-        fun newInstance(message: CharSequence, progress : Int, maxProgress: Int) = ProgressDialogFragment().apply {
+        fun newInstance(message: CharSequence, progress: Int, maxProgress: Int) = ProgressDialogFragment().apply {
             arguments = bundleOf(
                     ARGS_MESSAGE to message,
                     ARGS_PROGRESS to progress,

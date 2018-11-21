@@ -18,7 +18,6 @@ import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-
 class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
     val model by sharedViewModel<ImportGeocacheCodeViewModel>()
 

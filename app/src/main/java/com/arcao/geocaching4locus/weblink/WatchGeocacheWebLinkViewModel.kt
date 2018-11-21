@@ -11,10 +11,10 @@ import locus.api.objects.extra.Point
 import java.util.*
 
 class WatchGeocacheWebLinkViewModel(
-        accountManager: AccountManager,
-        getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        exceptionHandler: ExceptionHandler,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    accountManager: AccountManager,
+    getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    exceptionHandler: ExceptionHandler,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler, dispatcherProvider) {
 
     override fun getWebLink(point: Point): Uri {
@@ -32,4 +32,3 @@ class WatchGeocacheWebLinkViewModel(
         private const val URL_FORMAT_STAGING = "https://staging.geocaching.com/my/watchlist.aspx?w=%d"
     }
 }
-

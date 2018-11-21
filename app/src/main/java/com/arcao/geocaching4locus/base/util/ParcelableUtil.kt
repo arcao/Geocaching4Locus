@@ -33,4 +33,4 @@ object ParcelableUtil {
 inline fun Parcelable.marshall() = ParcelableUtil.marshall(this)
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun <reified T: Parcelable> ByteArray.unmarshall(creator: Parcelable.Creator<T>) = ParcelableUtil.unmarshall(this, creator)
+inline fun <reified T : Parcelable> ByteArray.unmarshall(creator: Parcelable.Creator<T>) = ParcelableUtil.unmarshall(this, creator)

@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 import locus.api.objects.extra.Point
 
 abstract class WebLinkViewModel(
-        private val accountManager: AccountManager,
-        private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        private val exceptionHandler: ExceptionHandler,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    private val accountManager: AccountManager,
+    private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    private val exceptionHandler: ExceptionHandler,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action: Command<WebLinkAction> = Command()
 
@@ -83,4 +83,3 @@ abstract class WebLinkViewModel(
         action(WebLinkAction.Cancel)
     }
 }
-

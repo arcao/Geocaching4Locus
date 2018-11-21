@@ -33,8 +33,6 @@ abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFr
         }.exhaustive
     }
 
-
     open override fun onProgressCancel() {
-
     }
 }

@@ -21,12 +21,12 @@ import locus.api.android.ActionDisplayPointsExtended
 import java.util.regex.Pattern
 
 class ImportGeocacheCodeViewModel(
-        private val context: Context,
-        private val accountManager: AccountManager,
-        private val exceptionHandler: ExceptionHandler,
-        private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
-        private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    private val context: Context,
+    private val accountManager: AccountManager,
+    private val exceptionHandler: ExceptionHandler,
+    private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
+    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
 
@@ -113,6 +113,5 @@ class ImportGeocacheCodeViewModel(
 
     companion object {
         private val PATTERN_CACHE_ID_SEPARATOR = Pattern.compile("[\\W]+")
-
     }
 }

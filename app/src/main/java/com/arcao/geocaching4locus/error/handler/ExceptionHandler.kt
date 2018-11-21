@@ -28,7 +28,6 @@ import java.io.EOFException
 import java.io.FileNotFoundException
 import java.io.InterruptedIOException
 import java.net.ConnectException
-import java.net.UnknownHostException
 
 class ExceptionHandler(private val context: Context, private val accountManager: AccountManager) {
 
@@ -40,7 +39,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         return this(throwable)
     }
 
-    operator fun invoke(throwable: Throwable) : Intent {
+    operator fun invoke(throwable: Throwable): Intent {
         var t = throwable
         Timber.e(t)
 
@@ -103,8 +102,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
             // Allow sending error report for exceptions that not caused by timeout or unknown host
             val innerT = t.cause
-            if (innerT != null && innerT !is InterruptedIOException && innerT !is UnknownHostException
-                    && innerT !is ConnectException && innerT !is EOFException && !isSSLConnectionException(innerT)) {
+            if (innerT != null && innerT !is InterruptedIOException && innerT !is UnknownHostException &&
+                    innerT !is ConnectException && innerT !is EOFException && !isSSLConnectionException(innerT)) {
                 builder.exception(t)
             }
 

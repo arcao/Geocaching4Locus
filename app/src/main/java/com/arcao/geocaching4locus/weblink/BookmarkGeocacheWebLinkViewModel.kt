@@ -13,10 +13,10 @@ import java.util.*
 import java.util.regex.Pattern
 
 class BookmarkGeocacheWebLinkViewModel(
-        accountManager: AccountManager,
-        getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-        exceptionHandler: ExceptionHandler,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    accountManager: AccountManager,
+    getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    exceptionHandler: ExceptionHandler,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler, dispatcherProvider) {
 
     override val isPremiumMemberRequired: Boolean
@@ -77,4 +77,3 @@ class BookmarkGeocacheWebLinkViewModel(
         private val GUID_URL_PATTERN = Pattern.compile("guid=([a-f0-9-]+)", Pattern.CASE_INSENSITIVE)
     }
 }
-

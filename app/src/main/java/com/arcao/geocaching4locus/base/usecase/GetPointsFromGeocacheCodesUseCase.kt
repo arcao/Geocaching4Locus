@@ -18,11 +18,11 @@ import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 class GetPointsFromGeocacheCodesUseCase(
-        private val geocachingApi: GeocachingApi,
-        private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
-        private val accountManager: AccountManager,
-        private val mapper: DataMapper,
-        private val dispatcherProvider: CoroutinesDispatcherProvider
+    private val geocachingApi: GeocachingApi,
+    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val accountManager: AccountManager,
+    private val mapper: DataMapper,
+    private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = dispatcherProvider.io
@@ -105,4 +105,3 @@ class GetPointsFromGeocacheCodesUseCase(
         return cacheIds.copyOfRange(current, current + count)
     }
 }
-

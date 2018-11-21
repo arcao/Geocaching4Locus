@@ -26,10 +26,11 @@ object Versions {
     const val material_dialogs = "0.9.6.0"
     const val firebase = "16.0.5"
     const val crashlytics = "2.9.6"
-    const val okhttp = "3.11.0"
+    const val okhttp = "3.12.0"
     const val butterknife = "9.0.0-SNAPSHOT"
     const val auto_value = "1.6.2"
     const val auto_value_parcel = "0.2.6"
+    const val androidx_core_ktx = "1.0.1"
     const val androidx_ktx = "1.0.0"
     const val androidx_ktx_lifecycle = "2.0.0"
 

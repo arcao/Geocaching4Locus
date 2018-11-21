@@ -7,7 +7,7 @@ object Deps {
     const val androidx_constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     const val androidx_preference = "androidx.preference:preference:${Versions.androidx}"
 
-    const val androidx_ktx_core = "androidx.core:core-ktx:${Versions.androidx_ktx}"
+    const val androidx_ktx_core = "androidx.core:core-ktx:${Versions.androidx_core_ktx}"
     const val androidx_ktx_fragment = "androidx.fragment:fragment-ktx:${Versions.androidx_ktx}"
     const val androidx_ktx_collection = "androidx.collection:collection-ktx:${Versions.androidx_ktx}"
     const val androidx_ktx_lifecycle_vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_ktx_lifecycle}"

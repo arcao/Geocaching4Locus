@@ -16,7 +16,7 @@ import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_gc.fragment.GeocacheCodesInputDialogFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInputDialogFragment.DialogListener {
     private val viewModel by viewModel<ImportGeocacheCodeViewModel>()

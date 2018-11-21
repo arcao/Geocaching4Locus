@@ -23,7 +23,7 @@ import com.arcao.geocaching4locus.live_map.fragment.PowerSaveWarningDialogFragme
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFragment.OnPowerSaveWarningConfirmedListener {

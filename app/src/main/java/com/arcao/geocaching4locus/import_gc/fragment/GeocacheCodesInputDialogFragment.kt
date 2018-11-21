@@ -16,7 +16,7 @@ import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.runIfIs
 import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeViewModel
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {

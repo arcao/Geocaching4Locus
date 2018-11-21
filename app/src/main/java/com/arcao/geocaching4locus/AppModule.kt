@@ -13,8 +13,8 @@ import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
 import locus.api.mapper.DataMapper
 import org.koin.android.ext.koin.androidApplication
-import org.koin.android.viewmodel.experimental.builder.viewModel
-import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.androidx.viewmodel.experimental.builder.viewModel
+import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.create
 import org.koin.experimental.builder.factory

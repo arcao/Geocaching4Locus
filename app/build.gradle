@@ -26,8 +26,8 @@ dependencies {
 
     // koin
     implementation Deps.koin_android
-    implementation Deps.koin_android_viewmodel
-    implementation Deps.koin_android_scope
+    implementation Deps.koin_androidx_viewmodel
+    implementation Deps.koin_androidx_scope
 
     // Geocaching API
     implementation(Deps.geocaching_api) {

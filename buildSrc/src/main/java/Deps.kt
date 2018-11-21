@@ -21,8 +21,8 @@ object Deps {
 
     // koin
     const val koin_android = "org.koin:koin-android:${Versions.koin}"
-    const val koin_android_viewmodel = "org.koin:koin-android-viewmodel:${Versions.koin}"
-    const val koin_android_scope = "org.koin:koin-android-scope:${Versions.koin}"
+    const val koin_androidx_viewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+    const val koin_androidx_scope = "org.koin:koin-androidx-scope:${Versions.koin}"
 
     // Geocaching API
     const val geocaching_api = "com.arcao:geocaching-api:${Versions.geocaching_api}"

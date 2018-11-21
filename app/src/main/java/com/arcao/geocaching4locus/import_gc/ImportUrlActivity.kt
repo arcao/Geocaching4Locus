@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.regex.Pattern
 

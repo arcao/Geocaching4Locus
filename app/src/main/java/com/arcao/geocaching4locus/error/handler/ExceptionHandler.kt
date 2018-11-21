@@ -5,7 +5,11 @@ import android.content.Intent
 import android.text.TextUtils
 import android.text.format.DateFormat
 import com.arcao.geocaching.api.StatusCode
-import com.arcao.geocaching.api.exception.*
+import com.arcao.geocaching.api.exception.InvalidCredentialsException
+import com.arcao.geocaching.api.exception.InvalidResponseException
+import com.arcao.geocaching.api.exception.InvalidSessionException
+import com.arcao.geocaching.api.exception.LiveGeocachingApiException
+import com.arcao.geocaching.api.exception.NetworkException
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
@@ -28,6 +32,7 @@ import java.io.EOFException
 import java.io.FileNotFoundException
 import java.io.InterruptedIOException
 import java.net.ConnectException
+import java.net.UnknownHostException
 
 class ExceptionHandler(private val context: Context, private val accountManager: AccountManager) {
 

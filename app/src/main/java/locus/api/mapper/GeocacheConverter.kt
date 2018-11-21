@@ -22,7 +22,7 @@ import locus.api.objects.geocaching.GeocachingData
 import locus.api.utils.toTime
 import timber.log.Timber
 import java.text.ParseException
-import java.util.*
+import java.util.Date
 import java.util.regex.Pattern
 
 class GeocacheConverter(context: Context) {

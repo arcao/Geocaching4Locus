@@ -7,7 +7,6 @@ import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingLog
 import locus.api.utils.addIgnoreNull
 import locus.api.utils.toTime
-import java.util.*
 
 class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
 

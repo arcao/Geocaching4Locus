@@ -7,7 +7,6 @@ import locus.api.mapper.Util.GSAK_USERNAME
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingLog
-import java.util.*
 
 class PointMerger(context: Context) {
     private val disableDnfNmNaGeocaches: Boolean

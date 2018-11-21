@@ -6,7 +6,6 @@ import com.arcao.geocaching.api.data.GeocacheLog
 import com.arcao.geocaching.api.data.Trackable
 import locus.api.objects.extra.Point
 import locus.api.utils.addIgnoreNull
-import java.util.*
 
 class DataMapper(context: Context) {
     private val geocacheConverter = GeocacheConverter(context)

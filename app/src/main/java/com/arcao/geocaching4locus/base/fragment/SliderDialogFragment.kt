@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.text.*
+import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
+import android.text.Spanned
+import android.text.TextWatcher
 import android.text.method.NumberKeyListener
 import android.view.LayoutInflater
 import android.view.View
@@ -204,7 +208,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
                         dest.subSequence(dend, dest.length))
 
-                if (TextUtils.isEmpty(result)) {
+                if (result.isEmpty()) {
                     return result
                 }
 
@@ -217,8 +221,8 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
 
                 return if (value > max) "" else filtered
             } else {
-                val filtered = source.subSequence(start, end).toString()
-                if (TextUtils.isEmpty(filtered)) {
+                val filtered = source.subSequence(start, end)
+                if (filtered.isEmpty()) {
                     return ""
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +

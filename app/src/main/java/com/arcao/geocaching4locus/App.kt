@@ -24,8 +24,7 @@ import locus.api.android.utils.LocusUtils
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
-import java.lang.Character.isWhitespace
-import java.util.*
+import java.util.UUID
 
 class App : Application() {
     val accountManager by inject<AccountManager>()

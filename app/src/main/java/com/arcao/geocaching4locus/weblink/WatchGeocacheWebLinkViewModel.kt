@@ -8,7 +8,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import locus.api.objects.extra.Point
-import java.util.*
+import java.util.Locale
 
 class WatchGeocacheWebLinkViewModel(
     accountManager: AccountManager,

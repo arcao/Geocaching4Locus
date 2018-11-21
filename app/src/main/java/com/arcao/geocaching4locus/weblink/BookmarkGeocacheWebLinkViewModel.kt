@@ -9,7 +9,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingData
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 class BookmarkGeocacheWebLinkViewModel(

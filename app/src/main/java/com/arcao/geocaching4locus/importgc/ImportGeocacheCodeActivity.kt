@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc
+package com.arcao.geocaching4locus.importgc
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import com.arcao.geocaching4locus.error.hasPositiveAction
-import com.arcao.geocaching4locus.import_gc.fragment.GeocacheCodesInputDialogFragment
+import com.arcao.geocaching4locus.importgc.fragment.GeocacheCodesInputDialogFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

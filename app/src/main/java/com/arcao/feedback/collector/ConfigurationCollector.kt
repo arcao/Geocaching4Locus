@@ -6,7 +6,6 @@ import android.util.SparseArray
 import timber.log.Timber
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
-import java.util.*
 
 class ConfigurationCollector(private val context: Context) : Collector() {
     override val name: String

@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc
+package com.arcao.geocaching4locus.importgc
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,7 +11,11 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.util.*
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
+import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import kotlinx.coroutines.launch
 import locus.api.android.ActionDisplayPointsExtended

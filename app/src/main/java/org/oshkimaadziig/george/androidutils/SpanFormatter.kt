@@ -16,9 +16,12 @@
 
 package org.oshkimaadziig.george.androidutils
 
-import android.text.*
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.SpannedString
 import androidx.annotation.NonNull
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 /**

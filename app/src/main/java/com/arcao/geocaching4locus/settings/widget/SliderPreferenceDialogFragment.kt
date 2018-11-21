@@ -1,7 +1,10 @@
 package com.arcao.geocaching4locus.settings.widget
 
 import android.os.Bundle
-import android.text.*
+import android.text.Editable
+import android.text.InputType
+import android.text.Spanned
+import android.text.TextWatcher
 import android.text.method.NumberKeyListener
 import android.view.View
 import android.widget.EditText
@@ -54,7 +57,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             value = min
         }
 
-        if (!TextUtils.isEmpty(dialogMessage)) {
+        if (!dialogMessage.isNullOrEmpty()) {
             messageView.visibility = View.VISIBLE
             messageView.text = dialogMessage
         } else {
@@ -142,7 +145,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
                         dest.subSequence(dend, dest.length))
 
-                if (TextUtils.isEmpty(result)) {
+                if (result.isEmpty()) {
                     return result
                 }
 
@@ -160,7 +163,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 }
             } else {
                 val filtered = source.subSequence(start, end).toString()
-                if (TextUtils.isEmpty(filtered)) {
+                if (filtered.isEmpty()) {
                     return StringUtils.EMPTY
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +

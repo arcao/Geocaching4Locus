@@ -16,7 +16,6 @@ import com.arcao.geocaching4locus.BuildConfig
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
-import java.util.*
 
 /**
  *
@@ -126,8 +125,8 @@ class FeedbackFileProvider : ContentProvider() {
                     }
                 }
 
-                cols = Arrays.copyOf<String>(cols, i)
-                values = Arrays.copyOf<Any>(values, i)
+                cols = cols.copyOf(i)
+                values = values.copyOf(i)
 
                 val cursor = MatrixCursor(cols, 1)
                 cursor.addRow(values)

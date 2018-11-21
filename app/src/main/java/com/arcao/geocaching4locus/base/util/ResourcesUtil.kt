@@ -7,7 +7,7 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat
 import org.oshkimaadziig.george.androidutils.SpanFormatter
-import java.util.*
+import java.util.Locale
 
 object ResourcesUtil {
 

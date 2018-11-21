@@ -8,13 +8,23 @@ import android.os.Build
 import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.annotation.StringRes
-import com.arcao.feedback.collector.*
+import com.arcao.feedback.collector.AccountInfoCollector
+import com.arcao.feedback.collector.AppInfoCollector
+import com.arcao.feedback.collector.BuildConfigCollector
+import com.arcao.feedback.collector.Collector
+import com.arcao.feedback.collector.ConfigurationCollector
+import com.arcao.feedback.collector.ConstantsCollector
+import com.arcao.feedback.collector.DisplayManagerCollector
+import com.arcao.feedback.collector.LocusMapInfoCollector
+import com.arcao.feedback.collector.LogCatCollector
+import com.arcao.feedback.collector.MemoryCollector
+import com.arcao.feedback.collector.SharedPreferencesCollector
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter
-import java.util.*
+import java.util.Stack
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 

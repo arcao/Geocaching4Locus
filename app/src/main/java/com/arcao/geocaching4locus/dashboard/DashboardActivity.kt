@@ -18,7 +18,7 @@ import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.databinding.ActivityDashboardBinding
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity
-import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeActivity
+import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeActivity
 import com.arcao.geocaching4locus.live_map.fragment.PowerSaveWarningDialogFragment
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity
 import com.arcao.geocaching4locus.settings.SettingsActivity

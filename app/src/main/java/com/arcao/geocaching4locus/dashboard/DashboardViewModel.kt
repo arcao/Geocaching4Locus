@@ -5,7 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.util.*
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
+import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import kotlinx.coroutines.launch
 

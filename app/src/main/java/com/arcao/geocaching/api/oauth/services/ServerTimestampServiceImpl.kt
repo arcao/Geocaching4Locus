@@ -3,7 +3,7 @@ package com.arcao.geocaching.api.oauth.services
 import com.arcao.wherigoservice.api.WherigoApiFactory
 import com.github.scribejava.core.services.TimestampServiceImpl
 import timber.log.Timber
-import java.util.*
+import java.util.Random
 
 class ServerTimestampServiceImpl : TimestampServiceImpl() {
     private val rand = Random()

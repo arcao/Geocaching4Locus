@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc
+package com.arcao.geocaching4locus.importgc
 
 import android.app.Activity
 import android.content.Intent

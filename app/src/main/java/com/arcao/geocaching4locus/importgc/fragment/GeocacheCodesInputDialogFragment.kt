@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.import_gc.fragment
+package com.arcao.geocaching4locus.importgc.fragment
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -14,7 +14,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.runIfIs
-import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeViewModel
+import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

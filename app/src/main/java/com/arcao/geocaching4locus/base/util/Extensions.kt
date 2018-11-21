@@ -22,8 +22,15 @@ import kotlin.reflect.KClass
 val <T> T.exhaustive: T
     get() = this
 
-inline fun <reified T : Any> Any?.ifIs(t : KClass<T>, block : T.() -> Unit) {
+inline fun <reified T : Any> Any?.runIfIs(t : KClass<T>, crossinline block : T.() -> Unit) {
     if (this is T) {
         block()
     }
 }
+
+suspend inline fun <reified T : Any> Any?.runIfIsSuspended(t : KClass<T>, crossinline block : suspend T.() -> Unit) {
+    if (this is T) {
+        block()
+    }
+}
+

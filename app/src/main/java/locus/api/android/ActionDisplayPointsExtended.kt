@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
-import androidx.annotation.Nullable
 import locus.api.android.utils.LocusConst
 import locus.api.android.utils.exceptions.RequiredVersionMissingException
 import timber.log.Timber
@@ -13,7 +12,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 object ActionDisplayPointsExtended : ActionDisplayPoints() {
-    private const val LOCUS_CACHE_FILENAME = "data.locus"
+    private const val APP_DIRECTORY = "Geocaching4Locus"
+    private const val CACHE_FILENAME = "data.locus"
 
     @JvmStatic
     @Throws(RequiredVersionMissingException::class)
@@ -43,11 +43,7 @@ object ActionDisplayPointsExtended : ActionDisplayPoints() {
     }
 
     @JvmStatic
-    @Nullable
-    fun createSendPacksIntent(file: File, callImport: Boolean, center: Boolean): Intent? {
-        if (!file.exists())
-            return null
-
+    fun createSendPacksIntent(file: File, callImport: Boolean, center: Boolean): Intent {
         return Intent(LocusConst.ACTION_DISPLAY_DATA)
                 .putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.absolutePath)
                 // set centering tag
@@ -64,7 +60,7 @@ object ActionDisplayPointsExtended : ActionDisplayPoints() {
     @JvmStatic
     val cacheFileName: File
         get() {
-            val cacheFile = File(Environment.getExternalStorageDirectory(), String.format("/Geocaching4Locus/%s", LOCUS_CACHE_FILENAME))
+            val cacheFile = File(File(Environment.getExternalStorageDirectory(), APP_DIRECTORY), CACHE_FILENAME)
 
             Timber.d("Cache file for Locus: %s", cacheFile.toString())
 

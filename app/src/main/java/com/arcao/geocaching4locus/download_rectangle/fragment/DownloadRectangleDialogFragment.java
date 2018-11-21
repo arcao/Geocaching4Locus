@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class DownloadRectangleDialogFragment extends AbstractDialogFragment implements DownloadRectangleTask.TaskListener {
+    public static final String FRAGMENT_TAG = DownloadRectangleDialogFragment.class.getName();
 
     public interface DialogListener {
         void onDownloadFinished(Intent intent);

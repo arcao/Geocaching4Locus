@@ -3,12 +3,14 @@ package com.arcao.geocaching4locus
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
+import com.arcao.geocaching4locus.base.usecase.*
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeViewModel
+import com.arcao.geocaching4locus.import_gc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
+import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
-import com.arcao.geocaching4locus.weblink.usecase.GetPointFromGeocacheCodeUseCase
 import locus.api.mapper.DataMapper
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.experimental.builder.viewModel
@@ -26,14 +28,25 @@ internal val appModule = module {
 
     single<ExceptionHandler>()
     factory<LiveMapNotificationManager>()
-    single<GeocachingApiLoginUseCase>()
 
+    // ---- Usecases ----
+    single<GeocachingApiLoginUseCase>()
+    single<GetGeocacheCodeFromGuidUseCase>()
+    single<GetPointFromGeocacheCodeUseCase>()
+    single<GetPointsFromGeocacheCodesUseCase>()
+    single<WritePointToPackPointsFileUseCase>()
+
+    // ---- View models ----
     // dashboard
     viewModel {
         (calledFromLocusMap : Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get())
     }
-
-    // weblink
+    // web link
+    viewModel<BookmarkGeocacheWebLinkViewModel>()
     viewModel<WatchGeocacheWebLinkViewModel>()
-    single<GetPointFromGeocacheCodeUseCase>()
+    // import geocache codes
+    viewModel<ImportGeocacheCodeViewModel>()
+    // import url
+    viewModel<ImportUrlViewModel>()
+
 }

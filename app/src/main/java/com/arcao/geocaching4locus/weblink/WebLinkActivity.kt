@@ -11,45 +11,25 @@ import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.error.ErrorActivity
-import com.arcao.geocaching4locus.weblink.fragment.WebLinkProgressDialogFragment
 import locus.api.android.utils.LocusUtils
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
-abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDialogFragment.DialogListener {
+abstract class WebLinkActivity : AbstractActionBarActivity() {
     protected abstract val viewModel: WebLinkViewModel
     private val accountManager by inject<AccountManager>()
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.progressVisible.observe(this) { visible ->
-            if (visible)
-                showProgressDialog()
-            else
-                dismissProgressDialog()
-        }
-
+        viewModel.progress.observe(this, ::handleProgress)
         viewModel.action.observe(this, ::handleAction)
 
         processIntent()
     }
 
-    private fun dismissProgressDialog() {
-        val f = supportFragmentManager.findFragmentByTag(WebLinkProgressDialogFragment.FRAGMENT_TAG) as WebLinkProgressDialogFragment?
-        f?.dismiss()
-    }
-
     override fun onProgressCancel() {
         viewModel.cancelRetrieveUri()
-    }
-
-    private fun showProgressDialog() {
-        if (supportFragmentManager.findFragmentByTag(WebLinkProgressDialogFragment.FRAGMENT_TAG) != null)
-            return
-
-        val f = WebLinkProgressDialogFragment.newInstance()
-        f.show(supportFragmentManager, WebLinkProgressDialogFragment.FRAGMENT_TAG)
     }
 
     private fun processIntent() {
@@ -78,11 +58,16 @@ abstract class WebLinkActivity : AbstractActionBarActivity(), WebLinkProgressDia
             WebLinkAction.SignIn ->
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
             is WebLinkAction.ShowUri -> {
-                showWebPage(action.uri)
+                if (showWebPage(action.uri)) {
+                    setResult(Activity.RESULT_OK)
+                } else {
+                    setResult(Activity.RESULT_CANCELED)
+                }
                 finish()
             }
             is WebLinkAction.Error -> {
                 startActivity(action.intent)
+                setResult(Activity.RESULT_CANCELED)
                 finish()
             }
             WebLinkAction.Cancel -> {

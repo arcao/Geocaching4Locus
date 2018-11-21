@@ -11,7 +11,6 @@ import com.arcao.geocaching4locus.base.util.PermissionUtil;
 import com.arcao.geocaching4locus.download_rectangle.fragment.DownloadRectangleDialogFragment;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
-import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 
 import androidx.annotation.NonNull;
@@ -48,7 +47,7 @@ public class DownloadRectangleActivity extends AbstractActionBarActivity impleme
             return;
         }
 
-        DownloadRectangleDialogFragment.newInstance().show(getSupportFragmentManager(), ImportDialogFragment.FRAGMENT_TAG);
+        DownloadRectangleDialogFragment.newInstance().show(getSupportFragmentManager(), DownloadRectangleDialogFragment.FRAGMENT_TAG);
     }
 
     @Override

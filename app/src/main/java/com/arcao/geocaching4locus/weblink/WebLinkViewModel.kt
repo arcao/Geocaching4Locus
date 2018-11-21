@@ -1,14 +1,14 @@
 package com.arcao.geocaching4locus.weblink
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import com.arcao.geocaching4locus.weblink.usecase.GetPointFromGeocacheCodeUseCase
 import kotlinx.coroutines.launch
 import locus.api.objects.extra.Point
 
@@ -18,8 +18,6 @@ abstract class WebLinkViewModel(
         private val exceptionHandler: ExceptionHandler,
         dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
-
-    val progressVisible: MutableLiveData<Boolean> = MutableLiveData()
     val action: Command<WebLinkAction> = Command()
 
     protected open val isPremiumMemberRequired: Boolean
@@ -57,9 +55,9 @@ abstract class WebLinkViewModel(
                     return@launch
                 }
 
-                progressVisible(true)
-                val newPoint = getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
-                progressVisible(false)
+                val newPoint = showProgress(R.string.progress_download_geocache) {
+                    getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
+                }
                 getWebLink(newPoint)
             }
 

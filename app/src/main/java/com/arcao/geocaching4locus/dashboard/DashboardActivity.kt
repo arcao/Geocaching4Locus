@@ -18,7 +18,7 @@ import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.databinding.ActivityDashboardBinding
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity
-import com.arcao.geocaching4locus.import_gc.ImportFromGCActivity
+import com.arcao.geocaching4locus.import_gc.ImportGeocacheCodeActivity
 import com.arcao.geocaching4locus.live_map.fragment.PowerSaveWarningDialogFragment
 import com.arcao.geocaching4locus.search_nearest.SearchNearestActivity
 import com.arcao.geocaching4locus.settings.SettingsActivity
@@ -59,7 +59,7 @@ class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFra
                 )
             }
             is DashboardAction.ImportGcCode ->
-                startActivityForResult(Intent(this, ImportFromGCActivity::class.java), 0)
+                startActivityForResult(Intent(this, ImportGeocacheCodeActivity::class.java), 0)
             is DashboardAction.DownloadLiveMapGeocaches ->
                 startActivityForResult(Intent(this, DownloadRectangleActivity::class.java), 0)
             is DashboardAction.ImportBookmarks ->

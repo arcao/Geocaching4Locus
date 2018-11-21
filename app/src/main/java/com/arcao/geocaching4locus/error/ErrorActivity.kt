@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.CheckBox
@@ -212,9 +213,13 @@ class ErrorActivity : AppCompatActivity() {
     companion object {
         private const val KEY_TITLE = "TITLE"
         private const val KEY_MESSAGE = "MESSAGE"
-        private const val KEY_POSITIVE_ACTION = "POSITIVE_ACTION"
+        internal const val KEY_POSITIVE_ACTION = "POSITIVE_ACTION"
         private const val KEY_POSITIVE_BUTTON_TEXT = "POSITIVE_BUTTON_TEXT"
         private const val KEY_NEGATIVE_BUTTON_TEXT = "NEGATIVE_BUTTON_TEXT"
         private const val KEY_EXCEPTION = "EXCEPTION"
     }
 }
+
+@Suppress("NOTHING_TO_INLINE")
+internal inline fun Intent.hasPositiveAction() =
+        getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null

@@ -94,7 +94,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:label="@string/launcher_import_geocache">
+        <activity android:name=".import_gc.ImportUrlActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:label="@string/launcher_import_geocache">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -123,7 +123,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".authentication.LoginActivity" android:label="@string/title_login" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+        <activity android:name=".import_gc.ImportGeocacheCodeActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -159,7 +159,7 @@
         <!-- Backward compatibility with Locus Map -->
         <activity-alias android:name=".DashboardActivity" android:targetActivity=".dashboard.DashboardActivity" android:exported="true" />
         <activity-alias android:name=".SearchNearestActivity" android:targetActivity=".search_nearest.SearchNearestActivity" android:exported="true" />
-        <activity-alias android:name=".ImportFromGCActivity" android:targetActivity=".import_gc.ImportFromGCActivity" android:exported="true" />
+        <activity-alias android:name=".ImportFromGCActivity" android:targetActivity=".import_gc.ImportGeocacheCodeActivity" android:exported="true" />
         <activity-alias android:name=".ImportBookmarkActivity" android:targetActivity=".import_bookmarks.ImportBookmarkActivity" android:exported="true" />
     </application>
 </manifest>

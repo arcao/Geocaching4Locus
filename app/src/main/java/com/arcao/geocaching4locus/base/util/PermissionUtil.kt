@@ -50,3 +50,6 @@ object PermissionUtil {
         }
     }
 }
+
+val Context.hasExternalStoragePermission
+        get() = PermissionUtil.hasPermission(this, *PermissionUtil.PERMISSION_EXTERNAL_STORAGE)

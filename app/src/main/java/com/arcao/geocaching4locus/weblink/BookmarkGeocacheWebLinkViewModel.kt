@@ -5,8 +5,8 @@ import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.BuildConfig
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import com.arcao.geocaching4locus.weblink.usecase.GetPointFromGeocacheCodeUseCase
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingData
 import java.util.*

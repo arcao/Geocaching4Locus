@@ -5,22 +5,22 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching.api.data.bookmarks.BookmarkList;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment;
-import com.arcao.geocaching4locus.import_gc.fragment.ImportDialogFragment;
 import com.arcao.geocaching4locus.import_bookmarks.task.BookmarkImportTask;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class BookmarkImportDialogFragment extends AbstractDialogFragment implements BookmarkImportTask.TaskListener {
-    public static final String FRAGMENT_TAG = ImportDialogFragment.class.getName();
+    public static final String FRAGMENT_TAG = BookmarkImportDialogFragment.class.getName();
 
     private static final String PARAM_GUID = "GUID";
     private static final String PARAM_COUNT = "COUNT";

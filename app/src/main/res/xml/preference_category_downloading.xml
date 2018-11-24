@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/pref_downloading">
+<androidx.preference.PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:title="@string/pref_downloading">
     <CheckBoxPreference
-        android:defaultValue="true "
-        android:key="simple_cache_data"
-        android:summary="@string/pref_download_basic_summary"
-        android:title="@string/pref_download_basic" />
+            app:defaultValue="true "
+            app:key="simple_cache_data"
+            app:summary="@string/pref_download_basic_summary"
+            app:title="@string/pref_download_basic"/>
     <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/pref_download_on_show_entries"
-        android:entryValues="@array/pref_download_on_show_values"
-        android:key="full_cache_data_on_show"
-        android:summary="@string/pref_download_on_show_summary"
-        android:title="@string/pref_download_on_show" />
+            app:defaultValue="0"
+            app:entries="@array/pref_download_on_show_entries"
+            app:entryValues="@array/pref_download_on_show_values"
+            app:key="full_cache_data_on_show"
+            app:summary="@string/pref_download_on_show_summary"
+            app:title="@string/pref_download_on_show"/>
     <com.arcao.geocaching4locus.settings.widget.SliderPreference
-        android:defaultValue="5"
-        android:dialogMessage="@string/pref_logs_count_summary"
-        android:key="downloading_count_of_logs"
-        android:max="30"
-        android:summary="@string/pref_logs_count_summary"
-        android:title="@string/pref_logs_count" />
+            app:defaultValue="5"
+            app:dialogMessage="@string/pref_logs_count_summary"
+            app:key="downloading_count_of_logs"
+            app:max="30"
+            app:summary="@string/pref_logs_count_summary"
+            app:title="@string/pref_logs_count"/>
     <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="download_logs_update_cache"
-        android:summary="@string/pref_download_logs_update_geocache_summary"
-        android:title="@string/pref_download_logs_update_geocache" />
+            app:defaultValue="true"
+            app:key="download_logs_update_cache"
+            app:summary="@string/pref_download_logs_update_geocache_summary"
+            app:title="@string/pref_download_logs_update_geocache"/>
     <com.arcao.geocaching4locus.settings.widget.ListPreference
-        android:defaultValue="10"
-        android:entries="@array/count_of_caches_steps"
-        android:entryValues="@array/count_of_caches_steps"
-        android:key="downloading_count_of_caches_step"
-        android:summary="@string/pref_step_geocaching_count_summary"
-        android:title="@string/pref_step_geocaching_count" />
+            app:defaultValue="10"
+            app:entries="@array/count_of_caches_steps"
+            app:entryValues="@array/count_of_caches_steps"
+            app:key="downloading_count_of_caches_step"
+            app:summary="@string/pref_step_geocaching_count_summary"
+            app:title="@string/pref_step_geocaching_count"/>
     <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="disable_dnf_nm_na_caches"
-        android:summary="@string/pref_disable_dnf_nm_na_geocaches_summary"
-        android:title="@string/pref_disable_dnf_nm_na_geocaches" />
+            app:defaultValue="false"
+            app:key="disable_dnf_nm_na_caches"
+            app:summary="@string/pref_disable_dnf_nm_na_geocaches_summary"
+            app:title="@string/pref_disable_dnf_nm_na_geocaches"/>
     <com.arcao.geocaching4locus.settings.widget.SliderPreference
-        android:defaultValue="1"
-        android:dependency="disable_dnf_nm_na_caches"
-        android:key="disable_dnf_nm_na_caches_logs_count"
-        android:max="5"
-        android:title="@string/pref_disable_dnf_nm_na_geocaches_logs_count"
-        app:min="1" />
-</PreferenceScreen>
+            app:defaultValue="1"
+            app:dependency="disable_dnf_nm_na_caches"
+            app:key="disable_dnf_nm_na_caches_logs_count"
+            app:max="5"
+            app:title="@string/pref_disable_dnf_nm_na_geocaches_logs_count"
+            app:min="1"/>
+</androidx.preference.PreferenceScreen>

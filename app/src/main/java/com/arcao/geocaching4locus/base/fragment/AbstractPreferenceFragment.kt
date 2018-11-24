@@ -6,7 +6,6 @@ import androidx.annotation.XmlRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
-import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
 import org.oshkimaadziig.george.androidutils.SpanFormatter
@@ -21,8 +20,8 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPr
         return findPreference(key) as P
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
-        addPreferencesFromResource(preferenceResource)
+    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String?) {
+        setPreferencesFromResource(preferenceResource, rootKey)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -46,8 +45,7 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(), SharedPr
     }
 
     protected open fun preparePreference() {
-        if (!resources.getBoolean(R.bool.preferences_prefer_dual_pane))
-            requireActivity().title = preferenceScreen.title
+        requireActivity().title = preferenceScreen.title
     }
 
     protected fun preparePreferenceSummary(value: CharSequence?, resId: Int): CharSequence {

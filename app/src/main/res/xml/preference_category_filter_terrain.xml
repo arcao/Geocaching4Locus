@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/pref_terrain">
-    <com.arcao.geocaching4locus.settings.widget.ListPreference
-        android:key="terrain_filter_min"
-        android:title="@string/pref_terrain_min"
-        android:entries="@array/rating"
-        android:entryValues="@array/rating"
-        android:defaultValue="1" />
-    <com.arcao.geocaching4locus.settings.widget.ListPreference
-        android:key="terrain_filter_max"
-        android:title="@string/pref_terrain_max"
-        android:entries="@array/rating"
-        android:entryValues="@array/rating"
-        android:defaultValue="5" />
-</PreferenceScreen>
+<app:androidx.preference.PreferenceScreen
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:title="@string/pref_terrain">
+    <ListPreference
+            app:key="terrain_filter_min"
+            app:title="@string/pref_terrain_min"
+            app:entries="@array/rating"
+            app:entryValues="@array/rating"
+            app:defaultValue="1"/>
+    <ListPreference
+            app:key="terrain_filter_max"
+            app:title="@string/pref_terrain_max"
+            app:entries="@array/rating"
+            app:entryValues="@array/rating"
+            app:defaultValue="5"/>
+</app:androidx.preference.PreferenceScreen>

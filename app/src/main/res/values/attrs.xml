@@ -9,12 +9,12 @@
 
     <declare-styleable name="SliderPreference">
         <attr name="min" format="integer" />
-        <attr name="android:max" />
-        <attr name="android:defaultValue" />
+        <attr name="max" format="integer" />
+        <attr name="defaultValue" />
         <attr name="step" format="integer" />
-        <attr name="android:title" />
-        <attr name="android:dialogMessage" />
-        <attr name="android:summary" />
+        <attr name="title" format="string|reference" />
+        <attr name="dialogMessage" format="string|reference" />
+        <attr name="summary" format="string|reference" />
     </declare-styleable>
     
     <declare-styleable name="IconPreference">

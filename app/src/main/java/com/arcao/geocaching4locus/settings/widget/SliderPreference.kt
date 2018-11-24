@@ -36,7 +36,7 @@ class SliderPreference @JvmOverloads constructor(context: Context, attrs: Attrib
     init {
         context.withStyledAttributes(attrs, R.styleable.SliderPreference) {
             min = getInt(R.styleable.SliderPreference_min, 0)
-            max = getInt(R.styleable.SliderPreference_android_max, 100)
+            max = getInt(R.styleable.SliderPreference_max, 100)
             step = getInt(R.styleable.SliderPreference_step, 1)
         }
     }

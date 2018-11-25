@@ -63,6 +63,6 @@ abstract class BaseViewModel(
 }
 
 sealed class ProgressState {
-    class ShowProgress(@StringRes val message: Int, val messageArgs: Array<Any>?, val progress: Int, val maxProgress: Int) : ProgressState()
+    class ShowProgress(@StringRes val message: Int = 0, val messageArgs: Array<Any>? = null, val progress: Int = 0, val maxProgress: Int = 0) : ProgressState()
     object HideProgress : ProgressState()
 }

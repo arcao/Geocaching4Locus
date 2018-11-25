@@ -17,7 +17,7 @@ class AccountInfoCollector(private val context: Context) : Collector() {
         if (account == null) {
             sb.append("No Account").append("\n")
         } else {
-            sb.append("NAME=").append(account.name()).append("\n")
+            sb.append("NAME=").append(account.name).append("\n")
 
             sb.append("\n--- RESTRICTIONS ---\n")
             sb.append(SharedPreferencesCollector(context, PrefConstants.RESTRICTION_STORAGE_NAME).collect())

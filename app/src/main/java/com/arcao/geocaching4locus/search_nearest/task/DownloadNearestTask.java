@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
+import androidx.annotation.NonNull;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApiFactory;
 import com.arcao.geocaching.api.data.Geocache;
@@ -14,16 +14,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.filter.Filter;
-import com.arcao.geocaching.api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.filter.TerrainFilter;
+import com.arcao.geocaching.api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.authentication.util.Account;
@@ -39,6 +30,12 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException;
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.arcao.geocaching4locus.search_nearest.parcel.ParcelFile;
 import com.arcao.geocaching4locus.update.UpdateActivity;
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackPoints;
+import locus.api.mapper.DataMapper;
+import locus.api.objects.extra.Point;
+import locus.api.utils.StoreableWriter;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,14 +43,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-
-import androidx.annotation.NonNull;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackPoints;
-import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Point;
-import locus.api.utils.StoreableWriter;
-import timber.log.Timber;
 
 import static com.arcao.geocaching.api.GeocachingApi.ResultQuality.FULL;
 import static com.arcao.geocaching.api.GeocachingApi.ResultQuality.LITE;
@@ -227,8 +216,8 @@ public class DownloadNearestTask extends UserTask<Void, Integer, Intent> {
 
         final Account account = accountManager.getAccount();
 
-        String userName = account != null ? account.name() : null;
-        boolean premiumMember = account != null && account.premium();
+        String userName = account != null ? account.getName() : null;
+        boolean premiumMember = account != null && account.getPremium();
 
         filters.add(new PointRadiusFilter(coordinates.latitude(), coordinates.longitude(), (long) (distance * 1000)));
 

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
+import androidx.annotation.WorkerThread;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
 import com.arcao.geocaching.api.GeocachingApiFactory;
@@ -16,17 +18,7 @@ import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidCredentialsException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
 import com.arcao.geocaching.api.exception.NetworkException;
-import com.arcao.geocaching.api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.filter.Filter;
-import com.arcao.geocaching.api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.filter.TerrainFilter;
-import com.arcao.geocaching.api.filter.ViewportFilter;
+import com.arcao.geocaching.api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
@@ -38,6 +30,12 @@ import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.update.UpdateActivity;
+import locus.api.android.ActionDisplayPoints;
+import locus.api.android.objects.PackPoints;
+import locus.api.android.utils.exceptions.RequiredVersionMissingException;
+import locus.api.mapper.DataMapper;
+import locus.api.objects.extra.Point;
+import timber.log.Timber;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -46,27 +44,8 @@ import java.util.Queue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
-import androidx.annotation.WorkerThread;
-import locus.api.android.ActionDisplayPoints;
-import locus.api.android.objects.PackPoints;
-import locus.api.android.utils.exceptions.RequiredVersionMissingException;
-import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Point;
-import timber.log.Timber;
-
-import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
-import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_PER_REQUEST;
-import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
-import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX;
-import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_REQUESTS;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_BOTTOM_RIGHT_LATITUDE;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_LATITUDE;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_LONGITUDE;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_LATITUDE;
-import static com.arcao.geocaching4locus.live_map.LiveMapService.PARAM_TOP_LEFT_LONGITUDE;
+import static com.arcao.geocaching4locus.base.constants.AppConstants.*;
+import static com.arcao.geocaching4locus.live_map.LiveMapService.*;
 
 public class LiveMapDownloadTask extends Thread {
     private static final Executor CLEAN_MAP_EXECUTOR = Executors.newSingleThreadExecutor();
@@ -270,8 +249,8 @@ public class LiveMapDownloadTask extends Thread {
 
         final Account account = accountManager.getAccount();
 
-        String userName = account != null ? account.name() : null;
-        boolean premiumMember = account != null && account.premium();
+        String userName = account != null ? account.getName() : null;
+        boolean premiumMember = account != null && account.getPremium();
 
         double latitude = task.getDoubleExtra(PARAM_LATITUDE, 0D);
         double longitude = task.getDoubleExtra(PARAM_LONGITUDE, 0D);

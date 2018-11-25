@@ -34,7 +34,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
             val account = accountManager.account
             if (account != null) {
                 setTitle(R.string.pref_logout)
-                summary = prepareAccountSummary(account.name())
+                summary = prepareAccountSummary(account.name)
             } else {
                 setTitle(R.string.pref_login)
                 setSummary(R.string.pref_login_summary)

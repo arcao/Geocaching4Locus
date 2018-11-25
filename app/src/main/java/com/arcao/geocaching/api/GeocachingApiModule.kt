@@ -1,11 +1,17 @@
 package com.arcao.geocaching.api
 
+import android.os.Build
 import com.arcao.geocaching.api.configuration.GeocachingApiConfiguration
 import com.arcao.geocaching.api.configuration.impl.DefaultProductionGeocachingApiConfiguration
 import com.arcao.geocaching.api.configuration.impl.DefaultStagingGeocachingApiConfiguration
 import com.arcao.geocaching.api.downloader.Downloader
 import com.arcao.geocaching.api.downloader.OkHttpClientDownloader
+import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider
 import com.arcao.geocaching4locus.BuildConfig
+import com.arcao.geocaching4locus.base.constants.AppConstants
+import com.github.scribejava.core.builder.ServiceBuilder
+import com.github.scribejava.core.oauth.OAuth10aService
+import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.create
@@ -36,5 +42,24 @@ internal val geocachingApiModule = module {
                 .configuration(get())
                 .downloader(get())
                 .build()
+    }
+
+    // OAuth service
+    factory<OAuth10aService> {
+        val serviceBuilder = ServiceBuilder(BuildConfig.GEOCACHING_API_KEY)
+            .apiSecret(BuildConfig.GEOCACHING_API_SECRET)
+            .callback(AppConstants.OAUTH_CALLBACK_URL)
+            .httpClient(OkHttpHttpClient(get<OkHttpClient>()))
+
+        if (BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // for debugging is required API 19
+            serviceBuilder.debug()
+        }
+
+        if (BuildConfig.GEOCACHING_API_STAGING) {
+            serviceBuilder.build(GeocachingOAuthProvider.Staging())
+        } else {
+            serviceBuilder.build(GeocachingOAuthProvider())
+        }
     }
 }

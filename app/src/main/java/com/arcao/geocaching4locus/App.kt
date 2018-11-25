@@ -85,8 +85,8 @@ class App : Application() {
 
         val account = accountManager.account
         if (account != null) {
-            Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium())
-            AnalyticsUtil.setPremiumUser(this, account.premium())
+            Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium)
+            AnalyticsUtil.setPremiumUser(this, account.premium)
         }
 
         try {

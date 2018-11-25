@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
+import androidx.annotation.NonNull;
 import com.arcao.geocaching.api.GeocachingApi;
 import com.arcao.geocaching.api.GeocachingApi.ResultQuality;
 import com.arcao.geocaching.api.GeocachingApiFactory;
@@ -14,17 +14,7 @@ import com.arcao.geocaching.api.data.type.ContainerType;
 import com.arcao.geocaching.api.data.type.GeocacheType;
 import com.arcao.geocaching.api.exception.GeocachingApiException;
 import com.arcao.geocaching.api.exception.InvalidSessionException;
-import com.arcao.geocaching.api.filter.BookmarksExcludeFilter;
-import com.arcao.geocaching.api.filter.DifficultyFilter;
-import com.arcao.geocaching.api.filter.Filter;
-import com.arcao.geocaching.api.filter.GeocacheContainerSizeFilter;
-import com.arcao.geocaching.api.filter.GeocacheExclusionsFilter;
-import com.arcao.geocaching.api.filter.GeocacheTypeFilter;
-import com.arcao.geocaching.api.filter.NotFoundByUsersFilter;
-import com.arcao.geocaching.api.filter.NotHiddenByUsersFilter;
-import com.arcao.geocaching.api.filter.PointRadiusFilter;
-import com.arcao.geocaching.api.filter.TerrainFilter;
-import com.arcao.geocaching.api.filter.ViewportFilter;
+import com.arcao.geocaching.api.filter.*;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.authentication.task.GeocachingApiLoginTask;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
@@ -39,6 +29,12 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
 import com.arcao.geocaching4locus.search_nearest.parcel.ParcelFile;
 import com.arcao.geocaching4locus.update.UpdateActivity;
+import locus.api.android.ActionDisplayPointsExtended;
+import locus.api.android.objects.PackPoints;
+import locus.api.mapper.DataMapper;
+import locus.api.objects.extra.Point;
+import locus.api.utils.StoreableWriter;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,27 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import androidx.annotation.NonNull;
-import locus.api.android.ActionDisplayPointsExtended;
-import locus.api.android.objects.PackPoints;
-import locus.api.mapper.DataMapper;
-import locus.api.objects.extra.Point;
-import locus.api.utils.StoreableWriter;
-import timber.log.Timber;
-
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_CACHES_COUNT;
 import static com.arcao.geocaching4locus.base.constants.AppConstants.LIVEMAP_DISTANCE;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_LOGS;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE_PREFIX;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CONTAINER_TYPE_PREFIX;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MAX;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MIN;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_SHOW_DISABLED;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_SHOW_FOUND;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_SHOW_OWN;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MAX;
-import static com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MIN;
+import static com.arcao.geocaching4locus.base.constants.PrefConstants.*;
 
 public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
     private static final String PACK_WAYPOINTS_NAME = DownloadRectangleTask.class.getName();
@@ -235,7 +213,7 @@ public class DownloadRectangleTask extends UserTask<Void, Integer, Intent> {
 
         AccountManager accountManager = App.get(context).getAccountManager();
         //noinspection ConstantConditions
-        String userName = accountManager.getAccount().name();
+        String userName = accountManager.getAccount().getName();
         boolean premiumMember = accountManager.isPremium();
 
         LastLiveMapData liveMapData = LastLiveMapData.getInstance();

@@ -66,9 +66,9 @@ allprojects {
     dependencyUpdates.resolutionStrategy = {
         componentSelection { rules ->
             rules.all { ComponentSelection selection ->
-                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+                boolean rejected = ['alpha'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
                 if (rejected)
-                    selection.reject('Release candidate')
+                    selection.reject('Alpha builds')
             }
         }
     }

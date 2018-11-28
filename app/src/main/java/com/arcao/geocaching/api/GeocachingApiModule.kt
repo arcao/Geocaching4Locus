@@ -8,6 +8,7 @@ import com.arcao.geocaching.api.downloader.Downloader
 import com.arcao.geocaching.api.downloader.OkHttpClientDownloader
 import com.arcao.geocaching.api.oauth.GeocachingOAuthProvider
 import com.arcao.geocaching4locus.BuildConfig
+import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.oauth.OAuth10aService
@@ -15,6 +16,7 @@ import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.module
 import org.koin.experimental.builder.create
+import org.koin.experimental.builder.single
 import java.util.concurrent.TimeUnit
 
 internal val geocachingApiModule = module {
@@ -43,6 +45,8 @@ internal val geocachingApiModule = module {
                 .downloader(get())
                 .build()
     }
+
+    single<DeviceInfoFactory>()
 
     // OAuth service
     factory<OAuth10aService> {

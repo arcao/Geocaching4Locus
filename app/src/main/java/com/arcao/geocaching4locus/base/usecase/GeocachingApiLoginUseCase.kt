@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 class GeocachingApiLoginUseCase(
     private val app: App,
     private val accountManager: AccountManager,
+    private val deviceInfoFactory: DeviceInfoFactory,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
 
@@ -36,7 +37,7 @@ class GeocachingApiLoginUseCase(
                     false,
                     false,
                     false,
-                    DeviceInfoFactory.create(app)
+                    deviceInfoFactory()
             ) ?: throw InvalidResponseException("User profile is null")
 
             accountManager.updateAccount(accountManager.createAccount(userProfile.user()))

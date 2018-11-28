@@ -35,7 +35,7 @@ class GeocachingApiLoginTask private constructor(context: Context, private val a
                 false,
                 false,
                 false,
-                DeviceInfoFactory.create(context)
+                DeviceInfoFactory(App.get(context))()
             ) ?: throw InvalidResponseException("User profile is null")
 
             account = accountManager.createAccount(userProfile.user())

@@ -14,14 +14,15 @@ abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFr
             is ProgressState.ShowProgress -> {
                 if (f != null && f.isShowing) {
                     f.updateProgress(
-                            getText(state.message, state.messageArgs ?: emptyArray<Any>()),
-                            state.progress
+                        getText(state.message, state.messageArgs ?: emptyArray<Any>()),
+                        state.progress,
+                        state.maxProgress
                     )
                 } else {
                     ProgressDialogFragment.newInstance(
-                            getText(state.message, state.messageArgs ?: emptyArray<Any>()),
-                            state.progress,
-                            state.maxProgress
+                        getText(state.message, state.messageArgs ?: emptyArray<Any>()),
+                        state.progress,
+                        state.maxProgress
                     ).show(supportFragmentManager, ProgressDialogFragment.FRAGMENT_TAG)
                 }
             }

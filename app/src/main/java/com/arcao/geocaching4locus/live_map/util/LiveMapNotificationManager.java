@@ -13,31 +13,29 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.StringRes;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.ResourcesUtil;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
-import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
+import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates;
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver;
 import com.arcao.geocaching4locus.live_map.task.LiveMapDownloadTask;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment;
-
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArraySet;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.StringRes;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import locus.api.android.ActionTools;
 import locus.api.android.utils.LocusInfo;
 import locus.api.android.utils.LocusUtils;
 import timber.log.Timber;
+
+import java.util.Collection;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class LiveMapNotificationManager implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String VAR_B_MAP_VISIBLE = ("1300");
@@ -262,7 +260,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
             Toast.makeText(context, context.getText(R.string.toast_live_map_enabled), Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(context, context.getText(R.string.toast_live_map_disabled), Toast.LENGTH_LONG).show();
-            LastLiveMapData.getInstance().remove();
+            LastLiveMapCoordinates.remove();
         }
 
         try {

@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.FilterPreferences
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
@@ -26,6 +27,7 @@ class ImportGeocacheCodeViewModel(
     private val exceptionHandler: ExceptionHandler,
     private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
     private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val filterPreferences: FilterPreferences,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
@@ -69,7 +71,11 @@ class ImportGeocacheCodeViewModel(
 
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
-                val channel = getPointsFromGeocacheCodesUseCase(geocacheCodes).map {
+                val channel = getPointsFromGeocacheCodesUseCase(
+                    geocacheCodes,
+                    !accountManager.isPremium,
+                    filterPreferences.geocacheLogsCount
+                ).map {
                     receivedGeocaches += it.size
                     updateProgress(progress = receivedGeocaches)
                     it

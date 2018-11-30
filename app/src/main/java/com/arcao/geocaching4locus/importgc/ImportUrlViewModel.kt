@@ -1,18 +1,17 @@
 package com.arcao.geocaching4locus.importgc
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.Uri
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
-import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.FilterPreferences
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
@@ -29,7 +28,7 @@ class ImportUrlViewModel(
     private val getGeocacheCodeFromGuidUseCase: GetGeocacheCodeFromGuidUseCase,
     private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
     private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
-    private val preferences: SharedPreferences,
+    private val filterPreferences: FilterPreferences,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
@@ -74,13 +73,10 @@ class ImportUrlViewModel(
 
                 Timber.i("source: import;%s", geocacheCode)
 
-                // TODO improve
-                val geocacheLogsCount = preferences.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5)
-
                 val point = getPointFromGeocacheCodeUseCase(
                         geocacheCode = geocacheCode,
                         liteData = !accountManager.isPremium,
-                        geocacheLogsCount = geocacheLogsCount
+                        geocacheLogsCount = filterPreferences.geocacheLogsCount
                 )
                 writePointToPackPointsFileUseCase(point)
 

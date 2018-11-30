@@ -12,6 +12,7 @@ import com.arcao.geocaching4locus.base.util.runIfIs
 class ProgressDialogFragment : AbstractDialogFragment() {
     private var message: CharSequence = ""
     private var progress: Int = 0
+    private var maxProgress: Int = 0
 
     interface DialogListener {
         fun onProgressCancel()
@@ -31,8 +32,7 @@ class ProgressDialogFragment : AbstractDialogFragment() {
 
         message = savedInstanceState?.getCharSequence(STATE_MESSAGE) ?: arguments.getCharSequence(ARGS_MESSAGE, "")
         progress = savedInstanceState?.getInt(STATE_PROGRESS) ?: arguments.getInt(ARGS_PROGRESS)
-
-        val maxProgress = arguments.getInt(ARGS_MAX_PROGRESS)
+        maxProgress = savedInstanceState?.getInt(STATE_MAX_PROGRESS) ?: arguments.getInt(ARGS_MAX_PROGRESS)
 
         return MaterialDialog.Builder(requireContext())
                 .content(message)
@@ -48,14 +48,19 @@ class ProgressDialogFragment : AbstractDialogFragment() {
 
         outState.putCharSequence(STATE_MESSAGE, message)
         outState.putInt(STATE_PROGRESS, progress)
+        outState.putInt(STATE_MAX_PROGRESS, maxProgress)
     }
 
-    fun updateProgress(message: CharSequence, progress: Int) {
+    fun updateProgress(message: CharSequence, progress: Int, maxProgress: Int) {
         this.progress = progress
         this.message = message
+        this.maxProgress = maxProgress
 
         (dialog as MaterialDialog?)?.apply {
-            if (!isIndeterminateProgress) setProgress(progress)
+            if (!isIndeterminateProgress) {
+                this.maxProgress = maxProgress
+                setProgress(progress)
+            }
             setContent(message)
         }
     }
@@ -77,5 +82,6 @@ class ProgressDialogFragment : AbstractDialogFragment() {
 
         private const val STATE_MESSAGE = "message"
         private const val STATE_PROGRESS = "progress"
+        private const val STATE_MAX_PROGRESS = "max_progress"
     }
 }

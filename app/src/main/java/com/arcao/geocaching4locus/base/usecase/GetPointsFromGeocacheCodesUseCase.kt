@@ -77,7 +77,7 @@ class GetPointsFromGeocacheCodesUseCase(
         Timber.v("found geocaches: %d", current)
         Timber.v("not found geocaches: %s", notFoundGeocacheCodes)
 
-        // throw error if some geocache was not found
+        // throw error if some geocache hasn't found
         if (notFoundGeocacheCodes.isNotEmpty()) {
             throw CacheNotFoundException(*notFoundGeocacheCodes.toTypedArray())
         }

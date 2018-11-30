@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
-import com.arcao.geocaching4locus.live_map.model.LastLiveMapData;
+import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 
 import locus.api.android.features.periodicUpdates.PeriodicUpdatesHandler;
@@ -37,7 +37,7 @@ public class LiveMapBroadcastReceiver extends BroadcastReceiver {
 
         final LiveMapNotificationManager notificationManager = LiveMapNotificationManager.get(context);
 
-        LastLiveMapData.getInstance().update(intent);
+        LastLiveMapCoordinates.update(intent);
 
         if (notificationManager.handleBroadcastIntent(intent)) {
             //noinspection AssignmentToStaticFieldFromInstanceMethod

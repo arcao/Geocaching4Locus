@@ -3,12 +3,16 @@ package com.arcao.geocaching4locus
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.usecase.GeocachingApiFiltersGenerator
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
+import com.arcao.geocaching4locus.base.util.FilterPreferences
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
+import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleViewModel
+import com.arcao.geocaching4locus.download_rectangle.usecase.GetPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
@@ -30,6 +34,8 @@ internal val appModule = module {
     single<DataMapper>()
     single<CoroutinesDispatcherProvider>()
 
+    single<GeocachingApiFiltersGenerator>()
+    single<FilterPreferences>()
     single<ExceptionHandler>()
     factory<LiveMapNotificationManager>()
 
@@ -38,6 +44,7 @@ internal val appModule = module {
     single<GetGeocacheCodeFromGuidUseCase>()
     single<GetPointFromGeocacheCodeUseCase>()
     single<GetPointsFromGeocacheCodesUseCase>()
+    single<GetPointsFromRectangleCoordinatesUseCase>()
     single<WritePointToPackPointsFileUseCase>()
 
     // ---- View models ----
@@ -52,4 +59,6 @@ internal val appModule = module {
     viewModel<ImportGeocacheCodeViewModel>()
     // import url
     viewModel<ImportUrlViewModel>()
+    // download live map rectangles
+    viewModel<DownloadRectangleViewModel>()
 }

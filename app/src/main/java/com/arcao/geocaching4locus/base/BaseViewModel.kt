@@ -44,7 +44,7 @@ abstract class BaseViewModel(
         }
     }
 
-    suspend fun <T : BaseViewModel> T.updateProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = 0) {
+    suspend fun <T : BaseViewModel> T.updateProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = -1, maxProgress : Int = -1) {
         this.progress.value.runIfIsSuspended(ProgressState.ShowProgress::class) {
             mainContext {
                 this@updateProgress.progress(ProgressState.ShowProgress(
@@ -53,9 +53,21 @@ abstract class BaseViewModel(
                         } else {
                             message
                         },
-                        messageArgs ?: this@runIfIsSuspended.messageArgs,
-                        progress,
-                        maxProgress
+                        if (message == 0) {
+                            this@runIfIsSuspended.messageArgs
+                        } else {
+                            messageArgs
+                        },
+                        if (progress < 0) {
+                            this@runIfIsSuspended.progress
+                        } else {
+                            progress
+                        },
+                        if (maxProgress < 0) {
+                            this@runIfIsSuspended.maxProgress
+                        } else {
+                            maxProgress
+                        }
                 ))
             }
         }

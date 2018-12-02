@@ -8,7 +8,7 @@ class LocusMapInfoCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "LocusMapInfo"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         val sb = StringBuilder()
 
         try {

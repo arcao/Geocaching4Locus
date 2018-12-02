@@ -5,7 +5,7 @@ class ConstantsCollector(private val source: Class<*>, private val prefix: Strin
     override val name: String
         get() = "$prefix CONSTANTS"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         val result = StringBuilder()
 
         source.fields.forEach { field ->

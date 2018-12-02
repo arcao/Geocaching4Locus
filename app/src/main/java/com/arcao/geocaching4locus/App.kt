@@ -10,6 +10,7 @@ import android.webkit.CookieSyncManager
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
+import com.arcao.feedback.feedbackModule
 import com.arcao.geocaching.api.geocachingApiModule
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
@@ -62,45 +63,47 @@ class App : Application() {
         }
     }
 
+    val name: String by lazy {
+        getString(applicationInfo.labelRes)
+    }
+
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule))
+        startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, feedbackModule))
 
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
         }
 
+        prepareCrashlytics()
+
+        AnalyticsUtil.setPremiumUser(this, accountManager.isPremium)
+    }
+
+    private fun prepareCrashlytics() {
         // Set up Crashlytics, disabled for debug builds
         val crashlyticsKit = Crashlytics.Builder()
-                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build()
+            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+            .build()
 
         // Initialize Fabric with the debug-disabled crashlytics.
         Fabric.with(this, crashlyticsKit)
         Timber.plant(CrashlyticsTree())
 
         Crashlytics.setUserIdentifier(deviceId)
+        Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, accountManager.isPremium)
 
-        val account = accountManager.account
-        if (account != null) {
-            Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, account.premium)
-            AnalyticsUtil.setPremiumUser(this, account.premium)
-        }
-
-        try {
-            val lv = LocusUtils.getActiveVersion(this)
-            if (lv != null) {
-                Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, lv.versionName)
-                Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, lv.packageName)
-            } else {
-                Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, "")
-                Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, "")
-            }
+        val lv = try {
+            LocusUtils.getActiveVersion(this)
         } catch (t: Throwable) {
             Timber.e(t)
+            null
         }
+
+        Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, lv?.versionName ?: "")
+        Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, lv?.packageName ?: "")
     }
 
     @WorkerThread
@@ -140,7 +143,8 @@ class App : Application() {
             for (cookie in cookies.split(";").dropLastWhile { it.isEmpty() }.toTypedArray()) {
                 val cookieParts = cookie.split("=").dropLastWhile { it.isEmpty() }.toTypedArray()
                 if (cookieParts.isNotEmpty()) {
-                    val newCookie = cookieParts[0].trim(Character::isWhitespace) + "=;expires=Sat, 1 Jan 2000 00:00:01 UTC;"
+                    val newCookie =
+                        cookieParts[0].trim(Character::isWhitespace) + "=;expires=Sat, 1 Jan 2000 00:00:01 UTC;"
                     cookieManager.setCookie(domain, newCookie)
                 }
             }

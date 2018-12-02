@@ -8,7 +8,7 @@ class MemoryCollector : Collector() {
     override val name: String
         get() = "MEMORY"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         try {
             val commandLine = arrayOf("dumpsys", "meminfo", Process.myPid().toString())
             val process = Runtime.getRuntime().exec(commandLine)

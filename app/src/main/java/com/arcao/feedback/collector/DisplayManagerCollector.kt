@@ -16,7 +16,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "DisplayManager"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         var displays: Array<Display>? = null
         val result = StringBuilder()
 

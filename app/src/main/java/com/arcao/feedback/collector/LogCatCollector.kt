@@ -1,5 +1,7 @@
 package com.arcao.feedback.collector
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 import java.io.IOException
 
@@ -7,28 +9,29 @@ class LogCatCollector : Collector() {
     override val name: String
         get() = "LOGCAT"
 
-    override fun collect(): String {
+    override suspend fun collect(): String = coroutineScope {
         try {
             val process = Runtime.getRuntime().exec(COMMAND_LINE)
-            process.inputStream.bufferedReader().use { reader ->
-                Timber.d("Retrieving logcat output...")
-                // Dump stderr to null
-                Thread {
-                    try {
-                        process.errorStream.use { stderr ->
-                            val dummy = ByteArray(DEFAULT_BUFFER_SIZE_IN_BYTES)
-                            while (stderr.read(dummy) >= 0); // discard all data
-                        }
-                    } catch (e: IOException) {
-                        // fall trough
-                    }
-                }.start()
+            val errors = async {
+                val buffer = ByteArray(DEFAULT_BUFFER_SIZE_IN_BYTES)
 
-                return reader.readText()
+                try {
+                    process.errorStream.use { stderr ->
+                        while (stderr.read(buffer) >= 0); // discard all data
+                    }
+                } catch (ignored: IOException) {
+                    // fall trough
+                }
             }
+            val logcat = process.inputStream.bufferedReader().use { reader ->
+                Timber.d("Retrieving logcat output...")
+                reader.readText()
+            }
+            errors.await()
+            logcat
         } catch (t: Exception) {
             Timber.e(t, "LogCatCollector could not retrieve data.")
-            return "Error: " + throwableToString(t)
+            "Error: " + throwableToString(t)
         }
     }
 

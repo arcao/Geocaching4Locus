@@ -19,9 +19,19 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_WEBSITE
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
+import kotlin.coroutines.CoroutineContext
 
-class AboutPreferenceFragment : AbstractPreferenceFragment() {
+class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
+
     override val preferenceResource: Int
         get() = R.xml.preference_category_about
 
@@ -52,7 +62,14 @@ class AboutPreferenceFragment : AbstractPreferenceFragment() {
         }
 
         preference<Preference>(ABOUT_FEEDBACK).setOnPreferenceClickListener {
-            FeedbackHelper.sendFeedback(requireActivity(), R.string.feedback_email, R.string.feedback_subject, R.string.feedback_body)
+            launch {
+                FeedbackHelper.sendFeedback(
+                    requireActivity(),
+                    R.string.feedback_email,
+                    R.string.feedback_subject,
+                    R.string.feedback_body
+                )
+            }
             true
         }
 
@@ -60,6 +77,11 @@ class AboutPreferenceFragment : AbstractPreferenceFragment() {
             DonatePaypalDialogFragment().show(requireFragmentManager(), DonatePaypalDialogFragment.TAG)
             true
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 
     class DonatePaypalDialogFragment : AbstractDialogFragment() {

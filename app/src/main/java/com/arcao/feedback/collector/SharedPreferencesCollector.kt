@@ -8,7 +8,7 @@ class SharedPreferencesCollector @JvmOverloads constructor(private val context: 
     override val name: String
         get() = if (sharedPreferenceName == null) "SharedPreferences.default" else "SharedPreferences.$sharedPreferenceName"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         val prefs: SharedPreferences = if (sharedPreferenceName == null) {
             PreferenceManager.getDefaultSharedPreferences(context)
         } else {

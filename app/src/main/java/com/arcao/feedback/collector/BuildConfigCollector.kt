@@ -6,7 +6,7 @@ class BuildConfigCollector : Collector() {
     override val name: String
         get() = "BuildConfig INFO"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         return "APPLICATION_ID=${BuildConfig.APPLICATION_ID}\n" +
                 "BUILD_TIME=${BuildConfig.BUILD_TIME}\n" +
                 "BUILD_TYPE=${BuildConfig.BUILD_TYPE}\n" +

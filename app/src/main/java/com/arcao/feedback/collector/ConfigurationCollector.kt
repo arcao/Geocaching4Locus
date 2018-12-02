@@ -11,7 +11,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
     override val name: String
         get() = "CONFIGURATION"
 
-    override fun collect(): String {
+    override suspend fun collect(): String {
         return try {
             val crashConf = context.resources.configuration
             ConfigurationCollector.toString(crashConf)

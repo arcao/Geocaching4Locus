@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_FEEDBACK
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_GPLUS
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_VERSION
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_WEBSITE
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage
@@ -24,9 +25,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
+    private val dispatcherProvider by inject<CoroutinesDispatcherProvider>()
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -62,7 +65,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         }
 
         preference<Preference>(ABOUT_FEEDBACK).setOnPreferenceClickListener {
-            launch {
+            launch(dispatcherProvider.computation) {
                 FeedbackHelper.sendFeedback(
                     requireActivity(),
                     R.string.feedback_email,

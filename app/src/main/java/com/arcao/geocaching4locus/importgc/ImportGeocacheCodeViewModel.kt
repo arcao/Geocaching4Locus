@@ -17,7 +17,6 @@ import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.launch
 import locus.api.android.ActionDisplayPointsExtended
 import java.util.regex.Pattern
 
@@ -32,39 +31,31 @@ class ImportGeocacheCodeViewModel(
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
 
-    fun init() = launch {
+    fun init() = mainLaunch {
         if (context.isLocusNotInstalled()) {
-            mainContext {
-                action(ImportGeocacheCodeAction.LocusMapNotInstalled)
-            }
-            return@launch
+            action(ImportGeocacheCodeAction.LocusMapNotInstalled)
+            return@mainLaunch
         }
 
         if (accountManager.account == null) {
-            mainContext {
-                action(ImportGeocacheCodeAction.SignIn)
-            }
-            return@launch
+            action(ImportGeocacheCodeAction.SignIn)
+            return@mainLaunch
         }
 
         if (!context.hasExternalStoragePermission) {
-            mainContext {
-                action(ImportGeocacheCodeAction.RequestExternalStoragePermission)
-            }
-            return@launch
+            action(ImportGeocacheCodeAction.RequestExternalStoragePermission)
+            return@mainLaunch
         }
 
-        mainContext {
-            action(ImportGeocacheCodeAction.GeocacheCodesInput)
-        }
+        action(ImportGeocacheCodeAction.GeocacheCodesInput)
     }
 
     @ExperimentalCoroutinesApi
-    fun importGeocacheCodes(geocacheCodes: Array<String>) = launch {
+    fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {
         val importIntent = ActionDisplayPointsExtended.createSendPacksIntent(
-                ActionDisplayPointsExtended.cacheFileName,
-                true,
-                true
+            ActionDisplayPointsExtended.cacheFileName,
+            true,
+            true
         )
 
         var receivedGeocaches = 0
@@ -84,15 +75,17 @@ class ImportGeocacheCodeViewModel(
             }
         } catch (e: Exception) {
             mainContext {
-                action(ImportGeocacheCodeAction.Error(
+                action(
+                    ImportGeocacheCodeAction.Error(
                         if (receivedGeocaches > 0) {
                             exceptionHandler(IntendedException(e, importIntent))
                         } else {
                             exceptionHandler(e)
                         }
-                ))
+                    )
+                )
             }
-            return@launch
+            return@computationLaunch
         }
 
         mainContext {

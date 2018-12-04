@@ -9,7 +9,6 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import kotlinx.coroutines.launch
 import locus.api.objects.extra.Point
 
 abstract class WebLinkViewModel(
@@ -29,19 +28,15 @@ abstract class WebLinkViewModel(
         return false
     }
 
-    fun resolveUri(point: Point) = launch {
+    fun resolveUri(point: Point) = mainLaunch {
         if (point.gcData == null || point.gcData.cacheID.isNullOrEmpty()) {
-            mainContext {
-                action(WebLinkAction.Cancel)
-            }
-            return@launch
+            action(WebLinkAction.Cancel)
+            return@mainLaunch
         }
 
         if (isPremiumMemberRequired && !accountManager.isPremium) {
-            mainContext {
-                action(WebLinkAction.PremiumMembershipRequired)
-            }
-            return@launch
+            action(WebLinkAction.PremiumMembershipRequired)
+            return@mainLaunch
         }
 
         try {
@@ -49,10 +44,8 @@ abstract class WebLinkViewModel(
                 getWebLink(point)
             } else {
                 if (accountManager.account == null) {
-                    mainContext {
-                        action(WebLinkAction.SignIn)
-                    }
-                    return@launch
+                    action(WebLinkAction.SignIn)
+                    return@mainLaunch
                 }
 
                 val newPoint = showProgress(R.string.progress_download_geocache) {
@@ -62,19 +55,13 @@ abstract class WebLinkViewModel(
             }
 
             if (uri == null) {
-                mainContext {
-                    action(WebLinkAction.Cancel)
-                }
-                return@launch
+                action(WebLinkAction.Cancel)
+                return@mainLaunch
             }
 
-            mainContext {
-                action(WebLinkAction.ShowUri(uri))
-            }
+            action(WebLinkAction.ShowUri(uri))
         } catch (e: Throwable) {
-            mainContext {
-                action(WebLinkAction.Error(exceptionHandler(e)))
-            }
+            action(WebLinkAction.Error(exceptionHandler(e)))
         }
     }
 

@@ -44,31 +44,26 @@ class DashboardViewModel(
         action(DashboardAction.ImportBookmarks)
     }
 
-    fun onClickLiveMap() = launch {
+    fun onClickLiveMap() = mainLaunch {
         if (context.isLocusNotInstalled()) {
-            mainContext {
-                action(DashboardAction.LocusMapNotInstalled)
-            }
-            return@launch
+            action(DashboardAction.LocusMapNotInstalled)
+            return@mainLaunch
         }
 
         if (accountManager.account != null) {
-            mainContext {
-                action(DashboardAction.SignIn)
-            }
-            return@launch
+            action(DashboardAction.SignIn)
+            return@mainLaunch
         }
 
         if (!context.hidePowerManagementWarning) {
-            mainContext {
-                action(DashboardAction.WarnPowerSaveActive)
-            }
+            action(DashboardAction.WarnPowerSaveActive)
+            return@mainLaunch
         }
 
         toggleLiveMap()
     }
 
-    private suspend fun toggleLiveMap() {
+    private suspend fun toggleLiveMap() = computationContext {
         notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
 
         if (calledFromLocusMap) {

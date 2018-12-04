@@ -18,7 +18,6 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.launch
 import locus.api.android.ActionDisplayPointsExtended
 import timber.log.Timber
 
@@ -37,34 +36,26 @@ class DownloadRectangleViewModel(
 
     val action = Command<DownloadRectangleAction>()
 
-    fun startDownload() = launch {
+    fun startDownload() = mainLaunch {
         if (context.isLocusNotInstalled()) {
-            mainContext {
-                action(DownloadRectangleAction.LocusMapNotInstalled)
-            }
-            return@launch
+            action(DownloadRectangleAction.LocusMapNotInstalled)
+            return@mainLaunch
         }
 
         if (accountManager.account == null) {
-            mainContext {
-                action(DownloadRectangleAction.SignIn)
-            }
-            return@launch
+            action(DownloadRectangleAction.SignIn)
+            return@mainLaunch
         }
 
         if (!context.hasExternalStoragePermission) {
-            mainContext {
-                action(DownloadRectangleAction.RequestExternalStoragePermission)
-            }
-            return@launch
+            action(DownloadRectangleAction.RequestExternalStoragePermission)
+            return@mainLaunch
         }
 
         val liveMapCoordinates = LastLiveMapCoordinates.value
         if (liveMapCoordinates == null) {
-            mainContext {
-                action(DownloadRectangleAction.LastLiveMapDataInvalid)
-            }
-            return@launch
+            action(DownloadRectangleAction.LastLiveMapDataInvalid)
+            return@mainLaunch
         }
 
         Timber.i(
@@ -78,7 +69,7 @@ class DownloadRectangleViewModel(
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private suspend fun doDownload(liveMapCoordinates: LastLiveMapCoordinates) {
+    private suspend fun doDownload(liveMapCoordinates: LastLiveMapCoordinates) = computationContext {
         val downloadIntent = ActionDisplayPointsExtended.createSendPacksIntent(
             ActionDisplayPointsExtended.cacheFileName,
             true,
@@ -138,7 +129,7 @@ class DownloadRectangleViewModel(
                     )
                 )
             }
-            return
+            return@computationContext
         }
 
         mainContext {

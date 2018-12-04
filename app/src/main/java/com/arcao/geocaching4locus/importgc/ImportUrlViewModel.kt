@@ -16,7 +16,6 @@ import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import kotlinx.coroutines.launch
 import locus.api.android.ActionDisplayPointsExtended
 import timber.log.Timber
 import java.util.regex.Pattern
@@ -33,32 +32,26 @@ class ImportUrlViewModel(
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
 
-    fun startImport(uri: Uri) = launch {
+    fun startImport(uri: Uri) = mainLaunch {
         if (context.isLocusNotInstalled()) {
-            mainContext {
-                action(ImportUrlAction.LocusMapNotInstalled)
-            }
-            return@launch
+            action(ImportUrlAction.LocusMapNotInstalled)
+            return@mainLaunch
         }
 
         if (accountManager.account == null) {
-            mainContext {
-                action(ImportUrlAction.SignIn)
-            }
-            return@launch
+            action(ImportUrlAction.SignIn)
+            return@mainLaunch
         }
 
         if (!context.hasExternalStoragePermission) {
-            mainContext {
-                action(ImportUrlAction.RequestExternalStoragePermission)
-            }
-            return@launch
+            action(ImportUrlAction.RequestExternalStoragePermission)
+            return@mainLaunch
         }
 
         performImport(uri)
     }
 
-    private suspend fun performImport(uri: Uri) {
+    private suspend fun performImport(uri: Uri) = computationContext {
         AnalyticsUtil.actionImport(accountManager.isPremium)
 
         try {
@@ -74,17 +67,17 @@ class ImportUrlViewModel(
                 Timber.i("source: import;%s", geocacheCode)
 
                 val point = getPointFromGeocacheCodeUseCase(
-                        geocacheCode = geocacheCode,
-                        liteData = !accountManager.isPremium,
-                        geocacheLogsCount = filterPreferences.geocacheLogsCount
+                    geocacheCode = geocacheCode,
+                    liteData = !accountManager.isPremium,
+                    geocacheLogsCount = filterPreferences.geocacheLogsCount
                 )
                 writePointToPackPointsFileUseCase(point)
 
                 mainContext {
                     val intent = ActionDisplayPointsExtended.createSendPacksIntent(
-                            ActionDisplayPointsExtended.cacheFileName,
-                            true,
-                            true
+                        ActionDisplayPointsExtended.cacheFileName,
+                        true,
+                        true
                     )
                     action(ImportUrlAction.Finish(intent))
                 }
@@ -96,22 +89,22 @@ class ImportUrlViewModel(
         }
     }
 
-    private suspend fun retrieveGeocacheCode(uri: Uri): String? {
+    private suspend fun retrieveGeocacheCode(uri: Uri): String? = computationContext {
         val url = uri.toString()
 
         val cacheCodeMatcher = CACHE_CODE_PATTERN.matcher(url)
         if (cacheCodeMatcher.find()) {
-            return cacheCodeMatcher.group(1)
+            return@computationContext cacheCodeMatcher.group(1)
         }
 
         val guidMatcher = GUID_PATTERN.matcher(url)
         if (!guidMatcher.find()) {
-            return null
+            return@computationContext null
         }
 
         val guid = guidMatcher.group(1)
 
-        return getGeocacheCodeFromGuidUseCase(guid)
+        return@computationContext getGeocacheCodeFromGuidUseCase(guid)
     }
 
     fun cancelImport() {
@@ -121,6 +114,9 @@ class ImportUrlViewModel(
 
     companion object {
         val CACHE_CODE_PATTERN: Pattern = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE)
-        private val GUID_PATTERN = Pattern.compile("guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})", Pattern.CASE_INSENSITIVE)
+        private val GUID_PATTERN = Pattern.compile(
+            "guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
+            Pattern.CASE_INSENSITIVE
+        )
     }
 }

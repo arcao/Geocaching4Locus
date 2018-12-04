@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.runIfIsSuspended
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
@@ -17,26 +18,47 @@ abstract class BaseViewModel(
     val job = Job()
     val progress: MutableLiveData<ProgressState> = MutableLiveData()
 
+    // Better to start on main context to minimize cost of switching between computation and main context
+    // Also it is better to read code without switching
+    // If you need more time to do work, switch to computation context
     override val coroutineContext: CoroutineContext
-        get() = dispatcherProvider.computation + job
+        get() = dispatcherProvider.main + job
 
     override fun onCleared() {
         job.cancel()
         super.onCleared()
     }
 
-    suspend fun <T : BaseViewModel, R> T.mainContext(block: suspend T.() -> R): R =
-            withContext(dispatcherProvider.main) {
-                this@mainContext.block()
-            }
+    fun <R> mainLaunch(block: suspend CoroutineScope.() -> R) = launch(dispatcherProvider.main) {
+        block()
+    }
 
-    suspend fun <T : BaseViewModel, R> T.showProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = 0, maxProgress: Int = 0, block: suspend T.() -> R): R {
+    fun <R> computationLaunch(block: suspend CoroutineScope.() -> R) = launch(dispatcherProvider.computation) {
+        block()
+    }
+
+    suspend inline fun <R> mainContext(crossinline block: suspend CoroutineScope.() -> R): R =
+        withContext(dispatcherProvider.main) {
+            block()
+        }
+
+    suspend inline fun <R> computationContext(crossinline block: suspend CoroutineScope.() -> R): R =
+        withContext(dispatcherProvider.computation) {
+            block()
+        }
+
+    suspend fun <R> showProgress(
+        @StringRes message: Int = 0, messageArgs: Array<Any>? = null,
+        progress: Int = 0,
+        maxProgress: Int = 0,
+        block: suspend () -> R
+    ): R {
         mainContext {
             progress(ProgressState.ShowProgress(message, messageArgs, progress, maxProgress))
         }
 
         try {
-            return this.block()
+            return block()
         } finally {
             mainContext {
                 progress(ProgressState.HideProgress)
@@ -44,10 +66,15 @@ abstract class BaseViewModel(
         }
     }
 
-    suspend fun <T : BaseViewModel> T.updateProgress(@StringRes message: Int = 0, messageArgs: Array<Any>? = null, progress: Int = -1, maxProgress : Int = -1) {
+    suspend fun updateProgress(
+        @StringRes message: Int = 0, messageArgs: Array<Any>? = null,
+        progress: Int = -1,
+        maxProgress: Int = -1
+    ) {
         this.progress.value.runIfIsSuspended(ProgressState.ShowProgress::class) {
             mainContext {
-                this@updateProgress.progress(ProgressState.ShowProgress(
+                progress(
+                    ProgressState.ShowProgress(
                         if (message == 0) {
                             this@runIfIsSuspended.message
                         } else {
@@ -68,13 +95,19 @@ abstract class BaseViewModel(
                         } else {
                             maxProgress
                         }
-                ))
+                    )
+                )
             }
         }
     }
 }
 
 sealed class ProgressState {
-    class ShowProgress(@StringRes val message: Int = 0, val messageArgs: Array<Any>? = null, val progress: Int = 0, val maxProgress: Int = 0) : ProgressState()
+    class ShowProgress(
+        @StringRes val message: Int = 0, val messageArgs: Array<Any>? = null,
+        val progress: Int = 0,
+        val maxProgress: Int = 0
+    ) : ProgressState()
+
     object HideProgress : ProgressState()
 }

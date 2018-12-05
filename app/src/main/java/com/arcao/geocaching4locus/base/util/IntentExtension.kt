@@ -7,20 +7,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 
-object IntentUtil {
-    @JvmStatic
-    @Deprecated("Use activity.showWebPage(uri) instead", ReplaceWith("activity.showWebPage(uri)"))
-    fun showWebPage(activity: Activity, uri: Uri): Boolean {
-        return activity.showWebPage(uri)
-    }
-
-    @JvmStatic
-    @Deprecated("Use intent.isCallableWith(context) instead.", ReplaceWith("intent.isCallableWith(context)"))
-    fun isIntentCallable(context: Context, intent: Intent): Boolean {
-        return intent.isCallableWith(context)
-    }
-}
-
 fun Activity.showWebPage(uri: Uri): Boolean {
     @Suppress("DEPRECATION")
     val intent = Intent(Intent.ACTION_VIEW, uri)

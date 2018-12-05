@@ -26,7 +26,7 @@ import com.arcao.geocaching4locus.authentication.util.Account;
 import com.arcao.geocaching4locus.authentication.util.AccountManager;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.util.PreferenceUtil;
-import com.arcao.geocaching4locus.base.util.ResourcesUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesExtensionKt;
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException;
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager;
 import com.arcao.geocaching4locus.update.UpdateActivity;
@@ -147,7 +147,7 @@ public class LiveMapDownloadTask extends Thread {
         Timber.e(e);
 
         if (e instanceof LocusMapRuntimeException) {
-            notificationManager.showLiveMapError(ResourcesUtil.getText(context, R.string.error_locus_map, e.getMessage()));
+            notificationManager.showLiveMapError(ResourcesExtensionKt.getText(context, R.string.error_locus_map, e.getMessage()));
 
             // disable live map
             preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();

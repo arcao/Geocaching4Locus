@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.HtmlUtil
-import com.arcao.geocaching4locus.base.util.ResourcesUtil
+import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.error.ErrorActivity.ErrorDialogFragment.Companion.FRAGMENT_TAG
 import com.crashlytics.android.Crashlytics
 import org.oshkimaadziig.george.androidutils.SpanFormatter
@@ -160,7 +160,7 @@ class ErrorActivity : AppCompatActivity() {
         }
 
         fun message(@StringRes message: Int, vararg params: Any): IntentBuilder {
-            this.message = ResourcesUtil.getText(context, message, *params)
+            this.message = context.getText(message, *params)
             return this
         }
 

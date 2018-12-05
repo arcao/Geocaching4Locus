@@ -7,15 +7,15 @@ import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.util.ResourcesUtil
+import com.arcao.geocaching4locus.base.util.getText
 
 abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
     @JvmOverloads
     protected fun prepareDialog(@StringRes title: Int = 0, @StringRes message: Int, additionalMessage: CharSequence? = null) {
         arguments = bundleOf(
-                PARAM_TITLE to title,
-                PARAM_MESSAGE to message,
-                PARAM_ADDITIONAL_MESSAGE to additionalMessage
+            PARAM_TITLE to title,
+            PARAM_MESSAGE to message,
+            PARAM_ADDITIONAL_MESSAGE to additionalMessage
         )
     }
 
@@ -32,10 +32,11 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
     protected open fun onDialogBuild(builder: MaterialDialog.Builder) {
         val args = requireArguments()
 
-        builder.content(ResourcesUtil.getText(requireContext(), args.getInt(PARAM_MESSAGE),
-                args.getString(PARAM_ADDITIONAL_MESSAGE) ?: ""))
-                .positiveText(R.string.button_ok)
-                .onPositive { _, _ -> onPositiveButtonClick() }
+        builder.content(
+            requireContext().getText(args.getInt(PARAM_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE) ?: "")
+        )
+            .positiveText(R.string.button_ok)
+            .onPositive { _, _ -> onPositiveButtonClick() }
 
         val title = args.getInt(PARAM_TITLE)
         if (title != 0) {

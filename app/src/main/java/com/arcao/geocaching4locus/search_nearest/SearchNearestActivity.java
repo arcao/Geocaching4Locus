@@ -14,7 +14,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.arcao.geocaching4locus.App;
 import com.arcao.geocaching4locus.R;
@@ -23,12 +30,7 @@ import com.arcao.geocaching4locus.base.AbstractActionBarActivity;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment;
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil;
-import com.arcao.geocaching4locus.base.util.Coordinates;
-import com.arcao.geocaching4locus.base.util.LocusMapUtil;
-import com.arcao.geocaching4locus.base.util.PermissionUtil;
-import com.arcao.geocaching4locus.base.util.PreferenceUtil;
-import com.arcao.geocaching4locus.base.util.ResourcesUtil;
+import com.arcao.geocaching4locus.base.util.*;
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.DownloadNearestDialogFragment;
 import com.arcao.geocaching4locus.search_nearest.fragment.LocationUpdateDialogFragment;
@@ -38,22 +40,12 @@ import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView;
 import com.arcao.geocaching4locus.settings.SettingsActivity;
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.apache.commons.lang3.StringUtils;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnFocusChange;
 import locus.api.android.utils.LocusConst;
 import locus.api.android.utils.LocusUtils;
 import locus.api.android.utils.LocusUtils.OnIntentMainFunction;
 import locus.api.android.utils.exceptions.RequiredVersionMissingException;
 import locus.api.objects.extra.Point;
+import org.apache.commons.lang3.StringUtils;
 import timber.log.Timber;
 
 public class SearchNearestActivity extends AbstractActionBarActivity implements LocationUpdateDialogFragment.DialogListener, OnIntentMainFunction, SliderDialogFragment.DialogListener, DownloadNearestDialogFragment.DialogListener {
@@ -277,7 +269,7 @@ public class SearchNearestActivity extends AbstractActionBarActivity implements 
             return;
 
         new MaterialDialog.Builder(this)
-                .content(ResourcesUtil.getText(this, errorResId, StringUtils.defaultString(additionalMessage)))
+                .content(ResourcesExtensionKt.getText(this, errorResId, StringUtils.defaultString(additionalMessage)))
                 .positiveText(R.string.button_ok)
                 .show();
     }

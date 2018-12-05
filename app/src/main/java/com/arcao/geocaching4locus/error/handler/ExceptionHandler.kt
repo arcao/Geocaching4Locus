@@ -15,7 +15,8 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
-import com.arcao.geocaching4locus.base.util.ResourcesUtil
+import com.arcao.geocaching4locus.base.util.getQuantityText
+import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -91,14 +92,13 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     .clearNegativeButtonText()
                     .build()
         } else if (t is InvalidResponseException) {
-            return builder.message(baseMessage, ResourcesUtil.getText(context, R.string.error_invalid_api_response, t.message!!))
+            return builder.message(baseMessage, context.getText(R.string.error_invalid_api_response, t.message!!))
                     .exception(t)
                     .build()
         } else if (t is CacheNotFoundException) {
             val geocacheCodes = t.cacheCodes
             return builder.message(baseMessage,
-                    ResourcesUtil.getQuantityText(context,
-                            R.plurals.plural_error_geocache_not_found,
+                    context.getQuantityText(R.plurals.plural_error_geocache_not_found,
                             geocacheCodes.size, TextUtils.join(", ", geocacheCodes)
                     )
             ).build()
@@ -185,8 +185,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 }
 
                 val renewTime = DateFormat.getTimeFormat(context).format(restrictions.getRenewFullGeocacheLimit())
-                val cacheString = ResourcesUtil.getQuantityText(context, R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod)
-                val errorText = ResourcesUtil.getText(context, message, cacheString, periodString, renewTime)
+                val cacheString = context.getQuantityText(R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod)
+                val errorText = context.getText(message, cacheString, periodString, renewTime)
 
                 builder.title(title).message(baseMessage, errorText)
 

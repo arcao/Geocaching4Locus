@@ -21,7 +21,7 @@ import androidx.core.content.ContextCompat;
 import com.arcao.geocaching4locus.R;
 import com.arcao.geocaching4locus.base.constants.AppConstants;
 import com.arcao.geocaching4locus.base.constants.PrefConstants;
-import com.arcao.geocaching4locus.base.util.ResourcesUtil;
+import com.arcao.geocaching4locus.base.util.ResourcesExtensionKt;
 import com.arcao.geocaching4locus.error.ErrorActivity;
 import com.arcao.geocaching4locus.live_map.LiveMapService;
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates;
@@ -157,9 +157,9 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
         if (current < count) {
             nb.setSmallIcon(R.drawable.ic_stat_live_map_downloading_anim);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                nb.setContentText(ResourcesUtil.getText(context, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
+                nb.setContentText(ResourcesExtensionKt.getText(context, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
             } else {
-                nb.setContentTitle(ResourcesUtil.getText(context, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
+                nb.setContentTitle(ResourcesExtensionKt.getText(context, R.string.notify_live_map_message_downloading, current, count, (current * 100) / count));
             }
         }
 
@@ -285,7 +285,7 @@ public class LiveMapNotificationManager implements SharedPreferences.OnSharedPre
 
     public void showLiveMapError(final CharSequence message) {
         new Handler(Looper.getMainLooper()).post(() ->
-                Toast.makeText(context, ResourcesUtil.getText(context, R.string.error_live_map, message), Toast.LENGTH_LONG).show()
+                Toast.makeText(context, ResourcesExtensionKt.getText(context, R.string.error_live_map, message), Toast.LENGTH_LONG).show()
         );
     }
 

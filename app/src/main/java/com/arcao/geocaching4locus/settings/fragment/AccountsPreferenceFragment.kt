@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_GEOCACHING_LIVE
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
-import com.arcao.geocaching4locus.base.util.ResourcesUtil
+import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.base.util.showWebPage
 import org.koin.android.ext.android.inject
 
@@ -48,7 +48,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun prepareAccountSummary(value: CharSequence): CharSequence {
-        return ResourcesUtil.getText(requireContext(), R.string.pref_logout_summary, stylizedValue(value))
+        return requireContext().getText(R.string.pref_logout_summary, stylizedValue(value))
     }
 
     companion object {

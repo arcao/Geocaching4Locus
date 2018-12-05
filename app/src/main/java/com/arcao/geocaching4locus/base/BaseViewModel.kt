@@ -37,12 +37,12 @@ abstract class BaseViewModel(
         block()
     }
 
-    suspend inline fun <R> mainContext(crossinline block: suspend CoroutineScope.() -> R): R =
+    suspend fun <R> mainContext(block: suspend CoroutineScope.() -> R): R =
         withContext(dispatcherProvider.main) {
             block()
         }
 
-    suspend inline fun <R> computationContext(crossinline block: suspend CoroutineScope.() -> R): R =
+    suspend fun <R> computationContext(block: suspend CoroutineScope.() -> R): R =
         withContext(dispatcherProvider.computation) {
             block()
         }

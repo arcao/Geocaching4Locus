@@ -3,14 +3,14 @@ object Versions {
     const val target_sdk = 28
     const val compile_sdk = target_sdk
 
-    const val kotlin = "1.3.10"
-    const val kotlin_stdlib = "1.3.10"
+    const val kotlin = "1.3.11"
+    const val kotlin_stdlib = "1.3.11"
     const val kotlin_coroutines = "1.0.1"
 
-    const val android_gradle_plugin = "3.3.0-rc01"
+    const val android_gradle_plugin = "3.3.0-rc02"
     const val gradle_versions_plugin = "0.20.0"
     const val google_services_plugin = "4.2.0"
-    const val fabric_io_plugin = "1.26.1"
+    const val fabric_io_plugin = "1.27.0"
 
     const val androidx = "1.0.0"
     const val constraint_layout = "1.1.3"
@@ -24,8 +24,8 @@ object Versions {
     const val commons_collections4 = "4.2"
     const val scribejava = "6.1.0"
     const val material_dialogs = "0.9.6.0"
-    const val firebase = "16.0.5"
-    const val crashlytics = "2.9.6"
+    const val firebase = "16.0.6"
+    const val crashlytics = "2.9.7"
     const val okhttp = "3.12.0"
     const val butterknife = "9.0.0-rc2"
     const val auto_value = "1.6.2"

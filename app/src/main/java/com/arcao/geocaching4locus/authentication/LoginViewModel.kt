@@ -15,6 +15,7 @@ import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.crashlytics.android.Crashlytics
+import kotlinx.coroutines.cancelChildren
 
 class LoginViewModel(
     private val app: App,
@@ -28,7 +29,7 @@ class LoginViewModel(
     val action = Command<LoginAction>()
 
     fun startLogin() {
-        if (job.isActive) job.cancel()
+        if (job.isActive) coroutineContext.cancelChildren()
 
         mainLaunch {
             try {

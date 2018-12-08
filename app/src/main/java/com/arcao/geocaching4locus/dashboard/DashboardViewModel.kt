@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.dashboard
 
 import android.content.Context
+import androidx.annotation.UiThread
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
@@ -44,6 +45,7 @@ class DashboardViewModel(
         action(DashboardAction.ImportBookmarks)
     }
 
+    @UiThread
     fun onClickLiveMap() = mainLaunch {
         if (context.isLocusNotInstalled()) {
             action(DashboardAction.LocusMapNotInstalled)
@@ -63,13 +65,14 @@ class DashboardViewModel(
         toggleLiveMap()
     }
 
-    private suspend fun toggleLiveMap() = computationContext {
-        notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
+    @UiThread
+    private suspend fun toggleLiveMap() {
+        computationContext {
+            notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
+        }
 
         if (calledFromLocusMap) {
-            mainContext {
-                action(DashboardAction.NavigationBack)
-            }
+            action(DashboardAction.NavigationBack)
         }
     }
 

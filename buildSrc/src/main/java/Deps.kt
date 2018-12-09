@@ -6,6 +6,9 @@ object Deps {
     const val material_design = "com.google.android.material:material:${Versions.androidx}"
     const val androidx_constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     const val androidx_preference = "androidx.preference:preference:${Versions.androidx}"
+    const val androidx_lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidx}"
+    const val androidx_lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata:${Versions.androidx}"
+    const val androidx_lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:${Versions.androidx}"
 
     const val androidx_ktx_core = "androidx.core:core-ktx:${Versions.androidx_core_ktx}"
     const val androidx_ktx_fragment = "androidx.fragment:fragment-ktx:${Versions.androidx_ktx}"

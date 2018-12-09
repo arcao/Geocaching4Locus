@@ -12,6 +12,10 @@ dependencies {
     implementation Deps.androidx_constraint_layout
     implementation Deps.androidx_preference
 
+    implementation Deps.androidx_lifecycle_viewmodel
+    implementation Deps.androidx_lifecycle_livedata
+    implementation Deps.androidx_lifecycle_extension
+
     implementation Deps.androidx_ktx_core
     implementation Deps.androidx_ktx_collection
     implementation Deps.androidx_ktx_fragment

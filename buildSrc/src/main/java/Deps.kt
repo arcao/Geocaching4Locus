@@ -6,14 +6,16 @@ object Deps {
     const val material_design = "com.google.android.material:material:${Versions.androidx}"
     const val androidx_constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     const val androidx_preference = "androidx.preference:preference:${Versions.androidx}"
-    const val androidx_lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidx}"
-    const val androidx_lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata:${Versions.androidx}"
-    const val androidx_lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:${Versions.androidx}"
+    const val androidx_lifecycle_viewmodel = "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidx_lifecycle}"
+    const val androidx_lifecycle_livedata = "androidx.lifecycle:lifecycle-livedata:${Versions.androidx_lifecycle}"
+    const val androidx_lifecycle_extension = "androidx.lifecycle:lifecycle-extensions:${Versions.androidx_lifecycle}"
 
     const val androidx_ktx_core = "androidx.core:core-ktx:${Versions.androidx_core_ktx}"
     const val androidx_ktx_fragment = "androidx.fragment:fragment-ktx:${Versions.androidx_ktx}"
     const val androidx_ktx_collection = "androidx.collection:collection-ktx:${Versions.androidx_ktx}"
     const val androidx_ktx_lifecycle_vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_ktx_lifecycle}"
+
+    const val android_databinding_compiler = "com.android.databinding:compiler:${Versions.android_gradle_plugin}"
 
     const val multidex = "com.android.support:multidex:${Versions.multidex}"
 

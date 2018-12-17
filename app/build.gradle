@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 dependencies {
@@ -22,6 +23,8 @@ dependencies {
     implementation Deps.androidx_ktx_lifecycle_vm
 
     implementation Deps.multidex
+
+    kapt Deps.android_databinding_compiler
 
     // kotlin
     implementation Deps.kotlin_stdlib
@@ -98,6 +101,8 @@ android {
 
         multiDexEnabled true
 
+        aaptOptions.cruncherEnabled = false
+
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
@@ -128,7 +133,7 @@ android {
 
     buildTypes {
         debug {
-            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
             versionNameSuffix '-dev'
             crunchPngs false
         }
@@ -144,7 +149,7 @@ android {
             crunchPngs false
 
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
-            proguardFiles fileTree(dir: 'proguard-rules', include: '*.pro') as File[]
+            proguardFiles fileTree(dir: 'proguard-rules', include: '*.pro').getFiles().toArray()
         }
     }
 

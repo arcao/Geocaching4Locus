@@ -8,7 +8,9 @@ import locus.api.objects.geocaching.GeocachingLog
 import locus.api.utils.addIgnoreNull
 import locus.api.utils.toTime
 
-class GeocacheLogConverter(private val imageDataConverter: ImageDataConverter) {
+class GeocacheLogConverter(
+    private val imageDataConverter: ImageDataConverter
+) {
 
     fun addGeocacheLogs(point: Point, @Nullable logs: Collection<GeocacheLog>) {
         if (point.gcData.logs?.isEmpty() != false || logs.isEmpty())

@@ -1,7 +1,6 @@
 package locus.api.mapper
 
 import android.content.Context
-import android.preference.PreferenceManager
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import com.arcao.geocaching.api.data.Geocache
@@ -13,7 +12,7 @@ import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching.api.data.type.WaypointType
 import com.arcao.geocaching.api.util.GeocachingUtils
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.constants.PrefConstants
+import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Location
 import locus.api.objects.extra.Point
@@ -25,23 +24,14 @@ import java.text.ParseException
 import java.util.Date
 import java.util.regex.Pattern
 
-class GeocacheConverter(context: Context) {
-    private val context: Context = context.applicationContext
-
-    private val imageDataConverter = ImageDataConverter()
-    val geocacheLogConverter = GeocacheLogConverter(imageDataConverter)
-    val trackableConverter = TrackableConverter()
-    private val waypointConverter = WaypointConverter()
-
-    private val disableDnfNmNaGeocaches: Boolean
-    private val disableDnfNmNaGeocachesThreshold: Int
-
-    init {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
-        disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false)
-        disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)
-    }
-
+class GeocacheConverter(
+    private val context: Context,
+    private val defaultPreferenceManager: DefaultPreferenceManager,
+    private val geocacheLogConverter: GeocacheLogConverter,
+    private val imageDataConverter: ImageDataConverter,
+    private val trackableConverter: TrackableConverter,
+    private val waypointConverter: WaypointConverter
+) {
     fun createLocusPoint(cache: Geocache): Point {
         val loc = Location()
                 .setLatitude(cache.coordinates().latitude())
@@ -99,8 +89,8 @@ class GeocacheConverter(context: Context) {
 
         updateGeocacheLocationByCorrectedCoordinates(p, cache.userWaypoints())
 
-        if (disableDnfNmNaGeocaches)
-            applyUnavailabilityForGeocache(p, disableDnfNmNaGeocachesThreshold)
+        if (defaultPreferenceManager.disableDnfNmNaGeocaches)
+            applyUnavailabilityForGeocache(p, defaultPreferenceManager.disableDnfNmNaGeocachesThreshold)
 
         return p
     }

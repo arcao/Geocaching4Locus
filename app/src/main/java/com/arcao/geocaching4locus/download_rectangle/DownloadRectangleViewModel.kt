@@ -6,16 +6,16 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.base.util.FilterPreferences
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
-import com.arcao.geocaching4locus.download_rectangle.usecase.GetPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
+import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.channels.map
 import locus.api.android.ActionDisplayPointsExtended
@@ -30,7 +30,7 @@ class DownloadRectangleViewModel(
     private val exceptionHandler: ExceptionHandler,
     private val getPointsFromRectangleCoordinatesUseCase: GetPointsFromRectangleCoordinatesUseCase,
     private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
-    private val filterPreferences: FilterPreferences,
+    private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -85,25 +85,26 @@ class DownloadRectangleViewModel(
                     liveMapCoordinates.center,
                     liveMapCoordinates.topLeft,
                     liveMapCoordinates.bottomRight,
-                    filterPreferences.simpleCacheData,
-                    filterPreferences.geocacheLogsCount,
-                    filterPreferences.trackableLogsCount,
-                    filterPreferences.showDisabled,
-                    filterPreferences.showFound,
-                    filterPreferences.showOwn,
-                    filterPreferences.geocacheTypes,
-                    filterPreferences.containerTypes,
-                    filterPreferences.difficultyMin,
-                    filterPreferences.difficultyMax,
-                    filterPreferences.terrainMin,
-                    filterPreferences.terrainMax,
-                    filterPreferences.excludeIgnoreList
+                    filterPreferenceManager.simpleCacheData,
+                    false,
+                    filterPreferenceManager.geocacheLogsCount,
+                    filterPreferenceManager.trackableLogsCount,
+                    filterPreferenceManager.showDisabled,
+                    filterPreferenceManager.showFound,
+                    filterPreferenceManager.showOwn,
+                    filterPreferenceManager.geocacheTypes,
+                    filterPreferenceManager.containerTypes,
+                    filterPreferenceManager.difficultyMin,
+                    filterPreferenceManager.difficultyMax,
+                    filterPreferenceManager.terrainMin,
+                    filterPreferenceManager.terrainMax,
+                    filterPreferenceManager.excludeIgnoreList
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     updateProgress(progress = receivedGeocaches, maxProgress = count)
 
                     // apply additional downloading full geocache if required
-                    if (filterPreferences.simpleCacheData) {
+                    if (filterPreferenceManager.simpleCacheData) {
                         list.forEach { point ->
                             point.setExtraOnDisplay(
                                 context.packageName,

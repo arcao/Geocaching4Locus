@@ -10,6 +10,7 @@ import android.webkit.CookieSyncManager
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.multidex.MultiDex
 import com.arcao.feedback.feedbackModule
 import com.arcao.geocaching.api.geocachingApiModule
 import com.arcao.geocaching4locus.authentication.util.AccountManager
@@ -71,7 +72,6 @@ class App : Application() {
         super.onCreate()
 
         startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, feedbackModule))
-
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
@@ -80,6 +80,11 @@ class App : Application() {
         prepareCrashlytics()
 
         AnalyticsUtil.setPremiumUser(this, accountManager.isPremium)
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(this)
     }
 
     private fun prepareCrashlytics() {

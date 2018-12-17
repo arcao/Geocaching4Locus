@@ -10,9 +10,10 @@ class LastLiveMapCoordinates private constructor(
     val bottomRight: Coordinates
 ) {
     companion object {
-        private val VAR_LOC_MAP_CENTER = "1302"
-        private val VAR_LOC_MAP_BBOX_TOP_LEFT = "1303"
-        private val VAR_LOC_MAP_BBOX_BOTTOM_RIGHT = "1304"
+        // copied from PeriodicUpdatesConst
+        private const val VAR_LOC_MAP_CENTER = "1302"
+        private const val VAR_LOC_MAP_BBOX_TOP_LEFT = "1303"
+        private const val VAR_LOC_MAP_BBOX_BOTTOM_RIGHT = "1304"
 
         var value : LastLiveMapCoordinates? = null
             private set

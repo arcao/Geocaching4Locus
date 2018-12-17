@@ -147,17 +147,17 @@ public class LiveMapDownloadTask extends Thread {
         Timber.e(e);
 
         if (e instanceof LocusMapRuntimeException) {
-            notificationManager.showLiveMapError(ResourcesExtensionKt.getText(context, R.string.error_locus_map, e.getMessage()));
+            notificationManager.showLiveMapToast(ResourcesExtensionKt.getText(context, R.string.error_locus_map, e.getMessage()));
 
             // disable live map
             preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
         } else if (e instanceof InvalidCredentialsException) {
-            notificationManager.showLiveMapError(R.string.error_no_account);
+            notificationManager.showLiveMapToast(R.string.error_no_account);
 
             // disable live map
             preferences.edit().putBoolean(PrefConstants.LIVE_MAP, false).apply();
         } else if (e instanceof NetworkException) {
-            notificationManager.showLiveMapError(R.string.error_network_unavailable);
+            notificationManager.showLiveMapToast(R.string.error_network_unavailable);
         }
     }
 

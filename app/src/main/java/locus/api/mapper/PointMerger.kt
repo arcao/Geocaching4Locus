@@ -1,22 +1,18 @@
 package locus.api.mapper
 
 import android.content.Context
-import android.preference.PreferenceManager
-import com.arcao.geocaching4locus.base.constants.PrefConstants
+import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.GSAK_USERNAME
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingLog
 
-class PointMerger(context: Context) {
-    private val disableDnfNmNaGeocaches: Boolean
-    private val disableDnfNmNaGeocachesThreshold: Int
+class PointMerger(
+    private val defaultPreferenceManager: DefaultPreferenceManager
+) {
 
-    init {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
-        disableDnfNmNaGeocaches = preferences.getBoolean(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES, false)
-        disableDnfNmNaGeocachesThreshold = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)
-    }
+    @Deprecated("Use koin.")
+    constructor(context: Context) : this(DefaultPreferenceManager(context))
 
     fun mergePoints(dest: Point, src: Point?) {
         dest.removeExtraOnDisplay()
@@ -32,7 +28,9 @@ class PointMerger(context: Context) {
         copyEditedGeocachingWaypointLocation(dest, src)
 
         // only when this feature is enabled
-        if (disableDnfNmNaGeocaches) applyUnavailabilityForGeocache(dest, disableDnfNmNaGeocachesThreshold)
+        if (defaultPreferenceManager.disableDnfNmNaGeocaches) {
+            applyUnavailabilityForGeocache(dest, defaultPreferenceManager.disableDnfNmNaGeocachesThreshold)
+        }
     }
 
     fun mergeGeocachingLogs(dest: Point, src: Point?) {

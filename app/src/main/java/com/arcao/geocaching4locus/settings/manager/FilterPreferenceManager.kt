@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.base.util
+package com.arcao.geocaching4locus.settings.manager
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,8 +7,9 @@ import com.arcao.geocaching.api.data.type.ContainerType
 import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.PrefConstants
+import com.arcao.geocaching4locus.base.util.getParsedFloat
 
-class FilterPreferences(
+class FilterPreferenceManager(
     context: Context,
     private val accountManager: AccountManager
 ) {

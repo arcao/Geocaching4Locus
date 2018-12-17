@@ -11,7 +11,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.base.util.FilterPreferences
+import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
@@ -27,7 +27,7 @@ class ImportUrlViewModel(
     private val getGeocacheCodeFromGuidUseCase: GetGeocacheCodeFromGuidUseCase,
     private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
     private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
-    private val filterPreferences: FilterPreferences,
+    private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
@@ -69,7 +69,7 @@ class ImportUrlViewModel(
                 val point = getPointFromGeocacheCodeUseCase(
                     geocacheCode = geocacheCode,
                     liteData = !accountManager.isPremium,
-                    geocacheLogsCount = filterPreferences.geocacheLogsCount
+                    geocacheLogsCount = filterPreferenceManager.geocacheLogsCount
                 )
                 writePointToPackPointsFileUseCase(point)
 

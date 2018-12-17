@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.download_rectangle.usecase
+package com.arcao.geocaching4locus.base.usecase
 
 import com.arcao.geocaching.api.GeocachingApi
 import com.arcao.geocaching.api.data.SearchForGeocachesRequest
@@ -8,8 +8,6 @@ import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.GeocachingApiFiltersGenerator
-import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +23,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
-    private val geocachingApiFiltersGenerator: GeocachingApiFiltersGenerator,
+    private val geocachingApiFilterProvider: GeocachingApiFilterProvider,
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : CoroutineScope {
@@ -38,6 +36,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
         topLeftCoordinates: Coordinates,
         bottomRightCoordinates: Coordinates,
         liteData: Boolean = true,
+        summaryData: Boolean = false,
         geocacheLogsCount: Int = 0,
         trackableLogsCount: Int = 0,
         downloadDisabled: Boolean = false,
@@ -54,10 +53,11 @@ class GetPointsFromRectangleCoordinatesUseCase(
     ) = produce {
         geocachingApiLoginUseCase(geocachingApi)
 
-        val resultQuality = if (liteData) {
-            GeocachingApi.ResultQuality.LITE
-        } else {
-            GeocachingApi.ResultQuality.FULL
+        val resultQuality = when {
+            liteData && !summaryData -> GeocachingApi.ResultQuality.LITE
+            !liteData && !summaryData -> GeocachingApi.ResultQuality.FULL
+            summaryData -> GeocachingApi.ResultQuality.SUMMARY
+            else -> throw IllegalStateException("Invalid ResultQuality combination.")
         }
 
         var count = AppConstants.ITEMS_PER_REQUEST
@@ -74,7 +74,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
                         .maxPerPage(Math.min(itemsPerRequest, count - current))
                         .geocacheLogCount(geocacheLogsCount)
                         .trackableLogCount(trackableLogsCount)
-                        .addFilters(geocachingApiFiltersGenerator(
+                        .addFilters(geocachingApiFilterProvider(
                             centerCoordinates,
                             topLeftCoordinates,
                             bottomRightCoordinates,

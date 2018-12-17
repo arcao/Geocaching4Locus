@@ -18,7 +18,7 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import java.util.ArrayList
 
-class GeocachingApiFiltersGenerator(
+class GeocachingApiFilterProvider(
     private val accountManager: AccountManager
 ) {
     operator fun invoke(

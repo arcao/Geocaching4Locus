@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.settings.manager
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import androidx.core.content.edit
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 
 class DefaultPreferenceManager(
@@ -22,4 +23,7 @@ class DefaultPreferenceManager(
     val disableDnfNmNaGeocachesThreshold
         get() = preferences.getInt(PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT, 1)
 
+    var liveMapLastRequests
+        get() = preferences.getInt(PrefConstants.LIVE_MAP_LAST_REQUESTS, 0)
+        set(value) = preferences.edit { putInt(PrefConstants.LIVE_MAP_LAST_REQUESTS, value) }
 }

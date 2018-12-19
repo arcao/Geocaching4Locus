@@ -49,6 +49,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
         terrainMin : Float = 1F,
         terrainMax: Float = 5F,
         excludeIgnoreList : Boolean = true,
+        maxCount : Int = 50,
         countHandler: (Int) -> Unit = {}
     ) = produce {
         geocachingApiLoginUseCase(geocachingApi)
@@ -91,7 +92,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
                         ))
                         .build()
                 ).also {
-                    count = Math.min(geocachingApi.lastSearchResultsFound, AppConstants.LIVEMAP_CACHES_COUNT)
+                    count = Math.min(geocachingApi.lastSearchResultsFound, maxCount)
                     withContext(dispatcherProvider.computation) {
                         countHandler(count)
                     }

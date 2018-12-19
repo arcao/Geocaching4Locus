@@ -46,6 +46,7 @@ object PrefConstants {
         const val SHOW_LIVE_MAP_DISABLED_NOTIFICATION = "show_live_map_disabled_notification"
         const val LIVE_MAP_DOWNLOAD_HINTS = "live_map_download_hints"
         const val LIVE_MAP_HIDE_CACHES_ON_DISABLED = "live_map_hide_caches_on_disabled"
+        const val LIVE_MAP_LAST_REQUESTS = "live_map_last_requests"
 
         const val DOWNLOADING_SIMPLE_CACHE_DATA = "simple_cache_data"
         const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW = "full_cache_data_on_show"

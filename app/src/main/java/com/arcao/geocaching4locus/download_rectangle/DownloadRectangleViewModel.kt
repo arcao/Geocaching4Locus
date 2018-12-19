@@ -98,7 +98,8 @@ class DownloadRectangleViewModel(
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
                     filterPreferenceManager.terrainMax,
-                    filterPreferenceManager.excludeIgnoreList
+                    filterPreferenceManager.excludeIgnoreList,
+                    AppConstants.LIVEMAP_CACHES_COUNT
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     updateProgress(progress = receivedGeocaches, maxProgress = count)

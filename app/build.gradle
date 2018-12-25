@@ -21,8 +21,7 @@ dependencies {
     implementation Deps.androidx_ktx_collection
     implementation Deps.androidx_ktx_fragment
     implementation Deps.androidx_ktx_lifecycle_vm
-
-    implementation Deps.multidex
+    implementation Deps.androidx_multidex
 
     kapt Deps.android_databinding_compiler
 

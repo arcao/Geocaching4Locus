@@ -61,6 +61,9 @@ allprojects {
         // for butterknife
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 
+        // for Locus API
+        maven { url "https://dl.bintray.com/asammsoft/maven/" }
+
         mavenCentral()
         jcenter()
     }

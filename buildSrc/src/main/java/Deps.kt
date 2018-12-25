@@ -17,7 +17,7 @@ object Deps {
 
     const val android_databinding_compiler = "com.android.databinding:compiler:${Versions.android_gradle_plugin}"
 
-    const val multidex = "com.android.support:multidex:${Versions.multidex}"
+    const val androidx_multidex = "androidx.multidex:multidex:${Versions.androidx_multidex}"
 
     // kotlin
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin_stdlib}"

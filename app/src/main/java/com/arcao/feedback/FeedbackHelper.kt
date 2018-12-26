@@ -11,7 +11,7 @@ import androidx.annotation.NonNull
 import androidx.annotation.StringRes
 import com.arcao.feedback.collector.Collector
 import com.arcao.geocaching4locus.App
-import kotlinx.coroutines.Dispatchers
+import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import kotlinx.coroutines.withContext
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -28,10 +28,11 @@ import java.util.zip.ZipOutputStream
 object FeedbackHelper : KoinComponent {
     private val app by inject<App>()
     private val collectors by inject<List<Collector>>(DEP_FEEDBACK_COLLECTORS)
+    private val dispatcherProvider by inject<CoroutinesDispatcherProvider>()
 
     @JvmStatic
     suspend fun sendFeedback(@NonNull activity: Activity, @StringRes resEmail: Int, @StringRes resSubject: Int, @StringRes resMessageText: Int) =
-        withContext(Dispatchers.Default) {
+        withContext(dispatcherProvider.computation) {
             val subject = activity.getString(resSubject, app.name, app.version)
 
             val email = activity.getString(resEmail)
@@ -67,7 +68,7 @@ object FeedbackHelper : KoinComponent {
                 Timber.e(e)
             }
 
-            withContext(Dispatchers.Main) {
+            withContext(dispatcherProvider.main) {
                 activity.startActivity(createEmailOnlyChooserIntent(activity, intent, null))
             }
         }

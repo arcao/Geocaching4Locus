@@ -9,17 +9,18 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.map
-import locus.api.android.ActionDisplayPointsExtended
+import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
 
+@ExperimentalCoroutinesApi
 class ImportGeocacheCodeViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
@@ -50,12 +51,10 @@ class ImportGeocacheCodeViewModel(
         action(ImportGeocacheCodeAction.GeocacheCodesInput)
     }
 
-    @ExperimentalCoroutinesApi
     fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {
-        val importIntent = ActionDisplayPointsExtended.createSendPacksIntent(
-            ActionDisplayPointsExtended.cacheFileName,
-            true,
-            true
+        val importIntent = LocusMapManager.createSendPointsIntent(
+            callImport = true,
+            center = true
         )
 
         var receivedGeocaches = 0

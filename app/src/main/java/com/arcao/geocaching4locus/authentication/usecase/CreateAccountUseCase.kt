@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.authentication.usecase
 import com.arcao.geocaching.api.GeocachingApi
 import com.arcao.geocaching.api.exception.InvalidResponseException
 import com.arcao.geocaching.api.exception.NetworkException
-import com.arcao.geocaching4locus.authentication.util.Account
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.authentication.util.DeviceInfoFactory
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -13,13 +12,13 @@ import java.io.IOException
 
 class CreateAccountUseCase(
     private val accountManager: AccountManager,
-    private val oAuthService : OAuth10aService,
+    private val oAuthService: OAuth10aService,
     private val geocachingApi: GeocachingApi,
     private val deviceInfoFactory: DeviceInfoFactory,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 
 ) {
-    suspend operator fun invoke(oAuthVerifier : String) : Account = withContext(dispatcherProvider.io) {
+    suspend operator fun invoke(oAuthVerifier: String) = withContext(dispatcherProvider.io) {
         try {
             val requestToken = accountManager.oAuthRequestToken
             val accessToken = oAuthService.getAccessToken(requestToken, oAuthVerifier)
@@ -55,7 +54,7 @@ class CreateAccountUseCase(
             accountManager.restrictions.updateLimits(apiLimitsResponse.apiLimits())
 
             account
-        } catch (e : IOException) {
+        } catch (e: IOException) {
             throw NetworkException(e.message, e)
         }
     }

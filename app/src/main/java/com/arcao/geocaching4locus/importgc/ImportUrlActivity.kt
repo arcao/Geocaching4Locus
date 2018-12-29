@@ -15,7 +15,6 @@ import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErro
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.util.regex.Pattern
 
 class ImportUrlActivity : AbstractActionBarActivity() {
     private val viewModel by viewModel<ImportUrlViewModel>()
@@ -111,9 +110,6 @@ class ImportUrlActivity : AbstractActionBarActivity() {
     }
 
     companion object {
-        @JvmField
-        @Deprecated("")
-        val CACHE_CODE_PATTERN: Pattern = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE)
         private const val REQUEST_SIGN_ON = 1
     }
 }

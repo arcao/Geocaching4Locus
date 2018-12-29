@@ -6,7 +6,6 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper
-import locus.api.objects.extra.Point
 
 class GetPointFromGeocacheCodeUseCase(
     private val geocachingApi: GeocachingApi,
@@ -15,21 +14,25 @@ class GetPointFromGeocacheCodeUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    suspend operator fun invoke(geocacheCode: String, liteData: Boolean = true, geocacheLogsCount: Int = 0, trackableLogsCount: Int = 0): Point =
-            withContext(dispatcherProvider.io) {
-                geocachingApiLoginUseCase(geocachingApi)
+    suspend operator fun invoke(
+        geocacheCode: String,
+        liteData: Boolean = true,
+        geocacheLogsCount: Int = 0,
+        trackableLogsCount: Int = 0
+    ) = withContext(dispatcherProvider.io) {
+        geocachingApiLoginUseCase(geocachingApi)
 
-                val resultQuality = if (liteData) {
-                    GeocachingApi.ResultQuality.LITE
-                } else {
-                    GeocachingApi.ResultQuality.FULL
-                }
+        val resultQuality = if (liteData) {
+            GeocachingApi.ResultQuality.LITE
+        } else {
+            GeocachingApi.ResultQuality.FULL
+        }
 
-                val geocache = geocachingApi.getGeocache(resultQuality, geocacheCode, geocacheLogsCount, trackableLogsCount)
-                        ?: throw CacheNotFoundException(geocacheCode)
+        val geocache = geocachingApi.getGeocache(resultQuality, geocacheCode, geocacheLogsCount, trackableLogsCount)
+            ?: throw CacheNotFoundException(geocacheCode)
 
-                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+        accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
 
-                mapper.createLocusPoint(geocache)
-            }
+        mapper.createLocusPoint(geocache)
+    }
 }

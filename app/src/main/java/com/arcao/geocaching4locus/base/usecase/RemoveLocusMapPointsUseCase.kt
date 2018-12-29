@@ -8,12 +8,16 @@ class RemoveLocusMapPointsUseCase(
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    suspend operator fun invoke(packPrefix : String, fromPackId: Int, toPackId: Int) = withContext(dispatcherProvider.computation) {
+    suspend operator fun invoke(
+        packPrefix: String,
+        fromPackId: Int,
+        toPackId: Int
+    ) = withContext(dispatcherProvider.computation) {
         try {
             for (id in fromPackId..toPackId) {
                 locusMapManager.removePackFromLocus("$packPrefix$id")
             }
-        } catch (ignored : Exception) {
+        } catch (ignored: Exception) {
             // ignored
         }
     }

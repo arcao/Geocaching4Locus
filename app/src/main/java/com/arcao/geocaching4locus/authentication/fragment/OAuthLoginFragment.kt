@@ -41,7 +41,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     }
 
     private fun handleProgress(state: ProgressState) {
-        when(state) {
+        when (state) {
             is ProgressState.ShowProgress -> progressLayout.visibility = View.VISIBLE
             ProgressState.HideProgress -> progressLayout.visibility = View.GONE
         }.exhaustive
@@ -91,7 +91,6 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     }
 
     private inner class DialogWebViewClient internal constructor() : WebViewClient() {
-
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
                 val uri = Uri.parse(url)

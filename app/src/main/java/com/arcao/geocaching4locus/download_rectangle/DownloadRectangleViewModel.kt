@@ -17,13 +17,12 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.map
-import locus.api.android.ActionDisplayPointsExtended
+import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
-/**
- * Created by Arcao on 29.11.2018.
- */
+@ExperimentalCoroutinesApi
 class DownloadRectangleViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
@@ -70,10 +69,9 @@ class DownloadRectangleViewModel(
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun doDownload(liveMapCoordinates: LastLiveMapCoordinates) = computationContext {
-        val downloadIntent = ActionDisplayPointsExtended.createSendPacksIntent(
-            ActionDisplayPointsExtended.cacheFileName,
-            true,
-            true
+        val downloadIntent = LocusMapManager.createSendPointsIntent(
+            callImport = true,
+            center = true
         )
 
         var count = AppConstants.ITEMS_PER_REQUEST

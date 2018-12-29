@@ -30,11 +30,11 @@ class GeocachingApiFilterProvider(
         ownGeocaches: Boolean = false,
         geocacheTypes: Array<GeocacheType> = emptyArray(),
         containerTypes: Array<ContainerType> = emptyArray(),
-        difficultyMin : Float = 1F,
+        difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
-        terrainMin : Float = 1F,
+        terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList : Boolean = true
+        excludeIgnoreList: Boolean = true
     ): List<Filter> {
         val filters = ArrayList<Filter>(9)
 

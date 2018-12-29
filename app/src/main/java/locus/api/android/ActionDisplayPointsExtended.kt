@@ -18,7 +18,7 @@ object ActionDisplayPointsExtended : ActionDisplayPoints() {
         LocusMapManager(context).sendPointsFile(callImport, center, intentFlags)
 
     @JvmStatic
-    @Deprecated("Use LocusMapManager.", ReplaceWith("locusMapManager.createSendPackIntent(callImport, center)"))
+    @Deprecated("Use LocusMapManager.", ReplaceWith("LocusMapManager.createSendPointsIntent(callImport, center)"))
     fun createSendPacksIntent(file: File, callImport: Boolean, center: Boolean) = LocusMapManager.createSendPointsIntent(callImport, center)
 
     /**

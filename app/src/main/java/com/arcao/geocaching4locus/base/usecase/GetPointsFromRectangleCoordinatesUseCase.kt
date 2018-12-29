@@ -10,15 +10,15 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
+@ExperimentalCoroutinesApi
 class GetPointsFromRectangleCoordinatesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
@@ -26,11 +26,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
     private val geocachingApiFilterProvider: GeocachingApiFilterProvider,
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
-) : CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = dispatcherProvider.io
-
-    @ExperimentalCoroutinesApi
+) {
     suspend operator fun invoke(
         centerCoordinates: Coordinates,
         topLeftCoordinates: Coordinates,
@@ -51,80 +47,84 @@ class GetPointsFromRectangleCoordinatesUseCase(
         excludeIgnoreList : Boolean = true,
         maxCount : Int = 50,
         countHandler: (Int) -> Unit = {}
-    ) = produce {
-        geocachingApiLoginUseCase(geocachingApi)
+    ) = coroutineScope {
+        produce(dispatcherProvider.io) {
+            geocachingApiLoginUseCase(geocachingApi)
 
-        val resultQuality = when {
-            liteData && !summaryData -> GeocachingApi.ResultQuality.LITE
-            !liteData && !summaryData -> GeocachingApi.ResultQuality.FULL
-            summaryData -> GeocachingApi.ResultQuality.SUMMARY
-            else -> throw IllegalStateException("Invalid ResultQuality combination.")
-        }
-
-        var count = AppConstants.ITEMS_PER_REQUEST
-        var current = 0
-
-        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
-        while (current < count) {
-            val startTimeMillis = System.currentTimeMillis()
-
-            val geocaches = if (current == 0) {
-                geocachingApi.searchForGeocaches(
-                    SearchForGeocachesRequest.builder()
-                        .resultQuality(resultQuality)
-                        .maxPerPage(Math.min(itemsPerRequest, count - current))
-                        .geocacheLogCount(geocacheLogsCount)
-                        .trackableLogCount(trackableLogsCount)
-                        .addFilters(geocachingApiFilterProvider(
-                            centerCoordinates,
-                            topLeftCoordinates,
-                            bottomRightCoordinates,
-                            downloadDisabled,
-                            downloadFound,
-                            downloadOwn,
-                            geocacheTypes,
-                            containerTypes,
-                            difficultyMin,
-                            difficultyMax,
-                            terrainMin,
-                            terrainMax,
-                            excludeIgnoreList
-                        ))
-                        .build()
-                ).also {
-                    count = Math.min(geocachingApi.lastSearchResultsFound, maxCount)
-                    withContext(dispatcherProvider.computation) {
-                        countHandler(count)
-                    }
-                }
-            } else {
-                geocachingApi.getMoreGeocaches(
-                    resultQuality,
-                    current,
-                    Math.min(itemsPerRequest, count - current),
-                    geocacheLogsCount,
-                    trackableLogsCount
-                )
+            val resultQuality = when {
+                liteData && !summaryData -> GeocachingApi.ResultQuality.LITE
+                !liteData && !summaryData -> GeocachingApi.ResultQuality.FULL
+                summaryData -> GeocachingApi.ResultQuality.SUMMARY
+                else -> throw IllegalStateException("Invalid ResultQuality combination.")
             }
 
-            accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+            var count = AppConstants.ITEMS_PER_REQUEST
+            var current = 0
 
-            if (!isActive)
-                return@produce
+            var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+            while (current < count) {
+                val startTimeMillis = System.currentTimeMillis()
 
-            if (geocaches.isEmpty())
-                break
+                val geocaches = if (current == 0) {
+                    geocachingApi.searchForGeocaches(
+                        SearchForGeocachesRequest.builder()
+                            .resultQuality(resultQuality)
+                            .maxPerPage(Math.min(itemsPerRequest, count - current))
+                            .geocacheLogCount(geocacheLogsCount)
+                            .trackableLogCount(trackableLogsCount)
+                            .addFilters(
+                                geocachingApiFilterProvider(
+                                    centerCoordinates,
+                                    topLeftCoordinates,
+                                    bottomRightCoordinates,
+                                    downloadDisabled,
+                                    downloadFound,
+                                    downloadOwn,
+                                    geocacheTypes,
+                                    containerTypes,
+                                    difficultyMin,
+                                    difficultyMax,
+                                    terrainMin,
+                                    terrainMax,
+                                    excludeIgnoreList
+                                )
+                            )
+                            .build()
+                    ).also {
+                        count = Math.min(geocachingApi.lastSearchResultsFound, maxCount)
+                        withContext(dispatcherProvider.computation) {
+                            countHandler(count)
+                        }
+                    }
+                } else {
+                    geocachingApi.getMoreGeocaches(
+                        resultQuality,
+                        current,
+                        Math.min(itemsPerRequest, count - current),
+                        geocacheLogsCount,
+                        trackableLogsCount
+                    )
+                }
 
-            send(mapper.createLocusPoints(geocaches))
-            current += geocaches.size
+                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
 
-            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
-        }
+                if (!isActive)
+                    return@produce
 
-        Timber.v("found geocaches: %d", current)
+                if (geocaches.isEmpty())
+                    break
 
-        if (current == 0) {
-            throw NoResultFoundException()
+                send(mapper.createLocusPoints(geocaches))
+                current += geocaches.size
+
+                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            }
+
+            Timber.v("found geocaches: %d", current)
+
+            if (current == 0) {
+                throw NoResultFoundException()
+            }
         }
     }
 }

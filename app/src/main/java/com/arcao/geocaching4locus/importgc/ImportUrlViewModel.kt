@@ -11,12 +11,12 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import locus.api.android.ActionDisplayPointsExtended
+import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
+import locus.api.manager.LocusMapManager
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -74,10 +74,9 @@ class ImportUrlViewModel(
                 writePointToPackPointsFileUseCase(point)
 
                 mainContext {
-                    val intent = ActionDisplayPointsExtended.createSendPacksIntent(
-                        ActionDisplayPointsExtended.cacheFileName,
-                        true,
-                        true
+                    val intent = LocusMapManager.createSendPointsIntent(
+                        callImport = true,
+                        center = true
                     )
                     action(ImportUrlAction.Finish(intent))
                 }

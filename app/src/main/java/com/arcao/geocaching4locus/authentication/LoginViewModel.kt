@@ -74,7 +74,7 @@ class LoginViewModel(
 
     private suspend fun handleException(e: Exception) = mainContext {
         accountManager.removeAccount()
-        AnalyticsUtil.actionLogin(false, false)
+        AnalyticsUtil.actionLogin(success = false, premiumMember = false)
 
         action(LoginAction.Error(exceptionHandler(e)))
     }
@@ -91,7 +91,7 @@ class LoginViewModel(
 
     @UiThread
     fun cancelLogin() {
-        AnalyticsUtil.actionLogin(false, false)
+        AnalyticsUtil.actionLogin(success = false, premiumMember = false)
 
         job.cancel()
         action(LoginAction.Cancel)

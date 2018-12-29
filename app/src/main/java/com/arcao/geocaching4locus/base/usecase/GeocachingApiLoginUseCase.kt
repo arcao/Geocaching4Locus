@@ -31,13 +31,13 @@ class GeocachingApiLoginUseCase(
 
         if (accountManager.isAccountUpdateRequired) {
             val userProfile = geocachingApi.getYourUserProfile(
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    false,
-                    deviceInfoFactory()
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                deviceInfoFactory()
             ) ?: throw InvalidResponseException("User profile is null")
 
             accountManager.updateAccount(accountManager.createAccount(userProfile.user()))

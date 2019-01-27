@@ -1,6 +1,6 @@
 object Deps {
     // Android Support
-    const val androidx_appcompat = "androidx.appcompat:appcompat:${Versions.androidx}"
+    const val androidx_appcompat = "androidx.appcompat:appcompat:${Versions.androidx_appcompat}"
     const val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}"
     const val androidx_cardview = "androidx.cardview:cardview:${Versions.androidx}"
     const val material_design = "com.google.android.material:material:${Versions.androidx}"

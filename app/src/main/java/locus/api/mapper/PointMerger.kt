@@ -33,8 +33,8 @@ class PointMerger(
         }
     }
 
-    fun mergeGeocachingLogs(dest: Point, src: Point?) {
-        if (src?.gcData == null)
+    fun mergeGeocachingLogs(dest: Point?, src: Point?) {
+        if (dest == null || src?.gcData == null)
             return
 
         // store original logs

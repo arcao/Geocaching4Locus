@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Environment
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
+import locus.api.android.ActionBasics
 import locus.api.android.ActionDisplayInternal
 import locus.api.android.ActionDisplayPoints
 import locus.api.android.ActionDisplayPointsExtended
@@ -109,6 +110,24 @@ class LocusMapManager(
             val pack = PackPoints(packName)
             points.forEach(pack::addWaypoint)
             ActionDisplayPoints.sendPackSilent(context, pack, centerOnData)
+        } catch (t: Throwable) {
+            throw LocusMapRuntimeException(t)
+        }
+    }
+
+    fun updatePoint(point: Point) {
+        try {
+            val locusVersion = LocusUtils.getActiveVersion(context)
+            ActionTools.updateLocusWaypoint(context, locusVersion, point, false)
+        } catch (t: Throwable) {
+            throw LocusMapRuntimeException(t)
+        }
+    }
+
+    fun getPoint(pointIndex: Long): Point? {
+        try {
+            val locusVersion = LocusUtils.getActiveVersion(context)
+            return ActionBasics.getPoint(context, locusVersion, pointIndex)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)
         }

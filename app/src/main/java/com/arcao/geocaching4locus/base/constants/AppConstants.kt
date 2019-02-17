@@ -55,6 +55,10 @@ object AppConstants {
     const val LOGS_PER_REQUEST = 30
     const val LOGS_TO_UPDATE_MAX = 100
 
+    const val TRACKEBLES_PER_REQUEST = 30
+    const val TRACKABLES_MAX = 60
+
+
     const val MILES_PER_KILOMETER = 1.609344f
     const val DISTANCE_KM_DEFAULT = 50f
     const val DISTANCE_MILES_DEFAULT = 50 / MILES_PER_KILOMETER

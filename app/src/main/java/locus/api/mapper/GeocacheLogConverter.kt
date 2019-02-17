@@ -23,11 +23,11 @@ class GeocacheLogConverter(
         sortLocusGeocachingLogsByDate(point)
     }
 
-    @Nullable
-    private fun createLocusGeocachingLog(@Nullable log: GeocacheLog?): GeocachingLog? {
-        if (log == null)
-            return null
+    fun createLocusGeocachingLogs(logs: Collection<GeocacheLog>): Collection<GeocachingLog> {
+        return logs.map(this::createLocusGeocachingLog)
+    }
 
+    private fun createLocusGeocachingLog(log: GeocacheLog): GeocachingLog {
         return GeocachingLog().apply {
             id = log.id()
             date = log.visited().toTime()

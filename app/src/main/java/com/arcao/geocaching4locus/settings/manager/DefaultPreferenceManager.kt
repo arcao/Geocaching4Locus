@@ -26,4 +26,23 @@ class DefaultPreferenceManager(
     var liveMapLastRequests
         get() = preferences.getInt(PrefConstants.LIVE_MAP_LAST_REQUESTS, 0)
         set(value) = preferences.edit { putInt(PrefConstants.LIVE_MAP_LAST_REQUESTS, value) }
+
+    val downloadingGeocacheLogsCount
+        get() = preferences.getInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 5)
+
+    val downloadLogsUpdateCache
+        get() = preferences.getBoolean(PrefConstants.DOWNLOAD_LOGS_UPDATE_CACHE, true)
+
+    val downloadFullGeocacheOnShow
+        get() = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE == preferences.getString(
+            PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
+            PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE
+        )
+
+    val downloadGeocacheOnShow
+        get() = PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_NEVER != preferences.getString(
+            PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW,
+            PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE
+        )
+
 }

@@ -9,7 +9,6 @@ import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import locus.api.android.ActionBasics
 import locus.api.android.ActionDisplayInternal
 import locus.api.android.ActionDisplayPoints
-import locus.api.android.ActionDisplayPointsExtended
 import locus.api.android.ActionTools
 import locus.api.android.objects.PackPoints
 import locus.api.android.utils.LocusConst
@@ -30,7 +29,7 @@ class LocusMapManager(
             val locusVersion = LocusUtils.getActiveVersion(context)
             return if (locusVersion != null) {
                 try {
-                    ActionTools.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled ?: false
+                    ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled ?: false
                 } catch (e: Throwable) {
                     Timber.e(e, "Unable to receive info about periodic update state from Locus Map.")
                     return true
@@ -118,7 +117,7 @@ class LocusMapManager(
     fun updatePoint(point: Point) {
         try {
             val locusVersion = LocusUtils.getActiveVersion(context)
-            ActionTools.updateLocusWaypoint(context, locusVersion, point, false)
+            ActionBasics.updatePoint(context, locusVersion, point, false)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)
         }
@@ -186,7 +185,7 @@ class LocusMapManager(
             @SuppressLint("SetWorldReadable")
             @Throws(IOException::class)
             get() {
-                val file = ActionDisplayPointsExtended.cacheFileName
+                val file = cacheFile
                 val fos = FileOutputStream(file)
                 fos.flush()
                 if (!file.setReadable(true, false)) {

@@ -1,15 +1,20 @@
 package com.arcao.geocaching.api.oauth.services
 
-import com.arcao.wherigoservice.api.WherigoApiFactory
+import com.arcao.wherigoservice.api.WherigoService
 import com.github.scribejava.core.services.TimestampServiceImpl
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import timber.log.Timber
 import java.util.Random
 
-class ServerTimestampServiceImpl : TimestampServiceImpl() {
+class ServerTimestampServiceImpl : TimestampServiceImpl(), KoinComponent {
+    private val wherigoService by inject<WherigoService>()
+
     private val rand = Random()
+
     private val ts: Long by lazy {
         val time = try {
-            WherigoApiFactory.create().getTime().also {
+            wherigoService.getTime().also {
                 Timber.i("server time received (ms): %d", it)
             }
         } catch (e: Exception) {

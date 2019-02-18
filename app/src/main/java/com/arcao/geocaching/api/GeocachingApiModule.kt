@@ -15,8 +15,6 @@ import com.github.scribejava.core.oauth.OAuth10aService
 import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
 import org.koin.dsl.module.module
-import org.koin.experimental.builder.create
-import org.koin.experimental.builder.single
 import java.util.concurrent.TimeUnit
 
 internal val geocachingApiModule = module {
@@ -31,22 +29,22 @@ internal val geocachingApiModule = module {
         val apiConfiguration: GeocachingApiConfiguration = get()
 
         OkHttpClient.Builder()
-                .connectTimeout(apiConfiguration.connectTimeout.toLong(), TimeUnit.MILLISECONDS)
-                .readTimeout(apiConfiguration.readTimeout.toLong(), TimeUnit.MILLISECONDS)
-                .enableTls12()
-                .build()
+            .connectTimeout(apiConfiguration.connectTimeout.toLong(), TimeUnit.MILLISECONDS)
+            .readTimeout(apiConfiguration.readTimeout.toLong(), TimeUnit.MILLISECONDS)
+            .enableTls12()
+            .build()
     }
 
-    single<Downloader> { create<OkHttpClientDownloader>() }
+    single<Downloader> { OkHttpClientDownloader(get()) }
 
     factory<GeocachingApi> {
         LiveGeocachingApi.builder()
-                .configuration(get())
-                .downloader(get())
-                .build()
+            .configuration(get())
+            .downloader(get())
+            .build()
     }
 
-    single<DeviceInfoFactory>()
+    single { DeviceInfoFactory(get()) }
 
     // OAuth service
     factory<OAuth10aService> {

@@ -34,60 +34,54 @@ import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.experimental.builder.viewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
-import org.koin.experimental.builder.create
-import org.koin.experimental.builder.factory
-import org.koin.experimental.builder.single
 
 @ExperimentalCoroutinesApi
 internal val appModule = module {
     single { androidApplication() as App }
-    single<AccountManager> { create<PreferenceAccountManager>() }
-    single<CoroutinesDispatcherProvider>()
+    single<AccountManager> { PreferenceAccountManager(get()) }
+    single { CoroutinesDispatcherProvider() }
 
-    single<GeocachingApiFilterProvider>()
-    single<FilterPreferenceManager>()
-    single<DefaultPreferenceManager>()
-    single<ExceptionHandler>()
-    factory<LiveMapNotificationManager>()
+    single { GeocachingApiFilterProvider(get()) }
+    single { FilterPreferenceManager(get(), get()) }
+    single { DefaultPreferenceManager(get()) }
+    single { ExceptionHandler(get(), get()) }
+    factory { LiveMapNotificationManager(get(), get(), get(), get(), get()) }
 
     // ---- Usecases ----
-    single<CreateAccountUseCase>()
-    single<RetrieveAuthorizationUrlUseCase>()
-    single<GeocachingApiLoginUseCase>()
-    single<GetGeocacheCodeFromGuidUseCase>()
-    single<GetGeocachingLogsUseCase>()
-    single<GetGeocachingTrackablesUseCase>()
-    single<GetOldPointNewPointPairFromPointUseCase>()
-    single<GetPointFromGeocacheCodeUseCase>()
-    single<GetPointsFromGeocacheCodesUseCase>()
-    single<GetPointsFromPointIndexesUseCase>()
-    single<GetPointsFromRectangleCoordinatesUseCase>()
-    single<RemoveLocusMapPointsUseCase>()
-    single<SendPointsSilentToLocusMapUseCase>()
-    single<WritePointToPackPointsFileUseCase>()
+    single { CreateAccountUseCase(get(), get(), get(), get(), get()) }
+    single { RetrieveAuthorizationUrlUseCase(get(), get(), get()) }
+    single { GeocachingApiLoginUseCase(get(), get(), get(), get()) }
+    single { GetGeocacheCodeFromGuidUseCase(get(), get()) }
+    single { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
+    single { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
+    single { GetOldPointNewPointPairFromPointUseCase(get(), get(), get(), get(), get()) }
+    single { GetPointFromGeocacheCodeUseCase(get(), get(), get(), get(), get()) }
+    single { GetPointsFromGeocacheCodesUseCase(get(), get(), get(), get(), get()) }
+    single { GetPointsFromPointIndexesUseCase(get(), get()) }
+    single { GetPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
+    single { RemoveLocusMapPointsUseCase(get(), get()) }
+    single { SendPointsSilentToLocusMapUseCase(get(), get()) }
+    single { WritePointToPackPointsFileUseCase(get()) }
 
     // ---- View models ----
     // login
-    viewModel<LoginViewModel>()
+    viewModel { LoginViewModel(get(), get(), get(), get(), get(), get()) }
     // dashboard
-    viewModel {
-        (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get())
-    }
+    viewModel { (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get()) }
     // download live map rectangles
-    viewModel<DownloadRectangleViewModel>()
+    viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get()) }
     // import geocache codes
-    viewModel<ImportGeocacheCodeViewModel>()
+    viewModel { ImportGeocacheCodeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     // import url
-    viewModel<ImportUrlViewModel>()
+    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // live map
-    viewModel<LiveMapViewModel>()
+    viewModel { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // update
-    viewModel<UpdateViewModel>()
-    viewModel<UpdateMoreViewModel>()
+    viewModel { UpdateViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { UpdateMoreViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // web link
-    viewModel<BookmarkGeocacheWebLinkViewModel>()
-    viewModel<WatchGeocacheWebLinkViewModel>()
+    viewModel { BookmarkGeocacheWebLinkViewModel(get(), get(), get(), get()) }
+    viewModel { WatchGeocacheWebLinkViewModel(get(), get(), get(), get()) }
 }

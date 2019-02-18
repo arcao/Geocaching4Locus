@@ -22,7 +22,9 @@ import com.arcao.wherigoservice.api.wherigoApiModule
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import io.fabric.sdk.android.Fabric
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import locus.api.android.utils.LocusUtils
+import locus.api.locusMapApiModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 import timber.log.Timber
@@ -68,10 +70,11 @@ class App : Application() {
         getString(applicationInfo.labelRes)
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, feedbackModule))
+        startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, locusMapApiModule, feedbackModule))
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
             StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())

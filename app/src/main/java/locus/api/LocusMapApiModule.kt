@@ -13,25 +13,11 @@ import org.koin.dsl.module.module
  * Created by Arcao on 08.12.2018.
  */
 internal val locusMapApiModule = module {
-    single {
-        LocusMapManager(get())
-    }
-    single {
-        TrackableConverter()
-    }
-    single {
-        WaypointConverter()
-    }
-    single {
-        ImageDataConverter()
-    }
-    single {
-        GeocacheLogConverter(get())
-    }
-    single {
-        GeocacheConverter(get(), get(), get(), get(), get(), get())
-    }
-    single {
-        DataMapper(get(), get(), get())
-    }
+    single { LocusMapManager(get()) }
+    single { TrackableConverter() }
+    single { WaypointConverter() }
+    single { ImageDataConverter() }
+    single { GeocacheLogConverter(get()) }
+    single { GeocacheConverter(get(), get(), get(), get(), get(), get()) }
+    single { DataMapper(get(), get(), get()) }
 }

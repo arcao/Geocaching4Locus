@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiFilterProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
+import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
@@ -16,12 +17,17 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
+import com.arcao.geocaching4locus.base.usecase.GetUserBookmarkListsUseCase
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
+import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleViewModel
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListViewModel
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.LiveMapViewModel
@@ -53,6 +59,7 @@ internal val appModule = module {
     single { CreateAccountUseCase(get(), get(), get(), get(), get()) }
     single { RetrieveAuthorizationUrlUseCase(get(), get(), get()) }
     single { GeocachingApiLoginUseCase(get(), get(), get(), get()) }
+    single { GetBookmarkUseCase(get(), get(), get()) }
     single { GetGeocacheCodeFromGuidUseCase(get(), get()) }
     single { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
     single { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
@@ -61,6 +68,7 @@ internal val appModule = module {
     single { GetPointsFromGeocacheCodesUseCase(get(), get(), get(), get(), get()) }
     single { GetPointsFromPointIndexesUseCase(get(), get()) }
     single { GetPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
+    single { GetUserBookmarkListsUseCase(get(), get(), get()) }
     single { RemoveLocusMapPointsUseCase(get(), get()) }
     single { SendPointsSilentToLocusMapUseCase(get(), get()) }
     single { WritePointToPackPointsFileUseCase(get()) }
@@ -76,6 +84,10 @@ internal val appModule = module {
     viewModel { ImportGeocacheCodeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     // import url
     viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    // import bookmarks
+    viewModel { ImportBookmarkViewModel(get(), get(), get()) }
+    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get()) }
     // live map
     viewModel { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // update

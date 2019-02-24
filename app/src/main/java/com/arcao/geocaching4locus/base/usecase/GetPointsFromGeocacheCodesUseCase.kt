@@ -60,10 +60,13 @@ class GetPointsFromGeocacheCodesUseCase(
                         .build()
                 )
 
-                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+                if (liteData) {
+                    accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+                }
 
-                if (!isActive)
+                if (!isActive) {
                     return@produce
+                }
 
                 addNotFoundCaches(notFoundGeocacheCodes, requestedCacheIds, cachesToAdd)
 

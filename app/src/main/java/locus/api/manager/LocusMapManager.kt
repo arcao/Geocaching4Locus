@@ -143,6 +143,7 @@ class LocusMapManager(
                 .putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center)
                 // set import tag
                 .putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
 
         /**

@@ -47,7 +47,7 @@ object FeedbackHelper : KoinComponent {
             }
 
             try {
-                createReport(activity, FeedbackFileProvider.getReportFile(activity))
+                createReport(FeedbackFileProvider.getReportFile(activity))
 
                 val reportUri = FeedbackFileProvider.reportFileUri
                 intent.putExtra(Intent.EXTRA_STREAM, reportUri)
@@ -74,7 +74,7 @@ object FeedbackHelper : KoinComponent {
         }
 
     @Throws(IOException::class)
-    private suspend fun createReport(context: Context, reportFile: File) {
+    private suspend fun createReport(reportFile: File) {
         if (reportFile.exists()) {
             Timber.d("Report file $reportFile already exist.")
             if (reportFile.delete()) {
@@ -83,12 +83,12 @@ object FeedbackHelper : KoinComponent {
         }
 
         Timber.d("Creating report to %s", reportFile)
-        ZipOutputStream(FileOutputStream(reportFile)).use { zos -> writeCollectors(zos, context) }
+        ZipOutputStream(FileOutputStream(reportFile)).use { zos -> writeCollectors(zos) }
         Timber.d("Report created.")
     }
 
     @Throws(IOException::class)
-    private suspend fun writeCollectors(zos: ZipOutputStream, context: Context) {
+    private suspend fun writeCollectors(zos: ZipOutputStream) {
         for (collector in collectors) {
             zos.putNextEntry(ZipEntry(collector.name + ".txt"))
 

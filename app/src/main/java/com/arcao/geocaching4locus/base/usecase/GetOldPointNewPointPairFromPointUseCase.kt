@@ -17,7 +17,7 @@ import locus.api.objects.extra.Point
 
 class GetOldPointNewPointPairFromPointUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
@@ -31,7 +31,7 @@ class GetOldPointNewPointPairFromPointUseCase(
         trackableLogsCount: Int = 0
     ) = coroutineScope {
         produce(dispatcherProvider.io) {
-            geocachingApiLoginUseCase(geocachingApi)
+            geocachingApiLogin(geocachingApi)
 
             val resultQuality = if (liteData) {
                 GeocachingApi.ResultQuality.LITE

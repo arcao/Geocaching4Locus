@@ -12,14 +12,14 @@ import locus.api.mapper.GeocacheLogConverter
 @ExperimentalCoroutinesApi
 class GetGeocachingLogsUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val geocacheLogConverter: GeocacheLogConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = 0) =
         coroutineScope {
             produce(dispatcherProvider.io) {
-                geocachingApiLoginUseCase(geocachingApi)
+                geocachingApiLogin(geocachingApi)
 
                 var current = start
 

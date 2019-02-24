@@ -32,9 +32,9 @@ class UpdateViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
-    private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-    private val getGeocachingTrackablesUseCase: GetGeocachingTrackablesUseCase,
-    private val getGeocachingLogsUseCase: GetGeocachingLogsUseCase,
+    private val getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
+    private val getGeocachingTrackables: GetGeocachingTrackablesUseCase,
+    private val getGeocachingLogs: GetGeocachingLogsUseCase,
     private val pointMerger: PointMerger,
     private val locusMapManager: LocusMapManager,
     private val exceptionHandler: ExceptionHandler,
@@ -70,11 +70,11 @@ class UpdateViewModel(
                         lite = true
                     }
 
-                    updateData.newPoint = getPointFromGeocacheCodeUseCase(updateData.geocacheCode, lite, logsCount)
+                    updateData.newPoint = getPointFromGeocacheCode(updateData.geocacheCode, lite, logsCount)
 
                     if (basicMember) {
                         // get trackables
-                        val trackables = getGeocachingTrackablesUseCase(updateData.geocacheCode, 0, 30)
+                        val trackables = getGeocachingTrackables(updateData.geocacheCode, 0, 30)
                         updateData.newPoint.gcData.trackables.addAll(trackables.toList().flatten())
                     }
 
@@ -89,7 +89,7 @@ class UpdateViewModel(
 
                         updateProgress(R.string.progress_download_logs, progress = progress, maxProgress = logsCount)
 
-                        val logs = getGeocachingLogsUseCase(
+                        val logs = getGeocachingLogs(
                             updateData.geocacheCode,
                             progress,
                             logsCount

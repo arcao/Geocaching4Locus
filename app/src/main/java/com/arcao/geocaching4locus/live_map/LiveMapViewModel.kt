@@ -28,9 +28,9 @@ class LiveMapViewModel(
     private val notificationManager: LiveMapNotificationManager,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
-    private val getPointsFromRectangleCoordinatesUseCase: GetPointsFromRectangleCoordinatesUseCase,
-    private val sendPointsSilentToLocusMapUseCase: SendPointsSilentToLocusMapUseCase,
-    private val removeLocusMapPointsUseCase: RemoveLocusMapPointsUseCase,
+    private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,
+    private val sendPointsSilentToLocusMap: SendPointsSilentToLocusMapUseCase,
+    private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -51,7 +51,7 @@ class LiveMapViewModel(
             var receivedGeocaches = 0
 
             showProgress(maxProgress = count) {
-                val pointListChannel = getPointsFromRectangleCoordinatesUseCase(
+                val pointListChannel = getPointsFromRectangleCoordinates(
                     task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
                     task.getCoordinates(LiveMapService.PARAM_TOP_LEFT_LATITUDE, LiveMapService.PARAM_TOP_LEFT_LONGITUDE),
                     task.getCoordinates(LiveMapService.PARAM_BOTTOM_RIGHT_LATITUDE, LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE),
@@ -88,14 +88,14 @@ class LiveMapViewModel(
                 }
 
                 // send to locus map
-                sendPointsSilentToLocusMapUseCase(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, pointListChannel)
+                sendPointsSilentToLocusMap(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, pointListChannel)
             }
         } catch (e: Exception) {
             handleException(e)
         } finally {
             val lastRequests = defaultPreferenceManager.liveMapLastRequests
             if (requests < lastRequests) {
-                removeLocusMapPointsUseCase(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, requests + 1, lastRequests)
+                removeLocusMapPoints(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, requests + 1, lastRequests)
             }
             defaultPreferenceManager.liveMapLastRequests = requests
         }

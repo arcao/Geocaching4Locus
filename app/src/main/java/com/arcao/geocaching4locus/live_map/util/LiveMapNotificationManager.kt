@@ -40,7 +40,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 class LiveMapNotificationManager(
     private val context: Context,
     private val defaultPreferenceManager: DefaultPreferenceManager,
-    private val removeLocusMapPointsUseCase: RemoveLocusMapPointsUseCase,
+    private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
@@ -333,7 +333,7 @@ class LiveMapNotificationManager(
     private fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
         val lastRequests = defaultPreferenceManager.liveMapLastRequests
         if (lastRequests > 0) {
-            removeLocusMapPointsUseCase(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, 1, lastRequests)
+            removeLocusMapPoints(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, 1, lastRequests)
             defaultPreferenceManager.liveMapLastRequests = 0
         }
     }

@@ -24,10 +24,10 @@ import timber.log.Timber
 class BookmarkListViewModel(
     private val context: Context,
     private val exceptionHandler: ExceptionHandler,
-    private val getUserBookmarkListsUseCase: GetUserBookmarkListsUseCase,
-    private val getBookmarkUseCase: GetBookmarkUseCase,
-    private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
-    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val getUserBookmarkLists: GetUserBookmarkListsUseCase,
+    private val getBookmark: GetBookmarkUseCase,
+    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -44,7 +44,7 @@ class BookmarkListViewModel(
 
         computationContext {
             try {
-                list.postValue(getUserBookmarkListsUseCase())
+                list.postValue(getUserBookmarkLists())
             } catch (e: Exception) {
                 action.postValue(BookmarkListAction.Error(exceptionHandler(e)))
             } finally {
@@ -64,12 +64,12 @@ class BookmarkListViewModel(
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = 1) {
                 Timber.d("source: import_from_bookmark;guid=%s", bookmarkList.guid)
-                val bookmark = getBookmarkUseCase(bookmarkList.guid)
+                val bookmark = getBookmark(bookmarkList.guid)
 
                 val geocacheCodes = bookmark.map { it.code }.toTypedArray()
                 Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
 
-                val channel = getPointsFromGeocacheCodesUseCase(
+                val channel = getPointsFromGeocacheCodes(
                     geocacheCodes,
                     filterPreferenceManager.simpleCacheData,
                     filterPreferenceManager.geocacheLogsCount
@@ -90,7 +90,7 @@ class BookmarkListViewModel(
                     }
                     list
                 }
-                writePointToPackPointsFileUseCase(channel)
+                writePointToPackPointsFile(channel)
             }
         } catch (e: Exception) {
             mainContext {

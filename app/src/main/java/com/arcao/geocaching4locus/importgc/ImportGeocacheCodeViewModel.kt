@@ -25,8 +25,8 @@ class ImportGeocacheCodeViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
-    private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
-    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -61,7 +61,7 @@ class ImportGeocacheCodeViewModel(
 
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
-                val channel = getPointsFromGeocacheCodesUseCase(
+                val channel = getPointsFromGeocacheCodes(
                     geocacheCodes,
                     !accountManager.isPremium,
                     filterPreferenceManager.geocacheLogsCount
@@ -70,7 +70,7 @@ class ImportGeocacheCodeViewModel(
                     updateProgress(progress = receivedGeocaches)
                     it
                 }
-                writePointToPackPointsFileUseCase(channel)
+                writePointToPackPointsFile(channel)
             }
         } catch (e: Exception) {
             mainContext {

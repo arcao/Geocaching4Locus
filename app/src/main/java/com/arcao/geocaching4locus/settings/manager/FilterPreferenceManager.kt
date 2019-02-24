@@ -24,6 +24,7 @@ class FilterPreferenceManager(
 
     val trackableLogsCount: Int = 0
 
+    // TODO move to DefaultPreferenceManager
     val simpleCacheData
         get() = if (accountManager.isPremium) {
             preferences.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false)

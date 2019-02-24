@@ -27,8 +27,8 @@ class DownloadRectangleViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
-    private val getPointsFromRectangleCoordinatesUseCase: GetPointsFromRectangleCoordinatesUseCase,
-    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -79,7 +79,7 @@ class DownloadRectangleViewModel(
 
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
-                val geocaches = getPointsFromRectangleCoordinatesUseCase(
+                val geocaches = getPointsFromRectangleCoordinates(
                     liveMapCoordinates.center,
                     liveMapCoordinates.topLeft,
                     liveMapCoordinates.bottomRight,
@@ -115,7 +115,7 @@ class DownloadRectangleViewModel(
                     }
                     list
                 }
-                writePointToPackPointsFileUseCase(geocaches)
+                writePointToPackPointsFile(geocaches)
             }
         } catch (e: Exception) {
             mainContext {

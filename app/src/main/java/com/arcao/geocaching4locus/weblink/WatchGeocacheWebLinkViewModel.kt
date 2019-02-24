@@ -12,10 +12,10 @@ import java.util.Locale
 
 class WatchGeocacheWebLinkViewModel(
     accountManager: AccountManager,
-    getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
     exceptionHandler: ExceptionHandler,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler, dispatcherProvider) {
+) : WebLinkViewModel(accountManager, getPointFromGeocacheCode, exceptionHandler, dispatcherProvider) {
 
     override fun getWebLink(point: Point): Uri {
         val cacheId = GeocachingUtils.cacheCodeToCacheId(point.gcData.cacheID)

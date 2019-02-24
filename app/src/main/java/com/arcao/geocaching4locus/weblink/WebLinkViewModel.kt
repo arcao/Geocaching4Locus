@@ -13,7 +13,7 @@ import locus.api.objects.extra.Point
 
 abstract class WebLinkViewModel(
     private val accountManager: AccountManager,
-    private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    private val getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
     private val exceptionHandler: ExceptionHandler,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -49,7 +49,7 @@ abstract class WebLinkViewModel(
                 }
 
                 val newPoint = showProgress(R.string.progress_download_geocache) {
-                    getPointFromGeocacheCodeUseCase(point.gcData.cacheID)
+                    getPointFromGeocacheCode(point.gcData.cacheID)
                 }
                 getWebLink(newPoint)
             }

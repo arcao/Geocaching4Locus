@@ -21,7 +21,7 @@ import timber.log.Timber
 @ExperimentalCoroutinesApi
 class GetPointsFromRectangleCoordinatesUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val geocachingApiFilterProvider: GeocachingApiFilterProvider,
     private val mapper: DataMapper,
@@ -49,7 +49,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
         countHandler: (Int) -> Unit = {}
     ) = coroutineScope {
         produce(dispatcherProvider.io) {
-            geocachingApiLoginUseCase(geocachingApi)
+            geocachingApiLogin(geocachingApi)
 
             val resultQuality = when {
                 liteData && !summaryData -> GeocachingApi.ResultQuality.LITE

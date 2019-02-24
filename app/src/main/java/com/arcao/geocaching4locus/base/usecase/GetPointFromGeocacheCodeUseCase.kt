@@ -9,7 +9,7 @@ import locus.api.mapper.DataMapper
 
 class GetPointFromGeocacheCodeUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
@@ -20,7 +20,7 @@ class GetPointFromGeocacheCodeUseCase(
         geocacheLogsCount: Int = 0,
         trackableLogsCount: Int = 0
     ) = withContext(dispatcherProvider.io) {
-        geocachingApiLoginUseCase(geocachingApi)
+        geocachingApiLogin(geocachingApi)
 
         val resultQuality = if (liteData) {
             GeocachingApi.ResultQuality.LITE

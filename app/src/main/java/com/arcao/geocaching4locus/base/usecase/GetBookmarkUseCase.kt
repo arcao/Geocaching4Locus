@@ -7,11 +7,11 @@ import kotlinx.coroutines.withContext
 
 class GetBookmarkUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(guid : String): List<BookmarkEntity> = withContext(dispatcherProvider.io) {
-        geocachingApiLoginUseCase(geocachingApi)
+        geocachingApiLogin(geocachingApi)
 
         geocachingApi.getBookmarkListByGuid(guid).map {
             BookmarkEntity(it.cacheCode(), it.cacheTitle(), it.geocacheType())

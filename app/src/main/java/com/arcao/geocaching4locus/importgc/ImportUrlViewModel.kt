@@ -24,9 +24,9 @@ class ImportUrlViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
-    private val getGeocacheCodeFromGuidUseCase: GetGeocacheCodeFromGuidUseCase,
-    private val getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
-    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val getGeocacheCodeFromGuid: GetGeocacheCodeFromGuidUseCase,
+    private val getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -66,12 +66,12 @@ class ImportUrlViewModel(
 
                 Timber.i("source: import;%s", geocacheCode)
 
-                val point = getPointFromGeocacheCodeUseCase(
+                val point = getPointFromGeocacheCode(
                     geocacheCode = geocacheCode,
                     liteData = !accountManager.isPremium,
                     geocacheLogsCount = filterPreferenceManager.geocacheLogsCount
                 )
-                writePointToPackPointsFileUseCase(point)
+                writePointToPackPointsFile(point)
 
                 mainContext {
                     val intent = LocusMapManager.createSendPointsIntent(
@@ -103,7 +103,7 @@ class ImportUrlViewModel(
 
         val guid = guidMatcher.group(1)
 
-        return@computationContext getGeocacheCodeFromGuidUseCase(guid)
+        return@computationContext getGeocacheCodeFromGuid(guid)
     }
 
     fun cancelImport() {

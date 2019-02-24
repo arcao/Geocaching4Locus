@@ -27,8 +27,8 @@ class UpdateMoreViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
-    private val getPointsFromPointIndexesUseCase: GetPointsFromPointIndexesUseCase,
-    private val getOldPointNewPointPairFromPointUseCase: GetOldPointNewPointPairFromPointUseCase,
+    private val getPointsFromPointIndexes: GetPointsFromPointIndexesUseCase,
+    private val getOldPointNewPointPairFromPoint: GetOldPointNewPointPairFromPointUseCase,
     private val locusMapManager: LocusMapManager,
     private val merger: PointMerger,
     private val exceptionHandler: ExceptionHandler,
@@ -74,9 +74,9 @@ class UpdateMoreViewModel(
                         lite = true
                     }
 
-                    val existingPoints = getPointsFromPointIndexesUseCase(pointIndexes)
+                    val existingPoints = getPointsFromPointIndexes(pointIndexes)
 
-                    val pointPairs = getOldPointNewPointPairFromPointUseCase(existingPoints, lite, logsCount)
+                    val pointPairs = getOldPointNewPointPairFromPoint(existingPoints, lite, logsCount)
                     for ((oldPoint, newPoint) in pointPairs) {
                         if (newPoint == null) continue
 

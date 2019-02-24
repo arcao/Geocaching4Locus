@@ -14,10 +14,10 @@ import java.util.regex.Pattern
 
 class BookmarkGeocacheWebLinkViewModel(
     accountManager: AccountManager,
-    getPointFromGeocacheCodeUseCase: GetPointFromGeocacheCodeUseCase,
+    getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
     exceptionHandler: ExceptionHandler,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : WebLinkViewModel(accountManager, getPointFromGeocacheCodeUseCase, exceptionHandler, dispatcherProvider) {
+) : WebLinkViewModel(accountManager, getPointFromGeocacheCode, exceptionHandler, dispatcherProvider) {
 
     override val isPremiumMemberRequired: Boolean
         get() = true

@@ -15,13 +15,13 @@ import locus.api.mapper.TrackableConverter
 @ExperimentalCoroutinesApi
 class GetGeocachingTrackablesUseCase(
     private val geocachingApi: GeocachingApi,
-    private val geocachingApiLoginUseCase: GeocachingApiLoginUseCase,
+    private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val trackableConverter: TrackableConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = AppConstants.TRACKABLES_MAX) = coroutineScope {
         produce(dispatcherProvider.io) {
-            geocachingApiLoginUseCase(geocachingApi)
+            geocachingApiLogin(geocachingApi)
 
             var current = start
 

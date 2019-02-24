@@ -26,9 +26,9 @@ class BookmarkViewModel(
     private val bookmarkList: BookmarkListEntity,
     private val context: Context,
     private val exceptionHandler: ExceptionHandler,
-    private val getBookmarkUseCase: GetBookmarkUseCase,
-    private val getPointsFromGeocacheCodesUseCase: GetPointsFromGeocacheCodesUseCase,
-    private val writePointToPackPointsFileUseCase: WritePointToPackPointsFileUseCase,
+    private val getBookmark: GetBookmarkUseCase,
+    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
@@ -48,7 +48,7 @@ class BookmarkViewModel(
 
         computationContext {
             try {
-                list.postValue(getBookmarkUseCase(bookmarkList.guid))
+                list.postValue(getBookmark(bookmarkList.guid))
             } catch (e: Exception) {
                 action.postValue(BookmarkAction.Error(exceptionHandler(e)))
             } finally {
@@ -74,7 +74,7 @@ class BookmarkViewModel(
 
             try {
                 showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
-                    val channel = getPointsFromGeocacheCodesUseCase(
+                    val channel = getPointsFromGeocacheCodes(
                         geocacheCodes,
                         filterPreferenceManager.simpleCacheData,
                         filterPreferenceManager.geocacheLogsCount
@@ -95,7 +95,7 @@ class BookmarkViewModel(
                         }
                         list
                     }
-                    writePointToPackPointsFileUseCase(channel)
+                    writePointToPackPointsFile(channel)
                 }
             } catch (e: Exception) {
                 mainContext {

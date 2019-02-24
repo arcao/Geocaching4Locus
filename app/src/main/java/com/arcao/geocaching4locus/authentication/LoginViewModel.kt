@@ -19,8 +19,8 @@ import kotlinx.coroutines.cancelChildren
 
 class LoginViewModel(
     private val app: App,
-    private val retrieveAuthorizationUrlUseCase: RetrieveAuthorizationUrlUseCase,
-    private val createAccountUseCase: CreateAccountUseCase,
+    private val retrieveAuthorizationUrl: RetrieveAuthorizationUrlUseCase,
+    private val createAccount: CreateAccountUseCase,
     private val exceptionHandler: ExceptionHandler,
     private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
@@ -37,7 +37,7 @@ class LoginViewModel(
                     app.clearGeocachingCookies()
 
                     // retrieve authorization url
-                    val url = retrieveAuthorizationUrlUseCase()
+                    val url = retrieveAuthorizationUrl()
 
                     action(LoginAction.LoginUrlAvailable(url))
                 }
@@ -56,7 +56,7 @@ class LoginViewModel(
         try {
             showProgress {
                 // create account
-                val account = createAccountUseCase(input)
+                val account = createAccount(input)
 
                 val premium = account.premium
 

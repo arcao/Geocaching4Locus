@@ -9,11 +9,14 @@
     tools:theme="@style/AppTheme.Dialog">
 
     <EditText
-        android:id="@+id/input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppTheme.EditText"
-        android:inputType="textCapCharacters" >
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppTheme.EditText"
+            android:inputType="textCapCharacters"
+            android:importantForAutofill="no"
+            tools:targetApi="o"
+            tools:ignore="LabelFor">
         <requestFocus />
     </EditText>
 </com.google.android.material.textfield.TextInputLayout>

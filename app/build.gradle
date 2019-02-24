@@ -74,12 +74,6 @@ dependencies {
 
     // ButterKnife
     implementation Deps.butterknife
-
-    // Auto-Value
-    implementation Deps.auto_value_annotations
-
-    // Auto-Value Parcelable
-    implementation Deps.auto_value_parcel_adapter
 }
 
 android {

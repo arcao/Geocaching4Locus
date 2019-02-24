@@ -8,6 +8,7 @@ dependencies {
     // Android Support
     implementation Deps.androidx_appcompat
     implementation Deps.androidx_recyclerview
+    implementation Deps.androidx_recyclerview_selection
     implementation Deps.androidx_cardview
     implementation Deps.material_design
     implementation Deps.androidx_constraint_layout
@@ -23,7 +24,7 @@ dependencies {
     implementation Deps.androidx_ktx_lifecycle_vm
     implementation Deps.androidx_multidex
 
-    kapt Deps.android_databinding_compiler
+    kapt Deps.androidx_databinding_compiler
 
     // kotlin
     implementation Deps.kotlin_stdlib
@@ -43,7 +44,9 @@ dependencies {
     }
 
     // Locus API
-    implementation Deps.locus_api_android
+    implementation(Deps.locus_api_android) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+    }
 
     // Logging API
     implementation Deps.slf4j_timber
@@ -71,15 +74,12 @@ dependencies {
 
     // ButterKnife
     implementation Deps.butterknife
-    kapt Deps.butterknife_compiler
 
     // Auto-Value
     implementation Deps.auto_value_annotations
-    annotationProcessor Deps.auto_value
 
     // Auto-Value Parcelable
     implementation Deps.auto_value_parcel_adapter
-    annotationProcessor Deps.auto_value_parcel
 }
 
 android {

@@ -2,6 +2,7 @@ object Deps {
     // Android Support
     const val androidx_appcompat = "androidx.appcompat:appcompat:${Versions.androidx_appcompat}"
     const val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}"
+    const val androidx_recyclerview_selection = "androidx.recyclerview:recyclerview-selection:${Versions.androidx}"
     const val androidx_cardview = "androidx.cardview:cardview:${Versions.androidx}"
     const val material_design = "com.google.android.material:material:${Versions.androidx}"
     const val androidx_constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
@@ -15,7 +16,7 @@ object Deps {
     const val androidx_ktx_collection = "androidx.collection:collection-ktx:${Versions.androidx_ktx}"
     const val androidx_ktx_lifecycle_vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_ktx_lifecycle}"
 
-    const val android_databinding_compiler = "com.android.databinding:compiler:${Versions.android_gradle_plugin}"
+    const val androidx_databinding_compiler = "androidx.databinding:databinding-compiler:${Versions.android_gradle_plugin}"
 
     const val androidx_multidex = "androidx.multidex:multidex:${Versions.androidx_multidex}"
 

@@ -33,4 +33,5 @@ internal val feedbackModule = module {
             LogCatCollector()
         )
     }
+    single { FeedbackHelper(get(), get(DEP_FEEDBACK_COLLECTORS), get()) }
 }

@@ -18,24 +18,17 @@ import java.io.File
 import java.io.FileNotFoundException
 
 /**
- *
- *
  * Provider for attaching feedback file to 3rd application:
  *
- *
- *
  * Usage in AndroidManifest.xml file:
- *
- *
- *
- * <pre class="prettyprint">
- * &lt;provider
- * android:name="com.arcao.feedback.FeedbackFileProvider"
- * android:authorities="${applicationId}.provider.feedback"
- * android:exported="true"
- * android:enabled="true"
- * android:grantUriPermissions="true"/&gt;
-</pre> *
+ * ```xml
+ * <provider
+ *     android:name="com.arcao.feedback.FeedbackFileProvider"
+ *     android:authorities="${applicationId}.provider.feedback"
+ *     android:exported="true"
+ *     android:enabled="true"
+ *     android:grantUriPermissions="true"/>
+ * ```
  */
 class FeedbackFileProvider : ContentProvider() {
 
@@ -81,7 +74,7 @@ class FeedbackFileProvider : ContentProvider() {
 
             else -> {
                 Timber.e("Unsupported uri: '$uri'.")
-                throw FileNotFoundException("Unsupported uri: " + uri.toString())
+                throw FileNotFoundException("Unsupported uri: $uri")
             }
         }
     }

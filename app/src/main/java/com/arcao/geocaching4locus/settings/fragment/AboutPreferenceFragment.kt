@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.settings.fragment
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
@@ -21,7 +22,6 @@ import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
@@ -30,10 +30,12 @@ import kotlin.coroutines.CoroutineContext
 
 class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
     private val dispatcherProvider by inject<CoroutinesDispatcherProvider>()
+    private val feedbackHelper by inject<FeedbackHelper>()
+
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.IO
+        get() = job + dispatcherProvider.main
 
     override val preferenceResource: Int
         get() = R.xml.preference_category_about
@@ -65,13 +67,14 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         }
 
         preference<Preference>(ABOUT_FEEDBACK).setOnPreferenceClickListener {
-            launch(dispatcherProvider.computation) {
-                FeedbackHelper.sendFeedback(
-                    requireActivity(),
+            launch {
+                val intent = feedbackHelper.createFeedbackIntent(
                     R.string.feedback_email,
                     R.string.feedback_subject,
                     R.string.feedback_body
                 )
+
+                startActivityForResult(intent, REQ_FEEDBACK)
             }
             true
         }
@@ -85,6 +88,12 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQ_FEEDBACK) {
+            feedbackHelper.revokeFeedbackPermission()
+        }
     }
 
     class DonatePaypalDialogFragment : AbstractDialogFragment() {
@@ -103,5 +112,9 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         companion object {
             const val TAG = "DonatePaypalDialogFragment"
         }
+    }
+
+    companion object {
+        const val REQ_FEEDBACK = 1
     }
 }

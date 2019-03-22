@@ -7,7 +7,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-object ActionDisplayPointsExtended : ActionDisplayPoints() {
+object ActionDisplayPointsExtended {
     private const val APP_DIRECTORY = "Geocaching4Locus"
     private const val CACHE_FILENAME = "data.locus"
 

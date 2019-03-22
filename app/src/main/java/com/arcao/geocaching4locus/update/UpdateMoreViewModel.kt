@@ -53,8 +53,8 @@ class UpdateMoreViewModel(
                 computationContext {
                     var pointIndexes: LongArray? = null
 
-                    if (IntentHelper.isIntentPointsScreenTools(intent))
-                        pointIndexes = IntentHelper.handleIntentPointsScreenTools(intent)
+                    if (IntentHelper.isIntentPointsTools(intent))
+                        pointIndexes = IntentHelper.getPointsFromIntent(intent)
 
                     Timber.i("source: update;count=%d", pointIndexes?.size ?: 0)
 

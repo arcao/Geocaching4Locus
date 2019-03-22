@@ -116,7 +116,7 @@ class LocusMapManager(
 
     fun updatePoint(point: Point) {
         try {
-            val locusVersion = LocusUtils.getActiveVersion(context)
+            val locusVersion = LocusUtils.getActiveVersion(context) ?: return
             ActionBasics.updatePoint(context, locusVersion, point, false)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)
@@ -125,7 +125,7 @@ class LocusMapManager(
 
     fun getPoint(pointIndex: Long): Point? {
         try {
-            val locusVersion = LocusUtils.getActiveVersion(context)
+            val locusVersion = LocusUtils.getActiveVersion(context) ?: return null
             return ActionBasics.getPoint(context, locusVersion, pointIndex)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)

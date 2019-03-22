@@ -133,7 +133,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     }
 
     private class FixedWebView : WebView {
-        constructor(context: Context) : super(context) {}
+        constructor(context: Context) : super(context)
 
         constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {}
 

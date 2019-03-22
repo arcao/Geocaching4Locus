@@ -72,7 +72,7 @@ object AppConstants {
 
     const val NOTIFICATION_ID_LIVEMAP = 1
 
-    const val LIVEMAP_REQUESTS = 5
+    private const val LIVEMAP_REQUESTS = 5
     const val LIVEMAP_CACHES_PER_REQUEST = 50
     const val LIVEMAP_CACHES_COUNT = LIVEMAP_REQUESTS * LIVEMAP_CACHES_PER_REQUEST
     const val LIVEMAP_DISTANCE = 60000

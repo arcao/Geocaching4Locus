@@ -13,7 +13,7 @@ abstract class AbstractDialogFragment : DialogFragment() {
 
     fun requireArguments(): Bundle {
         if (arguments == null) {
-            throw IllegalStateException("Fragment " + this + " does not contains arguments.")
+            throw IllegalStateException("Fragment $this does not contains arguments.")
         }
         return arguments!!
     }

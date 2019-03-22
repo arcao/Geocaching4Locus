@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.base.util
 
 import android.content.Context
 import android.content.res.Resources
-import androidx.annotation.NonNull
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.core.os.ConfigurationCompat

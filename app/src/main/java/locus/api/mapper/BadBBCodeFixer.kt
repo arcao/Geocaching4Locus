@@ -3,7 +3,7 @@ package locus.api.mapper
 import java.util.regex.Pattern
 
 internal object BadBBCodeFixer {
-    private val BBCODE_PATTERN_FLAGS = Pattern.CASE_INSENSITIVE or Pattern.DOTALL
+    private const val BBCODE_PATTERN_FLAGS = Pattern.CASE_INSENSITIVE or Pattern.DOTALL
     private val BBCODE_MAP = mapOf(
         Pattern.compile("\\[align=(.+?)](.+?)\\[/align=[^]]+]", BBCODE_PATTERN_FLAGS) to "<div align='$1'>$2</div>",
         Pattern.compile("\\[color=(.+?)](.+?)\\[/color=[^]]+]", BBCODE_PATTERN_FLAGS) to "<font color='$1'>$2</font>",

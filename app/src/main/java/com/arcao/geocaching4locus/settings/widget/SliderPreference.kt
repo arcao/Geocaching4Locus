@@ -105,7 +105,7 @@ class SliderPreference @JvmOverloads constructor(context: Context, attrs: Attrib
             dest.writeInt(value)
         }
 
-        internal constructor(superState: Parcelable) : super(superState) {}
+        internal constructor(superState: Parcelable) : super(superState)
 
         companion object {
             @JvmField

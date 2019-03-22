@@ -40,7 +40,7 @@ class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFra
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         binding.vm = viewModel
 
         viewModel.action.observe(this, ::handleAction)

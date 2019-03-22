@@ -116,7 +116,7 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
             get() = super.cause as IOException
 
         companion object {
-            private val serialVersionUID = 2678019269077897465L
+            private const val serialVersionUID = 2678019269077897465L
         }
     }
 }

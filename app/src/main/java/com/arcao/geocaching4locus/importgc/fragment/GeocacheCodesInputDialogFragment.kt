@@ -21,7 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
     val model by sharedViewModel<ImportGeocacheCodeViewModel>()
 
-    lateinit var editTextView: EditText
+    private lateinit var editTextView: EditText
     lateinit var textInputLayout: TextInputLayout
 
     interface DialogListener {

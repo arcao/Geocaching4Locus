@@ -7,7 +7,7 @@ object Versions {
     const val kotlin_stdlib = "1.3.30-eap-45"
     const val kotlin_coroutines = "1.1.1"
 
-    const val android_gradle_plugin = "3.4.0-rc02"
+    const val android_gradle_plugin = "3.4.0-rc03"
     const val gradle_versions_plugin = "0.21.0"
     const val google_services_plugin = "4.2.0"
     const val fabric_io_plugin = "1.28.1"

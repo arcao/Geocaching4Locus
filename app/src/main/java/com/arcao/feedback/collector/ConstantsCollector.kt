@@ -1,5 +1,7 @@
 package com.arcao.feedback.collector
 
+import java.util.Arrays
+
 class ConstantsCollector(private val source: Class<*>, private val prefix: String) : Collector() {
 
     override val name: String
@@ -11,7 +13,12 @@ class ConstantsCollector(private val source: Class<*>, private val prefix: Strin
         source.fields.forEach { field ->
             result.append(field.name).append("=")
             try {
-                result.append(field.get(null).toString())
+                result.append(
+                    when (val value = field.get(null)) {
+                        is Array<*> -> Arrays.toString(value)
+                        else -> value.toString()
+                    }
+                )
             } catch (e: IllegalArgumentException) {
                 result.append("N/A")
             } catch (e: IllegalAccessException) {

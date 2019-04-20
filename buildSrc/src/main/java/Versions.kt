@@ -3,11 +3,11 @@ object Versions {
     const val target_sdk = 28
     const val compile_sdk = target_sdk
 
-    const val kotlin = "1.3.30-eap-45"
-    const val kotlin_stdlib = "1.3.30-eap-45"
-    const val kotlin_coroutines = "1.1.1"
+    const val kotlin = "1.3.30"
+    const val kotlin_stdlib = "1.3.30"
+    const val kotlin_coroutines = "1.2.0"
 
-    const val android_gradle_plugin = "3.4.0-rc03"
+    const val android_gradle_plugin = "3.4.0"
     const val gradle_versions_plugin = "0.21.0"
     const val google_services_plugin = "4.2.0"
     const val fabric_io_plugin = "1.28.1"
@@ -19,12 +19,12 @@ object Versions {
     const val constraint_layout = "1.1.3"
     const val koin = "1.0.2"
     const val geocaching_api = "2.1.0"
-    const val locus_api_android = "0.3.10"
+    const val locus_api_android = "0.3.12"
     const val slf4j_timber = "3.1"
     const val timber = "4.7.1"
     const val commons_lang3 = "3.8.1"
     const val commons_collections4 = "4.2"
-    const val scribejava = "6.3.0"
+    const val scribejava = "6.5.1"
     const val material_dialogs = "0.9.6.0"
     const val firebase = "16.0.8"
     const val crashlytics = "2.9.9"

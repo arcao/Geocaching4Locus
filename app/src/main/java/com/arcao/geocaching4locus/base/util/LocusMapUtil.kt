@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.error.fragment.LocusTestingErrorDialogFragment
+import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
 import locus.api.objects.extra.Point
@@ -51,7 +52,7 @@ inline fun Point?.isGeocache() = this?.gcData?.cacheID?.startsWith("GC", true) ?
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Activity.isCalledFromLocusMap(): Boolean {
-    return LocusUtils.isIntentMainFunction(intent) ||
-        LocusUtils.isIntentMainFunctionGc(intent) ||
+    return IntentHelper.isIntentMainFunction(intent) ||
+        IntentHelper.isIntentMainFunctionGc(intent) ||
         intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
 }

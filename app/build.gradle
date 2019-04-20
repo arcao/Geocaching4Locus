@@ -58,7 +58,10 @@ dependencies {
 
     // ScribeJava
     implementation Deps.scribejava_core
-    implementation Deps.scribejava_httpclient_okhttp
+    implementation(Deps.scribejava_httpclient_okhttp) {
+        // exclude incompatible OkHttp library, use 3.12.x version instead
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
 
     // Material dialogs
     implementation(Deps.material_dialogs) {
@@ -114,6 +117,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlin.Experimental",
+                "-Xjvm-default=compatibility"
+        ]
+    }
+
     dataBinding {
         enabled = true
     }
@@ -133,7 +143,7 @@ android {
         release {
             versionNameSuffix ''
 
-            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() +'"'
+            buildConfigField 'String', 'GIT_SHA', '"' + gitSha() + '"'
             buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
 
             signingConfig signingConfigs.release
@@ -149,6 +159,7 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
+        exclude 'META-INF/atomicfu.kotlin_module'
         exclude 'org/apache/http/version.properties'
         exclude 'templates/release-notes.vm'
         exclude 'log4j.xml'

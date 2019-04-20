@@ -1,7 +1,7 @@
 package com.arcao.feedback.collector
 
 import android.content.Context
-import locus.api.android.ActionTools
+import locus.api.android.ActionBasics
 import locus.api.android.utils.LocusUtils
 
 class LocusMapInfoCollector(private val context: Context) : Collector() {
@@ -17,7 +17,7 @@ class LocusMapInfoCollector(private val context: Context) : Collector() {
                 sb.append("Locus Version = ").append(lv.versionName)
                 sb.append("\nLocus Package = ").append(lv.packageName)
 
-                val info = ActionTools.getLocusInfo(context, lv)
+                val info = ActionBasics.getLocusInfo(context, lv)
                 if (info != null) {
                     sb.append("\nLocus info:\n").append(info.toString())
                 }

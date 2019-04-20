@@ -22,8 +22,8 @@ import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
-@ExperimentalCoroutinesApi
-class DownloadRectangleViewModel(
+@UseExperimental(ExperimentalCoroutinesApi::class)
+class DownloadRectangleViewModel constructor(
     private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,

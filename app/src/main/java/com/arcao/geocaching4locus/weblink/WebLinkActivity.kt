@@ -11,7 +11,7 @@ import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.error.ErrorActivity
-import locus.api.android.utils.LocusUtils
+import locus.api.android.utils.IntentHelper
 import org.koin.android.ext.android.inject
 import timber.log.Timber
 
@@ -34,8 +34,8 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
 
     private fun processIntent() {
         try {
-            if (LocusUtils.isIntentPointTools(intent)) {
-                val point = LocusUtils.handleIntentPointTools(this, intent)
+            if (IntentHelper.isIntentPointTools(intent)) {
+                val point = IntentHelper.getPointFromIntent(this, intent)
 
                 if (point == null) {
                     setResult(Activity.RESULT_CANCELED)

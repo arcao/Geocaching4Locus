@@ -18,7 +18,8 @@ class PreferenceAccountManager(context: Context) : AccountManager {
 
     // Do not store username, password and hash in default shared preferences
     // PreferencesBackupAgent backup default shared preferences to Google Backup Service
-    private val preferences = this.context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
+    private val preferences =
+        this.context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
     override val restrictions = AccountRestrictions(this.context)
 
     override var account: Account? = null
@@ -79,21 +80,21 @@ class PreferenceAccountManager(context: Context) : AccountManager {
             premium = preferences.getBoolean(PrefConstants.ACCOUNT_PREMIUM, false),
             avatarUrl = preferences.getString(PrefConstants.ACCOUNT_AVATAR_URL, null),
             homeCoordinates =
-                Coordinates.builder()
-                    .latitude(
-                        preferences.getFloat(
-                            PrefConstants.ACCOUNT_HOME_COORDINATES_LAT,
-                            java.lang.Float.NaN
-                        ).toDouble()
-                    )
-                    .longitude(
-                        preferences.getFloat(
-                            PrefConstants.ACCOUNT_HOME_COORDINATES_LON,
-                            java.lang.Float.NaN
-                        ).toDouble()
-                    )
-                    .build()
-            )
+            Coordinates.builder()
+                .latitude(
+                    preferences.getFloat(
+                        PrefConstants.ACCOUNT_HOME_COORDINATES_LAT,
+                        java.lang.Float.NaN
+                    ).toDouble()
+                )
+                .longitude(
+                    preferences.getFloat(
+                        PrefConstants.ACCOUNT_HOME_COORDINATES_LON,
+                        java.lang.Float.NaN
+                    ).toDouble()
+                )
+                .build()
+        )
     }
 
     private fun store() {
@@ -167,6 +168,7 @@ class PreferenceAccountManager(context: Context) : AccountManager {
         preferences.edit().remove(PrefConstants.ACCOUNT_SESSION).apply()
     }
 
+    @Suppress("DEPRECATION")
     private fun upgradeStorage() {
         val defaultPref = PreferenceManager.getDefaultSharedPreferences(context)
 

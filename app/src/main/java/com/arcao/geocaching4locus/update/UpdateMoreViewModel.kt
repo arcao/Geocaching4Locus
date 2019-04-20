@@ -19,10 +19,6 @@ import locus.api.manager.LocusMapManager
 import locus.api.mapper.PointMerger
 import timber.log.Timber
 
-/**
- * Created by Arcao on 27.12.2018.
- */
-@ExperimentalCoroutinesApi
 class UpdateMoreViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
@@ -36,6 +32,7 @@ class UpdateMoreViewModel(
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<UpdateMoreAction>()
 
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     fun processIntent(intent: Intent) = mainLaunch {
         if (context.isLocusNotInstalled()) {
             action(UpdateMoreAction.LocusMapNotInstalled)

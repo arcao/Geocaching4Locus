@@ -1,8 +1,7 @@
 package com.arcao.geocaching4locus.live_map.model
 
-import android.content.Intent
 import com.arcao.geocaching.api.data.coordinates.Coordinates
-import locus.api.android.utils.LocusUtils
+import locus.api.objects.extra.Location
 
 class LastLiveMapCoordinates private constructor(
     val center: Coordinates,
@@ -10,25 +9,16 @@ class LastLiveMapCoordinates private constructor(
     val bottomRight: Coordinates
 ) {
     companion object {
-        // copied from PeriodicUpdatesConst
-        private const val VAR_LOC_MAP_CENTER = "1302"
-        private const val VAR_LOC_MAP_BBOX_TOP_LEFT = "1303"
-        private const val VAR_LOC_MAP_BBOX_BOTTOM_RIGHT = "1304"
-
-        var value : LastLiveMapCoordinates? = null
+        var value: LastLiveMapCoordinates? = null
             private set
 
         @JvmStatic
-        fun update(intent: Intent) {
-            val mapCenterCoordinates = getCoordinatesFromIntent(intent, VAR_LOC_MAP_CENTER)
-            val mapTopLeftCoordinates = getCoordinatesFromIntent(intent, VAR_LOC_MAP_BBOX_TOP_LEFT)
-            val mapBottomRightCoordinates = getCoordinatesFromIntent(intent, VAR_LOC_MAP_BBOX_BOTTOM_RIGHT)
-
-            if (mapCenterCoordinates != null && mapTopLeftCoordinates != null && mapBottomRightCoordinates != null) {
-                value = LastLiveMapCoordinates(mapCenterCoordinates, mapTopLeftCoordinates, mapBottomRightCoordinates)
-            } else {
-                value = null
-            }
+        fun update(mapCenter: Location, mapTopLeft: Location, mapBottomRight: Location) {
+            value = LastLiveMapCoordinates(
+                mapCenter.toCoordinates(),
+                mapTopLeft.toCoordinates(),
+                mapBottomRight.toCoordinates()
+            )
         }
 
         @JvmStatic
@@ -36,13 +26,6 @@ class LastLiveMapCoordinates private constructor(
             value = null
         }
 
-        private fun getCoordinatesFromIntent(intent: Intent, extraName: String): Coordinates? {
-            val location = LocusUtils.getLocationFromIntent(intent, extraName)
-
-            return if (location == null || location.latitude.isNaN() || location.longitude.isNaN())
-                null
-            else
-                Coordinates.create(location.latitude, location.longitude)
-        }
+        private fun Location.toCoordinates() = Coordinates.create(latitude, longitude)
     }
 }

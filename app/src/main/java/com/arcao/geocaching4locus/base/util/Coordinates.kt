@@ -6,6 +6,8 @@ object Coordinates {
     private const val MIN_PER_DEG = 60.0
     private const val SEC_PER_DEG = 3600.0
 
+    private val COMMA_REGEX = Regex.fromLiteral(",")
+
     @JvmStatic
     @JvmOverloads
     fun convertDoubleToDeg(source: Double, isLon: Boolean, precision: Int = 3): CharSequence {
@@ -39,8 +41,8 @@ object Coordinates {
     }
 
     @JvmStatic
-    fun convertDegToDouble(source: String): Double {
-        val tmp = source.trim { it <= ' ' }.replace(',', '.')
+    fun convertDegToDouble(source: CharSequence): Double {
+        val tmp = source.trim { it <= ' ' }.replace(COMMA_REGEX, ".")
 
         var index = 0
         var end: Int

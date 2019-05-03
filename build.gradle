@@ -80,6 +80,7 @@ allprojects {
             url 'https://maven.arcao.com'
             content {
                 includeModule 'com.arcao', 'geocaching-api'
+                includeModule 'com.arcao', 'parent'
             }
         }
 

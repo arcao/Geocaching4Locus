@@ -58,10 +58,6 @@ object Deps {
     // Networking
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
 
-    // ButterKnife
-    const val butterknife = "com.jakewharton:butterknife:${Versions.butterknife}"
-    const val butterknife_compiler = "com.jakewharton:butterknife-compiler:${Versions.butterknife}"
-
     // Auto-Value
     const val auto_value = "com.google.auto.value:auto-value:${Versions.auto_value}"
     const val auto_value_annotations = "com.google.auto.value:auto-value-annotations:${Versions.auto_value}"

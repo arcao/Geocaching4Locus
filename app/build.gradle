@@ -64,9 +64,7 @@ dependencies {
     }
 
     // Material dialogs
-    implementation(Deps.material_dialogs) {
-        //exclude group: 'com.android.support', module: 'support-v13'
-    }
+    implementation Deps.material_dialogs
 
     // Crashlytics & Firebase
     implementation Deps.firebase_core
@@ -74,9 +72,6 @@ dependencies {
 
     // Networking
     implementation Deps.okhttp
-
-    // ButterKnife
-    implementation Deps.butterknife
 }
 
 android {

@@ -29,7 +29,6 @@ object Versions {
     const val firebase = "16.0.8"
     const val crashlytics = "2.9.9"
     const val okhttp = "3.12.2" // keep 3.12.x, 3.13.x require Android 5+ (API 21)
-    const val butterknife = "10.1.0"
     const val auto_value = "1.6.3"
     const val auto_value_parcel = "0.2.6"
     const val androidx_core_ktx = "1.0.1"

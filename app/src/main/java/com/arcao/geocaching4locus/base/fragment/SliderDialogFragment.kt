@@ -19,8 +19,6 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
@@ -28,11 +26,8 @@ import java.lang.ref.WeakReference
 
 class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeListener, TextWatcher {
 
-    @BindView(R.id.seekbar)
     internal lateinit var seekBarView: SeekBar
-    @BindView(R.id.input)
     internal lateinit var editTextView: EditText
-    @BindView(R.id.message)
     internal lateinit var messageView: TextView
 
     private var minValue: Int = 0
@@ -113,7 +108,10 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
     private fun prepareView(): View {
         @SuppressLint("InflateParams")
         val view = LayoutInflater.from(activity).inflate(R.layout.view_slider, null, false)
-        ButterKnife.bind(this, view)
+
+        messageView = view.findViewById(R.id.message)
+        seekBarView = view.findViewById(R.id.seekbar)
+        editTextView = view.findViewById(R.id.input)
 
         val message = requireArguments().getInt(PARAM_MESSAGE)
         messageView.apply {

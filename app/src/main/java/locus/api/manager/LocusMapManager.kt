@@ -5,12 +5,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
+import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import locus.api.android.ActionBasics
 import locus.api.android.ActionDisplayInternal
 import locus.api.android.ActionDisplayPoints
 import locus.api.android.ActionTools
 import locus.api.android.objects.PackPoints
+import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
 import locus.api.android.utils.exceptions.RequiredVersionMissingException
@@ -131,6 +133,18 @@ class LocusMapManager(
             throw LocusMapRuntimeException(t)
         }
     }
+
+    fun isLocusMapNotInstalled() = context.isLocusNotInstalled()
+
+    fun isIntentPointTools(intent: Intent) = IntentHelper.isIntentPointTools(intent)
+
+    fun getPointFromIntent(intent: Intent) = IntentHelper.getPointFromIntent(context, intent)
+
+    fun getLocationFromIntent(intent: Intent) =
+        IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_GPS)
+            ?: IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+
+    fun isLocationIntent(intent: Intent) = intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
 
     companion object {
         private const val APP_DIRECTORY = "Geocaching4Locus"

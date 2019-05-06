@@ -64,8 +64,12 @@ object AppConstants {
     const val DISTANCE_MILES_DEFAULT = 50 / MILES_PER_KILOMETER
 
     // restrictions in Geocaching Live Service
+    @Deprecated("Use DISTANCE_MIN_METERS")
     const val DISTANCE_KM_MIN = 0.1f
+    @Deprecated("Use DISTANCE_MAX_METERS")
     const val DISTANCE_KM_MAX = 50f
+    const val DISTANCE_MIN_METERS = 100
+    const val DISTANCE_MAX_METERS = 50000
 
     @JvmField
     val PREMIUM_CHARACTER = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) String(Character.toChars(0x1F451)) else "(PM)"

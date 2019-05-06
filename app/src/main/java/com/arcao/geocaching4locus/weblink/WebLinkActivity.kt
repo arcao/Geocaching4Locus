@@ -28,7 +28,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
         processIntent()
     }
 
-    override fun onProgressCancel() {
+    override fun onProgressCancel(requestId: Int) {
         viewModel.cancelRetrieveUri()
     }
 

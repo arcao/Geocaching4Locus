@@ -260,7 +260,14 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
 
         @JvmStatic
         @JvmOverloads
-        fun newInstance(@StringRes title: Int, @StringRes message: Int, min: Int, max: Int, defaultValue: Int, step: Int = 1): SliderDialogFragment {
+        fun newInstance(
+            @StringRes title: Int,
+            @StringRes message: Int = 0,
+            min: Int,
+            max: Int,
+            defaultValue: Int,
+            step: Int = 1
+        ): SliderDialogFragment {
             val fragment = SliderDialogFragment()
 
             val args = bundleOf(

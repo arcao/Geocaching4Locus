@@ -77,7 +77,7 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
     companion object {
         // Limitation on Groundspeak side to 100000 meters
         private const val MAX_DIAGONAL_DISTANCE = 100000f
-        private const val DISTANCE_LIMIT_DIVIDER = 2.5
+        private const val DISTANCE_LIMIT_DIVIDER = 2.5f
 
         internal var forceUpdate: Boolean = false
         private var lastMapCenter: Location? = null
@@ -88,7 +88,7 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
             return mc != null && mc.distanceTo(mapCenter) < computeNotificationLimit(mapCenter, mapTopLeft)
         }
 
-        private fun computeNotificationLimit(mapCenter: Location, mapTopLeft: Location): Double {
+        private fun computeNotificationLimit(mapCenter: Location, mapTopLeft: Location): Float {
             return mapTopLeft.distanceTo(mapCenter) / DISTANCE_LIMIT_DIVIDER
         }
     }

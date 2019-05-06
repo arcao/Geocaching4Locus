@@ -48,13 +48,15 @@ abstract class BaseViewModel(
         }
 
     suspend fun <R> showProgress(
-        @StringRes message: Int = 0, messageArgs: Array<Any>? = null,
+        requestId: Int = 0,
+        @StringRes message: Int = 0,
+        messageArgs: Array<Any>? = null,
         progress: Int = 0,
         maxProgress: Int = 0,
         block: suspend () -> R
     ): R {
         mainContext {
-            progress(ProgressState.ShowProgress(message, messageArgs, progress, maxProgress))
+            progress(ProgressState.ShowProgress(requestId, message, messageArgs, progress, maxProgress))
         }
 
         try {
@@ -67,7 +69,9 @@ abstract class BaseViewModel(
     }
 
     suspend fun updateProgress(
-        @StringRes message: Int = 0, messageArgs: Array<Any>? = null,
+        requestId: Int = 0,
+        @StringRes message: Int = 0,
+        messageArgs: Array<Any>? = null,
         progress: Int = -1,
         maxProgress: Int = -1
     ) {
@@ -75,16 +79,17 @@ abstract class BaseViewModel(
             mainContext {
                 progress(
                     ProgressState.ShowProgress(
+                        if (requestId == 0) {
+                            this@runIfIsSuspended.requestId
+                        } else {
+                            requestId
+                        },
                         if (message == 0) {
                             this@runIfIsSuspended.message
                         } else {
                             message
                         },
-                        if (message == 0) {
-                            this@runIfIsSuspended.messageArgs
-                        } else {
-                            messageArgs
-                        },
+                        messageArgs ?: this@runIfIsSuspended.messageArgs,
                         if (progress < 0) {
                             this@runIfIsSuspended.progress
                         } else {
@@ -104,7 +109,9 @@ abstract class BaseViewModel(
 
 sealed class ProgressState {
     class ShowProgress(
-        @StringRes val message: Int = 0, val messageArgs: Array<Any>? = null,
+        val requestId : Int = 0,
+        @StringRes val message: Int = 0,
+        val messageArgs: Array<Any>? = null,
         val progress: Int = 0,
         val maxProgress: Int = 0
     ) : ProgressState()

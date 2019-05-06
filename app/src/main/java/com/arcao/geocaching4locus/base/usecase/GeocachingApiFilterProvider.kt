@@ -82,4 +82,64 @@ class GeocachingApiFilterProvider(
 
         return filters
     }
+
+    operator fun invoke(
+        coordinates: Coordinates,
+        distanceMeters: Int,
+        disabledGeocaches: Boolean = false,
+        foundGeocaches: Boolean = false,
+        ownGeocaches: Boolean = false,
+        geocacheTypes: Array<GeocacheType> = emptyArray(),
+        containerTypes: Array<ContainerType> = emptyArray(),
+        difficultyMin: Float = 1F,
+        difficultyMax: Float = 5F,
+        terrainMin: Float = 1F,
+        terrainMax: Float = 5F,
+        excludeIgnoreList: Boolean = true
+    ): List<Filter> {
+        val filters = ArrayList<Filter>(9)
+
+        val userName = requireNotNull(accountManager.account).name
+        val premiumMember = accountManager.isPremium
+
+        filters += PointRadiusFilter(coordinates, distanceMeters.toLong())
+
+        filters += GeocacheExclusionsFilter(
+            false,
+            if (disabledGeocaches)
+                null
+            else
+                true
+            ,
+            null,
+            null,
+            null,
+            null
+        )
+
+        if (!foundGeocaches) {
+            filters += NotFoundByUsersFilter(userName)
+        }
+
+        if (!ownGeocaches) {
+            filters += NotHiddenByUsersFilter(userName)
+        }
+
+        if (premiumMember) {
+            filters += GeocacheTypeFilter(*geocacheTypes)
+            filters += GeocacheContainerSizeFilter(*containerTypes)
+
+            if (difficultyMin > 1 || difficultyMax < 5) {
+                filters += DifficultyFilter(difficultyMin, difficultyMax)
+            }
+
+            if (terrainMin > 1 || terrainMax < 5) {
+                filters += TerrainFilter(terrainMin, terrainMax)
+            }
+
+            filters += BookmarksExcludeFilter(excludeIgnoreList)
+        }
+
+        return filters
+    }
 }

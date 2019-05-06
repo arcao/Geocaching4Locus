@@ -31,7 +31,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
         }
     }
 
-    override fun onProgressCancel() {
+    override fun onProgressCancel(requestId: Int) {
         viewModel.cancelImport()
     }
 

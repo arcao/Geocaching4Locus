@@ -30,7 +30,7 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
             viewModel.startDownload()
     }
 
-    override fun onProgressCancel() {
+    override fun onProgressCancel(requestId: Int) {
         viewModel.cancelDownload()
     }
 

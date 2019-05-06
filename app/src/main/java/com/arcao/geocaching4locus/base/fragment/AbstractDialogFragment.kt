@@ -18,6 +18,10 @@ abstract class AbstractDialogFragment : DialogFragment() {
         return arguments!!
     }
 
+    fun show(manager: FragmentManager) {
+        show(manager, javaClass.name)
+    }
+
     // This is work around for the situation when method show is called after saving
     // state even if you do all right. Especially when show is called after click on
     // a button.

@@ -32,7 +32,7 @@ class LoginActivity : AbstractActionBarActivity() {
         }
     }
 
-    override fun onProgressCancel() {
+    override fun onProgressCancel(requestId: Int) {
         viewModel.cancelLogin()
     }
 

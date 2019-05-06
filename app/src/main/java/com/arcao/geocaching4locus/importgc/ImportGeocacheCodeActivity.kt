@@ -31,7 +31,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         viewModel.init()
     }
 
-    override fun onProgressCancel() {
+    override fun onProgressCancel(requestId: Int) {
         viewModel.cancelImport()
     }
 

@@ -20,6 +20,7 @@ abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFr
                     )
                 } else {
                     ProgressDialogFragment.newInstance(
+                        state.requestId,
                         getText(state.message, state.messageArgs ?: emptyArray<Any>()),
                         state.progress,
                         state.maxProgress
@@ -34,6 +35,6 @@ abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFr
         }.exhaustive
     }
 
-    open override fun onProgressCancel() {
+    open override fun onProgressCancel(requestId: Int) {
     }
 }

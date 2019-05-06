@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.base.util
 
 import kotlin.math.pow
 
-object Coordinates {
+object CoordinatesFormatter {
     private const val MIN_PER_DEG = 60.0
     private const val SEC_PER_DEG = 3600.0
 

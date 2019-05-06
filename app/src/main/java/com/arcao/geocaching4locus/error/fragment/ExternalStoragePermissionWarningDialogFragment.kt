@@ -8,7 +8,11 @@ import com.arcao.geocaching4locus.base.util.PermissionUtil
 class ExternalStoragePermissionWarningDialogFragment : AbstractErrorDialogFragment() {
     override fun onPositiveButtonClick() {
         super.onPositiveButtonClick()
-        ActivityCompat.requestPermissions(requireActivity(), PermissionUtil.PERMISSION_EXTERNAL_STORAGE, PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION)
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            PermissionUtil.PERMISSION_EXTERNAL_STORAGE,
+            PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION
+        )
     }
 
     companion object {

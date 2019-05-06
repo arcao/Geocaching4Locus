@@ -49,19 +49,19 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         display.getMetrics(metrics)
 
         return collectCurrentSizeRange(display) +
-                collectFlags(display) +
-                display.displayId + ".height=" + display.height + '\n'.toString() +
-                collectMetrics(display, "getMetrics") +
-                collectName(display) +
-                display.displayId + ".orientation=" + display.rotation + '\n'.toString() +
-                collectMetrics(display, "getRealMetrics") +
-                collectSize(display, "getRealSize") +
-                collectRectSize(display) +
-                display.displayId + ".refreshRate=" + display.refreshRate + '\n'.toString() +
-                collectRotation(display) +
-                collectSize(display, "getSize") +
-                display.displayId + ".width=" + display.width + '\n'.toString() +
-                collectIsValid(display)
+            collectFlags(display) +
+            display.displayId + ".height=" + display.height + '\n'.toString() +
+            collectMetrics(display, "getMetrics") +
+            collectName(display) +
+            display.displayId + ".orientation=" + display.rotation + '\n'.toString() +
+            collectMetrics(display, "getRealMetrics") +
+            collectSize(display, "getRealSize") +
+            collectRectSize(display) +
+            display.displayId + ".refreshRate=" + display.refreshRate + '\n'.toString() +
+            collectRotation(display) +
+            collectSize(display, "getSize") +
+            display.displayId + ".width=" + display.width + '\n'.toString() +
+            collectIsValid(display)
     }
 
     private fun collectIsValid(display: Display): String {
@@ -105,7 +105,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
             val size = Rect()
             display.getRectSize(size)
             result.append(display.displayId).append(".rectSize=[").append(size.top).append(',').append(size.left)
-                    .append(',').append(size.width()).append(',').append(size.height()).append(']').append('\n')
+                .append(',').append(size.width()).append(',').append(size.height()).append(']').append('\n')
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -121,7 +121,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
             val size = Point()
             getRealSize.invoke(display, size)
             result.append(display.displayId).append('.').append(methodName).append("=[").append(size.x)
-                    .append(',').append(size.y).append(']').append('\n')
+                .append(',').append(size.y).append(']').append('\n')
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -133,14 +133,15 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         val result = StringBuilder()
         try {
             // since API v16
-            val getCurrentSizeRange = display.javaClass.getMethod("getCurrentSizeRange", Point::class.java, Point::class.java)
+            val getCurrentSizeRange =
+                display.javaClass.getMethod("getCurrentSizeRange", Point::class.java, Point::class.java)
             val smallest = Point()
             val largest = Point()
             getCurrentSizeRange.invoke(display, smallest, largest)
             result.append(display.displayId).append(".currentSizeRange.smallest=[").append(smallest.x).append(',')
-                    .append(smallest.y).append(']').append('\n')
+                .append(smallest.y).append(']').append('\n')
             result.append(display.displayId).append(".currentSizeRange.largest=[").append(largest.x).append(',')
-                    .append(largest.y).append(']').append('\n')
+                .append(largest.y).append(']').append('\n')
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -163,7 +164,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
             }
 
             result.append(display.displayId).append(".flags=").append(activeFlags(flagsNames, flags))
-                    .append('\n')
+                .append('\n')
         } catch (e: Exception) {
             Timber.e(e)
         }
@@ -193,19 +194,19 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
             val metrics = getMetrics.invoke(display) as DisplayMetrics
 
             result.append(display.displayId).append('.').append(methodName).append(".density=")
-                    .append(metrics.density).append('\n')
+                .append(metrics.density).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".densityDpi=")
-                    .append(metrics.javaClass.getField("densityDpi")).append('\n')
+                .append(metrics.javaClass.getField("densityDpi")).append('\n')
             result.append(display.displayId).append('.').append(methodName).append("scaledDensity=x")
-                    .append(metrics.scaledDensity).append('\n')
+                .append(metrics.scaledDensity).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".widthPixels=")
-                    .append(metrics.widthPixels).append('\n')
+                .append(metrics.widthPixels).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".heightPixels=")
-                    .append(metrics.heightPixels).append('\n')
+                .append(metrics.heightPixels).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".xdpi=").append(metrics.xdpi)
-                    .append('\n')
+                .append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".ydpi=").append(metrics.ydpi)
-                    .append('\n')
+                .append('\n')
         } catch (e: Exception) {
             Timber.e(e)
         }

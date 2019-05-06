@@ -2,7 +2,8 @@ package com.arcao.wherigoservice.api
 
 import java.io.IOException
 
-class WherigoServiceException @JvmOverloads constructor(val code: Int, message: String?, t: Throwable? = null) : IOException(message) {
+class WherigoServiceException @JvmOverloads constructor(val code: Int, message: String?, t: Throwable? = null) :
+    IOException(message) {
     init {
         initCause(t)
     }

@@ -28,7 +28,8 @@ class DownloadingPreferenceFragment : AbstractPreferenceFragment() {
         val downloadingCountOfLogsPreference = preference<SliderPreference>(DOWNLOADING_COUNT_OF_LOGS)
         val countOfCachesStepPreference = preference<ListPreference>(DOWNLOADING_COUNT_OF_CACHES_STEP)
         val disableDnfNmNaCachesPreference = preference<CheckBoxPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES)
-        val disableDnfNmNaCachesLogsCountPreference = preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
+        val disableDnfNmNaCachesLogsCountPreference =
+            preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
 
         simpleCacheDataPreference.apply {
             isEnabled = premiumMember
@@ -75,11 +76,13 @@ class DownloadingPreferenceFragment : AbstractPreferenceFragment() {
         when (key) {
             DOWNLOADING_COUNT_OF_LOGS -> {
                 val logsCountPreference = preference<SliderPreference>(key)
-                val disableLogsCountPreference = preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
+                val disableLogsCountPreference =
+                    preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
                 val disablePreference = preference<CheckBoxPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES)
 
                 val logsCount = logsCountPreference.progress
-                logsCountPreference.summary = preparePreferenceSummary(logsCount.toString(), R.string.pref_logs_count_summary)
+                logsCountPreference.summary =
+                    preparePreferenceSummary(logsCount.toString(), R.string.pref_logs_count_summary)
 
                 // additional checking if enough logs will be downloaded
                 if (disablePreference.isChecked && disableLogsCountPreference.progress > logsCount) {
@@ -120,7 +123,8 @@ class DownloadingPreferenceFragment : AbstractPreferenceFragment() {
 
             DOWNLOADING_DISABLE_DNF_NM_NA_CACHES -> {
                 val disablePreference = preference<CheckBoxPreference>(key)
-                val disableLogsCountPreference = preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
+                val disableLogsCountPreference =
+                    preference<SliderPreference>(DOWNLOADING_DISABLE_DNF_NM_NA_CACHES_LOGS_COUNT)
                 val logsCountPreference = preference<SliderPreference>(DOWNLOADING_COUNT_OF_LOGS)
 
                 // additional checking if enough logs will be downloaded

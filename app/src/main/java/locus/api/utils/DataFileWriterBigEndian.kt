@@ -70,7 +70,8 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
             // check index
             if (index < 0 || index > channel.size()) {
                 throw IllegalArgumentException(
-                        "Invalid move index:" + index + ", count:" + channel.size())
+                    "Invalid move index:" + index + ", count:" + channel.size()
+                )
             }
 
             channel.position(index.toLong())

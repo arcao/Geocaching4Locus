@@ -26,9 +26,9 @@ class FeedbackHelper(
     private val collectors: List<Collector>,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    private val context : Context = app
+    private val context: Context = app
 
-    suspend fun createFeedbackIntent(@StringRes resEmail: Int, @StringRes resSubject: Int, @StringRes resMessageText: Int) : Intent =
+    suspend fun createFeedbackIntent(@StringRes resEmail: Int, @StringRes resSubject: Int, @StringRes resMessageText: Int): Intent =
         coroutineScope {
             withContext(dispatcherProvider.computation) {
                 val email = context.getString(resEmail)

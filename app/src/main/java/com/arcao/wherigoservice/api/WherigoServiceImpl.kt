@@ -45,14 +45,22 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
         } catch (e: NetworkException) {
             throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
         } catch (e: InvalidResponseException) {
-            throw WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: ${e.message}", e)
+            throw WherigoServiceException(
+                WherigoServiceException.ERROR_API_ERROR,
+                "Response is not valid JSON string: ${e.message}",
+                e
+            )
         } catch (e: IOException) {
             Timber.e(e)
             if (!isGsonException(e)) {
                 throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
             }
 
-            throw WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: ${e.message}", e)
+            throw WherigoServiceException(
+                WherigoServiceException.ERROR_API_ERROR,
+                "Response is not valid JSON string: ${e.message}",
+                e
+            )
         }
 
         return cacheCode
@@ -89,14 +97,22 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
         } catch (e: NetworkException) {
             throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
         } catch (e: InvalidResponseException) {
-            throw WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: ${e.message}", e)
+            throw WherigoServiceException(
+                WherigoServiceException.ERROR_API_ERROR,
+                "Response is not valid JSON string: ${e.message}",
+                e
+            )
         } catch (e: IOException) {
             Timber.e(e)
             if (!isGsonException(e)) {
                 throw WherigoServiceException(WherigoServiceException.ERROR_CONNECTION_ERROR, e.message, e)
             }
 
-            throw WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Response is not valid JSON string: ${e.message}", e)
+            throw WherigoServiceException(
+                WherigoServiceException.ERROR_API_ERROR,
+                "Response is not valid JSON string: ${e.message}",
+                e
+            )
         }
 
         return time
@@ -115,7 +131,10 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
                     else -> throw WherigoServiceException(status.statusCode, status.statusMessage)
                 }
             }
-            else -> throw WherigoServiceException(WherigoServiceException.ERROR_API_ERROR, "Missing Status in a response.")
+            else -> throw WherigoServiceException(
+                WherigoServiceException.ERROR_API_ERROR,
+                "Missing Status in a response."
+            )
         }
     }
 
@@ -138,7 +157,7 @@ class WherigoServiceImpl(private val downloader: Downloader) : WherigoService {
 
     private fun isGsonException(t: Throwable): Boolean {
         return (t is MalformedJsonException || t is IllegalStateException ||
-                t is NumberFormatException || t is EOFException)
+            t is NumberFormatException || t is EOFException)
     }
 
     companion object {

@@ -24,7 +24,7 @@ class PowerSaveWarningDialogFragment : AbstractErrorDialogFragment() {
         super.onDialogBuild(builder)
 
         builder.neutralText(R.string.button_more_info)
-                .onNeutral { _, _ -> requireActivity().showWebPage(AppConstants.POWER_SAVE_INFO_URI) }
+            .onNeutral { _, _ -> requireActivity().showWebPage(AppConstants.POWER_SAVE_INFO_URI) }
 
         builder.checkBoxPromptRes(R.string.checkbox_do_not_show_again, false) { _, isChecked ->
             requireContext().hidePowerManagementWarning = isChecked

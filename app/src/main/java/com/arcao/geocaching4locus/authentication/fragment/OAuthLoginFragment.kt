@@ -135,9 +135,9 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     private class FixedWebView : WebView {
         constructor(context: Context) : super(context)
 
-        constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {}
+        constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
-        constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+        constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
         override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
             try {

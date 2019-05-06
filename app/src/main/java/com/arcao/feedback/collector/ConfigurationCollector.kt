@@ -66,14 +66,33 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                     val fieldName = f.name
                     try {
                         when {
-                            fieldName.startsWith(PREFIX_HARDKEYBOARDHIDDEN) -> HARD_KEYBOARD_HIDDEN_VALUES.put(f.getInt(null), fieldName)
+                            fieldName.startsWith(PREFIX_HARDKEYBOARDHIDDEN) -> HARD_KEYBOARD_HIDDEN_VALUES.put(
+                                f.getInt(
+                                    null
+                                ), fieldName
+                            )
                             fieldName.startsWith(PREFIX_KEYBOARD) -> KEYBOARD_VALUES.put(f.getInt(null), fieldName)
-                            fieldName.startsWith(PREFIX_KEYBOARDHIDDEN) -> KEYBOARD_HIDDEN_VALUES.put(f.getInt(null), fieldName)
+                            fieldName.startsWith(PREFIX_KEYBOARDHIDDEN) -> KEYBOARD_HIDDEN_VALUES.put(
+                                f.getInt(null),
+                                fieldName
+                            )
                             fieldName.startsWith(PREFIX_NAVIGATION) -> NAVIGATION_VALUES.put(f.getInt(null), fieldName)
-                            fieldName.startsWith(PREFIX_NAVIGATIONHIDDEN) -> NAVIGATION_HIDDEN_VALUES.put(f.getInt(null), fieldName)
-                            fieldName.startsWith(PREFIX_ORIENTATION) -> ORIENTATION_VALUES.put(f.getInt(null), fieldName)
-                            fieldName.startsWith(PREFIX_SCREENLAYOUT) -> SCREEN_LAYOUT_VALUES.put(f.getInt(null), fieldName)
-                            fieldName.startsWith(PREFIX_TOUCHSCREEN) -> TOUCH_SCREEN_VALUES.put(f.getInt(null), fieldName)
+                            fieldName.startsWith(PREFIX_NAVIGATIONHIDDEN) -> NAVIGATION_HIDDEN_VALUES.put(
+                                f.getInt(null),
+                                fieldName
+                            )
+                            fieldName.startsWith(PREFIX_ORIENTATION) -> ORIENTATION_VALUES.put(
+                                f.getInt(null),
+                                fieldName
+                            )
+                            fieldName.startsWith(PREFIX_SCREENLAYOUT) -> SCREEN_LAYOUT_VALUES.put(
+                                f.getInt(null),
+                                fieldName
+                            )
+                            fieldName.startsWith(PREFIX_TOUCHSCREEN) -> TOUCH_SCREEN_VALUES.put(
+                                f.getInt(null),
+                                fieldName
+                            )
                             fieldName.startsWith(PREFIX_UI_MODE) -> UI_MODE_VALUES.put(f.getInt(null), fieldName)
                         }
                     } catch (e: IllegalArgumentException) {
@@ -137,11 +156,12 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                 FIELD_UIMODE -> return activeFlags(VALUE_ARRAYS[PREFIX_UI_MODE]!!, f.getInt(conf))
                 FIELD_SCREENLAYOUT -> return activeFlags(VALUE_ARRAYS[PREFIX_SCREENLAYOUT]!!, f.getInt(conf))
                 else -> {
-                    val values = VALUE_ARRAYS[fieldName.toUpperCase() + '_'] // Unknown field, return the raw int as String
+                    val values =
+                        VALUE_ARRAYS[fieldName.toUpperCase() + '_'] // Unknown field, return the raw int as String
                             ?: return Integer.toString(f.getInt(conf))
 
                     return values.get(f.getInt(conf)) // Unknown value, return the raw int as String
-                            ?: return Integer.toString(f.getInt(conf))
+                        ?: return Integer.toString(f.getInt(conf))
                 }
             }
         }

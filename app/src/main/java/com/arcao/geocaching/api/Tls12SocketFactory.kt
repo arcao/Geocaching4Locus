@@ -74,11 +74,13 @@ fun OkHttpClient.Builder.enableTls12(): OkHttpClient.Builder {
             @Suppress("DEPRECATION")
             sslSocketFactory(Tls12SocketFactory(sc.socketFactory))
 
-            connectionSpecs(listOf(
+            connectionSpecs(
+                listOf(
                     ConnectionSpec.MODERN_TLS,
                     ConnectionSpec.COMPATIBLE_TLS,
                     ConnectionSpec.CLEARTEXT
-            ))
+                )
+            )
         } catch (e: Exception) {
             Timber.e(e, "Error while setting TLS 1.2")
         }

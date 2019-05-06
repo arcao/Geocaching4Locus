@@ -41,8 +41,10 @@ object ColorUtil {
              */
 
             val colorControlNormal = getThemeAttrColor(context, R.attr.colorControlNormal)
-            val colorControlActivated = getThemeAttrColor(context,
-                    R.attr.colorControlActivated)
+            val colorControlActivated = getThemeAttrColor(
+                context,
+                R.attr.colorControlActivated
+            )
 
             val states = arrayOfNulls<IntArray>(7)
             val colors = IntArray(7)

@@ -21,7 +21,7 @@ class BookmarkGeocachesAdapter : ListAdapter<BookmarkEntity, BookmarkGeocachesAd
     val selection: List<BookmarkEntity>
         get() {
             val result = mutableListOf<BookmarkEntity>()
-            val tracker = tracker?: return result
+            val tracker = tracker ?: return result
 
             val count = itemCount
             for (i in 0 until count) {

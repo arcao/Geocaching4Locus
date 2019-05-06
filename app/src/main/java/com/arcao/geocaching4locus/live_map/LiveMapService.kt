@@ -17,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class LiveMapService : LifecycleService() {
     private val notificationManager by inject<LiveMapNotificationManager>()
     private val viewModel by viewModel<LiveMapViewModel>()
-    private val onCompleteCallback : (Intent) -> Unit = { ServiceUtil.completeWakefulIntent(it) }
+    private val onCompleteCallback: (Intent) -> Unit = { ServiceUtil.completeWakefulIntent(it) }
 
     override fun onCreate() {
         super.onCreate()

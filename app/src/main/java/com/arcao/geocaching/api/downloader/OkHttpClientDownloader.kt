@@ -17,12 +17,12 @@ class OkHttpClientDownloader(private val client: OkHttpClient) : Downloader {
     override fun get(url: URL): Reader {
         try {
             val request = Request.Builder()
-                    .url(url)
-                    .addHeader("User-Agent", "Geocaching4Locus/${BuildConfig.VERSION_NAME}")
-                    .addHeader("Accept-Language", "en-US")
-                    .addHeader("Accept-Encoding", "gzip, deflate")
-                    .addHeader("Accept", "application/json")
-                    .build()
+                .url(url)
+                .addHeader("User-Agent", "Geocaching4Locus/${BuildConfig.VERSION_NAME}")
+                .addHeader("Accept-Language", "en-US")
+                .addHeader("Accept-Encoding", "gzip, deflate")
+                .addHeader("Accept", "application/json")
+                .build()
 
             val response = client.newCall(request).execute()
             val body = response.body()
@@ -49,13 +49,13 @@ class OkHttpClientDownloader(private val client: OkHttpClient) : Downloader {
     override fun post(url: URL, postData: ByteArray): Reader {
         try {
             val request = Request.Builder()
-                    .url(url)
-                    .post(RequestBody.create(MEDIA_TYPE_JSON, postData))
-                    .addHeader("User-Agent", "Geocaching4Locus/${BuildConfig.VERSION_NAME}")
-                    .addHeader("Accept", "application/json")
-                    .addHeader("Accept-Language", "en-US")
-                    .addHeader("Accept-Encoding", "gzip, deflate")
-                    .build()
+                .url(url)
+                .post(RequestBody.create(MEDIA_TYPE_JSON, postData))
+                .addHeader("User-Agent", "Geocaching4Locus/${BuildConfig.VERSION_NAME}")
+                .addHeader("Accept", "application/json")
+                .addHeader("Accept-Language", "en-US")
+                .addHeader("Accept-Encoding", "gzip, deflate")
+                .build()
 
             val response = client.newCall(request).execute()
             val body = response.body()

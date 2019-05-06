@@ -78,7 +78,7 @@ class BookmarkViewModel(
                         geocacheCodes,
                         filterPreferenceManager.simpleCacheData,
                         filterPreferenceManager.geocacheLogsCount
-                    ).map {list ->
+                    ).map { list ->
                         receivedGeocaches += list.size
                         updateProgress(progress = receivedGeocaches)
 

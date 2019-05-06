@@ -24,8 +24,8 @@ class BookmarkGeocacheWebLinkViewModel(
 
     override fun isRefreshRequired(point: Point): Boolean {
         return point.gcData != null &&
-                !point.gcData.cacheUrl.isNullOrEmpty() &&
-                getGuid(point.gcData.cacheUrl) == null
+            !point.gcData.cacheUrl.isNullOrEmpty() &&
+            getGuid(point.gcData.cacheUrl) == null
     }
 
     override fun getWebLink(point: Point): Uri {

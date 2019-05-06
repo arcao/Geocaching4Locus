@@ -26,9 +26,12 @@ object AppConstants {
     // This will prevent it to autodetect by robot.
     // params: %s = currency code (ISO-4217)
     @JvmField
-    val DONATE_PAYPAL_URI = String(Base64.decode(
+    val DONATE_PAYPAL_URI = String(
+        Base64.decode(
             "aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1hcmNhbyUlNDBhcmNhbyUlMmVjb20mbGM9Q1omaXRlbV9uYW1lPUdlb2NhY2hpbmc0TG9jdXMmaXRlbV9udW1iZXI9ZzRsJmN1cnJlbmN5X2NvZGU9JXMmYm49UFAlJTJkRG9uYXRpb25zQkYlJTNhYnRuX2RvbmF0ZUNDX0xHJSUyZWdpZiUlM2FOb25Ib3N0ZWQ=",
-            Base64.DEFAULT))
+            Base64.DEFAULT
+        )
+    )
 
     const val LOCUS_MIN_VERSION = "3.8.0"
     val LOCUS_MIN_VERSION_CODE: LocusUtils.VersionCode = LocusUtils.VersionCode.UPDATE_09
@@ -58,7 +61,6 @@ object AppConstants {
     const val TRACKEBLES_PER_REQUEST = 30
     const val TRACKABLES_MAX = 60
 
-
     const val MILES_PER_KILOMETER = 1.609344f
     const val DISTANCE_KM_DEFAULT = 50f
     const val DISTANCE_MILES_DEFAULT = 50 / MILES_PER_KILOMETER
@@ -72,7 +74,8 @@ object AppConstants {
     const val DISTANCE_MAX_METERS = 50000
 
     @JvmField
-    val PREMIUM_CHARACTER = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) String(Character.toChars(0x1F451)) else "(PM)"
+    val PREMIUM_CHARACTER =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) String(Character.toChars(0x1F451)) else "(PM)"
 
     const val NOTIFICATION_ID_LIVEMAP = 1
 

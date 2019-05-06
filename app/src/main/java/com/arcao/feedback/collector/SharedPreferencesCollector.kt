@@ -4,7 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-class SharedPreferencesCollector @JvmOverloads constructor(private val context: Context, private val sharedPreferenceName: String? = null) : Collector() {
+class SharedPreferencesCollector @JvmOverloads constructor(
+    private val context: Context,
+    private val sharedPreferenceName: String? = null
+) : Collector() {
     override val name: String
         get() = if (sharedPreferenceName == null) "SharedPreferences.default" else "SharedPreferences.$sharedPreferenceName"
 
@@ -26,9 +29,9 @@ class SharedPreferencesCollector @JvmOverloads constructor(private val context: 
         // Add all preferences
         entries.forEach { (key, value) ->
             result.append(key)
-                    .append('=')
-                    .append(value.toString())
-                    .append("\n")
+                .append('=')
+                .append(value.toString())
+                .append("\n")
         }
         return result.toString()
     }

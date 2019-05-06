@@ -51,24 +51,24 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
     @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = MaterialDialog.Builder(requireContext())
-                .title(R.string.title_import_from_gc)
-                .positiveText(R.string.button_ok)
-                .negativeText(R.string.button_cancel)
-                .customView(R.layout.dialog_gc_number_input, false)
-                .autoDismiss(false)
-                .onPositive { materialDialog, _ ->
-                    try {
-                        val geocacheCodes = model.parseGeocacheCodes(editTextView.text)
-                        fireOnInputFinished(geocacheCodes)
-                        materialDialog.dismiss()
-                    } catch (e: Exception) {
-                        textInputLayout.error = getText(R.string.error_gc_code_invalid)
-                    }
-                }
-                .onNegative { materialDialog, _ ->
-                    fireOnInputFinished(null)
+            .title(R.string.title_import_from_gc)
+            .positiveText(R.string.button_ok)
+            .negativeText(R.string.button_cancel)
+            .customView(R.layout.dialog_gc_number_input, false)
+            .autoDismiss(false)
+            .onPositive { materialDialog, _ ->
+                try {
+                    val geocacheCodes = model.parseGeocacheCodes(editTextView.text)
+                    fireOnInputFinished(geocacheCodes)
                     materialDialog.dismiss()
-                }.build()
+                } catch (e: Exception) {
+                    textInputLayout.error = getText(R.string.error_gc_code_invalid)
+                }
+            }
+            .onNegative { materialDialog, _ ->
+                fireOnInputFinished(null)
+                materialDialog.dismiss()
+            }.build()
 
         val window = dialog.window
         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)

@@ -34,7 +34,6 @@ class BookmarkListFragment : Fragment() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,7 +45,6 @@ class BookmarkListFragment : Fragment() {
 
         viewModel.list.observe(this, adapter::submitList)
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentBookmarkListBinding>(
@@ -72,8 +70,8 @@ class BookmarkListFragment : Fragment() {
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    fun handleAction(action : BookmarkListAction) {
-        when(action) {
+    fun handleAction(action: BookmarkListAction) {
+        when (action) {
             is BookmarkListAction.Error -> {
                 startActivity(action.intent)
                 requireActivity().apply {
@@ -104,7 +102,6 @@ class BookmarkListFragment : Fragment() {
             }
         }.exhaustive
     }
-
 
     companion object {
         fun newInstance() = BookmarkListFragment().apply {

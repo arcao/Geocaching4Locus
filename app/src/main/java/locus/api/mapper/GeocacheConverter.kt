@@ -34,8 +34,8 @@ class GeocacheConverter(
 ) {
     fun createLocusPoint(cache: Geocache): Point {
         val loc = Location()
-                .setLatitude(cache.coordinates().latitude())
-                .setLongitude(cache.coordinates().longitude())
+            .setLatitude(cache.coordinates().latitude())
+            .setLongitude(cache.coordinates().longitude())
 
         val p = Point(cache.name(), loc).apply {
             gcData = GeocachingData().apply {
@@ -64,8 +64,10 @@ class GeocacheConverter(
                 country = cache.countryName()
                 state = cache.stateName()
 
-                setDescriptions(BadBBCodeFixer.fix(cache.shortDescription()), cache.shortDescriptionHtml(),
-                        BadBBCodeFixer.fix(cache.longDescription()), cache.longDescriptionHtml())
+                setDescriptions(
+                    BadBBCodeFixer.fix(cache.shortDescription()), cache.shortDescriptionHtml(),
+                    BadBBCodeFixer.fix(cache.longDescription()), cache.longDescriptionHtml()
+                )
                 encodedHints = cache.hint()
                 notes = cache.personalNote()
                 favoritePoints = cache.favoritePoints()
@@ -160,9 +162,9 @@ class GeocacheConverter(
 
         // update coordinates to new location
         location.set(
-                Location()
-                        .setLatitude(correctedCoordinateUserWaypoint.coordinates().latitude())
-                        .setLongitude(correctedCoordinateUserWaypoint.coordinates().longitude())
+            Location()
+                .setLatitude(correctedCoordinateUserWaypoint.coordinates().latitude())
+                .setLongitude(correctedCoordinateUserWaypoint.coordinates().longitude())
         )
     }
 
@@ -181,13 +183,13 @@ class GeocacheConverter(
                 val waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID) + cacheCode.substring(2)
 
                 return Waypoint.builder()
-                        .coordinates(uw.coordinates())
-                        .time(Date())
-                        .waypointCode(waypointCode)
-                        .name(name)
-                        .note(uw.description())
-                        .waypointType(WaypointType.FinalLocation)
-                        .build()
+                    .coordinates(uw.coordinates())
+                    .time(Date())
+                    .waypointCode(waypointCode)
+                    .name(name)
+                    .note(uw.description())
+                    .waypointType(WaypointType.FinalLocation)
+                    .build()
             }
         }
 
@@ -238,14 +240,16 @@ class GeocacheConverter(
 
                 val code = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2)
 
-                list.add(Waypoint.builder()
+                list.add(
+                    Waypoint.builder()
                         .coordinates(point)
                         .time(Date())
                         .waypointCode(code)
                         .name(name)
                         .note("")
                         .waypointType(waypointType)
-                        .build())
+                        .build()
+                )
 
                 namePrefix.setLength(0)
             } catch (e: ParseException) {

@@ -8,7 +8,10 @@ internal object BadBBCodeFixer {
         Pattern.compile("\\[align=(.+?)](.+?)\\[/align=[^]]+]", BBCODE_PATTERN_FLAGS) to "<div align='$1'>$2</div>",
         Pattern.compile("\\[color=(.+?)](.+?)\\[/color=[^]]+]", BBCODE_PATTERN_FLAGS) to "<font color='$1'>$2</font>",
         Pattern.compile("\\[size=(.+?)](.+?)\\[/size=[^]]+]", BBCODE_PATTERN_FLAGS) to "<font size='$1'>$2</font>",
-        Pattern.compile("\\[img=(.+?),(.+?)](.+?)\\[/img=[^]]+]", BBCODE_PATTERN_FLAGS) to "<img width='$1' height='$2' src='$3' />",
+        Pattern.compile(
+            "\\[img=(.+?),(.+?)](.+?)\\[/img=[^]]+]",
+            BBCODE_PATTERN_FLAGS
+        ) to "<img width='$1' height='$2' src='$3' />",
         Pattern.compile("\\[email=(.+?)](.+?)\\[/email=[^]]+]", BBCODE_PATTERN_FLAGS) to "<a href='mailto:$1'>$2</a>",
         Pattern.compile("\\[url=(.+?)](.+?)\\[/url=[^]]+]", BBCODE_PATTERN_FLAGS) to "<a href='$1'>$2</a>"
     )

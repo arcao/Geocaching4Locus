@@ -43,7 +43,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
     override fun preparePreference() {
 
         preference<Preference>(ABOUT_VERSION).summary =
-                "${get<App>().version} (${BuildConfig.GIT_SHA})"
+            "${get<App>().version} (${BuildConfig.GIT_SHA})"
 
         preference<Preference>(ABOUT_WEBSITE).apply {
             summary = AppConstants.WEBSITE_URI.toString()
@@ -99,14 +99,14 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
     class DonatePaypalDialogFragment : AbstractDialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             return AlertDialog.Builder(requireActivity())
-                    .setTitle(R.string.pref_donate_paypal_choose_currency)
-                    .setItems(R.array.currency) { _, which ->
-                        requireActivity().showWebPage(
-                                AppConstants.DONATE_PAYPAL_URI.format(resources.getStringArray(R.array.currency)[which]).toUri()
-                        )
-                    }
-                    .setCancelable(true)
-                    .create()
+                .setTitle(R.string.pref_donate_paypal_choose_currency)
+                .setItems(R.array.currency) { _, which ->
+                    requireActivity().showWebPage(
+                        AppConstants.DONATE_PAYPAL_URI.format(resources.getStringArray(R.array.currency)[which]).toUri()
+                    )
+                }
+                .setCancelable(true)
+                .create()
         }
 
         companion object {

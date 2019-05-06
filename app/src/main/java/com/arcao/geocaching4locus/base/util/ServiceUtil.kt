@@ -114,5 +114,8 @@ object ServiceUtil {
         }
     }
 
-    private class WakeLockContainer internal constructor(internal val tag: String, internal val wakeLock: PowerManager.WakeLock)
+    private class WakeLockContainer internal constructor(
+        internal val tag: String,
+        internal val wakeLock: PowerManager.WakeLock
+    )
 }

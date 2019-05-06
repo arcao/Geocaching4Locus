@@ -96,7 +96,12 @@ class FeedbackFileProvider : ContentProvider() {
         return "application/octet-stream"
     }
 
-    override fun query(@NonNull uri: Uri, projection: Array<String>?, s: String, as1: Array<String>, s1: String): Cursor? {
+    override fun query(
+        @NonNull uri: Uri, projection: Array<String>?,
+        s: String,
+        as1: Array<String>,
+        s1: String
+    ): Cursor? {
         assert(context != null)
 
         when (uriMatcher.match(uri)) {

@@ -44,10 +44,10 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             is ImportGeocacheCodeAction.Error -> {
                 startActivity(action.intent)
                 setResult(
-                        if (intent.hasPositiveAction())
-                            Activity.RESULT_OK
-                        else
-                            Activity.RESULT_CANCELED
+                    if (intent.hasPositiveAction())
+                        Activity.RESULT_OK
+                    else
+                        Activity.RESULT_CANCELED
                 )
                 finish()
             }
@@ -67,13 +67,13 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             }
             is ImportGeocacheCodeAction.RequestExternalStoragePermission -> {
                 ExternalStoragePermissionWarningDialogFragment.newInstance().show(
-                        supportFragmentManager,
-                        ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
+                    supportFragmentManager,
+                    ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
                 )
             }
             ImportGeocacheCodeAction.GeocacheCodesInput -> {
                 GeocacheCodesInputDialogFragment.newInstance()
-                        .show(supportFragmentManager, GeocacheCodesInputDialogFragment.FRAGMENT_TAG)
+                    .show(supportFragmentManager, GeocacheCodesInputDialogFragment.FRAGMENT_TAG)
             }
         }.exhaustive
     }
@@ -104,7 +104,8 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 viewModel.init()
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true)
+                    .show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
             }
         }
     }

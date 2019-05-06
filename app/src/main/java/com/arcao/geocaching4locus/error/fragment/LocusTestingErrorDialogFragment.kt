@@ -20,11 +20,11 @@ class LocusTestingErrorDialogFragment : AbstractErrorDialogFragment() {
         fun newInstance(context: Context): LocusTestingErrorDialogFragment {
             return LocusTestingErrorDialogFragment().apply {
                 prepareDialog(
-                        message = if (LocusUtils.isLocusAvailable(context))
-                            R.string.error_old_locus_map
-                        else
-                            R.string.error_locus_not_found,
-                        additionalMessage = AppConstants.LOCUS_MIN_VERSION
+                    message = if (LocusUtils.isLocusAvailable(context))
+                        R.string.error_old_locus_map
+                    else
+                        R.string.error_locus_not_found,
+                    additionalMessage = AppConstants.LOCUS_MIN_VERSION
                 )
             }
         }

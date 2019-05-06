@@ -57,8 +57,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             t = t.cause!!
 
             baseMessage = SpanFormatter.format(
-                    HtmlUtil.fromHtml("%%s<br /><br />%s"),
-                    context.getText(R.string.error_continue_locus_map)
+                HtmlUtil.fromHtml("%%s<br /><br />%s"),
+                context.getText(R.string.error_continue_locus_map)
             )
         }
 
@@ -72,35 +72,39 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         val builder = ErrorActivity.IntentBuilder(context)
         if (positiveAction != null) {
             builder.positiveAction(positiveAction)
-                    .positiveButtonText(R.string.button_yes)
-                    .negativeButtonText(R.string.button_no)
+                .positiveButtonText(R.string.button_yes)
+                .negativeButtonText(R.string.button_no)
         }
 
         if (t is InvalidCredentialsException) {
             return builder.message(R.string.error_no_account)
-                    .positiveAction(
-                            SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java))
-                    .positiveButtonText(R.string.button_ok)
-                    .clearNegativeButtonText()
-                    .build()
+                .positiveAction(
+                    SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java)
+                )
+                .positiveButtonText(R.string.button_ok)
+                .clearNegativeButtonText()
+                .build()
         } else if (t is InvalidSessionException || t is LiveGeocachingApiException && t.statusCode == StatusCode.NotAuthorized) {
             accountManager.removeAccount()
             return builder.message(R.string.error_session_expired)
-                    .positiveAction(
-                            SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java))
-                    .positiveButtonText(R.string.button_ok)
-                    .clearNegativeButtonText()
-                    .build()
+                .positiveAction(
+                    SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java)
+                )
+                .positiveButtonText(R.string.button_ok)
+                .clearNegativeButtonText()
+                .build()
         } else if (t is InvalidResponseException) {
             return builder.message(baseMessage, context.getText(R.string.error_invalid_api_response, t.message!!))
-                    .exception(t)
-                    .build()
+                .exception(t)
+                .build()
         } else if (t is CacheNotFoundException) {
             val geocacheCodes = t.cacheCodes
-            return builder.message(baseMessage,
-                    context.getQuantityText(R.plurals.plural_error_geocache_not_found,
-                            geocacheCodes.size, TextUtils.join(", ", geocacheCodes)
-                    )
+            return builder.message(
+                baseMessage,
+                context.getQuantityText(
+                    R.plurals.plural_error_geocache_not_found,
+                    geocacheCodes.size, TextUtils.join(", ", geocacheCodes)
+                )
             ).build()
         } else if (t is NetworkException || t is WherigoServiceException && t.code == WherigoServiceException.ERROR_CONNECTION_ERROR) {
             builder.message(baseMessage, context.getText(R.string.error_network_unavailable))
@@ -108,41 +112,47 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             // Allow sending error report for exceptions that not caused by timeout or unknown host
             val innerT = t.cause
             if (innerT != null && innerT !is InterruptedIOException && innerT !is UnknownHostException &&
-                    innerT !is ConnectException && innerT !is EOFException && !isSSLConnectionException(innerT)) {
+                innerT !is ConnectException && innerT !is EOFException && !isSSLConnectionException(innerT)
+            ) {
                 builder.exception(t)
             }
 
             return builder.build()
         } else if (t is NoResultFoundException) {
             return builder.message(R.string.error_no_result)
-                    .build()
+                .build()
         } else if (t is LocusMapRuntimeException) {
             val cause = t.cause!!
             val message = StringUtils.defaultString(t.message)
 
             return builder
-                    .title(R.string.title_locus_map_error)
-                    .message(SpanFormatter.format(
-                            HtmlUtil.fromHtml("%s<br>Exception: %s"),
-                            message,
-                            cause.javaClass.simpleName
-                    ))
-                    .exception(cause)
-                    .build()
+                .title(R.string.title_locus_map_error)
+                .message(
+                    SpanFormatter.format(
+                        HtmlUtil.fromHtml("%s<br>Exception: %s"),
+                        message,
+                        cause.javaClass.simpleName
+                    )
+                )
+                .exception(cause)
+                .build()
         } else if (t is FileNotFoundException || t.cause is FileNotFoundException) {
             return builder
-                    .message(R.string.error_no_write_file_permission)
-                    .build()
+                .message(R.string.error_no_write_file_permission)
+                .build()
         } else if (t is OAuthException && t.message == "oauth_verifier argument was incorrect.") {
             return builder
-                    .message(R.string.error_invalid_authorization_code)
-                    .build()
+                .message(R.string.error_invalid_authorization_code)
+                .build()
         } else {
             val message = StringUtils.defaultString(t.message)
             return builder
-                    .message(baseMessage, SpanFormatter.format(HtmlUtil.fromHtml("%s<br>Exception: %s"), message, t.javaClass.simpleName))
-                    .exception(t)
-                    .build()
+                .message(
+                    baseMessage,
+                    SpanFormatter.format(HtmlUtil.fromHtml("%s<br>Exception: %s"), message, t.javaClass.simpleName)
+                )
+                .exception(t)
+                .build()
         }
     }
 
@@ -152,7 +162,11 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         return !message.isNullOrEmpty() && (message.contains("Connection reset by peer") || message.contains("Connection timed out"))
     }
 
-    private fun handleLiveGeocachingApiExceptions(t: LiveGeocachingApiException, positiveAction: Intent?, baseMessage: CharSequence): Intent? {
+    private fun handleLiveGeocachingApiExceptions(
+        t: LiveGeocachingApiException,
+        positiveAction: Intent?,
+        baseMessage: CharSequence
+    ): Intent? {
         // TODO fix this
         val premiumMember = accountManager.isPremium
         val restrictions = accountManager.restrictions
@@ -192,8 +206,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
                 if (positiveAction != null) {
                     builder.positiveAction(positiveAction)
-                            .positiveButtonText(R.string.button_yes)
-                            .negativeButtonText(R.string.button_no)
+                        .positiveButtonText(R.string.button_yes)
+                        .negativeButtonText(R.string.button_no)
                 }
 
                 return builder.build()
@@ -202,12 +216,12 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             // 140: too many method calls per minute
             StatusCode.NumberOfCallsExceeded -> {
                 builder.title(R.string.title_method_quota_exceeded)
-                        .message(baseMessage, context.getText(R.string.error_method_quota_exceeded))
+                    .message(baseMessage, context.getText(R.string.error_method_quota_exceeded))
 
                 if (positiveAction != null) {
                     builder.positiveAction(positiveAction)
-                            .positiveButtonText(R.string.button_yes)
-                            .negativeButtonText(R.string.button_no)
+                        .positiveButtonText(R.string.button_yes)
+                        .negativeButtonText(R.string.button_no)
                 }
 
                 return builder.build()
@@ -225,8 +239,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             StatusCode.PremiumMembershipRequiredForTrackableCountFilter -> {
                 accountManager.updateAccountNextTime()
                 return builder.title(R.string.title_premium_member_warning)
-                        .message(R.string.error_premium_filter)
-                        .build()
+                    .message(R.string.error_premium_filter)
+                    .build()
             }
 
             else -> return null

@@ -10,7 +10,7 @@ class GetBookmarkUseCase(
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    suspend operator fun invoke(guid : String): List<BookmarkEntity> = withContext(dispatcherProvider.io) {
+    suspend operator fun invoke(guid: String): List<BookmarkEntity> = withContext(dispatcherProvider.io) {
         geocachingApiLogin(geocachingApi)
 
         geocachingApi.getBookmarkListByGuid(guid).map {

@@ -15,6 +15,6 @@ class PreferencesBackupAgent : BackupAgentHelper() {
         private const val PREFS_BACKUP_KEY = "PREFERENCES"
 
         private fun getDefaultSharedPreferencesName(context: Context): String =
-                "${context.packageName}_preferences"
+            "${context.packageName}_preferences"
     }
 }

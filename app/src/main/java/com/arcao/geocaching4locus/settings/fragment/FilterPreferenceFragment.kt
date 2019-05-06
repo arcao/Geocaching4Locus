@@ -165,12 +165,14 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     private fun prepareCacheTypeSummaryBasicMember(): CharSequence {
-        return preparePreferenceSummary(SHORT_CACHE_TYPE_NAMES[GeocacheType.Traditional.ordinal] +
+        return preparePreferenceSummary(
+            SHORT_CACHE_TYPE_NAMES[GeocacheType.Traditional.ordinal] +
                 TEXT_VALUE_SEPARATOR +
                 SHORT_CACHE_TYPE_NAMES[GeocacheType.Event.ordinal] +
                 TEXT_VALUE_SEPARATOR +
                 SHORT_CACHE_TYPE_NAMES[GeocacheType.CacheInTrashOutEvent.ordinal],
-                0)
+            0
+        )
     }
 
     private fun prepareContainerTypeSummary(): CharSequence {

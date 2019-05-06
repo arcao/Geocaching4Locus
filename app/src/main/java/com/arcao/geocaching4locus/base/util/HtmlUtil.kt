@@ -15,7 +15,10 @@ object HtmlUtil {
 
     @JvmStatic
     fun toHtml(@NonNull source: CharSequence): String {
-        return if (source is Spanned) HtmlCompat.toHtml(source, HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE) else source.toString()
+        return if (source is Spanned) HtmlCompat.toHtml(
+            source,
+            HtmlCompat.TO_HTML_PARAGRAPH_LINES_CONSECUTIVE
+        ) else source.toString()
     }
 
     @JvmStatic

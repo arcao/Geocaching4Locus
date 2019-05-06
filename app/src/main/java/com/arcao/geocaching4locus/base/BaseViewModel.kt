@@ -109,7 +109,7 @@ abstract class BaseViewModel(
 
 sealed class ProgressState {
     class ShowProgress(
-        val requestId : Int = 0,
+        val requestId: Int = 0,
         @StringRes val message: Int = 0,
         val messageArgs: Array<Any>? = null,
         val progress: Int = 0,

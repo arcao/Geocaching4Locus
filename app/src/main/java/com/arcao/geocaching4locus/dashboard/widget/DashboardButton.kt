@@ -16,7 +16,12 @@ class DashboardButton : ToggleButton {
     private val toggleable: Boolean
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleAttr,
+        defStyleRes
+    ) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, defStyleRes)
         try {
             toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false)
@@ -29,8 +34,17 @@ class DashboardButton : ToggleButton {
     }
 
     @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, R.style.Widget_AppTheme_DashboardButton)
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.DashboardButton,
+            defStyleAttr,
+            R.style.Widget_AppTheme_DashboardButton
+        )
         try {
             toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false)
 

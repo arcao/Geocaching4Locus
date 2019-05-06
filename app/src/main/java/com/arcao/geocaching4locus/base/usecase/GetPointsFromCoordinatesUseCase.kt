@@ -18,7 +18,6 @@ import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper
 import timber.log.Timber
 
-
 class GetPointsFromCoordinatesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
@@ -40,12 +39,12 @@ class GetPointsFromCoordinatesUseCase(
         downloadOwn: Boolean = false,
         geocacheTypes: Array<GeocacheType> = emptyArray(),
         containerTypes: Array<ContainerType> = emptyArray(),
-        difficultyMin : Float = 1F,
+        difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
-        terrainMin : Float = 1F,
+        terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList : Boolean = true,
-        maxCount : Int = 50,
+        excludeIgnoreList: Boolean = true,
+        maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
     ) = coroutineScope {
         produce(dispatcherProvider.io) {

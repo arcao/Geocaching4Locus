@@ -126,7 +126,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
                 PermissionUtil.requestWifiLocationPermission(this)
             }
             SearchNearestAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(               supportFragmentManager)
+                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
             }
             SearchNearestAction.WrongCoordinatesFormat -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_coordinates_format).build())

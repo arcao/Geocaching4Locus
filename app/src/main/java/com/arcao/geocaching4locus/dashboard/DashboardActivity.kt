@@ -26,7 +26,8 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFragment.OnPowerSaveWarningConfirmedListener {
+class DashboardActivity : AbstractActionBarActivity(),
+    PowerSaveWarningDialogFragment.OnPowerSaveWarningConfirmedListener {
 
     private val viewModel by viewModel<DashboardViewModel> {
         parametersOf(isCalledFromLocusMap())
@@ -53,9 +54,9 @@ class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFra
         when (action) {
             is DashboardAction.SearchNearest -> {
                 startActivityForResult(
-                        Intent(this, SearchNearestActivity::class.java).apply {
-                            if (isCalledFromLocusMap()) putExtras(intent)
-                        }, 0
+                    Intent(this, SearchNearestActivity::class.java).apply {
+                        if (isCalledFromLocusMap()) putExtras(intent)
+                    }, 0
                 )
             }
             is DashboardAction.ImportGcCode ->
@@ -74,7 +75,10 @@ class DashboardActivity : AbstractActionBarActivity(), PowerSaveWarningDialogFra
             is DashboardAction.SignIn ->
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
             is DashboardAction.WarnPowerSaveActive ->
-                PowerSaveWarningDialogFragment.newInstance().show(supportFragmentManager, PowerSaveWarningDialogFragment.FRAGMENT_TAG)
+                PowerSaveWarningDialogFragment.newInstance().show(
+                    supportFragmentManager,
+                    PowerSaveWarningDialogFragment.FRAGMENT_TAG
+                )
 
             is DashboardAction.NavigationBack ->
                 onBackPressed()

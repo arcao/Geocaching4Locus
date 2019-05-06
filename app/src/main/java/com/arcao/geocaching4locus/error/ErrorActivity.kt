@@ -59,11 +59,12 @@ class ErrorActivity : AppCompatActivity() {
             val context = requireContext()
 
             val builder = MaterialDialog.Builder(requireContext())
-                    .positiveText(if (positiveButtonText.isNotEmpty())
+                .positiveText(
+                    if (positiveButtonText.isNotEmpty())
                         positiveButtonText
                     else
                         context.getString(R.string.button_ok)
-                    )
+                )
 
             if (title.isNotEmpty()) {
                 builder.title(title)
@@ -84,9 +85,9 @@ class ErrorActivity : AppCompatActivity() {
                     if (checkBox != null && checkBox.isChecked) {
                         Crashlytics.logException(t)
                         Toast.makeText(
-                                context,
-                                R.string.toast_error_report_sent,
-                                Toast.LENGTH_LONG
+                            context,
+                            R.string.toast_error_report_sent,
+                            Toast.LENGTH_LONG
                         ).show()
                     }
                 }
@@ -114,9 +115,11 @@ class ErrorActivity : AppCompatActivity() {
 
                 // add paddingTop for untitled dialogs
                 if (title.isEmpty()) {
-                    updatePadding(top = dialog.context.resources.getDimensionPixelSize(
+                    updatePadding(
+                        top = dialog.context.resources.getDimensionPixelSize(
                             com.afollestad.materialdialogs.R.dimen.md_notitle_vertical_padding
-                    ))
+                        )
+                    )
                 }
 
                 if (content != null && message.isNotEmpty()) {
@@ -201,12 +204,12 @@ class ErrorActivity : AppCompatActivity() {
 
         fun build(): Intent {
             return Intent(context, ErrorActivity::class.java)
-                    .putExtra(KEY_TITLE, title)
-                    .putExtra(KEY_MESSAGE, message)
-                    .putExtra(KEY_POSITIVE_ACTION, positiveAction)
-                    .putExtra(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText)
-                    .putExtra(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText)
-                    .putExtra(KEY_EXCEPTION, exception)
+                .putExtra(KEY_TITLE, title)
+                .putExtra(KEY_MESSAGE, message)
+                .putExtra(KEY_POSITIVE_ACTION, positiveAction)
+                .putExtra(KEY_POSITIVE_BUTTON_TEXT, positiveButtonText)
+                .putExtra(KEY_NEGATIVE_BUTTON_TEXT, negativeButtonText)
+                .putExtra(KEY_EXCEPTION, exception)
         }
     }
 
@@ -222,4 +225,4 @@ class ErrorActivity : AppCompatActivity() {
 
 @Suppress("NOTHING_TO_INLINE")
 internal inline fun Intent.hasPositiveAction() =
-        getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null
+    getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null

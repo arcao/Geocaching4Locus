@@ -9,7 +9,8 @@ import android.widget.ImageView
 import androidx.core.content.withStyledAttributes
 import com.arcao.geocaching4locus.R
 
-class IconPreference @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyle: Int = 0) : Preference(context, attrs, defStyle) {
+class IconPreference @JvmOverloads constructor(context: Context, attrs: AttributeSet, defStyle: Int = 0) :
+    Preference(context, attrs, defStyle) {
     private var iconDrawable: Drawable? = null
 
     init {

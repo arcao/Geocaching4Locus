@@ -54,7 +54,7 @@ class SearchNearestViewModel(
     val requestedCaches = MutableLiveData<Int>().apply {
         value = preferenceManager.downloadingGeocachesCount
 
-        observeForever {value ->
+        observeForever { value ->
             preferenceManager.downloadingGeocachesCount = value
         }
     }
@@ -161,7 +161,7 @@ class SearchNearestViewModel(
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private suspend fun doDownload(coordinates: Coordinates, maxCount : Int) = computationContext {
+    private suspend fun doDownload(coordinates: Coordinates, maxCount: Int) = computationContext {
         val downloadIntent = LocusMapManager.createSendPointsIntent(
             callImport = true,
             center = true

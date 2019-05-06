@@ -109,7 +109,12 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
     }
 
-    private class InputTextFilter internal constructor(internal val editText: EditText, private val min: Int, private val max: Int, step: Int) : NumberKeyListener() {
+    private class InputTextFilter internal constructor(
+        internal val editText: EditText,
+        private val min: Int,
+        private val max: Int,
+        step: Int
+    ) : NumberKeyListener() {
         private val availableValues: Array<String>?
 
         init {
@@ -135,7 +140,13 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return DIGIT_CHARACTERS
         }
 
-        override fun filter(@NonNull source: CharSequence, start: Int, end: Int, dest: Spanned, dstart: Int, dend: Int): CharSequence? {
+        override fun filter(
+            @NonNull source: CharSequence, start: Int,
+            end: Int,
+            dest: Spanned,
+            dstart: Int,
+            dend: Int
+        ): CharSequence? {
             if (availableValues == null || availableValues.isEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
                 if (filtered == null) {
@@ -143,7 +154,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 }
 
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                        dest.subSequence(dend, dest.length))
+                    dest.subSequence(dend, dest.length))
 
                 if (result.isEmpty()) {
                     return result
@@ -167,7 +178,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                     return StringUtils.EMPTY
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                        dest.subSequence(dend, dest.length))
+                    dest.subSequence(dend, dest.length))
 
                 for (value in availableValues) {
                     if (value.startsWith(result)) {

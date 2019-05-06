@@ -19,27 +19,28 @@ class GetGeocachingTrackablesUseCase(
     private val trackableConverter: TrackableConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = AppConstants.TRACKABLES_MAX) = coroutineScope {
-        produce(dispatcherProvider.io) {
-            geocachingApiLogin(geocachingApi)
+    suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = AppConstants.TRACKABLES_MAX) =
+        coroutineScope {
+            produce(dispatcherProvider.io) {
+                geocachingApiLogin(geocachingApi)
 
-            var current = start
+                var current = start
 
-            while (current < count) {
-                val logs = geocachingApi.getTrackablesByCacheCode(
-                    geocacheCode,
-                    current,
-                    Math.min(count - current, AppConstants.TRACKEBLES_PER_REQUEST),
-                    0
-                )
+                while (current < count) {
+                    val logs = geocachingApi.getTrackablesByCacheCode(
+                        geocacheCode,
+                        current,
+                        Math.min(count - current, AppConstants.TRACKEBLES_PER_REQUEST),
+                        0
+                    )
 
-                if (!isActive || logs.isEmpty())
-                    return@produce
+                    if (!isActive || logs.isEmpty())
+                        return@produce
 
-                send(trackableConverter.createLocusGeocachingTrackables(logs))
+                    send(trackableConverter.createLocusGeocachingTrackables(logs))
 
-                current += logs.size
+                    current += logs.size
+                }
             }
         }
-    }
 }

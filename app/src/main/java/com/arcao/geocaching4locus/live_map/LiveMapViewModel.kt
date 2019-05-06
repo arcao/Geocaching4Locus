@@ -53,8 +53,14 @@ class LiveMapViewModel(
             showProgress(maxProgress = count) {
                 val pointListChannel = getPointsFromRectangleCoordinates(
                     task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
-                    task.getCoordinates(LiveMapService.PARAM_TOP_LEFT_LATITUDE, LiveMapService.PARAM_TOP_LEFT_LONGITUDE),
-                    task.getCoordinates(LiveMapService.PARAM_BOTTOM_RIGHT_LATITUDE, LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE),
+                    task.getCoordinates(
+                        LiveMapService.PARAM_TOP_LEFT_LATITUDE,
+                        LiveMapService.PARAM_TOP_LEFT_LONGITUDE
+                    ),
+                    task.getCoordinates(
+                        LiveMapService.PARAM_BOTTOM_RIGHT_LATITUDE,
+                        LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE
+                    ),
                     filterPreferenceManager.simpleCacheData,
                     false,
                     filterPreferenceManager.geocacheLogsCount,

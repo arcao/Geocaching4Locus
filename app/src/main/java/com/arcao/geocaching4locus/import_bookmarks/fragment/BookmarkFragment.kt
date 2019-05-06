@@ -55,7 +55,6 @@ class BookmarkFragment : Fragment() {
         viewModel.list.observe(this, adapter::submitList)
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentBookmarkBinding>(
             inflater,
@@ -121,8 +120,8 @@ class BookmarkFragment : Fragment() {
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    fun handleAction(action : BookmarkAction) {
-        when(action) {
+    fun handleAction(action: BookmarkAction) {
+        when (action) {
             is BookmarkAction.Error -> {
                 startActivity(action.intent)
                 requireActivity().apply {

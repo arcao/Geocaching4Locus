@@ -32,10 +32,6 @@ class PowerSaveWarningDialogFragment : AbstractErrorDialogFragment() {
     }
 
     companion object {
-        @JvmField
-        val FRAGMENT_TAG: String = PowerSaveWarningDialogFragment::class.java.name
-
-        @JvmStatic
         fun newInstance(): PowerSaveWarningDialogFragment {
             return PowerSaveWarningDialogFragment().apply {
                 prepareDialog(R.string.title_warning, R.string.warning_power_management)

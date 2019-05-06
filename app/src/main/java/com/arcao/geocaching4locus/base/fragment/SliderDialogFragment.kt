@@ -269,8 +269,6 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         private const val PARAM_MAX = "MAX_VALUE"
         private const val PARAM_STEP = "STEP"
 
-        @JvmStatic
-        @JvmOverloads
         fun newInstance(
             @StringRes title: Int,
             @StringRes message: Int = 0,
@@ -278,10 +276,9 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             max: Int,
             defaultValue: Int,
             step: Int = 1
-        ): SliderDialogFragment {
-            val fragment = SliderDialogFragment()
+        ) = SliderDialogFragment().apply {
 
-            val args = bundleOf(
+            arguments = bundleOf(
                 PARAM_TITLE to title,
                 PARAM_MESSAGE to message,
                 PARAM_MIN to min,
@@ -290,10 +287,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
                 PARAM_STEP to step
             )
 
-            fragment.arguments = args
-            fragment.isCancelable = false
-
-            return fragment
+            isCancelable = false
         }
     }
 }

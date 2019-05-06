@@ -11,32 +11,6 @@ import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
 import locus.api.objects.extra.Point
 
-object LocusMapUtil {
-    @JvmStatic
-    @Deprecated("Use context.getLocusVersion()", ReplaceWith("context.getLocusVersion()"))
-    fun getLocusVersion(context: Context): LocusUtils.LocusVersion = context.getLocusVersion()
-
-    @JvmStatic
-    @Deprecated("Use context.isLocusNotInstalled()", ReplaceWith("context.isLocusNotInstalled()"))
-    fun isLocusNotInstalled(context: Context) = context.isLocusNotInstalled()
-
-    @JvmStatic
-    @Deprecated("Use FragmentActivity.showLocusMissingError()", ReplaceWith("activity.showLocusMissingError()"))
-    fun showLocusMissingError(activity: FragmentActivity) = activity.showLocusMissingError()
-
-    @JvmStatic
-    @Deprecated("Use Point.isGeocache()", ReplaceWith("point.isGeocache()"))
-    fun isGeocache(point: Point?) = point.isGeocache()
-}
-
-@Suppress("NOTHING_TO_INLINE")
-@Throws(LocusMapRuntimeException::class)
-inline fun Context.getLocusVersion() = try {
-    LocusUtils.getActiveVersion(this) ?: throw IllegalStateException("Locus is not installed.")
-} catch (t: Throwable) {
-    throw LocusMapRuntimeException(t)
-}
-
 @Suppress("NOTHING_TO_INLINE")
 inline fun Context.isLocusNotInstalled(): Boolean {
     val lv = LocusUtils.getActiveVersion(this)
@@ -44,8 +18,8 @@ inline fun Context.isLocusNotInstalled(): Boolean {
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun FragmentActivity.showLocusMissingError() = LocusTestingErrorDialogFragment.newInstance(this)
-    .show(supportFragmentManager, LocusTestingErrorDialogFragment.FRAGMENT_TAG)
+inline fun FragmentActivity.showLocusMissingError() =
+    LocusTestingErrorDialogFragment.newInstance(this).show(supportFragmentManager)
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Point?.isGeocache() = this?.gcData?.cacheID?.startsWith("GC", true) ?: false

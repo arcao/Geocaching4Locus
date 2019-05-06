@@ -9,23 +9,16 @@ import locus.api.android.utils.LocusUtils
 object AppConstants {
     const val OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth"
 
-    @JvmField
     val USERS_GUIDE_URI = Uri.parse("https://geocaching4locus.eu/users-guide/")!!
-    @JvmField
     val WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/")!!
-    @JvmField
     val FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus")!!
-    @JvmField
     val GPLUS_URI = Uri.parse("https://plus.google.com/+Geocaching4locusEu")!!
-    @JvmField
     val GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live")!!
-    @JvmField
     val POWER_SAVE_INFO_URI = Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")!!
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.
     // This will prevent it to autodetect by robot.
     // params: %s = currency code (ISO-4217)
-    @JvmField
     val DONATE_PAYPAL_URI = String(
         Base64.decode(
             "aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1hcmNhbyUlNDBhcmNhbyUlMmVjb20mbGM9Q1omaXRlbV9uYW1lPUdlb2NhY2hpbmc0TG9jdXMmaXRlbV9udW1iZXI9ZzRsJmN1cnJlbmN5X2NvZGU9JXMmYm49UFAlJTJkRG9uYXRpb25zQkYlJTNhYnRuX2RvbmF0ZUNDX0xHJSUyZWdpZiUlM2FOb25Ib3N0ZWQ=",
@@ -66,21 +59,16 @@ object AppConstants {
     const val DISTANCE_MILES_DEFAULT = 50 / MILES_PER_KILOMETER
 
     // restrictions in Geocaching Live Service
-    @Deprecated("Use DISTANCE_MIN_METERS")
-    const val DISTANCE_KM_MIN = 0.1f
-    @Deprecated("Use DISTANCE_MAX_METERS")
-    const val DISTANCE_KM_MAX = 50f
     const val DISTANCE_MIN_METERS = 100
     const val DISTANCE_MAX_METERS = 50000
 
-    @JvmField
     val PREMIUM_CHARACTER =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) String(Character.toChars(0x1F451)) else "(PM)"
 
     const val NOTIFICATION_ID_LIVEMAP = 1
 
     private const val LIVEMAP_REQUESTS = 5
-    const val LIVEMAP_CACHES_PER_REQUEST = 50
+    private const val LIVEMAP_CACHES_PER_REQUEST = 50
     const val LIVEMAP_CACHES_COUNT = LIVEMAP_REQUESTS * LIVEMAP_CACHES_PER_REQUEST
     const val LIVEMAP_DISTANCE = 60000
     const val LIVEMAP_PACK_WAYPOINT_PREFIX = "LiveMap|"

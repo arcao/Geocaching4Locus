@@ -10,7 +10,6 @@ import com.arcao.geocaching.api.exception.InvalidResponseException
 import com.arcao.geocaching.api.exception.InvalidSessionException
 import com.arcao.geocaching.api.exception.LiveGeocachingApiException
 import com.arcao.geocaching.api.exception.NetworkException
-import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -36,15 +35,6 @@ import java.net.ConnectException
 import java.net.UnknownHostException
 
 class ExceptionHandler(private val context: Context, private val accountManager: AccountManager) {
-
-    @Deprecated("Use Koin instead")
-    constructor(context: Context) : this(context, App[context].accountManager)
-
-    @Deprecated("Use operator invoke.", ReplaceWith("this(throwable)"))
-    fun handle(throwable: Throwable): Intent {
-        return this(throwable)
-    }
-
     operator fun invoke(throwable: Throwable): Intent {
         var t = throwable
         Timber.e(t)

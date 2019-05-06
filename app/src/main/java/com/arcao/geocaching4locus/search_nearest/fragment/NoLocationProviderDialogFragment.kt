@@ -23,8 +23,6 @@ class NoLocationProviderDialogFragment : AbstractDialogFragment() {
     }
 
     companion object {
-        val FRAGMENT_TAG = NoLocationProviderDialogFragment::class.java.name
-
         fun newInstance(): AbstractDialogFragment {
             return NoLocationProviderDialogFragment()
         }

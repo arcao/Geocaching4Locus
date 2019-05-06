@@ -104,8 +104,6 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
     }
 
     companion object {
-        val FRAGMENT_TAG: String = GeocacheCodesInputDialogFragment::class.java.name
-
         private const val STATE_INPUT = "input"
         private const val STATE_ERROR_MESSAGE = "error_message"
 

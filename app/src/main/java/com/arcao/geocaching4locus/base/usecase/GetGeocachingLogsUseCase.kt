@@ -9,13 +9,13 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import locus.api.mapper.GeocacheLogConverter
 
-@ExperimentalCoroutinesApi
 class GetGeocachingLogsUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val geocacheLogConverter: GeocacheLogConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = 0) =
         coroutineScope {
             produce(dispatcherProvider.io) {

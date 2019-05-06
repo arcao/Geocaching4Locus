@@ -15,13 +15,11 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updatePadding
-import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.HtmlUtil
 import com.arcao.geocaching4locus.base.util.getText
-import com.arcao.geocaching4locus.error.ErrorActivity.ErrorDialogFragment.Companion.FRAGMENT_TAG
 import com.crashlytics.android.Crashlytics
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 
@@ -41,7 +39,7 @@ class ErrorActivity : AppCompatActivity() {
             return
         }
 
-        ErrorDialogFragment.newInstance(args).show(supportFragmentManager, FRAGMENT_TAG)
+        ErrorDialogFragment.newInstance(args).show(supportFragmentManager)
     }
 
     class ErrorDialogFragment : AbstractDialogFragment() {
@@ -138,9 +136,7 @@ class ErrorActivity : AppCompatActivity() {
         }
 
         companion object {
-            val FRAGMENT_TAG: String = ErrorDialogFragment::class.java.name
-
-            internal fun newInstance(args: Bundle): DialogFragment {
+            internal fun newInstance(args: Bundle): ErrorDialogFragment {
                 return ErrorDialogFragment().apply {
                     isCancelable = false
                     arguments = args

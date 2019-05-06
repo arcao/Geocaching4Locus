@@ -54,10 +54,7 @@ class ImportBookmarkActivity : AppCompatActivity() {
 
                 }
                 is ImportBookmarkAction.RequestExternalStoragePermission -> {
-                    ExternalStoragePermissionWarningDialogFragment.newInstance().show(
-                        supportFragmentManager,
-                        ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
-                    )
+                    ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
                 }
                 is ImportBookmarkAction.SignIn -> {
                     accountManager.requestSignOn(this, REQUEST_SIGN_ON)
@@ -92,8 +89,7 @@ class ImportBookmarkActivity : AppCompatActivity() {
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 viewModel.init()
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true)
-                    .show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

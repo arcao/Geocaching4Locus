@@ -27,7 +27,6 @@ import locus.api.objects.extra.Point
 import timber.log.Timber
 import java.util.Locale
 
-@ExperimentalCoroutinesApi
 class UpdateViewModel(
     private val context: Context,
     private val accountManager: AccountManager,

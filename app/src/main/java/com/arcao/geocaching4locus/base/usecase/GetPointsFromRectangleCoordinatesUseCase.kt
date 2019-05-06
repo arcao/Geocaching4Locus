@@ -18,7 +18,6 @@ import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper
 import timber.log.Timber
 
-@ExperimentalCoroutinesApi
 class GetPointsFromRectangleCoordinatesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
@@ -27,6 +26,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         centerCoordinates: Coordinates,
         topLeftCoordinates: Coordinates,

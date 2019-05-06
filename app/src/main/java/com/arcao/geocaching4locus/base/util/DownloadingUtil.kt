@@ -4,11 +4,7 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import kotlin.math.max
 import kotlin.math.min
 
-/**
- * Created by Arcao on 12.02.2018.
- */
 object DownloadingUtil {
-    @JvmStatic
     fun computeItemsPerRequest(currentItemsPerRequest: Int, startTimeMillis: Long): Int {
         var itemsPerRequest = currentItemsPerRequest
         val requestDuration = System.currentTimeMillis() - startTimeMillis

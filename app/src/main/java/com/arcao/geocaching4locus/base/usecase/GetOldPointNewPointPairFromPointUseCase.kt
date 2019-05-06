@@ -22,8 +22,7 @@ class GetOldPointNewPointPairFromPointUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-
-    @ExperimentalCoroutinesApi
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         channel: ReceiveChannel<Point>,
         liteData: Boolean = true,
@@ -76,7 +75,6 @@ class GetOldPointNewPointPairFromPointUseCase(
     }
 }
 
-@ExperimentalCoroutinesApi
 private suspend fun <E> ReceiveChannel<E>.takeList(count: Int): List<E> {
     if (count <= 0) return emptyList()
 

@@ -25,8 +25,6 @@ class BasicMembershipWarningDialogFragment : AbstractErrorDialogFragment() {
     }
 
     companion object {
-        val FRAGMENT_TAG: String = BasicMembershipWarningDialogFragment::class.java.name
-
         fun newInstance(): BasicMembershipWarningDialogFragment {
             val fragment = BasicMembershipWarningDialogFragment()
             fragment.prepareDialog(R.string.title_basic_member_warning, R.string.warning_basic_member, null)

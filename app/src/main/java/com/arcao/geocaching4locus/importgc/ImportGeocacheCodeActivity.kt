@@ -14,7 +14,6 @@ import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarnin
 import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.importgc.fragment.GeocacheCodesInputDialogFragment
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,19 +65,14 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
                 finish()
             }
             is ImportGeocacheCodeAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(
-                    supportFragmentManager,
-                    ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
-                )
+                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
             }
             ImportGeocacheCodeAction.GeocacheCodesInput -> {
-                GeocacheCodesInputDialogFragment.newInstance()
-                    .show(supportFragmentManager, GeocacheCodesInputDialogFragment.FRAGMENT_TAG)
+                GeocacheCodesInputDialogFragment.newInstance().show(supportFragmentManager)
             }
         }.exhaustive
     }
 
-    @ExperimentalCoroutinesApi
     override fun onInputFinished(@NonNull input: Array<String>) {
         viewModel.importGeocacheCodes(input)
     }
@@ -104,8 +98,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 viewModel.init()
             } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true)
-                    .show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

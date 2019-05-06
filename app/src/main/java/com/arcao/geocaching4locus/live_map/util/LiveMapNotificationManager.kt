@@ -354,20 +354,6 @@ class LiveMapNotificationManager(
         private var notificationShown: Boolean = false
         private var lastLiveMapState: Boolean = false
 
-        @Deprecated("Use koin.", ReplaceWith("get<LiveMapNotificationManager>()"))
-        operator fun get(context: Context): LiveMapNotificationManager {
-            return LiveMapNotificationManager(
-                context,
-                DefaultPreferenceManager(context),
-                RemoveLocusMapPointsUseCase(
-                    LocusMapManager(context),
-                    CoroutinesDispatcherProvider()
-                ),
-                LocusMapManager(context),
-                CoroutinesDispatcherProvider()
-            )
-        }
-
         private fun isMapVisible(intent: Intent): Boolean {
             return intent.getBooleanExtra(VAR_B_MAP_VISIBLE, false)
         }

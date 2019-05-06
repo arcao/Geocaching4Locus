@@ -153,12 +153,10 @@ class FeedbackFileProvider : ContentProvider() {
         private const val REPORT_FILE_NAME = "logs.zip"
         private const val REPORT_FILE_ID = 1
 
-        @JvmStatic
         fun getReportFile(@NonNull context: Context): File {
             return File(context.cacheDir, REPORT_FILE_NAME)
         }
 
-        @JvmStatic
         val reportFileUri: Uri
             get() = Uri.Builder().scheme("content").authority(AUTHORITY).path(REPORT_FILE_NAME).build()
     }

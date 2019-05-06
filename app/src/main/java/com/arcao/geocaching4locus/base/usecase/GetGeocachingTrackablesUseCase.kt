@@ -12,13 +12,13 @@ import locus.api.mapper.TrackableConverter
 /**
  * Created by Arcao on 30.12.2018.
  */
-@ExperimentalCoroutinesApi
 class GetGeocachingTrackablesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val trackableConverter: TrackableConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(geocacheCode: String, start: Int = 0, count: Int = AppConstants.TRACKABLES_MAX) =
         coroutineScope {
             produce(dispatcherProvider.io) {

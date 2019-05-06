@@ -22,7 +22,6 @@ import com.arcao.wherigoservice.api.wherigoApiModule
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import io.fabric.sdk.android.Fabric
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import locus.api.android.utils.LocusUtils
 import locus.api.locusMapApiModule
 import org.koin.android.ext.android.inject
@@ -70,7 +69,6 @@ class App : Application() {
         getString(applicationInfo.labelRes)
     }
 
-    @ExperimentalCoroutinesApi
     override fun onCreate() {
         super.onCreate()
 
@@ -138,12 +136,6 @@ class App : Application() {
     }
 
     companion object {
-        @JvmStatic
-        @Deprecated("Use koin", ReplaceWith("val app by inject<App>"))
-        operator fun get(context: Context): App {
-            return context.applicationContext as App
-        }
-
         private fun clearCookiesForDomain(domain: String) {
             val cookieManager = CookieManager.getInstance()
             val cookies = cookieManager.getCookie(domain) ?: return

@@ -57,10 +57,7 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
                 finish()
             }
             is DownloadRectangleAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(
-                    supportFragmentManager,
-                    ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
-                )
+                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
             }
             is DownloadRectangleAction.SignIn -> {
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
@@ -94,8 +91,7 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
                 viewModel.startDownload()
             } else {
                 setResult(Activity.RESULT_CANCELED)
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true)
-                    .show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

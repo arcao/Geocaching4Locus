@@ -44,7 +44,6 @@ object SpanFormatter {
      * additional arguments are ignored.
      * @return the formatted string (with spans).
      */
-    @JvmStatic
     fun format(format: CharSequence, vararg args: Any): SpannedString {
         return format(Locale.getDefault(), format, *args)
     }
@@ -61,7 +60,6 @@ object SpanFormatter {
      * @return the formatted string (with spans).
      * @see String.format
      */
-    @JvmStatic
     fun format(locale: Locale, format: CharSequence, vararg args: Any): SpannedString {
         val out = SpannableStringBuilder(format)
 

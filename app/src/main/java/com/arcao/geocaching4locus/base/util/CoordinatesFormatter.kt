@@ -8,8 +8,6 @@ object CoordinatesFormatter {
 
     private val COMMA_REGEX = Regex.fromLiteral(",")
 
-    @JvmStatic
-    @JvmOverloads
     fun convertDoubleToDeg(source: Double, isLon: Boolean, precision: Int = 3): CharSequence {
         var value = source
         if (value.isNaN())
@@ -40,7 +38,6 @@ object CoordinatesFormatter {
         return sb.toString()
     }
 
-    @JvmStatic
     fun convertDegToDouble(source: CharSequence): Double {
         val tmp = source.trim { it <= ' ' }.replace(COMMA_REGEX, ".")
 

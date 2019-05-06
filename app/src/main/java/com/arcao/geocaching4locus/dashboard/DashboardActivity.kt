@@ -75,10 +75,7 @@ class DashboardActivity : AbstractActionBarActivity(),
             is DashboardAction.SignIn ->
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
             is DashboardAction.WarnPowerSaveActive ->
-                PowerSaveWarningDialogFragment.newInstance().show(
-                    supportFragmentManager,
-                    PowerSaveWarningDialogFragment.FRAGMENT_TAG
-                )
+                PowerSaveWarningDialogFragment.newInstance().show(supportFragmentManager)
 
             is DashboardAction.NavigationBack ->
                 onBackPressed()

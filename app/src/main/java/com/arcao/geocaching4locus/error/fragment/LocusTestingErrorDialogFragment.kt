@@ -13,10 +13,6 @@ class LocusTestingErrorDialogFragment : AbstractErrorDialogFragment() {
     }
 
     companion object {
-        @JvmField
-        val FRAGMENT_TAG: String = LocusTestingErrorDialogFragment::class.java.name
-
-        @JvmStatic
         fun newInstance(context: Context): LocusTestingErrorDialogFragment {
             return LocusTestingErrorDialogFragment().apply {
                 prepareDialog(

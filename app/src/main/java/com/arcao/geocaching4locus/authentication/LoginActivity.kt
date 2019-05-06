@@ -60,7 +60,6 @@ class LoginActivity : AbstractActionBarActivity() {
     }
 
     companion object {
-        @JvmStatic
         fun createIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }

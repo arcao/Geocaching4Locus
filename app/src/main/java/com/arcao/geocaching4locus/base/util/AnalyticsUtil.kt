@@ -12,7 +12,6 @@ object AnalyticsUtil {
     const val COORDINATES_SOURCE_GPS = "GPS"
     const val COORDINATES_SOURCE_MANUAL = "MANUAL"
 
-    @JvmStatic
     fun actionLogin(success: Boolean, premiumMember: Boolean) {
         Answers.getInstance().logLogin(
             LoginEvent().putSuccess(success)
@@ -20,7 +19,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionDashboard(calledFromLocus: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Dashboard")
@@ -28,7 +26,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionImport(premiumMember: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Import")
@@ -36,7 +33,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionImportBookmarks(count: Int, all: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Import bookmarks")
@@ -44,7 +40,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionImportGC(premiumMember: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Import GC")
@@ -52,7 +47,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionSearchNearest(coordinatesSource: String?, useFilter: Boolean, count: Int, premiumMember: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Search nearest")
@@ -66,7 +60,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionUpdate(oldPoint: Boolean, updateLogs: Boolean, premiumMember: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Update")
@@ -76,7 +69,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun actionUpdateMore(count: Int, premiumMember: Boolean) {
         Answers.getInstance().logCustom(
             CustomEvent("Update More")
@@ -85,7 +77,6 @@ object AnalyticsUtil {
         )
     }
 
-    @JvmStatic
     fun setPremiumUser(app: Context, premium: Boolean) {
         FirebaseAnalytics.getInstance(app).setUserProperty("premium", java.lang.Boolean.toString(premium))
     }

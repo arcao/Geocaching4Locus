@@ -32,7 +32,6 @@ object ColorUtil {
             return typedValue
         }
 
-    @JvmStatic
     fun getDefaultColorStateList(context: Context): ColorStateList {
         if (defaultColorStateList == null) {
             /*

@@ -71,10 +71,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
                 finish()
             }
             is ImportUrlAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(
-                    supportFragmentManager,
-                    ExternalStoragePermissionWarningDialogFragment.FRAGMENT_TAG
-                )
+                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
             }
             is ImportUrlAction.SignIn -> {
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
@@ -103,8 +100,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
                 processIntent()
             } else {
                 setResult(Activity.RESULT_CANCELED)
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true)
-                    .show(supportFragmentManager, NoExternalStoragePermissionErrorDialogFragment.FRAGMENT_TAG)
+                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

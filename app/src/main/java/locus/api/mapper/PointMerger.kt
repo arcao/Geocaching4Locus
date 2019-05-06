@@ -1,6 +1,5 @@
 package locus.api.mapper
 
-import android.content.Context
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.GSAK_USERNAME
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
@@ -10,10 +9,6 @@ import locus.api.objects.geocaching.GeocachingLog
 class PointMerger(
     private val defaultPreferenceManager: DefaultPreferenceManager
 ) {
-
-    @Deprecated("Use koin.")
-    constructor(context: Context) : this(DefaultPreferenceManager(context))
-
     fun mergePoints(dest: Point, src: Point?) {
         dest.removeExtraOnDisplay()
 

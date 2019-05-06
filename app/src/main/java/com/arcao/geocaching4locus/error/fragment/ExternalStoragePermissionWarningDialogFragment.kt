@@ -16,10 +16,6 @@ class ExternalStoragePermissionWarningDialogFragment : AbstractErrorDialogFragme
     }
 
     companion object {
-        @JvmField
-        val FRAGMENT_TAG: String = ExternalStoragePermissionWarningDialogFragment::class.java.name
-
-        @JvmStatic
         fun newInstance(): ExternalStoragePermissionWarningDialogFragment {
             return ExternalStoragePermissionWarningDialogFragment().apply {
                 prepareDialog(message = R.string.warning_external_storage_permission)

@@ -12,7 +12,6 @@ class LastLiveMapCoordinates private constructor(
         var value: LastLiveMapCoordinates? = null
             private set
 
-        @JvmStatic
         fun update(mapCenter: Location, mapTopLeft: Location, mapBottomRight: Location) {
             value = LastLiveMapCoordinates(
                 mapCenter.toCoordinates(),
@@ -21,7 +20,6 @@ class LastLiveMapCoordinates private constructor(
             )
         }
 
-        @JvmStatic
         fun remove() {
             value = null
         }

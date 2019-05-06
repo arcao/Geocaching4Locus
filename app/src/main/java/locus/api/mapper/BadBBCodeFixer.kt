@@ -16,7 +16,6 @@ internal object BadBBCodeFixer {
         Pattern.compile("\\[url=(.+?)](.+?)\\[/url=[^]]+]", BBCODE_PATTERN_FLAGS) to "<a href='$1'>$2</a>"
     )
 
-    @JvmStatic
     fun fix(text: String?): String? {
         if (text == null)
             return null

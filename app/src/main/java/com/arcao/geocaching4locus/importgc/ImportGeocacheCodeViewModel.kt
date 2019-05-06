@@ -20,7 +20,6 @@ import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
 
-@ExperimentalCoroutinesApi
 class ImportGeocacheCodeViewModel(
     private val context: Context,
     private val accountManager: AccountManager,

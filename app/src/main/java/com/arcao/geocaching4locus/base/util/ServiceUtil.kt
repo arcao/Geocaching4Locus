@@ -27,7 +27,6 @@ object ServiceUtil {
      * @param intent The Intent with which to start the service, as per
      * [                Context.startService][Context.startService].
      */
-    @JvmStatic
     fun startWakefulForegroundService(context: Context, intent: Intent): ComponentName? {
         synchronized(ACTIVE_WAKE_LOCKS) {
             val id = nextId
@@ -66,7 +65,6 @@ object ServiceUtil {
      * @return Returns true if the intent is associated with a wake lock that is
      * now released; returns false if there was no wake lock specified for it.
      */
-    @JvmStatic
     fun completeWakefulIntent(intent: Intent): Boolean {
         val id = intent.getIntExtra(EXTRA_WAKE_LOCK_ID, 0)
         if (id == 0) {
@@ -93,7 +91,6 @@ object ServiceUtil {
         }
     }
 
-    @JvmStatic
     fun releaseAllWakeLocks(component: ComponentName) {
         val tag = "wake:${component.flattenToShortString()}"
 

@@ -48,12 +48,10 @@ class SettingsActivity : AbstractActionBarActivity() {
     companion object {
         private const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
 
-        @JvmStatic
         fun createIntent(context: Context): Intent {
             return Intent(context, SettingsActivity::class.java)
         }
 
-        @JvmStatic
         fun <F : AbstractPreferenceFragment> createIntent(context: Context, preferenceFragment: Class<F>): Intent {
             return createIntent(context).putExtra(EXTRA_SHOW_FRAGMENT, preferenceFragment.name)
         }

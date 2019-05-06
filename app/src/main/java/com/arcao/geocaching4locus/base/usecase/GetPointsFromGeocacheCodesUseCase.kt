@@ -16,7 +16,6 @@ import kotlinx.coroutines.isActive
 import locus.api.mapper.DataMapper
 import timber.log.Timber
 
-@ExperimentalCoroutinesApi
 class GetPointsFromGeocacheCodesUseCase(
     private val geocachingApi: GeocachingApi,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
@@ -24,6 +23,7 @@ class GetPointsFromGeocacheCodesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         geocacheCodes: Array<String>,
         liteData: Boolean = true,

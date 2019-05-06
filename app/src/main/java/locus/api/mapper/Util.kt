@@ -7,7 +7,6 @@ import locus.api.objects.geocaching.GeocachingLog
 object Util {
     const val GSAK_USERNAME = "gsak"
 
-    @JvmStatic
     fun applyUnavailabilityForGeocache(@NonNull point: Point, threshold: Int) {
         var counter = 0
 

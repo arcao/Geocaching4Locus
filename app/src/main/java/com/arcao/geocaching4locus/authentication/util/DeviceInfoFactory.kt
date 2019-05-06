@@ -5,7 +5,6 @@ import com.arcao.geocaching.api.data.DeviceInfo
 import com.arcao.geocaching4locus.App
 
 class DeviceInfoFactory(private val app: App) {
-    @JvmName("create")
     operator fun invoke(): DeviceInfo = DeviceInfo.builder()
         .applicationCurrentMemoryUsage(0)
         .applicationPeakMemoryUsage(0)

@@ -81,7 +81,6 @@ object PrefConstants {
     const val UNIT_KM = "km"
     const val UNIT_MILES = "mi"
 
-    @JvmField
     val SHORT_CACHE_TYPE_NAMES = arrayOf(
         "Tradi",
         "Multi",
@@ -104,6 +103,5 @@ object PrefConstants {
         "G-Event"
     )
 
-    @JvmField
     val SHORT_CONTAINER_TYPE_NAMES = arrayOf("?", "M", "S", "R", "L", "H", "O")
 }

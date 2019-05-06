@@ -15,9 +15,8 @@ import com.arcao.geocaching4locus.R
 class SliderPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.preferenceStyle,
-    defStyleRes: Int = defStyleAttr
-) : DialogPreference(context, attrs, defStyleAttr, defStyleRes),
+    defStyleAttr: Int = R.attr.preferenceStyle
+) : DialogPreference(context, attrs, defStyleAttr),
     PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     private var value: Int = 0
 
@@ -99,7 +98,7 @@ class SliderPreference @JvmOverloads constructor(
         return false
     }
 
-    private class SavedState : Preference.BaseSavedState {
+    private class SavedState : BaseSavedState {
         internal var value: Int = 0
 
         internal constructor(source: Parcel) : super(source) {
@@ -114,6 +113,7 @@ class SliderPreference @JvmOverloads constructor(
         internal constructor(superState: Parcelable) : super(superState)
 
         companion object {
+            @Suppress("unused")
             @JvmField
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(source: Parcel): SavedState {

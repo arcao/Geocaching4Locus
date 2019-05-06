@@ -8,12 +8,10 @@ import androidx.annotation.NonNull
 import androidx.core.text.HtmlCompat
 
 object HtmlUtil {
-    @JvmStatic
     fun fromHtml(@NonNull source: String): CharSequence {
         return applyFix(HtmlCompat.fromHtml(source, HtmlCompat.FROM_HTML_MODE_LEGACY))
     }
 
-    @JvmStatic
     fun toHtml(@NonNull source: CharSequence): String {
         return if (source is Spanned) HtmlCompat.toHtml(
             source,
@@ -21,7 +19,6 @@ object HtmlUtil {
         ) else source.toString()
     }
 
-    @JvmStatic
     fun applyFix(@NonNull source: CharSequence): CharSequence {
         return if (source is Spanned) applyFix(source) else source
     }

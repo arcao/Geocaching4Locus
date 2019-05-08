@@ -26,7 +26,7 @@
             app:key="download_logs_update_cache"
             app:summary="@string/pref_download_logs_update_geocache_summary"
             app:title="@string/pref_download_logs_update_geocache"/>
-    <com.arcao.geocaching4locus.settings.widget.ListPreference
+    <ListPreference
             app:defaultValue="10"
             app:entries="@array/count_of_caches_steps"
             app:entryValues="@array/count_of_caches_steps"

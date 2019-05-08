@@ -4,7 +4,7 @@
         app:title="@string/pref_account">
     <Preference
             app:key="account"/>
-    <com.arcao.geocaching4locus.settings.widget.IconPreference
+    <Preference
             app:key="account_geocaching_live"
             app:title="@string/pref_geocaching_live"
             app:summary="@string/pref_geocaching_live_message"

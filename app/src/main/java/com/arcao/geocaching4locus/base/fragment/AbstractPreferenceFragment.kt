@@ -21,7 +21,7 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
         return findPreference(key) as P
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String?) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(preferenceResource, rootKey)
     }
 

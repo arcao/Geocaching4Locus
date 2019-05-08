@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
@@ -73,10 +72,10 @@ class App : Application() {
         super.onCreate()
 
         startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, locusMapApiModule, feedbackModule))
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
-            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
-        }
+//        if (BuildConfig.DEBUG) {
+//            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
+//            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
+//        }
 
         prepareCrashlytics()
 

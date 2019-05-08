@@ -4,26 +4,20 @@
         app:title="@string/action_settings">
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_account"/>
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_filter"/>
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_live_map"/>
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.DownloadingPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_downloading"/>
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.AdvancedPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_advanced"/>
     <Preference
             app:fragment="com.arcao.geocaching4locus.settings.fragment.AboutPreferenceFragment"
-            app:icon="@drawable/empty"
             app:title="@string/pref_about"/>
 </androidx.preference.PreferenceScreen>

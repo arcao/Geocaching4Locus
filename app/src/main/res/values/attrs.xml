@@ -1,29 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="buttonPanelStyle" format="reference" />
+    <attr name="buttonPanelStyle" format="reference"/>
+    <attr name="dashboardButtonStyle" format="reference"/>
 
-    <attr name="normalWindow" format="reference" />
-    <attr name="textAppearanceListItemSecondary" format="reference" />
-    <attr name="listPreferredItemPaddingTop" format="dimension" />
-    <attr name="listPreferredItemPaddingBottom" format="dimension" />
+    <attr name="normalWindow" format="reference"/>
+    <attr name="textAppearanceListItemSecondary" format="reference"/>
+    <attr name="listPreferredItemPaddingTop" format="dimension"/>
+    <attr name="listPreferredItemPaddingBottom" format="dimension"/>
 
     <declare-styleable name="SliderPreference">
-        <attr name="min" format="integer" />
-        <attr name="max" format="integer" />
-        <attr name="defaultValue" />
-        <attr name="step" format="integer" />
-        <attr name="title" format="string|reference" />
-        <attr name="dialogMessage" format="string|reference" />
-        <attr name="summary" format="string|reference" />
-    </declare-styleable>
-    
-    <declare-styleable name="IconPreference">
-         <attr name="icon" />
+        <attr name="min" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="defaultValue"/>
+        <attr name="step" format="integer"/>
+        <attr name="title" format="string|reference"/>
+        <attr name="dialogMessage" format="string|reference"/>
+        <attr name="summary" format="string|reference"/>
     </declare-styleable>
 
     <declare-styleable name="DashboardButton">
-        <attr name="toggleable" format="boolean" />
+        <attr name="toggleable" format="boolean"/>
         <attr name="compoundDrawableTint" format="color|reference"/>
-        <attr name="android:textColor" />
+        <attr name="android:textColor"/>
     </declare-styleable>
 </resources>

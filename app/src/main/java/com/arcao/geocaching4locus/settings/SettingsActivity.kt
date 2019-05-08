@@ -4,18 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.transaction
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.settings.fragment.SettingsPreferenceFragment
 
-class SettingsActivity : AbstractActionBarActivity() {
+class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_settings)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -43,6 +49,15 @@ class SettingsActivity : AbstractActionBarActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
+        supportFragmentManager.transaction {
+            replace(R.id.fragment, Fragment.instantiate(this@SettingsActivity, pref.fragment))
+            addToBackStack(null)
+        }
+
+        return true
     }
 
     companion object {

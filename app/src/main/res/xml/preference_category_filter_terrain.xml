@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app:androidx.preference.PreferenceScreen
+<androidx.preference.PreferenceScreen
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:title="@string/pref_terrain">
     <ListPreference
@@ -14,4 +14,4 @@
             app:entries="@array/rating"
             app:entryValues="@array/rating"
             app:defaultValue="5"/>
-</app:androidx.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

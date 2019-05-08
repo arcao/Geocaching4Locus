@@ -8,7 +8,7 @@ import com.arcao.geocaching4locus.base.util.getText
 abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFragment.DialogListener {
     @Suppress("IMPLICIT_CAST_TO_ANY")
     fun handleProgress(state: ProgressState) {
-        val f = supportFragmentManager.findFragmentByTag(ProgressDialogFragment.FRAGMENT_TAG) as ProgressDialogFragment?
+        val f = supportFragmentManager.findFragmentByTag(ProgressDialogFragment.FRAGMENT_TAG) as? ProgressDialogFragment
 
         when (state) {
             is ProgressState.ShowProgress -> {
@@ -25,12 +25,14 @@ abstract class AbstractActionBarActivity : AppCompatActivity(), ProgressDialogFr
                         state.progress,
                         state.maxProgress
                     ).show(supportFragmentManager, ProgressDialogFragment.FRAGMENT_TAG)
+                    supportFragmentManager.executePendingTransactions()
                 }
             }
             is ProgressState.HideProgress -> {
                 f?.apply {
                     dismiss()
                 }
+                supportFragmentManager.executePendingTransactions()
             }
         }.exhaustive
     }

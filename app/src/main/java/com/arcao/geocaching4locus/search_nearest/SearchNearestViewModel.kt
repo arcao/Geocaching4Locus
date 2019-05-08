@@ -7,7 +7,6 @@ import com.arcao.geocaching.api.data.coordinates.Coordinates
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
-import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
@@ -27,7 +26,7 @@ import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -164,7 +163,7 @@ class SearchNearestViewModel(
     private suspend fun doDownload(coordinates: Coordinates, maxCount: Int) = computationContext {
         val downloadIntent = LocusMapManager.createSendPointsIntent(
             callImport = true,
-            center = true
+            center = false
         )
 
         var count = maxCount
@@ -190,30 +189,27 @@ class SearchNearestViewModel(
                     filterPreferenceManager.terrainMin,
                     filterPreferenceManager.terrainMax,
                     filterPreferenceManager.excludeIgnoreList,
-                    AppConstants.LIVEMAP_CACHES_COUNT
-                ) { count = it }
+                    maxCount
+                ) { count = it }.map { list ->
+                    receivedGeocaches += list.size
+                    updateProgress(progress = receivedGeocaches, maxProgress = count)
 
-                val writeChannel = produce {
-                    for (list in points) {
-                        receivedGeocaches += list.size
-                        updateProgress(progress = receivedGeocaches, maxProgress = count)
-
-                        // apply additional downloading full geocache if required
-                        if (filterPreferenceManager.simpleCacheData) {
-                            list.forEach { point ->
-                                point.setExtraOnDisplay(
-                                    context.packageName,
-                                    UpdateActivity::class.java.name,
-                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                    point.gcData.cacheID
-                                )
-                            }
+                    // apply additional downloading full geocache if required
+                    if (filterPreferenceManager.simpleCacheData) {
+                        list.forEach { point ->
+                            point.setExtraOnDisplay(
+                                context.packageName,
+                                UpdateActivity::class.java.name,
+                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                point.gcData.cacheID
+                            )
                         }
-                        send(list)
                     }
+                    list
                 }
 
-                writePointToPackPointsFile(writeChannel)
+
+                writePointToPackPointsFile(points)
             }
         } catch (e: Exception) {
             mainContext {

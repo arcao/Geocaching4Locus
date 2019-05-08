@@ -73,11 +73,11 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
         val window = dialog.window
         window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
 
-        val customView = dialog.customView ?: throw IllegalStateException("Custom view is null")
+        textInputLayout = dialog.customView as? TextInputLayout ?: throw IllegalStateException("Custom view is null")
 
         val positiveButton = dialog.getActionButton(DialogAction.POSITIVE)
 
-        editTextView = customView.findViewById(R.id.input)
+        editTextView = textInputLayout.findViewById(R.id.input)
         editTextView.nextFocusDownId = positiveButton.id
         editTextView.setText(R.string.prefix_gc)
         editTextView.addTextChangedListener(object : TextWatcher {

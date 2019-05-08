@@ -152,7 +152,7 @@ class LocusMapManager(
 
         fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
             return Intent(LocusConst.ACTION_DISPLAY_DATA)
-                .putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, cacheFile)
+                .putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, cacheFile.absolutePath)
                 // set centering tag
                 .putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center)
                 // set import tag

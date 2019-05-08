@@ -117,11 +117,11 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
         override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
             super.onReceivedError(view, errorCode, description, failingUrl)
 
-            startActivity(ErrorActivity.IntentBuilder(activity!!).message(description).build())
+            startActivity(ErrorActivity.IntentBuilder(requireActivity()).message(description).build())
             cancelAction()
         }
 
-        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
+        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
             viewModel.showProgress()
         }

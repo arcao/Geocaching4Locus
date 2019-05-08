@@ -12,6 +12,8 @@ class DifficultyFilterPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_filter_difficulty
 
     override fun preparePreference() {
+        super.preparePreference()
+
         val difficultyMinPreference = preference<ListPreference>(FILTER_DIFFICULTY_MIN)
         val difficultyMaxPreference = preference<ListPreference>(FILTER_DIFFICULTY_MAX)
 

@@ -12,6 +12,8 @@ class TerrainFilterPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_filter_terrain
 
     override fun preparePreference() {
+        super.preparePreference()
+
         val terrainMinPreference = preference<ListPreference>(FILTER_TERRAIN_MIN)
         val terrainMaxPreference = preference<ListPreference>(FILTER_TERRAIN_MAX)
 

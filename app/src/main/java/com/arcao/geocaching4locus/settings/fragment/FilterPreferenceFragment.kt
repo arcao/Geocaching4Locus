@@ -39,6 +39,8 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_filter
 
     override fun preparePreference() {
+        super.preparePreference()
+
         prepareCacheTypePreference()
         prepareContainerTypePreference()
         prepareDifficultyPreference()

@@ -41,6 +41,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         get() = R.xml.preference_category_about
 
     override fun preparePreference() {
+        super.preparePreference()
 
         preference<Preference>(ABOUT_VERSION).summary =
             "${get<App>().version} (${BuildConfig.GIT_SHA})"

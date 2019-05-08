@@ -17,6 +17,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_accounts
 
     override fun preparePreference() {
+        super.preparePreference()
 
         preference<Preference>(ACCOUNT).apply {
             setOnPreferenceClickListener {

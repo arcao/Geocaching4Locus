@@ -14,6 +14,8 @@ class ContainerTypeFilterPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_filter_container_type
 
     override fun preparePreference() {
+        super.preparePreference()
+
         setHasOptionsMenu(true)
     }
 

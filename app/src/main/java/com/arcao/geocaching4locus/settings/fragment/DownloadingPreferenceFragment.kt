@@ -21,6 +21,8 @@ class DownloadingPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_downloading
 
     override fun preparePreference() {
+        super.preparePreference()
+
         val premiumMember: Boolean = get<AccountManager>().isPremium
 
         val simpleCacheDataPreference = preference<CheckBoxPreference>(DOWNLOADING_SIMPLE_CACHE_DATA)

@@ -14,6 +14,8 @@ class CacheTypeFilterPreferenceFragment : AbstractPreferenceFragment() {
         get() = R.xml.preference_category_filter_cache_type
 
     override fun preparePreference() {
+        super.preparePreference()
+
         setHasOptionsMenu(true)
     }
 

@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.base.fragment
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.annotation.XmlRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -45,6 +46,7 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
+    @CallSuper
     protected open fun preparePreference() {
         requireActivity().title = preferenceScreen.title
     }

@@ -1,57 +1,38 @@
 package com.arcao.geocaching4locus.dashboard.widget
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
-import android.os.Build
 import android.util.AttributeSet
 import android.widget.ToggleButton
 import androidx.annotation.StyleableRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.arcao.geocaching4locus.R
 
-class DashboardButton : ToggleButton {
-    private val toggleable: Boolean
+class DashboardButton @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.dashboardButtonStyle
+) : ToggleButton(
+    context,
+    attrs,
+    defStyleAttr
+) {
+    private var toggleable: Boolean = false
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(
-        context,
-        attrs,
-        defStyleAttr,
-        defStyleRes
-    ) {
-        val a = context.obtainStyledAttributes(attrs, R.styleable.DashboardButton, defStyleAttr, defStyleRes)
-        try {
-            toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false)
-
-            applyCompoundDrawableTint(a)
-            applyTextColorStateList(a)
-        } finally {
-            a.recycle()
-        }
-    }
-
-    @JvmOverloads
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
-        val a = context.obtainStyledAttributes(
+    init {
+        context.withStyledAttributes(
             attrs,
             R.styleable.DashboardButton,
             defStyleAttr,
             R.style.Widget_AppTheme_DashboardButton
-        )
-        try {
-            toggleable = a.getBoolean(R.styleable.DashboardButton_toggleable, false)
+        ) {
+            toggleable = getBoolean(R.styleable.DashboardButton_toggleable, false)
 
-            applyCompoundDrawableTint(a)
-            applyTextColorStateList(a)
-        } finally {
-            a.recycle()
+            applyCompoundDrawableTint(this)
+            applyTextColorStateList(this)
         }
     }
 

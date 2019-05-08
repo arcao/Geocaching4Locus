@@ -31,6 +31,10 @@
     </item>
 
     <item>
-        <ripple android:color="?attr/colorControlHighlight"/>
+        <ripple android:color="?attr/colorControlHighlight">
+            <item>
+                <color android:color="@color/white"/>
+            </item>
+        </ripple>
     </item>
 </selector>

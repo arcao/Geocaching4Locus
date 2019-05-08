@@ -27,7 +27,7 @@ import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.channels.produce
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -105,11 +105,11 @@ class SearchNearestViewModel(
 
 
         mainLaunch {
-            showProgress(message = R.string.progress_acquire_gps_location) {
+            showProgress(R.string.progress_acquire_gps_location) {
                 var location = getGpsLocation()
 
                 if (location == null) {
-                    updateProgress(message = R.string.progress_acquire_network_location)
+                    updateProgress(R.string.progress_acquire_network_location)
                     location = getWifiLocation()
                 }
 
@@ -172,7 +172,8 @@ class SearchNearestViewModel(
 
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
-                val geocaches = getPointsFromCoordinates(
+                val points = getPointsFromCoordinates(
+                    this,
                     coordinates,
                     preferenceManager.downloadDistanceMeters,
                     filterPreferenceManager.simpleCacheData,
@@ -190,24 +191,29 @@ class SearchNearestViewModel(
                     filterPreferenceManager.terrainMax,
                     filterPreferenceManager.excludeIgnoreList,
                     AppConstants.LIVEMAP_CACHES_COUNT
-                ) { count = it }.map { list ->
-                    receivedGeocaches += list.size
-                    updateProgress(progress = receivedGeocaches, maxProgress = count)
+                ) { count = it }
 
-                    // apply additional downloading full geocache if required
-                    if (filterPreferenceManager.simpleCacheData) {
-                        list.forEach { point ->
-                            point.setExtraOnDisplay(
-                                context.packageName,
-                                UpdateActivity::class.java.name,
-                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                point.gcData.cacheID
-                            )
+                val writeChannel = produce {
+                    for (list in points) {
+                        receivedGeocaches += list.size
+                        updateProgress(progress = receivedGeocaches, maxProgress = count)
+
+                        // apply additional downloading full geocache if required
+                        if (filterPreferenceManager.simpleCacheData) {
+                            list.forEach { point ->
+                                point.setExtraOnDisplay(
+                                    context.packageName,
+                                    UpdateActivity::class.java.name,
+                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                    point.gcData.cacheID
+                                )
+                            }
                         }
+                        send(list)
                     }
-                    list
                 }
-                writePointToPackPointsFile(geocaches)
+
+                writePointToPackPointsFile(writeChannel)
             }
         } catch (e: Exception) {
             mainContext {

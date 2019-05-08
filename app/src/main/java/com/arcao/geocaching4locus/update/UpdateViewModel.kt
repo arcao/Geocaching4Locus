@@ -15,7 +15,6 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.toList
 import locus.api.android.utils.IntentHelper
@@ -73,7 +72,7 @@ class UpdateViewModel(
 
                     if (basicMember) {
                         // get trackables
-                        val trackables = getGeocachingTrackables(updateData.geocacheCode, 0, 30)
+                        val trackables = getGeocachingTrackables(this, updateData.geocacheCode, 0, 30)
                         updateData.newPoint.gcData.trackables.addAll(trackables.toList().flatten())
                     }
 
@@ -89,6 +88,7 @@ class UpdateViewModel(
                         updateProgress(R.string.progress_download_logs, progress = progress, maxProgress = logsCount)
 
                         val logs = getGeocachingLogs(
+                            this,
                             updateData.geocacheCode,
                             progress,
                             logsCount

@@ -70,6 +70,7 @@ class BookmarkListViewModel(
                 Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
 
                 val channel = getPointsFromGeocacheCodes(
+                    this,
                     geocacheCodes,
                     filterPreferenceManager.simpleCacheData,
                     filterPreferenceManager.geocacheLogsCount

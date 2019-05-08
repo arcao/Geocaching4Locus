@@ -10,12 +10,13 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper
+import locus.api.objects.extra.Point
 import timber.log.Timber
 
 class GetPointsFromCoordinatesUseCase(
@@ -28,6 +29,7 @@ class GetPointsFromCoordinatesUseCase(
 ) {
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
+        scope: CoroutineScope,
         coordinates: Coordinates,
         distanceMeters: Int,
         liteData: Boolean = true,
@@ -46,8 +48,8 @@ class GetPointsFromCoordinatesUseCase(
         excludeIgnoreList: Boolean = true,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
-    ) = coroutineScope {
-        produce(dispatcherProvider.io) {
+    ): ReceiveChannel<List<Point>> {
+        return scope.produce(dispatcherProvider.io) {
             geocachingApiLogin(geocachingApi)
 
             val resultQuality = when {
@@ -57,7 +59,7 @@ class GetPointsFromCoordinatesUseCase(
                 else -> throw IllegalStateException("Invalid ResultQuality combination.")
             }
 
-            var count = AppConstants.ITEMS_PER_REQUEST
+            var count = maxCount
             var current = 0
 
             var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
@@ -90,9 +92,7 @@ class GetPointsFromCoordinatesUseCase(
                             .build()
                     ).also {
                         count = Math.min(geocachingApi.lastSearchResultsFound, maxCount)
-                        withContext(dispatcherProvider.computation) {
-                            countHandler(count)
-                        }
+                        countHandler(count)
                     }
                 } else {
                     geocachingApi.getMoreGeocaches(

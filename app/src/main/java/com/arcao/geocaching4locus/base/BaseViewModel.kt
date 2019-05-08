@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.runIfIsSuspended
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
@@ -48,19 +49,20 @@ abstract class BaseViewModel(
         }
 
     suspend fun <R> showProgress(
-        requestId: Int = 0,
         @StringRes message: Int = 0,
         messageArgs: Array<Any>? = null,
         progress: Int = 0,
         maxProgress: Int = 0,
-        block: suspend () -> R
-    ): R {
+        requestId: Int = 0,
+        block: suspend CoroutineScope.() -> R
+    ): R = coroutineScope {
+
         mainContext {
             progress(ProgressState.ShowProgress(requestId, message, messageArgs, progress, maxProgress))
         }
 
         try {
-            return block()
+            return@coroutineScope block()
         } finally {
             mainContext {
                 progress(ProgressState.HideProgress)

@@ -66,7 +66,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             longitude.text = value
         }
         longitude.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) viewModel.latitude(longitude.text ?: "")
+            if (!hasFocus) viewModel.longitude(longitude.text ?: "")
         }
 
         viewModel.requestedCaches.observe(this) { value ->

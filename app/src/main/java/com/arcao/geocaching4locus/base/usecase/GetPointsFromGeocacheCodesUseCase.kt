@@ -9,9 +9,9 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.isActive
 import locus.api.mapper.DataMapper
 import timber.log.Timber
@@ -25,68 +25,67 @@ class GetPointsFromGeocacheCodesUseCase(
 ) {
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
+        scope: CoroutineScope,
         geocacheCodes: Array<String>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0,
         trackableLogsCount: Int = 0
-    ) = coroutineScope {
-        produce(dispatcherProvider.io) {
-            geocachingApiLogin(geocachingApi)
+    ) = scope.produce(dispatcherProvider.io) {
+        geocachingApiLogin(geocachingApi)
 
-            val resultQuality = if (liteData) {
-                GeocachingApi.ResultQuality.LITE
-            } else {
-                GeocachingApi.ResultQuality.FULL
+        val resultQuality = if (liteData) {
+            GeocachingApi.ResultQuality.LITE
+        } else {
+            GeocachingApi.ResultQuality.FULL
+        }
+
+        val notFoundGeocacheCodes = ArrayList<String>()
+
+        val count = geocacheCodes.size
+        var current = 0
+
+        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+        while (current < count) {
+            val startTimeMillis = System.currentTimeMillis()
+
+            val requestedCacheIds = getRequestedGeocacheIds(geocacheCodes, current, itemsPerRequest)
+
+            val cachesToAdd = geocachingApi.searchForGeocaches(
+                SearchForGeocachesRequest.builder()
+                    .resultQuality(resultQuality)
+                    .maxPerPage(itemsPerRequest)
+                    .geocacheLogCount(geocacheLogsCount)
+                    .trackableLogCount(trackableLogsCount)
+                    .addFilter(CacheCodeFilter(*requestedCacheIds))
+                    .build()
+            )
+
+            if (liteData) {
+                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
             }
 
-            val notFoundGeocacheCodes = ArrayList<String>()
-
-            val count = geocacheCodes.size
-            var current = 0
-
-            var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
-            while (current < count) {
-                val startTimeMillis = System.currentTimeMillis()
-
-                val requestedCacheIds = getRequestedGeocacheIds(geocacheCodes, current, itemsPerRequest)
-
-                val cachesToAdd = geocachingApi.searchForGeocaches(
-                    SearchForGeocachesRequest.builder()
-                        .resultQuality(resultQuality)
-                        .maxPerPage(itemsPerRequest)
-                        .geocacheLogCount(geocacheLogsCount)
-                        .trackableLogCount(trackableLogsCount)
-                        .addFilter(CacheCodeFilter(*requestedCacheIds))
-                        .build()
-                )
-
-                if (liteData) {
-                    accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
-                }
-
-                if (!isActive) {
-                    return@produce
-                }
-
-                addNotFoundCaches(notFoundGeocacheCodes, requestedCacheIds, cachesToAdd)
-
-                if (!cachesToAdd.isEmpty()) {
-                    val points = mapper.createLocusPoints(cachesToAdd)
-                    send(points)
-                }
-
-                current += requestedCacheIds.size
-
-                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            if (!isActive) {
+                return@produce
             }
 
-            Timber.v("found geocaches: %d", current)
-            Timber.v("not found geocaches: %s", notFoundGeocacheCodes)
+            addNotFoundCaches(notFoundGeocacheCodes, requestedCacheIds, cachesToAdd)
 
-            // throw error if some geocache hasn't found
-            if (notFoundGeocacheCodes.isNotEmpty()) {
-                throw CacheNotFoundException(*notFoundGeocacheCodes.toTypedArray())
+            if (!cachesToAdd.isEmpty()) {
+                val points = mapper.createLocusPoints(cachesToAdd)
+                send(points)
             }
+
+            current += requestedCacheIds.size
+
+            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+        }
+
+        Timber.v("found geocaches: %d", current)
+        Timber.v("not found geocaches: %s", notFoundGeocacheCodes)
+
+        // throw error if some geocache hasn't found
+        if (notFoundGeocacheCodes.isNotEmpty()) {
+            throw CacheNotFoundException(*notFoundGeocacheCodes.toTypedArray())
         }
     }
 

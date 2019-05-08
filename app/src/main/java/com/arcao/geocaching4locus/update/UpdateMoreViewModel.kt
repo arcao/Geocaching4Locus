@@ -71,9 +71,9 @@ class UpdateMoreViewModel(
                         lite = true
                     }
 
-                    val existingPoints = getPointsFromPointIndexes(pointIndexes)
+                    val existingPoints = getPointsFromPointIndexes(this, pointIndexes)
 
-                    val pointPairs = getOldPointNewPointPairFromPoint(existingPoints, lite, logsCount)
+                    val pointPairs = getOldPointNewPointPairFromPoint(this, existingPoints, lite, logsCount)
                     for ((oldPoint, newPoint) in pointPairs) {
                         if (newPoint == null) continue
 

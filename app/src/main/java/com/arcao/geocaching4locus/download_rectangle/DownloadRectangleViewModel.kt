@@ -80,6 +80,7 @@ class DownloadRectangleViewModel constructor(
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
                 val geocaches = getPointsFromRectangleCoordinates(
+                    this,
                     liveMapCoordinates.center,
                     liveMapCoordinates.topLeft,
                     liveMapCoordinates.bottomRight,

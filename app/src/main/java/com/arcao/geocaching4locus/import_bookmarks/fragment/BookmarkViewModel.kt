@@ -75,6 +75,7 @@ class BookmarkViewModel(
             try {
                 showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
                     val channel = getPointsFromGeocacheCodes(
+                        this,
                         geocacheCodes,
                         filterPreferenceManager.simpleCacheData,
                         filterPreferenceManager.geocacheLogsCount

@@ -52,6 +52,7 @@ class LiveMapViewModel(
 
             showProgress(maxProgress = count) {
                 val pointListChannel = getPointsFromRectangleCoordinates(
+                    this,
                     task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
                     task.getCoordinates(
                         LiveMapService.PARAM_TOP_LEFT_LATITUDE,

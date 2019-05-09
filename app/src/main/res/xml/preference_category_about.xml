@@ -12,9 +12,6 @@
             app:key="about_facebook"
             app:title="@string/pref_facebook"/>
     <Preference
-            app:key="about_gplus"
-            app:title="@string/pref_gplus"/>
-    <Preference
             app:key="about_feedback"
             app:title="@string/pref_feedback"/>
     <Preference

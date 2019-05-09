@@ -14,7 +14,6 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_DONATE_PAYPAL
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_FACEBOOK
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_FEEDBACK
-import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_GPLUS
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_VERSION
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ABOUT_WEBSITE
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -57,13 +56,6 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
             summary = AppConstants.FACEBOOK_URI.toString()
             setOnPreferenceClickListener {
                 requireActivity().showWebPage(AppConstants.FACEBOOK_URI)
-            }
-        }
-
-        preference<Preference>(ABOUT_GPLUS).apply {
-            summary = AppConstants.GPLUS_URI.toString()
-            setOnPreferenceClickListener {
-                requireActivity().showWebPage(AppConstants.GPLUS_URI)
             }
         }
 

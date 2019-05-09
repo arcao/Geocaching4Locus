@@ -62,7 +62,6 @@ object PrefConstants {
     const val ABOUT_VERSION = "about_version"
     const val ABOUT_WEBSITE = "about_website"
     const val ABOUT_FACEBOOK = "about_facebook"
-    const val ABOUT_GPLUS = "about_gplus"
     const val ABOUT_FEEDBACK = "about_feedback"
     const val ABOUT_DONATE_PAYPAL = "about_donate_paypal"
     const val ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live"

@@ -12,7 +12,6 @@ object AppConstants {
     val USERS_GUIDE_URI = Uri.parse("https://geocaching4locus.eu/users-guide/")!!
     val WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/")!!
     val FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus")!!
-    val GPLUS_URI = Uri.parse("https://plus.google.com/+Geocaching4locusEu")!!
     val GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live")!!
     val POWER_SAVE_INFO_URI = Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")!!
 

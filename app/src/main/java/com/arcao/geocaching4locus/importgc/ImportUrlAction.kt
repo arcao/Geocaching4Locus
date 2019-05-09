@@ -8,5 +8,4 @@ sealed class ImportUrlAction {
     data class Finish(val intent: Intent) : ImportUrlAction()
     object Cancel : ImportUrlAction()
     object LocusMapNotInstalled : ImportUrlAction()
-    object RequestExternalStoragePermission : ImportUrlAction()
 }

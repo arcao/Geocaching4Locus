@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.import_bookmarks.fragment
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
@@ -22,14 +23,15 @@ import timber.log.Timber
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class BookmarkListViewModel(
-    private val context: Context,
-    private val exceptionHandler: ExceptionHandler,
-    private val getUserBookmarkLists: GetUserBookmarkListsUseCase,
-    private val getBookmark: GetBookmarkUseCase,
-    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
-    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
-    private val filterPreferenceManager: FilterPreferenceManager,
-    dispatcherProvider: CoroutinesDispatcherProvider
+        private val context: Context,
+        private val exceptionHandler: ExceptionHandler,
+        private val getUserBookmarkLists: GetUserBookmarkListsUseCase,
+        private val getBookmark: GetBookmarkUseCase,
+        private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
+        private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
+        private val filterPreferenceManager: FilterPreferenceManager,
+        private val locusMapManager: LocusMapManager,
+        dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val loading = MutableLiveData<Boolean>().apply {
         value = true
@@ -40,23 +42,21 @@ class BookmarkListViewModel(
     val action = Command<BookmarkListAction>()
 
     fun loadList() = mainLaunch {
-        loading.postValue(true)
+        loading(true)
 
-        computationContext {
-            try {
-                list.postValue(getUserBookmarkLists())
-            } catch (e: Exception) {
-                action.postValue(BookmarkListAction.Error(exceptionHandler(e)))
-            } finally {
-                loading.postValue(false)
-            }
+        try {
+            list(getUserBookmarkLists())
+        } catch (e: Exception) {
+            action(BookmarkListAction.Error(exceptionHandler(e)))
+        } finally {
+            loading(false)
         }
     }
 
     fun importAll(bookmarkList: BookmarkListEntity) = computationLaunch {
-        val importIntent = LocusMapManager.createSendPointsIntent(
-            callImport = true,
-            center = true
+        val importIntent = locusMapManager.createSendPointsIntent(
+                callImport = true,
+                center = true
         )
 
         var receivedGeocaches = 0
@@ -70,10 +70,10 @@ class BookmarkListViewModel(
                 Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
 
                 val channel = getPointsFromGeocacheCodes(
-                    this,
-                    geocacheCodes,
-                    filterPreferenceManager.simpleCacheData,
-                    filterPreferenceManager.geocacheLogsCount
+                        this,
+                        geocacheCodes,
+                        filterPreferenceManager.simpleCacheData,
+                        filterPreferenceManager.geocacheLogsCount
                 ).map { list ->
                     receivedGeocaches += list.size
                     updateProgress(progress = receivedGeocaches)
@@ -82,10 +82,10 @@ class BookmarkListViewModel(
                     if (filterPreferenceManager.simpleCacheData) {
                         list.forEach { point ->
                             point.setExtraOnDisplay(
-                                context.packageName,
-                                UpdateActivity::class.java.name,
-                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                point.gcData.cacheID
+                                    context.packageName,
+                                    UpdateActivity::class.java.name,
+                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                    point.gcData.cacheID
                             )
                         }
                     }
@@ -96,13 +96,13 @@ class BookmarkListViewModel(
         } catch (e: Exception) {
             mainContext {
                 action(
-                    BookmarkListAction.Error(
-                        if (receivedGeocaches > 0) {
-                            exceptionHandler(IntendedException(e, importIntent))
-                        } else {
-                            exceptionHandler(e)
-                        }
-                    )
+                        BookmarkListAction.Error(
+                                if (receivedGeocaches > 0) {
+                                    exceptionHandler(IntendedException(e, importIntent))
+                                } else {
+                                    exceptionHandler(e)
+                                }
+                        )
                 )
             }
             return@computationLaunch

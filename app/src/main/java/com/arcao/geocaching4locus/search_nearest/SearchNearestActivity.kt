@@ -12,14 +12,8 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
-import com.arcao.geocaching4locus.base.util.PermissionUtil
-import com.arcao.geocaching4locus.base.util.exhaustive
-import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.observe
-import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.base.util.*
 import com.arcao.geocaching4locus.error.ErrorActivity
-import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment
-import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
 import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView
 import com.arcao.geocaching4locus.settings.SettingsActivity
@@ -125,9 +119,6 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             SearchNearestAction.RequestWifiLocationPermission -> {
                 PermissionUtil.requestWifiLocationPermission(this)
             }
-            SearchNearestAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
-            }
             SearchNearestAction.WrongCoordinatesFormat -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_coordinates_format).build())
             }
@@ -171,14 +162,6 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
                 viewModel.retrieveCoordinates()
             } else {
                 NoLocationPermissionErrorDialogFragment.newInstance().show(supportFragmentManager)
-            }
-        }
-
-        if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                viewModel.download()
-            } else {
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(false).show(supportFragmentManager)
             }
         }
     }

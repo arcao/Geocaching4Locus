@@ -6,7 +6,6 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 
@@ -30,11 +29,6 @@ class ImportBookmarkViewModel(
 
         if (!accountManager.isPremium) {
             action(ImportBookmarkAction.PremiumMembershipRequired)
-            return
-        }
-
-        if (!context.hasExternalStoragePermission) {
-            action(ImportBookmarkAction.RequestExternalStoragePermission)
             return
         }
 

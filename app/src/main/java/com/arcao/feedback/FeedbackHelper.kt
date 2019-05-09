@@ -1,12 +1,13 @@
 package com.arcao.feedback
 
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.annotation.StringRes
+import androidx.core.content.FileProvider
 import com.arcao.feedback.collector.Collector
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -17,13 +18,14 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter
-import java.util.Stack
+import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+
 class FeedbackHelper(
     private val app: App,
-    private val collectors: List<Collector>,
+    private val collectors: Array<Collector>,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     private val context: Context = app
@@ -45,23 +47,14 @@ class FeedbackHelper(
                 }
 
                 try {
-                    createReport(FeedbackFileProvider.getReportFile(context))
+                    val reportFile = getReportFile(context)
+                    val reportUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", reportFile)
 
-                    val reportUri = FeedbackFileProvider.reportFileUri
+                    createReport(reportFile)
+
                     intent.putExtra(Intent.EXTRA_STREAM, reportUri)
-
-                    // grant read permission
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    } else {
-                        val resInfoList = context.packageManager
-                            .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-
-                        for (resolveInfo in resInfoList) {
-                            val packageName = resolveInfo.activityInfo.packageName
-                            context.grantUriPermission(packageName, reportUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        }
-                    }
+                    intent.clipData = ClipData.newRawUri("", reportUri)
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 } catch (e: IOException) {
                     Timber.e(e)
                 }
@@ -70,14 +63,10 @@ class FeedbackHelper(
             }
         }
 
-    fun revokeFeedbackPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            context.revokeUriPermission(FeedbackFileProvider.reportFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
-    }
-
     @Throws(IOException::class)
     private suspend fun createReport(reportFile: File) {
+        reportFile.parentFile.mkdirs()
+
         if (reportFile.exists()) {
             Timber.d("Report file $reportFile already exist.")
             if (reportFile.delete()) {
@@ -124,6 +113,14 @@ class FeedbackHelper(
                 .putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toTypedArray<Parcelable>())
         } else {
             Intent.createChooser(source, chooserTitle)
+        }
+    }
+
+    companion object {
+        private const val REPORT_FILE_NAME = "logs.zip"
+
+        fun getReportFile(@NonNull context: Context): File {
+            return File(File(context.cacheDir, "export"), REPORT_FILE_NAME)
         }
     }
 }

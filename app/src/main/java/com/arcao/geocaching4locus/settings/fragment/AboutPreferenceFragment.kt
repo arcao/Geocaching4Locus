@@ -83,12 +83,6 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         job.cancel()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQ_FEEDBACK) {
-            feedbackHelper.revokeFeedbackPermission()
-        }
-    }
-
     class DonatePaypalDialogFragment : AbstractDialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             return AlertDialog.Builder(requireActivity())

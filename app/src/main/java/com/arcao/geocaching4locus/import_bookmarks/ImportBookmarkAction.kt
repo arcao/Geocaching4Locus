@@ -8,5 +8,4 @@ sealed class ImportBookmarkAction {
     object ShowList : ImportBookmarkAction()
     class ChooseBookmark(val bookmarkList: BookmarkListEntity) : ImportBookmarkAction()
     object PremiumMembershipRequired : ImportBookmarkAction()
-    object RequestExternalStoragePermission : ImportBookmarkAction()
 }

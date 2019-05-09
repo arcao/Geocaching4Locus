@@ -8,6 +8,5 @@ sealed class ImportGeocacheCodeAction {
     data class Finish(val intent: Intent) : ImportGeocacheCodeAction()
     object Cancel : ImportGeocacheCodeAction()
     object LocusMapNotInstalled : ImportGeocacheCodeAction()
-    object RequestExternalStoragePermission : ImportGeocacheCodeAction()
     object GeocacheCodesInput : ImportGeocacheCodeAction()
 }

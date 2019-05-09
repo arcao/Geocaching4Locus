@@ -9,7 +9,6 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -30,6 +29,7 @@ class DownloadRectangleViewModel constructor(
     private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
+    private val locusMapManager: LocusMapManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -43,11 +43,6 @@ class DownloadRectangleViewModel constructor(
 
         if (accountManager.account == null) {
             action(DownloadRectangleAction.SignIn)
-            return@mainLaunch
-        }
-
-        if (!context.hasExternalStoragePermission) {
-            action(DownloadRectangleAction.RequestExternalStoragePermission)
             return@mainLaunch
         }
 
@@ -69,7 +64,7 @@ class DownloadRectangleViewModel constructor(
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun doDownload(liveMapCoordinates: LastLiveMapCoordinates) = computationContext {
-        val downloadIntent = LocusMapManager.createSendPointsIntent(
+        val downloadIntent = locusMapManager.createSendPointsIntent(
             callImport = true,
             center = true
         )

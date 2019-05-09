@@ -7,26 +7,7 @@ import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUr
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.GeocachingApiFilterProvider
-import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
-import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
-import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
-import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
-import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromCoordinatesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetUserBookmarkListsUseCase
-import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
-import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
-import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
-import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
+import com.arcao.geocaching4locus.base.usecase.*
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleViewModel
@@ -81,7 +62,7 @@ internal val appModule = module {
     factory { RemoveLocusMapPointsUseCase(get(), get()) }
     factory { RequireLocationPermissionRequestUseCase(get()) }
     factory { SendPointsSilentToLocusMapUseCase(get(), get()) }
-    factory { WritePointToPackPointsFileUseCase(get()) }
+    factory { WritePointToPackPointsFileUseCase(get(), get()) }
 
     // ---- View models ----
     // login
@@ -89,15 +70,15 @@ internal val appModule = module {
     // dashboard
     viewModel { (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get()) }
     // download live map rectangles
-    viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // import geocache codes
-    viewModel { ImportGeocacheCodeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { ImportGeocacheCodeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // import url
-    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // import bookmarks
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
-    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
     // live map
     viewModel { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest

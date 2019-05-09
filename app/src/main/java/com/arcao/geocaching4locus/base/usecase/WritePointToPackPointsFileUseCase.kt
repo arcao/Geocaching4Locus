@@ -9,10 +9,11 @@ import locus.api.objects.extra.Point
 import locus.api.utils.StoreableWriter
 
 class WritePointToPackPointsFileUseCase(
+        private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(point: Point) = withContext(dispatcherProvider.io) {
-        StoreableWriter(LocusMapManager.cacheFileOutputStream).use { writer ->
+        StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
             val pack = PackPoints()
             pack.addWaypoint(point)
             writer.write(pack)
@@ -20,7 +21,7 @@ class WritePointToPackPointsFileUseCase(
     }
 
     suspend operator fun invoke(channel: ReceiveChannel<Collection<Point>>) = withContext(dispatcherProvider.io) {
-        StoreableWriter(LocusMapManager.cacheFileOutputStream).use { writer ->
+        StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
             for (points in channel) {
                 val pack = PackPoints()
                 points.forEach(pack::addWaypoint)

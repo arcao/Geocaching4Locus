@@ -3,15 +3,11 @@ package com.arcao.geocaching4locus.importgc
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.NonNull
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
-import com.arcao.geocaching4locus.base.util.PermissionUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
-import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment
-import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -70,9 +66,6 @@ class ImportUrlActivity : AbstractActionBarActivity() {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
             }
-            is ImportUrlAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
-            }
             is ImportUrlAction.SignIn -> {
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
             }
@@ -88,19 +81,6 @@ class ImportUrlActivity : AbstractActionBarActivity() {
             } else {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                processIntent()
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

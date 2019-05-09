@@ -9,7 +9,6 @@ sealed class SearchNearestAction {
     object LocusMapNotInstalled : SearchNearestAction()
     object RequestGpsLocationPermission : SearchNearestAction()
     object RequestWifiLocationPermission : SearchNearestAction()
-    object RequestExternalStoragePermission : SearchNearestAction()
     object WrongCoordinatesFormat : SearchNearestAction()
     object ShowFilters : SearchNearestAction()
 }

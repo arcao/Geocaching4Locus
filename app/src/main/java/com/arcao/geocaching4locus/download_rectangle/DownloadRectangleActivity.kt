@@ -6,13 +6,10 @@ import android.os.Bundle
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
-import com.arcao.geocaching4locus.base.util.PermissionUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.error.ErrorActivity
-import com.arcao.geocaching4locus.error.fragment.ExternalStoragePermissionWarningDialogFragment
-import com.arcao.geocaching4locus.error.fragment.NoExternalStoragePermissionErrorDialogFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -56,9 +53,6 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
             }
-            is DownloadRectangleAction.RequestExternalStoragePermission -> {
-                ExternalStoragePermissionWarningDialogFragment.newInstance().show(supportFragmentManager)
-            }
             is DownloadRectangleAction.SignIn -> {
                 accountManager.requestSignOn(this, REQUEST_SIGN_ON)
             }
@@ -79,19 +73,6 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
             } else {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == PermissionUtil.REQUEST_EXTERNAL_STORAGE_PERMISSION) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                viewModel.startDownload()
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                NoExternalStoragePermissionErrorDialogFragment.newInstance(true).show(supportFragmentManager)
             }
         }
     }

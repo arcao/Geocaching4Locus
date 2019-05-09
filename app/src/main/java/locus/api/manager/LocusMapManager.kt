@@ -1,14 +1,13 @@
 package locus.api.manager
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.os.Environment
+import androidx.core.content.FileProvider
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import locus.api.android.ActionBasics
-import locus.api.android.ActionDisplayInternal
 import locus.api.android.ActionDisplayPoints
 import locus.api.android.ActionTools
 import locus.api.android.objects.PackPoints
@@ -24,14 +23,15 @@ import java.io.IOException
 import kotlin.reflect.KClass
 
 class LocusMapManager(
-    private val context: Context
+        private val context: Context
 ) {
     val periodicUpdateEnabled: Boolean
         get() {
             val locusVersion = LocusUtils.getActiveVersion(context)
             return if (locusVersion != null) {
                 try {
-                    ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled ?: false
+                    ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled
+                            ?: false
                 } catch (e: Throwable) {
                     Timber.e(e, "Unable to receive info about periodic update state from Locus Map.")
                     return true
@@ -40,6 +40,65 @@ class LocusMapManager(
                 return false
             }
         }
+
+
+    fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
+        val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", cacheFile)
+
+        return Intent(LocusConst.ACTION_DISPLAY_DATA).apply {
+            putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_URI, uri)
+            // set centering tag
+            putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center)
+            // set import tag
+            putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport)
+            clipData = ClipData.newRawUri("", uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+    }
+
+    /**
+     * Get a path including file name to save data for Locus
+     *
+     * @return path to file
+     */
+    private val cacheFile: File
+        get() {
+            val cacheFile = File(File(context.cacheDir, "export"), LocusMapManager.CACHE_FILENAME)
+
+            Timber.d("Cache file for Locus: %s", cacheFile.toString())
+
+            val parentDirectory = cacheFile.parentFile
+
+            if (!parentDirectory.mkdirs()) {
+                Timber.w("Directory '%s' not created, maybe exists.", parentDirectory)
+            }
+
+            if (!parentDirectory.isDirectory)
+                throw IllegalStateException("Directory $parentDirectory not exist.")
+
+            return cacheFile
+        }
+
+    /**
+     * Get a OutputFileStream to save data for Locus Map
+     *
+     * @return OutputFileStream object
+     * @throws IOException If I/O error occurs
+     */
+    val cacheFileOutputStream: FileOutputStream
+        @Throws(IOException::class)
+        get() {
+            val file = cacheFile
+
+            // make sure the path exist
+            file.parentFile.mkdirs()
+
+            val fos = FileOutputStream(file)
+            fos.flush()
+            return fos
+        }
+
 
     /**
      * Allows to remove already send Pack from the map. Keep in mind, that this method remove
@@ -69,39 +128,13 @@ class LocusMapManager(
             val locusVersion = LocusUtils.getActiveVersion(context)
             if (locusVersion != null) {
                 ActionTools.enablePeriodicUpdatesReceiver(
-                    context,
-                    locusVersion,
-                    clazz.java
+                        context,
+                        locusVersion,
+                        clazz.java
                 )
             }
         } catch (e: Throwable) {
             Timber.e(e, "Unable to enable ${clazz.java.simpleName}.")
-        }
-    }
-
-    fun sendPointsFile(callImport: Boolean, center: Boolean, intentFlags: Int): Boolean =
-        sendPointsFile(LocusConst.ACTION_DISPLAY_DATA, callImport, center, intentFlags)
-
-    @Throws(LocusMapRuntimeException::class)
-    private fun sendPointsFile(
-        action: String,
-        callImport: Boolean,
-        center: Boolean,
-        intentFlags: Int
-    ): Boolean {
-        try {
-            val file = cacheFile
-
-            if (!file.exists())
-                return false
-
-            val intent = Intent()
-                .addFlags(intentFlags)
-                .putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, file.absolutePath)
-
-            return ActionDisplayInternal.sendData(action, context, intent, callImport, center)
-        } catch (e: Exception) {
-            throw LocusMapRuntimeException(e)
         }
     }
 
@@ -141,73 +174,12 @@ class LocusMapManager(
     fun getPointFromIntent(intent: Intent) = IntentHelper.getPointFromIntent(context, intent)
 
     fun getLocationFromIntent(intent: Intent) =
-        IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_GPS)
-            ?: IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+            IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_GPS)
+                    ?: IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
 
     fun isLocationIntent(intent: Intent) = intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
 
     companion object {
-        private const val APP_DIRECTORY = "Geocaching4Locus"
         private const val CACHE_FILENAME = "data.locus"
-
-        fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
-            return Intent(LocusConst.ACTION_DISPLAY_DATA)
-                .putExtra(LocusConst.INTENT_EXTRA_POINTS_FILE_PATH, cacheFile.absolutePath)
-                // set centering tag
-                .putExtra(LocusConst.INTENT_EXTRA_CENTER_ON_DATA, center)
-                // set import tag
-                .putExtra(LocusConst.INTENT_EXTRA_CALL_IMPORT, callImport)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-
-        /**
-         * Get a path including file name to save data for Locus
-         *
-         * @return path to file
-         */
-        val cacheFile: File
-            get() {
-                val cacheFile = File(
-                    File(
-                        Environment.getExternalStorageDirectory(),
-                        APP_DIRECTORY
-                    ), CACHE_FILENAME
-                )
-
-                Timber.d("Cache file for Locus: %s", cacheFile.toString())
-
-                val parentDirectory = cacheFile.parentFile
-
-                if (!parentDirectory.mkdirs()) {
-                    Timber.w("Directory '%s' not created.", parentDirectory)
-                }
-
-                if (!parentDirectory.isDirectory)
-                    throw IllegalStateException("External storage (or SD Card) is not writable.")
-
-                return cacheFile
-            }
-
-        /**
-         * Get a OutputFileStream to save data for Locus
-         *
-         * @return OutputFileStream object for world readable file returned by getCacheFileName method
-         * @throws IOException If I/O error occurs
-         */
-        // create empty file
-        // file has to be readable for Locus
-        val cacheFileOutputStream: FileOutputStream
-            @SuppressLint("SetWorldReadable")
-            @Throws(IOException::class)
-            get() {
-                val file = cacheFile
-                val fos = FileOutputStream(file)
-                fos.flush()
-                if (!file.setReadable(true, false)) {
-                    Timber.e("Unable to set readable all for: %s", file)
-                }
-
-                return fos
-            }
     }
 }

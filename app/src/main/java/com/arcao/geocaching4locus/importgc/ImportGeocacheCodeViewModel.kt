@@ -9,7 +9,6 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
-import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -26,6 +25,7 @@ class ImportGeocacheCodeViewModel(
     private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
+    private val locusMapManager: LocusMapManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
@@ -41,16 +41,11 @@ class ImportGeocacheCodeViewModel(
             return@mainLaunch
         }
 
-        if (!context.hasExternalStoragePermission) {
-            action(ImportGeocacheCodeAction.RequestExternalStoragePermission)
-            return@mainLaunch
-        }
-
         action(ImportGeocacheCodeAction.GeocacheCodesInput)
     }
 
     fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {
-        val importIntent = LocusMapManager.createSendPointsIntent(
+        val importIntent = locusMapManager.createSendPointsIntent(
             callImport = true,
             center = true
         )

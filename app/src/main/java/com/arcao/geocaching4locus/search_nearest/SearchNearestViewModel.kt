@@ -8,16 +8,10 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromCoordinatesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
-import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
-import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
+import com.arcao.geocaching4locus.base.usecase.*
 import com.arcao.geocaching4locus.base.usecase.entity.LocationPermissionType
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.CoordinatesFormatter
-import com.arcao.geocaching4locus.base.util.hasExternalStoragePermission
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -150,18 +144,13 @@ class SearchNearestViewModel(
                 return@mainLaunch
             }
 
-            if (!context.hasExternalStoragePermission) {
-                action(SearchNearestAction.RequestExternalStoragePermission)
-                return@mainLaunch
-            }
-
             doDownload(Coordinates.create(latitude, longitude), requireNotNull(requestedCaches.value))
         }
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun doDownload(coordinates: Coordinates, maxCount: Int) = computationContext {
-        val downloadIntent = LocusMapManager.createSendPointsIntent(
+        val downloadIntent = locusMapManager.createSendPointsIntent(
             callImport = true,
             center = false
         )

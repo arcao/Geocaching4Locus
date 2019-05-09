@@ -25,8 +25,8 @@ object AppConstants {
         )
     )
 
-    const val LOCUS_MIN_VERSION = "3.8.0"
-    val LOCUS_MIN_VERSION_CODE: LocusUtils.VersionCode = LocusUtils.VersionCode.UPDATE_09
+    const val LOCUS_MIN_VERSION = "3.36.0"
+    val LOCUS_MIN_VERSION_CODE: LocusUtils.VersionCode = LocusUtils.VersionCode.UPDATE_15
 
     /* Adaptive downloading configuration */
     const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 5

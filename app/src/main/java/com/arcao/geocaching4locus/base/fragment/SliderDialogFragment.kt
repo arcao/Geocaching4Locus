@@ -4,11 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.InputFilter
-import android.text.InputType
-import android.text.Spanned
-import android.text.TextWatcher
+import android.text.*
 import android.text.method.NumberKeyListener
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +15,8 @@ import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.arcao.geocaching4locus.R
 import java.lang.ref.WeakReference
 
@@ -86,18 +82,16 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             value = savedInstanceState.getInt(PARAM_DEFAULT_VALUE, value)
         }
 
-        return MaterialDialog.Builder(requireActivity())
+        return MaterialDialog(requireActivity())
             .title(arguments.getInt(PARAM_TITLE))
-            .customView(prepareView(), false)
-            .positiveText(R.string.button_ok)
-            .negativeText(R.string.button_cancel)
-            .onAny { _, dialogAction ->
-                if (dialogAction == DialogAction.POSITIVE)
-                    newValue = value
-
+            .customView(view = prepareView())
+            .positiveButton(R.string.button_ok) {
+                newValue = value
                 fireDialogClose()
             }
-            .build()
+            .negativeButton(R.string.button_cancel) {
+                fireDialogClose()
+            }
     }
 
     override fun onSaveInstanceState(@NonNull outState: Bundle) {

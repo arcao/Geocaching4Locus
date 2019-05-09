@@ -28,17 +28,16 @@ ext {
     slf4jTimberVersion = '3.1'
     timberVersion = '4.7.1'
     scribejavaVersion = '6.5.1'
-    materialDialogsVersion = '0.9.6.0'
-    firebaseVersion = '16.0.8'
-    crashlyticsVersion = '2.9.9'
+    materialDialogsVersion = '2.8.1'
+    firebaseVersion = '16.0.9'
+    crashlyticsVersion = '2.10.0'
     okhttpVersion = '3.12.2' // keep 3.12.x, 3.13.x require Android 5+ (API 21)
-    autoValueVersion = '1.6.3'
-    autoValueParcelVersion = '0.2.6'
-    androidxCoreKtxVersion = '1.0.1'
+    androidxCoreKtxVersion = '1.0.2'
     androidxKtxVersion = '1.0.0'
     androidxKtxLifecycleVersion = '2.0.0'
 
     ktlintVersion = '0.31.0'
+
     // tests
     junitVersion = '4.12'
     testRunnerVersion = '1.1.1'

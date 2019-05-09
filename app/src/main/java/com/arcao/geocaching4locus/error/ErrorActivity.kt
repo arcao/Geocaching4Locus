@@ -7,18 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.method.LinkMovementMethod
-import android.view.View
-import android.widget.CheckBox
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.updatePadding
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
+import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
-import com.arcao.geocaching4locus.base.util.HtmlUtil
 import com.arcao.geocaching4locus.base.util.getText
 import com.crashlytics.android.Crashlytics
 import org.oshkimaadziig.george.androidutils.SpanFormatter
@@ -47,40 +43,19 @@ class ErrorActivity : AppCompatActivity() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val args = requireArguments()
 
-            val title = args.getCharSequence(KEY_TITLE) ?: ""
+            val title = args.getCharSequence(KEY_TITLE)
             val message = args.getCharSequence(KEY_MESSAGE) ?: ""
             val positiveAction = args.getParcelable(KEY_POSITIVE_ACTION) as Intent?
-            val positiveButtonText = args.getCharSequence(KEY_POSITIVE_BUTTON_TEXT) ?: ""
-            val negativeButtonText = args.getCharSequence(KEY_NEGATIVE_BUTTON_TEXT) ?: ""
-            val t = args.getSerializable(KEY_EXCEPTION) as Throwable?
+            val positiveButtonText = args.getCharSequence(KEY_POSITIVE_BUTTON_TEXT)
+            val negativeButtonText = args.getCharSequence(KEY_NEGATIVE_BUTTON_TEXT)
+            val t = args.getSerializable(KEY_EXCEPTION) as? Throwable
 
             val context = requireContext()
 
-            val builder = MaterialDialog.Builder(requireContext())
-                .positiveText(
-                    if (positiveButtonText.isNotEmpty())
-                        positiveButtonText
-                    else
-                        context.getString(R.string.button_ok)
-                )
-
-            if (title.isNotEmpty()) {
-                builder.title(title)
-            }
-
-            builder.customView(R.layout.dialog_error, false)
-
-            if (negativeButtonText.isNotEmpty()) {
-                builder.negativeText(negativeButtonText)
-            }
-
-            builder.onPositive { materialDialog, _ ->
-                val customView = materialDialog.customView
-
-                if (customView != null) {
-                    val checkBox = customView.findViewById<CheckBox>(R.id.checkbox)
-
-                    if (checkBox != null && checkBox.isChecked) {
+            val md = MaterialDialog(requireContext())
+                .message(text = message)
+                .positiveButton(text = positiveButtonText ?: context.getString(R.string.button_ok)) { dialog ->
+                    if (dialog.isCheckPromptChecked()) {
                         Crashlytics.logException(t)
                         Toast.makeText(
                             context,
@@ -88,48 +63,32 @@ class ErrorActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
+
+                    if (positiveAction != null) {
+                        startActivity(positiveAction)
+                    }
+
+                    requireActivity().apply {
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
                 }
 
-                if (positiveAction != null) {
-                    startActivity(positiveAction)
-                }
-
-                requireActivity().apply {
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                }
-            }
-            builder.onNegative { _, _ ->
-                requireActivity().apply {
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                }
+            title?.let {
+                md.title(text = title.toString())
             }
 
-            val dialog = builder.build()
-            dialog.customView?.apply {
-                val content = findViewById<TextView?>(R.id.content)
-                val checkBox = findViewById<CheckBox?>(R.id.checkbox)
-
-                // add paddingTop for untitled dialogs
-                if (title.isEmpty()) {
-                    updatePadding(
-                        top = dialog.context.resources.getDimensionPixelSize(
-                            com.afollestad.materialdialogs.R.dimen.md_notitle_vertical_padding
-                        )
-                    )
+            negativeButtonText?.let {
+                md.negativeButton(text = negativeButtonText) {
+                    requireActivity().apply {
+                        setResult(Activity.RESULT_CANCELED)
+                        finish()
+                    }
                 }
+            }
 
-                if (content != null && message.isNotEmpty()) {
-                    dialog.setTypeface(content, builder.regularFont)
-                    content.movementMethod = LinkMovementMethod()
-                    content.text = HtmlUtil.applyFix(message)
-                }
-
-                if (checkBox != null) {
-                    dialog.setTypeface(checkBox, builder.regularFont)
-                    checkBox.visibility = if (t != null) View.VISIBLE else View.GONE
-                }
+            t?.let {
+                md.checkBoxPrompt(R.string.button_send_error_report, onToggle = null)
             }
 
             return dialog

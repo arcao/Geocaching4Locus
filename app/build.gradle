@@ -61,6 +61,7 @@ dependencies {
 
     // Material dialogs
     implementation "com.afollestad.material-dialogs:core:$materialDialogsVersion"
+    implementation "com.afollestad.material-dialogs:input:$materialDialogsVersion"
 
     // Crashlytics & Firebase
     implementation "com.google.firebase:firebase-core:$firebaseVersion"

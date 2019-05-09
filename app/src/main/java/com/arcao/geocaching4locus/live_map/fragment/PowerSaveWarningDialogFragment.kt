@@ -1,6 +1,8 @@
 package com.arcao.geocaching4locus.live_map.fragment
 
+import android.annotation.SuppressLint
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.fragment.AbstractErrorDialogFragment
@@ -18,17 +20,20 @@ class PowerSaveWarningDialogFragment : AbstractErrorDialogFragment() {
         if (activity is OnPowerSaveWarningConfirmedListener) {
             activity.onPowerSaveWarningConfirmed()
         }
+        dismiss()
     }
 
-    override fun onDialogBuild(builder: MaterialDialog.Builder) {
-        super.onDialogBuild(builder)
+    @Suppress("DEPRECATION")
+    @SuppressLint("CheckResult")
+    override fun onDialogBuild(dialog: MaterialDialog) {
+        super.onDialogBuild(dialog)
 
-        builder.neutralText(R.string.button_more_info)
-            .onNeutral { _, _ -> requireActivity().showWebPage(AppConstants.POWER_SAVE_INFO_URI) }
-
-        builder.checkBoxPromptRes(R.string.checkbox_do_not_show_again, false) { _, isChecked ->
-            requireContext().hidePowerManagementWarning = isChecked
-        }
+        dialog.noAutoDismiss()
+            .neutralButton(R.string.button_more_info) {
+                requireActivity().showWebPage(AppConstants.POWER_SAVE_INFO_URI)
+            }.checkBoxPrompt(R.string.checkbox_do_not_show_again) { checked ->
+                requireContext().hidePowerManagementWarning = checked
+            }
     }
 
     companion object {

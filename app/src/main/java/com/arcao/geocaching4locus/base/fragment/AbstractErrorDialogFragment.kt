@@ -32,26 +32,27 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
         // do nothing
     }
 
-    protected open fun onDialogBuild(builder: MaterialDialog.Builder) {
+    protected open fun onDialogBuild(dialog: MaterialDialog) {
         val args = requireArguments()
 
-        builder.content(
-            requireContext().getText(args.getInt(PARAM_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE) ?: "")
+        dialog.message(
+            text = requireContext().getText(args.getInt(PARAM_MESSAGE), args.getString(PARAM_ADDITIONAL_MESSAGE) ?: "")
         )
-            .positiveText(R.string.button_ok)
-            .onPositive { _, _ -> onPositiveButtonClick() }
+            .positiveButton(R.string.button_ok) {
+                onPositiveButtonClick()
+            }
 
         val title = args.getInt(PARAM_TITLE)
         if (title != 0) {
-            builder.title(title)
+            dialog.title(title)
         }
     }
 
     @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = MaterialDialog.Builder(requireActivity())
-        onDialogBuild(builder)
-        return builder.build()
+        val dialog = MaterialDialog(requireActivity())
+        onDialogBuild(dialog)
+        return dialog
     }
 
     companion object {

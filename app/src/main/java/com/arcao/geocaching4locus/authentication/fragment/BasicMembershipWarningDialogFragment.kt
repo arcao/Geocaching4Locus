@@ -14,14 +14,15 @@ class BasicMembershipWarningDialogFragment : AbstractErrorDialogFragment() {
         dismiss()
     }
 
-    override fun onDialogBuild(builder: MaterialDialog.Builder) {
-        super.onDialogBuild(builder)
+    @Suppress("DEPRECATION")
+    override fun onDialogBuild(dialog: MaterialDialog) {
+        super.onDialogBuild(dialog)
 
         // disable auto dismiss
-        builder.autoDismiss(false)
-
-        builder.neutralText(R.string.button_show_users_guide)
-            .onNeutral { _, _ -> requireActivity().showWebPage(AppConstants.USERS_GUIDE_URI) }
+        dialog.noAutoDismiss()
+            .neutralButton(R.string.button_show_users_guide) {
+                requireActivity().showWebPage(AppConstants.USERS_GUIDE_URI)
+            }
     }
 
     companion object {

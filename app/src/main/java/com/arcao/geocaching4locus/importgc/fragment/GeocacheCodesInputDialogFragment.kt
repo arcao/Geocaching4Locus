@@ -9,8 +9,11 @@ import android.view.WindowManager
 import android.widget.EditText
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.runIfIs
@@ -50,32 +53,29 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
 
     @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = MaterialDialog.Builder(requireContext())
+        val dialog = MaterialDialog(requireContext())
             .title(R.string.title_import_from_gc)
-            .positiveText(R.string.button_ok)
-            .negativeText(R.string.button_cancel)
-            .customView(R.layout.dialog_gc_number_input, false)
-            .autoDismiss(false)
-            .onPositive { materialDialog, _ ->
+            .customView(R.layout.dialog_gc_number_input)
+            .noAutoDismiss()
+            .positiveButton(R.string.button_ok) {dialog ->
                 try {
                     val geocacheCodes = model.parseGeocacheCodes(editTextView.text)
                     fireOnInputFinished(geocacheCodes)
-                    materialDialog.dismiss()
+                    dialog.dismiss()
                 } catch (e: Exception) {
                     textInputLayout.error = getText(R.string.error_gc_code_invalid)
                 }
             }
-            .onNegative { materialDialog, _ ->
+            .negativeButton(R.string.button_cancel) { dialog ->
                 fireOnInputFinished(null)
-                materialDialog.dismiss()
-            }.build()
+                dialog.dismiss()
+            }
 
-        val window = dialog.window
-        window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
 
-        textInputLayout = dialog.customView as? TextInputLayout ?: throw IllegalStateException("Custom view is null")
+        textInputLayout = dialog.getCustomView() as? TextInputLayout ?: throw IllegalStateException("Custom view is null")
 
-        val positiveButton = dialog.getActionButton(DialogAction.POSITIVE)
+        val positiveButton = dialog.getActionButton(WhichButton.POSITIVE)
 
         editTextView = textInputLayout.findViewById(R.id.input)
         editTextView.nextFocusDownId = positiveButton.id

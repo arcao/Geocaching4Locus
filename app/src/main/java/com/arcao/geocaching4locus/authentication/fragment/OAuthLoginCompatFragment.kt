@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.util.observe
@@ -25,29 +26,32 @@ class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {
     }
 
     override fun onLoginUrlAvailable(url: String) {
-        MaterialDialog.Builder(requireActivity())
-            .content(R.string.warning_compat_android_sign_in, true)
-            .negativeText(R.string.button_cancel)
-            .positiveText(R.string.button_ok)
-            .onPositive { _, _ ->
+        MaterialDialog(requireActivity())
+            .message(R.string.warning_compat_android_sign_in)
+            .positiveButton(R.string.button_ok) {
                 showOAuthVerifierDialog()
                 requireActivity().showWebPage(Uri.parse(url))
             }
-            .onNegative { _, _ -> viewModel.cancelLogin() }
+            .negativeButton(R.string.button_cancel) {
+                viewModel.cancelLogin()
+            }
             .cancelable(false)
+            .cancelOnTouchOutside(false)
             .show()
     }
 
     private fun showOAuthVerifierDialog() {
-        MaterialDialog.Builder(requireActivity())
-            .input(R.string.hint_authorization_code, 0, false) { _, input ->
+        MaterialDialog(requireActivity())
+            .message(R.string.message_enter_authorization_code)
+            .input(hintRes = R.string.hint_authorization_code, allowEmpty = false) { _, input ->
                 viewModel.finishLogin(input.toString())
             }
-            .content(R.string.message_enter_authorization_code)
-            .negativeText(R.string.button_cancel)
-            .positiveText(R.string.button_ok)
-            .onNegative { _, _ -> viewModel.cancelLogin() }
+            .positiveButton(R.string.button_ok)
+            .negativeButton(R.string.button_cancel) {
+                viewModel.cancelLogin()
+            }
             .cancelable(false)
+            .cancelOnTouchOutside(false)
             .show()
     }
 

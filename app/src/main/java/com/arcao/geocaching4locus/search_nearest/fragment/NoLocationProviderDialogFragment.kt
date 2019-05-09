@@ -12,14 +12,14 @@ import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 class NoLocationProviderDialogFragment : AbstractDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return MaterialDialog.Builder(activity!!)
+        @Suppress("DEPRECATION")
+        return MaterialDialog(requireActivity())
             .title(R.string.error_location_not_allowed)
-            .content(R.string.error_location_disabled)
-            .positiveText(R.string.button_ok)
-            .neutralText(R.string.button_settings)
-
-            .onNeutral { materialDialog, dialogAction -> activity!!.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) }
-            .build()
+            .message(R.string.error_location_disabled)
+            .positiveButton(R.string.button_ok)
+            .neutralButton(R.string.button_settings) {
+                requireActivity().startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+            }
     }
 
     companion object {

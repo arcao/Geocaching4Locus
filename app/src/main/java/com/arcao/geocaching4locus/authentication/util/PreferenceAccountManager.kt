@@ -10,7 +10,7 @@ import com.arcao.geocaching.api.data.type.MemberType
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.github.scribejava.core.model.OAuth1RequestToken
-import java.util.Date
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class PreferenceAccountManager(context: Context) : AccountManager {
@@ -98,16 +98,17 @@ class PreferenceAccountManager(context: Context) : AccountManager {
     }
 
     private fun store() {
+        val account = account
         if (account != null) {
             preferences.edit {
-                putString(PrefConstants.ACCOUNT_USERNAME, account!!.name)
-                putBoolean(PrefConstants.ACCOUNT_PREMIUM, account!!.premium)
-                putString(PrefConstants.ACCOUNT_AVATAR_URL, account!!.avatarUrl)
+                putString(PrefConstants.ACCOUNT_USERNAME, account.name)
+                putBoolean(PrefConstants.ACCOUNT_PREMIUM, account.premium)
+                putString(PrefConstants.ACCOUNT_AVATAR_URL, account.avatarUrl)
                 putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, java.lang.Float.NaN)
                 putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, java.lang.Float.NaN)
             }
 
-            account!!.homeCoordinates?.let { coordinates ->
+            account.homeCoordinates?.let { coordinates ->
                 preferences.edit {
                     putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LAT, coordinates.latitude().toFloat())
                     putFloat(PrefConstants.ACCOUNT_HOME_COORDINATES_LON, coordinates.longitude().toFloat())

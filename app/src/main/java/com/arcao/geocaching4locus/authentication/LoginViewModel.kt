@@ -65,7 +65,7 @@ class LoginViewModel(
                 AnalyticsUtil.setPremiumUser(app, premium)
                 AnalyticsUtil.actionLogin(true, premium)
 
-                action(LoginAction.Finish(premium))
+                action(LoginAction.Finish(!premium))
             }
         } catch (e: Exception) {
             handleException(e)

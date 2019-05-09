@@ -25,7 +25,6 @@ import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment
 import com.arcao.wherigoservice.api.WherigoServiceException
 import com.github.scribejava.core.exceptions.OAuthException
-import org.apache.commons.lang3.StringUtils
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 import timber.log.Timber
 import java.io.EOFException
@@ -113,7 +112,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 .build()
         } else if (t is LocusMapRuntimeException) {
             val cause = t.cause!!
-            val message = StringUtils.defaultString(t.message)
+            val message = t.message.orEmpty()
 
             return builder
                 .title(R.string.title_locus_map_error)
@@ -135,7 +134,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 .message(R.string.error_invalid_authorization_code)
                 .build()
         } else {
-            val message = StringUtils.defaultString(t.message)
+            val message = t.message.orEmpty()
             return builder
                 .message(
                     baseMessage,

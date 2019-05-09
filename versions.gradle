@@ -27,8 +27,6 @@ ext {
     locusApiAndroidVersion = '0.3.13'
     slf4jTimberVersion = '3.1'
     timberVersion = '4.7.1'
-    commonsLang3Version = '3.8.1'
-    commonsCollections4Version = '4.2'
     scribejavaVersion = '6.5.1'
     materialDialogsVersion = '0.9.6.0'
     firebaseVersion = '16.0.8'

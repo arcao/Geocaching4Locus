@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.arcao.geocaching4locus.R
-import org.apache.commons.lang3.StringUtils
 
 class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     private var value: Int = 0
@@ -168,14 +167,14 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 }
 
                 return if (value > max) {
-                    StringUtils.EMPTY
+                    ""
                 } else {
                     filtered
                 }
             } else {
                 val filtered = source.subSequence(start, end).toString()
                 if (filtered.isEmpty()) {
-                    return StringUtils.EMPTY
+                    return ""
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
                     dest.subSequence(dend, dest.length))
@@ -186,7 +185,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                         return value.subSequence(dstart, value.length)
                     }
                 }
-                return StringUtils.EMPTY
+                return ""
             }
         }
 

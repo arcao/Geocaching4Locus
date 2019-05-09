@@ -52,10 +52,6 @@ dependencies {
     implementation "com.arcao:slf4j-timber:$slf4jTimberVersion"
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
-    // Apache commons
-    implementation "org.apache.commons:commons-lang3:$commonsLang3Version"
-    implementation "org.apache.commons:commons-collections4:$commonsCollections4Version"
-
     // ScribeJava
     implementation "com.github.scribejava:scribejava-core:$scribejavaVersion"
     implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion") {

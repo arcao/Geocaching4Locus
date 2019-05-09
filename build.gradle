@@ -1,6 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    apply from: 'versions.gradle'
+
     ext.isTravis = 'true' == System.getenv('TRAVIS')
     ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
 
@@ -48,11 +50,11 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath BuildDeps.android_gradle_plugin
-        classpath BuildDeps.kotlin_gradle_plugin
-        classpath BuildDeps.gradle_versions_plugin
-        classpath BuildDeps.google_services_plugin
-        classpath BuildDeps.fabric_io_plugin
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
+        classpath "com.google.gms:google-services:$googleServicesPluginVersion"
+        classpath "io.fabric.tools:gradle:$fabricIoPluginVersion"
     }
 }
 

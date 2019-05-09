@@ -7,17 +7,18 @@ import locus.api.mapper.GeocacheLogConverter
 import locus.api.mapper.ImageDataConverter
 import locus.api.mapper.TrackableConverter
 import locus.api.mapper.WaypointConverter
-import org.koin.dsl.module.module
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
 /**
  * Created by Arcao on 08.12.2018.
  */
 internal val locusMapApiModule = module {
-    single { LocusMapManager(get()) }
+    single { LocusMapManager(androidContext()) }
     single { TrackableConverter() }
     single { WaypointConverter() }
     single { ImageDataConverter() }
     single { GeocacheLogConverter(get()) }
-    single { GeocacheConverter(get(), get(), get(), get(), get(), get()) }
+    single { GeocacheConverter(androidContext(), get(), get(), get(), get(), get()) }
     single { DataMapper(get(), get(), get()) }
 }

@@ -10,8 +10,8 @@ import locus.api.android.ActionBasics
 import locus.api.android.utils.LocusUtils
 import locus.api.extension.isInvalid
 import locus.api.objects.extra.Location
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
     private val notificationManager by inject<LiveMapNotificationManager>()

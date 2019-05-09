@@ -2,8 +2,8 @@ package com.arcao.geocaching.api.oauth.services
 
 import com.arcao.wherigoservice.api.WherigoService
 import com.github.scribejava.core.services.TimestampServiceImpl
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import timber.log.Timber
 import java.util.Random
 

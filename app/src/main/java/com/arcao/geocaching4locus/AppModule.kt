@@ -45,10 +45,9 @@ import com.arcao.geocaching4locus.update.UpdateMoreViewModel
 import com.arcao.geocaching4locus.update.UpdateViewModel
 import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 internal val appModule = module {
     single { androidApplication() as App }

@@ -24,7 +24,11 @@ import io.fabric.sdk.android.Fabric
 import locus.api.android.utils.LocusUtils
 import locus.api.locusMapApiModule
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
+import org.koin.core.logger.Logger
+import org.koin.core.logger.MESSAGE
 import timber.log.Timber
 import java.util.UUID
 
@@ -71,7 +75,23 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(appModule, geocachingApiModule, wherigoApiModule, locusMapApiModule, feedbackModule))
+        startKoin {
+            androidContext(this@App)
+
+            if (BuildConfig.DEBUG) {
+                logger (object : Logger() {
+                    override fun log(level: Level, msg: MESSAGE) {
+                        when(level) {
+                            Level.DEBUG -> Timber.d(msg)
+                            Level.INFO -> Timber.i(msg)
+                            Level.ERROR -> Timber.e(msg)
+                        }
+                    }
+                })
+            }
+
+            modules(appModule, geocachingApiModule, wherigoApiModule, locusMapApiModule, feedbackModule)
+        }
 //        if (BuildConfig.DEBUG) {
 //            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
 //            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())

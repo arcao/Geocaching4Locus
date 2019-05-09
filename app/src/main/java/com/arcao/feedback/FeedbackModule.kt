@@ -11,9 +11,10 @@ import com.arcao.feedback.collector.LocusMapInfoCollector
 import com.arcao.feedback.collector.LogCatCollector
 import com.arcao.feedback.collector.MemoryCollector
 import com.arcao.feedback.collector.SharedPreferencesCollector
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
-const val DEP_FEEDBACK_COLLECTORS = "feedbackCollectors"
+val DEP_FEEDBACK_COLLECTORS = named("feedbackCollectors")
 
 internal val feedbackModule = module {
     single(DEP_FEEDBACK_COLLECTORS) {

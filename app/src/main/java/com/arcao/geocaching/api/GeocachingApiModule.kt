@@ -14,7 +14,7 @@ import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.oauth.OAuth10aService
 import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 
 internal val geocachingApiModule = module {

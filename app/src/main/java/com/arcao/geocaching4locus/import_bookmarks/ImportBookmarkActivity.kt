@@ -10,6 +10,7 @@ import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkFragment
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment
 import org.koin.android.ext.android.inject
@@ -48,6 +49,7 @@ class ImportBookmarkActivity : AppCompatActivity() {
                     }
                 }
                 ImportBookmarkAction.PremiumMembershipRequired -> {
+                    startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())
                     finish()
                 }
                 is ImportBookmarkAction.SignIn -> {

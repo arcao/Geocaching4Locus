@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.exhaustive
+import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkListBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
@@ -21,7 +21,7 @@ import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDe
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BookmarkListFragment : Fragment() {
+class BookmarkListFragment : BaseBookmarkFragment() {
     private val viewModel by viewModel<BookmarkListViewModel>()
     private val activityViewModel by sharedViewModel<ImportBookmarkViewModel>()
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
@@ -34,19 +34,9 @@ class BookmarkListFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         toolbar?.subtitle = null
 
-        if (savedInstanceState == null) {
-            viewModel.loadList()
-        }
-
-        viewModel.list.observe(this, adapter::submitList)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DataBindingUtil.inflate<FragmentBookmarkListBinding>(
             inflater,
             R.layout.fragment_bookmark_list,
@@ -54,19 +44,22 @@ class BookmarkListFragment : Fragment() {
             false
         )
 
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
         binding.list.apply {
-            adapter = this.adapter
+            adapter = this@BookmarkListFragment.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(MarginItemDecoration(context, R.dimen.cardview_space))
         }
 
-        return binding.root
-    }
+        viewModel.list.observe(viewLifecycleOwner, adapter::submitList)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.action.observe(viewLifecycleOwner, ::handleAction)
+        viewModel.progress.observe(viewLifecycleOwner) { state ->
+            activityViewModel.progress(state)
+        }
+
+        return binding.root
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
@@ -101,6 +94,10 @@ class BookmarkListFragment : Fragment() {
                 activityViewModel.chooseBookmarks(action.bookmarkList)
             }
         }.exhaustive
+    }
+
+    override fun onProgressCancel(requestId: Int) {
+        viewModel.cancelProgress()
     }
 
     companion object {

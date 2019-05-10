@@ -3,20 +3,22 @@ package com.arcao.geocaching4locus.import_bookmarks
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.MenuItem
 import androidx.fragment.app.transaction
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.error.ErrorActivity
+import com.arcao.geocaching4locus.import_bookmarks.fragment.BaseBookmarkFragment
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkFragment
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ImportBookmarkActivity : AppCompatActivity() {
+class ImportBookmarkActivity : AbstractActionBarActivity() {
     private val viewModel by viewModel<ImportBookmarkViewModel>()
     private val accountManager by inject<AccountManager>()
 
@@ -44,8 +46,8 @@ class ImportBookmarkActivity : AppCompatActivity() {
                 }
                 is ImportBookmarkAction.ChooseBookmark -> {
                     supportFragmentManager.transaction {
-                        addToBackStack(null)
                         replace(R.id.fragment, BookmarkFragment.newInstance(action.bookmarkList))
+                        addToBackStack(null)
                     }
                 }
                 ImportBookmarkAction.PremiumMembershipRequired -> {
@@ -58,9 +60,23 @@ class ImportBookmarkActivity : AppCompatActivity() {
             }.exhaustive
         }
 
+        viewModel.progress.observe(this, ::handleProgress)
+
         if (savedInstanceState == null) {
             viewModel.init()
         }
+    }
+
+    override fun onProgressCancel(requestId: Int) {
+        (supportFragmentManager.findFragmentById(R.id.fragment) as? BaseBookmarkFragment)?.onProgressCancel(requestId)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+            onBackPressed()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

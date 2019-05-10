@@ -17,6 +17,7 @@ import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
@@ -33,88 +34,91 @@ class BookmarkViewModel(
         private val locusMapManager: LocusMapManager,
         dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
-    val loading = MutableLiveData<Boolean>().apply {
-        value = true
-    }
-    val list = MutableLiveData<List<BookmarkEntity>>().apply {
-        value = emptyList()
-    }
+    val loading = MutableLiveData<Boolean>()
+    val list = MutableLiveData<List<BookmarkEntity>>()
     val selection = MutableLiveData<List<BookmarkEntity>>().apply {
         value = emptyList()
     }
     val action = Command<BookmarkAction>()
 
-    fun loadList() = mainLaunch {
+    init {
         loading(true)
-
-        try {
-            list(getBookmark(bookmarkList.guid))
-        } catch (e: Exception) {
-            action(BookmarkAction.Error(exceptionHandler(e)))
-        } finally {
-            loading(false)
+        mainLaunch {
+            try {
+                list(getBookmark(bookmarkList.guid))
+            } catch (e: Exception) {
+                action(BookmarkAction.Error(exceptionHandler(e)))
+            } finally {
+                loading(false)
+            }
         }
     }
 
-    fun import() = mainLaunch {
-        val selection = selection.value ?: return@mainLaunch
-        AnalyticsUtil.actionImportBookmarks(selection.size, false)
+    fun download() {
+        mainLaunch {
+            val selection = selection.value ?: return@mainLaunch
+            AnalyticsUtil.actionImportBookmarks(selection.size, false)
 
-        computationLaunch {
-            val geocacheCodes = selection.map { it.code }.toTypedArray()
-            Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
+            computationLaunch {
+                val geocacheCodes = selection.map { it.code }.toTypedArray()
+                Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
 
-            val importIntent = locusMapManager.createSendPointsIntent(
-                    callImport = true,
-                    center = true
-            )
+                val importIntent = locusMapManager.createSendPointsIntent(
+                        callImport = true,
+                        center = true
+                )
 
-            var receivedGeocaches = 0
+                var receivedGeocaches = 0
 
-            try {
-                showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
-                    val channel = getPointsFromGeocacheCodes(
-                            this,
-                            geocacheCodes,
-                            filterPreferenceManager.simpleCacheData,
-                            filterPreferenceManager.geocacheLogsCount
-                    ).map { list ->
-                        receivedGeocaches += list.size
-                        updateProgress(progress = receivedGeocaches)
+                try {
+                    showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
+                        val channel = getPointsFromGeocacheCodes(
+                                this,
+                                geocacheCodes,
+                                filterPreferenceManager.simpleCacheData,
+                                filterPreferenceManager.geocacheLogsCount
+                        ).map { list ->
+                            receivedGeocaches += list.size
+                            updateProgress(progress = receivedGeocaches)
 
-                        // apply additional downloading full geocache if required
-                        if (filterPreferenceManager.simpleCacheData) {
-                            list.forEach { point ->
-                                point.setExtraOnDisplay(
-                                        context.packageName,
-                                        UpdateActivity::class.java.name,
-                                        UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                        point.gcData.cacheID
-                                )
+                            // apply additional downloading full geocache if required
+                            if (filterPreferenceManager.simpleCacheData) {
+                                list.forEach { point ->
+                                    point.setExtraOnDisplay(
+                                            context.packageName,
+                                            UpdateActivity::class.java.name,
+                                            UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                            point.gcData.cacheID
+                                    )
+                                }
                             }
+                            list
                         }
-                        list
+                        writePointToPackPointsFile(channel)
                     }
-                    writePointToPackPointsFile(channel)
+                } catch (e: Exception) {
+                    mainContext {
+                        action(
+                                BookmarkAction.Error(
+                                        if (receivedGeocaches > 0) {
+                                            exceptionHandler(IntendedException(e, importIntent))
+                                        } else {
+                                            exceptionHandler(e)
+                                        }
+                                )
+                        )
+                    }
+                    return@computationLaunch
                 }
-            } catch (e: Exception) {
-                mainContext {
-                    action(
-                            BookmarkAction.Error(
-                                    if (receivedGeocaches > 0) {
-                                        exceptionHandler(IntendedException(e, importIntent))
-                                    } else {
-                                        exceptionHandler(e)
-                                    }
-                            )
-                    )
-                }
-                return@computationLaunch
-            }
 
-            mainContext {
-                action(BookmarkAction.Finish(importIntent))
+                mainContext {
+                    action(BookmarkAction.Finish(importIntent))
+                }
             }
         }
+    }
+
+    fun cancelProgress() {
+        job.cancelChildren()
     }
 }

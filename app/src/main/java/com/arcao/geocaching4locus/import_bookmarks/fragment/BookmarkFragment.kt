@@ -6,7 +6,6 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
@@ -20,18 +19,21 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
+import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
 import com.arcao.geocaching4locus.import_bookmarks.util.StableIdItemDetailsLookup
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class BookmarkFragment : Fragment() {
+class BookmarkFragment : BaseBookmarkFragment() {
     private val bookmarkList by lazy<BookmarkListEntity> {
         requireNotNull(arguments?.getParcelable(ARG_BOOKMARK_LIST))
     }
     private val viewModel by viewModel<BookmarkViewModel> {
         parametersOf(bookmarkList)
     }
+    private val activityViewModel by sharedViewModel<ImportBookmarkViewModel>()
 
     private val adapter = BookmarkGeocachesAdapter()
     private lateinit var tracker: SelectionTracker<Long>
@@ -41,16 +43,11 @@ class BookmarkFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-        toolbar?.subtitle = bookmarkList.name
-
-        if (savedInstanceState == null) {
-            viewModel.loadList()
-        }
-
-        viewModel.list.observe(this, adapter::submitList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        toolbar?.subtitle = bookmarkList.name
+
         val binding = DataBindingUtil.inflate<FragmentBookmarkBinding>(
             inflater,
             R.layout.fragment_bookmark,
@@ -58,9 +55,10 @@ class BookmarkFragment : Fragment() {
             false
         )
 
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
         binding.list.apply {
-            adapter = this.adapter
+            adapter = this@BookmarkFragment.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
@@ -82,20 +80,23 @@ class BookmarkFragment : Fragment() {
             })
         }
 
+        viewModel.list.observe(viewLifecycleOwner) { list ->
+            adapter.submitList(list)
+            tracker.onRestoreInstanceState(savedInstanceState)
+
+        }
+
+        viewModel.action.observe(viewLifecycleOwner, ::handleAction)
+        viewModel.progress.observe(viewLifecycleOwner) { state ->
+            activityViewModel.progress(state)
+        }
+
         return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         tracker.onSaveInstanceState(outState)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        tracker.onRestoreInstanceState(savedInstanceState)
-
-        viewModel.action.observe(this, ::handleAction)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -145,10 +146,14 @@ class BookmarkFragment : Fragment() {
         }.exhaustive
     }
 
+    override fun onProgressCancel(requestId: Int) {
+        viewModel.cancelProgress()
+    }
+
     companion object {
         private const val ARG_BOOKMARK_LIST = "bookmarkList"
 
-        fun newInstance(bookmarkList: BookmarkListEntity) = BookmarkListFragment().apply {
+        fun newInstance(bookmarkList: BookmarkListEntity) = BookmarkFragment().apply {
             arguments = bundleOf(
                 ARG_BOOKMARK_LIST to bookmarkList
             )

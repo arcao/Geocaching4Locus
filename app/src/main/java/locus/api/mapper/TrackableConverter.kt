@@ -7,7 +7,7 @@ import locus.api.utils.toTime
 
 class TrackableConverter {
     fun addTrackables(point: Point, trackables: Collection<Trackable>) {
-        if (point.gcData?.trackables?.isEmpty() != false || trackables.isEmpty())
+        if (point.gcData?.trackables == null || trackables.isEmpty())
             return
 
         point.gcData.trackables.addAll(createLocusGeocachingTrackables(trackables))

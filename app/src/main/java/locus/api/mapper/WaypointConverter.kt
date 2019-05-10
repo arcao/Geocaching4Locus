@@ -11,10 +11,10 @@ import locus.api.utils.isNullOrEmpty
 
 class WaypointConverter {
     fun addWaypoints(@NonNull point: Point, @Nullable waypoints: Collection<Waypoint?>?) {
-        if (point.gcData == null || waypoints.isNullOrEmpty())
+        if (point.gcData?.waypoints == null || waypoints.isNullOrEmpty())
             return
 
-        for (waypoint in waypoints!!) {
+        for (waypoint in waypoints) {
             point.gcData.waypoints.addIgnoreNull(createLocusGeocachingWaypoint(waypoint))
         }
     }

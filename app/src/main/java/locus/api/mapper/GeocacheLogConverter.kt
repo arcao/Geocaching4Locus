@@ -13,7 +13,7 @@ class GeocacheLogConverter(
 ) {
 
     fun addGeocacheLogs(point: Point, @Nullable logs: Collection<GeocacheLog>) {
-        if (point.gcData.logs?.isEmpty() != false || logs.isEmpty())
+        if (point.gcData?.logs == null || logs.isEmpty())
             return
 
         for (log in logs) {

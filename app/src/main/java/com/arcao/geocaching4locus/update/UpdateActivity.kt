@@ -8,7 +8,6 @@ import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -42,12 +41,7 @@ class UpdateActivity : AbstractActionBarActivity() {
             }
             is UpdateAction.Finish -> {
                 Timber.d("UpdateAction.Finish intent: %s", intent)
-
-                if (action.intent != null) {
-                    startActivity(action.intent)
-                }
-
-                setResult(Activity.RESULT_OK)
+                setResult(Activity.RESULT_OK, action.intent)
                 finish()
             }
             UpdateAction.Cancel -> {

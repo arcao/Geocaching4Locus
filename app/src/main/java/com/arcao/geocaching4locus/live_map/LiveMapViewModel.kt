@@ -2,6 +2,9 @@ package com.arcao.geocaching4locus.live_map
 
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.arcao.geocaching.api.data.coordinates.Coordinates
 import com.arcao.geocaching.api.exception.GeocachingApiException
 import com.arcao.geocaching.api.exception.InvalidCredentialsException
@@ -32,7 +35,7 @@ class LiveMapViewModel(
     private val sendPointsSilentToLocusMap: SendPointsSilentToLocusMapUseCase,
     private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : BaseViewModel(dispatcherProvider) {
+) : BaseViewModel(dispatcherProvider), LifecycleObserver {
 
     fun addTask(intent: Intent, completionCallback: (Intent) -> Unit) {
         cancelTasks()
@@ -134,6 +137,11 @@ class LiveMapViewModel(
             }
             else -> throw e
         }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    override fun onCleared() {
+        super.onCleared()
     }
 }
 

@@ -85,7 +85,7 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
 
         private fun isNewMapCenter(mapCenter: Location, mapTopLeft: Location): Boolean {
             val mc = lastMapCenter
-            return mc != null && mc.distanceTo(mapCenter) < computeNotificationLimit(mapCenter, mapTopLeft)
+            return mc != null && mc.distanceTo(mapCenter) > computeNotificationLimit(mapCenter, mapTopLeft)
         }
 
         private fun computeNotificationLimit(mapCenter: Location, mapTopLeft: Location): Float {

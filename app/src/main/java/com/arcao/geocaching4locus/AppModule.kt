@@ -80,7 +80,7 @@ internal val appModule = module {
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
     // live map
-    viewModel { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest
     viewModel { (intent: Intent) ->
         SearchNearestViewModel(

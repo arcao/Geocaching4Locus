@@ -12,17 +12,18 @@ import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LiveMapService : LifecycleService() {
     private val notificationManager by inject<LiveMapNotificationManager>()
-    private val viewModel by viewModel<LiveMapViewModel>()
+    private val viewModel by inject<LiveMapViewModel>()
     private val onCompleteCallback: (Intent) -> Unit = { ServiceUtil.completeWakefulIntent(it) }
 
     override fun onCreate() {
         super.onCreate()
 
         viewModel.progress.observe(this, ::handleProgress)
+
+        lifecycle.addObserver(viewModel)
 
         startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build())
     }

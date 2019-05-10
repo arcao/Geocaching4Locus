@@ -7,17 +7,18 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
+import locus.api.manager.LocusMapManager
 
 class ImportBookmarkViewModel(
     private val context: Context,
     private val accountManager: AccountManager,
+    private val locusMapManager: LocusMapManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportBookmarkAction>()
 
     fun init() {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(ImportBookmarkAction.LocusMapNotInstalled)
             return
         }

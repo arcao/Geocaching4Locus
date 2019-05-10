@@ -6,15 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.util.*
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
+import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import kotlinx.coroutines.launch
+import locus.api.manager.LocusMapManager
 
 class DashboardViewModel(
     private val calledFromLocusMap: Boolean,
     private val context: Context,
     private val notificationManager: LiveMapNotificationManager,
     private val accountManager: AccountManager,
+    private val locusMapManager: LocusMapManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LiveMapNotificationManager.LiveMapStateChangeListener {
     val premium by lazy { accountManager.isPremium }
@@ -43,7 +48,7 @@ class DashboardViewModel(
 
     @UiThread
     fun onClickLiveMap() = mainLaunch {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(DashboardAction.LocusMapNotInstalled)
             return@mainLaunch
         }

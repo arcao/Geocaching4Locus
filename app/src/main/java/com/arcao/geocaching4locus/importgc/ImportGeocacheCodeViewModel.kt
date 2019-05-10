@@ -10,7 +10,6 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
@@ -31,7 +30,7 @@ class ImportGeocacheCodeViewModel(
     val action = Command<ImportGeocacheCodeAction>()
 
     fun init() = mainLaunch {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(ImportGeocacheCodeAction.LocusMapNotInstalled)
             return@mainLaunch
         }

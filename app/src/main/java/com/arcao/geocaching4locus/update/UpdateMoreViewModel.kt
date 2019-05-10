@@ -10,7 +10,6 @@ import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointU
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +33,7 @@ class UpdateMoreViewModel(
 
     @UseExperimental(ExperimentalCoroutinesApi::class)
     fun processIntent(intent: Intent) = mainLaunch {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateMoreAction.LocusMapNotInstalled)
             return@mainLaunch
         }

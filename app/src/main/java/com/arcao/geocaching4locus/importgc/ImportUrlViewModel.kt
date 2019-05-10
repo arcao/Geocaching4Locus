@@ -12,7 +12,6 @@ import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import locus.api.manager.LocusMapManager
@@ -33,7 +32,7 @@ class ImportUrlViewModel(
     val action = Command<ImportUrlAction>()
 
     fun startImport(uri: Uri) = mainLaunch {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(ImportUrlAction.LocusMapNotInstalled)
             return@mainLaunch
         }

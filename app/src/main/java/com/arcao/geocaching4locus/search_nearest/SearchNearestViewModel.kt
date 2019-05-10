@@ -13,7 +13,6 @@ import com.arcao.geocaching4locus.base.usecase.entity.LocationPermissionType
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.CoordinatesFormatter
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
@@ -58,7 +57,7 @@ class SearchNearestViewModel(
         run {
             formatCoordinates(preferenceManager.lastLatitude, preferenceManager.lastLongitude)
 
-            if (locusMapManager.isLocusMapNotInstalled()) {
+            if (locusMapManager.isLocusMapNotInstalled) {
                 action(SearchNearestAction.LocusMapNotInstalled)
                 return@run
             }
@@ -134,7 +133,7 @@ class SearchNearestViewModel(
             Timber.i("Lat: $latitude; Lon: $longitude")
 
 
-            if (context.isLocusNotInstalled()) {
+            if (locusMapManager.isLocusMapNotInstalled) {
                 action(SearchNearestAction.LocusMapNotInstalled)
                 return@mainLaunch
             }

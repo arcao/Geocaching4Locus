@@ -5,7 +5,7 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.FileProvider
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
+import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import locus.api.android.ActionBasics
 import locus.api.android.ActionDisplayPoints
@@ -39,6 +39,12 @@ class LocusMapManager(
             } else {
                 return false
             }
+        }
+
+    val isLocusMapNotInstalled: Boolean
+        get() {
+            val lv = LocusUtils.getActiveVersion(context)
+            return lv == null || !lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)
         }
 
 
@@ -166,8 +172,6 @@ class LocusMapManager(
             throw LocusMapRuntimeException(t)
         }
     }
-
-    fun isLocusMapNotInstalled() = context.isLocusNotInstalled()
 
     fun isIntentPointTools(intent: Intent) = IntentHelper.isIntentPointTools(intent)
 

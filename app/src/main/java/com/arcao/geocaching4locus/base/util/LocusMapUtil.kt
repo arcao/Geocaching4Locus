@@ -12,12 +12,6 @@ import locus.api.android.utils.LocusUtils
 import locus.api.objects.extra.Point
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun Context.isLocusNotInstalled(): Boolean {
-    val lv = LocusUtils.getActiveVersion(this)
-    return lv == null || !lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)
-}
-
-@Suppress("NOTHING_TO_INLINE")
 inline fun FragmentActivity.showLocusMissingError() =
     LocusTestingErrorDialogFragment.newInstance(this).show(supportFragmentManager)
 

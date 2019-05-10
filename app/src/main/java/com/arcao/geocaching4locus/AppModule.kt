@@ -68,7 +68,7 @@ internal val appModule = module {
     // login
     viewModel { LoginViewModel(get(), get(), get(), get(), get(), get()) }
     // dashboard
-    viewModel { (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get()) }
+    viewModel { (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get(), get()) }
     // download live map rectangles
     viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // import geocache codes
@@ -76,7 +76,7 @@ internal val appModule = module {
     // import url
     viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // import bookmarks
-    viewModel { ImportBookmarkViewModel(get(), get(), get()) }
+    viewModel { ImportBookmarkViewModel(get(), get(), get(), get()) }
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
     // live map

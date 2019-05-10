@@ -12,7 +12,6 @@ import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.isLocusNotInstalled
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.channels.map
@@ -24,7 +23,7 @@ import locus.api.mapper.PointMerger
 import locus.api.mapper.Util
 import locus.api.objects.extra.Point
 import timber.log.Timber
-import java.util.Locale
+import java.util.*
 
 class UpdateViewModel(
     private val context: Context,
@@ -41,7 +40,7 @@ class UpdateViewModel(
     val action = Command<UpdateAction>()
 
     fun processIntent(intent: Intent) = mainLaunch {
-        if (context.isLocusNotInstalled()) {
+        if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateAction.LocusMapNotInstalled)
             return@mainLaunch
         }

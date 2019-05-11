@@ -21,7 +21,7 @@ ext {
     androidxMultidexVersion = '2.0.1'
     androidxLifecycleVersion = '2.0.0'
     constraintLayoutVersion = '1.1.3'
-    koinVersion = '2.0.0-GA'
+    koinVersion = '2.0.0-GA2'
     kotlinCoroutinesVersion = '1.2.1'
     geocachingApiVersion = '2.1.0'
     locusApiAndroidVersion = '0.3.13'

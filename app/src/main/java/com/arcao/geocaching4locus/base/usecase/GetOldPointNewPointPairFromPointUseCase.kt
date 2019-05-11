@@ -11,7 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import locus.api.objects.extra.Point
 
@@ -58,8 +58,7 @@ class GetOldPointNewPointPairFromPointUseCase(
 
             accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
 
-            if (!isActive)
-                return@produce
+            yield()
 
             if (cachesToAdd.isNotEmpty()) {
                 val receivedPoints = mapper.createLocusPoints(cachesToAdd)

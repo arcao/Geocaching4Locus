@@ -13,8 +13,8 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
 
@@ -108,8 +108,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
 
             accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
 
-            if (!isActive)
-                return@produce
+            yield()
 
             if (geocaches.isEmpty())
                 break

@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.yield
 import locus.api.mapper.TrackableConverter
 
 /**
@@ -37,7 +37,9 @@ class GetGeocachingTrackablesUseCase(
                 0
             )
 
-            if (!isActive || logs.isEmpty())
+            yield()
+
+            if (logs.isEmpty())
                 return@produce
 
             send(trackableConverter.createLocusGeocachingTrackables(logs))

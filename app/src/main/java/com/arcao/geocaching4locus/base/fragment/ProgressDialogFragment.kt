@@ -27,6 +27,10 @@ class ProgressDialogFragment : AbstractDialogFragment() {
     override fun onCancel(dialog: DialogInterface?) {
         super.onCancel(dialog)
 
+        performCancel()
+    }
+
+    private fun performCancel() {
         activity.runIfIs(DialogListener::class) {
             onProgressCancel(requestId)
         }
@@ -52,7 +56,10 @@ class ProgressDialogFragment : AbstractDialogFragment() {
 
         val dialog = MaterialDialog(requireContext())
                 .message(text = message)
-                .negativeButton(R.string.button_cancel)
+                .negativeButton(R.string.button_cancel) {
+                    performCancel()
+                }
+                .cancelOnTouchOutside(false)
                 .customView(R.layout.dialog_progress)
 
         val view = dialog.getCustomView()

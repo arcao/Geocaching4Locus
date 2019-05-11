@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.yield
 import locus.api.mapper.GeocacheLogConverter
 
 class GetGeocachingLogsUseCase(
@@ -33,7 +33,9 @@ class GetGeocachingLogsUseCase(
                 Math.min(count - current, AppConstants.LOGS_PER_REQUEST)
             )
 
-            if (!isActive || logs.isEmpty())
+            yield()
+
+            if (logs.isEmpty())
                 return@produce
 
             send(geocacheLogConverter.createLocusGeocachingLogs(logs))

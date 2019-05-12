@@ -18,14 +18,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="48dp"
-    android:layout_marginBottom="48dp"
     android:overScrollMode="ifContentScrolls">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:orientation="vertical">
 
@@ -34,8 +33,9 @@
             style="?android:attr/textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:layout_marginBottom="4dp"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="@tools:sample/lorem[10]" />
 
         <EditText
             android:id="@android:id/edit"
@@ -44,9 +44,9 @@
             android:layout_marginStart="-4dp"
             android:layout_marginEnd="-4dp"
             android:digits="1234567890."
-            android:inputType="numberDecimal"
             android:importantForAutofill="no"
-            tools:ignore="UnusedAttribute" />
+            android:inputType="numberDecimal"
+            tools:ignore="LabelFor,UnusedAttribute" />
 
     </LinearLayout>
 

@@ -5,9 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/md_dialog_frame_margin_vertical"
-    android:paddingStart="@dimen/md_dialog_frame_margin_vertical"
-    android:paddingRight="@dimen/md_dialog_frame_margin_vertical"
-    android:paddingEnd="@dimen/md_dialog_frame_margin_vertical">
+    android:paddingRight="@dimen/md_dialog_frame_margin_vertical">
 
     <ProgressBar
         android:id="@+id/progressBar"

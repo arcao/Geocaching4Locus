@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.settings.fragment.SettingsPreferenceFragment
 
-class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,6 +58,14 @@ class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.O
         }
 
         return true
+    }
+
+    override fun onPreferenceDisplayDialog(caller: PreferenceFragmentCompat, pref: Preference?): Boolean {
+        if (pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback) {
+            return pref.onPreferenceDisplayDialog(caller, pref)
+        }
+
+        return false
     }
 
     companion object {

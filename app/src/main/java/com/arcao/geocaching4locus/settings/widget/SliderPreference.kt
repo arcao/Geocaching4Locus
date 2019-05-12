@@ -15,7 +15,7 @@ import com.arcao.geocaching4locus.R
 class SliderPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.preferenceStyle
+    defStyleAttr: Int = R.attr.dialogPreferenceStyle
 ) : DialogPreference(context, attrs, defStyleAttr),
     PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     private var value: Int = 0
@@ -95,7 +95,7 @@ class SliderPreference @JvmOverloads constructor(
         val f = SliderPreferenceDialogFragment.newInstance(preference.getKey())
         f.setTargetFragment(caller, 0)
         f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
-        return false
+        return true
     }
 
     private class SavedState : BaseSavedState {

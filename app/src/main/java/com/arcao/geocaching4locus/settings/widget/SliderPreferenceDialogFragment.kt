@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.core.os.bundleOf
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.arcao.geocaching4locus.R
 
@@ -109,10 +110,10 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     }
 
     private class InputTextFilter internal constructor(
-        internal val editText: EditText,
-        private val min: Int,
-        private val max: Int,
-        step: Int
+            internal val editText: EditText,
+            private val min: Int,
+            private val max: Int,
+            step: Int
     ) : NumberKeyListener() {
         private val availableValues: Array<String>?
 
@@ -140,11 +141,11 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
 
         override fun filter(
-            @NonNull source: CharSequence, start: Int,
-            end: Int,
-            dest: Spanned,
-            dstart: Int,
-            dend: Int
+                @NonNull source: CharSequence, start: Int,
+                end: Int,
+                dest: Spanned,
+                dstart: Int,
+                dend: Int
         ): CharSequence? {
             if (availableValues == null || availableValues.isEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
@@ -153,7 +154,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 }
 
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                    dest.subSequence(dend, dest.length))
+                        dest.subSequence(dend, dest.length))
 
                 if (result.isEmpty()) {
                     return result
@@ -177,7 +178,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                     return ""
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                    dest.subSequence(dend, dest.length))
+                        dest.subSequence(dend, dest.length))
 
                 for (value in availableValues) {
                     if (value.startsWith(result)) {
@@ -204,12 +205,10 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     companion object {
         private const val SAVE_STATE_VALUE = "SliderPreferenceDialogFragment.value"
 
-        fun newInstance(key: String): SliderPreferenceDialogFragment {
-            val fragment = SliderPreferenceDialogFragment()
-            val b = Bundle(1)
-            b.putString(PreferenceDialogFragmentCompat.ARG_KEY, key)
-            fragment.arguments = b
-            return fragment
+        fun newInstance(key: String) = SliderPreferenceDialogFragment().apply {
+            arguments = bundleOf(
+                    ARG_KEY to key
+            )
         }
     }
 }

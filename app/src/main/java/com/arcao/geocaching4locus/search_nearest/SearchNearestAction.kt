@@ -11,4 +11,5 @@ sealed class SearchNearestAction {
     object RequestWifiLocationPermission : SearchNearestAction()
     object WrongCoordinatesFormat : SearchNearestAction()
     object ShowFilters : SearchNearestAction()
+    object LocationProviderDisabled : SearchNearestAction()
 }

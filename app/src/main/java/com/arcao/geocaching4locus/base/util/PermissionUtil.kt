@@ -9,9 +9,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 object PermissionUtil {
-    private const val REQUEST_PERMISSION_BASE = 100
-    const val REQUEST_LOCATION_PERMISSION = REQUEST_PERMISSION_BASE + 1
-
     val PERMISSION_LOCATION_GPS = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
@@ -36,20 +33,20 @@ object PermissionUtil {
         return true
     }
 
-    fun requestGpsLocationPermission(activity: AppCompatActivity): Boolean {
+    fun requestGpsLocationPermission(activity: AppCompatActivity, requestCode : Int): Boolean {
         return if (activity.hasGpsLocationPermission) {
             true
         } else {
-            ActivityCompat.requestPermissions(activity, PERMISSION_LOCATION_GPS, REQUEST_LOCATION_PERMISSION)
+            ActivityCompat.requestPermissions(activity, PERMISSION_LOCATION_GPS, requestCode)
             false
         }
     }
 
-    fun requestWifiLocationPermission(activity: AppCompatActivity): Boolean {
+    fun requestWifiLocationPermission(activity: AppCompatActivity, requestCode : Int): Boolean {
         return if (activity.hasGpsLocationPermission) {
             true
         } else {
-            ActivityCompat.requestPermissions(activity, PERMISSION_LOCATION_WIFI, REQUEST_LOCATION_PERMISSION)
+            ActivityCompat.requestPermissions(activity, PERMISSION_LOCATION_WIFI, requestCode)
             false
         }
     }

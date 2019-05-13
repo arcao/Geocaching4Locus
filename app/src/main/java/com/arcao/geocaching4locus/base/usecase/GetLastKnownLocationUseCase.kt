@@ -7,7 +7,6 @@ import android.location.LocationManager
 import androidx.core.content.getSystemService
 import com.arcao.geocaching4locus.base.util.hasGpsLocationPermission
 import com.arcao.geocaching4locus.base.util.hasWifiLocationPermission
-import com.arcao.geocaching4locus.base.util.whenNaN
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import timber.log.Timber
 
@@ -18,7 +17,7 @@ class GetLastKnownLocationUseCase(
     private val locationManager = requireNotNull(context.getSystemService<LocationManager>())
 
     @SuppressLint("MissingPermission")
-    operator fun invoke(): Location {
+    operator fun invoke(): Location? {
         var gpsLocation: Location? = null
         var networkLocation: Location? = null
 
@@ -36,10 +35,7 @@ class GetLastKnownLocationUseCase(
             gpsLocation != null && networkLocation != null -> {
                 if (networkLocation.time < gpsLocation.time) gpsLocation else networkLocation
             }
-            else -> Location(LocationManager.PASSIVE_PROVIDER).apply {
-                latitude = preferenceManager.lastLatitude.whenNaN(0.0)
-                longitude = preferenceManager.lastLongitude.whenNaN(0.0)
-            }
+            else -> null
         }
 
         Timber.i("Last location found for: %s", location)

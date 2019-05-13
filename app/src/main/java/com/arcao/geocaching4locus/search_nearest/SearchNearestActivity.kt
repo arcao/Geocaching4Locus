@@ -15,6 +15,7 @@ import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
 import com.arcao.geocaching4locus.base.util.*
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
+import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment
 import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment
@@ -70,11 +71,11 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             val step = viewModel.requestedCachesStep
             val max = viewModel.requestedCachesMax
             SliderDialogFragment.newInstance(
-                title = R.string.title_geocache_count,
-                min = step,
-                max = max,
-                step = step,
-                defaultValue = requireNotNull(viewModel.requestedCaches.value)
+                    title = R.string.title_geocache_count,
+                    min = step,
+                    max = max,
+                    step = step,
+                    defaultValue = requireNotNull(viewModel.requestedCaches.value)
             ).show(supportFragmentManager, "COUNTER")
         }
 
@@ -114,16 +115,19 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
                 showLocusMissingError()
             }
             SearchNearestAction.RequestGpsLocationPermission -> {
-                PermissionUtil.requestGpsLocationPermission(this)
+                PermissionUtil.requestGpsLocationPermission(this, REQUEST_LOCATION_PERMISSION)
             }
             SearchNearestAction.RequestWifiLocationPermission -> {
-                PermissionUtil.requestWifiLocationPermission(this)
+                PermissionUtil.requestWifiLocationPermission(this, REQUEST_LOCATION_PERMISSION)
             }
             SearchNearestAction.WrongCoordinatesFormat -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_coordinates_format).build())
             }
             SearchNearestAction.ShowFilters -> {
                 startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment::class.java))
+            }
+            SearchNearestAction.LocationProviderDisabled -> {
+                NoLocationProviderDialogFragment.newInstance().show(supportFragmentManager)
             }
         }.exhaustive
     }
@@ -157,7 +161,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == PermissionUtil.REQUEST_LOCATION_PERMISSION) {
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (PermissionUtil.verifyPermissions(grantResults)) {
                 viewModel.retrieveCoordinates()
             } else {
@@ -176,6 +180,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
     }
 
     companion object {
-        private val REQUEST_SIGN_ON = 1
+        private const val REQUEST_SIGN_ON = 1
+        private const val REQUEST_LOCATION_PERMISSION = 2
     }
 }

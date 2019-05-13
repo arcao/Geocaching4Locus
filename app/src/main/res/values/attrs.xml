@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="buttonPanelStyle" format="reference" />
+    <attr name="buttonPanelStyle" format="reference"/>
+    <attr name="dashboardButtonStyle" format="reference"/>
 
-    <attr name="normalWindow" format="reference" />
-    <attr name="textAppearanceListItemSecondary" format="reference" />
-    <attr name="listPreferredItemPaddingTop" format="dimension" />
-    <attr name="listPreferredItemPaddingBottom" format="dimension" />
+    <attr name="normalWindow" format="reference"/>
+    <attr name="textAppearanceListItemSecondary" format="reference"/>
+    <attr name="listPreferredItemPaddingTop" format="dimension"/>
+    <attr name="listPreferredItemPaddingBottom" format="dimension"/>
 
     <declare-styleable name="SliderPreference">
-        <attr name="min" format="integer" />
-        <attr name="android:max" />
-        <attr name="android:defaultValue" />
-        <attr name="step" format="integer" />
-        <attr name="android:title" />
-        <attr name="android:dialogMessage" />
-        <attr name="android:summary" />
-    </declare-styleable>
-    
-    <declare-styleable name="IconPreference">
-         <attr name="icon" />
+        <attr name="min" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="defaultValue"/>
+        <attr name="step" format="integer"/>
+        <attr name="title" format="string|reference"/>
+        <attr name="dialogMessage" format="string|reference"/>
+        <attr name="summary" format="string|reference"/>
     </declare-styleable>
 
     <declare-styleable name="DashboardButton">
-        <attr name="toggleable" format="boolean" />
+        <attr name="toggleable" format="boolean"/>
         <attr name="compoundDrawableTint" format="color|reference"/>
-        <attr name="android:textColor" />
+        <attr name="android:textColor"/>
     </declare-styleable>
-
-    <!-- Base attributes available to ListPreference. -->
-    <declare-styleable name="ListPreference" >
-        <!-- The human-readable array to present as a list. Each entry must have a corresponding index in entryValues. -->
-        <attr name="android:entries"/>
-        <!-- The array to find the value to save for a preference when an entry from entries is selected. If a user clicks on the second item in entries, the second item in this array will be saved to the preference. -->
-        <attr name="android:entryValues"/>
-    </declare-styleable>    
 </resources>

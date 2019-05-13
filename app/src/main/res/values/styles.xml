@@ -17,6 +17,8 @@
         <item name="listPreferredItemPaddingRight">8dp</item>
         <item name="listPreferredItemPaddingTop">8dp</item>
         <item name="listPreferredItemPaddingBottom">8dp</item>
+
+        <item name="dashboardButtonStyle">@style/Widget.AppTheme.DashboardButton</item>
     </style>
 
     <style name="AppBaseTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
@@ -30,6 +32,8 @@
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
+
+        <item name="dashboardButtonStyle">@style/Widget.AppTheme.DashboardButton</item>
     </style>
 
     <style name="AppBaseTheme.DialogWhenLarge" parent="Theme.AppCompat.Light.DialogWhenLarge">
@@ -44,9 +48,11 @@
 
         <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowSoftInputMode">adjustResize</item>
+
+        <item name="dashboardButtonStyle">@style/Widget.AppTheme.DashboardButton</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme"></style>
+    <style name="AppTheme" parent="AppBaseTheme" />
 
     <style name="AppTheme.Invisible">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -61,9 +67,8 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog"></style>
-
-    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge"></style>
+    <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog" />
+    <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge" />
 
     <style name="AppTheme.Dashboard" parent="AppTheme.Dialog">
         <item name="windowNoTitle">true</item>
@@ -72,14 +77,7 @@
         <item name="windowFixedWidthMajor">320dp</item>
     </style>
 
-    <style name="AppTheme.Settings">
-        <item name="windowNoTitle">false</item>
-        <item name="windowActionBar">true</item>
-
-        <item name="android:textAppearanceMedium">@style/TextAppearance.AppCompat.Medium.Primary
-        </item>
-        <item name="textAppearanceListItemSecondary">@style/TextAppearance.AppCompat.Body1</item>
-    </style>
+    <style name="AppTheme.Settings"/>
 
     <style name="TextAppearance.AppCompat.Medium.Primary">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
@@ -125,9 +123,6 @@
         <item name="android:minWidth">120dp</item>
         <item name="android:minHeight">100dp</item>
         <item name="android:maxLines">3</item>
-
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
 
         <item name="android:paddingTop">5dp</item>
 

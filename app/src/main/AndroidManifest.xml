@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-      package="com.arcao.geocaching4locus"
-      android:versionName="2.2.6"
-      android:installLocation="auto">
+    package="com.arcao.geocaching4locus"
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
 
@@ -36,11 +35,14 @@
             android:value="false" />
 
         <provider
-            android:name="com.arcao.feedback.FeedbackFileProvider"
-            android:authorities="${applicationId}.provider.feedback"
-            android:enabled="true"
-            android:grantUriPermissions="true"
-            android:exported="false"/>
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <service android:name=".live_map.LiveMapService"/>
 
@@ -94,7 +96,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".import_gc.ImportActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:label="@string/launcher_import_geocache">
+        <activity android:name=".importgc.ImportUrlActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:label="@string/launcher_import_geocache">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -123,7 +125,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".authentication.LoginActivity" android:label="@string/title_login" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".import_gc.ImportFromGCActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
+        <activity android:name=".importgc.ImportGeocacheCodeActivity" android:theme="@style/AppTheme.Invisible" android:exported="true" android:icon="@drawable/ic_action_gc_input" android:label="@string/launcher_import_from_gc">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -159,7 +161,7 @@
         <!-- Backward compatibility with Locus Map -->
         <activity-alias android:name=".DashboardActivity" android:targetActivity=".dashboard.DashboardActivity" android:exported="true" />
         <activity-alias android:name=".SearchNearestActivity" android:targetActivity=".search_nearest.SearchNearestActivity" android:exported="true" />
-        <activity-alias android:name=".ImportFromGCActivity" android:targetActivity=".import_gc.ImportFromGCActivity" android:exported="true" />
+        <activity-alias android:name=".ImportFromGCActivity" android:targetActivity=".importgc.ImportGeocacheCodeActivity" android:exported="true" />
         <activity-alias android:name=".ImportBookmarkActivity" android:targetActivity=".import_bookmarks.ImportBookmarkActivity" android:exported="true" />
     </application>
 </manifest>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
@@ -9,11 +9,14 @@
     tools:theme="@style/AppTheme.Dialog">
 
     <EditText
-        android:id="@+id/input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppTheme.EditText"
-        android:inputType="textCapCharacters" >
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppTheme.EditText"
+            android:inputType="textCapCharacters"
+            android:importantForAutofill="no"
+            tools:targetApi="o"
+            tools:ignore="LabelFor">
         <requestFocus />
     </EditText>
-</android.support.design.widget.TextInputLayout>
+</com.google.android.material.textfield.TextInputLayout>

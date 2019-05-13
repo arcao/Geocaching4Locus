@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Geocaching4Locus.iml" filepath="$PROJECT_DIR$/.idea/Geocaching4Locus.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/geocaching-api/geocaching-api.iml" filepath="$PROJECT_DIR$/geocaching-api/geocaching-api.iml" />
     </modules>
   </component>
 </project>

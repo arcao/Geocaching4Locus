@@ -116,6 +116,7 @@ android {
                 "-Xuse-experimental=kotlin.Experimental",
                 "-Xjvm-default=compatibility"
         ]
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     dataBinding {

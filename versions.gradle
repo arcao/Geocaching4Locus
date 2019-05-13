@@ -11,6 +11,7 @@ ext {
     gradleVersionsPluginVersion = '0.21.0'
     googleServicesPluginVersion = '4.2.0'
     fabricIoPluginVersion = '1.28.1'
+    androidJunit5Version = '1.4.2.0'
 
     // don't forget to change version in parent build.gradle
     detektVersion = '1.0.0-RC14'
@@ -38,8 +39,17 @@ ext {
 
     ktlintVersion = '0.31.0'
 
+    // dependencies geocaching-api only
+    retrofitVersion = '2.5.0'
+    moshiVersion = '1.8.0'
+    okhttpVersion = '3.12.0'
+    threeTenABPVersion = '1.2.0'
+
     // tests
-    junitVersion = '4.12'
+    junitVersion = '5.4.1'
+    mockkVersion = '1.8.13.kotlin13'
+
     testRunnerVersion = '1.1.1'
     espressoVersion = '3.1.1'
+    androidTestJunit5 = '1.0.0'
 }

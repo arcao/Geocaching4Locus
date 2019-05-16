@@ -56,7 +56,7 @@ internal object GeocachingAuthenticationInterceptorTest {
         val user = mockkClass(User::class)
 
         endpoint = mockkClass(GeocachingApiEndpoint::class) {
-            every { user() } returns CompletableDeferred(user)
+            every { userAsync() } returns CompletableDeferred(user)
         }
 
         interceptor = GeocachingAuthenticationInterceptor(accountManager)
@@ -75,7 +75,7 @@ internal object GeocachingAuthenticationInterceptorTest {
         verify(timeout = 5000) { chain.proceed(any()) }
         coVerify(Ordering.ORDERED, timeout = 5000) {
             account.refreshToken()
-            endpoint.user()
+            endpoint.userAsync()
         }
     }
 
@@ -91,7 +91,7 @@ internal object GeocachingAuthenticationInterceptorTest {
         verify(timeout = 5000) { chain.proceed(any()) }
         coVerify(timeout = 5000) {
             account.refreshToken() wasNot Called
-            endpoint.user() wasNot Called
+            endpoint.userAsync() wasNot Called
         }
     }
 

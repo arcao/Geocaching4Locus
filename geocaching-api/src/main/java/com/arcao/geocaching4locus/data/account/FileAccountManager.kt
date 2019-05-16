@@ -4,7 +4,6 @@ import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 import java.io.File
-import java.util.regex.Pattern
 
 class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) : AccountManager(oAuthService) {
     init {
@@ -41,7 +40,7 @@ class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: Fil
                 account.membership.name,
                 account.avatarUrl,
                 account.bannerUrl
-        ).joinToString(System.lineSeparator()))
+        ).joinToString("\n"))
     }
 
 
@@ -49,6 +48,6 @@ class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: Fil
     private operator fun <E> List<E>.component7(): E? = this[6]
 
     companion object {
-        private val NEW_LINE_PATTERN = Pattern.compile("(?:\r\n|\n|\r)")
+        private val NEW_LINE_PATTERN = Regex("(?:\r\n|\n|\r)")
     }
 }

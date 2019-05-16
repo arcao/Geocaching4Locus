@@ -20,8 +20,7 @@ internal class TotalCountListAdapter<T> private constructor(private val elementA
             JsonReader.Token.BEGIN_OBJECT -> {
                 reader.beginObject()
                 while (reader.hasNext()) {
-                    val name = reader.nextName()
-                    when (name) {
+                    when (reader.nextName()) {
                         "total" -> result.totalCount = reader.nextLong()
                         "data" -> readArray(reader, result)
                     }
@@ -54,14 +53,14 @@ internal class TotalCountListAdapter<T> private constructor(private val elementA
     }
 
     override fun toString(): String {
-        return elementAdapter.toString() + ".collection()"
+        return "$elementAdapter.collection()"
     }
 
     companion object {
-        val FACTORY: JsonAdapter.Factory = Factory { type, annotations, moshi ->
+        val FACTORY = Factory { type, annotations, moshi ->
             val rawType = Types.getRawType(type)
             when {
-                !annotations.isEmpty() -> null
+                annotations.isNotEmpty() -> null
                 rawType == TotalCountList::class.java -> newTotalCountArrayListAdapter<Any>(type, moshi).nullSafe()
                 else -> null
             }

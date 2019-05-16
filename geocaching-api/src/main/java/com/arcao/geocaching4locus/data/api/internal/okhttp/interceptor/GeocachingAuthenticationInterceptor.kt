@@ -20,7 +20,7 @@ class GeocachingAuthenticationInterceptor(private val accountManager: AccountMan
             if (account.accessTokenExpired) {
                 runBlocking {
                     account.refreshToken()
-                    account.updateUserInfo(endpoint.user().await())
+                    account.updateUserInfo(endpoint.userAsync().await())
                 }
             }
             return chain.proceed(chain.request().newBuilder().addHeader("Authorization", "bearer ${account.accessToken}").build())

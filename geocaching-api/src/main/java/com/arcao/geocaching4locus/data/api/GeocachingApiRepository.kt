@@ -18,7 +18,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun search(filters: Set<Filter>, logsCount: Int = 10, lite: Boolean = false, skip: Int = 0, take: Int = 10) = apiCall {
-        search(
+        searchAsync(
                 q = queryOf(*filters.toTypedArray()),
                 lite = lite,
                 expand = GeocacheExpand().all().apply { geocacheLogs = logsCount },
@@ -30,7 +30,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun liveMap(filters: Set<Filter>, lite: Boolean = false, skip: Int = 0, take: Int = 10) = apiCall {
-        search(
+        searchAsync(
                 q = queryOf(*filters.toTypedArray()),
                 lite = lite,
                 take = take,
@@ -41,7 +41,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocache(referenceCode: String, logsCount: Int = 10, lite: Boolean = false) = apiCall {
-        geocache(
+        geocacheAsync(
                 referenceCode = referenceCode,
                 lite = lite,
                 expand = GeocacheExpand().all().apply { geocacheLogs = logsCount },
@@ -51,7 +51,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocaches(vararg referenceCodes: String, logsCount: Int = 10, lite: Boolean = false) = apiCall {
-        geocaches(
+        geocachesAsync(
                 referenceCodes = referenceCodes.joinToString(","),
                 lite = lite,
                 expand = GeocacheExpand().all().apply { geocacheLogs = logsCount },
@@ -62,7 +62,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocacheLogs(referenceCode: String, skip: Int = 0, take: Int = 10) = apiCall {
-        geocacheLogs(
+        geocacheLogsAsync(
                 referenceCode = referenceCode,
                 skip = skip,
                 take = take
@@ -72,7 +72,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocacheTrackables(referenceCode: String, skip: Int = 0, take: Int = 10) = apiCall {
-        geocacheTrackables(
+        geocacheTrackablesAsync(
                 referenceCode = referenceCode,
                 skip = skip,
                 take = take
@@ -81,7 +81,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocacheImages(referenceCode: String, skip: Int = 0, take: Int = 10) = apiCall {
-        geocacheImages(
+        geocacheImagesAsync(
                 referenceCode = referenceCode,
                 skip = skip,
                 take = take
@@ -90,21 +90,21 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun user(referenceCode: String = "me") = apiCall {
-        user(
+        userAsync(
                 referenceCode = referenceCode
         )
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun createList(list: GeocacheList) = apiCall {
-        createList(
+        createListAsync(
                 list = list
         )
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun updateList(referenceCode: String? = null, list: GeocacheList) = apiCall {
-        updateList(
+        updateListAsync(
                 referenceCode = referenceCode ?: list.referenceCode,
                 list = list
         )
@@ -112,14 +112,14 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun deleteList(referenceCode: String) = apiCall {
-        deleteList(
+        deleteListAsync(
                 referenceCode = referenceCode
         )
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun userLists(referenceCode: String = "me", types: Set<GeocacheListType> = setOf(GeocacheListType.BOOKMARK), skip: Int = 0, take: Int = 10) = apiCall {
-        userLists(
+        userListsAsync(
                 referenceCode = referenceCode,
                 types = types.joinToString(","),
                 skip = skip,
@@ -129,7 +129,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun listGeocaches(referenceCode: String, skip: Int = 0, take: Int = 10, logsCount: Int = 10, lite: Boolean = false) = apiCall {
-        listGeocaches(
+        listGeocachesAsync(
                 referenceCode = referenceCode,
                 fields = if (lite) Geocache.FIELDS_LITE else Geocache.FIELDS_ALL,
                 skip = skip,

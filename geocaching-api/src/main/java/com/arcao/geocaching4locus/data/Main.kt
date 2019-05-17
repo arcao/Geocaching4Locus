@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpointFactory
 import com.arcao.geocaching4locus.data.api.internal.moshi.MoshiFactory
 import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheType
+import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.GeocacheTypeFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.LocationFilter
 import kotlinx.coroutines.runBlocking

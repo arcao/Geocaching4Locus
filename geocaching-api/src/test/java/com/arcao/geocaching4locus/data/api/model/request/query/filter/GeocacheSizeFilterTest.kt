@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model.request.query.filter
 
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheSize
+import com.arcao.geocaching4locus.data.api.model.GeocacheSize
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 

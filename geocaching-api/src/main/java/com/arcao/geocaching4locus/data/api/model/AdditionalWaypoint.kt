@@ -8,5 +8,6 @@ data class AdditionalWaypoint(
         val coordinates: Coordinates,
         val description: String, // string
         @Json(name = "typeId") val type: AdditionalWaypointType, // 0
-        val prefix: String // string
+        val prefix: String, // string
+        val url: String // string
 )

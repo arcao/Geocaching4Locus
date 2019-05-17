@@ -1,6 +1,12 @@
 package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 
-import com.arcao.geocaching4locus.data.api.model.enum.*
+import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
+import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.model.enum.IdType
+import com.arcao.geocaching4locus.data.api.model.enum.IdValueType
+import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
@@ -12,12 +18,8 @@ class EnumAdapterFactory : JsonAdapter.Factory {
         return when (type) {
             AdditionalWaypointType::class.java -> AdditionalWaypointTypeAdapter.INSTANCE
             GeocacheListType::class.java -> GeocacheListTypeAdapter.INSTANCE
-            GeocacheLogType::class.java -> GeocacheLogTypeAdapter.INSTANCE
-            GeocacheSize::class.java -> GeocacheSizeAdapter.INSTANCE
             GeocacheStatus::class.java -> GeocacheStatusAdapter.INSTANCE
-            GeocacheType::class.java -> GeocacheTypeAdapter.INSTANCE
             MembershipType::class.java -> MembershipTypeAdapter.INSTANCE
-            TrackableLogType::class.java -> TrackableLogTypeAdapter.INSTANCE
             StatusCode::class.java -> StatusCodeAdapter.INSTANCE
             else -> null
         }
@@ -57,22 +59,6 @@ class EnumAdapterFactory : JsonAdapter.Factory {
         override fun from(id: Int?)= GeocacheListType.from(id)
     }
 
-    class GeocacheLogTypeAdapter : ValueEnumAdapter<GeocacheLogType>() {
-        companion object {
-            val INSTANCE = GeocacheLogTypeAdapter()
-        }
-
-        override fun from(value: String?) = GeocacheLogType.from(value)
-    }
-
-    class GeocacheSizeAdapter : ValueEnumAdapter<GeocacheSize>() {
-        companion object {
-            val INSTANCE = GeocacheSizeAdapter()
-        }
-
-        override fun from(value: String?) = GeocacheSize.from(value)
-    }
-
     class GeocacheStatusAdapter : ValueEnumAdapter<GeocacheStatus>() {
         companion object {
             val INSTANCE = GeocacheStatusAdapter()
@@ -81,28 +67,12 @@ class EnumAdapterFactory : JsonAdapter.Factory {
         override fun from(value: String?) = GeocacheStatus.from(value)
     }
 
-    class GeocacheTypeAdapter : ValueEnumAdapter<GeocacheType>() {
-        companion object {
-            val INSTANCE = GeocacheTypeAdapter()
-        }
-
-        override fun from(value: String?) = GeocacheType.from(value)
-    }
-
     class MembershipTypeAdapter : IdEnumAdapter<MembershipType>() {
         companion object {
             val INSTANCE = MembershipTypeAdapter()
         }
 
         override fun from(id: Int?) = MembershipType.from(id)
-    }
-
-    class TrackableLogTypeAdapter : ValueEnumAdapter<TrackableLogType>() {
-        companion object {
-            val INSTANCE = TrackableLogTypeAdapter()
-        }
-
-        override fun from(value: String?) = TrackableLogType.from(value)
     }
 
     class StatusCodeAdapter : IdEnumAdapter<StatusCode>() {

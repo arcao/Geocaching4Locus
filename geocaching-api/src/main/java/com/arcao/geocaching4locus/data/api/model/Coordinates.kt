@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.data.api.model
 
 data class Coordinates(
-        val latitude: Double, // 0
-        val longitude: Double // 0
+    val latitude: Double, // 0
+    val longitude: Double // 0
 ) {
     fun distanceTo(another: Coordinates): Long {
         val result = DoubleArray(1)

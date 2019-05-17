@@ -1,43 +1,41 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheSize
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheType
 import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimePTZone
+import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
 import org.threeten.bp.Instant
 
 data class Geocache(
-        val referenceCode: String, // string
-        val name: String, // string
-        val difficulty: Float, // 0
-        val terrain: Float, // 0
-        val favoritePoints: Int?, // 0
-        val trackableCount: Int?, // 0
-        @LocalDateTimePTZone val placedDate: Instant?, // 2018-06-06T06:16:54.165Z
-        @LocalDateTimePTZone val publishedDate: Instant?, // 2018-06-06T06:16:54.165Z
-        val type: GeocacheType, // Traditional
-        val size: GeocacheSize, // Unknown
-        val userData: UserData?,
-        val status: GeocacheStatus, // Unpublished
-        val location: Location?,
-        val postedCoordinates: Coordinates,
-        @LocalDateTimePTZone val lastVisitedDate: Instant?, // 2018-06-06T06:16:54.165Z
-        val ownerCode: String?, // string
-        val ownerAlias: String, // string
-        val isPremiumOnly: Boolean, // true
-        val shortDescription: String?, // string
-        val longDescription: String?, // string
-        val hints: String?, // string
-        val attributes: Set<Attribute>?,
-        val ianaTimezoneId: String?, // string
-        val relatedWebPage: String?, // string
-        val url: String?, // string
-        val containsHtml: Boolean?, // true
-        val additionalWaypoints: List<AdditionalWaypoint>?,
-        val trackables: List<Trackable>?,
-        val geocacheLogs: List<GeocacheLog>?,
-        val images: List<Image>?,
-        val userWaypoints: List<UserWaypoint>?
+    val referenceCode: String, // string
+    val name: String, // string
+    val difficulty: Float, // 0
+    val terrain: Float, // 0
+    val favoritePoints: Int?, // 0
+    val trackableCount: Int?, // 0
+    @LocalDateTimePTZone val placedDate: Instant?, // 2018-06-06T06:16:54.165Z
+    @LocalDateTimePTZone val publishedDate: Instant?, // 2018-06-06T06:16:54.165Z
+    val geocacheType: GeocacheType, // Traditional
+    val geocacheSize: GeocacheSize, // Unknown
+    val userData: UserData?,
+    val status: GeocacheStatus, // Unpublished
+    val location: Location?,
+    val postedCoordinates: Coordinates,
+    @LocalDateTimePTZone val lastVisitedDate: Instant?, // 2018-06-06T06:16:54.165Z
+    val ownerCode: String?, // string
+    val ownerAlias: String, // string
+    val isPremiumOnly: Boolean, // true
+    val shortDescription: String?, // string
+    val longDescription: String?, // string
+    val hints: String?, // string
+    val attributes: Set<Attribute>?,
+    val ianaTimezoneId: String?, // string
+    val relatedWebPage: String?, // string
+    val url: String?, // string
+    val containsHtml: Boolean?, // true
+    val additionalWaypoints: List<AdditionalWaypoint>?,
+    val trackables: List<Trackable>?,
+    val geocacheLogs: List<GeocacheLog>?,
+    val images: List<Image>?,
+    val userWaypoints: List<UserWaypoint>?
 ) {
     companion object {
         private const val FIELD_SEPARATOR = ","
@@ -50,8 +48,8 @@ data class Geocache(
         private const val FIELD_TRACKABLE_COUNT = "trackableCount"
         private const val FIELD_PLACED_DATE = "placedDate"
         private const val FIELD_PUBLISHED_DATE = "publishedDate"
-        private const val FIELD_TYPE = "type"
-        private const val FIELD_SIZE = "size"
+        private const val FIELD_GEOCACHE_TYPE = "geocacheType"
+        private const val FIELD_GEOCACHE_SIZE = "geocacheSize"
         private const val FIELD_USER_DATA = "userData"
         private const val FIELD_STATUS = "status"
         private const val FIELD_LOCATION = "location"
@@ -69,79 +67,81 @@ data class Geocache(
         private const val FIELD_URL = "url"
         private const val FIELD_CONTAINS_HTML = "containsHtml"
         private const val FIELD_ADDITIONAL_WAYPOINTS = "additionalWaypoints"
+        private val FIELD_GEOCACHE_LOGS_MIN = "geocachelogs[${GeocacheLog.FIELDS_ALL}]"
 
         val FIELDS_ALL = arrayOf(
-                FIELD_REFERENCE_CODE,
-                FIELD_NAME,
-                FIELD_DIFFICULTY,
-                FIELD_TERRAIN,
-                FIELD_FAVORITE_POINTS,
-                FIELD_TRACKABLE_COUNT,
-                FIELD_PLACED_DATE,
-                FIELD_PUBLISHED_DATE,
-                FIELD_TYPE,
-                FIELD_SIZE,
-                FIELD_USER_DATA,
-                FIELD_STATUS,
-                FIELD_LOCATION,
-                FIELD_POSTED_COORDINATES,
-                FIELD_LAST_VISITED_DATE,
-                FIELD_OWNER_CODE,
-                FIELD_OWNER_ALIAS,
-                FIELD_IS_PREMIUM_ONLY,
-                FIELD_SHORT_DESCRIPTION,
-                FIELD_LONG_DESCRIPTION,
-                FIELD_HINTS,
-                FIELD_ATTRIBUTES,
-                FIELD_IANA_TIMEZONE_ID,
-                FIELD_RELATED_WEBPAGE,
-                FIELD_URL,
-                FIELD_CONTAINS_HTML,
-                FIELD_ADDITIONAL_WAYPOINTS
+            FIELD_REFERENCE_CODE,
+            FIELD_NAME,
+            FIELD_DIFFICULTY,
+            FIELD_TERRAIN,
+            FIELD_FAVORITE_POINTS,
+            FIELD_TRACKABLE_COUNT,
+            FIELD_PLACED_DATE,
+            FIELD_PUBLISHED_DATE,
+            FIELD_GEOCACHE_TYPE,
+            FIELD_GEOCACHE_SIZE,
+            FIELD_USER_DATA,
+            FIELD_STATUS,
+            FIELD_LOCATION,
+            FIELD_POSTED_COORDINATES,
+            FIELD_LAST_VISITED_DATE,
+            FIELD_OWNER_CODE,
+            FIELD_OWNER_ALIAS,
+            FIELD_IS_PREMIUM_ONLY,
+            FIELD_SHORT_DESCRIPTION,
+            FIELD_LONG_DESCRIPTION,
+            FIELD_HINTS,
+            FIELD_ATTRIBUTES,
+            FIELD_IANA_TIMEZONE_ID,
+            FIELD_RELATED_WEBPAGE,
+            FIELD_URL,
+            FIELD_CONTAINS_HTML,
+            FIELD_ADDITIONAL_WAYPOINTS,
+            FIELD_GEOCACHE_LOGS_MIN
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE = arrayOf(
-                FIELD_REFERENCE_CODE,
-                FIELD_NAME,
-                FIELD_DIFFICULTY,
-                FIELD_TERRAIN,
-                FIELD_FAVORITE_POINTS,
-                FIELD_TRACKABLE_COUNT,
-                FIELD_PLACED_DATE,
-                FIELD_TYPE,
-                FIELD_SIZE,
-                FIELD_USER_DATA,
-                FIELD_STATUS,
-                FIELD_LOCATION,
-                FIELD_POSTED_COORDINATES,
-                FIELD_LAST_VISITED_DATE,
-                FIELD_OWNER_CODE,
-                FIELD_OWNER_ALIAS,
-                FIELD_IS_PREMIUM_ONLY,
-                FIELD_IANA_TIMEZONE_ID,
-                FIELD_RELATED_WEBPAGE,
-                FIELD_URL,
-                FIELD_CONTAINS_HTML
+            FIELD_REFERENCE_CODE,
+            FIELD_NAME,
+            FIELD_DIFFICULTY,
+            FIELD_TERRAIN,
+            FIELD_FAVORITE_POINTS,
+            FIELD_TRACKABLE_COUNT,
+            FIELD_PLACED_DATE,
+            FIELD_GEOCACHE_TYPE,
+            FIELD_GEOCACHE_SIZE,
+            FIELD_USER_DATA,
+            FIELD_STATUS,
+            FIELD_LOCATION,
+            FIELD_POSTED_COORDINATES,
+            FIELD_LAST_VISITED_DATE,
+            FIELD_OWNER_CODE,
+            FIELD_OWNER_ALIAS,
+            FIELD_IS_PREMIUM_ONLY,
+            FIELD_IANA_TIMEZONE_ID,
+            FIELD_RELATED_WEBPAGE,
+            FIELD_URL,
+            FIELD_CONTAINS_HTML
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE_LIVEMAP = arrayOf(
-                FIELD_REFERENCE_CODE,
-                FIELD_NAME,
-                FIELD_DIFFICULTY,
-                FIELD_TERRAIN,
+            FIELD_REFERENCE_CODE,
+            FIELD_NAME,
+            FIELD_DIFFICULTY,
+            FIELD_TERRAIN,
 //                FIELD_FAVORITE_POINTS,
 //                FIELD_TRACKABLE_COUNT,
 //                FIELD_PLACED_DATE,
-                FIELD_TYPE,
-                FIELD_SIZE,
-                FIELD_USER_DATA,
-                FIELD_STATUS,
+            FIELD_GEOCACHE_TYPE,
+            FIELD_GEOCACHE_SIZE,
+            FIELD_USER_DATA,
+            FIELD_STATUS,
 //                FIELD_LOCATION,
-                FIELD_POSTED_COORDINATES,
+            FIELD_POSTED_COORDINATES,
 //                FIELD_LAST_VISITED_DATE,
 //                FIELD_OWNER_CODE,
-                FIELD_OWNER_ALIAS,
-                FIELD_IS_PREMIUM_ONLY
+            FIELD_OWNER_ALIAS,
+            FIELD_IS_PREMIUM_ONLY
 //                FIELD_IANA_TIMEZONE_ID,
 //                FIELD_RELATED_WEBPAGE,
 //                FIELD_URL,
@@ -149,27 +149,27 @@ data class Geocache(
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_ALL_LIVEMAP = arrayOf(
-                FIELD_REFERENCE_CODE,
-                FIELD_NAME,
-                FIELD_DIFFICULTY,
-                FIELD_TERRAIN,
-                FIELD_FAVORITE_POINTS,
-                FIELD_TRACKABLE_COUNT,
+            FIELD_REFERENCE_CODE,
+            FIELD_NAME,
+            FIELD_DIFFICULTY,
+            FIELD_TERRAIN,
+            FIELD_FAVORITE_POINTS,
+            FIELD_TRACKABLE_COUNT,
 //                FIELD_PLACED_DATE,
 //                FIELD_PUBLISHED_DATE,
-                FIELD_TYPE,
-                FIELD_SIZE,
-                FIELD_USER_DATA,
-                FIELD_STATUS,
+            FIELD_GEOCACHE_TYPE,
+            FIELD_GEOCACHE_SIZE,
+            FIELD_USER_DATA,
+            FIELD_STATUS,
 //                FIELD_LOCATION,
-                FIELD_POSTED_COORDINATES,
+            FIELD_POSTED_COORDINATES,
 //                FIELD_LAST_VISITED_DATE,
-                FIELD_OWNER_CODE,
-                FIELD_OWNER_ALIAS,
-                FIELD_IS_PREMIUM_ONLY,
+            FIELD_OWNER_CODE,
+            FIELD_OWNER_ALIAS,
+            FIELD_IS_PREMIUM_ONLY,
 //                FIELD_SHORT_DESCRIPTION,
 //                FIELD_LONG_DESCRIPTION,
-                FIELD_HINTS
+            FIELD_HINTS
 //                FIELD_ATTRIBUTES,
 //                FIELD_IANA_TIMEZONE_ID,
 //                FIELD_RELATED_WEBPAGE,

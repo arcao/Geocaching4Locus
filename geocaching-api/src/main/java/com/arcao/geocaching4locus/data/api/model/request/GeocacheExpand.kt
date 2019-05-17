@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model.request
 
 import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND_FIELD_GEOCACHE_LOGS
+import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND_FIELD_GEOCACHE_LOG_IMAGES
 import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND_FIELD_IMAGES
 import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND_FIELD_SEPARATOR
 import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND_FIELD_TRACKABLES
@@ -9,12 +10,14 @@ import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND
 class GeocacheExpand : Expand<GeocacheExpand> {
     var geocacheLogs: Int? = null
     var trackables: Int? = null
+    var geocacheLogImages : Int? = null
     var userWaypoint = false
     var images: Int? = null
 
     override fun all(): GeocacheExpand {
         geocacheLogs = 0
         trackables = 0
+        geocacheLogImages = 0
         userWaypoint = true
         images = 0
         return this
@@ -28,6 +31,9 @@ class GeocacheExpand : Expand<GeocacheExpand> {
         }
         trackables?.run {
             items.add(EXPAND_FIELD_TRACKABLES.expand(this))
+        }
+        geocacheLogImages?.run {
+            items.add(EXPAND_FIELD_GEOCACHE_LOG_IMAGES.expand(this))
         }
         if (userWaypoint) items.add(EXPAND_FIELD_USER_WAYPOINTS)
         images?.run {

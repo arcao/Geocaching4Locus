@@ -1,18 +1,16 @@
 package locus.api.mapper
 
-import androidx.annotation.Nullable
-import com.arcao.geocaching.api.data.GeocacheLog
-import com.arcao.geocaching.api.data.type.GeocacheLogType
+import com.arcao.geocaching4locus.data.api.model.GeocacheLog
+import com.arcao.geocaching4locus.data.api.model.GeocacheLogType
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingLog
 import locus.api.utils.addIgnoreNull
-import locus.api.utils.toTime
 
 class GeocacheLogConverter(
     private val imageDataConverter: ImageDataConverter
 ) {
 
-    fun addGeocacheLogs(point: Point, @Nullable logs: Collection<GeocacheLog>) {
+    fun addGeocacheLogs(point: Point, logs: Collection<GeocacheLog>) {
         if (point.gcData?.logs == null || logs.isEmpty())
             return
 
@@ -29,50 +27,48 @@ class GeocacheLogConverter(
 
     private fun createLocusGeocachingLog(log: GeocacheLog): GeocachingLog {
         return GeocachingLog().apply {
-            id = log.id()
-            date = log.visited().toTime()
-            logText = log.text()
-            type = createLocusCacheLogType(log.logType())
+            id = log.id
+            date = log.loggedDateInstant?.toEpochMilli() ?: 0
+            logText = log.text
+            type = log.geocacheLogType.toLocusMapLogType()
 
-            val author = log.author()
+            val author = log.owner
             if (author != null) {
-                finder = author.userName()
-                findersFound = author.findCount()
-                findersId = author.id()
+                finder = author.username
+                findersFound = author.findCount
+                findersId = author.id
             }
 
-            for (image in log.images()) {
+            for (image in log.images ?: emptyList()) {
                 addImage(imageDataConverter.createLocusGeocachingImage(image))
             }
-            if (log.updatedCoordinates() != null) {
-                cooLat = log.updatedCoordinates().latitude()
-                cooLon = log.updatedCoordinates().longitude()
+            log.updatedCoordinates?.let { coordinates ->
+                cooLat = coordinates.latitude
+                cooLon = coordinates.longitude
             }
         }
     }
 
-    private fun createLocusCacheLogType(@Nullable logType: GeocacheLogType?): Int {
-        return when (logType) {
-            GeocacheLogType.Announcement -> GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT
-            GeocacheLogType.Attended -> GeocachingLog.CACHE_LOG_TYPE_ATTENDED
-            GeocacheLogType.DidntFindIt -> GeocachingLog.CACHE_LOG_TYPE_NOT_FOUND
-            GeocacheLogType.EnableListing -> GeocachingLog.CACHE_LOG_TYPE_ENABLE_LISTING
-            GeocacheLogType.FoundIt -> GeocachingLog.CACHE_LOG_TYPE_FOUND
-            GeocacheLogType.NeedsArchived -> GeocachingLog.CACHE_LOG_TYPE_NEEDS_ARCHIVED
-            GeocacheLogType.NeedsMaintenance -> GeocachingLog.CACHE_LOG_TYPE_NEEDS_MAINTENANCE
-            GeocacheLogType.OwnerMaintenance -> GeocachingLog.CACHE_LOG_TYPE_OWNER_MAINTENANCE
-            GeocacheLogType.PostReviewerNote -> GeocachingLog.CACHE_LOG_TYPE_POST_REVIEWER_NOTE
-            GeocacheLogType.PublishListing -> GeocachingLog.CACHE_LOG_TYPE_PUBLISH_LISTING
-            GeocacheLogType.RetractListing -> GeocachingLog.CACHE_LOG_TYPE_RETRACT_LISTING
-            GeocacheLogType.TemporarilyDisableListing -> GeocachingLog.CACHE_LOG_TYPE_TEMPORARILY_DISABLE_LISTING
-            GeocacheLogType.Unknown -> GeocachingLog.CACHE_LOG_TYPE_UNKNOWN
-            GeocacheLogType.UpdateCoordinates -> GeocachingLog.CACHE_LOG_TYPE_UPDATE_COORDINATES
-            GeocacheLogType.WebcamPhotoTaken -> GeocachingLog.CACHE_LOG_TYPE_WEBCAM_PHOTO_TAKEN
-            GeocacheLogType.WillAttend -> GeocachingLog.CACHE_LOG_TYPE_WILL_ATTEND
-            GeocacheLogType.WriteNote -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
-            GeocacheLogType.Archive -> GeocachingLog.CACHE_LOG_TYPE_ARCHIVE
-            GeocacheLogType.Unarchive -> GeocachingLog.CACHE_LOG_TYPE_UNARCHIVE
-            else -> GeocachingLog.CACHE_LOG_TYPE_UNKNOWN
+    private fun GeocacheLogType?.toLocusMapLogType(): Int {
+        return when (this?.id ?: GeocacheLogType.WRITE_NOTE) {
+            GeocacheLogType.EVENT_ANNOUNCEMENT -> GeocachingLog.CACHE_LOG_TYPE_ANNOUNCEMENT
+            GeocacheLogType.ATTENDED -> GeocachingLog.CACHE_LOG_TYPE_ATTENDED
+            GeocacheLogType.DNF_IT -> GeocachingLog.CACHE_LOG_TYPE_NOT_FOUND
+            GeocacheLogType.ENABLE_LISTING -> GeocachingLog.CACHE_LOG_TYPE_ENABLE_LISTING
+            GeocacheLogType.FOUND_IT -> GeocachingLog.CACHE_LOG_TYPE_FOUND
+            GeocacheLogType.NEEDS_ARCHIVING -> GeocachingLog.CACHE_LOG_TYPE_NEEDS_ARCHIVED
+            GeocacheLogType.NEEDS_MAINTENANCE -> GeocachingLog.CACHE_LOG_TYPE_NEEDS_MAINTENANCE
+            GeocacheLogType.OWNER_MAINTENANCE -> GeocachingLog.CACHE_LOG_TYPE_OWNER_MAINTENANCE
+            GeocacheLogType.POST_REVIEWER_NOTE -> GeocachingLog.CACHE_LOG_TYPE_POST_REVIEWER_NOTE
+            GeocacheLogType.PUBLISH_LISTING -> GeocachingLog.CACHE_LOG_TYPE_PUBLISH_LISTING
+            GeocacheLogType.TEMPORARILY_DISABLE_LISTING -> GeocachingLog.CACHE_LOG_TYPE_TEMPORARILY_DISABLE_LISTING
+            GeocacheLogType.UPDATE_COORDINATES -> GeocachingLog.CACHE_LOG_TYPE_UPDATE_COORDINATES
+            GeocacheLogType.WEBCAM_PHOTO_TAKEN -> GeocachingLog.CACHE_LOG_TYPE_WEBCAM_PHOTO_TAKEN
+            GeocacheLogType.WILL_ATTEND -> GeocachingLog.CACHE_LOG_TYPE_WILL_ATTEND
+            GeocacheLogType.WRITE_NOTE -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
+            GeocacheLogType.ARCHIVE -> GeocachingLog.CACHE_LOG_TYPE_ARCHIVE
+            GeocacheLogType.UNARCHIVE -> GeocachingLog.CACHE_LOG_TYPE_UNARCHIVE
+            else -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
         }
     }
 

@@ -1,9 +1,8 @@
 package locus.api.mapper
 
-import com.arcao.geocaching.api.data.Trackable
+import com.arcao.geocaching4locus.data.api.model.Trackable
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingTrackable
-import locus.api.utils.toTime
 
 class TrackableConverter {
     fun addTrackables(point: Point, trackables: Collection<Trackable>) {
@@ -23,17 +22,17 @@ class TrackableConverter {
 
     private fun createLocusGeocachingTrackable(trackable: Trackable, trackableLightData: Boolean): GeocachingTrackable {
         return GeocachingTrackable().apply {
-            id = trackable.id()
-            imgUrl = trackable.trackableTypeImage()
-            name = trackable.name()
-            currentOwner = trackable.currentOwner()?.userName()
-            originalOwner = trackable.owner()?.userName()
-            srcDetails = trackable.trackableUrl()
-            released = trackable.created().toTime()
+            id = trackable.id
+            imgUrl = trackable.iconUrl
+            name = trackable.name
+            currentOwner = trackable.holder?.username
+            originalOwner = trackable.owner.username
+            srcDetails = trackable.url
+            released = trackable.releasedDate.toEpochMilli()
 
             if (!trackableLightData) {
-                details = trackable.description()
-                goal = trackable.goal()
+                details = trackable.description
+                goal = trackable.goal
             }
         }
     }

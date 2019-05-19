@@ -3,25 +3,24 @@ package locus.api.mapper
 import android.content.Context
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import com.arcao.geocaching.api.data.Geocache
-import com.arcao.geocaching.api.data.UserWaypoint
-import com.arcao.geocaching.api.data.Waypoint
-import com.arcao.geocaching.api.data.coordinates.CoordinatesParser
-import com.arcao.geocaching.api.data.type.ContainerType
-import com.arcao.geocaching.api.data.type.GeocacheType
-import com.arcao.geocaching.api.data.type.WaypointType
-import com.arcao.geocaching.api.util.GeocachingUtils
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.data.api.model.AdditionalWaypoint
+import com.arcao.geocaching4locus.data.api.model.Geocache
+import com.arcao.geocaching4locus.data.api.model.GeocacheSize
+import com.arcao.geocaching4locus.data.api.model.GeocacheType
+import com.arcao.geocaching4locus.data.api.model.UserWaypoint
+import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.util.CoordinatesParser
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Location
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingAttribute
 import locus.api.objects.geocaching.GeocachingData
-import locus.api.utils.toTime
 import timber.log.Timber
 import java.text.ParseException
-import java.util.Date
 import java.util.regex.Pattern
 
 class GeocacheConverter(
@@ -34,62 +33,60 @@ class GeocacheConverter(
 ) {
     fun createLocusPoint(cache: Geocache): Point {
         val loc = Location()
-            .setLatitude(cache.coordinates().latitude())
-            .setLongitude(cache.coordinates().longitude())
+            .setLatitude(cache.postedCoordinates.latitude)
+            .setLongitude(cache.postedCoordinates.longitude)
 
-        val p = Point(cache.name(), loc).apply {
+        val p = Point(cache.name, loc).apply {
             gcData = GeocachingData().apply {
-                cacheID = cache.code()
-                id = cache.id()
-                name = cache.name()
-                type = getLocusCacheType(cache.geocacheType())
-                difficulty = cache.difficulty()
-                terrain = cache.terrain()
-                owner = cache.owner()?.userName()
-                placedBy = cache.placedBy()
-                isAvailable = cache.available()
-                isArchived = cache.archived()
-                isPremiumOnly = cache.premium()
-                if (cache.guid() != null) {
-                    cacheUrl = GEOCACHE_GUID_LINK_PREFIX + cache.guid()
-                }
+                source = GeocachingData.CACHE_SOURCE_GEOCACHING_COM
+                cacheID = cache.referenceCode
+                id = cache.id
+                name = cache.name
+                type = cache.geocacheType.toLocusMapGeocacheType()
+                difficulty = cache.difficulty
+                terrain = cache.terrain
+                owner = cache.ownerAlias
+                placedBy = cache.ownerAlias
+                isAvailable = cache.status == GeocacheStatus.ACTIVE
+                isArchived = cache.status == GeocacheStatus.ARCHIVED
+                isPremiumOnly = cache.isPremiumOnly
+                cacheUrl = cache.url
 
-                dateHidden = cache.placeDate().toTime()
-                datePublished = cache.publishDate().toTime()
-                dateUpdated = cache.lastUpdateDate().toTime()
+                dateHidden = cache.placedDateInstant?.toEpochMilli() ?: 0
+                datePublished = cache.publishedDateInstant?.toEpochMilli() ?: 0
+                dateUpdated = cache.lastVisitedDateInstant?.toEpochMilli() ?: 0
 
-                container = getLocusContainerType(cache.containerType())
-                isFound = cache.foundByUser()
+                container = cache.geocacheSize.getLocusMapGeocacheSize()
+                isFound = cache.userData?.foundDate != null
 
-                country = cache.countryName()
-                state = cache.stateName()
+                country = cache.location?.country
+                state = cache.location?.state
 
                 setDescriptions(
-                    BadBBCodeFixer.fix(cache.shortDescription()), cache.shortDescriptionHtml(),
-                    BadBBCodeFixer.fix(cache.longDescription()), cache.longDescriptionHtml()
+                    BadBBCodeFixer.fix(cache.shortDescription), cache.containsHtml ?: false,
+                    BadBBCodeFixer.fix(cache.longDescription), cache.containsHtml ?: false
                 )
-                encodedHints = cache.hint()
-                notes = cache.personalNote()
-                favoritePoints = cache.favoritePoints()
+                encodedHints = cache.hints
+                notes = cache.userData?.note
+                favoritePoints = cache.favoritePoints ?: 0
 
-                for (image in cache.images().orEmpty()) {
+                for (image in cache.images.orEmpty()) {
                     addImage(imageDataConverter.createLocusGeocachingImage(image))
                 }
 
-                for (attribute in cache.attributes().orEmpty()) {
-                    if (attribute != null)
-                        attributes.add(GeocachingAttribute(attribute.id, attribute.on))
+                for (attribute in cache.attributes.orEmpty()) {
+                    attributes.add(GeocachingAttribute(attribute.id, attribute.isOn))
                 }
             }
         }
 
-        waypointConverter.addWaypoints(p, cache.waypoints()!!)
-        waypointConverter.addWaypoints(p, listOf(getCorrectedCoordinateWaypoint(cache)))
-        waypointConverter.addWaypoints(p, getWaypointsFromNote(cache))
-        geocacheLogConverter.addGeocacheLogs(p, cache.geocacheLogs()!!)
-        trackableConverter.addTrackables(p, cache.trackables()!!)
+        waypointConverter.addWaypoints(p, cache.additionalWaypoints, cache.id)
+        waypointConverter.addWaypoints(p, listOf(getCorrectedCoordinateWaypoint(cache)), cache.id)
+        waypointConverter.addWaypoints(p, getWaypointsFromNote(cache), cache.id)
+        geocacheLogConverter.addGeocacheLogs(p, cache.geocacheLogs.orEmpty())
+        trackableConverter.addTrackables(p, cache.trackables.orEmpty())
 
-        updateGeocacheLocationByCorrectedCoordinates(p, cache.userWaypoints())
+        updateGeocacheLocationByCorrectedCoordinates(p, cache.userWaypoints.orEmpty())
 
         if (defaultPreferenceManager.disableDnfNmNaGeocaches)
             applyUnavailabilityForGeocache(p, defaultPreferenceManager.disableDnfNmNaGeocachesThreshold)
@@ -97,41 +94,40 @@ class GeocacheConverter(
         return p
     }
 
-    private fun getLocusCacheType(@Nullable cacheType: GeocacheType?): Int {
-        return when (cacheType) {
-            GeocacheType.CacheInTrashOutEvent -> GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT
-            GeocacheType.Earth -> GeocachingData.CACHE_TYPE_EARTH
-            GeocacheType.Event -> GeocachingData.CACHE_TYPE_EVENT
-            GeocacheType.GpsAdventuresExhibit -> GeocachingData.CACHE_TYPE_GPS_ADVENTURE
-            GeocacheType.GroundspeakBlockParty -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
-            GeocacheType.GroudspeakHQ -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
-            GeocacheType.GroudspeakLostAndFoundCelebration -> GeocachingData.CACHE_TYPE_LF_CELEBRATION
-            GeocacheType.LetterboxHybrid -> GeocachingData.CACHE_TYPE_LETTERBOX
-            GeocacheType.Locationless -> GeocachingData.CACHE_TYPE_LOCATIONLESS
-            GeocacheType.LostAndFoundEvent -> GeocachingData.CACHE_TYPE_LF_EVENT
-            GeocacheType.MegaEvent -> GeocachingData.CACHE_TYPE_MEGA_EVENT
-            GeocacheType.Multi -> GeocachingData.CACHE_TYPE_MULTI
-            GeocacheType.ProjectApe -> GeocachingData.CACHE_TYPE_PROJECT_APE
-            GeocacheType.Traditional -> GeocachingData.CACHE_TYPE_TRADITIONAL
-            GeocacheType.Mystery -> GeocachingData.CACHE_TYPE_MYSTERY
-            GeocacheType.Virtual -> GeocachingData.CACHE_TYPE_VIRTUAL
-            GeocacheType.Webcam -> GeocachingData.CACHE_TYPE_WEBCAM
-            GeocacheType.Wherigo -> GeocachingData.CACHE_TYPE_WHERIGO
-            GeocacheType.GigaEvent -> GeocachingData.CACHE_TYPE_GIGA_EVENT
+    private fun GeocacheType?.toLocusMapGeocacheType(): Int {
+        return when (this?.id ?: 0) {
+            GeocacheType.CACHE_IN_TRASH_OUT_EVENT -> GeocachingData.CACHE_TYPE_CACHE_IN_TRASH_OUT
+            GeocacheType.EARTHCACHE -> GeocachingData.CACHE_TYPE_EARTH
+            GeocacheType.EVENT -> GeocachingData.CACHE_TYPE_EVENT
+            GeocacheType.GPS_ADVENTURES_EXHIBIT -> GeocachingData.CACHE_TYPE_GPS_ADVENTURE
+            GeocacheType.GEOCACHING_BLOCK_PARTY -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
+            GeocacheType.GEOCACHING_HQ -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
+            GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION -> GeocachingData.CACHE_TYPE_LF_CELEBRATION
+            GeocacheType.LETTERBOX_HYBRID -> GeocachingData.CACHE_TYPE_LETTERBOX
+            GeocacheType.LOCATIONLESS_CACHE -> GeocachingData.CACHE_TYPE_LOCATIONLESS
+            GeocacheType.LOST_AND_FOUND_EVENT_CACHE -> GeocachingData.CACHE_TYPE_LF_EVENT
+            GeocacheType.MEGA_EVENT -> GeocachingData.CACHE_TYPE_MEGA_EVENT
+            GeocacheType.MULTI_CACHE -> GeocachingData.CACHE_TYPE_MULTI
+            GeocacheType.PROJECT_APE -> GeocachingData.CACHE_TYPE_PROJECT_APE
+            GeocacheType.TRADITIONAL -> GeocachingData.CACHE_TYPE_TRADITIONAL
+            GeocacheType.MYSTERY_UNKNOWN -> GeocachingData.CACHE_TYPE_MYSTERY
+            GeocacheType.VIRTUAL -> GeocachingData.CACHE_TYPE_VIRTUAL
+            GeocacheType.WEBCAM -> GeocachingData.CACHE_TYPE_WEBCAM
+            GeocacheType.WHERIGO -> GeocachingData.CACHE_TYPE_WHERIGO
+            GeocacheType.GIGA_EVENT -> GeocachingData.CACHE_TYPE_GIGA_EVENT
             else -> GeocachingData.CACHE_TYPE_UNDEFINED
         }
     }
 
-    private fun getLocusContainerType(@Nullable containerType: ContainerType?): Int {
-        return when (containerType) {
-            ContainerType.Huge -> GeocachingData.CACHE_SIZE_HUGE
-            ContainerType.Large -> GeocachingData.CACHE_SIZE_LARGE
-            ContainerType.Micro -> GeocachingData.CACHE_SIZE_MICRO
-            ContainerType.NotChosen -> GeocachingData.CACHE_SIZE_NOT_CHOSEN
-            ContainerType.Other -> GeocachingData.CACHE_SIZE_OTHER
-            ContainerType.Regular -> GeocachingData.CACHE_SIZE_REGULAR
-            ContainerType.Small -> GeocachingData.CACHE_SIZE_SMALL
-            else -> GeocachingData.CACHE_SIZE_NOT_CHOSEN
+    private fun GeocacheSize?.getLocusMapGeocacheSize(): Int {
+        return when (this?.id ?: 0) {
+            GeocacheSize.LARGE -> GeocachingData.CACHE_SIZE_LARGE
+            GeocacheSize.MICRO -> GeocachingData.CACHE_SIZE_MICRO
+            GeocacheSize.NOT_CHOSEN -> GeocachingData.CACHE_SIZE_NOT_CHOSEN
+            GeocacheSize.OTHER -> GeocachingData.CACHE_SIZE_OTHER
+            GeocacheSize.MEDIUM -> GeocachingData.CACHE_SIZE_REGULAR
+            GeocacheSize.SMALL -> GeocachingData.CACHE_SIZE_SMALL
+            else -> GeocachingData.CACHE_SIZE_OTHER
         }
     }
 
@@ -142,7 +138,7 @@ class GeocacheConverter(
         // find corrected coordinate user waypoint
         var correctedCoordinateUserWaypoint: UserWaypoint? = null
         for (w in userWaypoints) {
-            if (w.correctedCoordinate()) {
+            if (w.isCorrectedCoordinates) {
                 correctedCoordinateUserWaypoint = w
                 break
             }
@@ -163,33 +159,30 @@ class GeocacheConverter(
         // update coordinates to new location
         location.set(
             Location()
-                .setLatitude(correctedCoordinateUserWaypoint.coordinates().latitude())
-                .setLongitude(correctedCoordinateUserWaypoint.coordinates().longitude())
+                .setLatitude(correctedCoordinateUserWaypoint.coordinates.latitude)
+                .setLongitude(correctedCoordinateUserWaypoint.coordinates.longitude)
         )
     }
 
-    @Nullable
-    private fun getCorrectedCoordinateWaypoint(@NonNull geocache: Geocache): com.arcao.geocaching.api.data.Waypoint? {
-        val userWaypoints = geocache.userWaypoints()
-        val cacheCode = geocache.code()
+    private fun getCorrectedCoordinateWaypoint(geocache: Geocache): AdditionalWaypoint? {
+        val userWaypoints = geocache.userWaypoints
 
         if (userWaypoints?.isEmpty() != false)
             return null
 
         for (uw in userWaypoints) {
-            if (uw.correctedCoordinate()) {
+            if (uw.isCorrectedCoordinates) {
 
                 val name = context.getString(R.string.var_final_location_name)
-                val waypointCode = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID) + cacheCode.substring(2)
 
-                return Waypoint.builder()
-                    .coordinates(uw.coordinates())
-                    .time(Date())
-                    .waypointCode(waypointCode)
-                    .name(name)
-                    .note(uw.description())
-                    .waypointType(WaypointType.FinalLocation)
-                    .build()
+                return AdditionalWaypoint(
+                  coordinates = uw.coordinates,
+                    name = name,
+                    prefix = "N0",
+                    description = uw.description,
+                    type = AdditionalWaypointType.FINAL_LOCATION,
+                    url = null
+                )
             }
         }
 
@@ -197,14 +190,13 @@ class GeocacheConverter(
     }
 
     @Nullable
-    private fun getWaypointsFromNote(@NonNull geocache: Geocache): Collection<com.arcao.geocaching.api.data.Waypoint?>? {
-        var note = geocache.personalNote().orEmpty()
-        val cacheCode = geocache.code()
+    private fun getWaypointsFromNote(@NonNull geocache: Geocache): Collection<AdditionalWaypoint>? {
+        var note = geocache.userData?.note ?: return null
 
         if (note.isBlank())
             return null
 
-        val list = ArrayList<Waypoint>()
+        val list = mutableListOf<AdditionalWaypoint>()
 
         var count = 0
         var nameCount = 0
@@ -225,30 +217,30 @@ class GeocacheConverter(
 
                 val nameMatcher = NOTE_NAME_PATTERN.matcher(name)
 
-                var waypointType = WaypointType.ReferencePoint
+                var waypointType = AdditionalWaypointType.REFERENCE_POINT
 
-                if (nameMatcher.find() && !nameMatcher.group(1).trim { it <= ' ' }.isEmpty()) {
+                if (nameMatcher.find() && nameMatcher.group(1).trim { it <= ' ' }.isNotEmpty()) {
                     name = nameMatcher.group(1).trim { it <= ' ' }
 
                     if (FINAL_WAYPOINT_NAME_PATTERN.matcher(name).matches()) {
-                        waypointType = WaypointType.FinalLocation
+                        waypointType = AdditionalWaypointType.FINAL_LOCATION
                     }
                 } else {
                     nameCount++
                     name = context.getString(R.string.var_user_waypoint_name, nameCount)
                 }
 
-                val code = GeocachingUtils.base31Encode(WAYPOINT_BASE_ID + count) + cacheCode.substring(2)
+                val prefix = ReferenceCode.base31Encode(WAYPOINT_BASE_ID + count)
 
                 list.add(
-                    Waypoint.builder()
-                        .coordinates(point)
-                        .time(Date())
-                        .waypointCode(code)
-                        .name(name)
-                        .note("")
-                        .waypointType(waypointType)
-                        .build()
+                    AdditionalWaypoint(
+                        coordinates = point,
+                        description = null,
+                        prefix = prefix,
+                        name = name,
+                        type = waypointType,
+                        url = null
+                    )
                 )
 
                 namePrefix.setLength(0)
@@ -267,8 +259,7 @@ class GeocacheConverter(
     }
 
     companion object {
-        private const val GEOCACHE_GUID_LINK_PREFIX = "http://www.geocaching.com/seek/cache_details.aspx?guid="
-        private val WAYPOINT_BASE_ID = GeocachingUtils.base31Decode("N0")
+        private val WAYPOINT_BASE_ID = ReferenceCode.base31Decode("N0")
 
         private val FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]+[l|ł]", Pattern.CASE_INSENSITIVE)
 

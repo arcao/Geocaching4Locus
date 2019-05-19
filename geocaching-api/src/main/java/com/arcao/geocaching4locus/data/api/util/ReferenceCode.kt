@@ -23,7 +23,7 @@ object ReferenceCode {
      * @return numeric value
      * @throws IllegalArgumentException If input contains illegal chars
      */
-    private fun base31Decode(input: String): Long {
+    fun base31Decode(input: String): Long {
         var result: Long = 0
 
         for (ch in input.toCharArray()) {
@@ -46,7 +46,7 @@ object ReferenceCode {
      * @param input numeric value
      * @return base 31 number
      */
-    private fun base31Encode(input: Long): String {
+    fun base31Encode(input: Long): String {
         var temp = input
         val sb = StringBuilder()
 

@@ -1,8 +1,8 @@
 package locus.api.mapper
 
-import com.arcao.geocaching.api.data.Geocache
-import com.arcao.geocaching.api.data.GeocacheLog
-import com.arcao.geocaching.api.data.Trackable
+import com.arcao.geocaching4locus.data.api.model.Geocache
+import com.arcao.geocaching4locus.data.api.model.GeocacheLog
+import com.arcao.geocaching4locus.data.api.model.Trackable
 import locus.api.objects.extra.Point
 import locus.api.utils.addIgnoreNull
 

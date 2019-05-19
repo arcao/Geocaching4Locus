@@ -24,7 +24,7 @@ abstract class AccountManager(
 
     protected abstract fun loadAccount() : GeocachingAccount?
 
-    internal abstract fun saveAccount(account: GeocachingAccount)
+    internal abstract fun saveAccount(account: GeocachingAccount?)
 
     suspend fun createAccount(code: String) : GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
@@ -40,6 +40,11 @@ abstract class AccountManager(
             this.account = it
             saveAccount(it)
         }
+    }
+
+    fun deleteAccount() {
+        account = null
+        saveAccount(account)
     }
 
     internal suspend fun refreshAccount(account: GeocachingAccount) {

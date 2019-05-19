@@ -31,7 +31,12 @@ class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: Fil
         }
     }
 
-    override fun saveAccount(account: GeocachingAccount) {
+    override fun saveAccount(account: GeocachingAccount?) {
+        if (account == null) {
+            dataFile.delete()
+            return
+        }
+
         dataFile.writeText(arrayOf(
                 account.accessToken,
                 account.accessTokenExpiration.toEpochMilli(),

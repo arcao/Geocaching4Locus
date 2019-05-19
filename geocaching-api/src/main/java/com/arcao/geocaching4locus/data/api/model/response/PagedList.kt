@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.data.api.model.response
 
-interface TotalCountList<T> : List<T> {
+interface PagedList<T> : List<T> {
     val totalCount : Long
 }
 
-interface MutableTotalCountList<T> : TotalCountList<T>, MutableList<T> {
+internal interface MutablePagedList<T> : PagedList<T>, MutableList<T> {
     override var totalCount: Long
 }

@@ -1,18 +1,23 @@
 package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 
-import com.arcao.geocaching4locus.data.api.model.response.MutableTotalCountList
-import com.arcao.geocaching4locus.data.api.model.response.TotalCountArrayList
-import com.arcao.geocaching4locus.data.api.model.response.TotalCountList
-import com.squareup.moshi.*
+import com.arcao.geocaching4locus.data.api.model.response.MutablePagedList
+import com.arcao.geocaching4locus.data.api.model.response.PagedArrayList
+import com.arcao.geocaching4locus.data.api.model.response.PagedList
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonAdapter.Factory
+import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.JsonWriter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import java.io.IOException
 import java.lang.reflect.Type
 
 /** Converts collection types to JSON arrays containing their converted contents.  */
-internal class TotalCountListAdapter<T> private constructor(private val elementAdapter: JsonAdapter<T>) : JsonAdapter<TotalCountList<T?>>() {
+internal class PagedListAdapter<T> private constructor(private val elementAdapter: JsonAdapter<T>) : JsonAdapter<PagedList<T?>>() {
     @Throws(IOException::class)
-    override fun fromJson(reader: JsonReader): TotalCountList<T?> {
-        val result = TotalCountArrayList<T?>()
+    override fun fromJson(reader: JsonReader): PagedList<T?> {
+        val result = PagedArrayList<T?>()
 
         when(reader.peek()) {
             JsonReader.Token.NULL -> {}
@@ -33,7 +38,7 @@ internal class TotalCountListAdapter<T> private constructor(private val elementA
         return result
     }
 
-    private fun readArray(reader: JsonReader, result: MutableTotalCountList<T?>) {
+    private fun readArray(reader: JsonReader, result: MutablePagedList<T?>) {
         reader.beginArray()
         while (reader.hasNext()) {
             result.add(elementAdapter.fromJson(reader))
@@ -42,7 +47,7 @@ internal class TotalCountListAdapter<T> private constructor(private val elementA
     }
 
     @Throws(IOException::class)
-    override fun toJson(writer: JsonWriter, value: TotalCountList<T?>?) {
+    override fun toJson(writer: JsonWriter, value: PagedList<T?>?) {
         writer.beginArray()
         if (value != null) {
             for (element in value) {
@@ -61,15 +66,15 @@ internal class TotalCountListAdapter<T> private constructor(private val elementA
             val rawType = Types.getRawType(type)
             when {
                 annotations.isNotEmpty() -> null
-                rawType == TotalCountList::class.java -> newTotalCountArrayListAdapter<Any>(type, moshi).nullSafe()
+                rawType == PagedList::class.java -> newTotalCountArrayListAdapter<Any>(type, moshi).nullSafe()
                 else -> null
             }
         }
 
-        private fun <T> newTotalCountArrayListAdapter(type: Type, moshi: Moshi): JsonAdapter<TotalCountList<T?>> {
+        private fun <T> newTotalCountArrayListAdapter(type: Type, moshi: Moshi): JsonAdapter<PagedList<T?>> {
             val elementType = Types.collectionElementType(type, Collection::class.java)
             val elementAdapter = moshi.adapter<T>(elementType)
-            return TotalCountListAdapter<T>(elementAdapter)
+            return PagedListAdapter<T>(elementAdapter)
         }
     }
 }

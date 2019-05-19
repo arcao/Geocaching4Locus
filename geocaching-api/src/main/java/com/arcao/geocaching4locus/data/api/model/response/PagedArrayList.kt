@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model.response
 
-class TotalCountArrayList<T> : ArrayList<T>, MutableTotalCountList<T> {
+internal class PagedArrayList<T> : ArrayList<T>, MutablePagedList<T> {
     override var totalCount: Long = 0
 
     constructor() : super()

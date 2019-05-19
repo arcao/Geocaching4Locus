@@ -5,7 +5,7 @@ import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
 import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
 import com.arcao.geocaching4locus.data.api.model.response.Error
-import com.arcao.geocaching4locus.data.api.model.response.MutableTotalCountList
+import com.arcao.geocaching4locus.data.api.model.response.MutablePagedList
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonEncodingException
 import kotlinx.coroutines.CompletableDeferred
@@ -115,7 +115,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             val headers = response.headers()
             val body = response.body()
 
-            if (body is MutableTotalCountList<*> && headers["x-total-count"] != null) {
+            if (body is MutablePagedList<*> && headers["x-total-count"] != null) {
                 body.totalCount = headers["x-total-count"]?.toLongOrNull() ?: body.totalCount
             }
         }

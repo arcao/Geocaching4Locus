@@ -10,7 +10,7 @@ import com.arcao.geocaching4locus.data.api.model.request.GeocacheExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheLogExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheSort
 import com.arcao.geocaching4locus.data.api.model.request.query.GeocacheQuery
-import com.arcao.geocaching4locus.data.api.model.response.TotalCountList
+import com.arcao.geocaching4locus.data.api.model.response.PagedList
 import kotlinx.coroutines.Deferred
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -30,7 +30,7 @@ interface GeocachingApiEndpoint {
         @Query("take") take: Int = 10,
         @Query("fields") fields: String = Geocache.FIELDS_LITE,
         @Query("expand") expand: GeocacheExpand = GeocacheExpand()
-    ): Deferred<TotalCountList<Geocache>>
+    ): Deferred<PagedList<Geocache>>
 
     @GET("/v1/geocaches")
     fun geocachesAsync(
@@ -54,7 +54,7 @@ interface GeocachingApiEndpoint {
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10,
         @Query("fields") fields: String = Image.FIELDS_ALL
-    ): Deferred<TotalCountList<Image>>
+    ): Deferred<PagedList<Image>>
 
     @GET("/v1/geocaches/{referenceCode}/geocacheLogs")
     fun geocacheLogsAsync(
@@ -63,7 +63,7 @@ interface GeocachingApiEndpoint {
         @Query("expand") expand: GeocacheLogExpand = GeocacheLogExpand(),
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10
-    ): Deferred<TotalCountList<GeocacheLog>>
+    ): Deferred<PagedList<GeocacheLog>>
 
     fun geocacheTrackablesAsync(
         @Path("referenceCode") referenceCode: String,
@@ -71,7 +71,7 @@ interface GeocachingApiEndpoint {
         @Query("expand") expand: GeocacheLogExpand = GeocacheLogExpand(),
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10
-    ): Deferred<TotalCountList<Trackable>>
+    ): Deferred<PagedList<Trackable>>
 
     @POST("/v1/lists/")
     fun createListAsync(
@@ -99,7 +99,7 @@ interface GeocachingApiEndpoint {
         @Query("take") take: Int = 10,
         @Query("lite") lite: Boolean = true,
         @Query("expand") expand: GeocacheExpand = GeocacheExpand()
-    ): Deferred<TotalCountList<Geocache>>
+    ): Deferred<PagedList<Geocache>>
 
     @GET("/v1/users/{referenceCode}")
     fun userAsync(
@@ -114,14 +114,14 @@ interface GeocachingApiEndpoint {
         @Query("fields") fields: String = GeocacheList.FIELDS_ALL,
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10
-    ): Deferred<TotalCountList<GeocacheList>>
+    ): Deferred<PagedList<GeocacheList>>
 
     @GET("/v1/friends")
     fun friendsAsync(
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10,
         @Query("fields") fields: String = User.FIELDS_ALL
-    ): Deferred<TotalCountList<User>>
+    ): Deferred<PagedList<User>>
 
     @GET("/status/ping")
     fun pingAsync(): Deferred<Void>

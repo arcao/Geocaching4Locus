@@ -56,10 +56,11 @@ fun main() {
         println(api.search(
                 setOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
                 lite = false,
-                take = 1,
+                take = 30,
                 logsCount = 10
         ))
 
         println(api.geocacheLogs("GC12345"))
+        println(api.geocacheImages("GC12345"))
     }
 }

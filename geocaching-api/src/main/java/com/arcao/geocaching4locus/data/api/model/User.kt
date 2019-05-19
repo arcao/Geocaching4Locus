@@ -4,11 +4,11 @@ import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
 import com.squareup.moshi.Json
 
 data class User(
-    val referenceCode: String, // string
+    val referenceCode: String?, // string
     val findCount: Int = 0, // 0
     val hideCount: Int = 0, // 0
     val favoritePoints: Int = 0, // 0
-    val username: String, // string
+    val username: String?, // string
     @Json(name = "membershipLevelId") val membership: MembershipType = MembershipType.UNKNOWN, // 0
     val avatarUrl: String?, // string
     val bannerUrl: String?, // string
@@ -61,6 +61,11 @@ data class User(
             FIELD_URL,
             FIELD_HOME_COORDINATES,
             FIELD_GEOCACHE_LIMITS
+        ).joinToString(FIELD_SEPARATOR)
+
+        val FIELDS_MIN = arrayOf(
+            FIELD_REFERENCE_CODE,
+            FIELD_USERNAME
         ).joinToString(FIELD_SEPARATOR)
     }
 }

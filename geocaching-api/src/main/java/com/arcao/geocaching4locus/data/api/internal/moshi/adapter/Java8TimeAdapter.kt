@@ -3,18 +3,22 @@ package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonQualifier
 import com.squareup.moshi.ToJson
-import org.threeten.bp.*
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.format.DateTimeFormatter
 
 class Java8TimeAdapter {
     @ToJson
-    fun offsetDateTimeToJson(value: OffsetDateTime): String {
-        return OFFSET_FORMATTER.format(value)
+    fun instantToJsonUTC(@LocalDateTimeUTC value: Instant): String {
+        return LOCAL_DATE_TIME_FORMATTER.format(LocalDateTime.ofInstant(value, UTC_ZONE))
     }
     
     @FromJson
-    fun offsetDateTimeFromJson(value: String): OffsetDateTime {
-        return OFFSET_FORMATTER.parse(value, OffsetDateTime::from)
+    @LocalDateTimeUTC
+    fun instantFromJsonUTC(value: String): Instant {
+        return LOCAL_DATE_TIME_FORMATTER.parse(value, LocalDateTime::from).toInstant(UTC_ZONE)
     }
 
     @ToJson
@@ -28,27 +32,14 @@ class Java8TimeAdapter {
     }
 
     @ToJson
-    fun groundspeakOffsetDateTimeToJson(@LocalDateTimePTZone value: OffsetDateTime): String {
-        return value.atZoneSameInstant(PT_ZONE).toLocalDateTime().format(LOCAL_DATE_TIME_FORMATTER)
+    fun localDateTimeToJson(value: LocalDateTime): String {
+        return value.format(LOCAL_DATE_TIME_FORMATTER)
     }
 
     @FromJson
-    @LocalDateTimePTZone
-    fun groundspeakOffsetDateTimeFromJson(value: String): OffsetDateTime {
-        return LOCAL_DATE_TIME_FORMATTER.parse(value, LocalDateTime::from).atZone(PT_ZONE).toOffsetDateTime()
+    fun localDateTimeFromJson(value: String): LocalDateTime {
+        return LOCAL_DATE_TIME_FORMATTER.parse(value, LocalDateTime::from)
     }
-
-    @ToJson
-    fun groundspeakInstantToJson(@LocalDateTimePTZone value: Instant): String {
-        return value.atZone(PT_ZONE).toLocalDateTime().format(LOCAL_DATE_TIME_FORMATTER)
-    }
-
-    @FromJson
-    @LocalDateTimePTZone
-    fun groundspeakInstantFromJson(value: String): Instant {
-        return LOCAL_DATE_TIME_FORMATTER.parse(value, LocalDateTime::from).atZone(PT_ZONE).toInstant()
-    }
-
 
     @ToJson
     fun durationToJson(value: Duration): String {
@@ -61,7 +52,7 @@ class Java8TimeAdapter {
     }
 
     companion object {
-        private val PT_ZONE = ZoneId.of("America/Los_Angeles")
+        private val UTC_ZONE = ZoneOffset.UTC
         private val OFFSET_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME
         private val INSTANT_FORMATTER = DateTimeFormatter.ISO_INSTANT
         private val LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME
@@ -70,4 +61,4 @@ class Java8TimeAdapter {
 
 @Retention(AnnotationRetention.RUNTIME)
 @JsonQualifier
-annotation class LocalDateTimePTZone
+annotation class LocalDateTimeUTC

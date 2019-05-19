@@ -4,13 +4,15 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.*
+import org.threeten.bp.Duration
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.Month
+import org.threeten.bp.ZoneOffset
 import org.threeten.bp.zone.TzdbZoneRulesProvider
 import org.threeten.bp.zone.ZoneRulesInitializer
 import org.threeten.bp.zone.ZoneRulesProvider
 
 internal object Java8TimeAdapterTest {
-    private val PT_ZONE: ZoneId by lazy { ZoneId.of("America/Los_Angeles") }
     private lateinit var adapter: Java8TimeAdapter
 
     @JvmStatic
@@ -33,21 +35,21 @@ internal object Java8TimeAdapterTest {
     }
 
     @Test
-    fun verifyOffsetDateTimeToJson() {
+    fun verifyInstantToJsonUTC() {
         val given = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atOffset(ZoneOffset.UTC)
-        val expected = "2018-01-20T12:13:14Z"
+                .toInstant(ZoneOffset.UTC)
+        val expected = "2018-01-20T12:13:14"
 
-        assertEquals(expected, adapter.offsetDateTimeToJson(given))
+        assertEquals(expected, adapter.instantToJsonUTC(given))
     }
 
     @Test
-    fun verifyOffsetDateTimeFromJson() {
-        val given = "2018-01-20T12:13:14Z"
+    fun verifyInstantFromJsonUTC() {
+        val given = "2018-01-20T12:13:14.000"
         val expected = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atOffset(ZoneOffset.UTC)
+                .toInstant(ZoneOffset.UTC)
 
-        assertEquals(expected, adapter.offsetDateTimeFromJson(given))
+        assertEquals(expected, adapter.instantFromJsonUTC(given))
     }
 
     @Test
@@ -71,34 +73,19 @@ internal object Java8TimeAdapterTest {
     }
 
     @Test
-    fun verifyGroundspeakInstantToJsonPTZone() {
+    fun verifyLocalDateTimeToJson() {
         val given = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atZone(PT_ZONE)
-                .toInstant()
         val expected = "2018-01-20T12:13:14"
 
-        assertEquals(expected, adapter.groundspeakInstantToJson(given))
+        assertEquals(expected, adapter.localDateTimeToJson(given))
     }
 
     @Test
-    fun verifyGroundspeakInstantToJsonUTCOffset() {
-        val given = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atOffset(ZoneOffset.UTC)
-                .toInstant()
-        // LocalDateTime in PST zone
-        val expected = "2018-01-20T04:13:14"
-
-        assertEquals(expected, adapter.groundspeakInstantToJson(given))
-    }
-
-    @Test
-    fun verifyGroundspeakInstantFromJsonPT() {
-        val given = "2018-01-20T12:13:14"
+    fun verifyLocalDateTimeFromJson() {
+        val given = "2018-01-20T12:13:14.000"
         val expected = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atZone(PT_ZONE)
-                .toInstant()
 
-        assertEquals(expected, adapter.groundspeakInstantFromJson(given))
+        assertEquals(expected, adapter.localDateTimeFromJson(given))
     }
 
     @Test

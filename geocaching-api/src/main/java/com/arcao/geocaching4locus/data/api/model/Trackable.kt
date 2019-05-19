@@ -1,25 +1,28 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
+import org.threeten.bp.Instant
+
 data class Trackable(
     val referenceCode: String, // string
-    val iconUrl: String, // string
+    val iconUrl: String?, // string
     val name: String, // string
     val goal: String?, // string
     val description: String?, // string
-    val releasedDate: String, // string
-    val originCountry: String, // string
-    val allowedToBeCollected: Boolean, // true
-    val ownerCode: String, // string
+    @LocalDateTimeUTC val releasedDate: Instant, // 2001-08-30T10:27:11
+    val originCountry: String?, // string
+    val allowedToBeCollected: Boolean = false, // true
+    val ownerCode: String?, // string
     val holderCode: String?, // string
-    val inHolderCollection: Boolean, // true
+    val inHolderCollection: Boolean = false, // true
     val currentGeocacheCode: String?, // string
-    val isMissing: Boolean, // true
-    val type: String, // string
-    val imageCount: Int, // 0
-    val trackingNumber: String, // string
-    val url: String, // string
+    val isMissing: Boolean = false, // true
+    val type: String?, // string
+    val imageCount: Int = 0, // 0
+    val trackingNumber: String?, // string
+    val url: String?, // string
     val owner: User, // user
-    val holder: User // user
+    val holder: User? // user
 ) {
     companion object {
         private const val FIELD_SEPARATOR = ","
@@ -29,7 +32,7 @@ data class Trackable(
         private const val FIELD_NAME = "name"
         private const val FIELD_GOAL = "goal"
         private const val FIELD_DESCRIPTION = "description"
-        private const val FIELD_RELEASE_DDATE = "releasedDate"
+        private const val FIELD_RELEASED_DATE = "releasedDate"
         private const val FIELD_ORIGIN_COUNTRY = "originCountry"
         private const val FIELD_ALLOWED_TO_BE_COLLECTED = "allowedToBeCollected"
         private const val FIELD_OWNER_CODE = "ownerCode"
@@ -43,13 +46,16 @@ data class Trackable(
         private const val FIELD_OWNER = "owner"
         private const val FIELD_HOLDER = "holder"
 
+        private val FIELD_OWNER_MIN = "owner[${User.FIELDS_MIN}]"
+        private val FIELD_HOLDER_MIN = "holder[${User.FIELDS_MIN}]"
+
         val FIELDS_ALL = arrayOf(
             FIELD_REFERENCE_CODE,
             FIELD_ICON_URL,
             FIELD_NAME,
             FIELD_GOAL,
             FIELD_DESCRIPTION,
-            FIELD_RELEASE_DDATE,
+            FIELD_RELEASED_DATE,
             FIELD_ORIGIN_COUNTRY,
             FIELD_ALLOWED_TO_BE_COLLECTED,
             FIELD_OWNER_CODE,
@@ -62,6 +68,15 @@ data class Trackable(
             FIELD_TRACKING_NUMBER,
             FIELD_OWNER,
             FIELD_HOLDER
+        ).joinToString(FIELD_SEPARATOR)
+
+        val FIELDS_MIN = arrayOf(
+            FIELD_REFERENCE_CODE,
+            FIELD_ICON_URL,
+            FIELD_NAME,
+            FIELD_RELEASED_DATE,
+            FIELD_OWNER_MIN,
+            FIELD_HOLDER_MIN
         ).joinToString(FIELD_SEPARATOR)
     }
 }

@@ -1,8 +1,9 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimePTZone
 import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
-import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZonedDateTime
 
 data class Geocache(
     val referenceCode: String, // string
@@ -11,15 +12,15 @@ data class Geocache(
     val terrain: Float, // 0
     val favoritePoints: Int?, // 0
     val trackableCount: Int?, // 0
-    @LocalDateTimePTZone val placedDate: Instant?, // 2018-06-06T06:16:54.165Z
-    @LocalDateTimePTZone val publishedDate: Instant?, // 2018-06-06T06:16:54.165Z
+    val placedDate: LocalDateTime?, // 2018-06-06T06:16:54.160
+    val publishedDate: LocalDateTime?, // 2018-06-06T06:16:54.165
     val geocacheType: GeocacheType, // Traditional
     val geocacheSize: GeocacheSize, // Unknown
     val userData: UserData?,
     val status: GeocacheStatus, // Unpublished
     val location: Location?,
     val postedCoordinates: Coordinates,
-    @LocalDateTimePTZone val lastVisitedDate: Instant?, // 2018-06-06T06:16:54.165Z
+    val lastVisitedDate: LocalDateTime?, // 2018-06-06T06:16:54.165
     val ownerCode: String?, // string
     val ownerAlias: String, // string
     val isPremiumOnly: Boolean, // true
@@ -37,6 +38,30 @@ data class Geocache(
     val images: List<Image>?,
     val userWaypoints: List<UserWaypoint>?
 ) {
+    val placedDateInstant by lazy {
+        if (placedDate != null && ianaTimezoneId != null) {
+            ZonedDateTime.of(placedDate, ZoneId.of(ianaTimezoneId)).toInstant()
+        } else {
+            null
+        }
+    }
+
+    val publishedDateInstant by lazy {
+        if (publishedDate != null && ianaTimezoneId != null) {
+            ZonedDateTime.of(publishedDate, ZoneId.of(ianaTimezoneId)).toInstant()
+        } else {
+            null
+        }
+    }
+
+    val lastVisitedDateInstant by lazy {
+        if (lastVisitedDate != null && ianaTimezoneId != null) {
+            ZonedDateTime.of(lastVisitedDate, ZoneId.of(ianaTimezoneId)).toInstant()
+        } else {
+            null
+        }
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 
@@ -67,7 +92,9 @@ data class Geocache(
         private const val FIELD_URL = "url"
         private const val FIELD_CONTAINS_HTML = "containsHtml"
         private const val FIELD_ADDITIONAL_WAYPOINTS = "additionalWaypoints"
-        private val FIELD_GEOCACHE_LOGS_MIN = "geocachelogs[${GeocacheLog.FIELDS_ALL}]"
+        private val FIELD_GEOCACHE_LOGS_MIN = "geocachelogs[${GeocacheLog.FIELDS_MIN}]"
+        private val FIELD_TRACKABLES_MIN = "trackables[${Trackable.FIELDS_MIN}]"
+        private val FIELD_IMAGES_MIN = "images[${Image.FIELDS_MIN}]"
 
         val FIELDS_ALL = arrayOf(
             FIELD_REFERENCE_CODE,
@@ -97,7 +124,9 @@ data class Geocache(
             FIELD_URL,
             FIELD_CONTAINS_HTML,
             FIELD_ADDITIONAL_WAYPOINTS,
-            FIELD_GEOCACHE_LOGS_MIN
+            FIELD_GEOCACHE_LOGS_MIN,
+            FIELD_TRACKABLES_MIN,
+            FIELD_IMAGES_MIN
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE = arrayOf(
@@ -120,8 +149,7 @@ data class Geocache(
             FIELD_IS_PREMIUM_ONLY,
             FIELD_IANA_TIMEZONE_ID,
             FIELD_RELATED_WEBPAGE,
-            FIELD_URL,
-            FIELD_CONTAINS_HTML
+            FIELD_URL
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE_LIVEMAP = arrayOf(

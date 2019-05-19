@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.Instant
 
 data class TrackableLog(
@@ -17,6 +18,10 @@ data class TrackableLog(
     val url: String, // string
     val owner: User // user
 ) {
+    val id by lazy {
+        ReferenceCode.toId(referenceCode)
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 

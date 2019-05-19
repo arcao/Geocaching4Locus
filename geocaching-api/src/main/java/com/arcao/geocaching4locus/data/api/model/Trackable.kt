@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.Instant
 
 data class Trackable(
@@ -24,6 +25,10 @@ data class Trackable(
     val owner: User, // user
     val holder: User? // user
 ) {
+    val id by lazy {
+        ReferenceCode.toId(referenceCode)
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 

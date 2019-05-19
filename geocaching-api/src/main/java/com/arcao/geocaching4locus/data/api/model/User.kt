@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
 
 data class User(
@@ -17,6 +18,12 @@ data class User(
     val homeCoordinates: Coordinates?,
     val geocacheLimits: GeocacheLimits?
 ) {
+    val id by lazy {
+        ReferenceCode.toId(requireNotNull(referenceCode) {
+            "Reference code is null."
+        })
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 

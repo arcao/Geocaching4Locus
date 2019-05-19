@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
@@ -20,6 +21,10 @@ data class GeocacheLog(
     val usedFavoritePoint: Boolean = false, // true
     val url: String? // string
 ) {
+    val id by lazy {
+        ReferenceCode.toId(referenceCode)
+    }
+
     val loggedDateInstant by lazy {
         if (loggedDate != null && ianaTimezoneId != null) {
             ZonedDateTime.of(loggedDate, ZoneId.of(ianaTimezoneId)).toInstant()

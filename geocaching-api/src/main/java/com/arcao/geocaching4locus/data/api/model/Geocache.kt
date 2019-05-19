@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
@@ -38,6 +39,10 @@ data class Geocache(
     val images: List<Image>?,
     val userWaypoints: List<UserWaypoint>?
 ) {
+    val id by lazy {
+        ReferenceCode.toId(referenceCode)
+    }
+
     val placedDateInstant by lazy {
         if (placedDate != null && ianaTimezoneId != null) {
             ZonedDateTime.of(placedDate, ZoneId.of(ianaTimezoneId)).toInstant()

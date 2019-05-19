@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.Instant
 
 data class Image(
@@ -11,6 +12,12 @@ data class Image(
     @LocalDateTimeUTC val createdDate: Instant?, // 2018-06-06T06:16:54.165
     val guid: String // string
 ) {
+    val id by lazy {
+        ReferenceCode.toId(requireNotNull(referenceCode) {
+            "Reference code is null"
+        })
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 

@@ -43,11 +43,16 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
 
-    implementation "com.github.scribejava:scribejava-core:$scribejavaVersion"
-    implementation "com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion"
+    api "com.github.scribejava:scribejava-core:$scribejavaVersion"
+    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion") {
+        // exclude incompatible OkHttp library, use 3.12.x version instead
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+
+    // koin
+    implementation "org.koin:koin-android:$koinVersion"
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
 

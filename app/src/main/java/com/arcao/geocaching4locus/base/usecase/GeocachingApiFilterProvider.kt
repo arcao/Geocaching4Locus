@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.base.usecase
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.model.Coordinates
+import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.BoundingBoxFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DifficultyFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DistanceUnit
@@ -12,10 +13,11 @@ import com.arcao.geocaching4locus.data.api.model.request.query.filter.GeocacheSi
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.GeocacheTypeFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.HiddenByFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.IsActiveFilter
+import com.arcao.geocaching4locus.data.api.model.request.query.filter.IsPublishedFilter
+import com.arcao.geocaching4locus.data.api.model.request.query.filter.LevelFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.LocationFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.RadiusFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.TerrainFilter
-import java.util.ArrayList
 
 class GeocachingApiFilterProvider(
     private val accountManager: AccountManager
@@ -35,7 +37,7 @@ class GeocachingApiFilterProvider(
         terrainMax: Float = 5F,
         excludeIgnoreList: Boolean = true
     ): List<Filter> {
-        val filters = ArrayList<Filter>(9)
+        val filters = mutableListOf<Filter>()
 
         val account = requireNotNull(accountManager.account)
         val userName = requireNotNull(account.userName)
@@ -45,9 +47,10 @@ class GeocachingApiFilterProvider(
         filters += RadiusFilter(AppConstants.LIVEMAP_DISTANCE.toFloat(), DistanceUnit.METER)
         filters += BoundingBoxFilter(topLeftCoordinates, bottomRightCoordinates)
 
-        filters += IsActiveFilter(true)
-        if (disabledGeocaches) {
-            filters += IsActiveFilter(false)
+        filters += IsPublishedFilter(true)
+
+        if (!disabledGeocaches) {
+            filters += IsActiveFilter(true)
         }
 
         if (!foundGeocaches) {
@@ -56,6 +59,10 @@ class GeocachingApiFilterProvider(
 
         if (!ownGeocaches) {
             filters += HiddenByFilter(userName).not()
+        }
+
+        if (!premiumMember) {
+            filters += LevelFilter(MembershipType.BASIC)
         }
 
         if (premiumMember) {
@@ -91,7 +98,7 @@ class GeocachingApiFilterProvider(
         terrainMax: Float = 5F,
         excludeIgnoreList: Boolean = true
     ): List<Filter> {
-        val filters = ArrayList<Filter>(9)
+        val filters = mutableListOf<Filter>()
 
         val account = requireNotNull(accountManager.account)
         val userName = requireNotNull(account.userName)
@@ -100,9 +107,10 @@ class GeocachingApiFilterProvider(
         filters += LocationFilter(coordinates)
         filters += RadiusFilter(distanceMeters.toFloat(), DistanceUnit.METER)
 
-        filters += IsActiveFilter(true)
-        if (disabledGeocaches) {
-            filters += IsActiveFilter(false)
+        filters += IsPublishedFilter(true)
+
+        if (!disabledGeocaches) {
+            filters += IsActiveFilter(true)
         }
 
         if (!foundGeocaches) {
@@ -111,6 +119,10 @@ class GeocachingApiFilterProvider(
 
         if (!ownGeocaches) {
             filters += HiddenByFilter(userName).not()
+        }
+
+        if (!premiumMember) {
+            filters += LevelFilter(MembershipType.BASIC)
         }
 
         if (premiumMember) {

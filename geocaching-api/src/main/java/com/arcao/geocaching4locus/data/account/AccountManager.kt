@@ -24,7 +24,7 @@ abstract class AccountManager(
 
     protected abstract fun loadAccount() : GeocachingAccount?
 
-    internal abstract fun saveAccount(account: GeocachingAccount?)
+    abstract fun saveAccount(account: GeocachingAccount?)
 
     suspend fun createAccount(code: String) : GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
@@ -47,7 +47,7 @@ abstract class AccountManager(
         saveAccount(account)
     }
 
-    internal suspend fun refreshAccount(account: GeocachingAccount) {
+    suspend fun refreshAccount(account: GeocachingAccount) {
         account.apply {
             val token = withContext(Dispatchers.IO) {
                 oAuthService.refreshAccessToken(refreshToken)

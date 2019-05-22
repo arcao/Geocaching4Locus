@@ -3,11 +3,12 @@ package com.arcao.geocaching4locus.update
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.data.account.AccountManager
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber

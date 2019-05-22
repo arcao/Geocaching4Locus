@@ -2,14 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
-        <import type="com.arcao.geocaching4locus.base.constants.AppConstants"/>
-
-        <import type="com.arcao.geocaching4locus.dashboard.DashboardViewModel"/>
-
         <variable
                 name="vm"
-                type="DashboardViewModel"/>
+                type="com.arcao.geocaching4locus.dashboard.DashboardViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"

@@ -38,11 +38,6 @@ dependencies {
 
     // Geocaching API
     api project(":geocaching-api")
-    implementation("com.arcao:geocaching-api:$geocachingApiVersion") {
-        // Not working in Android, slf4j-timber used instead
-        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-        exclude group: 'org.jetbrains', module: 'annotations-java5'
-    }
 
     // Locus API
     implementation("com.asamm:locus-api-android:$locusApiAndroidVersion") {

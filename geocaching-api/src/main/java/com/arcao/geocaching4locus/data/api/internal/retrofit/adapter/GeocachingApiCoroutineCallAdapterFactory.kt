@@ -10,7 +10,12 @@ import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonEncodingException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.CallAdapter
+import retrofit2.Callback
+import retrofit2.HttpException
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 import java.util.regex.Pattern
@@ -66,7 +71,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                     } else {
                         deferred.completeExceptionally(handleResponseError(response))
                     }
-                }
+                }   
             })
 
             return deferred
@@ -85,7 +90,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                         else -> null
                     }
 
-                    return AuthenticationException(code, message)
+                    return AuthenticationException(StatusCode.FORBIDDEN, code, message)
                 }
             }
 
@@ -95,7 +100,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                 try {
                     val error = retrofit.responseBodyConverter<Error>(Error::class.java, emptyArray()).convert(errorBody)
                     if (error != null) {
-                        return GeocachingApiException(error.statusCode, error.statusMessage, error.errorMessage)
+                        return createException(error.statusCode, error.statusMessage, error.errorMessage)
                     }
                 } catch (t: Throwable) {
                     // ignore and fallback to HttpException
@@ -105,7 +110,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             // try to handle known API error codes
             val statusCode = StatusCode.from(response.code())
             if (statusCode != null) {
-                return GeocachingApiException(statusCode, response.message(), "")
+                return createException(statusCode, response.message(), "")
             }
 
             return HttpException(response)
@@ -117,6 +122,13 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
 
             if (body is MutablePagedList<*> && headers["x-total-count"] != null) {
                 body.totalCount = headers["x-total-count"]?.toLongOrNull() ?: body.totalCount
+            }
+        }
+
+        private fun createException(statusCode : StatusCode, statusMessage: String, errorMessage : String): Exception {
+            return when(statusCode) {
+                StatusCode.FORBIDDEN -> AuthenticationException(statusCode, statusMessage, errorMessage)
+                else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }
         }
     }

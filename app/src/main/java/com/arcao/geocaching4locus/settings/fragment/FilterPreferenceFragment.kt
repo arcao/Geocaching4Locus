@@ -3,10 +3,9 @@ package com.arcao.geocaching4locus.settings.fragment
 import android.content.SharedPreferences
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
-import com.arcao.geocaching.api.data.type.ContainerType
-import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
+import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE_PREFIX
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CONTAINER_TYPE
@@ -24,6 +23,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.SHORT_CONTAINER_T
 import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_KM
 import com.arcao.geocaching4locus.base.constants.PrefConstants.UNIT_MILES
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
+import com.arcao.geocaching4locus.data.account.AccountManager
 import org.koin.android.ext.android.get
 
 class FilterPreferenceFragment : AbstractPreferenceFragment() {
@@ -142,7 +142,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         var allChecked = true
         var noneChecked = true
 
-        val len = GeocacheType.values().size
+        val len = AppConstants.GEOCACHE_TYPES.size
         for (i in 0 until len) {
             if (preferences.getBoolean(FILTER_CACHE_TYPE_PREFIX + i, true)) {
                 noneChecked = false
@@ -168,11 +168,11 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
 
     private fun prepareCacheTypeSummaryBasicMember(): CharSequence {
         return preparePreferenceSummary(
-            SHORT_CACHE_TYPE_NAMES[GeocacheType.Traditional.ordinal] +
+            SHORT_CACHE_TYPE_NAMES[0] +
                 TEXT_VALUE_SEPARATOR +
-                SHORT_CACHE_TYPE_NAMES[GeocacheType.Event.ordinal] +
+                SHORT_CACHE_TYPE_NAMES[8] +
                 TEXT_VALUE_SEPARATOR +
-                SHORT_CACHE_TYPE_NAMES[GeocacheType.CacheInTrashOutEvent.ordinal],
+                SHORT_CACHE_TYPE_NAMES[10],
             0
         )
     }
@@ -180,7 +180,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
     private fun prepareContainerTypeSummary(): CharSequence {
         val sb = StringBuilder()
 
-        val len = ContainerType.values().size
+        val len = AppConstants.GEOCACHE_SIZES.size
         for (i in 0 until len) {
             if (preferences.getBoolean(FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
                 if (sb.isNotEmpty())
@@ -203,7 +203,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
     private fun prepareContainerTypeSummaryBasicMember(): CharSequence {
         val sb = StringBuilder()
 
-        val len = ContainerType.values().size
+        val len = AppConstants.GEOCACHE_SIZES.size
         for (i in 0 until len) {
             if (sb.isNotEmpty())
                 sb.append(TEXT_VALUE_SEPARATOR)

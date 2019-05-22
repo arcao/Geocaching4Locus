@@ -1,13 +1,12 @@
 package com.arcao.geocaching4locus.base.usecase
 
-import com.arcao.geocaching.api.GeocachingApi
-import com.arcao.geocaching.api.data.Geocache
-import com.arcao.geocaching.api.data.SearchForGeocachesRequest
-import com.arcao.geocaching.api.filter.CacheCodeFilter
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.restrictions
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
+import com.arcao.geocaching4locus.data.api.model.Geocache
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +16,7 @@ import locus.api.mapper.DataMapper
 import timber.log.Timber
 
 class GetPointsFromGeocacheCodesUseCase(
-    private val geocachingApi: GeocachingApi,
+    private val repository: GeocachingApiRepository,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val mapper: DataMapper,
@@ -31,13 +30,7 @@ class GetPointsFromGeocacheCodesUseCase(
         geocacheLogsCount: Int = 0,
         trackableLogsCount: Int = 0
     ) = scope.produce(dispatcherProvider.io) {
-        geocachingApiLogin(geocachingApi)
-
-        val resultQuality = if (liteData) {
-            GeocachingApi.ResultQuality.LITE
-        } else {
-            GeocachingApi.ResultQuality.FULL
-        }
+        geocachingApiLogin()
 
         val notFoundGeocacheCodes = ArrayList<String>()
 
@@ -50,25 +43,19 @@ class GetPointsFromGeocacheCodesUseCase(
 
             val requestedCacheIds = getRequestedGeocacheIds(geocacheCodes, current, itemsPerRequest)
 
-            val cachesToAdd = geocachingApi.searchForGeocaches(
-                SearchForGeocachesRequest.builder()
-                    .resultQuality(resultQuality)
-                    .maxPerPage(itemsPerRequest)
-                    .geocacheLogCount(geocacheLogsCount)
-                    .trackableLogCount(trackableLogsCount)
-                    .addFilter(CacheCodeFilter(*requestedCacheIds))
-                    .build()
+            val cachesToAdd = repository.geocaches(
+                referenceCodes = *requestedCacheIds,
+                logsCount = geocacheLogsCount,
+                lite = liteData
             )
 
-            if (liteData) {
-                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
-            }
+            accountManager.restrictions().updateLimits(repository.userLimits())
 
             yield()
 
             addNotFoundCaches(notFoundGeocacheCodes, requestedCacheIds, cachesToAdd)
 
-            if (!cachesToAdd.isEmpty()) {
+            if (cachesToAdd.isNotEmpty()) {
                 val points = mapper.createLocusPoints(cachesToAdd)
                 send(points)
             }
@@ -98,7 +85,7 @@ class GetPointsFromGeocacheCodesUseCase(
 
         val foundCacheIds = arrayOfNulls<String>(cachesToAdd.size)
         for (i in cachesToAdd.indices) {
-            foundCacheIds[i] = cachesToAdd[i].code()
+            foundCacheIds[i] = cachesToAdd[i].referenceCode
         }
 
         for (cacheId in requestedCacheIds) {

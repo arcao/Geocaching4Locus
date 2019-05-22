@@ -1,9 +1,8 @@
 package com.arcao.geocaching4locus.importgc
 
-import android.content.Context
 import android.net.Uri
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
@@ -12,6 +11,7 @@ import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import locus.api.manager.LocusMapManager
@@ -19,7 +19,6 @@ import timber.log.Timber
 import java.util.regex.Pattern
 
 class ImportUrlViewModel(
-    private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
     private val getGeocacheCodeFromGuid: GetGeocacheCodeFromGuidUseCase,
@@ -61,7 +60,7 @@ class ImportUrlViewModel(
                 Timber.i("source: import;%s", geocacheCode)
 
                 val point = getPointFromGeocacheCode(
-                    geocacheCode = geocacheCode,
+                    referenceCode = geocacheCode,
                     liteData = !accountManager.isPremium,
                     geocacheLogsCount = filterPreferenceManager.geocacheLogsCount
                 )

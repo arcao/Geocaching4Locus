@@ -1,7 +1,6 @@
 package com.arcao.geocaching4locus.settings.fragment
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri

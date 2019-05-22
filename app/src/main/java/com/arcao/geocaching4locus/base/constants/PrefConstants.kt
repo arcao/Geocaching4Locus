@@ -5,7 +5,7 @@ object PrefConstants {
     const val RESTRICTION_STORAGE_NAME = "RESTRICTION"
 
     const val PREF_VERSION = "pref_version"
-    const val CURRENT_PREF_VERSION = 3
+    const val CURRENT_PREF_VERSION = 4
 
     const val LAST_LATITUDE = "latitude"
     const val LAST_LONGITUDE = "longitude"

@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.base.usecase
 
-import com.arcao.geocaching.api.GeocachingApi
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
@@ -10,7 +10,7 @@ import kotlinx.coroutines.yield
 import locus.api.mapper.GeocacheLogConverter
 
 class GetGeocachingLogsUseCase(
-    private val geocachingApi: GeocachingApi,
+    private val repository: GeocachingApiRepository,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val geocacheLogConverter: GeocacheLogConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
@@ -18,19 +18,19 @@ class GetGeocachingLogsUseCase(
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         scope: CoroutineScope,
-        geocacheCode: String,
+        referenceCode: String,
         start: Int = 0,
         count: Int = 0
     ) = scope.produce(dispatcherProvider.io) {
-        geocachingApiLogin(geocachingApi)
+        geocachingApiLogin()
 
         var current = start
 
         while (current < count) {
-            val logs = geocachingApi.getGeocacheLogsByCacheCode(
-                geocacheCode,
-                current,
-                Math.min(count - current, AppConstants.LOGS_PER_REQUEST)
+            val logs = repository.geocacheLogs(
+                referenceCode = referenceCode,
+                skip = current,
+                take = Math.min(count - current, AppConstants.LOGS_PER_REQUEST)
             )
 
             yield()

@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_CACHES_STEP
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_COUNT_OF_LOGS
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_DISABLE_DNF_NM_NA_CACHES
@@ -12,6 +12,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_DISAB
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_FULL_CACHE_DATE_ON_SHOW
 import com.arcao.geocaching4locus.base.constants.PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.settings.widget.SliderPreference
 import org.koin.android.ext.android.get
 

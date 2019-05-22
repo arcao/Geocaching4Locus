@@ -1,15 +1,15 @@
 package com.arcao.geocaching4locus.update
 
-import android.content.Context
 import android.content.Intent
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +19,6 @@ import locus.api.mapper.PointMerger
 import timber.log.Timber
 
 class UpdateMoreViewModel(
-    private val context: Context,
     private val accountManager: AccountManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
     private val getPointsFromPointIndexes: GetPointsFromPointIndexesUseCase,
@@ -61,7 +60,7 @@ class UpdateMoreViewModel(
 
                     updateProgress(maxProgress = pointIndexes.size)
 
-                    val basicMember = !accountManager.isPremium
+                    val basicMember = !(accountManager.isPremium)
                     var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
                     var lite = false
 

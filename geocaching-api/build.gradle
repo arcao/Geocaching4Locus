@@ -51,10 +51,12 @@ dependencies {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
     // koin
     implementation "org.koin:koin-android:$koinVersion"
 
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
+    api "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
 
     implementation "com.squareup.moshi:moshi:$moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"

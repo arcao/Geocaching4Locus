@@ -3,13 +3,12 @@ package com.arcao.geocaching4locus.authentication.util
 import android.content.Context
 import android.preference.PreferenceManager
 import androidx.core.content.edit
-import com.arcao.geocaching.api.data.GeocacheLimits
-import com.arcao.geocaching.api.data.apilimits.ApiLimits
-import com.arcao.geocaching.api.data.type.ContainerType
-import com.arcao.geocaching.api.data.type.GeocacheType
+import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
-import java.util.Calendar
-import java.util.Date
+import com.arcao.geocaching4locus.data.api.model.User
+import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import org.threeten.bp.Duration
+import org.threeten.bp.Instant
 
 class AccountRestrictions internal constructor(context: Context) {
 
@@ -17,12 +16,35 @@ class AccountRestrictions internal constructor(context: Context) {
     private val preferences =
         this.context.getSharedPreferences(PrefConstants.RESTRICTION_STORAGE_NAME, Context.MODE_PRIVATE)
 
-    var maxFullGeocacheLimit: Long = 0
+    var maxFullGeocacheLimit: Int = 0
         private set
-    private var currentFullGeocacheLimit: Long = 0
-    var fullGeocacheLimitPeriod: Long = 0
+    var maxLiteGeocacheLimit: Int = 0
         private set
-    private lateinit var renewFullGeocacheLimit: Date
+
+    var currentFullGeocacheLimit: Int = 0
+        private set
+    var currentLiteGeocacheLimit: Int = 0
+        private set
+
+    var renewFullGeocacheLimit: Instant = Instant.now()
+        get() {
+            val now = Instant.now()
+            if (field.isBefore(now)) {
+                field = now
+            }
+            return field
+        }
+        private set
+
+    var renewLiteGeocacheLimit: Instant = Instant.now()
+        get() {
+            val now = Instant.now()
+            if (field.isBefore(now)) {
+                field = now
+            }
+            return field
+        }
+        private set
 
     init {
         init()
@@ -32,7 +54,6 @@ class AccountRestrictions internal constructor(context: Context) {
         preferences.edit()
             .remove(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT)
             .remove(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT)
-            .remove(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD)
             .remove(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT)
             .apply()
 
@@ -40,17 +61,13 @@ class AccountRestrictions internal constructor(context: Context) {
     }
 
     private fun init() {
-        maxFullGeocacheLimit = preferences.getLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, Long.MAX_VALUE)
-        currentFullGeocacheLimit = preferences.getLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0)
-        fullGeocacheLimitPeriod = preferences.getLong(
-            PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD,
-            DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD
-        )
-        renewFullGeocacheLimit = Date(preferences.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0))
+        maxFullGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, 0)
+        currentFullGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0)
+        renewFullGeocacheLimit = Instant.ofEpochSecond(preferences.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0))
     }
 
-    internal fun applyRestrictions(premium: Boolean) {
-        if (premium) {
+    internal fun applyRestrictions(user: User) {
+        if (user.isPremium()) {
             presetPremiumMembershipConfiguration()
         } else {
             presetBasicMembershipConfiguration()
@@ -68,6 +85,7 @@ class AccountRestrictions internal constructor(context: Context) {
             putInt(PrefConstants.DOWNLOADING_COUNT_OF_LOGS, 0)
             // LIVE MAP
             putBoolean(PrefConstants.LIVE_MAP_DOWNLOAD_HINTS, false)
+
             // FILTERS
             putString(PrefConstants.FILTER_DIFFICULTY_MIN, "1")
             putString(PrefConstants.FILTER_DIFFICULTY_MAX, "5")
@@ -75,11 +93,9 @@ class AccountRestrictions internal constructor(context: Context) {
             putString(PrefConstants.FILTER_TERRAIN_MAX, "5")
 
             // multi-select filters (select all)
-            val geocacheTypeLength = GeocacheType.values().size
-            for (i in 0 until geocacheTypeLength)
+            for (i in 0 until AppConstants.GEOCACHE_TYPES.size)
                 putBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)
-            val containerTypeLength = ContainerType.values().size
-            for (i in 0 until containerTypeLength)
+            for (i in 0 until AppConstants.GEOCACHE_SIZES.size)
                 putBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)
         }
     }
@@ -98,65 +114,52 @@ class AccountRestrictions internal constructor(context: Context) {
         }
     }
 
-    fun updateLimits(apiLimits: ApiLimits?) {
-        val limits = apiLimits?.cacheLimits() ?: return
-        if (limits.isEmpty())
-            return
+    fun updateLimits(user: User) {
+        maxFullGeocacheLimit = if (user.isPremium()) {
+            FULL_GEOCACHE_LIMIT_PREMIUM
+        } else {
+            FULL_GEOCACHE_LIMIT_BASIC
+        }
 
-        val limit = limits[0]
+        maxLiteGeocacheLimit = if (user.isPremium()) {
+            LITE_GEOCACHE_LIMIT_PREMIUM
+        } else {
+            LITE_GEOCACHE_LIMIT_BASIC
+        }
 
-        maxFullGeocacheLimit = limit.limit()
-        fullGeocacheLimitPeriod = limit.period()
-
-        preferences.edit()
-            .putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
-            .putLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD, fullGeocacheLimitPeriod)
-            .apply()
-    }
-
-    fun updateLimits(cacheLimits: GeocacheLimits?) {
-        maxFullGeocacheLimit = cacheLimits?.maxGeocacheCount()?.toLong() ?: return
+        val limits = user.geocacheLimits ?: return
 
         preferences.edit {
-            // cache limit was renew
-            if (currentFullGeocacheLimit > cacheLimits.currentGeocacheCount() || currentFullGeocacheLimit == 0L && cacheLimits.currentGeocacheCount() > 0) {
-                currentFullGeocacheLimit = cacheLimits.currentGeocacheCount().toLong()
+            currentFullGeocacheLimit = limits.fullCallsRemaining
+            renewFullGeocacheLimit = Instant.now().plus(limits.fullCallsSecondsToLive ?: DEFAULT_RENEW_DURATION)
 
-                val c = Calendar.getInstance()
-                c.add(Calendar.MINUTE, fullGeocacheLimitPeriod.toInt())
+            currentLiteGeocacheLimit = limits.liteCallsRemaining
+            renewLiteGeocacheLimit = Instant.now().plus(limits.liteCallsSecondsToLive ?: DEFAULT_RENEW_DURATION)
 
-                renewFullGeocacheLimit = c.time
+            // store it to preferences
+            putInt(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
+            putInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
+            putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.epochSecond)
 
-                // store it to preferences
-                putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
-                putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
-                putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.time)
-            } else {
-                currentFullGeocacheLimit = cacheLimits.currentGeocacheCount().toLong()
-
-                // store it to preferences
-                putLong(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
-                putLong(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
-            }
-        }
-    }
-
-    fun getRenewFullGeocacheLimit(): Date? {
-        checkRenewPeriod()
-
-        return renewFullGeocacheLimit
-    }
-
-    private fun checkRenewPeriod() {
-        if (renewFullGeocacheLimit.before(Date())) {
-            val c = Calendar.getInstance()
-            c.add(Calendar.MINUTE, fullGeocacheLimitPeriod.toInt())
-            renewFullGeocacheLimit = c.time
-            currentFullGeocacheLimit = 0
+            putInt(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
+            putInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
+            putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.epochSecond)
         }
     }
 
     companion object {
-        private const val DEFAULT_FULL_GEOCACHE_LIMIT_PERIOD: Long = 1440 // 24 hours in minutes
+        private const val FULL_GEOCACHE_LIMIT_PREMIUM = 16000
+        private const val FULL_GEOCACHE_LIMIT_BASIC = 3
+        private const val LITE_GEOCACHE_LIMIT_PREMIUM = 10000
+        private const val LITE_GEOCACHE_LIMIT_BASIC = 10000
+
+        val DEFAULT_RENEW_DURATION: Duration = Duration.ofDays(1)
+    }
+
+    private fun User.isPremium() = when (membership) {
+        MembershipType.UNKNOWN -> false
+        MembershipType.BASIC -> false
+        MembershipType.CHARTER -> true
+        MembershipType.PREMIUM -> true
     }
 }

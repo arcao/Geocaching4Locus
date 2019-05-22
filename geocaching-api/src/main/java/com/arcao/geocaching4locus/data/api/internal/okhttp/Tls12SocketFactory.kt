@@ -1,4 +1,4 @@
-package com.arcao.geocaching.api
+package com.arcao.geocaching4locus.data.api.internal.okhttp
 
 import android.os.Build
 import okhttp3.ConnectionSpec

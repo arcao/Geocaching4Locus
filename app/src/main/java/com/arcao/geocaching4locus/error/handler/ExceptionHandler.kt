@@ -4,18 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.text.format.DateFormat
-import com.arcao.geocaching.api.StatusCode
-import com.arcao.geocaching.api.exception.InvalidCredentialsException
-import com.arcao.geocaching.api.exception.InvalidResponseException
-import com.arcao.geocaching.api.exception.InvalidSessionException
-import com.arcao.geocaching.api.exception.LiveGeocachingApiException
-import com.arcao.geocaching.api.exception.NetworkException
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.AccountRestrictions
+import com.arcao.geocaching4locus.authentication.util.isPremium
+import com.arcao.geocaching4locus.authentication.util.restrictions
+import com.arcao.geocaching4locus.base.AccountNotFoundException
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
 import com.arcao.geocaching4locus.base.util.getQuantityText
 import com.arcao.geocaching4locus.base.util.getText
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
+import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
+import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
+import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -23,12 +25,12 @@ import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment
-import com.arcao.wherigoservice.api.WherigoServiceException
 import com.github.scribejava.core.exceptions.OAuthException
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 import timber.log.Timber
 import java.io.EOFException
 import java.io.FileNotFoundException
+import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -52,8 +54,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         }
 
         // special handling for some API exceptions
-        if (t is LiveGeocachingApiException) {
-            val intent = handleLiveGeocachingApiExceptions(t, positiveAction, baseMessage)
+        if (t is GeocachingApiException) {
+            val intent = handleGeocachingApiExceptions(t, positiveAction, baseMessage)
             if (intent != null)
                 return intent
         }
@@ -65,17 +67,9 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 .negativeButtonText(R.string.button_no)
         }
 
-        if (t is InvalidCredentialsException) {
+        if (t is AuthenticationException || t is AccountNotFoundException) {
+            accountManager.deleteAccount()
             return builder.message(R.string.error_no_account)
-                .positiveAction(
-                    SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java)
-                )
-                .positiveButtonText(R.string.button_ok)
-                .clearNegativeButtonText()
-                .build()
-        } else if (t is InvalidSessionException || t is LiveGeocachingApiException && t.statusCode == StatusCode.NotAuthorized) {
-            accountManager.removeAccount()
-            return builder.message(R.string.error_session_expired)
                 .positiveAction(
                     SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java)
                 )
@@ -95,13 +89,12 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     geocacheCodes.size, TextUtils.join(", ", geocacheCodes)
                 )
             ).build()
-        } else if (t is NetworkException || t is WherigoServiceException && t.code == WherigoServiceException.ERROR_CONNECTION_ERROR) {
+        } else if (t is IOException) {
             builder.message(baseMessage, context.getText(R.string.error_network_unavailable))
 
             // Allow sending error report for exceptions that not caused by timeout or unknown host
-            val innerT = t.cause
-            if (innerT != null && innerT !is InterruptedIOException && innerT !is UnknownHostException &&
-                innerT !is ConnectException && innerT !is EOFException && !isSSLConnectionException(innerT)
+            if (t !is InterruptedIOException && t !is UnknownHostException &&
+                t !is ConnectException && t !is EOFException && !isSSLConnectionException(t)
             ) {
                 builder.exception(t)
             }
@@ -151,20 +144,20 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         return !message.isNullOrEmpty() && (message.contains("Connection reset by peer") || message.contains("Connection timed out"))
     }
 
-    private fun handleLiveGeocachingApiExceptions(
-        t: LiveGeocachingApiException,
+    private fun handleGeocachingApiExceptions(
+        t: GeocachingApiException,
         positiveAction: Intent?,
         baseMessage: CharSequence
     ): Intent? {
         // TODO fix this
         val premiumMember = accountManager.isPremium
-        val restrictions = accountManager.restrictions
+        val restrictions = accountManager.restrictions()
 
         val builder = ErrorActivity.IntentBuilder(context)
 
         when (t.statusCode) {
-            // 118: user reach the quota limit
-            StatusCode.CacheLimitExceeded -> {
+            // user reach the quota limit
+            StatusCode.CONFLICT -> {
                 val title = if (premiumMember)
                     R.string.title_premium_member_warning
                 else
@@ -176,8 +169,8 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     R.string.error_basic_member_full_geocaching_quota_exceeded
 
                 // apply format on a text
-                val cachesPerPeriod = restrictions.maxFullGeocacheLimit.toInt()
-                var period = restrictions.fullGeocacheLimitPeriod.toInt()
+                val cachesPerPeriod = restrictions.maxFullGeocacheLimit
+                var period = AccountRestrictions.DEFAULT_RENEW_DURATION.seconds.toInt()
 
                 val periodString: String
                 if (period < AppConstants.SECONDS_PER_MINUTE) {
@@ -187,7 +180,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     periodString = context.resources.getQuantityString(R.plurals.plurals_hour, period, period)
                 }
 
-                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.getRenewFullGeocacheLimit())
+                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.renewFullGeocacheLimit)
                 val cacheString = context.getQuantityText(R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod)
                 val errorText = context.getText(message, cacheString, periodString, renewTime)
 
@@ -203,7 +196,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             }
 
             // 140: too many method calls per minute
-            StatusCode.NumberOfCallsExceeded -> {
+            StatusCode.TOO_MANY_REQUESTS -> {
                 builder.title(R.string.title_method_quota_exceeded)
                     .message(baseMessage, context.getText(R.string.error_method_quota_exceeded))
 
@@ -216,21 +209,21 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 return builder.build()
             }
 
-            // BM user use PM filters
-            StatusCode.PremiumMembershipRequiredForBookmarksExcludeFilter,
-            StatusCode.PremiumMembershipRequiredForDifficultyFilter,
-            StatusCode.PremiumMembershipRequiredForFavoritePointsFilter,
-            StatusCode.PremiumMembershipRequiredForGeocacheContainerSizeFilter,
-            StatusCode.PremiumMembershipRequiredForGeocacheNameFilter,
-            StatusCode.PremiumMembershipRequiredForHiddenByUserFilter,
-            StatusCode.PremiumMembershipRequiredForNotHiddenByUserFilter,
-            StatusCode.PremiumMembershipRequiredForTerrainFilter,
-            StatusCode.PremiumMembershipRequiredForTrackableCountFilter -> {
-                accountManager.updateAccountNextTime()
-                return builder.title(R.string.title_premium_member_warning)
-                    .message(R.string.error_premium_filter)
-                    .build()
-            }
+//            // BM user use PM filters
+//            StatusCode.PremiumMembershipRequiredForBookmarksExcludeFilter,
+//            StatusCode.PremiumMembershipRequiredForDifficultyFilter,
+//            StatusCode.PremiumMembershipRequiredForFavoritePointsFilter,
+//            StatusCode.PremiumMembershipRequiredForGeocacheContainerSizeFilter,
+//            StatusCode.PremiumMembershipRequiredForGeocacheNameFilter,
+//            StatusCode.PremiumMembershipRequiredForHiddenByUserFilter,
+//            StatusCode.PremiumMembershipRequiredForNotHiddenByUserFilter,
+//            StatusCode.PremiumMembershipRequiredForTerrainFilter,
+//            StatusCode.PremiumMembershipRequiredForTrackableCountFilter -> {
+//                accountManager.updateAccountNextTime()
+//                return builder.title(R.string.title_premium_member_warning)
+//                    .message(R.string.error_premium_filter)
+//                    .build()
+//            }
 
             else -> return null
         }

@@ -1,12 +1,11 @@
 package com.arcao.geocaching4locus.base.usecase
 
-import com.arcao.geocaching.api.GeocachingApi
-import com.arcao.geocaching.api.data.SearchForGeocachesRequest
-import com.arcao.geocaching.api.filter.CacheCodeFilter
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.restrictions
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -16,7 +15,7 @@ import locus.api.mapper.DataMapper
 import locus.api.objects.extra.Point
 
 class GetOldPointNewPointPairFromPointUseCase(
-    private val geocachingApi: GeocachingApi,
+    private val repository: GeocachingApiRepository,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val mapper: DataMapper,
@@ -27,16 +26,9 @@ class GetOldPointNewPointPairFromPointUseCase(
         scope: CoroutineScope,
         channel: ReceiveChannel<Point>,
         liteData: Boolean = true,
-        geocacheLogsCount: Int = 0,
-        trackableLogsCount: Int = 0
+        geocacheLogsCount: Int = 0
     ) = scope.produce(dispatcherProvider.io) {
-        geocachingApiLogin(geocachingApi)
-
-        val resultQuality = if (liteData) {
-            GeocachingApi.ResultQuality.LITE
-        } else {
-            GeocachingApi.ResultQuality.FULL
-        }
+        geocachingApiLogin()
 
         var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
 
@@ -46,17 +38,13 @@ class GetOldPointNewPointPairFromPointUseCase(
 
             val startTimeMillis = System.currentTimeMillis()
 
-            val cachesToAdd = geocachingApi.searchForGeocaches(
-                SearchForGeocachesRequest.builder()
-                    .resultQuality(resultQuality)
-                    .maxPerPage(itemsPerRequest)
-                    .geocacheLogCount(geocacheLogsCount)
-                    .trackableLogCount(trackableLogsCount)
-                    .addFilter(CacheCodeFilter(*requestedCacheIds))
-                    .build()
+            val cachesToAdd = repository.geocaches(
+                referenceCodes = *requestedCacheIds,
+                logsCount = geocacheLogsCount,
+                lite = liteData
             )
 
-            accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+            accountManager.restrictions().updateLimits(repository.userLimits())
 
             yield()
 

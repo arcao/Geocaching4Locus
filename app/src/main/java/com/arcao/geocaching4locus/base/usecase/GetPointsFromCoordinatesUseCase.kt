@@ -1,14 +1,12 @@
 package com.arcao.geocaching4locus.base.usecase
 
-import com.arcao.geocaching.api.GeocachingApi
-import com.arcao.geocaching.api.data.SearchForGeocachesRequest
-import com.arcao.geocaching.api.data.coordinates.Coordinates
-import com.arcao.geocaching.api.data.type.ContainerType
-import com.arcao.geocaching.api.data.type.GeocacheType
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.restrictions
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
+import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,7 +18,7 @@ import locus.api.objects.extra.Point
 import timber.log.Timber
 
 class GetPointsFromCoordinatesUseCase(
-    private val geocachingApi: GeocachingApi,
+    private val repository: GeocachingApiRepository,
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val accountManager: AccountManager,
     private val geocachingApiFilterProvider: GeocachingApiFilterProvider,
@@ -33,14 +31,12 @@ class GetPointsFromCoordinatesUseCase(
         coordinates: Coordinates,
         distanceMeters: Int,
         liteData: Boolean = true,
-        summaryData: Boolean = false,
         geocacheLogsCount: Int = 0,
-        trackableLogsCount: Int = 0,
         downloadDisabled: Boolean = false,
         downloadFound: Boolean = false,
         downloadOwn: Boolean = false,
-        geocacheTypes: Array<GeocacheType> = emptyArray(),
-        containerTypes: Array<ContainerType> = emptyArray(),
+        geocacheTypes: IntArray = intArrayOf(),
+        containerTypes: IntArray = intArrayOf(),
         difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
@@ -50,14 +46,7 @@ class GetPointsFromCoordinatesUseCase(
         countHandler: (Int) -> Unit = {}
     ): ReceiveChannel<List<Point>> {
         return scope.produce(dispatcherProvider.io) {
-            geocachingApiLogin(geocachingApi)
-
-            val resultQuality = when {
-                liteData && !summaryData -> GeocachingApi.ResultQuality.LITE
-                !liteData && !summaryData -> GeocachingApi.ResultQuality.FULL
-                summaryData -> GeocachingApi.ResultQuality.SUMMARY
-                else -> throw IllegalStateException("Invalid ResultQuality combination.")
-            }
+            geocachingApiLogin()
 
             var count = maxCount
             var current = 0
@@ -66,45 +55,31 @@ class GetPointsFromCoordinatesUseCase(
             while (current < count) {
                 val startTimeMillis = System.currentTimeMillis()
 
-                val geocaches = if (current == 0) {
-                    geocachingApi.searchForGeocaches(
-                        SearchForGeocachesRequest.builder()
-                            .resultQuality(resultQuality)
-                            .maxPerPage(Math.min(itemsPerRequest, count - current))
-                            .geocacheLogCount(geocacheLogsCount)
-                            .trackableLogCount(trackableLogsCount)
-                            .addFilters(
-                                geocachingApiFilterProvider(
-                                    coordinates,
-                                    distanceMeters,
-                                    downloadDisabled,
-                                    downloadFound,
-                                    downloadOwn,
-                                    geocacheTypes,
-                                    containerTypes,
-                                    difficultyMin,
-                                    difficultyMax,
-                                    terrainMin,
-                                    terrainMax,
-                                    excludeIgnoreList
-                                )
-                            )
-                            .build()
-                    ).also {
-                        count = Math.min(geocachingApi.lastSearchResultsFound, maxCount)
-                        countHandler(count)
-                    }
-                } else {
-                    geocachingApi.getMoreGeocaches(
-                        resultQuality,
-                        current,
-                        Math.min(itemsPerRequest, count - current),
-                        geocacheLogsCount,
-                        trackableLogsCount
-                    )
+                val geocaches = repository.search(
+                    filters = geocachingApiFilterProvider(
+                        coordinates,
+                        distanceMeters,
+                        downloadDisabled,
+                        downloadFound,
+                        downloadOwn,
+                        geocacheTypes,
+                        containerTypes,
+                        difficultyMin,
+                        difficultyMax,
+                        terrainMin,
+                        terrainMax,
+                        excludeIgnoreList
+                    ),
+                    logsCount = geocacheLogsCount,
+                    lite = liteData,
+                    skip = current,
+                    take = Math.min(itemsPerRequest, count - current)
+                ).also {
+                    count = Math.min(it.totalCount, maxCount.toLong()).toInt()
+                    countHandler(count)
                 }
 
-                accountManager.restrictions.updateLimits(geocachingApi.lastGeocacheLimits)
+                accountManager.restrictions().updateLimits(repository.userLimits())
 
                 yield()
 

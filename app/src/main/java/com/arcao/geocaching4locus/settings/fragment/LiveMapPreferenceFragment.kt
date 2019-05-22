@@ -2,9 +2,10 @@ package com.arcao.geocaching4locus.settings.fragment
 
 import androidx.preference.CheckBoxPreference
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.PrefConstants.LIVE_MAP_DOWNLOAD_HINTS
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
+import com.arcao.geocaching4locus.data.account.AccountManager
 import org.koin.android.ext.android.get
 
 class LiveMapPreferenceFragment : AbstractPreferenceFragment() {

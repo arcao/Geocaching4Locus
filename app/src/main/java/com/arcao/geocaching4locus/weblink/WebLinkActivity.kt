@@ -5,11 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.Nullable
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import locus.api.android.utils.IntentHelper
 import org.koin.android.ext.android.inject

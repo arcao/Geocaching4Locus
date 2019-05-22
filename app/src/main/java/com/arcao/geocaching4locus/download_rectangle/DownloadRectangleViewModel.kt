@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.download_rectangle
 
 import android.content.Context
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -10,6 +9,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinates
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
@@ -79,9 +79,7 @@ class DownloadRectangleViewModel constructor(
                     liveMapCoordinates.topLeft,
                     liveMapCoordinates.bottomRight,
                     filterPreferenceManager.simpleCacheData,
-                    false,
                     filterPreferenceManager.geocacheLogsCount,
-                    filterPreferenceManager.trackableLogsCount,
                     filterPreferenceManager.showDisabled,
                     filterPreferenceManager.showFound,
                     filterPreferenceManager.showOwn,

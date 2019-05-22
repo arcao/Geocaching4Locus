@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.data.api.model.GeocacheList
 import com.arcao.geocaching4locus.data.api.model.GeocacheLog
 import com.arcao.geocaching4locus.data.api.model.Image
 import com.arcao.geocaching4locus.data.api.model.Trackable
+import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheLogExpand
@@ -22,7 +23,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun search(
-        filters: Set<Filter>,
+        filters: List<Filter>,
         logsCount: Int = 10,
         imageCount: Int = 30,
         trackableCount: Int = 30,
@@ -144,6 +145,14 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     suspend fun user(referenceCode: String = "me") = apiCall {
         userAsync(
             referenceCode = referenceCode
+        )
+    }
+
+    @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
+    suspend fun userLimits(referenceCode: String = "me") = apiCall {
+        userAsync(
+            referenceCode = referenceCode,
+            fields = User.FIELDS_LIMITS
         )
     }
 

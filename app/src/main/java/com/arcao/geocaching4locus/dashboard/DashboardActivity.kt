@@ -8,13 +8,14 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.isCalledFromLocusMap
 import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.databinding.ActivityDashboardBinding
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity

@@ -3,16 +3,21 @@ package com.arcao.geocaching4locus.search_nearest
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
-import com.arcao.geocaching.api.data.coordinates.Coordinates
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.*
+import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
+import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
+import com.arcao.geocaching4locus.base.usecase.GetPointsFromCoordinatesUseCase
+import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
+import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
+import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.LocationPermissionType
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.CoordinatesFormatter
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
@@ -155,7 +160,7 @@ class SearchNearestViewModel(
             preferenceManager.lastLatitude = latitude
             preferenceManager.lastLongitude = longitude
 
-            doDownload(Coordinates.create(latitude, longitude), requireNotNull(requestedCaches.value))
+            doDownload(Coordinates(latitude, longitude), requireNotNull(requestedCaches.value))
         }
     }
 
@@ -176,9 +181,7 @@ class SearchNearestViewModel(
                         coordinates,
                         preferenceManager.downloadDistanceMeters,
                         filterPreferenceManager.simpleCacheData,
-                        false,
                         filterPreferenceManager.geocacheLogsCount,
-                        filterPreferenceManager.trackableLogsCount,
                         filterPreferenceManager.showDisabled,
                         filterPreferenceManager.showFound,
                         filterPreferenceManager.showOwn,

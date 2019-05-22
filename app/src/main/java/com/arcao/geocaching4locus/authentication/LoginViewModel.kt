@@ -5,7 +5,6 @@ import androidx.annotation.UiThread
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
-import com.arcao.geocaching4locus.authentication.util.AccountManager
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
@@ -13,6 +12,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.crashlytics.android.Crashlytics
 import kotlinx.coroutines.cancelChildren
@@ -58,7 +58,7 @@ class LoginViewModel(
                 // create account
                 val account = createAccount(input)
 
-                val premium = account.premium
+                val premium = account.isPremium()
 
                 // handle analytics and crashlytics
                 Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, premium)
@@ -73,7 +73,7 @@ class LoginViewModel(
     }
 
     private suspend fun handleException(e: Exception) = mainContext {
-        accountManager.removeAccount()
+        accountManager.deleteAccount()
         AnalyticsUtil.actionLogin(success = false, premiumMember = false)
 
         action(LoginAction.Error(exceptionHandler(e)))

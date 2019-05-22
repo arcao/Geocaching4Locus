@@ -3,11 +3,11 @@ package com.arcao.geocaching4locus.settings.manager
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.arcao.geocaching.api.data.type.ContainerType
-import com.arcao.geocaching.api.data.type.GeocacheType
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
+import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.util.getParsedFloat
+import com.arcao.geocaching4locus.data.account.AccountManager
 
 class FilterPreferenceManager(
     context: Context,
@@ -55,30 +55,31 @@ class FilterPreferenceManager(
 
     val excludeIgnoreList = true
 
-    val geocacheTypes: Array<GeocacheType>
+    val geocacheTypes: IntArray
         get () {
-            val len = GeocacheType.values().size
-            val filter = ArrayList<GeocacheType>(len)
+            val len = AppConstants.GEOCACHE_TYPES.size
+            val filter = mutableListOf<Int>()
 
             for (i in 0 until len) {
                 if (preferences.getBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)) {
-                    filter.add(GeocacheType.values()[i])
+                    filter.add(AppConstants.GEOCACHE_TYPES[i])
                 }
             }
 
-            return filter.toTypedArray()
+            return filter.toIntArray()
         }
-    val containerTypes: Array<ContainerType>
+
+    val containerTypes: IntArray
         get() {
-            val len = ContainerType.values().size
-            val filter = ArrayList<ContainerType>(len)
+            val len = AppConstants.GEOCACHE_SIZES.size
+            val filter = mutableListOf<Int>()
 
             for (i in 0 until len) {
                 if (preferences.getBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)) {
-                    filter.add(ContainerType.values()[i])
+                    filter.add(AppConstants.GEOCACHE_SIZES[i])
                 }
             }
 
-            return filter.toTypedArray()
+            return filter.toIntArray()
         }
 }

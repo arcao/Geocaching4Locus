@@ -1,15 +1,15 @@
 package com.arcao.geocaching4locus.importgc
 
-import android.content.Context
-import com.arcao.geocaching.api.util.GeocachingUtils
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
@@ -18,7 +18,6 @@ import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
 
 class ImportGeocacheCodeViewModel(
-    private val context: Context,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
     private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
@@ -89,7 +88,7 @@ class ImportGeocacheCodeViewModel(
         val geocacheCodes = PATTERN_CACHE_ID_SEPARATOR.split(input)
 
         for (geocacheCode in geocacheCodes) {
-            if (!GeocachingUtils.isCacheCodeValid(geocacheCode)) {
+            if (!ReferenceCode.isReferenceCodeValid(geocacheCode, ReferenceCode.GEOCACHE_PREFIX)) {
                 throw IllegalArgumentException("Geocache code {$geocacheCode} is not valid.")
             }
         }

@@ -54,7 +54,7 @@ fun main() {
     runBlocking {
         println(api.user())
         println(api.search(
-                setOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
+                listOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
                 lite = false,
                 take = 30,
                 logsCount = 10

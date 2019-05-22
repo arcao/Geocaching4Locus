@@ -11,13 +11,13 @@ import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDex
 import com.arcao.feedback.feedbackModule
-import com.arcao.geocaching.api.geocachingApiModule
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree
-import com.arcao.wherigoservice.api.wherigoApiModule
+import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.data.geocachingApiModule
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import io.fabric.sdk.android.Fabric
@@ -90,7 +90,7 @@ class App : Application() {
                 })
             }
 
-            modules(appModule, geocachingApiModule, wherigoApiModule, locusMapApiModule, feedbackModule)
+            modules(appModule, geocachingApiModule, locusMapApiModule, feedbackModule)
         }
 //        if (BuildConfig.DEBUG) {
 //            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())

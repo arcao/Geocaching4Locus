@@ -3,13 +3,14 @@ package com.arcao.geocaching4locus.dashboard
 import android.content.Context
 import androidx.annotation.UiThread
 import androidx.lifecycle.MutableLiveData
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import kotlinx.coroutines.launch
 import locus.api.manager.LocusMapManager

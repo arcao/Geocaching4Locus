@@ -3,6 +3,8 @@ package com.arcao.geocaching4locus.base.constants
 import android.net.Uri
 import android.os.Build
 import android.util.Base64
+import com.arcao.geocaching4locus.data.api.model.GeocacheSize
+import com.arcao.geocaching4locus.data.api.model.GeocacheType
 
 import locus.api.android.utils.LocusUtils
 
@@ -71,4 +73,36 @@ object AppConstants {
     const val LIVEMAP_CACHES_COUNT = LIVEMAP_REQUESTS * LIVEMAP_CACHES_PER_REQUEST
     const val LIVEMAP_DISTANCE = 60000
     const val LIVEMAP_PACK_WAYPOINT_PREFIX = "LiveMap|"
+
+    val GEOCACHE_TYPES = arrayOf(
+        GeocacheType.TRADITIONAL,
+        GeocacheType.MULTI_CACHE,
+        GeocacheType.MYSTERY_UNKNOWN,
+        GeocacheType.VIRTUAL,
+        GeocacheType.EARTHCACHE,
+        GeocacheType.PROJECT_APE,
+        GeocacheType.LETTERBOX_HYBRID,
+        GeocacheType.WHERIGO,
+        GeocacheType.EVENT,
+        GeocacheType.MEGA_EVENT,
+        GeocacheType.CACHE_IN_TRASH_OUT_EVENT,
+        GeocacheType.GPS_ADVENTURES_EXHIBIT,
+        GeocacheType.WEBCAM,
+        GeocacheType.LOCATIONLESS_CACHE,
+        GeocacheType.LOST_AND_FOUND_EVENT_CACHE,
+        GeocacheType.GEOCACHING_HQ,
+        GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION,
+        GeocacheType.GEOCACHING_BLOCK_PARTY,
+        GeocacheType.GIGA_EVENT
+    )
+
+    val GEOCACHE_SIZES = arrayOf(
+        GeocacheSize.NOT_CHOSEN,
+        GeocacheSize.MICRO,
+        GeocacheSize.SMALL,
+        GeocacheSize.MEDIUM,
+        GeocacheSize.LARGE,
+        GeocacheSize.VIRTUAL,
+        GeocacheSize.OTHER
+    )
 }

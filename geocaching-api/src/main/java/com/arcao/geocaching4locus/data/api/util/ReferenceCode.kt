@@ -10,7 +10,7 @@ object ReferenceCode {
 
     // = (16 * 31 * 31 * 31) - (16 * 16 * 16 * 16)
     private const val REFERENCE_CODE_BASE31_MAGIC_NUMBER: Long = 411120
-    private const val GEOCACHE_PREFIX = "GC"
+    const val GEOCACHE_PREFIX = "GC"
     private const val REFERENCE_CODE_BASE16_MAX: Long = 0xFFFF
     private const val BASE_31 = 31
     private const val BASE_16 = 16
@@ -125,9 +125,14 @@ object ReferenceCode {
      * @return true if reference code is valid, otherwise false
      * @see .toId
      */
-    fun isReferenceCodeValid(referenceCode: String) = try {
-        toId(referenceCode) >= 0
-    } catch (e: IllegalArgumentException) {
-        false
+    fun isReferenceCodeValid(referenceCode: String, prefix: String? = null): Boolean {
+        try {
+            if (prefix != null && !referenceCode.startsWith(prefix, ignoreCase = true))
+                return false
+
+            return toId(referenceCode) >= 0
+        } catch (e: IllegalArgumentException) {
+            return false
+        }
     }
 }

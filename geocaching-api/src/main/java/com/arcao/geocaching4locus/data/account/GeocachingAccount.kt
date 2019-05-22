@@ -12,7 +12,8 @@ data class GeocachingAccount(
         var userName: String? = null,
         var membership: MembershipType = MembershipType.UNKNOWN,
         var avatarUrl: String? = null,
-        var bannerUrl: String? = null
+        var bannerUrl: String? = null,
+        var lastUserInfoUpdate: Instant = Instant.MIN
 ) {
 
     val accessTokenExpired
@@ -28,7 +29,15 @@ data class GeocachingAccount(
         membership = user.membership
         avatarUrl = user.avatarUrl
         bannerUrl = user.bannerUrl
+        lastUserInfoUpdate = Instant.now()
 
         accountManager.saveAccount(this)
+    }
+
+    fun isPremium() = when(membership) {
+        MembershipType.UNKNOWN -> false
+        MembershipType.BASIC -> false
+        MembershipType.CHARTER -> true
+        MembershipType.PREMIUM -> true
     }
 }

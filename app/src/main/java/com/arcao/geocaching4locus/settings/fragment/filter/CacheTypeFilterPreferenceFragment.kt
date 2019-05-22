@@ -4,8 +4,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.preference.CheckBoxPreference
-import com.arcao.geocaching.api.data.type.GeocacheType
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_CACHE_TYPE_PREFIX
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 
@@ -25,7 +25,7 @@ class CacheTypeFilterPreferenceFragment : AbstractPreferenceFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val geocacheTypeLength = GeocacheType.values().size
+        val geocacheTypeLength = AppConstants.GEOCACHE_TYPES.size
 
         when (item.itemId) {
             android.R.id.home -> {

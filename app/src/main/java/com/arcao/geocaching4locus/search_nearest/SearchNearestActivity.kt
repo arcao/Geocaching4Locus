@@ -9,10 +9,15 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.AccountManager
+import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
-import com.arcao.geocaching4locus.base.util.*
+import com.arcao.geocaching4locus.base.util.PermissionUtil
+import com.arcao.geocaching4locus.base.util.exhaustive
+import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.base.util.observe
+import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment

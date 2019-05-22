@@ -74,5 +74,10 @@ data class User(
             FIELD_REFERENCE_CODE,
             FIELD_USERNAME
         ).joinToString(FIELD_SEPARATOR)
+
+        val FIELDS_LIMITS = arrayOf(
+            FIELD_MEMBERSHIP,
+            FIELD_GEOCACHE_LIMITS
+        ).joinToString(FIELD_SEPARATOR)
     }
 }

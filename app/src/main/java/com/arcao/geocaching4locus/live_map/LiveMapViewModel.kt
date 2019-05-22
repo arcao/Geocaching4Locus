@@ -5,10 +5,6 @@ import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.arcao.geocaching.api.data.coordinates.Coordinates
-import com.arcao.geocaching.api.exception.GeocachingApiException
-import com.arcao.geocaching.api.exception.InvalidCredentialsException
-import com.arcao.geocaching.api.exception.NetworkException
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -17,6 +13,9 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinates
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.util.getText
+import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
+import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
+import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
@@ -25,6 +24,7 @@ import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import timber.log.Timber
+import java.io.IOException
 
 class LiveMapViewModel(
     private val context: Context,
@@ -66,9 +66,7 @@ class LiveMapViewModel(
                         LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE
                     ),
                     filterPreferenceManager.simpleCacheData,
-                    false,
                     filterPreferenceManager.geocacheLogsCount,
-                    filterPreferenceManager.trackableLogsCount,
                     filterPreferenceManager.showDisabled,
                     filterPreferenceManager.showFound,
                     filterPreferenceManager.showOwn,
@@ -124,16 +122,16 @@ class LiveMapViewModel(
                 // disable live map
                 notificationManager.isLiveMapEnabled = false
             }
-            is InvalidCredentialsException -> {
+            is AuthenticationException -> {
                 notificationManager.showLiveMapToast(R.string.error_no_account)
                 // disable live map
                 notificationManager.isLiveMapEnabled = false
             }
-            is NetworkException -> {
+            is IOException -> {
                 notificationManager.showLiveMapToast(R.string.error_network_unavailable)
             }
             is GeocachingApiException -> {
-                notificationManager.showLiveMapToast(e.message ?: "")
+                notificationManager.showLiveMapToast(e.errorMessage.orEmpty())
             }
             else -> throw e
         }
@@ -145,7 +143,7 @@ class LiveMapViewModel(
     }
 }
 
-private fun Intent.getCoordinates(latitudeName: String, longitudeName: String) = Coordinates.create(
+private fun Intent.getCoordinates(latitudeName: String, longitudeName: String) = Coordinates(
     getDoubleExtra(latitudeName, 0.0),
     getDoubleExtra(longitudeName, 0.0)
 )

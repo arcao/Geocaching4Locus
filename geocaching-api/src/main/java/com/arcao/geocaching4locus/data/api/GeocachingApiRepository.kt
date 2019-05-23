@@ -49,7 +49,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
-    suspend fun liveMap(filters: Set<Filter>, lite: Boolean = false, skip: Int = 0, take: Int = 10) = apiCall {
+    suspend fun liveMap(filters: List<Filter>, lite: Boolean = false, skip: Int = 0, take: Int = 10) = apiCall {
         searchAsync(
             q = queryOf(*filters.toTypedArray()),
             lite = lite,

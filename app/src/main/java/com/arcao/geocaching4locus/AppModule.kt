@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
+import com.arcao.geocaching4locus.base.usecase.GetLiveMapPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromCoordinatesUseCase
@@ -71,6 +72,7 @@ internal val appModule = module {
     factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
     factory { GetGpsLocationUseCase(get(), get()) }
     factory { GetLastKnownLocationUseCase(get(), get()) }
+    factory { GetLiveMapPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
     factory { GetOldPointNewPointPairFromPointUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointFromGeocacheCodeUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointsFromCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }

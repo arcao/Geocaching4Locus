@@ -7,7 +7,9 @@ import io.mockk.coVerify
 import io.mockk.every
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
@@ -47,8 +49,9 @@ internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
         }
 
         // expected
-        assertEquals("error", exception.code)
-        assertEquals("description", exception.message)
+        assertEquals(StatusCode.NOT_FOUND, exception.statusCode)
+        assertEquals("error", exception.statusMessage)
+        assertEquals("description", exception.errorMessage)
     }
 
     @Test

@@ -31,12 +31,12 @@ object AppConstants {
     val LOCUS_MIN_VERSION_CODE: LocusUtils.VersionCode = LocusUtils.VersionCode.UPDATE_15
 
     /* Adaptive downloading configuration */
-    const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 5
-    const val ADAPTIVE_DOWNLOADING_MAX_ITEMS = 50
-    const val ADAPTIVE_DOWNLOADING_STEP = 5
+    const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 10
+    const val ADAPTIVE_DOWNLOADING_MAX_ITEMS = 100
+    const val ADAPTIVE_DOWNLOADING_STEP = 20
     const val ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500 // more than time required for 30 calls per minute
     const val ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000
-    const val ITEMS_PER_REQUEST = ADAPTIVE_DOWNLOADING_MIN_ITEMS
+    const val ITEMS_PER_REQUEST = 30
 
     const val SECONDS_PER_MINUTE = 60
 
@@ -69,7 +69,7 @@ object AppConstants {
     const val NOTIFICATION_ID_LIVEMAP = 1
 
     private const val LIVEMAP_REQUESTS = 5
-    private const val LIVEMAP_CACHES_PER_REQUEST = 50
+    const val LIVEMAP_CACHES_PER_REQUEST = 50
     const val LIVEMAP_CACHES_COUNT = LIVEMAP_REQUESTS * LIVEMAP_CACHES_PER_REQUEST
     const val LIVEMAP_DISTANCE = 60000
     const val LIVEMAP_PACK_WAYPOINT_PREFIX = "LiveMap|"

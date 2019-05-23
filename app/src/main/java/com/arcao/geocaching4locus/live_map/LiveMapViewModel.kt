@@ -9,7 +9,7 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
+import com.arcao.geocaching4locus.base.usecase.GetLiveMapPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.util.getText
@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.delay
 import timber.log.Timber
 import java.io.IOException
 
@@ -31,7 +32,7 @@ class LiveMapViewModel(
     private val notificationManager: LiveMapNotificationManager,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
-    private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,
+    private val getLiveMapPointsFromRectangleCoordinates: GetLiveMapPointsFromRectangleCoordinatesUseCase,
     private val sendPointsSilentToLocusMap: SendPointsSilentToLocusMapUseCase,
     private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     dispatcherProvider: CoroutinesDispatcherProvider
@@ -49,12 +50,14 @@ class LiveMapViewModel(
     private fun downloadLiveMapGeocaches(task: Intent) = computationLaunch {
         var requests = 0
 
+        delay(200)
+
         try {
-            var count = AppConstants.ITEMS_PER_REQUEST
+            var count = AppConstants.LIVEMAP_CACHES_COUNT
             var receivedGeocaches = 0
 
             showProgress(maxProgress = count) {
-                val pointListChannel = getPointsFromRectangleCoordinates(
+                val pointListChannel = getLiveMapPointsFromRectangleCoordinates(
                     this,
                     task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
                     task.getCoordinates(
@@ -66,7 +69,6 @@ class LiveMapViewModel(
                         LiveMapService.PARAM_BOTTOM_RIGHT_LONGITUDE
                     ),
                     filterPreferenceManager.simpleCacheData,
-                    filterPreferenceManager.geocacheLogsCount,
                     filterPreferenceManager.showDisabled,
                     filterPreferenceManager.showFound,
                     filterPreferenceManager.showOwn,
@@ -76,8 +78,7 @@ class LiveMapViewModel(
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
                     filterPreferenceManager.terrainMax,
-                    filterPreferenceManager.excludeIgnoreList,
-                    AppConstants.LIVEMAP_CACHES_COUNT
+                    filterPreferenceManager.excludeIgnoreList
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     requests++

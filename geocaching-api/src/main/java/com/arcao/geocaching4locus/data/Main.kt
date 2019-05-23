@@ -6,13 +6,12 @@ import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpointFactory
 import com.arcao.geocaching4locus.data.api.internal.moshi.MoshiFactory
 import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
-import com.arcao.geocaching4locus.data.api.model.GeocacheType
-import com.arcao.geocaching4locus.data.api.model.request.query.filter.GeocacheTypeFilter
-import com.arcao.geocaching4locus.data.api.model.request.query.filter.LocationFilter
+import com.arcao.geocaching4locus.data.api.model.request.query.filter.BoundingBoxFilter
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.zone.TzdbZoneRulesProvider
 import org.threeten.bp.zone.ZoneRulesInitializer
 import org.threeten.bp.zone.ZoneRulesProvider
+import timber.log.Timber
 import java.io.File
 
 fun main() {
@@ -25,6 +24,13 @@ fun main() {
             stream.use {
                 ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
             }
+        }
+    })
+
+    // Init timber
+    Timber.plant(object : Timber.Tree() {
+        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+            println("$message" + (if (t != null) " $t" else ""))
         }
     })
 
@@ -52,15 +58,28 @@ fun main() {
     }
 
     runBlocking {
-        println(api.user())
-        println(api.search(
-                listOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
-                lite = false,
-                take = 30,
-                logsCount = 10
-        ))
+//        println(api.user())
+//        println(api.search(
+//                listOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
+//                lite = false,
+//                take = 30,
+//                logsCount = 10
+//        ))
+//
+//        println(api.geocacheLogs("GC12345"))
+//        println(api.geocacheImages("GC12345"))
 
-        println(api.geocacheLogs("GC12345"))
-        println(api.geocacheImages("GC12345"))
+        println(api.liveMap(
+            filters = listOf(
+                BoundingBoxFilter(
+                    topLatitude = 37.4719012,
+                    leftLongitude = -122.151702,
+                    bottomLatitude = 37.442423,
+                    rightLongitude = -122.128520
+                )
+            ),
+            lite = true,
+            take = 30
+        ))
     }
 }

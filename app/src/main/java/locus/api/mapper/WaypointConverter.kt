@@ -24,8 +24,8 @@ class WaypointConverter {
 
         return GeocachingWaypoint().apply {
             code = ReferenceCode.toReferenceCode(waypoint.prefix, geocacheId)
-            lat = waypoint.coordinates.latitude
-            lon = waypoint.coordinates.longitude
+            lat = waypoint.coordinates?.latitude ?: 0.0
+            lon = waypoint.coordinates?.longitude ?: 0.0
             desc = waypoint.description
             name = waypoint.name
             type = waypoint.type.toLocusMapWaypointType()

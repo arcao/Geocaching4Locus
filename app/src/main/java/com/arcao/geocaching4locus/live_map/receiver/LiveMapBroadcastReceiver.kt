@@ -12,6 +12,8 @@ import locus.api.extension.isInvalid
 import locus.api.objects.extra.Location
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import kotlin.math.max
+import kotlin.math.min
 
 class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
     private val notificationManager by inject<LiveMapNotificationManager>()
@@ -62,15 +64,19 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
         if (mapTopLeft.distanceTo(mapBottomRight) >= MAX_DIAGONAL_DISTANCE)
             return
 
+        // bug in Locus Map?
+        val leftLongitude = min(mapTopLeft.getLongitude(), mapBottomRight.getLongitude())
+        val rightLongitude = max(mapTopLeft.getLongitude(), mapBottomRight.getLongitude())
+
         // Start service to retrieve caches
         LiveMapService.start(
             context,
             mapCenter.getLatitude(),
             mapCenter.getLongitude(),
             mapTopLeft.getLatitude(),
-            mapTopLeft.getLongitude(),
+            leftLongitude,
             mapBottomRight.getLatitude(),
-            mapBottomRight.getLongitude()
+            rightLongitude
         )
     }
 

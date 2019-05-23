@@ -91,7 +91,7 @@ class ErrorActivity : AppCompatActivity() {
                 md.checkBoxPrompt(R.string.button_send_error_report, onToggle = null)
             }
 
-            return dialog
+            return md
         }
 
         companion object {

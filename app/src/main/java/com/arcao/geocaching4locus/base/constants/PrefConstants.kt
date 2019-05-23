@@ -67,9 +67,12 @@ object PrefConstants {
     const val ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live"
 
     const val RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit"
-    const val RESTRICTION__FULL_GEOCACHE_LIMIT_PERIOD = "full_geocache_limit_period"
     const val RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit"
     const val RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit"
+
+    const val RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT = "renew_lite_geocache_limit"
+    const val RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT = "current_lite_geocache_limit"
+    const val RESTRICTION__MAX_LITE_GEOCACHE_LIMIT = "max_lite_geocache_limit"
 
     const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_ONCE = "0"
     const val DOWNLOADING_FULL_CACHE_DATE_ON_SHOW__UPDATE_EVERY = "1"

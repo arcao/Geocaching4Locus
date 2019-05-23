@@ -40,7 +40,7 @@ interface GeocachingApiEndpoint {
         @Query("expand") expand: GeocacheExpand = GeocacheExpand()
     ): Deferred<List<Geocache>>
 
-    @GET("/v1/geocache/{referenceCode}")
+    @GET("/v1/geocaches/{referenceCode}")
     fun geocacheAsync(
         @Path("referenceCode") referenceCode: String,
         @Query("lite") lite: Boolean = true,
@@ -65,6 +65,7 @@ interface GeocachingApiEndpoint {
         @Query("take") take: Int = 10
     ): Deferred<PagedList<GeocacheLog>>
 
+    @GET("/v1/trackables/{referenceCode}")
     fun geocacheTrackablesAsync(
         @Path("referenceCode") referenceCode: String,
         @Query("fields") fields: String = Trackable.FIELDS_ALL,

@@ -7,13 +7,13 @@ import org.threeten.bp.Instant
 data class GeocachingAccount(
         private val accountManager: AccountManager,
         var accessToken: String,
-        var accessTokenExpiration: Instant = Instant.MIN,
+        var accessTokenExpiration: Instant = Instant.now(),
         var refreshToken: String,
         var userName: String? = null,
         var membership: MembershipType = MembershipType.UNKNOWN,
         var avatarUrl: String? = null,
         var bannerUrl: String? = null,
-        var lastUserInfoUpdate: Instant = Instant.MIN
+        var lastUserInfoUpdate: Instant = Instant.now()
 ) {
 
     val accessTokenExpired

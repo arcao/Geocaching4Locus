@@ -23,16 +23,17 @@ class TrackableConverter {
     private fun createLocusGeocachingTrackable(trackable: Trackable, trackableLightData: Boolean): GeocachingTrackable {
         return GeocachingTrackable().apply {
             id = trackable.id
-            imgUrl = trackable.iconUrl
+            imgUrl = trackable.iconUrl.orEmpty()
             name = trackable.name
-            currentOwner = trackable.holder?.username
             originalOwner = trackable.owner.username
-            srcDetails = trackable.url
+            currentOwner = trackable.owner.username
+            srcDetails = trackable.url.orEmpty()
             released = trackable.releasedDate.toEpochMilli()
+            origin = trackable.originCountry.orEmpty()
 
             if (!trackableLightData) {
-                details = trackable.description
-                goal = trackable.goal
+                details = trackable.description.orEmpty()
+                goal = trackable.goal.orEmpty()
             }
         }
     }

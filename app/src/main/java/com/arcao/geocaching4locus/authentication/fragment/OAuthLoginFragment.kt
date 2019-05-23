@@ -95,7 +95,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
             if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
                 val uri = Uri.parse(url)
 
-                viewModel.finishLogin(uri.getQueryParameter(OAuthConstants.VERIFIER) ?: return true)
+                viewModel.finishLogin(uri.getQueryParameter(OAuthConstants.CODE) ?: return true)
                 return true
             }
 

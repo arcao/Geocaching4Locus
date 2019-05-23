@@ -48,6 +48,7 @@ data class Trackable(
         private const val FIELD_TYPE = "type"
         private const val FIELD_IMAGE_COUNT = "imageCount"
         private const val FIELD_TRACKING_NUMBER = "trackingNumber"
+        private const val FIELD_URL = "url"
         private const val FIELD_OWNER = "owner"
         private const val FIELD_HOLDER = "holder"
 
@@ -70,7 +71,7 @@ data class Trackable(
             FIELD_IS_MISSING,
             FIELD_TYPE,
             FIELD_IMAGE_COUNT,
-            FIELD_TRACKING_NUMBER,
+            FIELD_URL,
             FIELD_OWNER,
             FIELD_HOLDER
         ).joinToString(FIELD_SEPARATOR)
@@ -80,6 +81,8 @@ data class Trackable(
             FIELD_ICON_URL,
             FIELD_NAME,
             FIELD_RELEASED_DATE,
+            FIELD_ORIGIN_COUNTRY,
+            FIELD_URL,
             FIELD_OWNER_MIN,
             FIELD_HOLDER_MIN
         ).joinToString(FIELD_SEPARATOR)

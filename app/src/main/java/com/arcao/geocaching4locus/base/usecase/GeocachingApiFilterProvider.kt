@@ -44,7 +44,7 @@ class GeocachingApiFilterProvider(
         val premiumMember = account.isPremium()
 
         filters += LocationFilter(centerCoordinates)
-        filters += RadiusFilter(AppConstants.LIVEMAP_DISTANCE.toFloat(), DistanceUnit.METER)
+        filters += RadiusFilter(AppConstants.LIVEMAP_DISTANCE, DistanceUnit.METER)
         filters += BoundingBoxFilter(topLeftCoordinates, bottomRightCoordinates)
 
         filters += IsPublishedFilter(true)
@@ -105,7 +105,7 @@ class GeocachingApiFilterProvider(
         val premiumMember = account.isPremium()
 
         filters += LocationFilter(coordinates)
-        filters += RadiusFilter(distanceMeters.toFloat(), DistanceUnit.METER)
+        filters += RadiusFilter(distanceMeters, DistanceUnit.METER)
 
         filters += IsPublishedFilter(true)
 

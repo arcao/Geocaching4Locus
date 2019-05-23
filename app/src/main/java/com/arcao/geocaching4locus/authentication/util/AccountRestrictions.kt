@@ -51,19 +51,30 @@ class AccountRestrictions internal constructor(context: Context) {
     }
 
     fun remove() {
-        preferences.edit()
-            .remove(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT)
-            .remove(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT)
-            .remove(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT)
-            .apply()
+        preferences.edit {
+            clear()
+            putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION)
+        }
 
         init()
     }
 
     private fun init() {
+        val version = preferences.getInt(PrefConstants.PREF_VERSION, 0)
+        if (version != PrefConstants.CURRENT_PREF_VERSION) {
+            preferences.edit {
+                clear()
+                putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION)
+            }
+        }
+
         maxFullGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, 0)
         currentFullGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, 0)
         renewFullGeocacheLimit = Instant.ofEpochSecond(preferences.getLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, 0))
+
+        maxLiteGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__MAX_LITE_GEOCACHE_LIMIT, 0)
+        currentLiteGeocacheLimit = preferences.getInt(PrefConstants.RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT, 0)
+        renewLiteGeocacheLimit = Instant.ofEpochSecond(preferences.getLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, 0))
     }
 
     internal fun applyRestrictions(user: User) {
@@ -141,9 +152,9 @@ class AccountRestrictions internal constructor(context: Context) {
             putInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
             putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.epochSecond)
 
-            putInt(PrefConstants.RESTRICTION__MAX_FULL_GEOCACHE_LIMIT, maxFullGeocacheLimit)
-            putInt(PrefConstants.RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT, currentFullGeocacheLimit)
-            putLong(PrefConstants.RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT, renewFullGeocacheLimit.epochSecond)
+            putInt(PrefConstants.RESTRICTION__MAX_LITE_GEOCACHE_LIMIT, maxLiteGeocacheLimit)
+            putInt(PrefConstants.RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT, currentLiteGeocacheLimit)
+            putLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, renewLiteGeocacheLimit.epochSecond)
         }
     }
 

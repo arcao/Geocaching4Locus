@@ -13,7 +13,7 @@ import org.threeten.bp.Instant
 
 class PreferenceAccountManager(private val context: Context, oAuthService: OAuth20Service) :
     AccountManager(oAuthService) {
-    private val prefs = context.getSharedPreferences("account", Context.MODE_PRIVATE)
+    private val prefs = context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
     val restrictions = AccountRestrictions(context)
 
     init {
@@ -26,7 +26,7 @@ class PreferenceAccountManager(private val context: Context, oAuthService: OAuth
         val expiration = prefs.getLong("expiration", 0)
         val refreshToken = prefs.getString("refreshToken", null) ?: return null
         val userName = prefs.getString("userName", null) ?: return null
-        val membership = prefs.getString("membership", null) ?: return null
+        val membership = prefs.getInt("membership", 0)
         val avatarUrl = prefs.getString("avatarUrl", null)
         val bannerUrl = prefs.getString("bannerUrl", null)
         val lastUserInfoUpdate = prefs.getLong("lastUserInfoUpdate", 0)
@@ -37,7 +37,7 @@ class PreferenceAccountManager(private val context: Context, oAuthService: OAuth
             accessTokenExpiration = Instant.ofEpochMilli(expiration),
             refreshToken = refreshToken,
             userName = userName,
-            membership = MembershipType.valueOf(membership),
+            membership = MembershipType.from(membership),
             avatarUrl = avatarUrl,
             bannerUrl = bannerUrl,
             lastUserInfoUpdate = Instant.ofEpochMilli(lastUserInfoUpdate)
@@ -56,7 +56,7 @@ class PreferenceAccountManager(private val context: Context, oAuthService: OAuth
             putLong("expiration", account.accessTokenExpiration.toEpochMilli())
             putString("refreshToken", account.refreshToken)
             putString("userName", account.userName)
-            putString("membership", account.membership.value)
+            putInt("membership", account.membership.id)
             putString("avatarUrl", account.avatarUrl)
             putString("bannerUrl", account.bannerUrl)
             putLong("lastUserInfoUpdate", account.lastUserInfoUpdate.toEpochMilli())

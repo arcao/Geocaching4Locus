@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.ServiceUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
 
@@ -20,7 +21,7 @@ class LiveMapService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
 
-        viewModel.progress.observe(this, ::handleProgress)
+        viewModel.progress.withObserve(this, ::handleProgress)
 
         lifecycle.addObserver(viewModel)
 

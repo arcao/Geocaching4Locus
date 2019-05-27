@@ -10,15 +10,16 @@ import com.afollestad.materialdialogs.input.input
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.base.util.withObserve
 
 class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.progress.observe(this) {
+        viewModel.progress.withObserve(viewLifecycleOwner) {
             (requireActivity() as LoginActivity).handleProgress(it)
         }
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
 
         if (savedInstanceState == null)
             viewModel.startLogin()

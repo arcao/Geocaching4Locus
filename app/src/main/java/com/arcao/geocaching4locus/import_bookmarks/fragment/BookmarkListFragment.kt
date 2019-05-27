@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkListBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
@@ -51,10 +52,10 @@ class BookmarkListFragment : BaseBookmarkFragment() {
             addItemDecoration(MarginItemDecoration(context, R.dimen.cardview_space))
         }
 
-        viewModel.list.observe(viewLifecycleOwner, adapter::submitList)
+        viewModel.list.withObserve(viewLifecycleOwner, adapter::submitList)
 
-        viewModel.action.observe(viewLifecycleOwner, ::handleAction)
-        viewModel.progress.observe(viewLifecycleOwner) { state ->
+        viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
+        viewModel.progress.withObserve(viewLifecycleOwner) { state ->
             activityViewModel.progress(state)
         }
 

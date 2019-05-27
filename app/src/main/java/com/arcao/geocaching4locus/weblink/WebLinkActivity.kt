@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import locus.api.android.utils.IntentHelper
@@ -22,8 +23,8 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.progress.observe(this, ::handleProgress)
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.progress.withObserve(this, ::handleProgress)
+        viewModel.action.withObserve(this, ::handleAction)
 
         processIntent()
     }

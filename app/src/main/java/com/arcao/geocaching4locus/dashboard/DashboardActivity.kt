@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.isCalledFromLocusMap
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.databinding.ActivityDashboardBinding
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity
@@ -44,7 +45,7 @@ class DashboardActivity : AbstractActionBarActivity(),
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.action.withObserve(this, ::handleAction)
 
         setSupportActionBar(binding.toolbar as Toolbar)
         supportActionBar?.title = title

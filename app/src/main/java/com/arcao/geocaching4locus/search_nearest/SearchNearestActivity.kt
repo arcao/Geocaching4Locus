@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.base.util.PermissionUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
@@ -55,20 +56,20 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.latitude.observe(this) { value ->
+        viewModel.latitude.withObserve(this) { value ->
             latitude.text = value
         }
         latitude.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) viewModel.latitude(latitude.text ?: "")
         }
-        viewModel.longitude.observe(this) { value ->
+        viewModel.longitude.withObserve(this) { value ->
             longitude.text = value
         }
         longitude.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) viewModel.longitude(longitude.text ?: "")
         }
 
-        viewModel.requestedCaches.observe(this) { value ->
+        viewModel.requestedCaches.withObserve(this) { value ->
             spinner.setText(value.toString())
         }
         spinner.setOnClickListener {
@@ -95,8 +96,8 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             viewModel.download()
         }
 
-        viewModel.action.observe(this, ::handleAction)
-        viewModel.progress.observe(this, ::handleProgress)
+        viewModel.action.withObserve(this, ::handleAction)
+        viewModel.progress.withObserve(this, ::handleProgress)
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")

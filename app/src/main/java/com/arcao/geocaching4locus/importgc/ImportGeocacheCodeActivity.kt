@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.importgc.fragment.GeocacheCodesInputDialogFragment
@@ -21,8 +22,8 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.progress.observe(this, ::handleProgress)
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.progress.withObserve(this, ::handleProgress)
+        viewModel.action.withObserve(this, ::handleAction)
 
         viewModel.init()
     }

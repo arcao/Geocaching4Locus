@@ -7,6 +7,7 @@ import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,8 +20,8 @@ class ImportUrlActivity : AbstractActionBarActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.action.observe(this, ::handleAction)
-        viewModel.progress.observe(this, ::handleProgress)
+        viewModel.action.withObserve(this, ::handleAction)
+        viewModel.progress.withObserve(this, ::handleProgress)
 
         if (savedInstanceState == null) {
             processIntent()

@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.github.scribejava.core.model.OAuthConstants
 import timber.log.Timber
@@ -30,10 +31,10 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.progress.observe(this) {
+        viewModel.progress.withObserve(this) {
             handleProgress(it)
         }
-        viewModel.action.observe(this, ::handleAction)
+        viewModel.action.withObserve(this, ::handleAction)
 
         if (savedInstanceState == null)
             viewModel.startLogin()

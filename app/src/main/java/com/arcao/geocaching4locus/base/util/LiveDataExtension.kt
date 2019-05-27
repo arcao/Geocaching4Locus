@@ -9,7 +9,8 @@ import timber.log.Timber
 import java.util.concurrent.atomic.AtomicBoolean
 
 @MainThread
-fun <T> LiveData<T>.observe(owner: LifecycleOwner, block: (T) -> Unit) = observe(owner, Observer { block(it!!) })
+inline fun <T> LiveData<T>.withObserve(owner: LifecycleOwner, crossinline block: (T) -> Unit) =
+    observe(owner, Observer { block(it!!) })
 
 @Suppress("NOTHING_TO_INLINE")
 @MainThread

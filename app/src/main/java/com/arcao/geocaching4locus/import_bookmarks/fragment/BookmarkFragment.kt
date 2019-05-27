@@ -21,6 +21,7 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
@@ -84,14 +85,14 @@ class BookmarkFragment : BaseBookmarkFragment() {
             })
         }
 
-        viewModel.list.observe(viewLifecycleOwner) { list ->
+        viewModel.list.withObserve(viewLifecycleOwner) { list ->
             adapter.submitList(list)
             tracker.onRestoreInstanceState(savedInstanceState)
 
         }
 
-        viewModel.action.observe(viewLifecycleOwner, ::handleAction)
-        viewModel.progress.observe(viewLifecycleOwner) { state ->
+        viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
+        viewModel.progress.withObserve(viewLifecycleOwner) { state ->
             activityViewModel.progress(state)
         }
 

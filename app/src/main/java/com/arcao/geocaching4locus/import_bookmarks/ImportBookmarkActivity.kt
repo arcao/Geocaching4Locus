@@ -10,6 +10,7 @@ import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
+import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BaseBookmarkFragment
@@ -34,7 +35,7 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
         }
 
         @Suppress("IMPLICIT_CAST_TO_ANY")
-        viewModel.action.observe(this) { action ->
+        viewModel.action.withObserve(this) { action ->
             when (action) {
                 ImportBookmarkAction.LocusMapNotInstalled -> {
                     showLocusMissingError()
@@ -60,7 +61,7 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
             }.exhaustive
         }
 
-        viewModel.progress.observe(this, ::handleProgress)
+        viewModel.progress.withObserve(this, ::handleProgress)
 
         if (savedInstanceState == null) {
             viewModel.init()

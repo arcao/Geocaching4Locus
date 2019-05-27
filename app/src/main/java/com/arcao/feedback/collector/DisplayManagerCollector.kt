@@ -82,8 +82,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         val result = StringBuilder()
         try {
             // since API v8
-            val rotation = display.rotation
-            when (rotation) {
+            when (val rotation = display.rotation) {
                 Surface.ROTATION_0 -> result.append("ROTATION_0")
                 Surface.ROTATION_90 -> result.append("ROTATION_90")
                 Surface.ROTATION_180 -> result.append("ROTATION_180")

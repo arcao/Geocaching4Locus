@@ -8,6 +8,8 @@ import com.arcao.geocaching4locus.data.api.model.Coordinates
 
 import java.text.ParseException
 import java.util.regex.Pattern
+import kotlin.math.abs
+import kotlin.math.floor
 
 object CoordinatesParser {
     private const val MINUTES_PER_DEGREE = 60.0
@@ -98,7 +100,7 @@ object CoordinatesParser {
 
             if (degree < 0) {
                 sign = -1.0
-                degree = Math.abs(degree)
+                degree = abs(degree)
             }
 
             var minutes = 0.0
@@ -163,7 +165,7 @@ object CoordinatesParser {
         val width = end - start
         val offsetValue = value - start // value relative to 0
 
-        return offsetValue - Math.floor(offsetValue / width) * width + start // + start to reset back to start of original range
+        return offsetValue - floor(offsetValue / width) * width + start // + start to reset back to start of original range
     }
 
     private class ParseResult(

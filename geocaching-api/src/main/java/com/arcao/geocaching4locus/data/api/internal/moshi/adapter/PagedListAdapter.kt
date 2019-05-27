@@ -32,7 +32,7 @@ internal class PagedListAdapter<T> private constructor(private val elementAdapte
                 }
                 reader.endObject()
             }
-            else -> JsonDataException("Expected BEGIN_ARRAY or BEGIN_OBJECT, but was ${reader.peek()}")
+            else -> throw JsonDataException("Expected BEGIN_ARRAY or BEGIN_OBJECT, but was ${reader.peek()}")
         }
 
         return result

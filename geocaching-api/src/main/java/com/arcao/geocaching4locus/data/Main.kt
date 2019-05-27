@@ -30,7 +30,7 @@ fun main() {
     // Init timber
     Timber.plant(object : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-            println("$message" + (if (t != null) " $t" else ""))
+            println(message + (if (t != null) " $t" else ""))
         }
     })
 

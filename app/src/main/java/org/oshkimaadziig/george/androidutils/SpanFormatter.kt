@@ -38,7 +38,7 @@ object SpanFormatter {
      * Due to the way [Spannable]s work, any argument's spans will can only be included **once** in the result.
      * Any duplicates will appear as text only.
      *
-     * @param format the format string (see [Formatter.format])
+     * @param format the format string (see [String.format])
      * @param args the list of arguments passed to the formatter. If there are
      * more arguments than required by `format`,
      * additional arguments are ignored.
@@ -55,7 +55,7 @@ object SpanFormatter {
      * Any duplicates will appear as text only.
      *
      * @param locale the locale to apply; `null` value means no localization.
-     * @param format the format string (see [Formatter.format])
+     * @param format the format string (see [String.format])
      * @param args the list of arguments passed to the formatter.
      * @return the formatted string (with spans).
      * @see String.format
@@ -110,7 +110,7 @@ object SpanFormatter {
 
     private fun spannedToUpperCase(@NonNull s: Spanned): Spanned {
         val spans = s.getSpans(0, s.length, Any::class.java)
-        val spannableString = SpannableString(s.toString().toUpperCase())
+        val spannableString = SpannableString(s.toString().toUpperCase(Locale.getDefault()))
 
         // reapply the spans to the now uppercase string
         for (span in spans) {

@@ -53,7 +53,6 @@ class Java8TimeAdapter {
 
     companion object {
         private val UTC_ZONE = ZoneOffset.UTC
-        private val OFFSET_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME
         private val INSTANT_FORMATTER = DateTimeFormatter.ISO_INSTANT
         private val LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME
     }

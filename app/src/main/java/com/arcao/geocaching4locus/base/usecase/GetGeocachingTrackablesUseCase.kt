@@ -8,6 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.yield
 import locus.api.mapper.TrackableConverter
+import kotlin.math.min
 
 /**
  * Created by Arcao on 30.12.2018.
@@ -33,7 +34,7 @@ class GetGeocachingTrackablesUseCase(
             val logs = repository.geocacheTrackables(
                 referenceCode = referenceCode,
                 skip = current,
-                take = Math.min(count - current, AppConstants.TRACKEBLES_PER_REQUEST)
+                take = min(count - current, AppConstants.TRACKEBLES_PER_REQUEST)
             )
 
             yield()

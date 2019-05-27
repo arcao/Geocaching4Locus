@@ -18,7 +18,7 @@ class BookmarkListAdapter(
         setHasStableIds(true)
     }
 
-    override fun getItemId(position: Int) = getItem(position).id.toLong()
+    override fun getItemId(position: Int) = getItem(position).id
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

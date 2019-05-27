@@ -2,7 +2,12 @@ package com.arcao.geocaching4locus.import_bookmarks.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -16,7 +21,6 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel

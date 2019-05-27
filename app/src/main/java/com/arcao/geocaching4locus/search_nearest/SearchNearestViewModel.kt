@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
@@ -13,6 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.LocationPermissionType
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.CoordinatesFormatter
 import com.arcao.geocaching4locus.base.util.invoke
@@ -58,6 +60,9 @@ class SearchNearestViewModel(
     val requestedCachesMax = DefaultPreferenceManager.MAX_GEOCACHES_COUNT
     val requestedCachesStep = preferenceManager.downloadingGeocachesCountStep
 
+    private var coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_MANUAL
+    private var useFilter = false
+
     init {
         run {
             formatCoordinates(preferenceManager.lastLatitude, preferenceManager.lastLongitude)
@@ -69,10 +74,12 @@ class SearchNearestViewModel(
 
             if (locusMapManager.isIntentPointTools(intent)) {
                 locusMapManager.getPointFromIntent(intent)?.let { point ->
+                    coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_LOCUS
                     formatCoordinates(point.location.latitude, point.location.longitude)
                 }
             } else if (locusMapManager.isLocationIntent(intent)) {
                 locusMapManager.getLocationFromIntent(intent)?.let { location ->
+                    coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_LOCUS
                     formatCoordinates(location.latitude, location.longitude)
                 }
             }
@@ -100,6 +107,7 @@ class SearchNearestViewModel(
             }
         }
 
+        coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_GPS
 
         mainLaunch {
             showProgress(R.string.progress_acquire_gps_location) {
@@ -166,6 +174,8 @@ class SearchNearestViewModel(
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun doDownload(coordinates: Coordinates, maxCount: Int) = computationContext {
+        AnalyticsUtil.actionSearchNearest(coordinatesSource, useFilter, maxCount, accountManager.isPremium)
+
         val downloadIntent = locusMapManager.createSendPointsIntent(
                 callImport = true,
                 center = false
@@ -252,6 +262,7 @@ class SearchNearestViewModel(
     }
 
     fun showFilters() {
+        useFilter = true
         action(SearchNearestAction.ShowFilters)
     }
 }

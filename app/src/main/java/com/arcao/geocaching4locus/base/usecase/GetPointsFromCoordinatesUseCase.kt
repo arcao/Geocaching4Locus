@@ -16,6 +16,7 @@ import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import locus.api.objects.extra.Point
 import timber.log.Timber
+import kotlin.math.min
 
 class GetPointsFromCoordinatesUseCase(
     private val repository: GeocachingApiRepository,
@@ -73,9 +74,9 @@ class GetPointsFromCoordinatesUseCase(
                     logsCount = geocacheLogsCount,
                     lite = liteData,
                     skip = current,
-                    take = Math.min(itemsPerRequest, count - current)
+                    take = min(itemsPerRequest, count - current)
                 ).also {
-                    count = Math.min(it.totalCount, maxCount.toLong()).toInt()
+                    count = min(it.totalCount, maxCount.toLong()).toInt()
                     countHandler(count)
                 }
 

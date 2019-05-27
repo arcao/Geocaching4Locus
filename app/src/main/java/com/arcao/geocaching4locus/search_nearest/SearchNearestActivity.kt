@@ -15,7 +15,6 @@ import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
 import com.arcao.geocaching4locus.base.util.PermissionUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity

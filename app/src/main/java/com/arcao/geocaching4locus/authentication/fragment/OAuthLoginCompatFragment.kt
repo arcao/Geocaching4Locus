@@ -9,7 +9,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.LoginActivity
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showWebPage
 
 class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {

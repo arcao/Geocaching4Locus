@@ -14,6 +14,7 @@ import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.arcao.geocaching4locus.R
+import kotlin.math.min
 
 class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     private var value: Int = 0
@@ -193,7 +194,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         private fun postSetSelection(start: Int, stop: Int) {
             editText.post {
                 val len = editText.text.length
-                editText.setSelection(Math.min(start, len), Math.min(stop, len))
+                editText.setSelection(min(start, len), min(stop, len))
             }
         }
 

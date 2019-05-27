@@ -127,6 +127,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
 
         private fun createException(statusCode : StatusCode, statusMessage: String, errorMessage : String): Exception {
             return when(statusCode) {
+                StatusCode.UNAUTHORIZED,
                 StatusCode.FORBIDDEN -> AuthenticationException(statusCode, statusMessage, errorMessage)
                 else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }

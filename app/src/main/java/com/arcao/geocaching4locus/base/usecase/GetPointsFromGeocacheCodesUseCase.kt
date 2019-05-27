@@ -14,6 +14,7 @@ import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
+import kotlin.math.min
 
 class GetPointsFromGeocacheCodesUseCase(
     private val repository: GeocachingApiRepository,
@@ -27,8 +28,7 @@ class GetPointsFromGeocacheCodesUseCase(
         scope: CoroutineScope,
         geocacheCodes: Array<String>,
         liteData: Boolean = true,
-        geocacheLogsCount: Int = 0,
-        trackableLogsCount: Int = 0
+        geocacheLogsCount: Int = 0
     ) = scope.produce(dispatcherProvider.io) {
         geocachingApiLogin()
 
@@ -96,7 +96,7 @@ class GetPointsFromGeocacheCodesUseCase(
     }
 
     private fun getRequestedGeocacheIds(cacheIds: Array<String>, current: Int, cachesPerRequest: Int): Array<String> {
-        val count = Math.min(cacheIds.size - current, cachesPerRequest)
+        val count = min(cacheIds.size - current, cachesPerRequest)
         return cacheIds.copyOfRange(current, current + count)
     }
 }

@@ -6,6 +6,7 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -43,6 +44,8 @@ class ImportGeocacheCodeViewModel(
     }
 
     fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {
+        AnalyticsUtil.actionImportGC(accountManager.isPremium)
+
         val importIntent = locusMapManager.createSendPointsIntent(
             callImport = true,
             center = true

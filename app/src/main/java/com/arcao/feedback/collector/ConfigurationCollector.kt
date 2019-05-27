@@ -14,7 +14,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
     override suspend fun collect(): String {
         return try {
             val crashConf = context.resources.configuration
-            ConfigurationCollector.toString(crashConf)
+            toString(crashConf)
         } catch (e: RuntimeException) {
             Timber.w(e, "Couldn't retrieve ConfigurationCollector for : %s", context.packageName)
             "Couldn't retrieve crash config"
@@ -150,18 +150,17 @@ class ConfigurationCollector(private val context: Context) : Collector() {
          */
         @Throws(IllegalAccessException::class)
         private fun getFieldValueName(conf: Configuration, f: Field): String? {
-            val fieldName = f.name
-            when (fieldName) {
-                FIELD_MCC, FIELD_MNC -> return Integer.toString(f.getInt(conf))
+            when (val fieldName = f.name) {
+                FIELD_MCC, FIELD_MNC -> return f.getInt(conf).toString()
                 FIELD_UIMODE -> return activeFlags(VALUE_ARRAYS[PREFIX_UI_MODE]!!, f.getInt(conf))
                 FIELD_SCREENLAYOUT -> return activeFlags(VALUE_ARRAYS[PREFIX_SCREENLAYOUT]!!, f.getInt(conf))
                 else -> {
                     val values =
                         VALUE_ARRAYS[fieldName.toUpperCase() + '_'] // Unknown field, return the raw int as String
-                            ?: return Integer.toString(f.getInt(conf))
+                            ?: return f.getInt(conf).toString()
 
                     return values.get(f.getInt(conf)) // Unknown value, return the raw int as String
-                        ?: return Integer.toString(f.getInt(conf))
+                        ?: return f.getInt(conf).toString()
                 }
             }
         }

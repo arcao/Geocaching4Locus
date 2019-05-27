@@ -17,7 +17,6 @@ import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.exhaustive
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.github.scribejava.core.model.OAuthConstants

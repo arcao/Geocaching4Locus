@@ -14,7 +14,7 @@ enum class StatusCode(override val id: Int) : IdType {
     INTERNAL_SERVER_ERROR(500);
 
     companion object {
-        fun from(id: Int?) = StatusCode.values().find { it.id == id }
+        fun from(id: Int?) = values().find { it.id == id }
     }
 }
 

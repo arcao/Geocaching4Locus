@@ -7,12 +7,10 @@ import android.location.LocationManager
 import androidx.core.content.getSystemService
 import com.arcao.geocaching4locus.base.util.hasGpsLocationPermission
 import com.arcao.geocaching4locus.base.util.hasWifiLocationPermission
-import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import timber.log.Timber
 
 class GetLastKnownLocationUseCase(
-    private val context: Context,
-    private val preferenceManager: DefaultPreferenceManager
+    private val context: Context
 ) {
     private val locationManager = requireNotNull(context.getSystemService<LocationManager>())
 

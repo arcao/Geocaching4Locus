@@ -7,7 +7,6 @@ import androidx.annotation.NonNull
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.hasPositiveAction

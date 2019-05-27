@@ -1,6 +1,5 @@
 package locus.api.utils
 
-import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -15,6 +14,3 @@ inline fun <reified T> Collection<T>?.isNullOrEmpty(): Boolean {
     }
     return this == null || isEmpty()
 }
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun Date?.toTime() = this?.time ?: 0

@@ -7,6 +7,7 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -42,6 +43,7 @@ class UpdateMoreViewModel(
             return@mainLaunch
         }
 
+
         try {
             var progress = 0
             showProgress(R.string.progress_update_geocaches, maxProgress = 1) {
@@ -51,6 +53,7 @@ class UpdateMoreViewModel(
                     if (IntentHelper.isIntentPointsTools(intent))
                         pointIndexes = IntentHelper.getPointsFromIntent(intent)
 
+                    AnalyticsUtil.actionUpdateMore(pointIndexes?.size ?: 0, accountManager.isPremium)
                     Timber.i("source: update;count=%d", pointIndexes?.size ?: 0)
 
                     if (pointIndexes?.isNotEmpty() != true) {

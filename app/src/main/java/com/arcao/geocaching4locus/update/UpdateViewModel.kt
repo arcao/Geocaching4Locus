@@ -10,6 +10,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
+import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -188,6 +189,8 @@ class UpdateViewModel(
         }
 
         val downloadLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
+
+        AnalyticsUtil.actionUpdate(oldPoint != null, downloadLogs, accountManager.isPremium)
         return UpdateData(cacheId, downloadLogs, oldPoint)
     }
 

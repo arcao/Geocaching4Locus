@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.base.util
 
 import kotlin.math.pow
+import kotlin.math.roundToLong
 
 object CoordinatesFormatter {
     private const val MIN_PER_DEG = 60.0
@@ -97,7 +98,7 @@ object CoordinatesFormatter {
     private fun roundDouble(source: Double, decimalPlaces: Int): Double {
         val multiplicationFactor = 10.0.pow(decimalPlaces.toDouble())
         val sourceMultiplied = source * multiplicationFactor
-        return Math.round(sourceMultiplied) / multiplicationFactor
+        return sourceMultiplied.roundToLong() / multiplicationFactor
     }
 
     private fun round(source: Double, decimals: Int): String {

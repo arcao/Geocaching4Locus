@@ -26,7 +26,7 @@ class ContainerTypeFilterPreferenceFragment : AbstractPreferenceFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val containerTypeLength = AppConstants.GEOCACHE_SIZES.size
-2
+
         when (item.itemId) {
             android.R.id.home -> {
                 // app icon in action bar clicked; go home

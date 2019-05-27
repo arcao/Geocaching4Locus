@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.util.TypedValue
 import androidx.appcompat.R
 import androidx.core.graphics.ColorUtils
+import kotlin.math.roundToLong
 
 object ColorUtil {
     private val TL_TYPED_VALUE = ThreadLocal<TypedValue>()
@@ -113,7 +114,7 @@ object ColorUtil {
     private fun getThemeAttrColor(context: Context, attr: Int, alpha: Float): Int {
         val color = getThemeAttrColor(context, attr)
         val originalAlpha = Color.alpha(color)
-        return ColorUtils.setAlphaComponent(color, Math.round(originalAlpha * alpha))
+        return ColorUtils.setAlphaComponent(color, (originalAlpha * alpha).roundToLong())
     }
 
     private fun getThemeAttrColor(context: Context, attr: Int): Int {

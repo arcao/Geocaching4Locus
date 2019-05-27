@@ -15,6 +15,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
+import kotlin.math.min
 
 class GetLiveMapPointsFromRectangleCoordinatesUseCase(
     private val repository: GeocachingApiRepository,
@@ -71,9 +72,9 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
                     ),
                     lite = liteData,
                     skip = current,
-                    take = Math.min(itemsPerRequest, count - current)
+                    take = min(itemsPerRequest, count - current)
                 ).also {
-                    count = Math.min(it.totalCount, AppConstants.LIVEMAP_CACHES_COUNT.toLong()).toInt()
+                    count = min(it.totalCount, AppConstants.LIVEMAP_CACHES_COUNT.toLong()).toInt()
                     withContext(dispatcherProvider.computation) {
                         countHandler(count)
                     }

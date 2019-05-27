@@ -1,5 +1,10 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
+
 data class Coordinates(
     val latitude: Double, // 0
     val longitude: Double // 0
@@ -42,32 +47,32 @@ data class Coordinates(
             val lon2 = Math.toRadians(destination.longitude)
 
             // prepare variables
-            val cosLat1 = Math.cos(lat1)
-            val cosLat2 = Math.cos(lat2)
-            val sinDLat2 = Math.sin((lat2 - lat1) / 2.0)
-            val sinDLon2 = Math.sin((lon2 - lon1) / 2.0)
+            val cosLat1 = cos(lat1)
+            val cosLat2 = cos(lat2)
+            val sinDLat2 = sin((lat2 - lat1) / 2.0)
+            val sinDLon2 = sin((lon2 - lon1) / 2.0)
 
             // compute values
             val a = sinDLat2 * sinDLat2 + cosLat1 * cosLat2 * sinDLon2 * sinDLon2
-            val d = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a))
+            val d = 2.0 * atan2(sqrt(a), sqrt(1.0 - a))
 
             // convert to metres
             results[0] = d * AVERAGE_RADIUS_OF_EARTH
 
             // compute initial bearing
             if (results.size > 1) {
-                val sinLambda = Math.sin(lon2 - lon1)
-                val cosLambda = Math.cos(lon2 - lon1)
+                val sinLambda = sin(lon2 - lon1)
+                val cosLambda = cos(lon2 - lon1)
 
                 var y = sinLambda * cosLat2
-                var x = cosLat1 * Math.sin(lat2) - Math.sin(lat1) * cosLat2 * cosLambda
-                results[1] = Math.toDegrees(Math.atan2(y, x))
+                var x = cosLat1 * sin(lat2) - sin(lat1) * cosLat2 * cosLambda
+                results[1] = Math.toDegrees(atan2(y, x))
 
                 // compute final bearing
                 if (results.size > 2) {
                     y = sinLambda * cosLat1
-                    x = -Math.sin(lat1) * cosLat2 + cosLat1 * Math.sin(lat2) * cosLambda
-                    results[2] = Math.toDegrees(Math.atan2(y, x))
+                    x = -sin(lat1) * cosLat2 + cosLat1 * sin(lat2) * cosLambda
+                    results[2] = Math.toDegrees(atan2(y, x))
                 }
             }
         }

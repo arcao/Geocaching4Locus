@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.authentication.util
 
 import android.app.Activity
 import android.content.Context
-import android.preference.PreferenceManager
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -11,7 +10,7 @@ import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 
-class PreferenceAccountManager(private val context: Context, oAuthService: OAuth20Service) :
+class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
     AccountManager(oAuthService) {
     private val prefs = context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
     val restrictions = AccountRestrictions(context)
@@ -65,8 +64,6 @@ class PreferenceAccountManager(private val context: Context, oAuthService: OAuth
 
     @Suppress("DEPRECATION")
     private fun upgradeStorage() {
-        val defaultPref = PreferenceManager.getDefaultSharedPreferences(context)
-
         val prefVersion = prefs.getInt(PrefConstants.PREF_VERSION, 0)
         if (prefVersion < 4) {
             // remove old Geocaching API account

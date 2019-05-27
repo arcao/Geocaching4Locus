@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.text.*
+import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
+import android.text.Spanned
+import android.text.TextWatcher
 import android.text.method.NumberKeyListener
 import android.view.LayoutInflater
 import android.view.View
@@ -19,12 +23,13 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.arcao.geocaching4locus.R
 import java.lang.ref.WeakReference
+import kotlin.math.min
 
 class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeListener, TextWatcher {
 
-    internal lateinit var seekBarView: SeekBar
-    internal lateinit var editTextView: EditText
-    internal lateinit var messageView: TextView
+    private lateinit var seekBarView: SeekBar
+    private lateinit var editTextView: EditText
+    private lateinit var messageView: TextView
 
     private var minValue: Int = 0
     private var maxValue = 100
@@ -244,7 +249,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         private fun postSetSelection(start: Int, stop: Int) {
             editTextView.post {
                 val len = editTextView.text.length
-                editTextView.setSelection(Math.min(start, len), Math.min(stop, len))
+                editTextView.setSelection(min(start, len), min(stop, len))
             }
         }
 

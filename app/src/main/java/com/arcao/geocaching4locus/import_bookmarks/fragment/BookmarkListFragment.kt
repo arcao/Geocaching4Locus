@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
-import com.arcao.geocaching4locus.base.util.observe
 import com.arcao.geocaching4locus.databinding.FragmentBookmarkListBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel

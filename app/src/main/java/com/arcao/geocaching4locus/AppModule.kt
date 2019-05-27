@@ -71,7 +71,7 @@ internal val appModule = module {
     factory { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
     factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
     factory { GetGpsLocationUseCase(get(), get()) }
-    factory { GetLastKnownLocationUseCase(get(), get()) }
+    factory { GetLastKnownLocationUseCase(get()) }
     factory { GetLiveMapPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
     factory { GetOldPointNewPointPairFromPointUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointFromGeocacheCodeUseCase(get(), get(), get(), get(), get()) }

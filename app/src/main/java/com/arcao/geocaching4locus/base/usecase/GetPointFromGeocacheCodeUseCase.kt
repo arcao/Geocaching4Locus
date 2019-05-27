@@ -20,8 +20,7 @@ class GetPointFromGeocacheCodeUseCase(
     suspend operator fun invoke(
         referenceCode: String,
         liteData: Boolean = true,
-        geocacheLogsCount: Int = 0,
-        trackableLogsCount: Int = 0
+        geocacheLogsCount: Int = 0
     ) = withContext(dispatcherProvider.io) {
         geocachingApiLogin()
 

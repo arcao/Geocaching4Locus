@@ -8,6 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.yield
 import locus.api.mapper.GeocacheLogConverter
+import kotlin.math.min
 
 class GetGeocachingLogsUseCase(
     private val repository: GeocachingApiRepository,
@@ -30,7 +31,7 @@ class GetGeocachingLogsUseCase(
             val logs = repository.geocacheLogs(
                 referenceCode = referenceCode,
                 skip = current,
-                take = Math.min(count - current, AppConstants.LOGS_PER_REQUEST)
+                take = min(count - current, AppConstants.LOGS_PER_REQUEST)
             )
 
             yield()

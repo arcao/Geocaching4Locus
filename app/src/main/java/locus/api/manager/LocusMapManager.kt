@@ -70,7 +70,7 @@ class LocusMapManager(
      */
     private val cacheFile: File
         get() {
-            val cacheFile = File(File(context.cacheDir, "export"), LocusMapManager.CACHE_FILENAME)
+            val cacheFile = File(File(context.cacheDir, "export"), CACHE_FILENAME)
 
             Timber.d("Cache file for Locus: %s", cacheFile.toString())
 

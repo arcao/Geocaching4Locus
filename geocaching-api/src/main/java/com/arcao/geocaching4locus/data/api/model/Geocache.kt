@@ -67,6 +67,24 @@ data class Geocache(
         }
     }
 
+    val foundDateInstant by lazy {
+        val date = userData?.foundDate
+        if (date != null && ianaTimezoneId != null) {
+            ZonedDateTime.of(date, ZoneId.of(ianaTimezoneId)).toInstant()
+        } else {
+            null
+        }
+    }
+
+    val dnfDateInstant by lazy {
+        val date = userData?.dnfDate
+        if (date != null && ianaTimezoneId != null) {
+            ZonedDateTime.of(date, ZoneId.of(ianaTimezoneId)).toInstant()
+        } else {
+            null
+        }
+    }
+
     companion object {
         private const val FIELD_SEPARATOR = ","
 

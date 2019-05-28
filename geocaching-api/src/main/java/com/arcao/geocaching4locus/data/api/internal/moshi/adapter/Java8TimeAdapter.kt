@@ -1,7 +1,6 @@
 package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 
 import com.squareup.moshi.FromJson
-import com.squareup.moshi.JsonQualifier
 import com.squareup.moshi.ToJson
 import org.threeten.bp.Duration
 import org.threeten.bp.Instant
@@ -58,6 +57,3 @@ class Java8TimeAdapter {
     }
 }
 
-@Retention(AnnotationRetention.RUNTIME)
-@JsonQualifier
-annotation class LocalDateTimeUTC

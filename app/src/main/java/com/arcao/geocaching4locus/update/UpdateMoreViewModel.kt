@@ -85,6 +85,8 @@ class UpdateMoreViewModel(
                     }
                 }
             }
+            
+            action(UpdateMoreAction.Finish)
         } catch (e: Exception) {
             action(UpdateMoreAction.Error(exceptionHandler(e)))
         }

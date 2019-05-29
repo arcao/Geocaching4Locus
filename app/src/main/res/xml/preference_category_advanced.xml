@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app:androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_advanced">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_advanced">
     <CheckBoxPreference
-            app:key="imperial_units"
-            app:title="@string/pref_imperial_units"
-            app:summary="@string/pref_imperial_units_summary"/>
-</app:androidx.preference.PreferenceScreen>
+        app:iconSpaceReserved="false"
+        app:key="imperial_units"
+        app:summary="@string/pref_imperial_units_summary"
+        app:title="@string/pref_imperial_units" />
+</androidx.preference.PreferenceScreen>

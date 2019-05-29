@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_terrain">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_terrain">
     <ListPreference
-            app:key="terrain_filter_min"
-            app:title="@string/pref_terrain_min"
-            app:entries="@array/rating"
-            app:entryValues="@array/rating"
-            app:defaultValue="1"/>
+        app:defaultValue="1"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="terrain_filter_min"
+        app:title="@string/pref_terrain_min" />
     <ListPreference
-            app:key="terrain_filter_max"
-            app:title="@string/pref_terrain_max"
-            app:entries="@array/rating"
-            app:entryValues="@array/rating"
-            app:defaultValue="5"/>
+        app:defaultValue="5"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="terrain_filter_max"
+        app:title="@string/pref_terrain_max" />
 </androidx.preference.PreferenceScreen>

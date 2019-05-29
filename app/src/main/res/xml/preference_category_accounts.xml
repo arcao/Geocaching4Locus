@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_account">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_account">
     <Preference
-            app:key="account"/>
+        app:iconSpaceReserved="false"
+        app:key="account" />
     <Preference
-            app:key="account_geocaching_live"
-            app:title="@string/pref_geocaching_live"
-            app:summary="@string/pref_geocaching_live_message"
-            app:icon="@drawable/geocaching_live_icon"/>
+        app:icon="@drawable/geocaching_live_icon"
+        app:key="account_geocaching_live"
+        app:summary="@string/pref_geocaching_live_message"
+        app:title="@string/pref_geocaching_live" />
 </androidx.preference.PreferenceScreen>

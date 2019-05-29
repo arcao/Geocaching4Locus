@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app:androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_difficulty">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_difficulty">
     <ListPreference
-            app:key="difficulty_filter_min"
-            app:title="@string/pref_difficulty_min"
-            app:entries="@array/rating"
-            app:entryValues="@array/rating"
-            app:defaultValue="1"/>
+        app:defaultValue="1"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="difficulty_filter_min"
+        app:title="@string/pref_difficulty_min" />
     <ListPreference
-            app:key="difficulty_filter_max"
-            app:title="@string/pref_difficulty_max"
-            app:entries="@array/rating"
-            app:entryValues="@array/rating"
-            app:defaultValue="5"/>
-</app:androidx.preference.PreferenceScreen>
+        app:defaultValue="5"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="difficulty_filter_max"
+        app:title="@string/pref_difficulty_max" />
+</androidx.preference.PreferenceScreen>

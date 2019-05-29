@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app:androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_about">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_about">
     <Preference
-            app:key="about_version"
-            app:title="@string/pref_version"/>
+        app:iconSpaceReserved="false"
+        app:key="about_version"
+        app:title="@string/pref_version" />
     <Preference
-            app:key="about_website"
-            app:title="@string/pref_website"/>
+        app:iconSpaceReserved="false"
+        app:key="about_website"
+        app:title="@string/pref_website" />
     <Preference
-            app:key="about_facebook"
-            app:title="@string/pref_facebook"/>
+        app:iconSpaceReserved="false"
+        app:key="about_facebook"
+        app:title="@string/pref_facebook" />
     <Preference
-            app:key="about_feedback"
-            app:title="@string/pref_feedback"/>
+        app:iconSpaceReserved="false"
+        app:key="about_feedback"
+        app:title="@string/pref_feedback" />
     <Preference
-            app:key="about_donate_paypal"
-            app:title="@string/pref_donate_paypal"
-            app:summary="@string/pref_donate_paypal_summary"/>
-</app:androidx.preference.PreferenceScreen>
+        app:iconSpaceReserved="false"
+        app:key="about_donate_paypal"
+        app:summary="@string/pref_donate_paypal_summary"
+        app:title="@string/pref_donate_paypal" />
+</androidx.preference.PreferenceScreen>

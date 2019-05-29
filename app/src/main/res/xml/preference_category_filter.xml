@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_filter">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_filter">
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.CacheTypeFilterPreferenceFragment"
-            app:key="cache_type_filter"
-            app:title="@string/pref_geocache_type"/>
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.CacheTypeFilterPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:key="cache_type_filter"
+        app:title="@string/pref_geocache_type" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.ContainerTypeFilterPreferenceFragment"
-            app:key="container_type_filter"
-            app:title="@string/pref_container_size"/>
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.ContainerTypeFilterPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:key="container_type_filter"
+        app:title="@string/pref_container_size" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.DifficultyFilterPreferenceFragment"
-            app:key="difficulty_filter"
-            app:title="@string/pref_difficulty"/>
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.DifficultyFilterPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:key="difficulty_filter"
+        app:title="@string/pref_difficulty" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.TerrainFilterPreferenceFragment"
-            app:key="terrain_filter"
-            app:title="@string/pref_terrain"/>
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.filter.TerrainFilterPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:key="terrain_filter"
+        app:title="@string/pref_terrain" />
     <CheckBoxPreference
-            app:defaultValue="false"
-            app:key="filter_show_found"
-            app:summary="@string/pref_show_found_summary"
-            app:title="@string/pref_show_found"/>
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="filter_show_found"
+        app:summary="@string/pref_show_found_summary"
+        app:title="@string/pref_show_found" />
     <CheckBoxPreference
-            app:defaultValue="false"
-            app:key="filter_show_own"
-            app:summary="@string/pref_show_own_summary"
-            app:title="@string/pref_show_own"/>
+        app:defaultValue="false"
+        app:key="filter_show_own"
+        app:iconSpaceReserved="false"
+        app:summary="@string/pref_show_own_summary"
+        app:title="@string/pref_show_own" />
     <CheckBoxPreference
-            app:defaultValue="false"
-            app:key="filter_show_disabled"
-            app:summary="@string/pref_show_disabled_summary"
-            app:title="@string/pref_show_disabled"/>
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="filter_show_disabled"
+        app:summary="@string/pref_show_disabled_summary"
+        app:title="@string/pref_show_disabled" />
     <EditTextPreference
-            app:defaultValue="50.0"
-            app:dialogLayout="@layout/preference_dialog_edittext_decimal"
-            app:dialogMessage="@string/pref_distance_summary_km"
-            app:dialogTitle="@string/pref_distance"
-            app:key="filter_distance"
-            app:summary="@string/pref_distance_summary_km"
-            app:title="@string/pref_distance"/>
+        app:defaultValue="50.0"
+        app:dialogLayout="@layout/preference_dialog_edittext_decimal"
+        app:dialogMessage="@string/pref_distance_summary_km"
+        app:dialogTitle="@string/pref_distance"
+        app:iconSpaceReserved="false"
+        app:key="filter_distance"
+        app:summary="@string/pref_distance_summary_km"
+        app:title="@string/pref_distance" />
 </androidx.preference.PreferenceScreen>

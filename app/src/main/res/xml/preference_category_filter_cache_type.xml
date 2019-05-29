@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_geocache_type">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_geocache_type">
     <CheckBoxPreference
-            app:key="filter_0"
-            app:title="Traditional Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_0"
+        app:title="Traditional Cache" />
     <CheckBoxPreference
-            app:key="filter_1"
-            app:title="Multi-cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_1"
+        app:title="Multi-cache" />
     <CheckBoxPreference
-            app:key="filter_2"
-            app:title="Mystery Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_2"
+        app:title="Mystery Cache" />
     <CheckBoxPreference
-            app:key="filter_3"
-            app:title="Virtual Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_3"
+        app:title="Virtual Cache" />
     <CheckBoxPreference
-            app:key="filter_4"
-            app:title="Earthcache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_4"
+        app:title="Earthcache" />
     <CheckBoxPreference
-            app:key="filter_5"
-            app:title="Project APE Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_5"
+        app:title="Project APE Cache" />
     <CheckBoxPreference
-            app:key="filter_6"
-            app:title="Letterbox Hybrid"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_6"
+        app:title="Letterbox Hybrid" />
     <CheckBoxPreference
-            app:key="filter_7"
-            app:title="Wherigo Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_7"
+        app:title="Wherigo Cache" />
     <CheckBoxPreference
-            app:key="filter_8"
-            app:title="Event Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_8"
+        app:title="Event Cache" />
     <CheckBoxPreference
-            app:key="filter_9"
-            app:title="Mega-Event Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_9"
+        app:title="Mega-Event Cache" />
     <CheckBoxPreference
-            app:key="filter_10"
-            app:title="Cache In Trash Out Event"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:key="filter_10"
+        app:iconSpaceReserved="false"
+        app:title="Cache In Trash Out Event" />
     <CheckBoxPreference
-            app:key="filter_11"
-            app:title="GPS Adventures Exhibit"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_11"
+        app:title="GPS Adventures Exhibit" />
     <CheckBoxPreference
-            app:key="filter_12"
-            app:title="Webcam Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_12"
+        app:title="Webcam Cache" />
     <CheckBoxPreference
-            app:key="filter_13"
-            app:title="Locationless (Reverse) Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_13"
+        app:title="Locationless (Reverse) Cache" />
     <CheckBoxPreference
-            app:key="filter_14"
-            app:title="Lost and Found Event"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_14"
+        app:title="Lost and Found Event" />
     <CheckBoxPreference
-            app:key="filter_15"
-            app:title="Groundspeak HQ"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_15"
+        app:title="Groundspeak HQ" />
     <CheckBoxPreference
-            app:key="filter_16"
-            app:title="Groundspeak Lost and Found Celebration"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_16"
+        app:title="Groundspeak Lost and Found Celebration" />
     <CheckBoxPreference
-            app:key="filter_17"
-            app:title="Groundspeak Block Party"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_17"
+        app:title="Groundspeak Block Party" />
     <CheckBoxPreference
-            app:key="filter_18"
-            app:title="Giga-Event Cache"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="filter_18"
+        app:title="Giga-Event Cache" />
 </androidx.preference.PreferenceScreen>

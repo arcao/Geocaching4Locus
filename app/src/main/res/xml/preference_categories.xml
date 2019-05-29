@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/action_settings">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/action_settings">
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment"
-            app:title="@string/pref_account"/>
+        app:allowDividerBelow="true"
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_account" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment"
-            app:title="@string/pref_filter"/>
+        app:allowDividerBelow="true"
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_filter" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment"
-            app:title="@string/pref_live_map"/>
+        app:allowDividerBelow="true"
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_live_map" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.DownloadingPreferenceFragment"
-            app:title="@string/pref_downloading"/>
+        app:allowDividerBelow="true"
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.DownloadingPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_downloading" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.AdvancedPreferenceFragment"
-            app:title="@string/pref_advanced"/>
+        app:allowDividerBelow="true"
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.AdvancedPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_advanced" />
     <Preference
-            app:fragment="com.arcao.geocaching4locus.settings.fragment.AboutPreferenceFragment"
-            app:title="@string/pref_about"/>
+        app:fragment="com.arcao.geocaching4locus.settings.fragment.AboutPreferenceFragment"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_about" />
 </androidx.preference.PreferenceScreen>

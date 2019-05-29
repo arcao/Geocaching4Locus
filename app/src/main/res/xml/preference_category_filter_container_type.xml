@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:title="@string/pref_container_size">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_container_size">
     <CheckBoxPreference
-            app:key="container_filter_0"
-            app:title="Not chosen"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_0"
+        app:title="Not chosen" />
     <CheckBoxPreference
-            app:key="container_filter_1"
-            app:title="Micro"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_1"
+        app:title="Micro" />
     <CheckBoxPreference
-            app:key="container_filter_2"
-            app:title="Small"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_2"
+        app:title="Small" />
     <CheckBoxPreference
-            app:key="container_filter_3"
-            app:title="Regular"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_3"
+        app:title="Regular" />
     <CheckBoxPreference
-            app:key="container_filter_4"
-            app:title="Large"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_4"
+        app:title="Large" />
     <CheckBoxPreference
-            app:key="container_filter_5"
-            app:title="Huge"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_5"
+        app:title="Huge" />
     <CheckBoxPreference
-            app:key="container_filter_6"
-            app:title="Other"
-            app:defaultValue="true"/>
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="container_filter_6"
+        app:title="Other" />
 </androidx.preference.PreferenceScreen>

@@ -56,7 +56,8 @@
                 android:text="@{vm.premium ? @string/menu_import_bookmarks : @string/format_premium(@string/menu_import_bookmarks)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/db_import_gc"
-                app:layout_constraintTop_toTopOf="@+id/db_search_nearest"/>
+                app:layout_constraintTop_toTopOf="@+id/db_search_nearest"
+                tools:text="@string/menu_import_bookmarks" />
 
         <com.arcao.geocaching4locus.dashboard.widget.DashboardButton
                 android:id="@+id/db_live_map"

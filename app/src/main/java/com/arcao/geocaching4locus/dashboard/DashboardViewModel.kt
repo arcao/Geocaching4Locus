@@ -23,7 +23,8 @@ class DashboardViewModel(
     private val locusMapManager: LocusMapManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LiveMapNotificationManager.LiveMapStateChangeListener {
-    val premium by lazy { accountManager.isPremium }
+    val premium
+        get() = accountManager.isPremium
 
     val action = Command<DashboardAction>()
     val liveMapEnabled = MutableLiveData<Boolean>()

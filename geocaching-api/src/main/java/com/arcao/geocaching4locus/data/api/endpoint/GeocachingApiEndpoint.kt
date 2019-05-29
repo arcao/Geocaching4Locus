@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheLogExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheSort
+import com.arcao.geocaching4locus.data.api.model.request.GeocacheTrackableExpand
 import com.arcao.geocaching4locus.data.api.model.request.query.GeocacheQuery
 import com.arcao.geocaching4locus.data.api.model.response.PagedList
 import kotlinx.coroutines.Deferred
@@ -65,11 +66,11 @@ interface GeocachingApiEndpoint {
         @Query("take") take: Int = 10
     ): Deferred<PagedList<GeocacheLog>>
 
-    @GET("/v1/trackables/{referenceCode}")
+    @GET("/v1/geocaches/{referenceCode}/trackables")
     fun geocacheTrackablesAsync(
         @Path("referenceCode") referenceCode: String,
         @Query("fields") fields: String = Trackable.FIELDS_ALL,
-        @Query("expand") expand: GeocacheLogExpand = GeocacheLogExpand(),
+        @Query("expand") expand: GeocacheTrackableExpand = GeocacheTrackableExpand(),
         @Query("skip") skip: Int = 0,
         @Query("take") take: Int = 10
     ): Deferred<PagedList<Trackable>>

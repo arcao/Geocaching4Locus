@@ -12,6 +12,7 @@ import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheLogExpand
+import com.arcao.geocaching4locus.data.api.model.request.GeocacheTrackableExpand
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.Filter
 import com.arcao.geocaching4locus.data.api.model.request.query.queryOf
 import kotlinx.coroutines.Deferred
@@ -124,7 +125,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
         apiCall {
             geocacheTrackablesAsync(
                 referenceCode = referenceCode,
-                expand = GeocacheLogExpand().all(),
+                expand = GeocacheTrackableExpand(),
                 fields = Trackable.FIELDS_MIN,
                 skip = skip,
                 take = take

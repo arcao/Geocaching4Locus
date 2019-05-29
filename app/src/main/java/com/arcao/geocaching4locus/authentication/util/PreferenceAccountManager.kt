@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.data.account.GeocachingAccount
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
+import org.threeten.bp.temporal.ChronoUnit
 
 class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
     AccountManager(oAuthService) {
@@ -89,4 +90,4 @@ val AccountManager.isPremium: Boolean
 
 fun AccountManager.restrictions(): AccountRestrictions = (this as PreferenceAccountManager).restrictions
 
-fun GeocachingAccount.isAccountUpdateRequired() = Instant.now().isAfter(lastUserInfoUpdate)
+fun GeocachingAccount.isAccountUpdateRequired() = Instant.now().minus(1L, ChronoUnit.DAYS).isAfter(lastUserInfoUpdate)

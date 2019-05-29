@@ -23,6 +23,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$androidxKtxVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidxKtxLifecycleVersion"
     implementation "androidx.multidex:multidex:$androidxMultidexVersion"
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
 
     kapt "androidx.databinding:databinding-compiler:$androidGradlePluginVersion"
 

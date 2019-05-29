@@ -5,7 +5,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import kotlinx.coroutines.withContext
 import locus.api.mapper.DataMapper

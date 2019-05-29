@@ -47,7 +47,7 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
                 }
                 is ImportBookmarkAction.ChooseBookmark -> {
                     supportFragmentManager.transaction {
-                        replace(R.id.fragment, BookmarkFragment.newInstance(action.bookmarkList))
+                        replace(R.id.fragment, BookmarkFragment.newInstance(action.geocacheList))
                         addToBackStack(null)
                     }
                 }

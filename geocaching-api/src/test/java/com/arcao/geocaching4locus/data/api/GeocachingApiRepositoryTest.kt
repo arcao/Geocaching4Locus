@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.data.api
 
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import io.mockk.coVerify
 import io.mockk.every
 import kotlinx.coroutines.runBlocking

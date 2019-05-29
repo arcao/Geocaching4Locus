@@ -9,7 +9,7 @@ import com.arcao.geocaching4locus.data.api.model.GeocacheLog
 import com.arcao.geocaching4locus.data.api.model.Image
 import com.arcao.geocaching4locus.data.api.model.Trackable
 import com.arcao.geocaching4locus.data.api.model.User
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheExpand
 import com.arcao.geocaching4locus.data.api.model.request.GeocacheLogExpand
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.Filter

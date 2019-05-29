@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.account
 
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 import java.io.File

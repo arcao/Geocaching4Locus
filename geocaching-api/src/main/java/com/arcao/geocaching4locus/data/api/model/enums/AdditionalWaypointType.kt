@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.data.api.model.enum
+package com.arcao.geocaching4locus.data.api.model.enums
 
 enum class AdditionalWaypointType(override val id: Int, override val value: String) : IdValueType {
     PARKING_AREA(217, "Parking Area"),

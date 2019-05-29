@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.account.GeocachingAccount
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 

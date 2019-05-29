@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.data.api.model.enum
+package com.arcao.geocaching4locus.data.api.model.enums
 
 enum class GeocacheListType(override val id: Int, override val value: String) : IdValueType {
     POCKET_QUERY(1, "pq"),

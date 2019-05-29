@@ -9,7 +9,7 @@ import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.BookmarkEntity
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
+import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
@@ -24,7 +24,7 @@ import timber.log.Timber
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class BookmarkViewModel(
-        private val bookmarkList: BookmarkListEntity,
+        private val geocacheList: GeocacheListEntity,
         private val context: Context,
         private val exceptionHandler: ExceptionHandler,
         private val getBookmark: GetBookmarkUseCase,
@@ -45,7 +45,7 @@ class BookmarkViewModel(
         loading(true)
         mainLaunch {
             try {
-                list(getBookmark(bookmarkList.guid))
+                list(getBookmark(geocacheList.guid))
             } catch (e: Exception) {
                 action(BookmarkAction.Error(exceptionHandler(e)))
             } finally {

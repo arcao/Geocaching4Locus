@@ -1,19 +1,25 @@
 package com.arcao.geocaching4locus.import_bookmarks.fragment
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
+import com.arcao.geocaching4locus.base.paging.DataSourceState
 import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetUserBookmarkListsUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
+import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheListsDataSource
+import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheListsDataSourceFactory
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.cancelChildren
@@ -25,7 +31,7 @@ import timber.log.Timber
 class BookmarkListViewModel(
         private val context: Context,
         private val exceptionHandler: ExceptionHandler,
-        private val getUserBookmarkLists: GetUserBookmarkListsUseCase,
+        private val dataSourceFactory: GeocacheListsDataSourceFactory,
         private val getBookmark: GetBookmarkUseCase,
         private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
         private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
@@ -34,25 +40,34 @@ class BookmarkListViewModel(
         dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val loading = MutableLiveData<Boolean>()
-    val list = MutableLiveData<List<BookmarkListEntity>>()
+    val list : LiveData<PagedList<GeocacheListEntity>>
     val action = Command<BookmarkListAction>()
 
-    init {
-        loading(true)
+    val state: LiveData<DataSourceState>
+        get() = Transformations.switchMap(dataSourceFactory.dataSource, GeocacheListsDataSource::state)
 
-        mainLaunch {
-            try {
-                val l = getUserBookmarkLists()
-                list(l)
-            } catch (e: Exception) {
-                action(BookmarkListAction.Error(exceptionHandler(e)))
-            } finally {
-                loading(false)
+    init {
+        val pageSize = 25
+        val config = PagedList.Config.Builder()
+            .setPageSize(pageSize)
+            .setInitialLoadSizeHint(pageSize * 2)
+            .setEnablePlaceholders(false)
+            .build()
+
+        list = LivePagedListBuilder(dataSourceFactory, config).build()
+
+        state.observeForever { state ->
+            if (state == DataSourceState.LoadingInitial) {
+                loading(true)
+            } else {
+                if (loading.value == true) {
+                    loading(false)
+                }
             }
         }
     }
 
-    fun importAll(bookmarkList: BookmarkListEntity) = computationLaunch {
+    fun importAll(geocacheList: GeocacheListEntity) = computationLaunch {
         val importIntent = locusMapManager.createSendPointsIntent(
                 callImport = true,
                 center = true
@@ -62,8 +77,8 @@ class BookmarkListViewModel(
 
         try {
             showProgress(R.string.progress_download_geocaches) {
-                Timber.d("source: import_from_bookmark;guid=%s", bookmarkList.guid)
-                val bookmark = getBookmark(bookmarkList.guid)
+                Timber.d("source: import_from_bookmark;guid=%s", geocacheList.guid)
+                val bookmark = getBookmark(geocacheList.guid)
 
                 val geocacheCodes = bookmark.map { it.code }.toTypedArray()
                 Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
@@ -114,8 +129,8 @@ class BookmarkListViewModel(
         }
     }
 
-    fun chooseBookmarks(bookmarkList: BookmarkListEntity) {
-        action(BookmarkListAction.ChooseBookmarks(bookmarkList))
+    fun chooseBookmarks(geocacheList: GeocacheListEntity) {
+        action(BookmarkListAction.ChooseBookmarks(geocacheList))
     }
 
     fun cancelProgress() {

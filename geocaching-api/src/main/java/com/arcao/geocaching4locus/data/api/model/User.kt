@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
 

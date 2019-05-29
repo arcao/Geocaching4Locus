@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.base.usecase
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.model.Coordinates
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.BoundingBoxFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DifficultyFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DistanceUnit

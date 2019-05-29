@@ -8,7 +8,7 @@
 
         <variable
                 name="item"
-                type="com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity"/>
+                type="com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity"/>
     </data>
 
     <androidx.cardview.widget.CardView

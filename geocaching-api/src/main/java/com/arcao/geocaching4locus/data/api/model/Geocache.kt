@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId

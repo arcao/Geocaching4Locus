@@ -6,7 +6,7 @@ import androidx.core.content.edit
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.api.model.User
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 

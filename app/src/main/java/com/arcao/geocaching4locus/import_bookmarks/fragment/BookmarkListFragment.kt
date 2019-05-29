@@ -91,7 +91,7 @@ class BookmarkListFragment : BaseBookmarkFragment() {
                 }
             }
             is BookmarkListAction.ChooseBookmarks -> {
-                activityViewModel.chooseBookmarks(action.bookmarkList)
+                activityViewModel.chooseBookmarks(action.geocacheList)
             }
         }.exhaustive
     }

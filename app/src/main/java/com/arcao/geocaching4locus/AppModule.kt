@@ -21,13 +21,13 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromRectangleCoordinatesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetUserBookmarkListsUseCase
+import com.arcao.geocaching4locus.base.usecase.GetUserListsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
+import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleViewModel
@@ -35,6 +35,7 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel
+import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheListsDataSourceFactory
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.LiveMapViewModel
@@ -79,7 +80,7 @@ internal val appModule = module {
     factory { GetPointsFromGeocacheCodesUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointsFromPointIndexesUseCase(get(), get()) }
     factory { GetPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
-    factory { GetUserBookmarkListsUseCase(get(), get(), get()) }
+    factory { GetUserListsUseCase(get(), get(), get()) }
     factory { GetWifiLocationUseCase(get(), get()) }
     factory { RemoveLocusMapPointsUseCase(get(), get()) }
     factory { RequireLocationPermissionRequestUseCase(get()) }
@@ -100,7 +101,8 @@ internal val appModule = module {
     // import bookmarks
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { (bl: BookmarkListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { (bl: GeocacheListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
+    factory { GeocacheListsDataSourceFactory(get(), get()) }
     // live map
     factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest

@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.data.api.internal.retrofit.adapter
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.data.api.model.response.Error
 import com.arcao.geocaching4locus.data.api.model.response.MutablePagedList
 import com.squareup.moshi.JsonDataException

@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
 import com.squareup.moshi.Json
 
 data class AdditionalWaypoint(

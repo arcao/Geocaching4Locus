@@ -9,8 +9,8 @@ import com.arcao.geocaching4locus.data.api.model.Geocache
 import com.arcao.geocaching4locus.data.api.model.GeocacheSize
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import com.arcao.geocaching4locus.data.api.model.UserWaypoint
-import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.CoordinatesParser
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager

@@ -18,7 +18,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
+import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.withObserve
@@ -32,7 +32,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class BookmarkFragment : BaseBookmarkFragment() {
-    private val bookmarkList by lazy<BookmarkListEntity> {
+    private val bookmarkList by lazy<GeocacheListEntity> {
         requireNotNull(arguments?.getParcelable(ARG_BOOKMARK_LIST))
     }
     private val viewModel by viewModel<BookmarkViewModel> {
@@ -158,9 +158,9 @@ class BookmarkFragment : BaseBookmarkFragment() {
     companion object {
         private const val ARG_BOOKMARK_LIST = "bookmarkList"
 
-        fun newInstance(bookmarkList: BookmarkListEntity) = BookmarkFragment().apply {
+        fun newInstance(geocacheList: GeocacheListEntity) = BookmarkFragment().apply {
             arguments = bundleOf(
-                ARG_BOOKMARK_LIST to bookmarkList
+                ARG_BOOKMARK_LIST to geocacheList
             )
         }
     }

@@ -1,12 +1,12 @@
 package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 
-import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheStatus
-import com.arcao.geocaching4locus.data.api.model.enum.IdType
-import com.arcao.geocaching4locus.data.api.model.enum.IdValueType
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
+import com.arcao.geocaching4locus.data.api.model.enums.IdType
+import com.arcao.geocaching4locus.data.api.model.enums.IdValueType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter

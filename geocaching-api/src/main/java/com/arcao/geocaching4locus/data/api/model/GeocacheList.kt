@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
-import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
+import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
 import org.threeten.bp.Instant

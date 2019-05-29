@@ -5,7 +5,7 @@ import com.arcao.geocaching4locus.data.account.GeocachingAccount
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpointFactory
 import com.arcao.geocaching4locus.data.api.internal.moshi.MoshiFactory
 import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.data.api.model.response.Error
 import com.squareup.moshi.Moshi
 import io.mockk.every

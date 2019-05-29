@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.import_bookmarks
 import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkListEntity
+import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -35,7 +35,7 @@ class ImportBookmarkViewModel(
         action(ImportBookmarkAction.ShowList)
     }
 
-    fun chooseBookmarks(bookmarkList: BookmarkListEntity) {
-        action(ImportBookmarkAction.ChooseBookmark(bookmarkList))
+    fun chooseBookmarks(geocacheList: GeocacheListEntity) {
+        action(ImportBookmarkAction.ChooseBookmark(geocacheList))
     }
 }

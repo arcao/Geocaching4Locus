@@ -1,7 +1,7 @@
 package locus.api.mapper
 
 import com.arcao.geocaching4locus.data.api.model.AdditionalWaypoint
-import com.arcao.geocaching4locus.data.api.model.enum.AdditionalWaypointType
+import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import locus.api.objects.extra.Point
 import locus.api.objects.geocaching.GeocachingWaypoint

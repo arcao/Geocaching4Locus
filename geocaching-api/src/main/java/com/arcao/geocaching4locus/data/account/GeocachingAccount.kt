@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.data.account
 
 import com.arcao.geocaching4locus.data.api.model.User
-import com.arcao.geocaching4locus.data.api.model.enum.MembershipType
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import org.threeten.bp.Instant
 
 data class GeocachingAccount(

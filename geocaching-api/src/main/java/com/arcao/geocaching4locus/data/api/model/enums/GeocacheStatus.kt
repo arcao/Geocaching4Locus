@@ -1,4 +1,4 @@
-package com.arcao.geocaching4locus.data.api.model.enum
+package com.arcao.geocaching4locus.data.api.model.enums
 
 enum class GeocacheStatus(override val id: Int, override val value: String) : IdValueType {
     UNPUBLISHED(1, "Unpublished"),

@@ -17,7 +17,7 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
-import com.arcao.geocaching4locus.data.api.model.enum.StatusCode
+import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import com.arcao.geocaching4locus.error.exception.IntendedException

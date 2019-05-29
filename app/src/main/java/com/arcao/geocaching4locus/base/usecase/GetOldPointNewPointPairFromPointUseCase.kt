@@ -72,5 +72,5 @@ private suspend fun <E> ReceiveChannel<E>.takeList(count: Int): List<E> {
         if (++received >= count) return list
     }
 
-    return emptyList()
+    return list
 }

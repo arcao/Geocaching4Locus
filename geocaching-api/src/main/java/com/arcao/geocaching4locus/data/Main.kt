@@ -6,7 +6,6 @@ import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpointFactory
 import com.arcao.geocaching4locus.data.api.internal.moshi.MoshiFactory
 import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
-import com.arcao.geocaching4locus.data.api.model.request.query.filter.BoundingBoxFilter
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.zone.TzdbZoneRulesProvider
 import org.threeten.bp.zone.ZoneRulesInitializer
@@ -69,17 +68,6 @@ fun main() {
 //        println(api.geocacheLogs("GC12345"))
 //        println(api.geocacheImages("GC12345"))
 
-        println(api.liveMap(
-            filters = listOf(
-                BoundingBoxFilter(
-                    topLatitude = 37.4719012,
-                    leftLongitude = -122.151702,
-                    bottomLatitude = 37.442423,
-                    rightLongitude = -122.128520
-                )
-            ),
-            lite = true,
-            take = 30
-        ))
+        println(api.userLists())
     }
 }

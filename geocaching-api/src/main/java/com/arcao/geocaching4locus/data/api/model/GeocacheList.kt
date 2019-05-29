@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
 import com.arcao.geocaching4locus.data.api.model.enum.GeocacheListType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
@@ -7,8 +8,8 @@ import org.threeten.bp.Instant
 
 data class GeocacheList(
     val referenceCode: String = "", // string
-    val lastUpdatedDateUtc: Instant = Instant.now(), // 2018-06-06T06:16:54.275Z
-    val createdDateUtc: Instant = Instant.now(), // 2018-06-06T06:16:54.275Z
+    @LocalDateTimeUTC val lastUpdatedDateUtc: Instant = Instant.now(), // 2018-06-06T06:16:54.275Z
+    @LocalDateTimeUTC val createdDateUtc: Instant = Instant.now(), // 2018-06-06T06:16:54.275Z
     val count: Int = 0, // 0
     val findCount: Int = 0, // 0
     val ownerCode: String = "", // string
@@ -34,7 +35,7 @@ data class GeocacheList(
         private const val FIELD_OWNER_CODE = "ownerCode"
         private const val FIELD_NAME = "name"
         private const val FIELD_DESCRIPTION = "description"
-        private const val FIELD_TYPE = "type"
+        private const val FIELD_TYPE_ID = "typeId"
         private const val FIELD_IS_PUBLIC = "isPublic"
         private const val FIELD_IS_SHARED = "isShared"
         private const val FIELD_URL = "url"
@@ -48,7 +49,7 @@ data class GeocacheList(
             FIELD_OWNER_CODE,
             FIELD_NAME,
             FIELD_DESCRIPTION,
-            FIELD_TYPE,
+            FIELD_TYPE_ID,
             FIELD_IS_PUBLIC,
             FIELD_IS_SHARED,
             FIELD_URL

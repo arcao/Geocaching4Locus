@@ -8,21 +8,19 @@ import android.view.ViewGroup
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.base.util.withObserve
 
 class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view =  inflater.inflate(R.layout.fragment_login_oauth_compat, container, false)
 
-        viewModel.progress.withObserve(viewLifecycleOwner) {
-            (requireActivity() as LoginActivity).handleProgress(it)
-        }
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
 
         if (savedInstanceState == null)
             viewModel.startLogin()
+
+        return view
     }
 
     override fun onLoginUrlAvailable(url: String) {
@@ -53,10 +51,6 @@ class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {
             .cancelable(false)
             .cancelOnTouchOutside(false)
             .show()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_login_oauth_compat, container, false)
     }
 
     companion object {

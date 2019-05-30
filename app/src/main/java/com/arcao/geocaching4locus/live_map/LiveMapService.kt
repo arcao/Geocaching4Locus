@@ -24,8 +24,6 @@ class LiveMapService : LifecycleService() {
         viewModel.progress.withObserve(this, ::handleProgress)
 
         lifecycle.addObserver(viewModel)
-
-        startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build())
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

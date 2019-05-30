@@ -81,7 +81,7 @@ object ServiceUtil {
             }
 
             // We return true whether or not we actually found the wake lock
-            // the return code is defined to indicate whether the Intent contained
+            // the return referenceCode is defined to indicate whether the Intent contained
             // an identifier for a wake lock that it was supposed to match.
             // We just log a warning here if there is no wake lock found, which could
             // happen for example if this function is called twice on the same

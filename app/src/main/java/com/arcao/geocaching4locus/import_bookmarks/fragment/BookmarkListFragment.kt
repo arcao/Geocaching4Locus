@@ -93,6 +93,15 @@ class BookmarkListFragment : BaseBookmarkFragment() {
             is BookmarkListAction.ChooseBookmarks -> {
                 activityViewModel.chooseBookmarks(action.geocacheList)
             }
+            is BookmarkListAction.LoadingError -> {
+                startActivity(action.intent)
+                requireActivity().apply {
+                    if (adapter.itemCount == 0) {
+                        setResult(Activity.RESULT_CANCELED)
+                        finish()
+                    }
+                }
+            }
         }.exhaustive
     }
 

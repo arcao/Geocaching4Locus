@@ -3,39 +3,44 @@ package com.arcao.geocaching4locus.import_bookmarks.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.selection.SelectionTracker
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.base.usecase.entity.BookmarkEntity
+import com.arcao.geocaching4locus.base.selection.SelectionAdapter
+import com.arcao.geocaching4locus.base.selection.SelectionTracker
+import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
 import com.arcao.geocaching4locus.databinding.ViewBookmarkItemBinding
 
-class BookmarkGeocachesAdapter : ListAdapter<BookmarkEntity, BookmarkGeocachesAdapter.ViewHolder>(DiffCallback) {
-    var tracker: SelectionTracker<Long>? = null
-
+class BookmarkGeocachesAdapter :
+    PagedListAdapter<ListGeocacheEntity, BookmarkGeocachesAdapter.ViewHolder>(DiffCallback) {
     init {
         setHasStableIds(true)
     }
 
-    val selection: List<BookmarkEntity>
-        get() {
-            val result = mutableListOf<BookmarkEntity>()
-            val tracker = tracker ?: return result
+    val tracker by lazy {
+        SelectionTracker(object : SelectionAdapter<ListGeocacheEntity> {
+            override val itemCount: Int
+                get() = currentList?.loadedCount ?: 0
 
-            val count = itemCount
-            for (i in 0 until count) {
-                if (tracker.isSelected(i.toLong())) {
-                    result.add(getItem(i))
-                }
+            override fun registerAdapterDataObserver(adapterDataObserver: RecyclerView.AdapterDataObserver) =
+                this@BookmarkGeocachesAdapter.registerAdapterDataObserver(adapterDataObserver)
+
+            override fun findPosition(value: ListGeocacheEntity): Int =
+                currentList?.indexOf(value) ?: RecyclerView.NO_POSITION
+
+            override fun getItem(position: Int) = currentList?.get(position)
+        }).apply {
+            addSelectionChangeListener { startPosition: Int, count: Int ->
+                notifyItemRangeChanged(startPosition, count)
             }
-
-            return result
         }
+    }
 
-    val isAnySelected: Boolean get() = tracker?.hasSelection() ?: false
+    val selected: List<ListGeocacheEntity>
+        get() = tracker.selectedValues
 
-    override fun getItemId(position: Int) = position.toLong()
+    override fun getItemId(position: Int) = getItem(position)?.id ?: RecyclerView.NO_ID
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -43,26 +48,30 @@ class BookmarkGeocachesAdapter : ListAdapter<BookmarkEntity, BookmarkGeocachesAd
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.item = getItem(position)
-        holder.binding.checkbox.isChecked = tracker?.isSelected(position.toLong()) ?: false
+        val item = requireNotNull(getItem(position))
+        holder.binding.item = item
+        holder.binding.checkbox.isChecked = tracker.isSelected(position)
+        holder.binding.root.setOnClickListener {
+            tracker.onClick(position, item)
+        }
     }
 
     fun selectAll() {
-        tracker?.setItemsSelected(0L until itemCount, true)
+        tracker.selectAll()
     }
 
     fun selectNone() {
-        tracker?.clearSelection()
+        tracker.selectNone()
     }
 
     class ViewHolder(val binding: ViewBookmarkItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private object DiffCallback : DiffUtil.ItemCallback<BookmarkEntity>() {
-        override fun areItemsTheSame(oldItem: BookmarkEntity, newItem: BookmarkEntity): Boolean {
-            return oldItem.code == newItem.code
+    private object DiffCallback : DiffUtil.ItemCallback<ListGeocacheEntity>() {
+        override fun areItemsTheSame(oldItem: ListGeocacheEntity, newItem: ListGeocacheEntity): Boolean {
+            return oldItem.referenceCode == newItem.referenceCode
         }
 
-        override fun areContentsTheSame(oldItem: BookmarkEntity, newItem: BookmarkEntity): Boolean {
+        override fun areContentsTheSame(oldItem: ListGeocacheEntity, newItem: ListGeocacheEntity): Boolean {
             return oldItem == newItem
         }
     }

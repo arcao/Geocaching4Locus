@@ -6,18 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.paging.DataSourceState
-import com.arcao.geocaching4locus.base.usecase.GetUserListsUseCase
-import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
+import com.arcao.geocaching4locus.base.usecase.GetListGeocachesUseCase
+import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class GeocacheListsDataSource(
-    private val getUserLists: GetUserListsUseCase,
+class ListGeocachesDataSource(
+    private val referenceCode: String,
+    private val getListGeocaches: GetListGeocachesUseCase,
     private val dispatcherProvider: CoroutinesDispatcherProvider
-) : PageKeyedDataSource<Int, GeocacheListEntity>(), CoroutineScope {
+) : PageKeyedDataSource<Int, ListGeocacheEntity>(), CoroutineScope {
     private val job = Job()
 
     override val coroutineContext: CoroutineContext
@@ -37,13 +38,14 @@ class GeocacheListsDataSource(
     }
 
     @WorkerThread
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, GeocacheListEntity>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, ListGeocacheEntity>) {
         state.postValue(DataSourceState.LoadingInitial)
 
         job.cancelChildren()
         launch {
             try {
-                val response = getUserLists(
+                val response = getListGeocaches(
+                    referenceCode = referenceCode,
                     skip = 0,
                     take = params.requestedLoadSize
                 )
@@ -55,7 +57,7 @@ class GeocacheListsDataSource(
                     0,
                     itemCount.toInt(),
                     null,
-                    if (hasNext) 1 else null
+                    if (hasNext) response.size else null
                 )
 
                 state.postValue(DataSourceState.Done)
@@ -66,24 +68,24 @@ class GeocacheListsDataSource(
     }
 
     @WorkerThread
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, GeocacheListEntity>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, ListGeocacheEntity>) {
         state.postValue(DataSourceState.LoadingNext)
 
         job.cancelChildren()
         launch {
             try {
-                val skip = params.key * params.requestedLoadSize
-                val response = getUserLists(
-                    skip = skip,
+                val response = getListGeocaches(
+                    referenceCode = referenceCode,
+                    skip = params.key,
                     take = params.requestedLoadSize
                 )
 
                 val itemCount = response.totalCount
-                val hasNext = (skip + response.size) < itemCount
+                val hasNext = (params.key + response.size) < itemCount
 
                 callback.onResult(
                     response,
-                    if (hasNext) params.key + 1 else null
+                    if (hasNext) params.key + response.size else null
                 )
                 state.postValue(DataSourceState.Done)
             } catch (e: Exception) {
@@ -93,6 +95,6 @@ class GeocacheListsDataSource(
     }
 
     @MainThread
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, GeocacheListEntity>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, ListGeocacheEntity>) {
     }
 }

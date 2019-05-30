@@ -19,7 +19,7 @@ object AppConstants {
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.
     // This will prevent it to autodetect by robot.
-    // params: %s = currency code (ISO-4217)
+    // params: %s = currency referenceCode (ISO-4217)
     val DONATE_PAYPAL_URI = String(
         Base64.decode(
             "aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1hcmNhbyUlNDBhcmNhbyUlMmVjb20mbGM9Q1omaXRlbV9uYW1lPUdlb2NhY2hpbmc0TG9jdXMmaXRlbV9udW1iZXI9ZzRsJmN1cnJlbmN5X2NvZGU9JXMmYm49UFAlJTJkRG9uYXRpb25zQkYlJTNhYnRuX2RvbmF0ZUNDX0xHJSUyZWdpZiUlM2FOb25Ib3N0ZWQ=",

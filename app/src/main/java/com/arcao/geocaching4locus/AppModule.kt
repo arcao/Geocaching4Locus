@@ -8,12 +8,12 @@ import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiFilterProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiLoginUseCase
-import com.arcao.geocaching4locus.base.usecase.GetBookmarkUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetGpsLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.GetLastKnownLocationUseCase
+import com.arcao.geocaching4locus.base.usecase.GetListGeocachesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetLiveMapPointsFromRectangleCoordinatesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
@@ -35,7 +35,8 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel
-import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheListsDataSourceFactory
+import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataSourceFactory
+import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourceFactory
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.LiveMapViewModel
@@ -67,7 +68,7 @@ internal val appModule = module {
     factory { CreateAccountUseCase(get(), get(), get()) }
     factory { RetrieveAuthorizationUrlUseCase(get()) }
     factory { GeocachingApiLoginUseCase(get(), get(), get()) }
-    factory { GetBookmarkUseCase(get(), get(), get()) }
+    factory { GetListGeocachesUseCase(get(), get(), get()) }
     factory { GetGeocacheCodeFromGuidUseCase(get(), get()) }
     factory { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
     factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
@@ -102,7 +103,8 @@ internal val appModule = module {
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { (bl: GeocacheListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
-    factory { GeocacheListsDataSourceFactory(get(), get()) }
+    factory { GeocacheUserListsDataSourceFactory(get(), get()) }
+    factory { ListGeocachesDataSourceFactory(get(), get()) }
     // live map
     factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest

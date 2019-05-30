@@ -7,15 +7,15 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetUserListsUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 
-class GeocacheListsDataSourceFactory(
+class GeocacheUserListsDataSourceFactory(
     private val getUserLists: GetUserListsUseCase,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : DataSource.Factory<Int, GeocacheListEntity>() {
-    val dataSource = MutableLiveData<GeocacheListsDataSource>()
+    val dataSource = MutableLiveData<GeocacheUserListsDataSource>()
 
     @WorkerThread
     override fun create(): DataSource<Int, GeocacheListEntity> {
-        return GeocacheListsDataSource(getUserLists, dispatcherProvider).also {
+        return GeocacheUserListsDataSource(getUserLists, dispatcherProvider).also {
             dataSource.postValue(it)
         }
     }

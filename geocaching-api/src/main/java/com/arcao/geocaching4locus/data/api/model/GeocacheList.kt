@@ -14,7 +14,7 @@ data class GeocacheList(
     val findCount: Int = 0, // 0
     val ownerCode: String = "", // string
     val name: String, // string
-    val description: String = "", // string
+    val description: String?, // string
     @Json(name = "typeId") val type: GeocacheListType, // 0
     val isPublic: Boolean, // true
     val isShared: Boolean, // true

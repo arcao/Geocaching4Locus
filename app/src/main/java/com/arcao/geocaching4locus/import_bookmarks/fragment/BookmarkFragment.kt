@@ -11,10 +11,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StableIdKeyProvider
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
@@ -26,7 +22,6 @@ import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
-import com.arcao.geocaching4locus.import_bookmarks.util.StableIdItemDetailsLookup
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -41,7 +36,6 @@ class BookmarkFragment : BaseBookmarkFragment() {
     private val activityViewModel by sharedViewModel<ImportBookmarkViewModel>()
 
     private val adapter = BookmarkGeocachesAdapter()
-    private lateinit var tracker: SelectionTracker<Long>
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,28 +61,13 @@ class BookmarkFragment : BaseBookmarkFragment() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-
-        tracker = SelectionTracker.Builder<Long>(
-            "bookmark_geocaches",
-            binding.list,
-            StableIdKeyProvider(binding.list),
-            StableIdItemDetailsLookup(binding.list),
-            StorageStrategy.createLongStorage()
-        ).withSelectionPredicate(
-            SelectionPredicates.createSelectAnything()
-        ).build().apply {
-            adapter.tracker = this
-            addObserver(object : SelectionTracker.SelectionObserver<Long>() {
-                override fun onSelectionChanged() {
-                    viewModel.selection(adapter.selection)
-                }
-            })
+        adapter.tracker.addSelectionChangeListener { _: Int, _: Int ->
+            viewModel.selection(adapter.selected)
         }
 
         viewModel.list.withObserve(viewLifecycleOwner) { list ->
             adapter.submitList(list)
-            tracker.onRestoreInstanceState(savedInstanceState)
-
+            adapter.tracker.onRestoreInstanceState(savedInstanceState)
         }
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
@@ -101,7 +80,7 @@ class BookmarkFragment : BaseBookmarkFragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        tracker.onSaveInstanceState(outState)
+        adapter.tracker.onSaveInstanceState(outState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -146,6 +125,15 @@ class BookmarkFragment : BaseBookmarkFragment() {
                 requireActivity().apply {
                     setResult(Activity.RESULT_CANCELED)
                     finish()
+                }
+            }
+            is BookmarkAction.LoadingError -> {
+                startActivity(action.intent)
+                requireActivity().apply {
+                    if (adapter.itemCount == 0) {
+                        setResult(Activity.RESULT_CANCELED)
+                        finish()
+                    }
                 }
             }
         }.exhaustive

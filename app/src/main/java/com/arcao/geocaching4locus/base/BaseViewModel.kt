@@ -20,7 +20,7 @@ abstract class BaseViewModel(
     val progress: MutableLiveData<ProgressState> = MutableLiveData()
 
     // Better to start on main context to minimize cost of switching between computation and main context
-    // Also it is better to read code without switching
+    // Also it is better to read referenceCode without switching
     // If you need more time to do work, switch to computation context
     override val coroutineContext: CoroutineContext
         get() = dispatcherProvider.main + job

@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="item"
-                type="com.arcao.geocaching4locus.base.usecase.entity.BookmarkEntity" />
+                type="com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,7 +58,7 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
                 android:maxLines="1"
-                android:text="@{item.code}"
+                android:text="@{item.referenceCode}"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
                 android:textColor="?android:attr/textColorSecondary"
                 app:layout_constraintBottom_toBottomOf="parent"

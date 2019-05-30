@@ -92,7 +92,7 @@ class ImportGeocacheCodeViewModel(
 
         for (geocacheCode in geocacheCodes) {
             if (!ReferenceCode.isReferenceCodeValid(geocacheCode, ReferenceCode.GEOCACHE_PREFIX)) {
-                throw IllegalArgumentException("Geocache code {$geocacheCode} is not valid.")
+                throw IllegalArgumentException("Geocache referenceCode {$geocacheCode} is not valid.")
             }
         }
 

@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import com.arcao.geocaching4locus.BR
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
@@ -115,8 +114,8 @@ class DashboardActivity : AbstractActionBarActivity(),
 
     override fun onResume() {
         super.onResume()
-        
-        binding.notifyPropertyChanged(BR.vm)
+
+        binding.vm = viewModel
     }
 
     override fun onPowerSaveWarningConfirmed() {

@@ -24,6 +24,7 @@ import com.github.scribejava.core.model.OAuthConstants
 import timber.log.Timber
 
 class OAuthLoginFragment : BaseOAuthLoginFragment() {
+    private var blockWebPageProgress: Boolean = false
     private lateinit var webView: WebView
     private lateinit var progressLayout: View
     private var lastInstanceState: Bundle? = null
@@ -95,6 +96,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
             if (url.startsWith(AppConstants.OAUTH_CALLBACK_URL)) {
                 val uri = Uri.parse(url)
 
+                blockWebPageProgress = true
                 viewModel.finishLogin(uri.getQueryParameter(OAuthConstants.CODE) ?: return true)
                 return true
             }
@@ -128,7 +130,9 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
 
         override fun onPageFinished(view: WebView, url: String) {
             super.onPageFinished(view, url)
-            viewModel.hideProgress()
+            if (!blockWebPageProgress) {
+                viewModel.hideProgress()
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 ext {
-    versionName = '3.0.0-beta01'
+    versionName = '3.0.0-beta02'
 
     minSdkVersion = 16
     compileSdkVersion = 28

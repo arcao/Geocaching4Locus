@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.base.AccountNotFoundException
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -16,7 +17,9 @@ import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.model.Coordinates
+import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
+import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
@@ -123,6 +126,7 @@ class LiveMapViewModel(
                 // disable live map
                 notificationManager.isLiveMapEnabled = false
             }
+            is AccountNotFoundException,
             is AuthenticationException -> {
                 notificationManager.showLiveMapToast(R.string.error_no_account)
                 // disable live map
@@ -133,6 +137,10 @@ class LiveMapViewModel(
             }
             is GeocachingApiException -> {
                 notificationManager.showLiveMapToast(e.errorMessage.orEmpty())
+            }
+            is CacheNotFoundException,
+            is NoResultFoundException -> {
+                // do nothing
             }
             else -> throw e
         }

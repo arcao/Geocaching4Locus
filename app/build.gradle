@@ -98,7 +98,7 @@ android {
         buildConfigField 'String', 'TEST_USER', 'null'
         buildConfigField 'String', 'TEST_PASSWORD', 'null'
 
-        resConfigs 'en', 'cs', 'da', 'de', 'es', 'fr', 'hr', 'it', 'nl', 'pl', 'pt', 'ru', 'sk', 'uk', 'zh', 'zh-rTW'
+        resConfigs 'en', 'cs', 'de', 'es', 'fr', 'nl', 'no', 'pl', 'sk'
     }
 
     compileOptions {

@@ -138,8 +138,8 @@ android {
             buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
 
             signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false // App crash on VerifyError on Android 4.2, 4.3
+            shrinkResources false
             crunchPngs false
 
             proguardFile getDefaultProguardFile('proguard-android-optimize.txt')

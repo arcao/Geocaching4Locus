@@ -6,3 +6,5 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+
+-dontwarn kotlinx.coroutines.flow.FlowKt__MergeKt

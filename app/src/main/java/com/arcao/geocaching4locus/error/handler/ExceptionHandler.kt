@@ -157,7 +157,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
         when (t.statusCode) {
             // user reach the quota limit
-            StatusCode.CONFLICT -> {
+            StatusCode.FORBIDDEN -> {
                 val title = if (premiumMember)
                     R.string.title_premium_member_warning
                 else

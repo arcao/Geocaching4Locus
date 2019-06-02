@@ -90,7 +90,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                         else -> null
                     }
 
-                    return AuthenticationException(StatusCode.FORBIDDEN, code, message)
+                    return AuthenticationException(StatusCode.UNAUTHORIZED, code, message)
                 }
             }
 
@@ -127,8 +127,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
 
         private fun createException(statusCode : StatusCode, statusMessage: String, errorMessage : String): Exception {
             return when(statusCode) {
-                StatusCode.UNAUTHORIZED,
-                StatusCode.FORBIDDEN -> AuthenticationException(statusCode, statusMessage, errorMessage)
+                StatusCode.UNAUTHORIZED -> AuthenticationException(statusCode, statusMessage, errorMessage)
                 else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }
         }

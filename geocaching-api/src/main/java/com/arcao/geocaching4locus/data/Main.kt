@@ -57,7 +57,7 @@ fun main() {
     }
 
     runBlocking {
-//        println(api.user())
+        //        println(api.user())
 //        println(api.search(
 //                listOf(LocationFilter(50.0, 14.0), GeocacheTypeFilter(GeocacheType.TRADITIONAL)),
 //                lite = false,
@@ -68,6 +68,17 @@ fun main() {
 //        println(api.geocacheLogs("GC12345"))
 //        println(api.geocacheImages("GC12345"))
 
-        println(api.userLists())
+//        println(api.userLists())
+//
+        api.geocaches(
+            lite = false,
+            referenceCodes = *arrayOf(
+                "GC7E3EA"
+            )
+        ).forEach {
+            println("${it.referenceCode}: ${it.lastVisitedDate}")
+        }
+//        api.geocacheLogs("GC7E3EA", take = 50)
+//        api.geocache("GC7E3EA", logsCount = 0, imageCount = 0, lite = false)
     }
 }

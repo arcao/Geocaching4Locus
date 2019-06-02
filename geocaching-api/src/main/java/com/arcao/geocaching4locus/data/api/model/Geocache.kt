@@ -2,9 +2,8 @@ package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
+import com.arcao.geocaching4locus.data.api.util.toSafeInstant
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
 
 data class Geocache(
     val referenceCode: String, // string
@@ -44,45 +43,23 @@ data class Geocache(
     }
 
     val placedDateInstant by lazy {
-        if (placedDate != null && ianaTimezoneId != null) {
-            ZonedDateTime.of(placedDate, ZoneId.of(ianaTimezoneId)).toInstant()
-        } else {
-            null
-        }
+        placedDate.toSafeInstant(ianaTimezoneId)
     }
 
     val publishedDateInstant by lazy {
-        if (publishedDate != null && ianaTimezoneId != null) {
-            ZonedDateTime.of(publishedDate, ZoneId.of(ianaTimezoneId)).toInstant()
-        } else {
-            null
-        }
+        publishedDate.toSafeInstant(ianaTimezoneId)
     }
 
     val lastVisitedDateInstant by lazy {
-        if (lastVisitedDate != null && ianaTimezoneId != null) {
-            ZonedDateTime.of(lastVisitedDate, ZoneId.of(ianaTimezoneId)).toInstant()
-        } else {
-            null
-        }
+        lastVisitedDate.toSafeInstant(ianaTimezoneId)
     }
 
     val foundDateInstant by lazy {
-        val date = userData?.foundDate
-        if (date != null && ianaTimezoneId != null) {
-            ZonedDateTime.of(date, ZoneId.of(ianaTimezoneId)).toInstant()
-        } else {
-            null
-        }
+        userData?.foundDate.toSafeInstant(ianaTimezoneId)
     }
 
     val dnfDateInstant by lazy {
-        val date = userData?.dnfDate
-        if (date != null && ianaTimezoneId != null) {
-            ZonedDateTime.of(date, ZoneId.of(ianaTimezoneId)).toInstant()
-        } else {
-            null
-        }
+        userData?.dnfDate.toSafeInstant(ianaTimezoneId)
     }
 
     companion object {

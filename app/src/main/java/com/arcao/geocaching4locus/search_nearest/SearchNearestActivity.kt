@@ -109,7 +109,6 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             is SearchNearestAction.Error -> {
                 startActivity(action.intent)
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
             }
             is SearchNearestAction.Finish -> {
                 startActivity(action.intent)

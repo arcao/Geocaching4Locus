@@ -79,7 +79,7 @@ class DashboardActivity : AbstractActionBarActivity(),
                 PowerSaveWarningDialogFragment.newInstance().show(supportFragmentManager)
 
             is DashboardAction.NavigationBack ->
-                onBackPressed()
+                finish()
         }
     }
 
@@ -108,7 +108,7 @@ class DashboardActivity : AbstractActionBarActivity(),
         if (requestCode == REQUEST_SIGN_ON && resultCode == Activity.RESULT_OK) {
             viewModel.onClickLiveMap()
         } else if (resultCode == Activity.RESULT_OK) {
-            onBackPressed()
+            finish()
         }
     }
 

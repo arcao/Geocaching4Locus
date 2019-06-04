@@ -12,6 +12,7 @@ import locus.api.extension.isInvalid
 import locus.api.objects.extra.Location
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.min
 
@@ -31,10 +32,15 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
             return
         }
 
-        val container =
+        val container = try {
             ActionBasics.getUpdateContainer(context, requireNotNull(LocusUtils.createLocusVersion(context, intent)))
                 ?: return
-
+        } catch (e : Exception) {
+            Timber.e(e)
+            notificationManager.isLiveMapEnabled = false
+            return
+        }
+        
         // ignore onTouch events
         if (container.isUserTouching)
             return

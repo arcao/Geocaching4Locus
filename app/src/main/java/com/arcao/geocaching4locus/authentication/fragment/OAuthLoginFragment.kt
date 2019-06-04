@@ -105,7 +105,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
                 Timber.d("External URL: %s", url)
 
                 // launch external URLs in a full browser
-                requireActivity().showWebPage(Uri.parse(url))
+                activity?.showWebPage(Uri.parse(url))
                 return true
             }
 
@@ -119,8 +119,12 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
         override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
             super.onReceivedError(view, errorCode, description, failingUrl)
 
-            startActivity(ErrorActivity.IntentBuilder(requireActivity()).message(description).build())
-            cancelAction()
+            activity?.apply {
+                runOnUiThread {
+                    startActivity(ErrorActivity.IntentBuilder(this).message(description).build())
+                    cancelAction()
+                }
+            }
         }
 
         override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {

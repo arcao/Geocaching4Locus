@@ -40,7 +40,7 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
             notificationManager.isLiveMapEnabled = false
             return
         }
-        
+
         // ignore onTouch events
         if (container.isUserTouching)
             return

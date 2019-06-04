@@ -1,6 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
+buildscript { 
+    apply from: 'versions.gradle'
+
     ext.isTravis = 'true' == System.getenv('TRAVIS')
     ext.preDexEnabled = 'true' == System.getProperty('pre-dex', 'true')
 
@@ -29,35 +31,87 @@ buildscript {
     }
 
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android\\..*")
+                includeGroupByRegex("com\\.google\\..*")
+                includeGroupByRegex("androidx\\..*")
+                includeGroupByRegex("android\\.arch\\..*")
+            }
+        }
+        maven {
+            url 'https://maven.fabric.io/public'
+            content {
+                includeGroupByRegex("com\\.crashlytics\\..*")
+                includeGroupByRegex("io\\.fabric\\..*")
+            }
+        }
+        mavenCentral()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
+        maven {
+            url "https://kotlin.bintray.com/kotlinx/"
+        }
     }
+
     dependencies {
-        classpath BuildDeps.android_gradle_plugin
-        classpath BuildDeps.gradle_versions_plugin
-        classpath BuildDeps.google_services_plugin
-        classpath BuildDeps.fabric_io_plugin
+        // remove after update AGP
+        classpath 'com.android.tools:r8:1.4.93'  // Must be before the Gradle Plugin for Android
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
+        classpath "com.google.gms:google-services:$googleServicesPluginVersion"
+        classpath "io.fabric.tools:gradle:$fabricIoPluginVersion"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:$androidJunit5Version"
     }
 }
 
 allprojects {
     apply plugin: 'com.github.ben-manes.versions'
+    apply from: "$rootDir/ktlint.gradle"
 
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android\\..*")
+                includeGroupByRegex("com\\.google\\..*")
+                includeGroupByRegex("androidx\\..*")
+                includeGroupByRegex("android\\.arch\\..*")
+            }
+        }
+        maven {
+            url 'https://maven.fabric.io/public'
+            content {
+                includeGroupByRegex("com\\.crashlytics\\..*")
+                includeGroupByRegex("io\\.fabric\\..*")
+            }
+        }
+        maven {
+            url 'https://maven.arcao.com'
+            content {
+                includeModule 'com.arcao', 'geocaching-api'
+                includeModule 'com.arcao', 'parent'
+            }
+        }
+
+        // for Locus API
+        maven {
+            url "https://dl.bintray.com/asammsoft/maven/"
+            content {
+                includeGroupByRegex("com\\.asamm\\..*")
+            }
+        }
+
+        mavenCentral()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
-        maven { url 'https://maven.arcao.com' }
     }
 
     // dependencyUpdates: suggest only released artifacts
     dependencyUpdates.resolutionStrategy = {
         componentSelection { rules ->
             rules.all { ComponentSelection selection ->
-                boolean rejected = ['alpha', 'beta', 'rc', 'cr', 'm'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
+                boolean rejected = ['alpha', 'beta', 'rc'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
                 if (rejected)
-                    selection.reject('Release candidate')
+                    selection.reject('Alpha builds')
             }
         }
     }

@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "de.mannodermaus.android-junit5"
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
+        buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
+        buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        junitPlatform {
+            // Configuration goes here!
+        }
+    }
+
+    packagingOptions {
+        exclude "META-INF/LICENSE*"
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+
+    api "com.github.scribejava:scribejava-core:$scribejavaVersion"
+    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion") {
+        // exclude incompatible OkHttp library, use 3.12.x version instead
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    }
+
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // koin
+    implementation "org.koin:koin-android:$koinVersion"
+
+    api "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
+
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    testImplementation "io.mockk:mockk:$mockkVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+
+    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
+    androidTestImplementation "de.mannodermaus.junit5:android-test-core:$androidTestJunit5"
+    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:$androidTestJunit5"
+}

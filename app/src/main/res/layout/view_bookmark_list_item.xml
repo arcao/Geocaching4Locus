@@ -1,97 +1,111 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    app:cardUseCompatPadding="true"
-    tools:showIn="@layout/fragment_bookmark_list">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp">
+    <data>
 
+        <import type="android.view.View"/>
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
+        <variable
+                name="item"
+                type="com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-light"
-            android:maxLines="1"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UnusedAttribute"
-            tools:text="Bookmark name" />
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardUseCompatPadding="true"
+            tools:showIn="@layout/fragment_bookmark_list">
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textAppearance="?attr/textAppearanceListItemSecondary"
-            android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts." />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="8dp">
+
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:paddingTop="4dp"
+                    android:text="@{item.name}"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/cities"/>
+
+            <TextView
+                    android:id="@+id/description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textAppearance="?attr/textAppearanceListItemSecondary"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="@{item.description}"
+                    android:visibility="@{item.description != null ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    tools:text="@tools:sample/lorem[17]"/>
 
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="#1f000000"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description" />
+            <View
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#1f000000"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description"/>
 
 
-        <TextView
-            android:id="@+id/count"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clickable="false"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textAppearance="?android:attr/textAppearanceListItem"
-            android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            tools:targetApi="jelly_bean"
-            tools:text="3 caches" />
+            <TextView
+                    android:id="@+id/count"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:clickable="false"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="@{@plurals/plurals_geocache(item.itemCount, item.itemCount)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/button"
+                    app:layout_constraintTop_toBottomOf="@+id/divider"
+                    tools:targetApi="jelly_bean"
+                    tools:text="3 geocaches"/>
 
-        <Button
-            android:id="@+id/button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:text="@string/action_import_all"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/count"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider" />
+            <Button
+                    android:id="@+id/button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/action_import_all"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/count"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider"/>
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

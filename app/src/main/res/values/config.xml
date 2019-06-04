@@ -6,5 +6,5 @@
     <string translatable="false" name="feedback_body">Your text (english or czech if possible)…</string>
     <string translatable="false" name="prefix_gc">GC</string>
     <string translatable="false" name="pref_facebook">Facebook</string>
-    <string translatable="false" name="pref_gplus">Google+</string>
+    <string translatable="false" name="format_premium">%s (PM)</string>
 </resources>

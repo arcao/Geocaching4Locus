@@ -1,6 +1,3 @@
--optimizations !field/*,!class/merging/*,!code/allocation/variable
--optimizationpasses 6
-
 #prevent severe obfuscation
 -keep,allowshrinking,allowoptimization class * { <methods>; }
 

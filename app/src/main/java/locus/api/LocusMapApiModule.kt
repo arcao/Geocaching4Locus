@@ -1,0 +1,20 @@
+package locus.api
+
+import locus.api.manager.LocusMapManager
+import locus.api.mapper.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
+
+/**
+ * Created by Arcao on 08.12.2018.
+ */
+internal val locusMapApiModule = module {
+    single { LocusMapManager(androidContext()) }
+    single { DataMapper(get(), get(), get()) }
+    single { GeocacheConverter(androidContext(), get(), get(), get(), get(), get()) }
+    single { GeocacheLogConverter(get()) }
+    single { ImageDataConverter() }
+    single { PointMerger(get()) }
+    single { TrackableConverter() }
+    single { WaypointConverter() }
+}

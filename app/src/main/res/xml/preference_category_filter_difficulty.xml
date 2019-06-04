@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        android:title="@string/pref_difficulty">
-    <com.arcao.geocaching4locus.settings.widget.ListPreference
-        android:key="difficulty_filter_min"
-        android:title="@string/pref_difficulty_min"
-        android:entries="@array/rating"
-        android:entryValues="@array/rating"
-        android:defaultValue="1" />
-    <com.arcao.geocaching4locus.settings.widget.ListPreference
-        android:key="difficulty_filter_max"
-        android:title="@string/pref_difficulty_max"
-        android:entries="@array/rating"
-        android:entryValues="@array/rating"
-        android:defaultValue="5" />
-</PreferenceScreen>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/pref_difficulty">
+    <ListPreference
+        app:defaultValue="1"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="difficulty_filter_min"
+        app:title="@string/pref_difficulty_min" />
+    <ListPreference
+        app:defaultValue="5"
+        app:entries="@array/rating"
+        app:entryValues="@array/rating"
+        app:iconSpaceReserved="false"
+        app:key="difficulty_filter_max"
+        app:title="@string/pref_difficulty_max" />
+</androidx.preference.PreferenceScreen>

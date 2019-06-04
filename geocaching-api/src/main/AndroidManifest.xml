@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.arcao.geocaching4locus.geocaching_api">
+
+    <application>
+        <provider
+            android:authorities="${applicationId}.GeocachingAPiInitProvider"
+            android:exported="false"
+            android:enabled="true"
+            android:name="com.arcao.geocaching4locus.data.GeocachingApiInitProvider" />
+    </application>
+</manifest>

@@ -67,3 +67,4 @@ fabric.properties
 
 .idea/caches
 /account.dat
+.idea/markdown-*

@@ -8,7 +8,6 @@ import com.arcao.geocaching4locus.data.api.model.AdditionalWaypoint
 import com.arcao.geocaching4locus.data.api.model.Geocache
 import com.arcao.geocaching4locus.data.api.model.GeocacheSize
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
-import com.arcao.geocaching4locus.data.api.model.UserWaypoint
 import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.CoordinatesParser
@@ -86,7 +85,7 @@ class GeocacheConverter(
         geocacheLogConverter.addGeocacheLogs(p, cache.geocacheLogs.orEmpty())
         trackableConverter.addTrackables(p, cache.trackables.orEmpty())
 
-        updateGeocacheLocationByCorrectedCoordinates(p, cache.userWaypoints.orEmpty())
+        updateGeocacheLocationByCorrectedCoordinates(p, cache)
 
         if (defaultPreferenceManager.disableDnfNmNaGeocaches)
             applyUnavailabilityForGeocache(p, defaultPreferenceManager.disableDnfNmNaGeocachesThreshold)
@@ -131,21 +130,9 @@ class GeocacheConverter(
         }
     }
 
-    private fun updateGeocacheLocationByCorrectedCoordinates(@NonNull p: Point, @Nullable userWaypoints: Collection<UserWaypoint>?) {
-        if (p.gcData == null || userWaypoints?.isEmpty() != false)
-            return
-
-        // find corrected coordinate user waypoint
-        var correctedCoordinateUserWaypoint: UserWaypoint? = null
-        for (w in userWaypoints) {
-            if (w.isCorrectedCoordinates) {
-                correctedCoordinateUserWaypoint = w
-                break
-            }
-        }
-
-        // continue only if something was found
-        if (correctedCoordinateUserWaypoint == null)
+    private fun updateGeocacheLocationByCorrectedCoordinates(p: Point, cache: Geocache) {
+        val correctedCoordinates = cache.userData?.correctedCoordinates
+        if (p.gcData == null || correctedCoordinates == null)
             return
 
         val location = p.location
@@ -159,34 +146,24 @@ class GeocacheConverter(
         // update coordinates to new location
         location.set(
             Location()
-                .setLatitude(correctedCoordinateUserWaypoint.coordinates.latitude)
-                .setLongitude(correctedCoordinateUserWaypoint.coordinates.longitude)
+                .setLatitude(correctedCoordinates.latitude)
+                .setLongitude(correctedCoordinates.longitude)
         )
     }
 
     private fun getCorrectedCoordinateWaypoint(geocache: Geocache): AdditionalWaypoint? {
-        val userWaypoints = geocache.userWaypoints
+        val correctedCoordinates = geocache.userData?.correctedCoordinates ?: return null
 
-        if (userWaypoints?.isEmpty() != false)
-            return null
+        val name = context.getString(R.string.var_final_location_name)
 
-        for (uw in userWaypoints) {
-            if (uw.isCorrectedCoordinates) {
-
-                val name = context.getString(R.string.var_final_location_name)
-
-                return AdditionalWaypoint(
-                  coordinates = uw.coordinates,
-                    name = name,
-                    prefix = "N0",
-                    description = uw.description,
-                    type = AdditionalWaypointType.FINAL_LOCATION,
-                    url = null
-                )
-            }
-        }
-
-        return null
+        return AdditionalWaypoint(
+          coordinates = correctedCoordinates,
+            name = name,
+            prefix = "N0",
+            description = null,
+            type = AdditionalWaypointType.FINAL_LOCATION,
+            url = null
+        )
     }
 
     @Nullable

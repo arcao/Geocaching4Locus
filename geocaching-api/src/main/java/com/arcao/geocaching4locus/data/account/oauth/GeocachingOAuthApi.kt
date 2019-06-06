@@ -1,8 +1,10 @@
 package com.arcao.geocaching4locus.data.account.oauth
 
 import com.github.scribejava.core.builder.api.DefaultApi20
+import com.github.scribejava.core.extractors.TokenExtractor
 import com.github.scribejava.core.httpclient.HttpClient
 import com.github.scribejava.core.httpclient.HttpClientConfig
+import com.github.scribejava.core.model.OAuth2AccessToken
 import com.github.scribejava.core.oauth.OAuth20Service
 import com.github.scribejava.core.oauth2.bearersignature.BearerSignature
 import com.github.scribejava.core.oauth2.bearersignature.BearerSignatureAuthorizationRequestHeaderField
@@ -14,6 +16,7 @@ open class GeocachingOAuthApi : DefaultApi20() {
     override fun getAccessTokenEndpoint(): String = "https://oauth.geocaching.com/token"
     override fun getClientAuthentication(): ClientAuthentication = RequestBodyAuthenticationScheme.instance()
     override fun getBearerSignature(): BearerSignature = BearerSignatureAuthorizationRequestHeaderField.instance()
+    override fun getAccessTokenExtractor(): TokenExtractor<OAuth2AccessToken> = GeocachingOAuth2AccessTokenJsonExtractor
 
     override fun createService(
         apiKey: String,

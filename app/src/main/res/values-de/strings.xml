@@ -64,7 +64,7 @@
     <string name="pref_container_size" comment="">Behältergröße</string>
     <string name="toast_live_map_enabled" comment="">Live Karte ist aktiviert, bewege nun die Karte um Caches zu sehen</string>
     <string name="toast_live_map_disabled" comment="">Live Karte ist ausgeschaltet.</string>
-    <string name="error_live_map_periodic_updates" comment="">Sie haben den Informationsaustausch für Add-ons nicht aktiviert. Aktivierung in Locus Map unter:  Einstellungen -&gt; Verschiedenes -&gt; AddOn Verbindung aktivieren</string>
+    <string name="error_live_map_periodic_updates" comment="">Sie haben den Informationsaustausch für Add-ons nicht aktiviert. Aktivierung in Locus Map unter: Einstellungen → Verschiedenes → Verbinde mit AddOns.</string>
     <string name="error_location_not_allowed" comment="">Positionsbestimmung nicht aktiviert</string>
     <string name="button_settings" comment="">Einstellungen</string>
     <string name="menu_import_from_gc" comment="">Import mit GC Code</string>

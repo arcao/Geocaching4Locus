@@ -50,12 +50,12 @@ class ImportUrlActivity : AbstractActionBarActivity() {
         when (action) {
             is ImportUrlAction.Cancel -> {
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             is ImportUrlAction.Error -> {
                 startActivity(action.intent)
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             is ImportUrlAction.Finish -> {
                 startActivity(action.intent)

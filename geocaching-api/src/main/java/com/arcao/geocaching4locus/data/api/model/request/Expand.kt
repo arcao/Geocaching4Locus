@@ -8,7 +8,7 @@ interface Expand<T> {
         const val EXPAND_FIELD_GEOCACHE_LOGS = "geocachelogs"
         const val EXPAND_FIELD_IMAGES = "images"
         const val EXPAND_FIELD_GEOCACHE_LOG_IMAGES = "geocachelog.images"
-        const val EXPAND_FIELD_USER_WAYPOINTS = "userWaypoints"
+        const val EXPAND_FIELD_USER_WAYPOINTS = "userwaypoints"
         const val EXPAND_FIELD_SEPARATOR = ","
     }
 

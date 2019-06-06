@@ -73,7 +73,7 @@ fun main() {
         api.geocaches(
             lite = false,
             referenceCodes = *arrayOf(
-                "GC7E3EA"
+                "GC74J6N"
             )
         ).forEach {
             println("${it.referenceCode}: ${it.lastVisitedDate}")

@@ -38,7 +38,7 @@ class UpdateMoreActivity : AbstractActionBarActivity() {
                 Timber.d("UpdateMoreAction.Error intent: %s", action.intent)
                 startActivity(action.intent)
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             UpdateMoreAction.Finish -> {
                 Timber.d("UpdateMoreAction.Finish")
@@ -47,7 +47,7 @@ class UpdateMoreActivity : AbstractActionBarActivity() {
             }
             UpdateMoreAction.Cancel -> {
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             UpdateMoreAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
@@ -66,7 +66,7 @@ class UpdateMoreActivity : AbstractActionBarActivity() {
                 viewModel.processIntent(intent)
             } else {
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
         }
     }

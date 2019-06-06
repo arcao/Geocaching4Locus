@@ -23,7 +23,7 @@ import java.io.IOException
 import kotlin.reflect.KClass
 
 class LocusMapManager(
-        private val context: Context
+    private val context: Context
 ) {
     val periodicUpdateEnabled: Boolean
         get() {
@@ -31,7 +31,7 @@ class LocusMapManager(
             return if (locusVersion != null) {
                 try {
                     ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled
-                            ?: false
+                        ?: false
                 } catch (e: Throwable) {
                     Timber.e(e, "Unable to receive info about periodic update state from Locus Map.")
                     return true
@@ -46,7 +46,6 @@ class LocusMapManager(
             val lv = LocusUtils.getActiveVersion(context)
             return lv == null || !lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)
         }
-
 
     fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", cacheFile)
@@ -105,7 +104,6 @@ class LocusMapManager(
             return fos
         }
 
-
     /**
      * Allows to remove already send Pack from the map. Keep in mind, that this method remove
      * only packs that are visible (temporary) on map.
@@ -134,9 +132,9 @@ class LocusMapManager(
             val locusVersion = LocusUtils.getActiveVersion(context)
             if (locusVersion != null) {
                 ActionTools.enablePeriodicUpdatesReceiver(
-                        context,
-                        locusVersion,
-                        clazz.java
+                    context,
+                    locusVersion,
+                    clazz.java
                 )
             }
         } catch (e: Throwable) {
@@ -178,10 +176,12 @@ class LocusMapManager(
     fun getPointFromIntent(intent: Intent) = IntentHelper.getPointFromIntent(context, intent)
 
     fun getLocationFromIntent(intent: Intent) =
-            IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_GPS)
-                    ?: IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+        IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+            ?: IntentHelper.getLocationFromIntent(intent, LocusConst.INTENT_EXTRA_LOCATION_GPS)
 
-    fun isLocationIntent(intent: Intent) = intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER)
+    fun isLocationIntent(intent: Intent) =
+        intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_MAP_CENTER) ||
+            intent.hasExtra(LocusConst.INTENT_EXTRA_LOCATION_GPS)
 
     companion object {
         private const val CACHE_FILENAME = "data.locus"

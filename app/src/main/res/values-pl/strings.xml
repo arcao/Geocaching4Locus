@@ -65,7 +65,7 @@
     <string name="pref_container_size" comment="">Rozmiar</string>
     <string name="toast_live_map_enabled" comment="">Mapa \"na żywo\" włączona. Teraz przesuń mapę, aby zobaczyć skrzynki.</string>
     <string name="toast_live_map_disabled" comment="">Mapa \"na żywo\" jest wyłączona.</string>
-    <string name="error_live_map_periodic_updates" comment="">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus (włącz w programie Locus: Ustawienia → Różne → Włącz okresowe uaktualnienia).</string>
+    <string name="error_live_map_periodic_updates" comment="">Nie zezwoliłeś na wysyłanie okresowych uaktualnień z programu Locus Map. Włącz w programie Locus Map: Ustawienia → Różne → Połącz z dodatkami.</string>
     <string name="error_location_not_allowed" comment="">Brak dostępu do usług lokalizacji.</string>
     <string name="button_settings" comment="">Ustawienia</string>
     <string name="menu_import_from_gc" comment="">Importuj GC</string>

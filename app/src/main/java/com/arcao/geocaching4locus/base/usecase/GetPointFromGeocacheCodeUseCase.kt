@@ -39,6 +39,10 @@ class GetPointFromGeocacheCodeUseCase(
                 throw CacheNotFoundException(referenceCode)
             }
 
+            if (e.statusCode == StatusCode.FORBIDDEN && e.errorMessage?.contains("not published") == true) {
+                throw CacheNotFoundException(referenceCode)
+            }
+
             throw  e
         }
     }

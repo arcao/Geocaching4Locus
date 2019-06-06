@@ -27,7 +27,7 @@ abstract class BaseOAuthLoginFragment : Fragment() {
     abstract fun onLoginUrlAvailable(url: String)
 
     fun cancelAction() {
-        requireActivity().apply {
+        activity?.apply {
             setResult(Activity.RESULT_CANCELED)
             finish()
         }
@@ -39,7 +39,7 @@ abstract class BaseOAuthLoginFragment : Fragment() {
             return
         }
 
-        requireActivity().apply {
+        activity?.apply {
             setResult(Activity.RESULT_OK)
             finish()
         }

@@ -14,9 +14,9 @@ class GeocacheSizeFilter(private vararg val values: Int, private var not : Boole
         val ids = values.joinToString(",")
 
         return if (not) {
-            "type:not($ids)"
+            "size:not($ids)"
         } else {
-            "type:$ids"
+            "size:$ids"
         }
     }
 }

@@ -67,7 +67,7 @@
     <string name="pref_container_size" comment="">Velikost schránky</string>
     <string name="toast_live_map_enabled" comment="">Živá mapa povolena. Nyní pohněte s mapou, aby se zobrazily keše.</string>
     <string name="toast_live_map_disabled" comment="">Živá mapa zakázána.</string>
-    <string name="error_live_map_periodic_updates" comment="">Nemáte povolené zasílání periodických aktualizací z Locus Map. Nejprve je prosím povolte v Locus Map: Nastavení → Různé → Povolit periodické aktualizace.</string>
+    <string name="error_live_map_periodic_updates" comment="">Nemáte povolené zasílání periodických aktualizací z Locus Map. Nejprve je prosím povolte v Locus Map: Nastavení → Různé → Propojit s doplňky.</string>
     <string name="error_location_not_allowed" comment="">Služba k určení polohy není povolena</string>
     <string name="button_settings" comment="">Nastavení</string>
     <string name="menu_import_from_gc" comment="">Importovat GC</string>

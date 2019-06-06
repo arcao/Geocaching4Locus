@@ -37,12 +37,12 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
         when (action) {
             is DownloadRectangleAction.Cancel -> {
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             is DownloadRectangleAction.Error -> {
                 startActivity(action.intent)
                 setResult(Activity.RESULT_CANCELED)
-                onBackPressed()
+                finish()
             }
             is DownloadRectangleAction.Finish -> {
                 startActivity(action.intent)

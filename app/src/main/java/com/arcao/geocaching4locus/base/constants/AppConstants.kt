@@ -38,7 +38,7 @@ object AppConstants {
     const val ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000
     const val ITEMS_PER_REQUEST = 30
 
-    const val SECONDS_PER_MINUTE = 60
+    const val MINUTES_PER_HOUR = 60
 
     /* Search nearest cache count configuration */
     const val DOWNLOADING_COUNT_OF_CACHES_DEFAULT = 20

@@ -64,7 +64,7 @@
     <string name="pref_container_size" comment="">Grootte van container</string>
     <string name="toast_live_map_enabled" comment="">Live map ingeschakeld. Beweeg de map om caches te gaan zien.</string>
     <string name="toast_live_map_disabled" comment="">Live map uitgeschakeld.</string>
-    <string name="error_live_map_periodic_updates" comment="">   Je hebt het sturen van periodieke updates door Locus Map niet toegelaten. Gelieve het eerst in te schakelen in Locus Map: Instellingen → Diversen → Periodieke updates inschakelen.</string>
+    <string name="error_live_map_periodic_updates" comment="">Je hebt het sturen van periodieke updates door Locus Map niet toegelaten. Gelieve het eerst in te schakelen in Locus Map: Instellingen → Diversen → Verbinden met add-ons.</string>
     <string name="error_location_not_allowed" comment="">Geen locatie diensten toegestaan</string>
     <string name="button_settings" comment="">Instellingen</string>
     <string name="menu_import_from_gc" comment="">Importeer GC</string>

@@ -5,26 +5,28 @@ import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import org.threeten.bp.Instant
 
 data class GeocachingAccount(
-        private val accountManager: AccountManager,
-        var accessToken: String,
-        var accessTokenExpiration: Instant = Instant.now(),
-        var refreshToken: String,
-        var userName: String? = null,
-        var membership: MembershipType = MembershipType.UNKNOWN,
-        var avatarUrl: String? = null,
-        var bannerUrl: String? = null,
-        var lastUserInfoUpdate: Instant = Instant.now()
+    private val accountManager: AccountManager,
+    var accessToken: String,
+    var accessTokenExpiration: Instant = Instant.now(),
+    var refreshToken: String,
+    var userName: String? = null,
+    var membership: MembershipType = MembershipType.UNKNOWN,
+    var avatarUrl: String? = null,
+    var bannerUrl: String? = null,
+    var lastUserInfoUpdate: Instant = Instant.now()
 ) {
 
     val accessTokenExpired
         get() = Instant.now().isAfter(accessTokenExpiration)
 
+    val isAccountUpdateInProgress: Boolean
+        get() = accountManager.isAccountUpdateInProgress
+
     suspend fun refreshToken() {
         accountManager.refreshAccount(this)
     }
 
-
-    fun updateUserInfo(user : User) {
+    fun updateUserInfo(user: User) {
         userName = user.username
         membership = user.membership
         avatarUrl = user.avatarUrl
@@ -34,7 +36,7 @@ data class GeocachingAccount(
         accountManager.saveAccount(this)
     }
 
-    fun isPremium() = when(membership) {
+    fun isPremium() = when (membership) {
         MembershipType.UNKNOWN -> false
         MembershipType.BASIC -> false
         MembershipType.CHARTER -> true

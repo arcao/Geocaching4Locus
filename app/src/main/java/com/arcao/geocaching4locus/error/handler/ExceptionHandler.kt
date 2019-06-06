@@ -13,6 +13,7 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.HtmlUtil
 import com.arcao.geocaching4locus.base.util.getQuantityText
 import com.arcao.geocaching4locus.base.util.getText
+import com.arcao.geocaching4locus.base.util.toDate
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
@@ -126,6 +127,11 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             return builder
                 .message(R.string.error_invalid_authorization_code)
                 .build()
+        } else if (t is GeocachingApiException && !t.errorMessage.isNullOrEmpty()) {
+            return builder
+                .message(baseMessage, context.getText(R.string.error_invalid_api_response, t.errorMessage!!))
+                .exception(t)
+                .build()
         } else {
             val message = t.message.orEmpty()
             return builder
@@ -158,6 +164,10 @@ class ExceptionHandler(private val context: Context, private val accountManager:
         when (t.statusCode) {
             // user reach the quota limit
             StatusCode.FORBIDDEN -> {
+                if (t.errorMessage?.contains("not published") == true) {
+                    return null
+                }
+
                 val title = if (premiumMember)
                     R.string.title_premium_member_warning
                 else
@@ -170,17 +180,17 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
                 // apply format on a text
                 val cachesPerPeriod = restrictions.maxFullGeocacheLimit
-                var period = AccountRestrictions.DEFAULT_RENEW_DURATION.seconds.toInt()
+                var period = AccountRestrictions.DEFAULT_RENEW_DURATION.toMinutes().toInt()
 
                 val periodString: String
-                if (period < AppConstants.SECONDS_PER_MINUTE) {
+                if (period < AppConstants.MINUTES_PER_HOUR) {
                     periodString = context.resources.getQuantityString(R.plurals.plurals_minute, period, period)
                 } else {
-                    period /= AppConstants.SECONDS_PER_MINUTE
+                    period /= AppConstants.MINUTES_PER_HOUR
                     periodString = context.resources.getQuantityString(R.plurals.plurals_hour, period, period)
                 }
 
-                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.renewFullGeocacheLimit)
+                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.renewFullGeocacheLimit.toDate())
                 val cacheString = context.getQuantityText(R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod)
                 val errorText = context.getText(message, cacheString, periodString, renewTime)
 

@@ -67,7 +67,7 @@
     <string name="pref_container_size" comment="">Veľkosť schránky</string>
     <string name="toast_live_map_enabled" comment="">Aktívna mapa povolená. Teraz pohnite s mapou, aby sa zobrazili skrýše.</string>
     <string name="toast_live_map_disabled" comment="">Aktívna mapa je zakázaná.</string>
-    <string name="error_live_map_periodic_updates" comment="">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Povoliť pravidelné aktualizácie.</string>
+    <string name="error_live_map_periodic_updates" comment="">Nemáte povolené zasielanie pravidelných aktualizácií z Locus Map. Najprv ich prosím povoľte v Locus Map pod: Nastavenie → Ostatné → Prepojenie s doplnkami.</string>
     <string name="error_location_not_allowed" comment="">Služba na určenie polohy nie je povolená</string>
     <string name="button_settings" comment="">Nastavenia</string>
     <string name="menu_import_from_gc" comment="">Importovať GC</string>

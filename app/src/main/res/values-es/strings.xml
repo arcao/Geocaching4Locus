@@ -63,7 +63,7 @@
     <string name="pref_container_size" comment="">Tamaño contenedor</string>
     <string name="toast_live_map_enabled" comment="">Mapa dinámico habilitado. Ahora mueva con el mapa para ver geocachés.</string>
     <string name="toast_live_map_disabled" comment="">Mapa dinámico está desactivado.</string>
-    <string name="error_live_map_periodic_updates" comment="">No has activado enviar actualizaciones periódicas desde Locus. Por favor, actívalo primero en Locus: Settings → Misc. → Activar actualizaciones periódicas.</string>
+    <string name="error_live_map_periodic_updates" comment="">No has activado enviar actualizaciones periódicas desde Locus Map. Por favor, actívalo primero en Locus Map: Settings → Miscellaneous → Connect with add-ons.</string>
     <string name="error_location_not_allowed" comment="">Servicio de localización no permitido</string>
     <string name="button_settings" comment="">Ajustes</string>
     <string name="menu_import_from_gc" comment="">Importar GC</string>

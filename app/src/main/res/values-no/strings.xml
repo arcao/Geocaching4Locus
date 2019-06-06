@@ -65,7 +65,7 @@
     <string name="pref_container_size" comment="">Boksstørrelse</string>
     <string name="toast_live_map_enabled" comment="">Live kart er påslått. Flytt på kartet for å se cacher.</string>
     <string name="toast_live_map_disabled" comment="">Live kart er avslått.</string>
-    <string name="error_live_map_periodic_updates" comment="">Regelmessige oppdateringer i Locus Map er avslått. Aktiver det i Innstillinger -&gt; Diverse -&gt; Aktiver regelmessige oppdateringer av tilleggsprogrammer.</string>
+    <string name="error_live_map_periodic_updates" comment="">Regelmessige oppdateringer i Locus Map er avslått. Aktiver det i Innstillinger → Diverse → Koble til med programutvidelser.</string>
     <string name="error_location_not_allowed" comment="">Lokasjonstjenester er avslått</string>
     <string name="button_settings" comment="">Innstillinger</string>
     <string name="menu_import_from_gc" comment="">Importer GC</string>

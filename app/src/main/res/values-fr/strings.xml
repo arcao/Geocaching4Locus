@@ -62,7 +62,7 @@
     <string name="pref_container_size" comment="">Taille de la cache</string>
     <string name="toast_live_map_enabled" comment="">La carte Live est activée. Bougez la carte pour voir les caches.</string>
     <string name="toast_live_map_disabled" comment="">Carte en direct désactivée.</string>
-    <string name="error_live_map_periodic_updates" comment="">Vous n\'avez pas autorisé la connexion aux add-ons dans Locus. Commencez par l\'autoriser dans Locus: Paramètres-&gt;Divers-&gt;Connexion aux add-ons</string>
+    <string name="error_live_map_periodic_updates" comment="">Vous n\'avez pas autorisé la connexion aux add-ons dans Locus Map. Commencez par l\'autoriser dans Locus Map: Paramètres → Divers → Connexion aux add-ons.</string>
     <string name="error_location_not_allowed" comment="">Aucun service de localisation activé</string>
     <string name="button_settings" comment="">Paramètres</string>
     <string name="menu_import_from_gc" comment="">Importer GC</string>

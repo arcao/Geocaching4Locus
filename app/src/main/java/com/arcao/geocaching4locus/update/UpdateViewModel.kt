@@ -52,6 +52,11 @@ class UpdateViewModel(
             return@mainLaunch
         }
 
+        if (!accountManager.isPremium && isUpdateLogsIntent(intent)) {
+            action(UpdateAction.PremiumMembershipRequired)
+            return@mainLaunch
+        }
+
         val downloadFullGeocacheOnShow = defaultPreferenceManager.downloadFullGeocacheOnShow
 
         try {
@@ -71,13 +76,14 @@ class UpdateViewModel(
 
                     updateData.newPoint = getPointFromGeocacheCode(updateData.geocacheCode, lite, logsCount)
 
-                    if (basicMember) {
-                        // get trackables
-                        val trackables = getGeocachingTrackables(this, updateData.geocacheCode, 0, 30)
-                        updateData.newPoint.gcData.trackables.addAll(trackables.toList().flatten())
-                    }
+                    // count to full geocache limit
+//                    if (basicMember) {
+//                        // get trackables
+//                        val trackables = getGeocachingTrackables(this, updateData.geocacheCode, 0, 30)
+//                        updateData.newPoint.gcData.trackables.addAll(trackables.toList().flatten())
+//                    }
 
-                    if (updateData.downloadLogs || basicMember) {
+                    if (updateData.downloadLogs) {
                         var progress = updateData.newPoint.gcData.logs.count()
 
                         logsCount = if (updateData.downloadLogs) {
@@ -193,6 +199,8 @@ class UpdateViewModel(
         AnalyticsUtil.actionUpdate(oldPoint != null, downloadLogs, accountManager.isPremium)
         return UpdateData(cacheId, downloadLogs, oldPoint)
     }
+
+    fun isUpdateLogsIntent(intent : Intent) = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
 
     class UpdateData(val geocacheCode: String, val downloadLogs: Boolean, val oldPoint: Point? = null) {
         lateinit var newPoint: Point

@@ -8,4 +8,5 @@ sealed class UpdateAction {
     class Finish(val intent: Intent? = null) : UpdateAction()
     object Cancel : UpdateAction()
     object LocusMapNotInstalled : UpdateAction()
+    object PremiumMembershipRequired : UpdateAction()
 }

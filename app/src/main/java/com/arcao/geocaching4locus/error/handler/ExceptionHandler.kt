@@ -180,13 +180,13 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
                 // apply format on a text
                 val cachesPerPeriod = restrictions.maxFullGeocacheLimit
-                var period = AccountRestrictions.DEFAULT_RENEW_DURATION.seconds.toInt()
+                var period = AccountRestrictions.DEFAULT_RENEW_DURATION.toMinutes().toInt()
 
                 val periodString: String
-                if (period < AppConstants.SECONDS_PER_MINUTE) {
+                if (period < AppConstants.MINUTES_PER_HOUR) {
                     periodString = context.resources.getQuantityString(R.plurals.plurals_minute, period, period)
                 } else {
-                    period /= AppConstants.SECONDS_PER_MINUTE
+                    period /= AppConstants.MINUTES_PER_HOUR
                     periodString = context.resources.getQuantityString(R.plurals.plurals_hour, period, period)
                 }
 

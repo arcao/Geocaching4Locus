@@ -57,6 +57,9 @@ dependencies {
     // koin
     implementation "org.koin:koin-android:$koinVersion"
 
+    // gms base to patch SSL certificates
+    implementation "com.google.android.gms:play-services-base:$playServiceBaseVersion"
+
     api "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
 
     implementation "com.squareup.moshi:moshi:$moshiVersion"

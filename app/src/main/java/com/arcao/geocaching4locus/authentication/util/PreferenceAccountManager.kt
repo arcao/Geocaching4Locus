@@ -11,7 +11,7 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 import org.threeten.bp.temporal.ChronoUnit
 
-class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
+class PreferenceAccountManager(context: Context, oAuthService: Lazy<OAuth20Service>) :
     AccountManager(oAuthService) {
     private val prefs = context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
     val restrictions = AccountRestrictions(context)

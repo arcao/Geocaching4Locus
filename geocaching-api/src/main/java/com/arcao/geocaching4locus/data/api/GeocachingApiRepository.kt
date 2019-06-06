@@ -20,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
-class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
+class GeocachingApiRepository(private val endpoint: Lazy<GeocachingApiEndpoint>) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun search(
@@ -214,6 +214,6 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     private suspend inline fun <T : Any> apiCall(crossinline body: GeocachingApiEndpoint.() -> Deferred<T>): T =
         withContext(Dispatchers.IO) {
-            endpoint.body().await()
+            endpoint.value.body().await()
         }
 }

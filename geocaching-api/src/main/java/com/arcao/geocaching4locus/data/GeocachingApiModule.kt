@@ -10,11 +10,11 @@ import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
 import org.koin.dsl.module
 
 val geocachingApiModule = module {
-    single { OkHttpClientFactory(true).create() }
+    single { OkHttpClientFactory(getOrNull(),true).create() }
     single { MoshiFactory.create() }
     single { GeocachingOAuthServiceFactory(get()).create() }
     single { GeocachingApiEndpointFactory(get(), get(), get()).create() }
     single { WherigoApiEndpointFactory(get(), get()).create() }
-    single { GeocachingApiRepository(get()) }
-    single { WherigoApiRepository(get()) }
+    single { GeocachingApiRepository(inject()) }
+    single { WherigoApiRepository(inject()) }
 }

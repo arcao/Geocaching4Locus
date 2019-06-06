@@ -7,7 +7,7 @@ import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 
 abstract class AccountManager(
-        private val oAuthService: OAuth20Service
+        private val oAuthService: Lazy<OAuth20Service>
 ) {
     companion object {
         val SAFE_OAUTH_TOKEN_REFRESH_DURATION: Duration = Duration.ofMinutes(2)
@@ -19,7 +19,7 @@ abstract class AccountManager(
 
     val authorizationUrl: String
         get() {
-            return oAuthService.authorizationUrl
+            return oAuthService.value.authorizationUrl
         }
 
     protected abstract fun loadAccount() : GeocachingAccount?
@@ -28,7 +28,7 @@ abstract class AccountManager(
 
     suspend fun createAccount(code: String) : GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
-            oAuthService.getAccessToken(code)
+            oAuthService.value.getAccessToken(code)
         }
 
         return GeocachingAccount(
@@ -50,7 +50,7 @@ abstract class AccountManager(
     suspend fun refreshAccount(account: GeocachingAccount) {
         account.apply {
             val token = withContext(Dispatchers.IO) {
-                oAuthService.refreshAccessToken(refreshToken)
+                oAuthService.value.refreshAccessToken(refreshToken)
             }
 
             accessToken = token.accessToken

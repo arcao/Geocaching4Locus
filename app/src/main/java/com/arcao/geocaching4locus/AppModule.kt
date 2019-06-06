@@ -55,7 +55,7 @@ import org.koin.dsl.module
 
 internal val appModule = module {
     single { androidApplication() as App }
-    single { PreferenceAccountManager(get(), get()) } bind AccountManager::class
+    single { PreferenceAccountManager(get(), inject()) } bind AccountManager::class
     single { CoroutinesDispatcherProvider() }
 
     single { GeocachingApiFilterProvider(get()) }

@@ -33,14 +33,14 @@ fun main() {
         }
     })
 
-    val okHttpClient = OkHttpClientFactory(true).create()
+    val okHttpClient = OkHttpClientFactory(null,true).create()
     val moshi = MoshiFactory.create()
 
     println("World!")
 
-    val oAuthService = GeocachingOAuthServiceFactory(okHttpClient).create()
+    val oAuthService = lazy { GeocachingOAuthServiceFactory(okHttpClient).create() }
     val manager = FileAccountManager(oAuthService)
-    val endpoint = GeocachingApiEndpointFactory(manager, okHttpClient, moshi).create()
+    val endpoint = lazy { GeocachingApiEndpointFactory(manager, okHttpClient, moshi).create() }
     val api = GeocachingApiRepository(endpoint)
 
     if (manager.account == null) {

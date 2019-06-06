@@ -5,7 +5,7 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 import java.io.File
 
-class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) : AccountManager(oAuthService) {
+class FileAccountManager(oAuthService: Lazy<OAuth20Service>, private val dataFile: File = File("account.dat")) : AccountManager(oAuthService) {
     init {
         account = loadAccount()
     }

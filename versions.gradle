@@ -44,6 +44,7 @@ ext {
     moshiVersion = '1.8.0'
     okhttpVersion = '3.12.0'
     threeTenABPVersion = '1.2.0'
+    playServiceBaseVersion= '16.0.1'
 
     // tests
     junitVersion = '5.4.1'

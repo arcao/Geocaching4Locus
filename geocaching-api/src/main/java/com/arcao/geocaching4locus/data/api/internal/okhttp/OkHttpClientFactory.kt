@@ -1,17 +1,18 @@
 package com.arcao.geocaching4locus.data.api.internal.okhttp
 
+import android.content.Context
 import com.arcao.geocaching4locus.data.api.internal.Factory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class OkHttpClientFactory(private val debug: Boolean) : Factory<OkHttpClient> {
+class OkHttpClientFactory(private val context: Context?, private val debug: Boolean) : Factory<OkHttpClient> {
     override fun create(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             readTimeout(TIMEOUT, TimeUnit.SECONDS)
             connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            enableTls12()
+            enableTls12(context)
 
             addInterceptor(HttpLoggingInterceptor { message ->
                 Timber.d(message)

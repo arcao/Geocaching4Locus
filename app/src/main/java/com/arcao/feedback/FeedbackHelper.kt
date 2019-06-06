@@ -18,7 +18,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStreamWriter
-import java.util.*
+import java.util.Stack
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
@@ -59,7 +59,7 @@ class FeedbackHelper(
                     Timber.e(e)
                 }
 
-                createEmailOnlyChooserIntent(intent, null)
+                createEmailOnlyChooserIntent(intent)
             }
         }
 
@@ -100,7 +100,7 @@ class FeedbackHelper(
         }
     }
 
-    private fun createEmailOnlyChooserIntent(source: Intent, chooserTitle: CharSequence?): Intent {
+    private fun createEmailOnlyChooserIntent(source: Intent, chooserTitle: CharSequence? = null): Intent {
         val intents = Stack<Intent>()
         val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:info@domain.com"))
 
@@ -112,6 +112,8 @@ class FeedbackHelper(
             Intent.createChooser(intents.removeAt(0), chooserTitle)
                 .putExtra(Intent.EXTRA_INITIAL_INTENTS, intents.toTypedArray<Parcelable>())
         } else {
+            // fall back when no e-mail app is installed
+            source.type = "*/*"
             Intent.createChooser(source, chooserTitle)
         }
     }

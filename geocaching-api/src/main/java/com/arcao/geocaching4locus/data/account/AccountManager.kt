@@ -2,6 +2,8 @@ package com.arcao.geocaching4locus.data.account
 
 import com.github.scribejava.core.oauth.OAuth20Service
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.threeten.bp.Duration
 import org.threeten.bp.Instant
@@ -21,6 +23,11 @@ abstract class AccountManager(
         get() {
             return oAuthService.authorizationUrl
         }
+
+    private val refreshAccountMutex = Mutex()
+
+    var isAccountUpdateInProgress : Boolean = false
+        private set
 
     protected abstract fun loadAccount() : GeocachingAccount?
 
@@ -48,16 +55,27 @@ abstract class AccountManager(
     }
 
     suspend fun refreshAccount(account: GeocachingAccount) {
-        account.apply {
-            val token = withContext(Dispatchers.IO) {
-                oAuthService.refreshAccessToken(refreshToken)
+        refreshAccountMutex.withLock {
+            if (!account.accessTokenExpired) {
+                return
             }
 
-            accessToken = token.accessToken
-            accessTokenExpiration = computeExpiration(token.expiresIn)
-            refreshToken = token.refreshToken
-        }.also {
-            saveAccount(it)
+            try {
+                isAccountUpdateInProgress = true
+                account.apply {
+                    val token = withContext(Dispatchers.IO) {
+                        oAuthService.refreshAccessToken(refreshToken)
+                    }
+
+                    accessToken = token.accessToken
+                    accessTokenExpiration = computeExpiration(token.expiresIn)
+                    refreshToken = token.refreshToken
+                }.also {
+                    saveAccount(it)
+                }
+            } finally {
+                isAccountUpdateInProgress = false
+            }
         }
     }
 

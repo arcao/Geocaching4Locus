@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetLiveMapPointsFromRectangleCoor
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.util.getText
+import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.model.Coordinates
@@ -24,11 +25,15 @@ import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import java.util.concurrent.Executors
 
 class LiveMapViewModel(
     private val context: Context,
@@ -38,11 +43,17 @@ class LiveMapViewModel(
     private val getLiveMapPointsFromRectangleCoordinates: GetLiveMapPointsFromRectangleCoordinatesUseCase,
     private val sendPointsSilentToLocusMap: SendPointsSilentToLocusMapUseCase,
     private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
+    private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LifecycleObserver {
 
+    private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+
     fun addTask(intent: Intent, completionCallback: (Intent) -> Unit) {
-        cancelTasks()
+        val account = accountManager.account
+        if (account == null || !account.isAccountUpdateInProgress) {
+            cancelTasks()
+        }
 
         downloadLiveMapGeocaches(intent).invokeOnCompletion {
             completionCallback(intent)
@@ -50,7 +61,7 @@ class LiveMapViewModel(
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private fun downloadLiveMapGeocaches(task: Intent) = computationLaunch {
+    private fun downloadLiveMapGeocaches(task: Intent) = launch(dispatcher) {
         var requests = 0
 
         delay(200)
@@ -114,7 +125,7 @@ class LiveMapViewModel(
     }
 
     fun cancelTasks() {
-        coroutineContext.cancelChildren()
+        dispatcher.cancelChildren()
     }
 
     private fun handleException(e: Exception) {
@@ -149,6 +160,7 @@ class LiveMapViewModel(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun onCleared() {
         super.onCleared()
+        dispatcher.cancel()
     }
 }
 

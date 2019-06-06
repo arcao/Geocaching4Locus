@@ -106,7 +106,7 @@ internal val appModule = module {
     factory { GeocacheUserListsDataSourceFactory(get(), get()) }
     factory { ListGeocachesDataSourceFactory(get(), get()) }
     // live map
-    factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest
     viewModel { (intent: Intent) ->
         SearchNearestViewModel(

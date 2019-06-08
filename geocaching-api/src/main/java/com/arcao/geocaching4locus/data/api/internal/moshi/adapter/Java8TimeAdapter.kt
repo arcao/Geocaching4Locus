@@ -13,7 +13,7 @@ class Java8TimeAdapter {
     fun instantToJsonUTC(@LocalDateTimeUTC value: Instant): String {
         return LOCAL_DATE_TIME_FORMATTER.format(LocalDateTime.ofInstant(value, UTC_ZONE))
     }
-    
+
     @FromJson
     @LocalDateTimeUTC
     fun instantFromJsonUTC(value: String): Instant {
@@ -56,4 +56,3 @@ class Java8TimeAdapter {
         private val LOCAL_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME
     }
 }
-

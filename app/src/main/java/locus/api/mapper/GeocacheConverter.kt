@@ -157,7 +157,7 @@ class GeocacheConverter(
         val name = context.getString(R.string.var_final_location_name)
 
         return AdditionalWaypoint(
-          coordinates = correctedCoordinates,
+            coordinates = correctedCoordinates,
             name = name,
             prefix = "N0",
             description = null,

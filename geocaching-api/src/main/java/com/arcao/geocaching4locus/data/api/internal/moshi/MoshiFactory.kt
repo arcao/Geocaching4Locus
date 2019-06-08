@@ -9,11 +9,10 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 object MoshiFactory : Factory<Moshi> {
     override fun create(): Moshi =
-            Moshi.Builder().apply {
-                add(KotlinJsonAdapterFactory())
-                add(Java8TimeAdapter())
-                add(EnumAdapterFactory())
-                add(PagedListAdapter.FACTORY)
-            }.build()
-
+        Moshi.Builder().apply {
+            add(KotlinJsonAdapterFactory())
+            add(Java8TimeAdapter())
+            add(EnumAdapterFactory())
+            add(PagedListAdapter.FACTORY)
+        }.build()
 }

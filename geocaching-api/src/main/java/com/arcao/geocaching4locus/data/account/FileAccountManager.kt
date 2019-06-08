@@ -5,25 +5,26 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import org.threeten.bp.Instant
 import java.io.File
 
-class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) : AccountManager(oAuthService) {
+class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) :
+    AccountManager(oAuthService) {
     init {
         account = loadAccount()
     }
 
-    override fun loadAccount() : GeocachingAccount? {
+    override fun loadAccount(): GeocachingAccount? {
         try {
             val (accessToken, expiration, refreshToken, userName, membership, avatarUrl, bannerUrl) =
-                    dataFile.readText().split(NEW_LINE_PATTERN)
+                dataFile.readText().split(NEW_LINE_PATTERN)
 
             return GeocachingAccount(
-                    accountManager = this,
-                    accessToken = accessToken,
-                    accessTokenExpiration = Instant.ofEpochMilli(expiration.toLong()),
-                    refreshToken = refreshToken,
-                    userName = userName,
-                    membership = MembershipType.valueOf(membership),
-                    avatarUrl = avatarUrl,
-                    bannerUrl = bannerUrl
+                accountManager = this,
+                accessToken = accessToken,
+                accessTokenExpiration = Instant.ofEpochMilli(expiration.toLong()),
+                refreshToken = refreshToken,
+                userName = userName,
+                membership = MembershipType.valueOf(membership),
+                avatarUrl = avatarUrl,
+                bannerUrl = bannerUrl
             )
         } catch (e: Exception) {
             println(e)
@@ -37,7 +38,8 @@ class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: Fil
             return
         }
 
-        dataFile.writeText(arrayOf(
+        dataFile.writeText(
+            arrayOf(
                 account.accessToken,
                 account.accessTokenExpiration.toEpochMilli(),
                 account.refreshToken,
@@ -45,9 +47,9 @@ class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: Fil
                 account.membership.name,
                 account.avatarUrl,
                 account.bannerUrl
-        ).joinToString("\n"))
+            ).joinToString("\n")
+        )
     }
-
 
     private operator fun <E> List<E>.component6(): E? = this[5]
     private operator fun <E> List<E>.component7(): E? = this[6]

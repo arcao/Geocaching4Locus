@@ -4,5 +4,5 @@ sealed class DataSourceState {
     object LoadingInitial : DataSourceState()
     object LoadingNext : DataSourceState()
     object Done : DataSourceState()
-    class Error(val e : Exception) : DataSourceState()
+    class Error(val e: Exception) : DataSourceState()
 }

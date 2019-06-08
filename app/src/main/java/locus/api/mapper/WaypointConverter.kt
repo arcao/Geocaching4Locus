@@ -32,7 +32,7 @@ class WaypointConverter {
         }
     }
 
-    private fun AdditionalWaypointType?.toLocusMapWaypointType() : String {
+    private fun AdditionalWaypointType?.toLocusMapWaypointType(): String {
         return when (this ?: AdditionalWaypointType.REFERENCE_POINT) {
             AdditionalWaypointType.FINAL_LOCATION -> GeocachingWaypoint.CACHE_WAYPOINT_TYPE_FINAL
             AdditionalWaypointType.PARKING_AREA -> GeocachingWaypoint.CACHE_WAYPOINT_TYPE_PARKING

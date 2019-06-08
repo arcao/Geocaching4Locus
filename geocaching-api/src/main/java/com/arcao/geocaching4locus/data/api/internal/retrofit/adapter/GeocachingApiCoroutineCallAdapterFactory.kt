@@ -25,10 +25,12 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
         fun create() = GeocachingApiCoroutineCallAdapterFactory()
 
         private val WWW_AUTHENTICATE_ERROR_PATTERN: Pattern by lazy {
-            Pattern.compile("\\s*bearer\\s*realm\\s*=\\s*(\")?.+\\1\\s*,\\s*error\\s*=\\s*(\")?([^\"]+)\\2(?:\\s*,\\s*error_descriptions*=s*(\")?([^\"]+)\\4)?", Pattern.CASE_INSENSITIVE)
+            Pattern.compile(
+                "\\s*bearer\\s*realm\\s*=\\s*(\")?.+\\1\\s*,\\s*error\\s*=\\s*(\")?([^\"]+)\\2(?:\\s*,\\s*error_descriptions*=s*(\")?([^\"]+)\\4)?",
+                Pattern.CASE_INSENSITIVE
+            )
         }
     }
-
 
     override fun get(returnType: Type, annotations: Array<out Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
         if (Deferred::class.java != getRawType(returnType)) {
@@ -36,13 +38,15 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
         }
         if (returnType !is ParameterizedType) {
             throw IllegalStateException(
-                    "Deferred return type must be parameterized as Deferred<Foo> or Deferred<out Foo>")
+                "Deferred return type must be parameterized as Deferred<Foo> or Deferred<out Foo>"
+            )
         }
 
         return BodyCallAdapter<Any>(getParameterUpperBound(0, returnType), retrofit)
     }
 
-    private class BodyCallAdapter<T>(private val responseType: Type, private val retrofit: Retrofit) : CallAdapter<T, Deferred<T>> {
+    private class BodyCallAdapter<T>(private val responseType: Type, private val retrofit: Retrofit) :
+        CallAdapter<T, Deferred<T>> {
         override fun responseType() = responseType
 
         override fun adapt(call: Call<T>): Deferred<T> {
@@ -71,7 +75,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                     } else {
                         deferred.completeExceptionally(handleResponseError(response))
                     }
-                }   
+                }
             })
 
             return deferred
@@ -98,7 +102,8 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             val errorBody = response.errorBody()
             if (errorBody != null) {
                 try {
-                    val error = retrofit.responseBodyConverter<Error>(Error::class.java, emptyArray()).convert(errorBody)
+                    val error =
+                        retrofit.responseBodyConverter<Error>(Error::class.java, emptyArray()).convert(errorBody)
                     if (error != null) {
                         return createException(error.statusCode, error.statusMessage, error.errorMessage)
                     }
@@ -125,8 +130,8 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             }
         }
 
-        private fun createException(statusCode : StatusCode, statusMessage: String, errorMessage : String): Exception {
-            return when(statusCode) {
+        private fun createException(statusCode: StatusCode, statusMessage: String, errorMessage: String): Exception {
+            return when (statusCode) {
                 StatusCode.UNAUTHORIZED -> AuthenticationException(statusCode, statusMessage, errorMessage)
                 else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }

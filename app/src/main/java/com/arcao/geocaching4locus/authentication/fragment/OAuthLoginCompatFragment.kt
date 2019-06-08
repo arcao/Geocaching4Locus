@@ -13,7 +13,7 @@ import com.arcao.geocaching4locus.base.util.withObserve
 
 class OAuthLoginCompatFragment : BaseOAuthLoginFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view =  inflater.inflate(R.layout.fragment_login_oauth_compat, container, false)
+        val view = inflater.inflate(R.layout.fragment_login_oauth_compat, container, false)
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
 

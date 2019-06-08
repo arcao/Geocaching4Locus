@@ -9,7 +9,7 @@ import org.threeten.bp.Duration
 import org.threeten.bp.Instant
 
 abstract class AccountManager(
-        private val oAuthService: OAuth20Service
+    private val oAuthService: OAuth20Service
 ) {
     companion object {
         val SAFE_OAUTH_TOKEN_REFRESH_DURATION: Duration = Duration.ofMinutes(2)
@@ -26,23 +26,23 @@ abstract class AccountManager(
 
     private val refreshAccountMutex = Mutex()
 
-    var isAccountUpdateInProgress : Boolean = false
+    var isAccountUpdateInProgress: Boolean = false
         private set
 
-    protected abstract fun loadAccount() : GeocachingAccount?
+    protected abstract fun loadAccount(): GeocachingAccount?
 
     abstract fun saveAccount(account: GeocachingAccount?)
 
-    suspend fun createAccount(code: String) : GeocachingAccount {
+    suspend fun createAccount(code: String): GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
             oAuthService.getAccessToken(code)
         }
 
         return GeocachingAccount(
-                accountManager = this,
-                accessToken = token.accessToken,
-                accessTokenExpiration = computeExpiration(token.expiresIn),
-                refreshToken = token.refreshToken
+            accountManager = this,
+            accessToken = token.accessToken,
+            accessTokenExpiration = computeExpiration(token.expiresIn),
+            refreshToken = token.refreshToken
         ).also {
             this.account = it
             saveAccount(it)
@@ -80,7 +80,7 @@ abstract class AccountManager(
     }
 
     private fun computeExpiration(expiresIn: Int?) =
-            Instant.now()
-                    .plusSeconds(expiresIn?.toLong() ?: TWO_YEARS_IN_SECONDS)
-                    .minus(SAFE_OAUTH_TOKEN_REFRESH_DURATION)
+        Instant.now()
+            .plusSeconds(expiresIn?.toLong() ?: TWO_YEARS_IN_SECONDS)
+            .minus(SAFE_OAUTH_TOKEN_REFRESH_DURATION)
 }

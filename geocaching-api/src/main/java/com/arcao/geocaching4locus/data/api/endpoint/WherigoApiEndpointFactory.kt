@@ -8,8 +8,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class WherigoApiEndpointFactory constructor(
-        private val okHttpClient: OkHttpClient,
-        private val moshi: Moshi
+    private val okHttpClient: OkHttpClient,
+    private val moshi: Moshi
 ) : Factory<WherigoApiEndpoint> {
     companion object {
         private const val ENDPOINT_URL = "https://wherigo-service.appspot.com/"

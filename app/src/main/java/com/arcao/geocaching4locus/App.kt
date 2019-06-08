@@ -79,9 +79,9 @@ class App : Application() {
             androidContext(this@App)
 
             if (BuildConfig.DEBUG) {
-                logger (object : Logger() {
+                logger(object : Logger() {
                     override fun log(level: Level, msg: MESSAGE) {
-                        when(level) {
+                        when (level) {
                             Level.DEBUG -> Timber.d(msg)
                             Level.INFO -> Timber.i(msg)
                             Level.ERROR -> Timber.e(msg)

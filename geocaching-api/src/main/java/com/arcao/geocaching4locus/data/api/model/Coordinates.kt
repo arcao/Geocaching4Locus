@@ -30,9 +30,9 @@ data class Coordinates(
          * Compute is based on [Haversine formula](http://en.wikipedia.org/wiki/Haversine_formula).
          * Precision is around 99.9%.
          *
-         * @param source      source coordinates
+         * @param source source coordinates
          * @param destination destination coordinates
-         * @param results     array where first index is distance in meters, second index is initial bearing in degree
+         * @param results array where first index is distance in meters, second index is initial bearing in degree
          * and third index is final bearing in degree
          * @since 1.20
          */

@@ -201,7 +201,8 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         }
 
         override fun filter(
-            @NonNull source: CharSequence, start: Int,
+            @NonNull source: CharSequence,
+            start: Int,
             end: Int,
             dest: Spanned,
             dstart: Int,

@@ -12,10 +12,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class GeocachingApiEndpointFactory @TestOnly internal constructor(
-        private val endpointUrl: String,
-        private val accountManager: AccountManager,
-        private val okHttpClient: OkHttpClient,
-        private val moshi: Moshi
+    private val endpointUrl: String,
+    private val accountManager: AccountManager,
+    private val okHttpClient: OkHttpClient,
+    private val moshi: Moshi
 ) : Factory<GeocachingApiEndpoint> {
 
     companion object {
@@ -24,10 +24,10 @@ class GeocachingApiEndpointFactory @TestOnly internal constructor(
     }
 
     constructor(accountManager: AccountManager, okHttpClient: OkHttpClient, moshi: Moshi) : this(
-            if (GeocachingOAuthServiceFactory.API_STAGING) STAGING_ENDPOINT_URL else PRODUCTION_ENDPOINT_URL,
-            accountManager,
-            okHttpClient,
-            moshi
+        if (GeocachingOAuthServiceFactory.API_STAGING) STAGING_ENDPOINT_URL else PRODUCTION_ENDPOINT_URL,
+        accountManager,
+        okHttpClient,
+        moshi
     )
 
     override fun create(): GeocachingApiEndpoint {

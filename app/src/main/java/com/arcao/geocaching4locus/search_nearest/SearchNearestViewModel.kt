@@ -31,20 +31,20 @@ import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
 class SearchNearestViewModel(
-        intent: Intent,
-        private val context: Context,
-        private val accountManager: AccountManager,
-        private val preferenceManager: DefaultPreferenceManager,
-        private val filterPreferenceManager: FilterPreferenceManager,
-        private val locusMapManager: LocusMapManager,
-        private val getGpsLocation: GetGpsLocationUseCase,
-        private val getWifiLocation: GetWifiLocationUseCase,
-        private val getLastKnownLocation: GetLastKnownLocationUseCase,
-        private val requireLocationPermissionRequest: RequireLocationPermissionRequestUseCase,
-        private val getPointsFromCoordinates: GetPointsFromCoordinatesUseCase,
-        private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
-        private val exceptionHandler: ExceptionHandler,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    intent: Intent,
+    private val context: Context,
+    private val accountManager: AccountManager,
+    private val preferenceManager: DefaultPreferenceManager,
+    private val filterPreferenceManager: FilterPreferenceManager,
+    private val locusMapManager: LocusMapManager,
+    private val getGpsLocation: GetGpsLocationUseCase,
+    private val getWifiLocation: GetWifiLocationUseCase,
+    private val getLastKnownLocation: GetLastKnownLocationUseCase,
+    private val requireLocationPermissionRequest: RequireLocationPermissionRequestUseCase,
+    private val getPointsFromCoordinates: GetPointsFromCoordinatesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
+    private val exceptionHandler: ExceptionHandler,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<SearchNearestAction>()
 
@@ -154,7 +154,6 @@ class SearchNearestViewModel(
 
             Timber.i("Lat: $latitude; Lon: $longitude")
 
-
             if (locusMapManager.isLocusMapNotInstalled) {
                 action(SearchNearestAction.LocusMapNotInstalled)
                 return@mainLaunch
@@ -177,8 +176,8 @@ class SearchNearestViewModel(
         AnalyticsUtil.actionSearchNearest(coordinatesSource, useFilter, maxCount, accountManager.isPremium)
 
         val downloadIntent = locusMapManager.createSendPointsIntent(
-                callImport = true,
-                center = false
+            callImport = true,
+            center = false
         )
 
         var count = maxCount
@@ -187,22 +186,22 @@ class SearchNearestViewModel(
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
                 val points = getPointsFromCoordinates(
-                        this,
-                        coordinates,
-                        preferenceManager.downloadDistanceMeters,
-                        filterPreferenceManager.simpleCacheData,
-                        filterPreferenceManager.geocacheLogsCount,
-                        filterPreferenceManager.showDisabled,
-                        filterPreferenceManager.showFound,
-                        filterPreferenceManager.showOwn,
-                        filterPreferenceManager.geocacheTypes,
-                        filterPreferenceManager.containerTypes,
-                        filterPreferenceManager.difficultyMin,
-                        filterPreferenceManager.difficultyMax,
-                        filterPreferenceManager.terrainMin,
-                        filterPreferenceManager.terrainMax,
-                        filterPreferenceManager.excludeIgnoreList,
-                        maxCount
+                    this,
+                    coordinates,
+                    preferenceManager.downloadDistanceMeters,
+                    filterPreferenceManager.simpleCacheData,
+                    filterPreferenceManager.geocacheLogsCount,
+                    filterPreferenceManager.showDisabled,
+                    filterPreferenceManager.showFound,
+                    filterPreferenceManager.showOwn,
+                    filterPreferenceManager.geocacheTypes,
+                    filterPreferenceManager.containerTypes,
+                    filterPreferenceManager.difficultyMin,
+                    filterPreferenceManager.difficultyMax,
+                    filterPreferenceManager.terrainMin,
+                    filterPreferenceManager.terrainMax,
+                    filterPreferenceManager.excludeIgnoreList,
+                    maxCount
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     updateProgress(progress = receivedGeocaches, maxProgress = count)
@@ -211,29 +210,28 @@ class SearchNearestViewModel(
                     if (filterPreferenceManager.simpleCacheData) {
                         list.forEach { point ->
                             point.setExtraOnDisplay(
-                                    context.packageName,
-                                    UpdateActivity::class.java.name,
-                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                    point.gcData.cacheID
+                                context.packageName,
+                                UpdateActivity::class.java.name,
+                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                point.gcData.cacheID
                             )
                         }
                     }
                     list
                 }
 
-
                 writePointToPackPointsFile(points)
             }
         } catch (e: Exception) {
             mainContext {
                 action(
-                        SearchNearestAction.Error(
-                                if (receivedGeocaches > 0) {
-                                    exceptionHandler(IntendedException(e, downloadIntent))
-                                } else {
-                                    exceptionHandler(e)
-                                }
-                        )
+                    SearchNearestAction.Error(
+                        if (receivedGeocaches > 0) {
+                            exceptionHandler(IntendedException(e, downloadIntent))
+                        } else {
+                            exceptionHandler(e)
+                        }
+                    )
                 )
             }
             return@computationContext

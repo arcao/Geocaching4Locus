@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model.request.query.filter
 
-class GeocacheTypeFilter(private vararg val values: Int, private var not : Boolean = false) : NotFilter<GeocacheTypeFilter> {
+class GeocacheTypeFilter(private vararg val values: Int, private var not: Boolean = false) :
+    NotFilter<GeocacheTypeFilter> {
     override fun isValid() = values.isNotEmpty()
 
     override fun not(): GeocacheTypeFilter {

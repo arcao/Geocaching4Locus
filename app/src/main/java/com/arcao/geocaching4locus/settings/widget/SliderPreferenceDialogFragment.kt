@@ -111,10 +111,10 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
     }
 
     private class InputTextFilter internal constructor(
-            internal val editText: EditText,
-            private val min: Int,
-            private val max: Int,
-            step: Int
+        internal val editText: EditText,
+        private val min: Int,
+        private val max: Int,
+        step: Int
     ) : NumberKeyListener() {
         private val availableValues: Array<String>?
 
@@ -142,11 +142,12 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
 
         override fun filter(
-                @NonNull source: CharSequence, start: Int,
-                end: Int,
-                dest: Spanned,
-                dstart: Int,
-                dend: Int
+            @NonNull source: CharSequence,
+            start: Int,
+            end: Int,
+            dest: Spanned,
+            dstart: Int,
+            dend: Int
         ): CharSequence? {
             if (availableValues == null || availableValues.isEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
@@ -155,7 +156,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                 }
 
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                        dest.subSequence(dend, dest.length))
+                    dest.subSequence(dend, dest.length))
 
                 if (result.isEmpty()) {
                     return result
@@ -179,7 +180,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
                     return ""
                 }
                 val result = (dest.subSequence(0, dstart).toString() + filtered +
-                        dest.subSequence(dend, dest.length))
+                    dest.subSequence(dend, dest.length))
 
                 for (value in availableValues) {
                     if (value.startsWith(result)) {
@@ -208,7 +209,7 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
 
         fun newInstance(key: String) = SliderPreferenceDialogFragment().apply {
             arguments = bundleOf(
-                    ARG_KEY to key
+                ARG_KEY to key
             )
         }
     }

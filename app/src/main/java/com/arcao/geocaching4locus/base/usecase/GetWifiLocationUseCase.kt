@@ -39,7 +39,6 @@ class GetWifiLocationUseCase(
 
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, listener)
             Timber.i("Location listener added.")
-
         }
     }
 

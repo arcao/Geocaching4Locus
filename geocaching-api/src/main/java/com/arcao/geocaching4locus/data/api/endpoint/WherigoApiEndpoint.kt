@@ -7,6 +7,5 @@ import retrofit2.http.Query
 
 interface WherigoApiEndpoint {
     @GET("api/v2/guidToReferenceCode")
-    fun guidToReferenceCodeAsync(@Query("guid") guid: String) : Deferred<GuidToReferenceCodeResponse>
+    fun guidToReferenceCodeAsync(@Query("guid") guid: String): Deferred<GuidToReferenceCodeResponse>
 }
-

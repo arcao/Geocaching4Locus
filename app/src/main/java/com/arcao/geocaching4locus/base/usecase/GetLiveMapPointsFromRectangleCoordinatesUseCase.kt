@@ -93,7 +93,7 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         } finally {
             try {
                 accountManager.restrictions().updateLimits(repository.userLimits())
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 // ignore
             }
         }
@@ -105,4 +105,3 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         }
     }
 }
-

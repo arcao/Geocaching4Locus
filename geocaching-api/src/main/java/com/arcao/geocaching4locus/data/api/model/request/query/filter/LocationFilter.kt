@@ -4,7 +4,7 @@ import com.arcao.geocaching4locus.data.api.model.Coordinates
 import java.util.Locale
 import kotlin.math.abs
 
-class LocationFilter(private val latitude: Double, private val longitude : Double) : Filter {
+class LocationFilter(private val latitude: Double, private val longitude: Double) : Filter {
     override fun isValid() = abs(latitude) <= 90 && abs(longitude) <= 180
 
     constructor(coordinates: Coordinates) : this(coordinates.latitude, coordinates.longitude)

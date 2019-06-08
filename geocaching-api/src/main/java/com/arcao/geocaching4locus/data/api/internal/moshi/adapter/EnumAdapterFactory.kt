@@ -41,22 +41,20 @@ class EnumAdapterFactory : JsonAdapter.Factory {
         }
     }
 
-
     class AdditionalWaypointTypeAdapter : IdEnumAdapter<AdditionalWaypointType>() {
         companion object {
             val INSTANCE = AdditionalWaypointTypeAdapter()
         }
 
-        override fun from(id: Int?)= AdditionalWaypointType.from(id)
+        override fun from(id: Int?) = AdditionalWaypointType.from(id)
     }
-
 
     class GeocacheListTypeAdapter : IdEnumAdapter<GeocacheListType>() {
         companion object {
             val INSTANCE = GeocacheListTypeAdapter()
         }
 
-        override fun from(id: Int?)= GeocacheListType.from(id)
+        override fun from(id: Int?) = GeocacheListType.from(id)
     }
 
     class GeocacheStatusAdapter : ValueEnumAdapter<GeocacheStatus>() {

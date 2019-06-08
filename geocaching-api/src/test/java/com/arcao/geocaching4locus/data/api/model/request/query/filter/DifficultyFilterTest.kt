@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model.request.query.filter
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal object DifficultyFilterTest {

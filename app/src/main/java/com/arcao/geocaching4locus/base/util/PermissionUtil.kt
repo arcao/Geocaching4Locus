@@ -33,7 +33,7 @@ object PermissionUtil {
         return true
     }
 
-    fun requestGpsLocationPermission(activity: AppCompatActivity, requestCode : Int): Boolean {
+    fun requestGpsLocationPermission(activity: AppCompatActivity, requestCode: Int): Boolean {
         return if (activity.hasGpsLocationPermission) {
             true
         } else {
@@ -42,7 +42,7 @@ object PermissionUtil {
         }
     }
 
-    fun requestWifiLocationPermission(activity: AppCompatActivity, requestCode : Int): Boolean {
+    fun requestWifiLocationPermission(activity: AppCompatActivity, requestCode: Int): Boolean {
         return if (activity.hasGpsLocationPermission) {
             true
         } else {

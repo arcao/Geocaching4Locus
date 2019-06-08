@@ -207,4 +207,3 @@ data class Geocache(
         ).joinToString(FIELD_SEPARATOR)
     }
 }
-

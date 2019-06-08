@@ -34,7 +34,7 @@ class GetPointFromGeocacheCodeUseCase(
             accountManager.restrictions().updateLimits(repository.userLimits())
 
             mapper.createLocusPoint(geocache)
-        } catch (e : GeocachingApiException) {
+        } catch (e: GeocachingApiException) {
             if (e.statusCode == StatusCode.NOT_FOUND) {
                 throw CacheNotFoundException(referenceCode)
             }
@@ -43,7 +43,7 @@ class GetPointFromGeocacheCodeUseCase(
                 throw CacheNotFoundException(referenceCode)
             }
 
-            throw  e
+            throw e
         }
     }
 }

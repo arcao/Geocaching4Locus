@@ -362,4 +362,10 @@
         >Authorization code</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
         >The entered authorization code is not valid. Please, try again.</string>
+    <string name="pref_account_quota_basic"  comment="Title of preference in Account settings. This preference show info about remaining geocaches in daily quota for premium membership."
+        >Remaining daily quota (Basic membership)</string>
+    <string name="pref_account_quota_premium" comment="Title of preference in Account settings. This preference show info about remaining geocaches in daily quota for premium membership."
+        >Remaining daily quota (Premium membership)</string>
+    <string name="pref_account_quota_message" comment="Summary of preference in Account settings. This preference show info about remaining geocaches in daily quota. Placeholders: %1$s = count of remaining full geocaches, %2$s = count of full geocachces to be downloaded per day, %3$s = count of remaining lite geocaches, %4$s = count of lite geocaches to be downloaded per day, %5$s = time when daily quote will be renew, eg. 15:23 (formatted by country conventions)"
+        >Full geocaches: %1$s / %2$s\nRenew tomorrow at: %3$s\n\nLite geocaches: %4$s / %5$s\nRenew tomorrow sat: %6$s</string>
 </resources>

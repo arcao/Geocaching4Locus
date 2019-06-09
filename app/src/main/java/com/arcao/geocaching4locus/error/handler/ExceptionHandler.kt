@@ -190,7 +190,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     periodString = context.resources.getQuantityString(R.plurals.plurals_hour, period, period)
                 }
 
-                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.renewFullGeocacheLimit.toDate())
+                val renewTime = DateFormat.getTimeFormat(context).format(restrictions.renewFullGeocacheQuota.toDate())
                 val cacheString = context.getQuantityText(R.plurals.plurals_geocache, cachesPerPeriod, cachesPerPeriod)
                 val errorText = context.getText(message, cacheString, periodString, renewTime)
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     app:title="@string/pref_account">
+    <Preference app:key="account" />
     <Preference
-        app:iconSpaceReserved="false"
-        app:key="account" />
+        app:isPreferenceVisible="false"
+        app:key="account_quota"
+        app:title="@string/pref_account_quota_premium" />
     <Preference
         app:icon="@drawable/geocaching_live_icon"
         app:key="account_geocaching_live"

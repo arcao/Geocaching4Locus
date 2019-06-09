@@ -32,8 +32,8 @@ class GeocacheConverter(
 ) {
     fun createLocusPoint(cache: Geocache): Point {
         val loc = Location()
-            .setLatitude(cache.postedCoordinates.latitude)
-            .setLongitude(cache.postedCoordinates.longitude)
+            .setLatitude(cache.postedCoordinates?.latitude ?: throw IllegalArgumentException("Coordinates missing"))
+            .setLongitude(cache.postedCoordinates?.longitude ?: throw IllegalArgumentException("Coordinates missing"))
 
         val p = Point(cache.name, loc).apply {
             gcData = GeocachingData().apply {
@@ -42,13 +42,13 @@ class GeocacheConverter(
                 id = cache.id
                 name = cache.name
                 type = cache.geocacheType.toLocusMapGeocacheType()
-                difficulty = cache.difficulty
-                terrain = cache.terrain
+                difficulty = cache.difficulty ?: 1F
+                terrain = cache.terrain ?: 1F
                 owner = cache.ownerAlias
                 placedBy = cache.ownerAlias
                 isAvailable = cache.status == GeocacheStatus.ACTIVE
                 isArchived = cache.status == GeocacheStatus.ARCHIVED
-                isPremiumOnly = cache.isPremiumOnly
+                isPremiumOnly = cache.isPremiumOnly ?: false
                 cacheUrl = cache.url
 
                 dateHidden = cache.placedDateInstant?.toEpochMilli() ?: 0

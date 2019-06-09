@@ -8,22 +8,22 @@ import org.threeten.bp.LocalDateTime
 data class Geocache(
     val referenceCode: String, // string
     val name: String, // string
-    val difficulty: Float, // 0
-    val terrain: Float, // 0
+    val difficulty: Float?, // 0
+    val terrain: Float?, // 0
     val favoritePoints: Int?, // 0
     val trackableCount: Int?, // 0
     val placedDate: LocalDateTime?, // 2018-06-06T06:16:54.160
     val publishedDate: LocalDateTime?, // 2018-06-06T06:16:54.165
-    val geocacheType: GeocacheType, // Traditional
-    val geocacheSize: GeocacheSize, // Unknown
+    val geocacheType: GeocacheType?, // Traditional
+    val geocacheSize: GeocacheSize?, // Unknown
     val userData: UserData?,
-    val status: GeocacheStatus, // Unpublished
+    val status: GeocacheStatus?, // Unpublished
     val location: Location?,
-    val postedCoordinates: Coordinates,
+    val postedCoordinates: Coordinates?,
     val lastVisitedDate: LocalDateTime?, // 2018-06-06T06:16:54.165
     val ownerCode: String?, // string
-    val ownerAlias: String, // string
-    val isPremiumOnly: Boolean, // true
+    val ownerAlias: String?, // string
+    val isPremiumOnly: Boolean?, // true
     val shortDescription: String?, // string
     val longDescription: String?, // string
     val hints: String?, // string
@@ -204,6 +204,30 @@ data class Geocache(
 //                FIELD_URL,
 //                FIELD_CONTAINS_HTML,
 //                FIELD_ADDITIONAL_WAYPOINTS,
+        ).joinToString(FIELD_SEPARATOR)
+
+        val FIELDS_LITE_BOOKMARKS = arrayOf(
+            FIELD_REFERENCE_CODE,
+            FIELD_NAME,
+//            FIELD_DIFFICULTY,
+//            FIELD_TERRAIN,
+//            FIELD_FAVORITE_POINTS,
+//            FIELD_TRACKABLE_COUNT,
+//            FIELD_PLACED_DATE,
+            FIELD_GEOCACHE_TYPE
+//            FIELD_GEOCACHE_SIZE,
+//            FIELD_USER_DATA,
+//            FIELD_STATUS,
+//            FIELD_LOCATION,
+//            FIELD_POSTED_COORDINATES,
+//            FIELD_LAST_VISITED_DATE,
+//            FIELD_OWNER_CODE,
+//            FIELD_OWNER_ALIAS,
+//            FIELD_IS_PREMIUM_ONLY,
+//            FIELD_IANA_TIMEZONE_ID,
+//            FIELD_RELATED_WEBPAGE,
+//            FIELD_URL,
+//            FIELD_CONTAINS_HTML
         ).joinToString(FIELD_SEPARATOR)
     }
 }

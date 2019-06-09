@@ -52,7 +52,7 @@ class BookmarkViewModel(
         get() = Transformations.switchMap(dataSourceFactory.dataSource, ListGeocachesDataSource::state)
 
     init {
-        val pageSize = 10
+        val pageSize = 25
         val config = PagedList.Config.Builder()
             .setPageSize(pageSize)
             .setInitialLoadSizeHint(pageSize * 2)

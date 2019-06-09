@@ -200,15 +200,24 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
         skip: Int = 0,
         take: Int = 10,
         logsCount: Int = 10,
+        imageCount: Int = 30,
+        trackableCount: Int = 30,
         lite: Boolean = false
     ) = apiCall {
         listGeocachesAsync(
             referenceCode = referenceCode,
-            fields = if (lite) Geocache.FIELDS_LITE else Geocache.FIELDS_ALL,
+            fields = if (lite) Geocache.FIELDS_LITE_BOOKMARKS else Geocache.FIELDS_ALL,
             skip = skip,
             take = take,
             lite = lite,
-            expand = GeocacheExpand().all().apply { geocacheLogs = logsCount }
+            expand = GeocacheExpand().apply {
+                if (!lite) {
+                    geocacheLogs = logsCount
+                    images = imageCount
+                    geocacheLogImages = imageCount
+                    trackables = trackableCount
+                }
+            }
         )
     }
 

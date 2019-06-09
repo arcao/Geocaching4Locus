@@ -81,21 +81,20 @@ class BookmarkListViewModel(
         try {
             showProgress(R.string.progress_download_geocaches) {
                 Timber.d("source: import_from_bookmark;guid=%s", geocacheList.guid)
-                val bookmark = getListGeocaches(geocacheList.guid)
 
-                val geocacheCodes = bookmark.map { it.referenceCode }.toTypedArray()
-                Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
+                var count = 0
 
-                updateProgress(maxProgress = geocacheCodes.size)
-
-                val channel = getPointsFromGeocacheCodes(
+                val channel = getListGeocaches(
                     this,
-                    geocacheCodes,
+                    geocacheList.guid,
                     filterPreferenceManager.simpleCacheData,
                     filterPreferenceManager.geocacheLogsCount
-                ).map { list ->
+                ) {
+                    count = it
+                    Timber.d("source: import_from_bookmark; guid=%s; count=%d", geocacheList.guid, count)
+                }.map { list ->
                     receivedGeocaches += list.size
-                    updateProgress(progress = receivedGeocaches)
+                    updateProgress(progress = receivedGeocaches, maxProgress = count)
 
                     // apply additional downloading full geocache if required
                     if (filterPreferenceManager.simpleCacheData) {

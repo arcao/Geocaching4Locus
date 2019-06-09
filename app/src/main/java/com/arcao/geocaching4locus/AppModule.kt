@@ -68,7 +68,7 @@ internal val appModule = module {
     factory { CreateAccountUseCase(get(), get(), get()) }
     factory { RetrieveAuthorizationUrlUseCase(get()) }
     factory { GeocachingApiLoginUseCase(get(), get(), get()) }
-    factory { GetListGeocachesUseCase(get(), get(), get()) }
+    factory { GetListGeocachesUseCase(get(), get(), get(), get(), get()) }
     factory { GetGeocacheCodeFromGuidUseCase(get(), get()) }
     factory { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
     factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }

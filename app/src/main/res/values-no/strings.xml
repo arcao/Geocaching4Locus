@@ -15,6 +15,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Imperial måleenheter</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Bruk miles i stedet for kilometer</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Du er ikke pålogget. Logg på først i konto innstillinger.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Locusversjonen din er for gamal. Du må ha versjon %s eller nyare for å fungera skikkeleg.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Avbryt</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Vis funne</string>
@@ -26,6 +27,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Hentar  ny cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal loggar</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal loggar som skal lastast ned med hurtigminne</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Vis avslåtte</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Syn midlertidig avslåtte hurtigminne</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Lastar ned hurtigminne…</string>
@@ -89,6 +91,10 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Du har nådd grensen for full nedlasting med <b>%1$s pr %2$s periode</b>. Din daglige kvote blir nullstillt %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hei, ta det med ro!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Du har nådd grensen for hvor mye du kan hente innenfor et minutt.</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d Geocache</item>
+        <item quantity="other">%d Geocaches</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d time</item>
         <item quantity="other">%d timer</item>
@@ -111,6 +117,7 @@
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiver varslinger</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis melding når live kart slås av. Dette virker kun når periodiske oppdateringer er slått på i Locus Map og når Locus Map kjører.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Laster ned logger...</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Last ned logger</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Laste ned logger vil oppdatere cachen</string>
@@ -119,6 +126,7 @@
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Endre stegstørrelse for antall cacher dialog</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Noen filtre krever premium medlemskap, noe du ikke har. Dette tillegget skifter til modus for basis medlemskap. Prøv igjen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Konto</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kart</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Lastar ned</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Avansert</string>
@@ -160,4 +168,8 @@
     <string name="button_more_info" comment="Dialog button for More info action">Mer info</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map feil: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Klarer ikke å opprette datafil for Locus Map. Har du gitt skrivetilgang til lagring?</string>
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs.">Din Android-enhetsversjon støtter ikke det nyeste transportsikkerhetslaget (TLS 1.1 og 1.2) for innebygd nettleser.\n\nDenne appen vil prøve å bruke tredjeparts nettleser i stedet. Etter godkjenning av tilgang til Geocaching-kontoen din, vennligst kopier en autorisasjonskode, kom tilbake hit og lim den inn her.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Vennligst lim inn autorisasjonskoden.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Autorisasjonskode</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Den angitte autorisasjonskoden er ikke gyldig. Vær så snill, prøv på nytt.</string>
 </resources>

@@ -15,6 +15,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Britische Maßeinheiten</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Zeige Meilen statt Kilometer</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Du bist nicht eingeloggt. Bitte logge dich zuerst ein</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Ihre Locus Map-Version ist veraltet. Geocaching4locus benötigt Version %s oder höher.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Abbrechen</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Funde zeigen</string>
@@ -26,9 +27,11 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Aktualisiere Cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Anzahl der Logs</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Anzahl der mit dem Cache herunterzuladenden Logs</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Zeige deaktivierte</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Zeige vorübergehend deaktivierte Caches</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Lade caches…</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Version</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Webseite, Forum, etc.</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Spenden über Paypal</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Unterstützen Sie die zukünftige Entwicklung …</string>
@@ -88,6 +91,10 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Sie haben das Limit zum Herunterladen der kompletten Informationen von <b>%1$s pro %2$s Periode</b> erreicht. Ihr tägliche Anzahl wird heruntergesetzt auf %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Langsamer!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Sie haben das Limit der maximalen Aktionen/Aufrufe pro Minute erreicht </string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d Cache</item>
+        <item quantity="other">%d Caches</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d Stunde</item>
         <item quantity="other">%d Stunden</item>
@@ -96,11 +103,13 @@
         <item quantity="one">%d Minute</item>
         <item quantity="other">%d Minuten</item>
     </plurals>
+    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Powered by Geocaching Live</string>
     <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Dieses Add-on ruft Informationen über Geocaches via Geocaching Live ab. Tippen hier für weitere Informationen…</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live gibt eine ungültige Angabe zurück:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus Live Karte</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Live Karte ist eingeschaltet</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">Live Karte ist ausgeschaltet</string>
+    <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Herunterladen Live-Karte Geocaches: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Schalte ein</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Schalte aus</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Einstellungen</string>
@@ -108,6 +117,7 @@
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Benachrichtigung ausgeschaltet</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Zeigt die Benachrichtigung, wenn \"Live map\" ausgeschaltet ist. Das funktioniert nur, wenn in Locus \"periodische Updates\" erlaubt sind und Locus aktiv ist.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Logs werden heruntergeladen</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Logs herunterladen</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Logs werden heruntergeladen und der Cache wird aktualisiert</string>
@@ -116,6 +126,7 @@
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Auswahlmenü: Anzahl der heruntergeladenen Cache in 1-er oder 10-er Schritten</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Einige Flter erfordern Premium-Mitgliedschaft, die nicht vorliegt. Die App schaltet auf Basic-Mitgliedschaft. Bitte noch einmal versuchen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Anmeldung</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live Karte</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Empfange Daten</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Erweitert</string>

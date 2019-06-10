@@ -9,11 +9,13 @@
     <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">Paramètres</string>
     <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button.">Mauvais format de coordonnées</string>
     <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen.">Coordonnées</string>
+    <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings.">Distance</string>
     <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked.">Distance en Km</string>
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Distance en Miles</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Unités Impériales</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Utiliser les miles au lieu des kilomètres</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Vous n’êtes pas identifié. Merci de vous identifier dans les paramètres.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">D\'accord</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">La version de Locus installée est trop ancienne. Geocaching4Locus nécessite la version %s ou supérieure pour fonctionner correctement.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Annuler</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Montrer trouvées</string>
@@ -25,15 +27,18 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Mise à jour de la cache</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Nombre de logs</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Nombre de logs à télécharger par cache</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Montrer les caches désactivées</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Montrer les caches temporairement désactivées</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Téléchargement de la cache…</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Version</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Site internet, forum, etc…</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Faire un don par Paypal</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Encourager les futures évolutions…</string>
     <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Choisissez votre devise</string>
     <string name="pref_geocache_type" comment="">Types de caches</string>
     <string name="pref_difficulty" comment="">Difficulté</string>
+    <string name="pref_terrain" comment="">Terrain</string>
     <string name="pref_difficulty_min" comment="">Difficulté Min.</string>
     <string name="pref_difficulty_max" comment="">Difficulté Max.</string>
     <string name="pref_terrain_min" comment="">Terrain Min.</string>
@@ -86,9 +91,17 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Vous avez atteint la limite de téléchargement des <b>6000 caches par 24 heures</b>. Votre quota sera remis à zéro à %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Ho, ralentissez !</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Vous avez atteint la limite maximale d\'actions/demandes par minute.</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d cache</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d heure</item>
         <item quantity="other">%d heures</item>
+    </plurals>
+    <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
     <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Propulsé par Geocaching Live</string>
     <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Appuyez ici pour plus d\'informations…</string>

@@ -23,8 +23,13 @@ class GeocachingAuthenticationInterceptor(private val accountManager: AccountMan
                     account.updateUserInfo(endpoint.userAsync().await())
                 }
             }
-            return chain.proceed(chain.request().newBuilder().addHeader("Authorization", "bearer ${account.accessToken}").build())
-        } catch (e : IOException) {
+            return chain.proceed(
+                chain.request().newBuilder().addHeader(
+                    "Authorization",
+                    "bearer ${account.accessToken}"
+                ).build()
+            )
+        } catch (e: IOException) {
             throw e
         } catch (t: Throwable) {
             throw InvalidResponseException(t.message, t)

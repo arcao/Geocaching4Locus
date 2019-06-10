@@ -29,4 +29,3 @@ class OkHttpClientFactory(private val debug: Boolean) : Factory<OkHttpClient> {
         private const val TIMEOUT = 60L
     }
 }
-

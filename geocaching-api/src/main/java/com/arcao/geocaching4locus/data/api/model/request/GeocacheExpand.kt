@@ -10,7 +10,7 @@ import com.arcao.geocaching4locus.data.api.model.request.Expand.Companion.EXPAND
 class GeocacheExpand : Expand<GeocacheExpand> {
     var geocacheLogs: Int? = null
     var trackables: Int? = null
-    var geocacheLogImages : Int? = null
+    var geocacheLogImages: Int? = null
     var userWaypoint = false
     var images: Int? = null
 

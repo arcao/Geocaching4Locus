@@ -17,14 +17,14 @@ object GeocachingOAuth2AccessTokenJsonExtractor : OAuth2AccessTokenJsonExtractor
 
         val errorUri = try {
             if (errorUriInString == null) null else URI.create(errorUriInString)
-        } catch (iae: IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) {
             null
         }
 
         val errorCode = try {
             OAuth2AccessTokenErrorResponse.ErrorCode.valueOf(errorInString)
-        } catch (iaE: IllegalArgumentException) {
-            //non oauth standard error code
+        } catch (e: IllegalArgumentException) {
+            // non oauth standard error code
             null
         }
 

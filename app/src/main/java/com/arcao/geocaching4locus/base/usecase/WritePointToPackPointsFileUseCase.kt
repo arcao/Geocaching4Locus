@@ -9,7 +9,7 @@ import locus.api.objects.extra.Point
 import locus.api.utils.StoreableWriter
 
 class WritePointToPackPointsFileUseCase(
-        private val locusMapManager: LocusMapManager,
+    private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
     suspend operator fun invoke(point: Point) = withContext(dispatcherProvider.io) {

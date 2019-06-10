@@ -78,7 +78,7 @@ class GeocachingApiFilterProvider(
             }
 
             // not supported?
-            //filters += BookmarksExcludeFilter(excludeIgnoreList)
+            // filters += BookmarksExcludeFilter(excludeIgnoreList)
         }
 
         return filters
@@ -138,7 +138,7 @@ class GeocachingApiFilterProvider(
             }
 
             // not supported?
-            //filters += BookmarksExcludeFilter(excludeIgnoreList)
+            // filters += BookmarksExcludeFilter(excludeIgnoreList)
         }
 
         return filters

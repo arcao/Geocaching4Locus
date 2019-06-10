@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model.request.query.filter
 
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 internal object GeocacheTypeFilterTest {

@@ -158,7 +158,7 @@ object CoordinatesParser {
      *
      * @param value input
      * @param start range start
-     * @param end   range end
+     * @param end range end
      * @return normalized number
      */
     private fun normalize(value: Double, start: Double, end: Double): Double {

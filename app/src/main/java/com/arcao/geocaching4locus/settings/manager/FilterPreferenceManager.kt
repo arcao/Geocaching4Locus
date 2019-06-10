@@ -56,7 +56,7 @@ class FilterPreferenceManager(
     val excludeIgnoreList = true
 
     val geocacheTypes: IntArray
-        get () {
+        get() {
             val len = AppConstants.GEOCACHE_TYPES.size
             val filter = mutableListOf<Int>()
 

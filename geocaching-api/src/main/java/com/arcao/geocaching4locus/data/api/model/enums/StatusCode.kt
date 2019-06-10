@@ -17,4 +17,3 @@ enum class StatusCode(override val id: Int) : IdType {
         fun from(id: Int?) = values().find { it.id == id }
     }
 }
-

@@ -128,4 +128,3 @@ interface GeocachingApiEndpoint {
     @GET("/status/ping")
     fun pingAsync(): Deferred<Void>
 }
-

@@ -29,18 +29,18 @@ import timber.log.Timber
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class BookmarkListViewModel(
-        private val context: Context,
-        private val exceptionHandler: ExceptionHandler,
-        private val dataSourceFactory: GeocacheUserListsDataSourceFactory,
-        private val getListGeocaches: GetListGeocachesUseCase,
-        private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
-        private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
-        private val filterPreferenceManager: FilterPreferenceManager,
-        private val locusMapManager: LocusMapManager,
-        dispatcherProvider: CoroutinesDispatcherProvider
+    private val context: Context,
+    private val exceptionHandler: ExceptionHandler,
+    private val dataSourceFactory: GeocacheUserListsDataSourceFactory,
+    private val getListGeocaches: GetListGeocachesUseCase,
+    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
+    private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
+    private val filterPreferenceManager: FilterPreferenceManager,
+    private val locusMapManager: LocusMapManager,
+    dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val loading = MutableLiveData<Boolean>()
-    val list : LiveData<PagedList<GeocacheListEntity>>
+    val list: LiveData<PagedList<GeocacheListEntity>>
     val action = Command<BookmarkListAction>()
 
     val state: LiveData<DataSourceState>
@@ -72,8 +72,8 @@ class BookmarkListViewModel(
 
     fun importAll(geocacheList: GeocacheListEntity) = computationLaunch {
         val importIntent = locusMapManager.createSendPointsIntent(
-                callImport = true,
-                center = true
+            callImport = true,
+            center = true
         )
 
         var receivedGeocaches = 0
@@ -81,30 +81,29 @@ class BookmarkListViewModel(
         try {
             showProgress(R.string.progress_download_geocaches) {
                 Timber.d("source: import_from_bookmark;guid=%s", geocacheList.guid)
-                val bookmark = getListGeocaches(geocacheList.guid)
 
-                val geocacheCodes = bookmark.map { it.referenceCode }.toTypedArray()
-                Timber.d("source: import_from_bookmark;gccodes=%s", geocacheCodes)
+                var count = 0
 
-                updateProgress(maxProgress = geocacheCodes.size)
-
-                val channel = getPointsFromGeocacheCodes(
+                val channel = getListGeocaches(
                     this,
-                    geocacheCodes,
+                    geocacheList.guid,
                     filterPreferenceManager.simpleCacheData,
                     filterPreferenceManager.geocacheLogsCount
-                ).map { list ->
+                ) {
+                    count = it
+                    Timber.d("source: import_from_bookmark; guid=%s; count=%d", geocacheList.guid, count)
+                }.map { list ->
                     receivedGeocaches += list.size
-                    updateProgress(progress = receivedGeocaches)
+                    updateProgress(progress = receivedGeocaches, maxProgress = count)
 
                     // apply additional downloading full geocache if required
                     if (filterPreferenceManager.simpleCacheData) {
                         list.forEach { point ->
                             point.setExtraOnDisplay(
-                                    context.packageName,
-                                    UpdateActivity::class.java.name,
-                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                    point.gcData.cacheID
+                                context.packageName,
+                                UpdateActivity::class.java.name,
+                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                point.gcData.cacheID
                             )
                         }
                     }
@@ -115,13 +114,13 @@ class BookmarkListViewModel(
         } catch (e: Exception) {
             mainContext {
                 action(
-                        BookmarkListAction.Error(
-                                if (receivedGeocaches > 0) {
-                                    exceptionHandler(IntendedException(e, importIntent))
-                                } else {
-                                    exceptionHandler(e)
-                                }
-                        )
+                    BookmarkListAction.Error(
+                        if (receivedGeocaches > 0) {
+                            exceptionHandler(IntendedException(e, importIntent))
+                        } else {
+                            exceptionHandler(e)
+                        }
+                    )
                 )
             }
             return@computationLaunch

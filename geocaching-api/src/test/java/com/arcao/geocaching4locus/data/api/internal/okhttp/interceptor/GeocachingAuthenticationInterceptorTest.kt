@@ -4,7 +4,12 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.account.GeocachingAccount
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpoint
 import com.arcao.geocaching4locus.data.api.model.User
-import io.mockk.*
+import io.mockk.Called
+import io.mockk.Ordering
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockkClass
+import io.mockk.verify
 import kotlinx.coroutines.CompletableDeferred
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -15,7 +20,6 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.zone.TzdbZoneRulesProvider
 import org.threeten.bp.zone.ZoneRulesInitializer
 import org.threeten.bp.zone.ZoneRulesProvider
-
 
 internal object GeocachingAuthenticationInterceptorTest {
     private lateinit var account: GeocachingAccount
@@ -43,7 +47,6 @@ internal object GeocachingAuthenticationInterceptorTest {
             every { request() } returns Request.Builder().url("http://test").build()
             every { proceed(any()) } returns mockkClass(Response::class)
         }
-
 
         account = mockkClass(GeocachingAccount::class, relaxed = true) {
             every { accessToken } returns "accessToken1234"
@@ -109,5 +112,4 @@ internal object GeocachingAuthenticationInterceptorTest {
         }
         coVerify { account.refreshToken() wasNot Called }
     }
-
 }

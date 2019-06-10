@@ -14,13 +14,14 @@ import java.io.IOException
 import java.lang.reflect.Type
 
 /** Converts collection types to JSON arrays containing their converted contents.  */
-internal class PagedListAdapter<T> private constructor(private val elementAdapter: JsonAdapter<T>) : JsonAdapter<PagedList<T?>>() {
+internal class PagedListAdapter<T> private constructor(private val elementAdapter: JsonAdapter<T>) :
+    JsonAdapter<PagedList<T?>>() {
     @Throws(IOException::class)
     override fun fromJson(reader: JsonReader): PagedList<T?> {
         val result = PagedArrayList<T?>()
 
-        when(reader.peek()) {
-            JsonReader.Token.NULL -> {}
+        when (reader.peek()) {
+            JsonReader.Token.NULL -> return result
             JsonReader.Token.BEGIN_ARRAY -> readArray(reader, result)
             JsonReader.Token.BEGIN_OBJECT -> {
                 reader.beginObject()

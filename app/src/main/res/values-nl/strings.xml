@@ -15,6 +15,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Imperiale eenheden</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Gebruik miles in plaats van kilometers</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Je bent niet aangemeld. AUB aanmelden via account instellingen.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">De geïnstalleerde versie van Locus Map is te oud. Geocaching4Locus Map heeft versie %s of hoger nodig om naar behoren te werken.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Annuleren</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Toon gevonden</string>
@@ -26,6 +27,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Bezig met updaten van cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Aantal logs</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Aantal logs om te downloaden met cache</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Toon uitgeschakelde</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Toon tijdelijk uitgeschakelde caches</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Bezig met downloaden van cache…</string>
@@ -34,6 +36,7 @@
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Doneer via Paypal</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Steun toekomstige ontwikkeling…</string>
     <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Kies uw munteenheid</string>
+    <string name="pref_geocache_type" comment="">Geocachetypen</string>
     <string name="pref_difficulty" comment="">Moeilijkheid</string>
     <string name="pref_terrain" comment="">Terrein</string>
     <string name="pref_difficulty_min" comment="">Minimum moeilijkheid</string>
@@ -77,6 +80,8 @@
     <string name="title_geocache_count" comment="">Aantal caches</string>
     <string name="launcher_nearest_geocaches" comment="">Caches dichtbij</string>
     <string name="launcher_import_geocache" comment="">Importeer cache in Locus Map</string>
+    <string name="launcher_update_geocache" comment="">Geocache updaten</string>
+    <string name="launcher_update_geocaches" comment="">Geocaches updaten</string>
     <string name="launcher_import_from_gc" comment="">Importeer via GC code</string>
     <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog">Basis lid toegang</string>
     <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog">Premium lid toegang</string>
@@ -86,6 +91,10 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Je hebt de limiet om alle details te dowloaden van <b>%1$s per %2$s periode</b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hey, kalm aan!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d Geocache</item>
+        <item quantity="other">%d Geocaches</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d uur</item>
         <item quantity="other">%d uren</item>
@@ -97,25 +106,33 @@
     <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Aangedreven door Geocaching Live</string>
     <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Deze add-on gebruikt Geocaching Live om informatie te verkrijgen over Geocaches. Druk hier voor meer informatie…</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live gaf een ongeldig antwoord: <br/>%s</string>
+    <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus Live-kaart</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Live map is geactiveerd.</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">Live map is uitgeschakeld.</string>
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Bezig met downloaden van Live map caches: %1$d / %2$d  (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Schakelen</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Uitschakelen</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Instellingen</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus Live-kaart: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Gedeactiveerde melding</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Toon een melding wanneer Live map uitgeschakeld is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus Map en Locus Map actief is.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Bezig met downloaden van logs…</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Logboeken downloaden</string>
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Logboeken downloaden update Geocache</string>
     <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Actie \"Download logs\" update ook geocache data</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Stap grootte voor aantal caches</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Verander stap grootte voor dialoog over aantal caches</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Sommige filters vereisen een premium account welke u niet hebt. De applicatie zal terug wisselen naar een mode voor gewone gebruikers. Probeert u aub opnieuw.</string>
+    <string name="pref_account" comment="Title of preference category for Account settings.">Account</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kaart</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Bezig met downloaden</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Geavanceerd</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Over</string>
     <string name="title_login" comment="Window title for sign in task.">Log in</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Hints downloaden</string>
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Laadt trager en verbruikt meer data</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Verzend feedback</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Geen geocaches gevonden die aan jouw zoektermen voldoen.</string>

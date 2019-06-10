@@ -43,7 +43,6 @@ class UpdateMoreViewModel(
             return@mainLaunch
         }
 
-
         try {
             var progress = 0
             showProgress(R.string.progress_update_geocaches, maxProgress = 1) {
@@ -85,7 +84,7 @@ class UpdateMoreViewModel(
                     }
                 }
             }
-            
+
             action(UpdateMoreAction.Finish)
         } catch (e: Exception) {
             action(UpdateMoreAction.Error(exceptionHandler(e)))

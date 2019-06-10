@@ -22,7 +22,6 @@ import java.util.Stack
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
-
 class FeedbackHelper(
     private val app: App,
     private val collectors: Array<Collector>,

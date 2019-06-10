@@ -168,4 +168,3 @@ private fun Intent.getCoordinates(latitudeName: String, longitudeName: String) =
     getDoubleExtra(latitudeName, 0.0),
     getDoubleExtra(longitudeName, 0.0)
 )
-

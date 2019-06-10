@@ -12,7 +12,7 @@ interface Expand<T> {
         const val EXPAND_FIELD_SEPARATOR = ","
     }
 
-    fun all() : T
+    fun all(): T
 
     fun String.expand(value: Int) = if (value != 0) "$this:$value" else this
 }

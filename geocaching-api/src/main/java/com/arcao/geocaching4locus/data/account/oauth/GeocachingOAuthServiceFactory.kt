@@ -8,7 +8,7 @@ import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
 
 class GeocachingOAuthServiceFactory(
-        private val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient
 ) : Factory<OAuth20Service> {
     companion object {
         const val API_KEY = BuildConfig.GEOCACHING_API_KEY
@@ -17,26 +17,25 @@ class GeocachingOAuthServiceFactory(
 
         const val CALLBACK_URL = "https://geocaching4locus.eu/oauth"
     }
-    
+
     override fun create(): OAuth20Service {
         return when {
             API_STAGING ->
                 ServiceBuilder(API_KEY)
-                        .apiSecret(API_SECRET)
-                        .callback(CALLBACK_URL)
-                        .defaultScope("*")
-                        .responseType("code")
-                        .httpClient(OkHttpHttpClient(okHttpClient))
-                        .build(GeocachingOAuthApi.Staging())
+                    .apiSecret(API_SECRET)
+                    .callback(CALLBACK_URL)
+                    .defaultScope("*")
+                    .responseType("code")
+                    .httpClient(OkHttpHttpClient(okHttpClient))
+                    .build(GeocachingOAuthApi.Staging())
             else ->
                 ServiceBuilder(API_KEY)
-                        .apiSecret(API_SECRET)
-                        .callback(CALLBACK_URL)
-                        .defaultScope("*")
-                        .responseType("code")
-                        .httpClient(OkHttpHttpClient(okHttpClient))
-                        .build(GeocachingOAuthApi())
+                    .apiSecret(API_SECRET)
+                    .callback(CALLBACK_URL)
+                    .defaultScope("*")
+                    .responseType("code")
+                    .httpClient(OkHttpHttpClient(okHttpClient))
+                    .build(GeocachingOAuthApi())
         }
     }
-
 }

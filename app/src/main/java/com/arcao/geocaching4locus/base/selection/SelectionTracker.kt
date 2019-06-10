@@ -10,15 +10,17 @@ import androidx.core.util.valueIterator
 import androidx.recyclerview.widget.RecyclerView
 import java.util.concurrent.CopyOnWriteArraySet
 
-class SelectionTracker<T : Parcelable>(private val adapter: SelectionAdapter<T>, private val stateKey : String = DEFAULT_STATE_KEY) {
+class SelectionTracker<T : Parcelable>(
+    private val adapter: SelectionAdapter<T>,
+    private val stateKey: String = DEFAULT_STATE_KEY
+) {
     private val selectedPositionMap = SparseArray<T>()
     private val selectionChangeListeners = CopyOnWriteArraySet<OnSelectionChangeListener>()
-
 
     val selectedValues: List<T>
         get() {
             return mutableListOf<T>().apply {
-                for(value in selectedPositionMap.valueIterator()) {
+                for (value in selectedPositionMap.valueIterator()) {
                     add(value)
                 }
             }
@@ -44,7 +46,7 @@ class SelectionTracker<T : Parcelable>(private val adapter: SelectionAdapter<T>,
         })
     }
 
-    fun onClick(position: Int, value : T) {
+    fun onClick(position: Int, value: T) {
         if (selectedPositionMap.containsKey(position)) {
             selectedPositionMap.remove(position)
         } else {

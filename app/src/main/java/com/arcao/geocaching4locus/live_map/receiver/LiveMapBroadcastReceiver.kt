@@ -35,7 +35,7 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
         val container = try {
             ActionBasics.getUpdateContainer(context, requireNotNull(LocusUtils.createLocusVersion(context, intent)))
                 ?: return
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             Timber.e(e)
             notificationManager.isLiveMapEnabled = false
             return

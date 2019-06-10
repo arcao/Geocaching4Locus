@@ -148,7 +148,7 @@
     <string name="toast_live_map_disabled" comment=""
         >Live map disabled.</string>
     <string name="error_live_map_periodic_updates" comment=""
-        >You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Enable periodic updates for Add-on.</string>
+        >You do not have allowed sending Periodic updates from Locus Map. Please, enable it first in Locus Map under: Settings → Miscellaneous → Connect with add-ons.</string>
     <string name="error_location_not_allowed" comment=""
         >No location service allowed</string>
     <string name="button_settings" comment=""

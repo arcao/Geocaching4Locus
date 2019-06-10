@@ -13,7 +13,7 @@ class ListGeocachesDataSourceFactory(
 ) : DataSource.Factory<Int, ListGeocacheEntity>() {
     val dataSource = MutableLiveData<ListGeocachesDataSource>()
 
-    var referenceCode : String? = null
+    var referenceCode: String? = null
 
     @WorkerThread
     override fun create(): DataSource<Int, ListGeocacheEntity> {

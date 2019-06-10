@@ -200,7 +200,7 @@ class UpdateViewModel(
         return UpdateData(cacheId, downloadLogs, oldPoint)
     }
 
-    fun isUpdateLogsIntent(intent : Intent) = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
+    fun isUpdateLogsIntent(intent: Intent) = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
 
     class UpdateData(val geocacheCode: String, val downloadLogs: Boolean, val oldPoint: Point? = null) {
         lateinit var newPoint: Point

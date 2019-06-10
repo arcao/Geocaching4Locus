@@ -96,20 +96,20 @@
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
         <item quantity="one">%d keš</item>
         <item quantity="few">%d keše</item>
-        <item quantity="many">%d keše</item>
-        <item quantity="other">%d keše</item>
+        <item quantity="many">%d keší</item>
+        <item quantity="other">%d keší</item>
     </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d hodinu</item>
         <item quantity="few">%d hodiny</item>
-        <item quantity="many">%d hodiny</item>
-        <item quantity="other">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
+        <item quantity="other">%d hodin</item>
     </plurals>
     <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
-        <item quantity="one">%d minutu</item>
+        <item quantity="one">%d minuta</item>
         <item quantity="few">%d minuty</item>
-        <item quantity="many">%d minuty</item>
-        <item quantity="other">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
     </plurals>
     <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Powered by Geocaching Live</string>
     <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Toto rozšíření využívá Geocaching Live k získávání informací o keších. Klepněte zde pro více informací…</string>

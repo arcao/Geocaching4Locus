@@ -5,7 +5,7 @@ class PagedArrayList<T> : ArrayList<T>, MutablePagedList<T> {
 
     constructor() : super()
 
-    constructor(initialCapacity : Int, totalCount : Long) : super(initialCapacity) {
+    constructor(initialCapacity: Int, totalCount: Long) : super(initialCapacity) {
         this.totalCount = totalCount
     }
 

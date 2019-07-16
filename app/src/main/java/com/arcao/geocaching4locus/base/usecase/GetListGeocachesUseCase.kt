@@ -35,7 +35,6 @@ class GetListGeocachesUseCase(
 
         val list = repository.listGeocaches(
             referenceCode = referenceCode,
-            lite = true,
             skip = skip,
             take = take
         )
@@ -64,7 +63,7 @@ class GetListGeocachesUseCase(
         while (current < count) {
             val startTimeMillis = System.currentTimeMillis()
 
-            val geocaches = repository.listGeocaches(
+            val geocaches = repository.listGeocachesDownload(
                 referenceCode = referenceCode,
                 lite = liteData,
                 logsCount = geocacheLogsCount,

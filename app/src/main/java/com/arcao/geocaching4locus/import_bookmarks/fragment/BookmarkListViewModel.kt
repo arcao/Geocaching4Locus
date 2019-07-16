@@ -11,7 +11,6 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.paging.DataSourceState
 import com.arcao.geocaching4locus.base.usecase.GetListGeocachesUseCase
-import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.Command
@@ -33,7 +32,6 @@ class BookmarkListViewModel(
     private val exceptionHandler: ExceptionHandler,
     private val dataSourceFactory: GeocacheUserListsDataSourceFactory,
     private val getListGeocaches: GetListGeocachesUseCase,
-    private val getPointsFromGeocacheCodes: GetPointsFromGeocacheCodesUseCase,
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val locusMapManager: LocusMapManager,

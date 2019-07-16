@@ -101,7 +101,7 @@ internal val appModule = module {
     viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // import bookmarks
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
-    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { (bl: GeocacheListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
     factory { GeocacheUserListsDataSourceFactory(get(), get()) }
     factory { ListGeocachesDataSourceFactory(get(), get()) }

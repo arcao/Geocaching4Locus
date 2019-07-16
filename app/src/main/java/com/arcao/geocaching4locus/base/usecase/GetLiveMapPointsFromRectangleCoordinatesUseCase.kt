@@ -67,8 +67,7 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
                         difficultyMin,
                         difficultyMax,
                         terrainMin,
-                        terrainMax,
-                        excludeIgnoreList
+                        terrainMax
                     ),
                     lite = liteData,
                     skip = current,

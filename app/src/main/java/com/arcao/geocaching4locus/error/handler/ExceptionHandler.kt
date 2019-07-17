@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
+import com.arcao.geocaching4locus.data.api.exception.ServiceUnavailableException
 import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
@@ -90,6 +91,9 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                     geocacheCodes.size, TextUtils.join(", ", geocacheCodes)
                 )
             ).build()
+        } else if (t is ServiceUnavailableException) {
+            return builder.message(baseMessage, context.getText(R.string.error_network_unavailable))
+                .build()
         } else if (t is IOException) {
             builder.message(baseMessage, context.getText(R.string.error_network_unavailable))
 

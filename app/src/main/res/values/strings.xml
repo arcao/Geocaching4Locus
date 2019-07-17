@@ -362,4 +362,6 @@
         >Authorization code</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
         >The entered authorization code is not valid. Please, try again.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance"
+        >Geocaching API is currently down due to maintenance. Please try it later.</string>
 </resources>

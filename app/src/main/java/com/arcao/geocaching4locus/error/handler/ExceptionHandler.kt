@@ -28,6 +28,7 @@ import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment
 import com.github.scribejava.core.exceptions.OAuthException
+import com.github.scribejava.core.model.OAuth2AccessTokenErrorResponse
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 import timber.log.Timber
 import java.io.EOFException
@@ -69,7 +70,7 @@ class ExceptionHandler(private val context: Context, private val accountManager:
                 .negativeButtonText(R.string.button_no)
         }
 
-        if (t is AuthenticationException || t is AccountNotFoundException) {
+        if (t is AuthenticationException || t is AccountNotFoundException || t.isOAuth2InvalidGrant()) {
             accountManager.deleteAccount()
             return builder.message(R.string.error_no_account)
                 .positiveAction(
@@ -241,5 +242,15 @@ class ExceptionHandler(private val context: Context, private val accountManager:
 
             else -> return null
         }
+    }
+}
+
+private fun Throwable.isOAuth2InvalidGrant(): Boolean {
+    if (this !is InvalidResponseException) {
+        return false
+    }
+
+    return cause.let {
+        it is OAuth2AccessTokenErrorResponse && it.errorCode == OAuth2AccessTokenErrorResponse.ErrorCode.invalid_grant
     }
 }

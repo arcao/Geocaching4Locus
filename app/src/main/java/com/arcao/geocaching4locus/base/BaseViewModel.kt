@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.runIfIsSuspended
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -34,9 +33,10 @@ abstract class BaseViewModel(
         block()
     }
 
-    fun <R> computationLaunch(block: suspend CoroutineScope.() -> R) = launch(dispatcherProvider.computation) {
-        block()
-    }
+    fun <R> computationLaunch(block: suspend CoroutineScope.() -> R) =
+        launch(dispatcherProvider.computation) {
+            block()
+        }
 
     suspend fun <R> mainContext(block: suspend CoroutineScope.() -> R): R =
         withContext(dispatcherProvider.main) {
@@ -57,16 +57,20 @@ abstract class BaseViewModel(
         block: suspend CoroutineScope.() -> R
     ): R = coroutineScope {
 
-        mainContext {
-            progress(ProgressState.ShowProgress(requestId, message, messageArgs, progress, maxProgress))
-        }
+        this@BaseViewModel.progress.postValue(
+            ProgressState.ShowProgress(
+                requestId,
+                message,
+                messageArgs,
+                progress,
+                maxProgress
+            )
+        )
 
         try {
             return@coroutineScope block()
         } finally {
-            mainContext {
-                progress(ProgressState.HideProgress)
-            }
+            this@BaseViewModel.progress.postValue(ProgressState.HideProgress)
         }
     }
 
@@ -78,33 +82,31 @@ abstract class BaseViewModel(
         maxProgress: Int = -1
     ) {
         this.progress.value.runIfIsSuspended(ProgressState.ShowProgress::class) {
-            mainContext {
-                progress(
-                    ProgressState.ShowProgress(
-                        if (requestId == 0) {
-                            this@runIfIsSuspended.requestId
-                        } else {
-                            requestId
-                        },
-                        if (message == 0) {
-                            this@runIfIsSuspended.message
-                        } else {
-                            message
-                        },
-                        messageArgs ?: this@runIfIsSuspended.messageArgs,
-                        if (progress < 0) {
-                            this@runIfIsSuspended.progress
-                        } else {
-                            progress
-                        },
-                        if (maxProgress < 0) {
-                            this@runIfIsSuspended.maxProgress
-                        } else {
-                            maxProgress
-                        }
-                    )
+            this@BaseViewModel.progress.postValue(
+                ProgressState.ShowProgress(
+                    if (requestId == 0) {
+                        this@runIfIsSuspended.requestId
+                    } else {
+                        requestId
+                    },
+                    if (message == 0) {
+                        this@runIfIsSuspended.message
+                    } else {
+                        message
+                    },
+                    messageArgs ?: this@runIfIsSuspended.messageArgs,
+                    if (progress < 0) {
+                        this@runIfIsSuspended.progress
+                    } else {
+                        progress
+                    },
+                    if (maxProgress < 0) {
+                        this@runIfIsSuspended.maxProgress
+                    } else {
+                        maxProgress
+                    }
                 )
-            }
+            )
         }
     }
 }

@@ -25,7 +25,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         viewModel.progress.withObserve(this, ::handleProgress)
         viewModel.action.withObserve(this, ::handleAction)
 
-        viewModel.init()
+        viewModel.init(intent.getStringArrayExtra(PARAM_GEOCACHES))
     }
 
     override fun onProgressCancel(requestId: Int) {
@@ -78,7 +78,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         // restart update process after log in
         if (requestCode == REQUEST_SIGN_ON) {
             if (resultCode == Activity.RESULT_OK) {
-                viewModel.init()
+                viewModel.init(intent.getStringArrayExtra(PARAM_GEOCACHES))
             } else {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
@@ -88,5 +88,6 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
 
     companion object {
         private const val REQUEST_SIGN_ON = 1
+        private const val PARAM_GEOCACHES = "com.arcao.geocaching4locus.GEOCACHES"
     }
 }

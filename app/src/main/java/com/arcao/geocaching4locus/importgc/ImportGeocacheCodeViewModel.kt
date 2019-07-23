@@ -29,7 +29,7 @@ class ImportGeocacheCodeViewModel(
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
 
-    fun init() = mainLaunch {
+    fun init(geocacheCodes: Array<String>?) = mainLaunch {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(ImportGeocacheCodeAction.LocusMapNotInstalled)
             return@mainLaunch
@@ -40,7 +40,11 @@ class ImportGeocacheCodeViewModel(
             return@mainLaunch
         }
 
-        action(ImportGeocacheCodeAction.GeocacheCodesInput)
+        if (geocacheCodes.isNullOrEmpty()) {
+            action(ImportGeocacheCodeAction.GeocacheCodesInput)
+        } else {
+            importGeocacheCodes(geocacheCodes)
+        }
     }
 
     fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {

@@ -90,7 +90,7 @@ class App : Application() {
                 })
             }
 
-            modules(appModule, geocachingApiModule, locusMapApiModule, feedbackModule)
+            modules(listOf(appModule, geocachingApiModule, locusMapApiModule, feedbackModule))
         }
 //        if (BuildConfig.DEBUG) {
 //            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())

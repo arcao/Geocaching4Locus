@@ -46,7 +46,7 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
         }
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         fireOnInputFinished(null)
         super.onCancel(dialog)
     }

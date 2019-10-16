@@ -36,7 +36,8 @@ data class Geocache(
     val trackables: List<Trackable>?,
     val geocacheLogs: List<GeocacheLog>?,
     val images: List<Image>?,
-    val userWaypoints: List<UserWaypoint>?
+    val userWaypoints: List<UserWaypoint>?,
+    val owner: User?
 ) {
     val id by lazy {
         ReferenceCode.toId(referenceCode)
@@ -92,6 +93,7 @@ data class Geocache(
         private const val FIELD_URL = "url"
         private const val FIELD_CONTAINS_HTML = "containsHtml"
         private const val FIELD_ADDITIONAL_WAYPOINTS = "additionalWaypoints"
+        private val FIELD_OWNER = "owner[${User.FIELDS_MIN}]"
         private val FIELD_GEOCACHE_LOGS_MIN = "geocachelogs[${GeocacheLog.FIELDS_MIN}]"
         private val FIELD_TRACKABLES_MIN = "trackables[${Trackable.FIELDS_MIN}]"
         private val FIELD_IMAGES_MIN = "images[${Image.FIELDS_MIN}]"
@@ -126,7 +128,8 @@ data class Geocache(
             FIELD_ADDITIONAL_WAYPOINTS,
             FIELD_GEOCACHE_LOGS_MIN,
             FIELD_TRACKABLES_MIN,
-            FIELD_IMAGES_MIN
+            FIELD_IMAGES_MIN,
+            FIELD_OWNER
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE = arrayOf(
@@ -149,7 +152,8 @@ data class Geocache(
             FIELD_IS_PREMIUM_ONLY,
             FIELD_IANA_TIMEZONE_ID,
             FIELD_RELATED_WEBPAGE,
-            FIELD_URL
+            FIELD_URL,
+            FIELD_OWNER
         ).joinToString(FIELD_SEPARATOR)
 
         val FIELDS_LITE_LIVEMAP = arrayOf(
@@ -194,6 +198,7 @@ data class Geocache(
 //                FIELD_LAST_VISITED_DATE,
             FIELD_OWNER_CODE,
             FIELD_OWNER_ALIAS,
+            FIELD_OWNER,
             FIELD_IS_PREMIUM_ONLY,
 //                FIELD_SHORT_DESCRIPTION,
 //                FIELD_LONG_DESCRIPTION,

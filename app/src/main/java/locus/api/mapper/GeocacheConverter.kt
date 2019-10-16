@@ -44,7 +44,7 @@ class GeocacheConverter(
                 type = cache.geocacheType.toLocusMapGeocacheType()
                 difficulty = cache.difficulty ?: 1F
                 terrain = cache.terrain ?: 1F
-                owner = cache.ownerAlias
+                owner = cache.owner?.username ?: cache.ownerAlias
                 placedBy = cache.ownerAlias
                 isAvailable = cache.status == GeocacheStatus.ACTIVE
                 isArchived = cache.status == GeocacheStatus.ARCHIVED

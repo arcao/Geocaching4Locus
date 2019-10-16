@@ -18,6 +18,12 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
     @get:XmlRes
     protected abstract val preferenceResource: Int
 
+    protected inline fun <reified P : Preference> preference(key: CharSequence): P {
+        return requireNotNull(findPreference(key)) {
+            "Preference $key not found"
+        }
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(preferenceResource, rootKey)
     }

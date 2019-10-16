@@ -8,14 +8,15 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import androidx.preference.R
 
-class UnlimitedIconSizePreference(
+class UnlimitedIconSizePreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = TypedArrayUtils.getAttr(
-        context, R.attr.preferenceStyle,
+        context,
+        R.attr.preferenceStyle,
         android.R.attr.preferenceStyle
     )
-) :  Preference(context, attrs, defStyleAttr) {
+) : Preference(context, attrs, defStyleAttr) {
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
 

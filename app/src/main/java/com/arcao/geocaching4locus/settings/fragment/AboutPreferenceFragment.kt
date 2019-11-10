@@ -20,7 +20,7 @@ import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.showWebPage
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
@@ -30,7 +30,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
     private val dispatcherProvider by inject<CoroutinesDispatcherProvider>()
     private val feedbackHelper by inject<FeedbackHelper>()
 
-    private val job = Job()
+    private val job = SupervisorJob()
 
     override val coroutineContext: CoroutineContext
         get() = job + dispatcherProvider.main

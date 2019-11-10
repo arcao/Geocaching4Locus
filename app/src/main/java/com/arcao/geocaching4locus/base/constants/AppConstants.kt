@@ -14,7 +14,7 @@ object AppConstants {
     val USERS_GUIDE_URI = Uri.parse("https://geocaching4locus.eu/users-guide/")!!
     val WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/")!!
     val FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus")!!
-    val GEOCACHING_LIVE_URI = Uri.parse("http://www.geocaching.com/live")!!
+    val GEOCACHING_URI = Uri.parse("http://geocaching.com/")!!
     val POWER_SAVE_INFO_URI = Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")!!
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.

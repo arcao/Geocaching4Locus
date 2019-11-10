@@ -127,7 +127,7 @@ internal val appModule = module {
         )
     }
     // update
-    viewModel { UpdateViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { UpdateViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { UpdateMoreViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // web link
     viewModel { BookmarkGeocacheWebLinkViewModel(get(), get(), get(), get()) }

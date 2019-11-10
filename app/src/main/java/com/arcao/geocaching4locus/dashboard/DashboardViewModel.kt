@@ -12,7 +12,6 @@ import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
-import kotlinx.coroutines.launch
 import locus.api.manager.LocusMapManager
 
 class DashboardViewModel(
@@ -104,7 +103,7 @@ class DashboardViewModel(
         liveMapEnabled(newState)
     }
 
-    fun onPowerSaveWarningConfirmed() = launch {
+    fun onPowerSaveWarningConfirmed() = mainLaunch {
         toggleLiveMap()
     }
 }

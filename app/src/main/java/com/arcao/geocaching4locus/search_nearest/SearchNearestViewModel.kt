@@ -25,6 +25,7 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
@@ -62,6 +63,7 @@ class SearchNearestViewModel(
 
     private var coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_MANUAL
     private var useFilter = false
+    private var job: Job? = null
 
     init {
         run {
@@ -137,13 +139,17 @@ class SearchNearestViewModel(
     }
 
     fun cancelProgress() {
-        job.cancelChildren()
+        job?.cancelChildren()
     }
 
     fun download() {
         formatCoordinates()
 
-        mainLaunch {
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
+
+        job = mainLaunch {
             val latitude = CoordinatesFormatter.convertDegToDouble(latitude.value ?: "")
             val longitude = CoordinatesFormatter.convertDegToDouble(longitude.value ?: "")
 

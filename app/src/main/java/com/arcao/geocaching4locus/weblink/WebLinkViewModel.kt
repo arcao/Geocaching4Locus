@@ -10,6 +10,7 @@ import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import kotlinx.coroutines.Job
 import locus.api.objects.extra.Point
 
 abstract class WebLinkViewModel(
@@ -19,6 +20,7 @@ abstract class WebLinkViewModel(
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action: Command<WebLinkAction> = Command()
+    private var job: Job? = null
 
     protected open val isPremiumMemberRequired: Boolean
         get() = false
@@ -29,45 +31,51 @@ abstract class WebLinkViewModel(
         return false
     }
 
-    fun resolveUri(point: Point) = mainLaunch {
+    fun resolveUri(point: Point) {
         if (point.gcData == null || point.gcData.cacheID.isNullOrEmpty()) {
             action(WebLinkAction.Cancel)
-            return@mainLaunch
+            return
         }
 
         if (isPremiumMemberRequired && !accountManager.isPremium) {
             action(WebLinkAction.PremiumMembershipRequired)
-            return@mainLaunch
+            return
         }
 
-        try {
-            val uri = if (!isRefreshRequired(point)) {
-                getWebLink(point)
-            } else {
-                if (accountManager.account == null) {
-                    action(WebLinkAction.SignIn)
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
+
+        job = mainLaunch {
+            try {
+                val uri = if (!isRefreshRequired(point)) {
+                    getWebLink(point)
+                } else {
+                    if (accountManager.account == null) {
+                        action(WebLinkAction.SignIn)
+                        return@mainLaunch
+                    }
+
+                    val newPoint = showProgress(R.string.progress_download_geocache) {
+                        getPointFromGeocacheCode(point.gcData.cacheID)
+                    }
+                    getWebLink(newPoint)
+                }
+
+                if (uri == null) {
+                    action(WebLinkAction.Cancel)
                     return@mainLaunch
                 }
 
-                val newPoint = showProgress(R.string.progress_download_geocache) {
-                    getPointFromGeocacheCode(point.gcData.cacheID)
-                }
-                getWebLink(newPoint)
+                action(WebLinkAction.ShowUri(uri))
+            } catch (e: Throwable) {
+                action(WebLinkAction.Error(exceptionHandler(e)))
             }
-
-            if (uri == null) {
-                action(WebLinkAction.Cancel)
-                return@mainLaunch
-            }
-
-            action(WebLinkAction.ShowUri(uri))
-        } catch (e: Throwable) {
-            action(WebLinkAction.Error(exceptionHandler(e)))
         }
     }
 
     fun cancelRetrieveUri() {
-        job.cancel()
+        job?.cancel()
         action(WebLinkAction.Cancel)
     }
 }

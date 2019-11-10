@@ -35,7 +35,7 @@ import java.util.UUID
 class App : Application() {
     val accountManager by inject<AccountManager>()
 
-    val deviceId: String by lazy {
+    private val deviceId: String by lazy {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
 
         var value = pref.getString(PrefConstants.DEVICE_ID, null)
@@ -92,10 +92,6 @@ class App : Application() {
 
             modules(listOf(appModule, geocachingApiModule, locusMapApiModule, feedbackModule))
         }
-//        if (BuildConfig.DEBUG) {
-//            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().build())
-//            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().build())
-//        }
 
         prepareCrashlytics()
 
@@ -150,6 +146,7 @@ class App : Application() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().flush()
         } else {
+            @Suppress("DEPRECATION")
             CookieSyncManager.createInstance(this).sync()
         }
     }

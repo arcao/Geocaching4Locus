@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.viewModelScope
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.AccountNotFoundException
 import com.arcao.geocaching4locus.base.BaseViewModel
@@ -46,7 +47,6 @@ class LiveMapViewModel(
     private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LifecycleObserver {
-
     private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     fun addTask(intent: Intent, completionCallback: (Intent) -> Unit) {
@@ -61,7 +61,7 @@ class LiveMapViewModel(
     }
 
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private fun downloadLiveMapGeocaches(task: Intent) = launch(dispatcher) {
+    private fun downloadLiveMapGeocaches(task: Intent) = viewModelScope.launch(dispatcher) {
         var requests = 0
 
         delay(200)
@@ -159,8 +159,7 @@ class LiveMapViewModel(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     override fun onCleared() {
-        super.onCleared()
-        dispatcher.cancel()
+        viewModelScope.cancel()
     }
 }
 

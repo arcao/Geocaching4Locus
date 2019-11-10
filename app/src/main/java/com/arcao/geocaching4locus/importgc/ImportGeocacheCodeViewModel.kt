@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
@@ -28,6 +29,7 @@ class ImportGeocacheCodeViewModel(
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
+    private var job: Job? = null
 
     fun init(geocacheCodes: Array<String>?) = mainLaunch {
         if (locusMapManager.isLocusMapNotInstalled) {
@@ -47,47 +49,56 @@ class ImportGeocacheCodeViewModel(
         }
     }
 
-    fun importGeocacheCodes(geocacheCodes: Array<String>) = computationLaunch {
-        AnalyticsUtil.actionImportGC(accountManager.isPremium)
-
-        val importIntent = locusMapManager.createSendPointsIntent(
-            callImport = true,
-            center = true
-        )
-
-        var receivedGeocaches = 0
-
-        try {
-            showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
-                val channel = getPointsFromGeocacheCodes(
-                    this,
-                    geocacheCodes,
-                    !accountManager.isPremium,
-                    filterPreferenceManager.geocacheLogsCount
-                ).map {
-                    receivedGeocaches += it.size
-                    updateProgress(progress = receivedGeocaches)
-                    it
-                }
-                writePointToPackPointsFile(channel)
-            }
-        } catch (e: Exception) {
-            mainContext {
-                action(
-                    ImportGeocacheCodeAction.Error(
-                        if (receivedGeocaches > 0) {
-                            exceptionHandler(IntendedException(e, importIntent))
-                        } else {
-                            exceptionHandler(e)
-                        }
-                    )
-                )
-            }
-            return@computationLaunch
+    fun importGeocacheCodes(geocacheCodes: Array<String>) {
+        if (job?.isActive == true) {
+            job?.cancel()
         }
 
-        mainContext {
-            action(ImportGeocacheCodeAction.Finish(importIntent))
+        job = computationLaunch {
+            AnalyticsUtil.actionImportGC(accountManager.isPremium)
+
+            val importIntent = locusMapManager.createSendPointsIntent(
+                callImport = true,
+                center = true
+            )
+
+            var receivedGeocaches = 0
+
+            try {
+                showProgress(
+                    R.string.progress_download_geocaches,
+                    maxProgress = geocacheCodes.size
+                ) {
+                    val channel = getPointsFromGeocacheCodes(
+                        this,
+                        geocacheCodes,
+                        !accountManager.isPremium,
+                        filterPreferenceManager.geocacheLogsCount
+                    ).map {
+                        receivedGeocaches += it.size
+                        updateProgress(progress = receivedGeocaches)
+                        it
+                    }
+                    writePointToPackPointsFile(channel)
+                }
+            } catch (e: Exception) {
+                mainContext {
+                    action(
+                        ImportGeocacheCodeAction.Error(
+                            if (receivedGeocaches > 0) {
+                                exceptionHandler(IntendedException(e, importIntent))
+                            } else {
+                                exceptionHandler(e)
+                            }
+                        )
+                    )
+                }
+                return@computationLaunch
+            }
+
+            mainContext {
+                action(ImportGeocacheCodeAction.Finish(importIntent))
+            }
         }
     }
 
@@ -104,7 +115,7 @@ class ImportGeocacheCodeViewModel(
     }
 
     fun cancelImport() {
-        job.cancel()
+        job?.cancel()
         action(ImportGeocacheCodeAction.Cancel)
     }
 

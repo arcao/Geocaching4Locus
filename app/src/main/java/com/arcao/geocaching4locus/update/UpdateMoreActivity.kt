@@ -71,6 +71,9 @@ class UpdateMoreActivity : AbstractActionBarActivity() {
         }
     }
 
+    override fun onProgressCancel(requestId: Int) {
+        viewModel.cancelProgress()
+    }
     companion object {
         private const val REQUEST_SIGN_ON = 1
     }

@@ -15,7 +15,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.crashlytics.android.Crashlytics
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.Job
 
 class LoginViewModel(
     private val app: App,
@@ -25,13 +25,15 @@ class LoginViewModel(
     private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
-
     val action = Command<LoginAction>()
+    private var job: Job? = null
 
     fun startLogin() {
-        if (job.isActive) coroutineContext.cancelChildren()
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
 
-        mainLaunch {
+        job = mainLaunch {
             try {
                 showProgress {
                     app.clearGeocachingCookies()
@@ -47,28 +49,34 @@ class LoginViewModel(
         }
     }
 
-    fun finishLogin(input: String) = mainLaunch {
-        if (input.isBlank()) {
-            action(LoginAction.Cancel)
-            return@mainLaunch
+    fun finishLogin(input: String) {
+        if (job?.isActive == true) {
+            job?.cancel()
         }
 
-        try {
-            showProgress {
-                // create account
-                val account = createAccount(input)
-
-                val premium = account.isPremium()
-
-                // handle analytics and crashlytics
-                Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, premium)
-                AnalyticsUtil.setPremiumUser(app, premium)
-                AnalyticsUtil.actionLogin(true, premium)
-
-                action(LoginAction.Finish(!premium))
+        job = mainLaunch {
+            if (input.isBlank()) {
+                action(LoginAction.Cancel)
+                return@mainLaunch
             }
-        } catch (e: Exception) {
-            handleException(e)
+
+            try {
+                showProgress {
+                    // create account
+                    val account = createAccount(input)
+
+                    val premium = account.isPremium()
+
+                    // handle analytics and crashlytics
+                    Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, premium)
+                    AnalyticsUtil.setPremiumUser(app, premium)
+                    AnalyticsUtil.actionLogin(true, premium)
+
+                    action(LoginAction.Finish(!premium))
+                }
+            } catch (e: Exception) {
+                handleException(e)
+            }
         }
     }
 
@@ -93,7 +101,7 @@ class LoginViewModel(
     fun cancelLogin() {
         AnalyticsUtil.actionLogin(success = false, premiumMember = false)
 
-        job.cancel()
+        job?.cancel()
         action(LoginAction.Cancel)
     }
 }

@@ -78,6 +78,10 @@ class UpdateActivity : AbstractActionBarActivity() {
         }
     }
 
+    override fun onProgressCancel(requestId: Int) {
+        viewModel.cancelProgress()
+    }
+
     companion object {
         const val PARAM_CACHE_ID = "cacheId"
         const val PARAM_SIMPLE_CACHE_ID = "simpleCacheId"

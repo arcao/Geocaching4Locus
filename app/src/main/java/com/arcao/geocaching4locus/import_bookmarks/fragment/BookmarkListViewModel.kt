@@ -21,7 +21,7 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataS
 import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataSourceFactory
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
-import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
@@ -40,6 +40,7 @@ class BookmarkListViewModel(
     val loading = MutableLiveData<Boolean>()
     val list: LiveData<PagedList<GeocacheListEntity>>
     val action = Command<BookmarkListAction>()
+    private var job: Job? = null
 
     val state: LiveData<DataSourceState>
         get() = Transformations.switchMap(dataSourceFactory.dataSource, GeocacheUserListsDataSource::state)
@@ -68,64 +69,74 @@ class BookmarkListViewModel(
         }
     }
 
-    fun importAll(geocacheList: GeocacheListEntity) = computationLaunch {
-        val importIntent = locusMapManager.createSendPointsIntent(
-            callImport = true,
-            center = true
-        )
-
-        var receivedGeocaches = 0
-
-        try {
-            showProgress(R.string.progress_download_geocaches) {
-                Timber.d("source: import_from_bookmark;guid=%s", geocacheList.guid)
-
-                var count = 0
-
-                val channel = getListGeocaches(
-                    this,
-                    geocacheList.guid,
-                    filterPreferenceManager.simpleCacheData,
-                    filterPreferenceManager.geocacheLogsCount
-                ) {
-                    count = it
-                    Timber.d("source: import_from_bookmark; guid=%s; count=%d", geocacheList.guid, count)
-                }.map { list ->
-                    receivedGeocaches += list.size
-                    updateProgress(progress = receivedGeocaches, maxProgress = count)
-
-                    // apply additional downloading full geocache if required
-                    if (filterPreferenceManager.simpleCacheData) {
-                        list.forEach { point ->
-                            point.setExtraOnDisplay(
-                                context.packageName,
-                                UpdateActivity::class.java.name,
-                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                point.gcData.cacheID
-                            )
-                        }
-                    }
-                    list
-                }
-                writePointToPackPointsFile(channel)
-            }
-        } catch (e: Exception) {
-            mainContext {
-                action(
-                    BookmarkListAction.Error(
-                        if (receivedGeocaches > 0) {
-                            exceptionHandler(IntendedException(e, importIntent))
-                        } else {
-                            exceptionHandler(e)
-                        }
-                    )
-                )
-            }
-            return@computationLaunch
+    fun importAll(geocacheList: GeocacheListEntity) {
+        if (job?.isActive == true) {
+            job?.cancel()
         }
 
-        mainContext {
-            action(BookmarkListAction.Finish(importIntent))
+        job = computationLaunch {
+            val importIntent = locusMapManager.createSendPointsIntent(
+                callImport = true,
+                center = true
+            )
+
+            var receivedGeocaches = 0
+
+            try {
+                showProgress(R.string.progress_download_geocaches) {
+                    Timber.d("source: import_from_bookmark;guid=%s", geocacheList.guid)
+
+                    var count = 0
+
+                    val channel = getListGeocaches(
+                        this,
+                        geocacheList.guid,
+                        filterPreferenceManager.simpleCacheData,
+                        filterPreferenceManager.geocacheLogsCount
+                    ) {
+                        count = it
+                        Timber.d(
+                            "source: import_from_bookmark; guid=%s; count=%d",
+                            geocacheList.guid,
+                            count
+                        )
+                    }.map { list ->
+                        receivedGeocaches += list.size
+                        updateProgress(progress = receivedGeocaches, maxProgress = count)
+
+                        // apply additional downloading full geocache if required
+                        if (filterPreferenceManager.simpleCacheData) {
+                            list.forEach { point ->
+                                point.setExtraOnDisplay(
+                                    context.packageName,
+                                    UpdateActivity::class.java.name,
+                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                    point.gcData.cacheID
+                                )
+                            }
+                        }
+                        list
+                    }
+                    writePointToPackPointsFile(channel)
+                }
+            } catch (e: Exception) {
+                mainContext {
+                    action(
+                        BookmarkListAction.Error(
+                            if (receivedGeocaches > 0) {
+                                exceptionHandler(IntendedException(e, importIntent))
+                            } else {
+                                exceptionHandler(e)
+                            }
+                        )
+                    )
+                }
+                return@computationLaunch
+            }
+
+            mainContext {
+                action(BookmarkListAction.Finish(importIntent))
+            }
         }
     }
 
@@ -134,6 +145,6 @@ class BookmarkListViewModel(
     }
 
     fun cancelProgress() {
-        job.cancelChildren()
+        job?.cancel()
     }
 }

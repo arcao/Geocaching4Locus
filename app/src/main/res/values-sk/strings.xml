@@ -111,8 +111,6 @@
         <item quantity="many">%d minúty</item>
         <item quantity="other">%d minúty</item>
     </plurals>
-    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Powered by Geocaching Live</string>
-    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Toto rozšírenie využíva Geocaching Live na získavanie informácií o skrýšach. Klepnite tu pre viac informácií…</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live vrátil neplatnú odpoveď:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Aktívna mapa Geocaching4Locus</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Aktívna mapa je povolená.</string>
@@ -181,4 +179,7 @@ Táto aplikácia sa namiesto toho pokúsi použiť webový prehliadač tretej st
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Prosím, vložte autorizačný kód.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Autorizačný kód</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Zadaný autorizačný kód nie je platný. Prosím, skúste znova.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API je v súčasnosti kvôli údržbe vypnuté. Skúste to neskôr.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Beží na Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">API program, ktorý je umožnený vďaka podpore prémiového členstva Geocaching, dáva vývojárom tretích strán príležitosť spolupracovať s Geocaching HQ na celej rade zjednotených produktov a služieb pre komunitu. Aplikácia vývojárov používajúce API sú navrhnuté tak, aby pracovali so základnými službami geocaching.com a poskytovali ďalšie funkcie geocaching komunite.</string>
 </resources>

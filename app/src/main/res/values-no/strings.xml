@@ -103,8 +103,6 @@
         <item quantity="one">%d minutt</item>
         <item quantity="other">%d minutter</item>
     </plurals>
-    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Drevet av Geocaching Live</string>
-    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Dette tillegget bruker Geocaching Live for å få informasjon om cacher. Trykk her for mer informasjon ...</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live returnerer ugyldig informasjon: <br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus Live kart</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Live kart er påslått.</string>

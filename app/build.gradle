@@ -24,8 +24,6 @@ dependencies {
     implementation "androidx.multidex:multidex:$androidxMultidexVersion"
     implementation "androidx.paging:paging-runtime:$pagingVersion"
 
-    kapt "androidx.databinding:databinding-compiler:$androidGradlePluginVersion"
-
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"

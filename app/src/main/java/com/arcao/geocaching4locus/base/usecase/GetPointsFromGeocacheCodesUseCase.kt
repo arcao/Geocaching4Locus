@@ -8,9 +8,9 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.model.Geocache
 import com.arcao.geocaching4locus.error.exception.CacheNotFoundException
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
@@ -25,11 +25,10 @@ class GetPointsFromGeocacheCodesUseCase(
 ) {
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
-        scope: CoroutineScope,
         geocacheCodes: Array<String>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
         val notFoundGeocacheCodes = ArrayList<String>()
@@ -57,7 +56,7 @@ class GetPointsFromGeocacheCodesUseCase(
 
             if (cachesToAdd.isNotEmpty()) {
                 val points = mapper.createLocusPoints(cachesToAdd)
-                send(points)
+                emit(points)
             }
 
             current += requestedCacheIds.size
@@ -72,7 +71,7 @@ class GetPointsFromGeocacheCodesUseCase(
         if (notFoundGeocacheCodes.isNotEmpty()) {
             throw CacheNotFoundException(*notFoundGeocacheCodes.toTypedArray())
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 
     private fun addNotFoundCaches(
         notFoundCacheIds: MutableList<String>,

@@ -3,9 +3,9 @@ package com.arcao.geocaching4locus.base.usecase
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.TrackableConverter
 import kotlin.math.min
@@ -21,11 +21,10 @@ class GetGeocachingTrackablesUseCase(
 ) {
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
-        scope: CoroutineScope,
         referenceCode: String,
         start: Int = 0,
         count: Int = AppConstants.TRACKABLES_MAX
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
         var current = start
@@ -40,11 +39,11 @@ class GetGeocachingTrackablesUseCase(
             yield()
 
             if (logs.isEmpty())
-                return@produce
+                return@flow
 
-            send(trackableConverter.createLocusGeocachingTrackables(logs))
+            emit(trackableConverter.createLocusGeocachingTrackables(logs))
 
             current += logs.size
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 }

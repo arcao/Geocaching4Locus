@@ -17,7 +17,7 @@ import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -82,7 +82,6 @@ class DownloadRectangleViewModel constructor(
             try {
                 showProgress(R.string.progress_download_geocaches, maxProgress = count) {
                     val geocaches = getPointsFromRectangleCoordinates(
-                        this,
                         liveMapCoordinates.center,
                         liveMapCoordinates.topLeft,
                         liveMapCoordinates.bottomRight,

@@ -25,7 +25,7 @@ import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -102,7 +102,6 @@ class BookmarkViewModel(
                 try {
                     showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
                         val channel = getPointsFromGeocacheCodes(
-                            this,
                             geocacheCodes,
                             filterPreferenceManager.simpleCacheData,
                             filterPreferenceManager.geocacheLogsCount

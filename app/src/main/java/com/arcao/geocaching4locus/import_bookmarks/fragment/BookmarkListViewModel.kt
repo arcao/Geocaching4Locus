@@ -22,7 +22,7 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataS
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -89,7 +89,6 @@ class BookmarkListViewModel(
                     var count = 0
 
                     val channel = getListGeocaches(
-                        this,
                         geocacheList.guid,
                         filterPreferenceManager.simpleCacheData,
                         filterPreferenceManager.geocacheLogsCount

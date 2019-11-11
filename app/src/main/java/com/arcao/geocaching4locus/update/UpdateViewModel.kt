@@ -16,8 +16,8 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.channels.toList
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusUtils
 import locus.api.manager.LocusMapManager
@@ -99,7 +99,6 @@ class UpdateViewModel(
                             )
 
                             val logs = getGeocachingLogs(
-                                this,
                                 updateData.geocacheCode,
                                 progress,
                                 logsCount

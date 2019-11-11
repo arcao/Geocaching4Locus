@@ -6,10 +6,11 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import locus.api.objects.extra.Point
@@ -23,17 +24,20 @@ class GetOldPointNewPointPairFromPointUseCase(
 ) {
     @UseExperimental(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
-        scope: CoroutineScope,
-        channel: ReceiveChannel<Point>,
+        source: Flow<Point>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
         var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
 
-        while (!channel.isClosedForReceive) {
-            val points = channel.takeList(itemsPerRequest)
+        while (true) {
+            val points = source.takeList(itemsPerRequest)
+            if (points.isEmpty()) {
+                break
+            }
+
             val requestedCacheIds = points.map { it.gcData.cacheID }.toTypedArray()
 
             val startTimeMillis = System.currentTimeMillis()
@@ -52,24 +56,24 @@ class GetOldPointNewPointPairFromPointUseCase(
                 val receivedPoints = mapper.createLocusPoints(cachesToAdd)
                 for (oldPoint in points) {
                     val newPoint = receivedPoints.find { it.gcData.cacheID == oldPoint.gcData.cacheID }
-                    send(Pair(oldPoint, newPoint))
+                    emit(Pair(oldPoint, newPoint))
                 }
             }
 
             itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 }
 
-private suspend fun <E> ReceiveChannel<E>.takeList(count: Int): List<E> {
+private suspend fun <E> Flow<E>.takeList(count: Int): List<E> {
     if (count <= 0) return emptyList()
 
     val list = mutableListOf<E>()
     var received = 0
 
-    for (item in this) {
+    collect { item ->
         list.add(item)
-        if (++received >= count) return list
+        if (++received >= count) return@collect
     }
 
     return list

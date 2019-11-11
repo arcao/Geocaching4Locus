@@ -29,8 +29,8 @@ import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -72,7 +72,6 @@ class LiveMapViewModel(
 
             showProgress(maxProgress = count) {
                 val pointListChannel = getLiveMapPointsFromRectangleCoordinates(
-                    this,
                     task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
                     task.getCoordinates(
                         LiveMapService.PARAM_TOP_LEFT_LATITUDE,

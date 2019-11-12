@@ -4,7 +4,7 @@ import androidx.preference.Preference
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.constants.AppConstants
-import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_GEOCACHING_LIVE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_POWERED_BY
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.base.util.showWebPage
@@ -43,8 +43,8 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
             }
         }
 
-        preference<Preference>(ACCOUNT_GEOCACHING_LIVE).setOnPreferenceClickListener {
-            requireActivity().showWebPage(AppConstants.GEOCACHING_LIVE_URI)
+        preference<Preference>(ACCOUNT_POWERED_BY).setOnPreferenceClickListener {
+            requireActivity().showWebPage(AppConstants.GEOCACHING_URI)
             true
         }
     }

@@ -4,9 +4,9 @@
     <Preference
         app:iconSpaceReserved="false"
         app:key="account" />
-    <Preference
-        app:icon="@drawable/geocaching_live_icon"
-        app:key="account_geocaching_live"
-        app:summary="@string/pref_geocaching_live_message"
-        app:title="@string/pref_geocaching_live" />
+    <com.arcao.geocaching4locus.settings.widget.PoweredByPreference
+        app:iconSpaceReserved="false"
+        app:key="account_powered_by"
+        app:summary="@string/pref_account_powered_by_summary"
+        app:title="@string/pref_account_powered_by" />
 </androidx.preference.PreferenceScreen>

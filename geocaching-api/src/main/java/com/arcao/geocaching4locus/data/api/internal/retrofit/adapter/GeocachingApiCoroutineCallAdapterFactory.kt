@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.data.api.internal.retrofit.adapter
 import com.arcao.geocaching4locus.data.api.exception.AuthenticationException
 import com.arcao.geocaching4locus.data.api.exception.GeocachingApiException
 import com.arcao.geocaching4locus.data.api.exception.InvalidResponseException
+import com.arcao.geocaching4locus.data.api.exception.ServiceUnavailableException
 import com.arcao.geocaching4locus.data.api.model.enums.StatusCode
 import com.arcao.geocaching4locus.data.api.model.response.Error
 import com.arcao.geocaching4locus.data.api.model.response.MutablePagedList
@@ -133,6 +134,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
         private fun createException(statusCode: StatusCode, statusMessage: String, errorMessage: String): Exception {
             return when (statusCode) {
                 StatusCode.UNAUTHORIZED -> AuthenticationException(statusCode, statusMessage, errorMessage)
+                StatusCode.SERVICE_UNAVAILABLE -> ServiceUnavailableException(statusCode, statusMessage, errorMessage)
                 else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }
         }

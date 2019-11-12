@@ -216,12 +216,7 @@
         <item quantity="few">%d minutes</item>
         <item quantity="other">%d minutes</item>
     </plurals>
-    
-    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API."
-        >Powered by Geocaching Live</string>
-    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings."
-        >This add-on use Geocaching Live for getting information about geocaches. Tap here for more information…</string>
-    
+
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response."
         >Geocaching Live returns invalid response:<br/>%s</string>
 
@@ -362,4 +357,10 @@
         >Authorization code</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
         >The entered authorization code is not valid. Please, try again.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance"
+        >Geocaching API is currently down due to maintenance. Please try it later.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section."
+        >Powered by the Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement"
+        >Made possible through the support of Geocaching Premium Memberships, the API program gives third-party developers the opportunity to work with Geocaching HQ on a full suite of integrated products and services for the community. API developer applications are designed to work with the core services of geocaching.com and provide additional features to the geocaching community.</string>
 </resources>

@@ -68,8 +68,7 @@ class GetPointsFromCoordinatesUseCase(
                         difficultyMin,
                         difficultyMax,
                         terrainMin,
-                        terrainMax,
-                        excludeIgnoreList
+                        terrainMax
                     ),
                     logsCount = geocacheLogsCount,
                     lite = liteData,

@@ -24,7 +24,7 @@ class ProgressDialogFragment : AbstractDialogFragment() {
         fun onProgressCancel(requestId: Int)
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
 
         performCancel()

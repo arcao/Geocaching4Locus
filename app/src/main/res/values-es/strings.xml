@@ -91,8 +91,6 @@
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
     </plurals>
-    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Desarrollado por Geocaching Live</string>
-    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Este add-on usa Geocaching Live para obtener información de Geocaches. Pulsa aquí para más información…</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live ha dado respuesta no válida:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus Mapa dinámico</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Mapa dinámico está activada.</string>

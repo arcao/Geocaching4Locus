@@ -130,6 +130,10 @@
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="com.arcao.geocaching4locus.INTENT_IMPORT_GEOCACHE_CODES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".import_bookmarks.ImportBookmarkActivity" android:theme="@style/AppTheme.DialogWhenLarge" android:exported="true" android:icon="@drawable/ic_action_import_bookmark" android:label="@string/launcher_import_bookmarks">
             <intent-filter>

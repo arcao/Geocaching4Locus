@@ -26,19 +26,20 @@ class LiveMapService : LifecycleService() {
         lifecycle.addObserver(viewModel)
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
         // in case the service is already running, this must be called after each startForegroundService
-        startForeground(AppConstants.NOTIFICATION_ID_LIVEMAP, notificationManager.createNotification().build())
+        startForeground(
+            AppConstants.NOTIFICATION_ID_LIVEMAP,
+            notificationManager.createNotification().build()
+        )
 
-        if (intent != null) {
-            if (ACTION_START == intent.action) {
-                viewModel.addTask(intent, onCompleteCallback)
-            } else if (ACTION_STOP == intent.action) {
-                cancelTasks()
-                stopSelf(startId)
-            }
+        if (ACTION_START == intent.action) {
+            viewModel.addTask(intent, onCompleteCallback)
+        } else if (ACTION_STOP == intent.action) {
+            cancelTasks()
+            stopSelf(startId)
         }
 
         return Service.START_STICKY

@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import locus.api.android.utils.IntentHelper
 import locus.api.manager.LocusMapManager
 import locus.api.mapper.PointMerger
@@ -30,64 +31,79 @@ class UpdateMoreViewModel(
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<UpdateMoreAction>()
+    private var job: Job? = null
 
     @UseExperimental(ExperimentalCoroutinesApi::class)
-    fun processIntent(intent: Intent) = mainLaunch {
+    fun processIntent(intent: Intent) {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateMoreAction.LocusMapNotInstalled)
-            return@mainLaunch
+            return
         }
 
         if (accountManager.account == null) {
             action(UpdateMoreAction.SignIn)
-            return@mainLaunch
+            return
         }
 
-        try {
-            var progress = 0
-            showProgress(R.string.progress_update_geocaches, maxProgress = 1) {
-                computationContext {
-                    var pointIndexes: LongArray? = null
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
 
-                    if (IntentHelper.isIntentPointsTools(intent))
-                        pointIndexes = IntentHelper.getPointsFromIntent(intent)
+        job = mainLaunch {
+            try {
+                var progress = 0
+                showProgress(R.string.progress_update_geocaches, maxProgress = 1) {
+                    computationContext {
+                        var pointIndexes: LongArray? = null
 
-                    AnalyticsUtil.actionUpdateMore(pointIndexes?.size ?: 0, accountManager.isPremium)
-                    Timber.i("source: update;count=%d", pointIndexes?.size ?: 0)
+                        if (IntentHelper.isIntentPointsTools(intent))
+                            pointIndexes = IntentHelper.getPointsFromIntent(intent)
 
-                    if (pointIndexes?.isNotEmpty() != true) {
-                        action(UpdateMoreAction.Cancel)
-                        return@computationContext
-                    }
+                        AnalyticsUtil.actionUpdateMore(
+                            pointIndexes?.size ?: 0,
+                            accountManager.isPremium
+                        )
+                        Timber.i("source: update;count=%d", pointIndexes?.size ?: 0)
 
-                    updateProgress(maxProgress = pointIndexes.size)
+                        if (pointIndexes?.isNotEmpty() != true) {
+                            action(UpdateMoreAction.Cancel)
+                            return@computationContext
+                        }
 
-                    val basicMember = !(accountManager.isPremium)
-                    var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
-                    var lite = false
+                        updateProgress(maxProgress = pointIndexes.size)
 
-                    if (basicMember) {
-                        logsCount = 0
-                        lite = true
-                    }
+                        val basicMember = !(accountManager.isPremium)
+                        var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
+                        var lite = false
 
-                    val existingPoints = getPointsFromPointIndexes(this, pointIndexes)
+                        if (basicMember) {
+                            logsCount = 0
+                            lite = true
+                        }
 
-                    val pointPairs = getOldPointNewPointPairFromPoint(this, existingPoints, lite, logsCount)
-                    for ((oldPoint, newPoint) in pointPairs) {
-                        if (newPoint == null) continue
+                        val existingPoints = getPointsFromPointIndexes(this, pointIndexes)
 
-                        merger.mergePoints(newPoint, oldPoint)
-                        locusMapManager.updatePoint(newPoint)
-                        progress++
-                        updateProgress(progress = progress)
+                        val pointPairs =
+                            getOldPointNewPointPairFromPoint(this, existingPoints, lite, logsCount)
+                        for ((oldPoint, newPoint) in pointPairs) {
+                            if (newPoint == null) continue
+
+                            merger.mergePoints(newPoint, oldPoint)
+                            locusMapManager.updatePoint(newPoint)
+                            progress++
+                            updateProgress(progress = progress)
+                        }
                     }
                 }
-            }
 
-            action(UpdateMoreAction.Finish)
-        } catch (e: Exception) {
-            action(UpdateMoreAction.Error(exceptionHandler(e)))
+                action(UpdateMoreAction.Finish)
+            } catch (e: Exception) {
+                action(UpdateMoreAction.Error(exceptionHandler(e)))
+            }
         }
+    }
+
+    fun cancelProgress() {
+        job?.cancel()
     }
 }

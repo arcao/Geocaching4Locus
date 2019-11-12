@@ -103,8 +103,6 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
-    <string name="pref_geocaching_live" comment="Title of 'Powered by Geocaching Live' item in Account settings. Clicking on this open WebBrowser with info about Geocaching Live API.">Propulsé par Geocaching Live</string>
-    <string name="pref_geocaching_live_message" comment="Summary of 'Powered by Geocaching Live' item in Account settings.">Cet add-on utilise Geocaching Live pour obtenir les informations sur les caches. Appuyez ici pour plus d\'informations…</string>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live a envoyé une réponse invalide:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Carte Live Geocaching4Locus</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Carte Live activée.</string>

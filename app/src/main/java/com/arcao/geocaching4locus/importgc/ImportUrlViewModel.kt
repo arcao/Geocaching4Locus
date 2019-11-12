@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
+import kotlinx.coroutines.Job
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 import java.util.regex.Pattern
@@ -29,19 +30,26 @@ class ImportUrlViewModel(
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
+    private var job: Job? = null
 
-    fun startImport(uri: Uri) = mainLaunch {
+    fun startImport(uri: Uri) {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(ImportUrlAction.LocusMapNotInstalled)
-            return@mainLaunch
+            return
         }
 
         if (accountManager.account == null) {
             action(ImportUrlAction.SignIn)
-            return@mainLaunch
+            return
         }
 
-        performImport(uri)
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
+
+        job = mainLaunch {
+            performImport(uri)
+        }
     }
 
     private suspend fun performImport(uri: Uri) = computationContext {
@@ -100,12 +108,13 @@ class ImportUrlViewModel(
     }
 
     fun cancelImport() {
-        job.cancel()
+        job?.cancel()
         action(ImportUrlAction.Cancel)
     }
 
     companion object {
-        val CACHE_CODE_PATTERN: Pattern = Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE)
+        val CACHE_CODE_PATTERN: Pattern =
+            Pattern.compile("(GC[A-HJKMNPQRTV-Z0-9]+)", Pattern.CASE_INSENSITIVE)
         private val GUID_PATTERN = Pattern.compile(
             "guid=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})",
             Pattern.CASE_INSENSITIVE

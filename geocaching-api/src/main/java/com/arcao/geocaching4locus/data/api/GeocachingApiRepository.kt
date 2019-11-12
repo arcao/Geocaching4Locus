@@ -198,6 +198,20 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     suspend fun listGeocaches(
         referenceCode: String,
         skip: Int = 0,
+        take: Int = 10
+    ) = apiCall {
+        listGeocachesAsync(
+            referenceCode = referenceCode,
+            fields = Geocache.FIELDS_LITE_BOOKMARKS,
+            skip = skip,
+            take = take
+        )
+    }
+
+    @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
+    suspend fun listGeocachesDownload(
+        referenceCode: String,
+        skip: Int = 0,
         take: Int = 10,
         logsCount: Int = 10,
         imageCount: Int = 30,
@@ -206,7 +220,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     ) = apiCall {
         listGeocachesAsync(
             referenceCode = referenceCode,
-            fields = if (lite) Geocache.FIELDS_LITE_BOOKMARKS else Geocache.FIELDS_ALL,
+            fields = if (lite) Geocache.FIELDS_LITE else Geocache.FIELDS_ALL,
             skip = skip,
             take = take,
             lite = lite,

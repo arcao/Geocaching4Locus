@@ -19,7 +19,9 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
     protected abstract val preferenceResource: Int
 
     protected inline fun <reified P : Preference> preference(key: CharSequence): P {
-        return findPreference(key) as P
+        return requireNotNull(findPreference(key)) {
+            "Preference $key not found"
+        }
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

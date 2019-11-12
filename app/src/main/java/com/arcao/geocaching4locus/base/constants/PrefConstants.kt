@@ -64,7 +64,7 @@ object PrefConstants {
     const val ABOUT_FACEBOOK = "about_facebook"
     const val ABOUT_FEEDBACK = "about_feedback"
     const val ABOUT_DONATE_PAYPAL = "about_donate_paypal"
-    const val ACCOUNT_GEOCACHING_LIVE = "account_geocaching_live"
+    const val ACCOUNT_POWERED_BY = "account_powered_by"
 
     const val RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit"
     const val RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit"

@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourc
 import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourceFactory
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
@@ -51,6 +52,8 @@ class BookmarkViewModel(
     val state: LiveData<DataSourceState>
         get() = Transformations.switchMap(dataSourceFactory.dataSource, ListGeocachesDataSource::state)
 
+    private var job: Job? = null
+
     init {
         val pageSize = 25
         val config = PagedList.Config.Builder()
@@ -60,7 +63,6 @@ class BookmarkViewModel(
             .build()
 
         dataSourceFactory.referenceCode = geocacheList.guid
-
         list = LivePagedListBuilder(dataSourceFactory, config).build()
 
         state.observeForever { state ->
@@ -78,7 +80,11 @@ class BookmarkViewModel(
     }
 
     fun download() {
-        mainLaunch {
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
+
+        job = mainLaunch {
             val selection = selection.value ?: return@mainLaunch
             AnalyticsUtil.actionImportBookmarks(selection.size, false)
 
@@ -142,6 +148,6 @@ class BookmarkViewModel(
     }
 
     fun cancelProgress() {
-        job.cancelChildren()
+        job?.cancelChildren()
     }
 }

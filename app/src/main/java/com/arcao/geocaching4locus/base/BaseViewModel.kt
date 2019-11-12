@@ -3,70 +3,62 @@ package com.arcao.geocaching4locus.base
 import androidx.annotation.StringRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.runIfIsSuspended
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel(
     val dispatcherProvider: CoroutinesDispatcherProvider
-) : ViewModel(), CoroutineScope {
-    val job = Job()
+) : ViewModel() {
     val progress: MutableLiveData<ProgressState> = MutableLiveData()
 
-    // Better to start on main context to minimize cost of switching between computation and main context
-    // Also it is better to read referenceCode without switching
-    // If you need more time to do work, switch to computation context
-    override val coroutineContext: CoroutineContext
-        get() = dispatcherProvider.main + job
+    inline fun <R> mainLaunch(crossinline block: suspend CoroutineScope.() -> R) =
+        viewModelScope.launch(dispatcherProvider.main) {
+            block()
+        }
 
-    override fun onCleared() {
-        job.cancel()
-        super.onCleared()
-    }
+    inline fun <R> computationLaunch(crossinline block: suspend CoroutineScope.() -> R) =
+        viewModelScope.launch(dispatcherProvider.computation) {
+            block()
+        }
 
-    fun <R> mainLaunch(block: suspend CoroutineScope.() -> R) = launch(dispatcherProvider.main) {
-        block()
-    }
-
-    fun <R> computationLaunch(block: suspend CoroutineScope.() -> R) = launch(dispatcherProvider.computation) {
-        block()
-    }
-
-    suspend fun <R> mainContext(block: suspend CoroutineScope.() -> R): R =
+    suspend inline fun <R> mainContext(crossinline block: suspend CoroutineScope.() -> R): R =
         withContext(dispatcherProvider.main) {
             block()
         }
 
-    suspend fun <R> computationContext(block: suspend CoroutineScope.() -> R): R =
+    suspend inline fun <R> computationContext(crossinline block: suspend CoroutineScope.() -> R): R =
         withContext(dispatcherProvider.computation) {
             block()
         }
 
-    suspend fun <R> showProgress(
+    suspend inline fun <R> showProgress(
         @StringRes message: Int = 0,
         messageArgs: Array<Any>? = null,
         progress: Int = 0,
         maxProgress: Int = 0,
         requestId: Int = 0,
-        block: suspend CoroutineScope.() -> R
+        crossinline block: suspend CoroutineScope.() -> R
     ): R = coroutineScope {
 
-        mainContext {
-            progress(ProgressState.ShowProgress(requestId, message, messageArgs, progress, maxProgress))
-        }
+        this@BaseViewModel.progress.postValue(
+            ProgressState.ShowProgress(
+                requestId,
+                message,
+                messageArgs,
+                progress,
+                maxProgress
+            )
+        )
 
         try {
             return@coroutineScope block()
         } finally {
-            mainContext {
-                progress(ProgressState.HideProgress)
-            }
+            this@BaseViewModel.progress.postValue(ProgressState.HideProgress)
         }
     }
 
@@ -78,33 +70,31 @@ abstract class BaseViewModel(
         maxProgress: Int = -1
     ) {
         this.progress.value.runIfIsSuspended(ProgressState.ShowProgress::class) {
-            mainContext {
-                progress(
-                    ProgressState.ShowProgress(
-                        if (requestId == 0) {
-                            this@runIfIsSuspended.requestId
-                        } else {
-                            requestId
-                        },
-                        if (message == 0) {
-                            this@runIfIsSuspended.message
-                        } else {
-                            message
-                        },
-                        messageArgs ?: this@runIfIsSuspended.messageArgs,
-                        if (progress < 0) {
-                            this@runIfIsSuspended.progress
-                        } else {
-                            progress
-                        },
-                        if (maxProgress < 0) {
-                            this@runIfIsSuspended.maxProgress
-                        } else {
-                            maxProgress
-                        }
-                    )
+            this@BaseViewModel.progress.postValue(
+                ProgressState.ShowProgress(
+                    if (requestId == 0) {
+                        this@runIfIsSuspended.requestId
+                    } else {
+                        requestId
+                    },
+                    if (message == 0) {
+                        this@runIfIsSuspended.message
+                    } else {
+                        message
+                    },
+                    messageArgs ?: this@runIfIsSuspended.messageArgs,
+                    if (progress < 0) {
+                        this@runIfIsSuspended.progress
+                    } else {
+                        progress
+                    },
+                    if (maxProgress < 0) {
+                        this@runIfIsSuspended.maxProgress
+                    } else {
+                        maxProgress
+                    }
                 )
-            }
+            )
         }
     }
 }

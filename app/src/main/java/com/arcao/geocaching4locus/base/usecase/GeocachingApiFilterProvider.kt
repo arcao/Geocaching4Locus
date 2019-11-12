@@ -34,8 +34,7 @@ class GeocachingApiFilterProvider(
         difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
-        terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true
+        terrainMax: Float = 5F
     ): List<Filter> {
         val filters = mutableListOf<Filter>()
 
@@ -76,9 +75,6 @@ class GeocachingApiFilterProvider(
             if (terrainMin > 1 || terrainMax < 5) {
                 filters += TerrainFilter(terrainMin, terrainMax)
             }
-
-            // not supported?
-            // filters += BookmarksExcludeFilter(excludeIgnoreList)
         }
 
         return filters
@@ -95,8 +91,7 @@ class GeocachingApiFilterProvider(
         difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
-        terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true
+        terrainMax: Float = 5F
     ): List<Filter> {
         val filters = mutableListOf<Filter>()
 
@@ -136,9 +131,6 @@ class GeocachingApiFilterProvider(
             if (terrainMin > 1 || terrainMax < 5) {
                 filters += TerrainFilter(terrainMin, terrainMax)
             }
-
-            // not supported?
-            // filters += BookmarksExcludeFilter(excludeIgnoreList)
         }
 
         return filters

@@ -8,7 +8,6 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
-import com.arcao.geocaching4locus.base.usecase.GetGeocachingTrackablesUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.Command
@@ -16,6 +15,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.channels.toList
 import locus.api.android.utils.IntentHelper
@@ -32,7 +32,6 @@ class UpdateViewModel(
     private val accountManager: AccountManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
     private val getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
-    private val getGeocachingTrackables: GetGeocachingTrackablesUseCase,
     private val getGeocachingLogs: GetGeocachingLogsUseCase,
     private val pointMerger: PointMerger,
     private val locusMapManager: LocusMapManager,
@@ -40,123 +39,132 @@ class UpdateViewModel(
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<UpdateAction>()
+    private var job: Job? = null
 
-    fun processIntent(intent: Intent) = mainLaunch {
+    fun processIntent(intent: Intent) {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateAction.LocusMapNotInstalled)
-            return@mainLaunch
+            return
         }
 
         if (accountManager.account == null) {
             action(UpdateAction.SignIn)
-            return@mainLaunch
+            return
         }
 
         if (!accountManager.isPremium && isUpdateLogsIntent(intent)) {
             action(UpdateAction.PremiumMembershipRequired)
-            return@mainLaunch
+            return
         }
 
-        val downloadFullGeocacheOnShow = defaultPreferenceManager.downloadFullGeocacheOnShow
+        if (job?.isActive == true) {
+            job?.cancel()
+        }
 
-        try {
-            showProgress(R.string.progress_update_geocache, maxProgress = 1) {
+        job = mainLaunch {
+            val downloadFullGeocacheOnShow = defaultPreferenceManager.downloadFullGeocacheOnShow
 
-                val updateData = computationContext {
-                    val updateData = retrieveUpdateData(intent) ?: return@computationContext null
+            try {
+                showProgress(R.string.progress_update_geocache, maxProgress = 1) {
 
-                    val basicMember = !(accountManager.isPremium)
-                    var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
-                    var lite = false
+                    val updateData = computationContext {
+                        val updateData =
+                            retrieveUpdateData(intent) ?: return@computationContext null
 
-                    if (basicMember) {
-                        logsCount = 0
-                        lite = true
-                    }
+                        val basicMember = !(accountManager.isPremium)
+                        var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
+                        var lite = false
 
-                    updateData.newPoint = getPointFromGeocacheCode(updateData.geocacheCode, lite, logsCount)
-
-                    // count to full geocache limit
-//                    if (basicMember) {
-//                        // get trackables
-//                        val trackables = getGeocachingTrackables(this, updateData.geocacheCode, 0, 30)
-//                        updateData.newPoint.gcData.trackables.addAll(trackables.toList().flatten())
-//                    }
-
-                    if (updateData.downloadLogs) {
-                        var progress = updateData.newPoint.gcData.logs.count()
-
-                        logsCount = if (updateData.downloadLogs) {
-                            AppConstants.LOGS_TO_UPDATE_MAX
-                        } else {
-                            defaultPreferenceManager.downloadingGeocacheLogsCount
+                        if (basicMember) {
+                            logsCount = 0
+                            lite = true
                         }
 
-                        updateProgress(R.string.progress_download_logs, progress = progress, maxProgress = logsCount)
+                        updateData.newPoint =
+                            getPointFromGeocacheCode(updateData.geocacheCode, lite, logsCount)
 
-                        val logs = getGeocachingLogs(
-                            this,
-                            updateData.geocacheCode,
-                            progress,
-                            logsCount
-                        ).map {
-                            progress += it.count()
-                            updateProgress(progress = progress, maxProgress = logsCount)
-                            it
-                        }.toList()
+                        if (updateData.downloadLogs) {
+                            var progress = updateData.newPoint.gcData.logs.count()
 
-                        updateData.newPoint.gcData.logs.apply {
-                            addAll(logs.flatten())
-                            sortBy {
-                                it.date
+                            logsCount = if (updateData.downloadLogs) {
+                                AppConstants.LOGS_TO_UPDATE_MAX
+                            } else {
+                                defaultPreferenceManager.downloadingGeocacheLogsCount
+                            }
+
+                            updateProgress(
+                                R.string.progress_download_logs,
+                                progress = progress,
+                                maxProgress = logsCount
+                            )
+
+                            val logs = getGeocachingLogs(
+                                this,
+                                updateData.geocacheCode,
+                                progress,
+                                logsCount
+                            ).map {
+                                progress += it.count()
+                                updateProgress(progress = progress, maxProgress = logsCount)
+                                it
+                            }.toList()
+
+                            updateData.newPoint.gcData.logs.apply {
+                                addAll(logs.flatten())
+                                sortBy {
+                                    it.date
+                                }
                             }
                         }
-                    }
 
-                    if (updateData.downloadLogs && updateData.oldPoint != null && !defaultPreferenceManager.downloadLogsUpdateCache) {
-                        pointMerger.mergeGeocachingLogs(updateData.oldPoint, updateData.newPoint)
-
-                        // only when this feature is enabled
-                        if (defaultPreferenceManager.disableDnfNmNaGeocaches)
-                            Util.applyUnavailabilityForGeocache(
+                        if (updateData.downloadLogs && updateData.oldPoint != null && !defaultPreferenceManager.downloadLogsUpdateCache) {
+                            pointMerger.mergeGeocachingLogs(
                                 updateData.oldPoint,
-                                defaultPreferenceManager.disableDnfNmNaGeocachesThreshold
+                                updateData.newPoint
                             )
 
-                        updateData.newPoint = updateData.oldPoint
-                    } else {
-                        pointMerger.mergePoints(updateData.newPoint, updateData.oldPoint)
+                            // only when this feature is enabled
+                            if (defaultPreferenceManager.disableDnfNmNaGeocaches)
+                                Util.applyUnavailabilityForGeocache(
+                                    updateData.oldPoint,
+                                    defaultPreferenceManager.disableDnfNmNaGeocachesThreshold
+                                )
 
-                        if (downloadFullGeocacheOnShow) {
-                            updateData.newPoint.removeExtraOnDisplay()
+                            updateData.newPoint = updateData.oldPoint
+                        } else {
+                            pointMerger.mergePoints(updateData.newPoint, updateData.oldPoint)
+
+                            if (downloadFullGeocacheOnShow) {
+                                updateData.newPoint.removeExtraOnDisplay()
+                            }
                         }
+
+                        return@computationContext updateData
                     }
 
-                    return@computationContext updateData
-                }
+                    if (updateData == null) {
+                        action(UpdateAction.Cancel)
+                        return@showProgress
+                    }
 
-                if (updateData == null) {
-                    action(UpdateAction.Cancel)
-                    return@showProgress
-                }
-
-                // if Point is already in DB we must update it manually
-                if (updateData.oldPoint != null) {
-                    locusMapManager.updatePoint(updateData.newPoint)
-                    action(UpdateAction.Finish())
-                } else {
-                    action(
-                        UpdateAction.Finish(
-                            LocusUtils.prepareResultExtraOnDisplayIntent(
-                                updateData.newPoint,
-                                downloadFullGeocacheOnShow
+                    // if Point is already in DB we must update it manually
+                    if (updateData.oldPoint != null) {
+                        locusMapManager.updatePoint(updateData.newPoint)
+                        action(UpdateAction.Finish())
+                    } else {
+                        action(
+                            UpdateAction.Finish(
+                                LocusUtils.prepareResultExtraOnDisplayIntent(
+                                    updateData.newPoint,
+                                    downloadFullGeocacheOnShow
+                                )
                             )
                         )
-                    )
+                    }
                 }
+            } catch (e: Exception) {
+                action(UpdateAction.Error(exceptionHandler(e)))
             }
-        } catch (e: Exception) {
-            action(UpdateAction.Error(exceptionHandler(e)))
         }
     }
 
@@ -194,15 +202,25 @@ class UpdateViewModel(
             return null
         }
 
-        val downloadLogs = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
+        val downloadLogs =
+            AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
 
         AnalyticsUtil.actionUpdate(oldPoint != null, downloadLogs, accountManager.isPremium)
         return UpdateData(cacheId, downloadLogs, oldPoint)
     }
 
-    fun isUpdateLogsIntent(intent: Intent) = AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
+    private fun isUpdateLogsIntent(intent: Intent) =
+        AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
 
-    class UpdateData(val geocacheCode: String, val downloadLogs: Boolean, val oldPoint: Point? = null) {
+    fun cancelProgress() {
+        job?.cancel()
+    }
+
+    class UpdateData(
+        val geocacheCode: String,
+        val downloadLogs: Boolean,
+        val oldPoint: Point? = null
+    ) {
         lateinit var newPoint: Point
     }
 }

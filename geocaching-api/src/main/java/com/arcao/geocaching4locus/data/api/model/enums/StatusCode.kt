@@ -11,7 +11,8 @@ enum class StatusCode(override val id: Int) : IdType {
     CONFLICT(409),
     UNPROCESSABLE_ENTITY(422),
     TOO_MANY_REQUESTS(429),
-    INTERNAL_SERVER_ERROR(500);
+    INTERNAL_SERVER_ERROR(500),
+    SERVICE_UNAVAILABLE(503);
 
     companion object {
         fun from(id: Int?) = values().find { it.id == id }

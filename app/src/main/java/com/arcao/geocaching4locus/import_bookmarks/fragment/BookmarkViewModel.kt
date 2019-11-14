@@ -108,7 +108,10 @@ class BookmarkViewModel(
                             filterPreferenceManager.geocacheLogsCount
                         ).map { list ->
                             receivedGeocaches += list.size
-                            updateProgress(progress = receivedGeocaches)
+                            updateProgress(
+                                progress = receivedGeocaches,
+                                maxProgress = geocacheCodes.size
+                            )
 
                             // apply additional downloading full geocache if required
                             if (filterPreferenceManager.simpleCacheData) {

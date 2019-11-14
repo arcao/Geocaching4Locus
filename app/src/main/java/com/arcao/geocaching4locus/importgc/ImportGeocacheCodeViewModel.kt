@@ -76,7 +76,10 @@ class ImportGeocacheCodeViewModel(
                         filterPreferenceManager.geocacheLogsCount
                     ).map {
                         receivedGeocaches += it.size
-                        updateProgress(progress = receivedGeocaches)
+                        updateProgress(
+                            progress = receivedGeocaches,
+                            maxProgress = geocacheCodes.size
+                        )
                         it
                     }
                     writePointToPackPointsFile(channel)

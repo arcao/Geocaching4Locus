@@ -1,5 +1,5 @@
 ext {
-    versionName = '3.0.4'
+    versionName = '3.0.5'
 
     minSdkVersion = 16
     compileSdkVersion = 28
@@ -7,7 +7,7 @@ ext {
 
     // build plugins
     androidGradlePluginVersion = '3.5.2'
-    kotlinVersion = '1.3.50'
+    kotlinVersion = '1.3.60'
     gradleVersionsPluginVersion = '0.26.0'
     googleServicesPluginVersion = '4.3.2'
     fabricIoPluginVersion = '1.28.1'

@@ -70,8 +70,6 @@ class UpdateMoreViewModel(
                             return@computationContext
                         }
 
-                        updateProgress(maxProgress = pointIndexes.size)
-
                         val basicMember = !(accountManager.isPremium)
                         var logsCount = defaultPreferenceManager.downloadingGeocacheLogsCount
                         var lite = false
@@ -91,7 +89,7 @@ class UpdateMoreViewModel(
                             merger.mergePoints(newPoint, oldPoint)
                             locusMapManager.updatePoint(newPoint)
                             progress++
-                            updateProgress(progress = progress)
+                            updateProgress(progress = progress, maxProgress = pointIndexes.size)
                         }
                     }
                 }

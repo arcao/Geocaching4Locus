@@ -37,9 +37,15 @@ import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.ConnectException
 import java.net.UnknownHostException
+import java.util.concurrent.CancellationException
 
 class ExceptionHandler(private val context: Context, private val accountManager: AccountManager) {
     operator fun invoke(throwable: Throwable): Intent {
+        // Coroutine Job is cancelled, notify parent job about it
+        if (throwable is CancellationException) {
+            throw throwable
+        }
+
         var t = throwable
         Timber.e(t)
 

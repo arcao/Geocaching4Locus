@@ -1,19 +1,18 @@
 package com.arcao.geocaching4locus.live_map
 
-import android.app.Service
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.LifecycleService
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.ServiceUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.withObserve
+import com.arcao.geocaching4locus.live_map.util.LifecycleServiceFixed
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
 
-class LiveMapService : LifecycleService() {
+class LiveMapService : LifecycleServiceFixed() {
     private val notificationManager by inject<LiveMapNotificationManager>()
     private val viewModel by inject<LiveMapViewModel>()
     private val onCompleteCallback: (Intent) -> Unit = { ServiceUtil.completeWakefulIntent(it) }
@@ -26,23 +25,23 @@ class LiveMapService : LifecycleService() {
         lifecycle.addObserver(viewModel)
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        super.onStartCommand(intent, flags, startId)
-
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // in case the service is already running, this must be called after each startForegroundService
         startForeground(
             AppConstants.NOTIFICATION_ID_LIVEMAP,
             notificationManager.createNotification().build()
         )
 
-        if (ACTION_START == intent.action) {
-            viewModel.addTask(intent, onCompleteCallback)
-        } else if (ACTION_STOP == intent.action) {
-            cancelTasks()
-            stopSelf(startId)
+        if (intent != null) {
+            if (ACTION_START == intent.action) {
+                viewModel.addTask(intent, onCompleteCallback)
+            } else if (ACTION_STOP == intent.action) {
+                cancelTasks()
+                stopSelf(startId)
+            }
         }
 
-        return Service.START_STICKY
+        return super.onStartCommand(intent, flags, startId)
     }
 
     private fun cancelTasks() {

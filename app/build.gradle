@@ -138,7 +138,7 @@ android {
             buildConfigField 'String', 'BUILD_TIME', '"' + gitTimestamp() + '"'
 
             signingConfig signingConfigs.release
-            minifyEnabled false // App crash on VerifyError on Android 4.2, 4.3
+            minifyEnabled true // App crash on VerifyError on Android 4.2, 4.3
             shrinkResources false
             crunchPngs false
 

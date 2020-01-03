@@ -2,6 +2,8 @@ package com.arcao.geocaching4locus.authentication
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import com.arcao.geocaching4locus.R
@@ -45,6 +47,14 @@ class LoginActivity : AbstractActionBarActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // fis for crash in WebView: https://issuetracker.google.com/issues/141132133#comment6
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (Build.VERSION.SDK_INT in 21..25 && (resources.configuration.uiMode == applicationContext.resources.configuration.uiMode)) {
+            return
+        }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 
     private fun showLoginFragment() {

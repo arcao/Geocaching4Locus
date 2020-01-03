@@ -141,6 +141,12 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
     }
 
     private class FixedWebView : WebView {
+        // fix for WebView crash: https://stackoverflow.com/a/58812125/861661
+        init {
+            isFocusable = true
+            isFocusableInTouchMode = true
+        }
+
         constructor(context: Context) : super(context)
 
         constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)

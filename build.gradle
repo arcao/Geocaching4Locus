@@ -54,8 +54,6 @@ buildscript {
     }
 
     dependencies {
-        // remove after update AGP
-        classpath 'com.android.tools:r8:1.4.93'  // Must be before the Gradle Plugin for Android
         classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"

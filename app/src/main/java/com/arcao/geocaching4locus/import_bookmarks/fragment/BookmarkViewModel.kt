@@ -24,7 +24,6 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourc
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.channels.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
@@ -151,6 +150,6 @@ class BookmarkViewModel(
     }
 
     fun cancelProgress() {
-        job?.cancelChildren()
+        job?.cancel()
     }
 }

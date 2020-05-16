@@ -11,11 +11,6 @@ import org.threeten.bp.Instant
 abstract class AccountManager(
     private val oAuthService: OAuth20Service
 ) {
-    companion object {
-        val SAFE_OAUTH_TOKEN_REFRESH_DURATION: Duration = Duration.ofMinutes(2)
-        const val TWO_YEARS_IN_SECONDS = 2L * 365L * 24L * 3600L
-    }
-
     var account: GeocachingAccount? = null
         protected set
 
@@ -38,15 +33,17 @@ abstract class AccountManager(
             oAuthService.getAccessToken(code)
         }
 
-        return GeocachingAccount(
+        val newAccount = GeocachingAccount(
             accountManager = this,
             accessToken = token.accessToken,
             accessTokenExpiration = computeExpiration(token.expiresIn),
             refreshToken = token.refreshToken
-        ).also {
-            this.account = it
-            saveAccount(it)
-        }
+        )
+
+        saveAccount(newAccount)
+        this.account = newAccount
+
+        return newAccount
     }
 
     fun deleteAccount() {
@@ -54,10 +51,10 @@ abstract class AccountManager(
         saveAccount(account)
     }
 
-    suspend fun refreshAccount(account: GeocachingAccount) {
+    suspend fun refreshAccount(account: GeocachingAccount): Boolean {
         refreshAccountMutex.withLock {
             if (!account.accessTokenExpired) {
-                return
+                return false
             }
 
             try {
@@ -70,17 +67,22 @@ abstract class AccountManager(
                     accessToken = token.accessToken
                     accessTokenExpiration = computeExpiration(token.expiresIn)
                     refreshToken = token.refreshToken
-                }.also {
-                    saveAccount(it)
                 }
+                saveAccount(account)
+
+                return true
             } finally {
                 isAccountUpdateInProgress = false
             }
         }
     }
 
-    private fun computeExpiration(expiresIn: Int?) =
-        Instant.now()
-            .plusSeconds(expiresIn?.toLong() ?: TWO_YEARS_IN_SECONDS)
-            .minus(SAFE_OAUTH_TOKEN_REFRESH_DURATION)
+    private fun computeExpiration(expiresIn: Int?) = Instant.now()
+        .plusSeconds(expiresIn?.toLong() ?: TWO_YEARS_IN_SECONDS)
+        .minus(SAFE_OAUTH_TOKEN_REFRESH_DURATION)
+
+    companion object {
+        val SAFE_OAUTH_TOKEN_REFRESH_DURATION: Duration = Duration.ofMinutes(2)
+        const val TWO_YEARS_IN_SECONDS = 2L * 365L * 24L * 3600L
+    }
 }

@@ -29,6 +29,7 @@ import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment
 import com.github.scribejava.core.exceptions.OAuthException
 import com.github.scribejava.core.model.OAuth2AccessTokenErrorResponse
+import com.github.scribejava.core.oauth2.OAuth2Error
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 import timber.log.Timber
 import java.io.EOFException
@@ -257,6 +258,6 @@ private fun Throwable.isOAuth2InvalidGrant(): Boolean {
     }
 
     return cause.let {
-        it is OAuth2AccessTokenErrorResponse && it.errorCode == OAuth2AccessTokenErrorResponse.ErrorCode.invalid_grant
+        it is OAuth2AccessTokenErrorResponse && it.error == OAuth2Error.INVALID_GRANT
     }
 }

@@ -146,7 +146,7 @@ class LocusMapManager(
     fun sendPointsSilent(packName: String, points: List<Point>, centerOnData: Boolean = false) {
         try {
             val pack = PackPoints(packName)
-            points.forEach(pack::addWaypoint)
+            points.forEach(pack::addPoint)
             ActionDisplayPoints.sendPackSilent(context, pack, centerOnData)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)

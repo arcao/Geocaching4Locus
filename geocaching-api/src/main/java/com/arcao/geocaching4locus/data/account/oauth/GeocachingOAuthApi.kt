@@ -10,6 +10,7 @@ import com.github.scribejava.core.oauth2.bearersignature.BearerSignature
 import com.github.scribejava.core.oauth2.bearersignature.BearerSignatureAuthorizationRequestHeaderField
 import com.github.scribejava.core.oauth2.clientauthentication.ClientAuthentication
 import com.github.scribejava.core.oauth2.clientauthentication.RequestBodyAuthenticationScheme
+import java.io.OutputStream
 
 open class GeocachingOAuthApi : DefaultApi20() {
     override fun getAuthorizationBaseUrl(): String = "https://www.geocaching.com/oauth/authorize.aspx"
@@ -19,11 +20,12 @@ open class GeocachingOAuthApi : DefaultApi20() {
     override fun getAccessTokenExtractor(): TokenExtractor<OAuth2AccessToken> = GeocachingOAuth2AccessTokenJsonExtractor
 
     override fun createService(
-        apiKey: String,
-        apiSecret: String,
-        callback: String,
+        apiKey: String?,
+        apiSecret: String?,
+        callback: String?,
         defaultScope: String?,
         responseType: String?,
+        debugStream: OutputStream?,
         userAgent: String?,
         httpClientConfig: HttpClientConfig?,
         httpClient: HttpClient?
@@ -35,6 +37,7 @@ open class GeocachingOAuthApi : DefaultApi20() {
             callback,
             defaultScope,
             responseType,
+            debugStream,
             userAgent,
             httpClientConfig,
             httpClient

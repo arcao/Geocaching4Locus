@@ -8,6 +8,7 @@ import locus.api.manager.LocusMapManager
 import locus.api.objects.extra.Point
 import locus.api.utils.StoreableWriter
 
+@Suppress("BlockingMethodInNonBlockingContext")
 class WritePointToPackPointsFileUseCase(
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
@@ -15,7 +16,7 @@ class WritePointToPackPointsFileUseCase(
     suspend operator fun invoke(point: Point) = withContext(dispatcherProvider.io) {
         StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
             val pack = PackPoints()
-            pack.addWaypoint(point)
+            pack.addPoint(point)
             writer.write(pack)
         }
     }
@@ -24,7 +25,7 @@ class WritePointToPackPointsFileUseCase(
         StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
             for (points in channel) {
                 val pack = PackPoints()
-                points.forEach(pack::addWaypoint)
+                points.forEach(pack::addPoint)
                 writer.write(pack)
             }
         }

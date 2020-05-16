@@ -6,69 +6,67 @@ apply plugin: 'io.fabric'
 
 dependencies {
     // Android Support
-    implementation "androidx.appcompat:appcompat:$androidxAppcompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidxRecyclerViewVersion"
-    implementation "androidx.cardview:cardview:$androidxCardViewVersion"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "androidx.preference:preference:$androidxVersion"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
+    implementation "androidx.cardview:cardview:$card_view_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.preference:preference:$preference_version"
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$androidxLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata:$androidxLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$androidxLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
-    implementation "androidx.core:core-ktx:$androidxCoreKtxVersion"
-    implementation "androidx.collection:collection-ktx:$androidxKtxVersion"
-    implementation "androidx.fragment:fragment-ktx:$androidxKtxVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidxKtxLifecycleVersion"
-    implementation "androidx.multidex:multidex:$androidxMultidexVersion"
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
+    implementation "androidx.core:core-ktx:$core_version"
+    implementation "androidx.collection:collection-ktx:$collection_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.multidex:multidex:$multidex_version"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
-    kapt "androidx.databinding:databinding-compiler:$androidGradlePluginVersion"
+    kapt "androidx.databinding:databinding-compiler:$android_plugin_version"
 
     // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     // koin
-    implementation "org.koin:koin-android:$koinVersion"
-    implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
-    implementation "org.koin:koin-androidx-scope:$koinVersion"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
 
     // Geocaching API
     api project(":geocaching-api")
 
     // Locus API
-    implementation("com.asamm:locus-api-android:$locusApiAndroidVersion") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
-    }
+    implementation "com.asamm:locus-api-android:$locus_api_version"
 
     // Logging API
-    implementation "com.arcao:slf4j-timber:$slf4jTimberVersion"
-    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.arcao:slf4j-timber:$slf4jtimber_version"
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
     // ScribeJava
-    implementation "com.github.scribejava:scribejava-core:$scribejavaVersion"
-    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion") {
+    implementation "com.github.scribejava:scribejava-core:$scribejava_version"
+    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejava_version") {
         // exclude incompatible OkHttp library, use 3.12.x version instead
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
     // Material dialogs
-    implementation "com.afollestad.material-dialogs:core:$materialDialogsVersion"
-    implementation "com.afollestad.material-dialogs:input:$materialDialogsVersion"
+    implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
+    implementation "com.afollestad.material-dialogs:input:$material_dialogs_version"
 
     // Crashlytics & Firebase
-    implementation "com.google.firebase:firebase-core:$firebaseVersion"
-    implementation "com.crashlytics.sdk.android:crashlytics:$crashlyticsVersion"
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
 
     // Networking
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 }
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion rootProject.compile_sdk_version
 
     dexOptions {
         // Skip pre-dexing when running on Travis CI or when disabled via -Dpre-dex=false.
@@ -79,10 +77,10 @@ android {
         applicationId 'com.arcao.geocaching4locus'
         archivesBaseName = parent.name
 
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion rootProject.min_sdk_version
+        targetSdkVersion rootProject.target_sdk_version
 
-        versionName rootProject.versionName
+        versionName rootProject.version_name
         versionCode hasProperty('devBuild') ? 1 : gitVersionCode()
 
         multiDexEnabled true
@@ -109,7 +107,7 @@ android {
 
     kotlinOptions {
         freeCompilerArgs += [
-                "-Xuse-experimental=kotlin.Experimental",
+                "-Xopt-in=kotlin.RequiresOptIn",
                 "-Xjvm-default=compatibility"
         ]
         jvmTarget = JavaVersion.VERSION_1_8

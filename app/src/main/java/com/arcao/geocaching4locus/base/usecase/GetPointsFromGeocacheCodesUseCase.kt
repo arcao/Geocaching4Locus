@@ -23,7 +23,7 @@ class GetPointsFromGeocacheCodesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         scope: CoroutineScope,
         geocacheCodes: Array<String>,

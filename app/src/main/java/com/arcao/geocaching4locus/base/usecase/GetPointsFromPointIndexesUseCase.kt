@@ -11,7 +11,7 @@ class GetPointsFromPointIndexesUseCase(
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(scope: CoroutineScope, pointIndexes: LongArray) =
         scope.produce(dispatcherProvider.io, capacity = 50) {
             for (pointIndex in pointIndexes) {

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.transaction
+import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.arcao.geocaching4locus.R
@@ -14,7 +14,9 @@ import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.settings.fragment.SettingsPreferenceFragment
 
-class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
+class SettingsActivity : AbstractActionBarActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
+    PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,7 +29,12 @@ class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.O
 
         if (savedInstanceState == null) {
             if (intent.hasExtra(EXTRA_SHOW_FRAGMENT)) {
-                showFragment(Fragment.instantiate(this, intent.getStringExtra(EXTRA_SHOW_FRAGMENT)))
+                showFragment(
+                    supportFragmentManager.fragmentFactory.instantiate(
+                        classLoader,
+                        intent.getStringExtra(EXTRA_SHOW_FRAGMENT)
+                    )
+                )
             } else {
                 showFragment(SettingsPreferenceFragment())
             }
@@ -35,7 +42,7 @@ class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.O
     }
 
     private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.transaction {
+        supportFragmentManager.commit {
             replace(R.id.fragment, fragment)
         }
     }
@@ -51,16 +58,25 @@ class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.O
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPreferenceStartFragment(caller: PreferenceFragmentCompat, pref: Preference): Boolean {
-        supportFragmentManager.transaction {
-            replace(R.id.fragment, Fragment.instantiate(this@SettingsActivity, pref.fragment))
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference
+    ): Boolean {
+        supportFragmentManager.commit {
+            replace(
+                R.id.fragment,
+                supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
+            )
             addToBackStack(null)
         }
 
         return true
     }
 
-    override fun onPreferenceDisplayDialog(caller: PreferenceFragmentCompat, pref: Preference?): Boolean {
+    override fun onPreferenceDisplayDialog(
+        caller: PreferenceFragmentCompat,
+        pref: Preference?
+    ): Boolean {
         if (pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback) {
             return pref.onPreferenceDisplayDialog(caller, pref)
         }
@@ -75,7 +91,10 @@ class SettingsActivity : AbstractActionBarActivity(), PreferenceFragmentCompat.O
             return Intent(context, SettingsActivity::class.java)
         }
 
-        fun <F : AbstractPreferenceFragment> createIntent(context: Context, preferenceFragment: Class<F>): Intent {
+        fun <F : AbstractPreferenceFragment> createIntent(
+            context: Context,
+            preferenceFragment: Class<F>
+        ): Intent {
             return createIntent(context).putExtra(EXTRA_SHOW_FRAGMENT, preferenceFragment.name)
         }
     }

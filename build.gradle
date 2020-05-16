@@ -33,6 +33,7 @@ buildscript {
     repositories {
         google {
             content {
+                includeGroupByRegex("com\\.android")
                 includeGroupByRegex("com\\.android\\..*")
                 includeGroupByRegex("com\\.google\\..*")
                 includeGroupByRegex("androidx\\..*")
@@ -48,19 +49,22 @@ buildscript {
         }
         mavenCentral()
         jcenter()
-        maven {
-            url "https://kotlin.bintray.com/kotlinx/"
-        }
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
-        classpath "com.google.gms:google-services:$googleServicesPluginVersion"
-        classpath "io.fabric.tools:gradle:$fabricIoPluginVersion"
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:$androidJunit5Version"
+        classpath "com.android.tools.build:gradle:$android_plugin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$versions_plugin_version"
+        classpath "com.google.gms:google-services:$google_services_plugin_version"
+        classpath "io.fabric.tools:gradle:$fabric_plugin_version"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:$junit5_plugin_version"
     }
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
 }
 
 allprojects {
@@ -70,6 +74,7 @@ allprojects {
     repositories {
         google {
             content {
+                includeGroupByRegex("com\\.android")
                 includeGroupByRegex("com\\.android\\..*")
                 includeGroupByRegex("com\\.google\\..*")
                 includeGroupByRegex("androidx\\..*")
@@ -83,14 +88,6 @@ allprojects {
                 includeGroupByRegex("io\\.fabric\\..*")
             }
         }
-        maven {
-            url 'https://maven.arcao.com'
-            content {
-                includeModule 'com.arcao', 'geocaching-api'
-                includeModule 'com.arcao', 'parent'
-            }
-        }
-
         // for Locus API
         maven {
             url "https://dl.bintray.com/asammsoft/maven/"
@@ -104,13 +101,10 @@ allprojects {
     }
 
     // dependencyUpdates: suggest only released artifacts
-    dependencyUpdates.resolutionStrategy = {
-        componentSelection { rules ->
-            rules.all { ComponentSelection selection ->
-                boolean rejected = ['alpha', 'beta', 'rc'].any { selection.candidate.version ==~ /(?i).*[.-]${it}.*/ }
-                if (rejected)
-                    selection.reject('Alpha builds')
-            }
+    dependencyUpdates {
+        // disallow release candidates as upgradable versions from stable versions
+        rejectVersionIf {
+            isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)
         }
     }
 }

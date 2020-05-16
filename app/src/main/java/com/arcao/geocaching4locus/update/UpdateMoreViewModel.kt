@@ -33,7 +33,7 @@ class UpdateMoreViewModel(
     val action = Command<UpdateMoreAction>()
     private var job: Job? = null
 
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun processIntent(intent: Intent) {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateMoreAction.LocusMapNotInstalled)

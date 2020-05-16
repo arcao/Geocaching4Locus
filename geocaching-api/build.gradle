@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "de.mannodermaus.android-junit5"
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
+    compileSdkVersion rootProject.compile_sdk_version
 
     defaultConfig {
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion rootProject.min_sdk_version
+        targetSdkVersion rootProject.target_sdk_version
         versionCode 1
         versionName "1.0"
 
@@ -27,6 +27,10 @@ android {
     }
 
     kotlinOptions {
+        freeCompilerArgs += [
+                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xjvm-default=compatibility"
+        ]
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
@@ -42,37 +46,37 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
 
-    api "com.github.scribejava:scribejava-core:$scribejavaVersion"
-    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejavaVersion") {
+    api "com.github.scribejava:scribejava-core:$scribejava_version"
+    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejava_version") {
         // exclude incompatible OkHttp library, use 3.12.x version instead
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
-    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
     // koin
-    implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-android:$koin_version"
 
-    api "com.jakewharton.threetenabp:threetenabp:$threeTenABPVersion"
+    api "com.jakewharton.threetenabp:threetenabp:$three_ten_abp_version"
 
-    implementation "com.squareup.moshi:moshi:$moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-    testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
-    androidTestImplementation "androidx.test:runner:$testRunnerVersion"
-    androidTestImplementation "de.mannodermaus.junit5:android-test-core:$androidTestJunit5"
-    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:$androidTestJunit5"
+    androidTestImplementation "androidx.test:runner:$test_runner_version"
+    androidTestImplementation "de.mannodermaus.junit5:android-test-core:$android_test_junit"
+    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:$android_test_junit"
 }

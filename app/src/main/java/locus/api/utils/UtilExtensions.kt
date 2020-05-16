@@ -7,7 +7,7 @@ inline fun <reified T> MutableList<in T>.addIgnoreNull(item: T?) {
     if (item != null) add(item)
 }
 
-@UseExperimental(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class)
 inline fun <reified T> Collection<T>?.isNullOrEmpty(): Boolean {
     contract {
         returns(false) implies (this@isNullOrEmpty != null)

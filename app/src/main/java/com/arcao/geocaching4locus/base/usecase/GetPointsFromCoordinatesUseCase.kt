@@ -26,7 +26,7 @@ class GetPointsFromCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         scope: CoroutineScope,
         coordinates: Coordinates,

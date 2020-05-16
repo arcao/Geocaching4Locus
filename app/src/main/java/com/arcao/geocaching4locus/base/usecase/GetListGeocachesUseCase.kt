@@ -46,7 +46,7 @@ class GetListGeocachesUseCase(
         }
     }
 
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         scope: CoroutineScope,
         referenceCode: String,

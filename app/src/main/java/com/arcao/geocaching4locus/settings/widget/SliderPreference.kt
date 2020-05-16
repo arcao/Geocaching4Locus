@@ -87,7 +87,7 @@ class SliderPreference @JvmOverloads constructor(
 
     override fun onPreferenceDisplayDialog(caller: PreferenceFragmentCompat, preference: Preference): Boolean {
         // check if dialog is already showing
-        val fragmentManager = caller.requireFragmentManager()
+        val fragmentManager = caller.parentFragmentManager
         if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return true
 
         if (preference !is SliderPreference) return false

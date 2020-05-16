@@ -35,7 +35,7 @@ abstract class BaseOAuthLoginFragment : Fragment() {
 
     private fun finishAction(showBasicMembershipWarning: Boolean) {
         if (showBasicMembershipWarning) {
-            BasicMembershipWarningDialogFragment.newInstance().show(requireFragmentManager())
+            BasicMembershipWarningDialogFragment.newInstance().show(parentFragmentManager)
             return
         }
 

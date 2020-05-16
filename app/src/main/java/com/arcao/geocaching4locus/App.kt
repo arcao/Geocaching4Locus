@@ -16,6 +16,7 @@ import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.util.AnalyticsUtil
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree
+import com.arcao.geocaching4locus.base.util.KoinTimberLogger
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.geocachingApiModule
 import com.crashlytics.android.Crashlytics
@@ -26,9 +27,6 @@ import locus.api.locusMapApiModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
-import org.koin.core.logger.Logger
-import org.koin.core.logger.MESSAGE
 import timber.log.Timber
 import java.util.UUID
 
@@ -79,15 +77,7 @@ class App : Application() {
             androidContext(this@App)
 
             if (BuildConfig.DEBUG) {
-                logger(object : Logger() {
-                    override fun log(level: Level, msg: MESSAGE) {
-                        when (level) {
-                            Level.DEBUG -> Timber.d(msg)
-                            Level.INFO -> Timber.i(msg)
-                            Level.ERROR -> Timber.e(msg)
-                        }
-                    }
-                })
+                logger(KoinTimberLogger())
             }
 
             modules(listOf(appModule, geocachingApiModule, locusMapApiModule, feedbackModule))
@@ -167,3 +157,4 @@ class App : Application() {
         }
     }
 }
+

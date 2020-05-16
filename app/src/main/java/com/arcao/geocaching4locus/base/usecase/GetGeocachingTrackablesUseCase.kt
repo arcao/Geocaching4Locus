@@ -19,7 +19,7 @@ class GetGeocachingTrackablesUseCase(
     private val trackableConverter: TrackableConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     suspend operator fun invoke(
         scope: CoroutineScope,
         referenceCode: String,

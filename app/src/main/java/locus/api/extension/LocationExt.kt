@@ -4,7 +4,7 @@ import locus.api.objects.extra.Location
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-@UseExperimental(ExperimentalContracts::class)
+@OptIn(ExperimentalContracts::class)
 fun Location?.isInvalid(): Boolean {
     contract {
         returns(false) implies (this@isInvalid is Location)

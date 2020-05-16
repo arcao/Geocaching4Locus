@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.transaction
+import androidx.fragment.app.commit
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
@@ -41,12 +41,12 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
                     showLocusMissingError()
                 }
                 ImportBookmarkAction.ShowList -> {
-                    supportFragmentManager.transaction {
+                    supportFragmentManager.commit {
                         replace(R.id.fragment, BookmarkListFragment.newInstance())
                     }
                 }
                 is ImportBookmarkAction.ChooseBookmark -> {
-                    supportFragmentManager.transaction {
+                    supportFragmentManager.commit {
                         replace(R.id.fragment, BookmarkFragment.newInstance(action.geocacheList))
                         addToBackStack(null)
                     }

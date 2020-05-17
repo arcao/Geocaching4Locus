@@ -1,7 +1,8 @@
 package com.arcao.geocaching4locus.base.usecase
 
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import locus.api.android.objects.PackPoints
 import locus.api.manager.LocusMapManager
@@ -21,13 +22,14 @@ class WritePointToPackPointsFileUseCase(
         }
     }
 
-    suspend operator fun invoke(channel: ReceiveChannel<Collection<Point>>) = withContext(dispatcherProvider.io) {
-        StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
-            for (points in channel) {
-                val pack = PackPoints()
-                points.forEach(pack::addPoint)
-                writer.write(pack)
+    suspend operator fun invoke(flow: Flow<Collection<Point>>) =
+        withContext(dispatcherProvider.io) {
+            StoreableWriter(locusMapManager.cacheFileOutputStream).use { writer ->
+                flow.collect { points ->
+                    val pack = PackPoints()
+                    points.forEach(pack::addPoint)
+                    writer.write(pack)
+                }
             }
         }
-    }
 }

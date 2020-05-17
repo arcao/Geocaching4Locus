@@ -86,7 +86,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocaches(
-        vararg referenceCodes: String,
+        referenceCodes: Array<String>,
         logsCount: Int = 10,
         imageCount: Int = 30,
         trackableCount: Int = 30,

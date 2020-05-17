@@ -8,10 +8,8 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
@@ -25,9 +23,8 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
-        scope: CoroutineScope,
         centerCoordinates: Coordinates,
         topLeftCoordinates: Coordinates,
         bottomRightCoordinates: Coordinates,
@@ -43,7 +40,7 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         terrainMax: Float = 5F,
         excludeIgnoreList: Boolean = true,
         countHandler: (Int) -> Unit = {}
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
         var count = AppConstants.LIVEMAP_CACHES_COUNT
@@ -74,9 +71,7 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
                     take = min(itemsPerRequest, count - current)
                 ).also {
                     count = min(it.totalCount, AppConstants.LIVEMAP_CACHES_COUNT.toLong()).toInt()
-                    withContext(dispatcherProvider.computation) {
-                        countHandler(count)
-                    }
+                    countHandler(count)
                 }
 
                 yield()
@@ -84,10 +79,11 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
                 if (geocaches.isEmpty())
                     break
 
-                send(mapper.createLocusPoints(geocaches))
+                emit(mapper.createLocusPoints(geocaches))
                 current += geocaches.size
 
-                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+                itemsPerRequest =
+                    DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
             }
         } finally {
             try {
@@ -102,5 +98,5 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         if (current == 0) {
             throw NoResultFoundException()
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 }

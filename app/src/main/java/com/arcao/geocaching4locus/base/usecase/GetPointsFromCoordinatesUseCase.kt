@@ -8,13 +8,11 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
-import locus.api.objects.extra.Point
 import timber.log.Timber
 import kotlin.math.min
 
@@ -26,9 +24,8 @@ class GetPointsFromCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
-        scope: CoroutineScope,
         coordinates: Coordinates,
         distanceMeters: Int,
         liteData: Boolean = true,
@@ -45,58 +42,60 @@ class GetPointsFromCoordinatesUseCase(
         excludeIgnoreList: Boolean = true,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
-    ): ReceiveChannel<List<Point>> {
-        return scope.produce(dispatcherProvider.io) {
-            geocachingApiLogin()
+    ) = flow {
+        geocachingApiLogin()
 
-            var count = maxCount
-            var current = 0
+        var count = maxCount
+        var current = 0
 
-            var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
-            while (current < count) {
-                val startTimeMillis = System.currentTimeMillis()
+        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+        while (current < count) {
+            val startTimeMillis = System.currentTimeMillis()
 
-                val geocaches = repository.search(
-                    filters = geocachingApiFilterProvider(
-                        coordinates,
-                        distanceMeters,
-                        downloadDisabled,
-                        downloadFound,
-                        downloadOwn,
-                        geocacheTypes,
-                        containerTypes,
-                        difficultyMin,
-                        difficultyMax,
-                        terrainMin,
-                        terrainMax
-                    ),
-                    logsCount = geocacheLogsCount,
-                    lite = liteData,
-                    skip = current,
-                    take = min(itemsPerRequest, count - current)
-                ).also {
-                    count = min(it.totalCount, maxCount.toLong()).toInt()
+            val geocaches = repository.search(
+                filters = geocachingApiFilterProvider(
+                    coordinates,
+                    distanceMeters,
+                    downloadDisabled,
+                    downloadFound,
+                    downloadOwn,
+                    geocacheTypes,
+                    containerTypes,
+                    difficultyMin,
+                    difficultyMax,
+                    terrainMin,
+                    terrainMax
+                ),
+                logsCount = geocacheLogsCount,
+                lite = liteData,
+                skip = current,
+                take = min(itemsPerRequest, count - current)
+            ).also {
+                count = min(it.totalCount, maxCount.toLong()).toInt()
+
+                withContext(dispatcherProvider.io) {
                     countHandler(count)
                 }
-
-                accountManager.restrictions().updateLimits(repository.userLimits())
-
-                yield()
-
-                if (geocaches.isEmpty())
-                    break
-
-                send(mapper.createLocusPoints(geocaches))
-                current += geocaches.size
-
-                itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
             }
 
-            Timber.v("found geocaches: %d", current)
+            accountManager.restrictions().updateLimits(repository.userLimits())
 
-            if (current == 0) {
-                throw NoResultFoundException()
-            }
+            yield()
+
+            if (geocaches.isEmpty())
+                break
+
+            emit(mapper.createLocusPoints(geocaches))
+            current += geocaches.size
+
+            itemsPerRequest =
+                DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
         }
-    }
+
+        Timber.v("found geocaches: %d", current)
+
+        if (current == 0) {
+            throw NoResultFoundException()
+        }
+    }.flowOn(dispatcherProvider.io)
 }

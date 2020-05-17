@@ -178,6 +178,5 @@ class ErrorActivity : AppCompatActivity() {
     }
 }
 
-@Suppress("NOTHING_TO_INLINE")
-internal inline fun Intent.hasPositiveAction() =
+internal fun Intent.hasPositiveAction() =
     getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null

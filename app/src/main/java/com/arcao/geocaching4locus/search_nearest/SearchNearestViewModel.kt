@@ -26,7 +26,7 @@ import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -198,7 +198,6 @@ class SearchNearestViewModel(
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
                 val points = getPointsFromCoordinates(
-                    this,
                     coordinates,
                     preferenceManager.downloadDistanceMeters,
                     filterPreferenceManager.simpleCacheData,

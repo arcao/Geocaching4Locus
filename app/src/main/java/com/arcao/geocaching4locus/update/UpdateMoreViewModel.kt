@@ -15,6 +15,7 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import locus.api.android.utils.IntentHelper
 import locus.api.manager.LocusMapManager
 import locus.api.mapper.PointMerger
@@ -79,17 +80,21 @@ class UpdateMoreViewModel(
                             lite = true
                         }
 
-                        val existingPoints = getPointsFromPointIndexes(this, pointIndexes)
+                        val existingPoints = getPointsFromPointIndexes(pointIndexes)
 
-                        val pointPairs =
-                            getOldPointNewPointPairFromPoint(this, existingPoints, lite, logsCount)
-                        for ((oldPoint, newPoint) in pointPairs) {
-                            if (newPoint == null) continue
+                        val pointPairs = getOldPointNewPointPairFromPoint(
+                            existingPoints,
+                            lite,
+                            logsCount
+                        )
 
-                            merger.mergePoints(newPoint, oldPoint)
-                            locusMapManager.updatePoint(newPoint)
-                            progress++
-                            updateProgress(progress = progress, maxProgress = pointIndexes.size)
+                        pointPairs.collect { (oldPoint, newPoint) ->
+                            if (newPoint != null) {
+                                merger.mergePoints(newPoint, oldPoint)
+                                locusMapManager.updatePoint(newPoint)
+                                progress++
+                                updateProgress(progress = progress, maxProgress = pointIndexes.size)
+                            }
                         }
                     }
                 }

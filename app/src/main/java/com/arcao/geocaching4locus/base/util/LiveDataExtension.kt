@@ -12,9 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean
 inline fun <T> LiveData<T>.withObserve(owner: LifecycleOwner, crossinline block: (T) -> Unit) =
     observe(owner, Observer { block(it!!) })
 
-@Suppress("NOTHING_TO_INLINE")
 @MainThread
-inline operator fun MutableLiveData<Unit>.invoke() {
+operator fun MutableLiveData<Unit>.invoke() {
     value = Unit
 }
 

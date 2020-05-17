@@ -15,7 +15,7 @@ import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
 
@@ -70,7 +70,6 @@ class ImportGeocacheCodeViewModel(
                     maxProgress = geocacheCodes.size
                 ) {
                     val channel = getPointsFromGeocacheCodes(
-                        this,
                         geocacheCodes,
                         !accountManager.isPremium,
                         filterPreferenceManager.geocacheLogsCount

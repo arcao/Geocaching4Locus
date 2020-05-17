@@ -29,8 +29,8 @@ import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
@@ -60,7 +60,6 @@ class LiveMapViewModel(
         }
     }
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
     private fun downloadLiveMapGeocaches(task: Intent) = viewModelScope.launch(dispatcher) {
         var requests = 0
 
@@ -72,8 +71,10 @@ class LiveMapViewModel(
 
             showProgress(maxProgress = count) {
                 val pointListChannel = getLiveMapPointsFromRectangleCoordinates(
-                    this,
-                    task.getCoordinates(LiveMapService.PARAM_LATITUDE, LiveMapService.PARAM_LONGITUDE),
+                    task.getCoordinates(
+                        LiveMapService.PARAM_LATITUDE,
+                        LiveMapService.PARAM_LONGITUDE
+                    ),
                     task.getCoordinates(
                         LiveMapService.PARAM_TOP_LEFT_LATITUDE,
                         LiveMapService.PARAM_TOP_LEFT_LONGITUDE
@@ -111,14 +112,21 @@ class LiveMapViewModel(
                 }
 
                 // send to locus map
-                sendPointsSilentToLocusMap(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, pointListChannel)
+                sendPointsSilentToLocusMap(
+                    AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX,
+                    pointListChannel
+                )
             }
         } catch (e: Exception) {
             handleException(e)
         } finally {
             val lastRequests = defaultPreferenceManager.liveMapLastRequests
             if (requests < lastRequests) {
-                removeLocusMapPoints(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, requests + 1, lastRequests)
+                removeLocusMapPoints(
+                    AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX,
+                    requests + 1,
+                    lastRequests
+                )
             }
             defaultPreferenceManager.liveMapLastRequests = requests
         }
@@ -133,7 +141,12 @@ class LiveMapViewModel(
 
         when (e) {
             is LocusMapRuntimeException -> {
-                notificationManager.showLiveMapToast(context.getText(R.string.error_locus_map, e.message ?: ""))
+                notificationManager.showLiveMapToast(
+                    context.getText(
+                        R.string.error_locus_map,
+                        e.message ?: ""
+                    )
+                )
                 // disable live map
                 notificationManager.isLiveMapEnabled = false
             }

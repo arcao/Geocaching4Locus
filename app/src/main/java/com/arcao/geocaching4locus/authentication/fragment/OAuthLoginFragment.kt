@@ -112,6 +112,7 @@ class OAuthLoginFragment : BaseOAuthLoginFragment() {
             return false
         }
 
+        @Suppress("UNUSED_PARAMETER")
         private fun isWebViewSafeUrl(url: String): Boolean {
             return true
         }

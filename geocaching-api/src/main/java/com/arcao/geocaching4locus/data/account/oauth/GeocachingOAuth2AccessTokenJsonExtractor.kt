@@ -6,8 +6,9 @@ import com.github.scribejava.core.oauth2.OAuth2Error
 import java.net.URI
 
 object GeocachingOAuth2AccessTokenJsonExtractor : OAuth2AccessTokenJsonExtractor() {
+    private const val FIELD_ERRORS = "errors"
     private const val FIELD_ERROR_MESSAGE = "errorMessage"
-    private const val FIELD_DETAiL = "detail"
+    private const val FIELD_DETAIL = "detail"
     private const val FIELD_ERROR_URI = "error_uri"
 
     override fun generateError(rawResponse: String) {
@@ -15,7 +16,7 @@ object GeocachingOAuth2AccessTokenJsonExtractor : OAuth2AccessTokenJsonExtractor
 
         val errorMessage = extractRequiredParameter(response, FIELD_ERROR_MESSAGE, rawResponse)
             .asText()
-        val detail = response.get(FIELD_DETAiL)?.asText()
+
         val errorUriString = response.get(FIELD_ERROR_URI)?.asText()
 
         val errorUri = try {
@@ -30,6 +31,8 @@ object GeocachingOAuth2AccessTokenJsonExtractor : OAuth2AccessTokenJsonExtractor
             // non oauth standard error code
             null
         }
+
+        val detail = response.get(FIELD_ERRORS)?.get(0)?.get(FIELD_DETAIL)?.asText()
 
         throw OAuth2AccessTokenErrorResponse(errorCode, detail, errorUri, rawResponse)
     }

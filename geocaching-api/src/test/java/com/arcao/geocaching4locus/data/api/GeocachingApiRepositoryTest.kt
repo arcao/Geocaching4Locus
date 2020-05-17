@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
+@Suppress("BlockingMethodInNonBlockingContext")
 internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
     @Test
     fun verifyRefreshTokenCalled() {
@@ -49,7 +50,7 @@ internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
         }
 
         // expected
-        assertEquals(StatusCode.NOT_FOUND, exception.statusCode)
+        assertEquals(StatusCode.UNAUTHORIZED, exception.statusCode)
         assertEquals("error", exception.statusMessage)
         assertEquals("description", exception.errorMessage)
     }

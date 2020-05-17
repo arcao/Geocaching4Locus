@@ -6,6 +6,7 @@ import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpoint
 import com.arcao.geocaching4locus.data.api.model.User
 import io.mockk.Called
 import io.mockk.Ordering
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockkClass
@@ -30,15 +31,19 @@ internal object GeocachingAuthenticationInterceptorTest {
     @JvmStatic
     @BeforeAll
     fun setupThreeTenABP() {
-        // load TZDB for ThreeTenABP
-        ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-            override fun initializeProviders() {
-                val stream = this::class.java.getResourceAsStream("/TZDB.dat")
-                stream.use {
-                    ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
+        try {
+            // load TZDB for ThreeTenABP
+            ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
+                override fun initializeProviders() {
+                    val stream = this::class.java.getResourceAsStream("/TZDB.dat")
+                    stream.use {
+                        ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
+                    }
                 }
-            }
-        })
+            })
+        } catch (ignored: IllegalStateException) {
+            // ignored
+        }
     }
 
     @BeforeEach
@@ -48,8 +53,10 @@ internal object GeocachingAuthenticationInterceptorTest {
             every { proceed(any()) } returns mockkClass(Response::class)
         }
 
-        account = mockkClass(GeocachingAccount::class, relaxed = true) {
+        account = mockkClass(GeocachingAccount::class) {
             every { accessToken } returns "accessToken1234"
+            coEvery { refreshToken() } returns true
+            every { updateUserInfo(any()) } returns Unit
         }
 
         val accountManager = mockkClass(AccountManager::class) {
@@ -78,6 +85,8 @@ internal object GeocachingAuthenticationInterceptorTest {
         verify(timeout = 5000) { chain.proceed(any()) }
         coVerify(Ordering.ORDERED, timeout = 5000) {
             account.refreshToken()
+
+            @Suppress("DeferredResultUnused")
             endpoint.userAsync()
         }
     }

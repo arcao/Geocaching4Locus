@@ -18,15 +18,19 @@ internal object Java8TimeAdapterTest {
     @JvmStatic
     @BeforeAll
     fun setupThreeTenABP() {
-        // load TZDB for ThreeTenABP
-        ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-            override fun initializeProviders() {
-                val stream = this::class.java.getResourceAsStream("/TZDB.dat")
-                stream.use {
-                    ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
+        try {
+            // load TZDB for ThreeTenABP
+            ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
+                override fun initializeProviders() {
+                    val stream = this::class.java.getResourceAsStream("/TZDB.dat")
+                    stream.use {
+                        ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
+                    }
                 }
-            }
-        })
+            })
+        } catch (ignored: IllegalStateException) {
+            // ignored
+        }
     }
 
     @BeforeEach

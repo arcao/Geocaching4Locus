@@ -16,7 +16,7 @@ internal object FavoritePointsFilterTest {
     @Test
     fun verifyOneFavoritePoints() {
         val given = FavoritePointsFilter(1)
-        val expected = "fav:1"
+        val expected = "mfav:1"
 
         assertTrue(given.isValid())
         assertEquals(expected, given.toString())
@@ -25,7 +25,7 @@ internal object FavoritePointsFilterTest {
     @Test
     fun verifyFiveFavoritePoints() {
         val given = FavoritePointsFilter(5)
-        val expected = "fav:5"
+        val expected = "mfav:5"
 
         assertTrue(given.isValid())
         assertEquals(expected, given.toString())

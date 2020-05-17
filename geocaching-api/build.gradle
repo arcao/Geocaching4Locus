@@ -51,11 +51,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
 
     api "com.github.scribejava:scribejava-core:$scribejava_version"
-    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejava_version") {
-        // exclude incompatible OkHttp library, use 3.12.x version instead
-        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
-    }
-
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     // koin

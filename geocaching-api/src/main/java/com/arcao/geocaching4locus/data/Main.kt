@@ -1,3 +1,5 @@
+@file:Suppress("BlockingMethodInNonBlockingContext")
+
 package com.arcao.geocaching4locus.data
 
 import com.arcao.geocaching4locus.data.account.FileAccountManager
@@ -72,7 +74,7 @@ fun main() {
 //
         api.geocaches(
             lite = false,
-            referenceCodes = *arrayOf(
+            referenceCodes = arrayOf(
                 "GCGH8J"
             )
         ).forEach {

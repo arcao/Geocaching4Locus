@@ -17,11 +17,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okio.Buffer
 import okio.Okio
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
-import org.threeten.bp.zone.TzdbZoneRulesProvider
-import org.threeten.bp.zone.ZoneRulesInitializer
-import org.threeten.bp.zone.ZoneRulesProvider
 import java.util.concurrent.TimeUnit
 
 abstract class GeocachingApiRepositoryBaseTest {
@@ -107,24 +103,4 @@ abstract class GeocachingApiRepositoryBaseTest {
 
     protected fun MockResponse.totalCount(totalCount: Long): MockResponse =
         setHeader("x-total-count", totalCount.toString())
-
-    companion object {
-        @JvmStatic
-        @BeforeAll
-        fun setupThreeTenABP() {
-            try {
-                // load TZDB for ThreeTenABP
-                ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-                    override fun initializeProviders() {
-                        val stream = this::class.java.getResourceAsStream("/TZDB.dat")
-                        stream.use {
-                            ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
-                        }
-                    }
-                })
-            } catch (ignored: IllegalStateException) {
-                // ignored
-            }
-        }
-    }
 }

@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 data class UserData(
     val foundDate: LocalDateTime?, // 2018-06-06T06:16:54.165Z

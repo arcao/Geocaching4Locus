@@ -25,6 +25,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$paging_version"
 
     kapt "androidx.databinding:databinding-compiler:$android_plugin_version"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -85,7 +86,9 @@ android {
 
         multiDexEnabled true
 
-        aaptOptions.cruncherEnabled = false
+        aaptOptions {
+            cruncherEnabled = false
+        }
 
         buildConfigField 'String', 'GIT_SHA', 'null'
         buildConfigField 'String', 'BUILD_TIME', 'null'
@@ -103,6 +106,7 @@ android {
         encoding 'UTF-8'
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -113,8 +117,8 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 
     signingConfigs {

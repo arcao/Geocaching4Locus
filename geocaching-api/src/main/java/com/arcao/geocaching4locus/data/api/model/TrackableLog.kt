@@ -1,7 +1,7 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
-import org.threeten.bp.Instant
+import java.time.Instant
 
 data class TrackableLog(
     val referenceCode: String, // string

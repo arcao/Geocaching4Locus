@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.data.api.util.toSafeInstant
-import org.threeten.bp.LocalDateTime
+import java.time.LocalDateTime
 
 data class GeocacheLog(
     val referenceCode: String, // string

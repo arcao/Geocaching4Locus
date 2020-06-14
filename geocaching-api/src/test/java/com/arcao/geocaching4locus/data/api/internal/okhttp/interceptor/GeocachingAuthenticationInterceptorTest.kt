@@ -15,36 +15,14 @@ import kotlinx.coroutines.CompletableDeferred
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.zone.TzdbZoneRulesProvider
-import org.threeten.bp.zone.ZoneRulesInitializer
-import org.threeten.bp.zone.ZoneRulesProvider
 
 internal object GeocachingAuthenticationInterceptorTest {
     private lateinit var account: GeocachingAccount
     private lateinit var interceptor: GeocachingAuthenticationInterceptor
     private lateinit var chain: Interceptor.Chain
     private lateinit var endpoint: GeocachingApiEndpoint
-
-    @JvmStatic
-    @BeforeAll
-    fun setupThreeTenABP() {
-        try {
-            // load TZDB for ThreeTenABP
-            ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-                override fun initializeProviders() {
-                    val stream = this::class.java.getResourceAsStream("/TZDB.dat")
-                    stream.use {
-                        ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
-                    }
-                }
-            })
-        } catch (ignored: IllegalStateException) {
-            // ignored
-        }
-    }
 
     @BeforeEach
     fun setup() {

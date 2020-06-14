@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import org.threeten.bp.Duration
+import java.time.Duration
 
 data class GeocacheLimits(
     val liteCallsRemaining: Int, // 0

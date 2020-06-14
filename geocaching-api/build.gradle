@@ -12,6 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true
+
         buildConfigField 'String', 'GEOCACHING_API_KEY', "\"${geocachingApiKey}\""
         buildConfigField 'String', 'GEOCACHING_API_SECRET', "\"${geocachingApiSecret}\""
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
@@ -24,6 +26,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
@@ -53,10 +56,10 @@ dependencies {
     api "com.github.scribejava:scribejava-core:$scribejava_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
 
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"
+
     // koin
     implementation "org.koin:koin-android:$koin_version"
-
-    api "com.jakewharton.threetenabp:threetenabp:$three_ten_abp_version"
 
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"

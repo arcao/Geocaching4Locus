@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.data.account
 
 import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
-import org.threeten.bp.Instant
+import java.time.Instant
 
 data class GeocachingAccount(
     private val accountManager: AccountManager,

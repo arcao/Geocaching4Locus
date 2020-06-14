@@ -4,7 +4,7 @@ import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeU
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
-import org.threeten.bp.Instant
+import java.time.Instant
 
 data class GeocacheList(
     val referenceCode: String = "", // string

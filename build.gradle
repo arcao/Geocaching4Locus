@@ -56,7 +56,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.ben-manes:gradle-versions-plugin:$versions_plugin_version"
         classpath "com.google.gms:google-services:$google_services_plugin_version"
-        classpath "io.fabric.tools:gradle:$fabric_plugin_version"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$firebase_crashlytics_plugin_version"
         classpath "de.mannodermaus.gradle.plugins:android-junit5:$junit5_plugin_version"
     }
 }

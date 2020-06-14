@@ -7,7 +7,7 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetOldPointNewPointPairFromPointUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromPointIndexesUseCase
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -29,6 +29,7 @@ class UpdateMoreViewModel(
     private val locusMapManager: LocusMapManager,
     private val merger: PointMerger,
     private val exceptionHandler: ExceptionHandler,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<UpdateMoreAction>()
@@ -60,7 +61,7 @@ class UpdateMoreViewModel(
                         if (IntentHelper.isIntentPointsTools(intent))
                             pointIndexes = IntentHelper.getPointsFromIntent(intent)
 
-                        AnalyticsUtil.actionUpdateMore(
+                        analyticsManager.actionUpdateMore(
                             pointIndexes?.size ?: 0,
                             accountManager.isPremium
                         )

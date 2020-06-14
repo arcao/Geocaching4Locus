@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 
 dependencies {
     // Android Support
@@ -58,8 +58,10 @@ dependencies {
     implementation "com.afollestad.material-dialogs:input:$material_dialogs_version"
 
     // Crashlytics & Firebase
-    implementation "com.google.firebase:firebase-core:$firebase_version"
-    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
 
     // Networking
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -131,6 +133,10 @@ android {
             ext.alwaysUpdateBuildId = false
             versionNameSuffix '-dev'
             crunchPngs false
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
         release {
             versionNameSuffix ''

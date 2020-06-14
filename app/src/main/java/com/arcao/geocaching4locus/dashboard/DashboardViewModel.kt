@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
 import com.arcao.geocaching4locus.base.util.invoke
@@ -20,6 +20,7 @@ class DashboardViewModel(
     private val notificationManager: LiveMapNotificationManager,
     private val accountManager: AccountManager,
     private val locusMapManager: LocusMapManager,
+    analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider), LiveMapNotificationManager.LiveMapStateChangeListener {
     val premium
@@ -32,7 +33,7 @@ class DashboardViewModel(
         notificationManager.addLiveMapStateChangeListener(this)
         liveMapEnabled(notificationManager.isLiveMapEnabled)
 
-        AnalyticsUtil.actionDashboard(calledFromLocusMap)
+        analyticsManager.actionDashboard(calledFromLocusMap)
     }
 
     fun onClickSearchNearest() {

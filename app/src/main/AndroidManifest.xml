@@ -27,12 +27,6 @@
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI11M7Jm9XH3drtBzgQE2yTA2VimFyXPJROK0xaA" />
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="d9f9c35025d01f3c5119cabffed73f1083e2c220" />
-        <meta-data
-            android:name="firebase_crashlytics_collection_enabled"
-            android:value="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

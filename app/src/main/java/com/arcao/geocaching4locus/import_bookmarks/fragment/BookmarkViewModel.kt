@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -38,6 +38,7 @@ class BookmarkViewModel(
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val locusMapManager: LocusMapManager,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -88,7 +89,7 @@ class BookmarkViewModel(
 
         job = mainLaunch {
             val selection = selection.value ?: return@mainLaunch
-            AnalyticsUtil.actionImportBookmarks(selection.size, false)
+            analyticsManager.actionImportBookmarks(selection.size, false)
 
             computationLaunch {
                 val geocacheCodes = selection.map { it.referenceCode }.toTypedArray()

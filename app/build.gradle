@@ -24,7 +24,6 @@ dependencies {
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation "androidx.paging:paging-runtime:$paging_version"
 
-    kapt "androidx.databinding:databinding-compiler:$android_plugin_version"
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"
 
     // kotlin

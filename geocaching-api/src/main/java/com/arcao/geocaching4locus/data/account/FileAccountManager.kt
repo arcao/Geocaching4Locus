@@ -5,7 +5,10 @@ import com.github.scribejava.core.oauth.OAuth20Service
 import java.io.File
 import java.time.Instant
 
-class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) :
+class FileAccountManager(
+    oAuthService: OAuth20Service,
+    private val dataFile: File = File("account.dat")
+) :
     AccountManager(oAuthService) {
     init {
         account = loadAccount()

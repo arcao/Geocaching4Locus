@@ -2,8 +2,10 @@ package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
+import com.squareup.moshi.JsonClass
 import java.time.Instant
 
+@JsonClass(generateAdapter = true)
 data class Trackable(
     val referenceCode: String, // string
     val iconUrl: String?, // string

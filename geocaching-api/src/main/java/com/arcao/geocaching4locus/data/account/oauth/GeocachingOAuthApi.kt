@@ -13,11 +13,18 @@ import com.github.scribejava.core.oauth2.clientauthentication.RequestBodyAuthent
 import java.io.OutputStream
 
 open class GeocachingOAuthApi : DefaultApi20() {
-    override fun getAuthorizationBaseUrl(): String = "https://www.geocaching.com/oauth/authorize.aspx"
+    override fun getAuthorizationBaseUrl(): String =
+        "https://www.geocaching.com/oauth/authorize.aspx"
+
     override fun getAccessTokenEndpoint(): String = "https://oauth.geocaching.com/token"
-    override fun getClientAuthentication(): ClientAuthentication = RequestBodyAuthenticationScheme.instance()
-    override fun getBearerSignature(): BearerSignature = BearerSignatureAuthorizationRequestHeaderField.instance()
-    override fun getAccessTokenExtractor(): TokenExtractor<OAuth2AccessToken> = GeocachingOAuth2AccessTokenJsonExtractor
+    override fun getClientAuthentication(): ClientAuthentication =
+        RequestBodyAuthenticationScheme.instance()
+
+    override fun getBearerSignature(): BearerSignature =
+        BearerSignatureAuthorizationRequestHeaderField.instance()
+
+    override fun getAccessTokenExtractor(): TokenExtractor<OAuth2AccessToken> =
+        GeocachingOAuth2AccessTokenJsonExtractor
 
     override fun createService(
         apiKey: String?,
@@ -45,7 +52,9 @@ open class GeocachingOAuthApi : DefaultApi20() {
     }
 
     class Staging : GeocachingOAuthApi() {
-        override fun getAuthorizationBaseUrl(): String = "https://staging.geocaching.com/oauth/authorize.aspx"
+        override fun getAuthorizationBaseUrl(): String =
+            "https://staging.geocaching.com/oauth/authorize.aspx"
+
         override fun getAccessTokenEndpoint(): String = "https://oauth-staging.geocaching.com/token"
     }
 }

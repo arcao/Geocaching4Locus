@@ -1,10 +1,12 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.squareup.moshi.JsonClass
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+@JsonClass(generateAdapter = true)
 data class Coordinates(
     val latitude: Double, // 0
     val longitude: Double // 0
@@ -36,7 +38,11 @@ data class Coordinates(
          * and third index is final bearing in degree
          * @since 1.20
          */
-        private fun computeDistanceAndBearing(source: Coordinates, destination: Coordinates, results: DoubleArray) {
+        private fun computeDistanceAndBearing(
+            source: Coordinates,
+            destination: Coordinates,
+            results: DoubleArray
+        ) {
             if (results.isEmpty() || results.size > 3) {
                 throw IllegalArgumentException("Results has to be initialized array of size 1, 2 or 3.")
             }

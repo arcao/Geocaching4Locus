@@ -15,7 +15,8 @@ internal object GeocacheTypeFilterTest {
 
     @Test
     fun verifyNegativeConstructorGeocacheType() {
-        val given = GeocacheTypeFilter(GeocacheType.TRADITIONAL, GeocacheType.GIGA_EVENT, not = true)
+        val given =
+            GeocacheTypeFilter(GeocacheType.TRADITIONAL, GeocacheType.GIGA_EVENT, not = true)
         val expected = "type:not(2,7005)"
 
         assertEquals(expected, given.toString())

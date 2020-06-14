@@ -14,7 +14,11 @@ import com.squareup.moshi.Moshi
 import java.lang.reflect.Type
 
 class EnumAdapterFactory : JsonAdapter.Factory {
-    override fun create(type: Type?, annotations: MutableSet<out Annotation>?, moshi: Moshi?): JsonAdapter<*>? {
+    override fun create(
+        type: Type?,
+        annotations: MutableSet<out Annotation>?,
+        moshi: Moshi?
+    ): JsonAdapter<*>? {
         return when (type) {
             AdditionalWaypointType::class.java -> AdditionalWaypointTypeAdapter.INSTANCE
             GeocacheListType::class.java -> GeocacheListTypeAdapter.INSTANCE

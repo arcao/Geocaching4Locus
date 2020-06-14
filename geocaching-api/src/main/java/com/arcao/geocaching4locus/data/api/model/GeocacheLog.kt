@@ -2,8 +2,10 @@ package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.data.api.util.toSafeInstant
+import com.squareup.moshi.JsonClass
 import java.time.LocalDateTime
 
+@JsonClass(generateAdapter = true)
 data class GeocacheLog(
     val referenceCode: String, // string
     val owner: User?, // User

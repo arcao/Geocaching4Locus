@@ -1,5 +1,8 @@
 package com.arcao.geocaching4locus.data.api.model
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 class GeocacheSize(
     id: Int,
     name: String

@@ -67,12 +67,18 @@ internal class PagedListAdapter<T> private constructor(private val elementAdapte
             val rawType = Types.getRawType(type)
             when {
                 annotations.isNotEmpty() -> null
-                rawType == PagedList::class.java -> newTotalCountArrayListAdapter<Any>(type, moshi).nullSafe()
+                rawType == PagedList::class.java -> newTotalCountArrayListAdapter<Any>(
+                    type,
+                    moshi
+                ).nullSafe()
                 else -> null
             }
         }
 
-        private fun <T> newTotalCountArrayListAdapter(type: Type, moshi: Moshi): JsonAdapter<PagedList<T?>> {
+        private fun <T> newTotalCountArrayListAdapter(
+            type: Type,
+            moshi: Moshi
+        ): JsonAdapter<PagedList<T?>> {
             val elementType = Types.collectionElementType(type, Collection::class.java)
             val elementAdapter = moshi.adapter<T>(elementType)
             return PagedListAdapter<T>(elementAdapter)

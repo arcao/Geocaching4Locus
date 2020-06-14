@@ -58,7 +58,13 @@ internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
     @Test
     fun verifyGeocachingApiExceptionThrown() {
         // given
-        server.enqueue(MockResponse().apiException(StatusCode.FORBIDDEN, "Forbidden", "user is forbidden"))
+        server.enqueue(
+            MockResponse().apiException(
+                StatusCode.FORBIDDEN,
+                "Forbidden",
+                "user is forbidden"
+            )
+        )
 
         // under test
         val exception = assertThrows(GeocachingApiException::class.java) {

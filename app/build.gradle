@@ -46,13 +46,6 @@ dependencies {
     implementation "com.arcao:slf4j-timber:$slf4jtimber_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    // ScribeJava
-    implementation "com.github.scribejava:scribejava-core:$scribejava_version"
-    implementation("com.github.scribejava:scribejava-httpclient-okhttp:$scribejava_version") {
-        // exclude incompatible OkHttp library, use 3.12.x version instead
-        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
-    }
-
     // Material dialogs
     implementation "com.afollestad.material-dialogs:core:$material_dialogs_version"
     implementation "com.afollestad.material-dialogs:input:$material_dialogs_version"

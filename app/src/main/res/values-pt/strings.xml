@@ -45,7 +45,7 @@
     <string name="pref_download_basic" comment="">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary" comment="">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show" comment="">Descarregar o restante da informação apenas na visualização</string>
-    <string name="pref_download_on_show_summary" comment="">Descarregar o restante da informação apenas quando o conteúdo for visualizado no Locus</string>
+    <string name="pref_download_on_show_summary" comment="">Transferir o resto da informação da cache quando o conteúdo dela for visualizado no Locus</string>
     <string-array name="pref_download_on_show_entries" comment="">
         <item>uma vez</item>
         <item>sempre</item>
@@ -55,7 +55,7 @@
     <string name="menu_nearest" comment="">Por perto</string>
     <string name="menu_users_guide" comment="">Guia do Utilizador</string>
     <string name="menu_settings" comment="">Definições</string>
-    <string name="var_user_waypoint_name" comment="">Ponto de passagem do utilizador %1$d</string>
+    <string name="var_user_waypoint_name" comment="">Waypoint do utilizador %1$d</string>
     <string name="var_final_location_name" comment="">Localização final</string>
     <string name="pref_login" comment="">Entrar</string>
     <string name="pref_login_summary" comment="">Entrar na conta Geocaching.com</string>
@@ -64,7 +64,7 @@
     <string name="error_network_unavailable" comment="">Rede indisponível. Por favor, verifica a tua conexão.</string>
     <string name="progress_update_geocaches" comment="">A atualizar caches…</string>
     <string name="pref_container_size" comment="">Tamanho do contentor</string>
-    <string name="toast_live_map_enabled" comment="">Mapa ao vivo ativado. Agora, move o mapa para veres as geocaches.</string>
+    <string name="toast_live_map_enabled" comment="">Mapa ao vivo ativado. Move o mapa para veres as geocaches.</string>
     <string name="toast_live_map_disabled" comment="">Mapa ao vivo desabilitado.</string>
     <string name="error_live_map_periodic_updates" comment="">Não permitiste o envio de atualizações periódicas no Locus Map. Por favor, habilita-as no Locus, em: Definições → Diversos → Conecta-te com complementos.</string>
     <string name="error_location_not_allowed" comment="">Nenhum serviço de localização permitido</string>
@@ -141,8 +141,8 @@
     <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Lamentamos, mas este recurso só está disponível para membros premium.</string>
     <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Erro no Locus</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Enviar relatório de erro </string>
-    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Obrigado por enviar o relatório.</string>
-    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Pretende continuar para o Locus apenas com dados parciais?</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Obrigado pelo envio do relatório.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Pretendes continuar para o Locus apenas com dados parciais?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Sim</string>
     <string name="button_no" comment="Dialog button for No action.">Não</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Esta extensão só funciona totalmente com uma subscrição premium. Como membro básico, podes transferir geocaches tradicionais, eventos e CITOs com dados básicos (sem descrição, sem dica, sem atributos, sem imagens, sem registos, etc.) e usar somente alguns filtros na pesquisa de geocaches. Para mais informação, por favor, lê o Guia do Utilizador no website do Geocaching4Locus.</string>
@@ -171,5 +171,6 @@
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Código de autorização</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">O código de autorização introduzido não é válido. Por favor, tenta novamente.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">A API do Geocaching está desativada para manutenção. Por favor, tenta mais tarde.</string>
-    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Desenvolvido pela a API Geocaching</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Funciona com a API do Geocaching</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Possível graças ao apoio das contas premium do Geocaching, o programa API permite que os programadores externos possam trabalhar com o Geocaching HQ num vasto leque de produtos e serviços integrados para a comunidade. As aplicações que se baseiam na API são criadas para funcionar com os serviços do geocaching.com e fornecer novas funcionalidades à comunidade Geocaching.</string>
 </resources>

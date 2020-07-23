@@ -55,19 +55,19 @@
     <string name="menu_nearest" comment="">Por perto</string>
     <string name="menu_users_guide" comment="">Guia do Utilizador</string>
     <string name="menu_settings" comment="">Definições</string>
-    <string name="var_user_waypoint_name" comment="">Waypoint de utilizador %1$d</string>
-    <string name="var_final_location_name" comment="">Local final</string>
+    <string name="var_user_waypoint_name" comment="">Ponto de passagem do utilizador %1$d</string>
+    <string name="var_final_location_name" comment="">Localização final</string>
     <string name="pref_login" comment="">Entrar</string>
     <string name="pref_login_summary" comment="">Entrar na conta Geocaching.com</string>
     <string name="pref_logout" comment="">Sair</string>
-    <string name="pref_logout_summary" comment="">Utilizador: %s</string>
-    <string name="error_network_unavailable" comment="">Rede inacessível. Por favor, verifica a tua ligação.</string>
+    <string name="pref_logout_summary" comment="">Sessão iniciada como %s</string>
+    <string name="error_network_unavailable" comment="">Rede indisponível. Por favor, verifica a tua conexão.</string>
     <string name="progress_update_geocaches" comment="">A atualizar caches…</string>
     <string name="pref_container_size" comment="">Tamanho do contentor</string>
     <string name="toast_live_map_enabled" comment="">Mapa ao vivo ativado. Agora, move o mapa para veres as geocaches.</string>
-    <string name="toast_live_map_disabled" comment="">Mapa ao vivo desligado.</string>
-    <string name="error_live_map_periodic_updates" comment="">Não ativaste o envio de atualizações periódicas no Locus Map. Por favor, ativa-as no Locus, em: Definições → Diversos → Ligar às extensões.</string>
-    <string name="error_location_not_allowed" comment="">Não é permitido nenhum serviço de localização</string>
+    <string name="toast_live_map_disabled" comment="">Mapa ao vivo desabilitado.</string>
+    <string name="error_live_map_periodic_updates" comment="">Não permitiste o envio de atualizações periódicas no Locus Map. Por favor, habilita-as no Locus, em: Definições → Diversos → Conecta-te com complementos.</string>
+    <string name="error_location_not_allowed" comment="">Nenhum serviço de localização permitido</string>
     <string name="button_settings" comment="">Definições</string>
     <string name="menu_import_from_gc" comment="">Importar GC</string>
     <string name="title_import_from_gc" comment="">Importar do código GC</string>
@@ -90,6 +90,10 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Atingiste o limite de transferência de detalhes completos das caches de <b>%1$s por %2$s período</b>. A tua quota diária será reiniciada às %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Ei, vai com calma!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Atingiste o limite máximo de ações/chamadas por minuto.</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d cache</item>
+        <item quantity="other">%d caches</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d hora</item>
         <item quantity="other">%d horas</item>
@@ -167,4 +171,5 @@
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Código de autorização</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">O código de autorização introduzido não é válido. Por favor, tenta novamente.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">A API do Geocaching está desativada para manutenção. Por favor, tenta mais tarde.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Desenvolvido pela a API Geocaching</string>
 </resources>

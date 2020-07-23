@@ -14,6 +14,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Jednostki imperialne</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Używaj mil zamiast kilometrów</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Nie jesteś zalogowany. Proszę najpierw zalogować się w ustawieniach konta.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Zainstalowana wersja programu Locus jest nieaktualna. Do poprawnego działania Geocaching4Locus wymaga wersji %s albo nowszej. </string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Anuluj</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Pokaż znalezione</string>
@@ -25,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Aktualizowanie skrzynki…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Ilość logów</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Ilość wpisów do pobrania wraz ze skrzynką</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Pokazuj nieaktywne</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Pokazuj tymczasowo niedostępne skrzynki</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Pobieranie skrzynki…</string>

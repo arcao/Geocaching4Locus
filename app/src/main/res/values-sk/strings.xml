@@ -14,6 +14,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Imperiálne jednotky</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Použitie míľ namiesto kilometrov</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Nie ste prihlásený. Prihláste sa prosím najprv v nastavení účtu.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Nainštalovaná verzia Locus Map je príliš stará. Geocaching4Locus vyžaduje verziu %s alebo vyššiu.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Zrušiť</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Zobraziť najdené</string>
@@ -25,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Aktualizujem skrýšu…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Počet záznamov</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Počet záznamov k stiahnutiu</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Zobraziť zrušené</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Zobraziť dočasne zrušené skrýše</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Sťahujem skrýšu…</string>
@@ -120,6 +122,7 @@
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Notifikácie zakázané</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Zobraziť notifikáciu, keď je aktívna mapa zakázaná. Toto funguje iba v prípade, že pravidelné aktualizácie sú povolené v Locus Map a Locus Map beží.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Všetko</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Sťahujem záznamy…</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Stiahnuť záznamy</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Stiahnuť záznamy aktualizuje skrýš</string>
@@ -128,6 +131,7 @@
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Zmení veľkosť kroku u dialógu na vybranie počtu skrýš</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Niektoré filtre vyžadujú prémiový účet, ktorý nemáte. Aplikácia sa prepne do režimu pre základný účet. Prosím, skúste to znova.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Účet</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Aktívna mapa</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Sťahovanie</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Pokročilé</string>

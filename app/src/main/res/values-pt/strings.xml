@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">A transferir caches…</string>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">A descarregar caches…</string>
     <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">A aplicação do Locus Map não foi encontrada, mas o Geocaching4Locus precisa dela para funcionar corretamente. Por favor, instala o Locus Map.</string>
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Por favor, ativa o serviço de localização por Wi-Fi ou GPS nas definições.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">A adquirir a localização através do GPS…</string>
@@ -13,7 +13,8 @@
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Distância em milhas</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Unidades imperiais</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Usar milhas em vez de quilómetros</string>
-    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Não estás ligado. Por favor, liga-te primeiro nas definições de conta.</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Não estás conetado. Por favor, coneta-te primeiro nas definições de conta.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">A versão instalada do Locus é antiga. O Geocaching4Locus requer a versão %s ou superior para funcionar corretamente.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Cancelar</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Mostrar encontradas</string>
@@ -21,15 +22,16 @@
     <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Mostrar escondidas por mim</string>
     <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Mostrar caches próprias (escondidas por ti)</string>
     <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Selecionar tudo</string>
-    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">Retirar seleção</string>
+    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">Desselecionar tudo</string>
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">A atualizar cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Número de registos</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Número de registos a descarregar com a cache</string>
-    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Mostrar inativos</string>
-    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Mostrar caches temporariamente inativas</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Mostrar desabilitados</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Mostrar caches temporariamente desabilitadas</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">A descarregar cache…</string>
     <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Versão</string>
-    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Website, fórum, etc.</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Sítio, fórum, etc.</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Doar por Paypal</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Apoiar os desenvolvimentos futuros…</string>
     <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Escolha a moeda</string>
@@ -43,7 +45,7 @@
     <string name="pref_download_basic" comment="">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary" comment="">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show" comment="">Descarregar o restante da informação apenas na visualização</string>
-    <string name="pref_download_on_show_summary" comment="">Descarregar o restante da informação apenas quando o conteudo for visualizado no Locus</string>
+    <string name="pref_download_on_show_summary" comment="">Descarregar o restante da informação apenas quando o conteúdo for visualizado no Locus</string>
     <string-array name="pref_download_on_show_entries" comment="">
         <item>uma vez</item>
         <item>sempre</item>

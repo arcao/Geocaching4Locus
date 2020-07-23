@@ -14,6 +14,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Imperial måleenheter</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Bruk miles i stedet for kilometer</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Du er ikke pålogget. Logg på først i konto innstillinger.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Locusversjonen din er for gamal. Du må ha versjon %s eller nyare for å fungera skikkeleg.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Avbryt</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Vis funne</string>
@@ -25,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Hentar  ny cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal loggar</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal loggar som skal lastast ned med hurtigminne</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Vis avslåtte</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Syn midlertidig avslåtte hurtigminne</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Lastar ned hurtigminne…</string>
@@ -112,6 +114,7 @@
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiver varslinger</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis melding når live kart slås av. Dette virker kun når periodiske oppdateringer er slått på i Locus Map og når Locus Map kjører.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Laster ned logger...</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Last ned logger</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Laste ned logger vil oppdatere cachen</string>
@@ -120,6 +123,7 @@
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Endre stegstørrelse for antall cacher dialog</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Noen filtre krever premium medlemskap, noe du ikke har. Dette tillegget skifter til modus for basis medlemskap. Prøv igjen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Konto</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kart</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Lastar ned</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Avansert</string>
@@ -165,4 +169,7 @@
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Vennligst lim inn autorisasjonskoden.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Autorisasjonskode</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Den angitte autorisasjonskoden er ikke gyldig. Vær så snill, prøv på nytt.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API er for øyeblikket nede på grunn av vedlikehold. Prøv det senere.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Drevet av Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Gjøres mulig med støtte fra Geocaching Premium Memberships, gir API-programmet tredjepartsutviklere muligheten til å samarbeide med Geocaching HQ på en komplett pakke med integrerte produkter og tjenester for samfunnet. API-utviklerapplikasjoner er designet for å jobbe med kjernetjenestene til geocaching.com og gi tilleggsfunksjoner til geocaching-fellesskapet.</string>
 </resources>

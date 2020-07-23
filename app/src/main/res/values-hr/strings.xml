@@ -1,2 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Odaberi sve</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Ažuriram cache…</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Broj zapisnika</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Broj zapisnika za skidanje s cacheom</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Pokaži onemogućeno</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Pokaži privremeno onemogućene cacheove</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Skidam cache…</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Verzija</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Website, forum, itd.</string>
+    <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Donirajte preko Paypal</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Podržite razvoj u budućnosti…</string>
+    <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Odaberite valutu</string>
+    <string name="pref_geocache_type" comment="">Vrste cacheova</string>
+    <string name="pref_difficulty" comment="">Težina</string>
+    <string name="pref_terrain" comment="">Teren</string>
+    <string name="pref_difficulty_min" comment="">Min. težina</string>
+    <string name="pref_difficulty_max" comment="">Max. težina</string>
+    <string name="pref_terrain_min" comment="">Min. teren</string>
+    <string name="pref_terrain_max" comment="">Max. teren</string>
+    <string name="pref_download_basic" comment="">Samo osnovne informacije</string>
+    <string name="pref_download_basic_summary" comment="">Skini samo osnovne informacije o cachu</string>
+    <string name="pref_download_on_show" comment="">Skini ostatak informacija na prikaz</string>
+    <string name="pref_download_on_show_summary" comment="">Skini ostatak informacija o cacheu kada je njegov sadržaj prikazan u Locusu</string>
+    <string-array name="pref_download_on_show_entries" comment="">
+        <item>jednom</item>
+        <item>svaki</item>
+        <item>nikad</item>
+    </string-array>
+    <string name="menu_live_map" comment="">Živa mapa</string>
+    <string name="menu_nearest" comment="">Najbliže</string>
+    <string name="menu_users_guide" comment="">Korisnički priručnik</string>
+    <string name="menu_settings" comment="">Postavke</string>
+    <string name="var_user_waypoint_name" comment="">Korisnička točka %1$d</string>
+    <string name="var_final_location_name" comment="">Konačna lokacija</string>
+    <string name="pref_login" comment="">Prijavi se</string>
+    <string name="pref_login_summary" comment="">Prijavite se u Vaš geocaching,com račun</string>
+    <string name="pref_logout" comment="">Odjavi se</string>
+    <string name="pref_logout_summary" comment="">Prijavljen kao %s</string>
+    <string name="error_network_unavailable" comment="">Mreža nedostupna. Molimo Vas, provjerite vezu.</string>
+    <string name="progress_update_geocaches" comment="">Ažuriram caheove…</string>
+    <string name="pref_container_size" comment="">Veličina spremnika</string>
+    <string name="toast_live_map_enabled" comment="">Živa karta omogućen. Sada premjestite s karte da vidi sprema.</string>
+    <string name="toast_live_map_disabled" comment="">Živa karta je onemogućen.</string>
+    <string name="error_live_map_periodic_updates" comment="">Nemate dozvoljeno slanje periodičnog ažuriranja od Locus Map. Molimo, omogućite to najprije u Locus Map pod: Settings → Miscellaneous → Connect with add-ons.</string>
+    <string name="error_location_not_allowed" comment="">Nije dopuštena lokacijska usluga</string>
+    <string name="button_settings" comment="">Postavke</string>
+    <string name="menu_import_from_gc" comment="">Uvezi GC</string>
+    <string name="title_import_from_gc" comment="">Uvezi iz GC koda</string>
+    <string name="error_gc_code_invalid" comment="">GC kod nije valjan.</string>
+    <string name="title_geocache_count" comment="">Broj cacheova</string>
+    <string name="launcher_nearest_geocaches" comment="">Najbliži cacheovi</string>
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Žao nam je, ali ova odlika je samo za Premium članove.</string>
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Locus Map greška</string>
+    <string name="button_send_error_report" comment="Button for Send error report action.">Pošalji izvješće o greški</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Hvala Vam što ste poslali grešku.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Želite li nastaviti s djelomično primljenim podacima ka Locus Map?</string>
+    <string name="button_yes" comment="Dialog button for Yes action.">Da</string>
+    <string name="button_no" comment="Dialog button for No action.">Ne</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Ovaj dodatak u potpunosti funkcionira samo s premium članstvom. Kao osnovni član možete preuzeti tradicionalne, događajne i CITO geochecheve s osnovnim podacima geocachea (bez uvrštavanja, bez nagovještaja, bez atributa, bez slika, bez zapisnika itd.) I koristite samo nekoliko filtera u pretraživanju geocacheva. Za više informacija, pročitajte korisnički vodič na web lokaciji Geocaching4Locus.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Pokažite mi korisnički vodič</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">Aplikacija zahtijeva <b>pisanje vanjsku pohranu</b> dozvolu za pohranu sprema podatke za Locus Map. <b>Dozvolite</b> ovu dozvolu u sljedećem dijalogu.</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Aplikacija nema dozvolu za <b>pisanje vanjsku pohranu</b>. Dopuštenje je potrebno za spremanje sprema podatke za Locus Map.</string>
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Sakrij sprema na onemogućen</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Sakrij sprema žive karti kada se značajka karta živa je onemogućen</string>
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Gledajte geocache</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Oznaka geocache</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">Uvoz geocacheova uživo karata</string>
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map.">Provjerite je li omogućena Live Map i Locus Map prikazuje Geocaches geochache.</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Uvoz karte uživo u GC</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Ne pokazuj više ovu poruku</string>
+    <string name="title_warning" comment="Warning dialog title">Upozorenje</string>
+    <string name="button_more_info" comment="Dialog button for More info action">Više informacija</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map greška: %s</string>
+</resources>

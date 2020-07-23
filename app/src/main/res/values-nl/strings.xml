@@ -14,6 +14,7 @@
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Imperiale eenheden</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Gebruik miles in plaats van kilometers</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Je bent niet aangemeld. AUB aanmelden via account instellingen.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">De geïnstalleerde versie van Locus Map is te oud. Geocaching4Locus Map heeft versie %s of hoger nodig om naar behoren te werken.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Annuleren</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Toon gevonden</string>
@@ -25,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Bezig met updaten van cache…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Aantal logs</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Aantal logs om te downloaden met cache</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Toon uitgeschakelde</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Toon tijdelijk uitgeschakelde caches</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Bezig met downloaden van cache…</string>
@@ -112,6 +114,7 @@
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Gedeactiveerde melding</string>
     <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Toon een melding wanneer Live map uitgeschakeld is. Dit werkt enkel indien periodieke updates toegestaan zijn in Locus Map en Locus Map actief is.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filter</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Bezig met downloaden van logs…</string>
     <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Logboeken downloaden</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Logboeken downloaden update Geocache</string>
@@ -119,6 +122,8 @@
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Stap grootte voor aantal caches</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Verander stap grootte voor dialoog over aantal caches</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Sommige filters vereisen een premium account welke u niet hebt. De applicatie zal terug wisselen naar een mode voor gewone gebruikers. Probeert u aub opnieuw.</string>
+    <string name="pref_account" comment="Title of preference category for Account settings.">Account</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kaart</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Bezig met downloaden</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Geavanceerd</string>
@@ -165,4 +170,7 @@ Dit programma gaat proberen een web browser van een derde partij te gebruiken. N
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Gelieve uw autorisatiecode te plakken.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Toegangs code</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">De ingegeven autorisatiecode is ongeldig. Gelieve opnieuw te proberen.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API is momenteel niet beschikbaar vanwege onderhoud. Probeer het later opnieuw.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Aangedreven door Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Mogelijk gemaakt door de ondersteuning van Geocaching Premium-lidmaatschappen, biedt het API-programma externe ontwikkelaars de mogelijkheid om met Geocaching HQ te werken aan een volledige suite van geïntegreerde producten en diensten voor de gemeenschap. API-ontwikkelaarsapps zijn ontworpen om te werken met de kernservices van geocaching.com en bieden extra functies aan de geocaching-gemeenschap.</string>
 </resources>

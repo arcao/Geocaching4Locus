@@ -13,6 +13,8 @@
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Distancia en millas</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Unidades imperiales</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Usar millas en vez de kilómetros</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">No ha iniciado sesión. Inicie sesión primero en la configuración de la cuenta.</string>
+    <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">La versión instalada de Locus es demasiado antigua. Geocaching4Locus requiere la versión %s o superior para funcionar correctamente.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Cancelar</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Mostrar encontrados</string>
@@ -24,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Actualizando caché…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Recuento de registros</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Recuento de registros a descargar con caché</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Mostrar deshabilitados</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Mostrar cachés temporalmente deshabilitados</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Descargando caché…</string>
@@ -50,6 +53,7 @@
     </string-array>
     <string name="menu_live_map" comment="">Mapa dinámico</string>
     <string name="menu_nearest" comment="">Más cercano</string>
+    <string name="menu_users_guide" comment="">Manual de uso</string>
     <string name="menu_settings" comment="">Ajustes</string>
     <string name="var_user_waypoint_name" comment="">Waypoint usuario %1$d</string>
     <string name="var_final_location_name" comment="">Ubicación final</string>
@@ -82,6 +86,10 @@
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Has alcanzado el límite de descarga de detalles completos de <b>%1$s por %2$s periodo</b>. Tu cuota diaria se reseteará en %3$s.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">¡Eh, despacio!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Se ha alcanzado el límite máximo de acciones/llamadas por minuto.</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d caché</item>
+        <item quantity="other">%d cachés</item>
+    </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d hora</item>
         <item quantity="other">%d horas</item>
@@ -121,6 +129,7 @@
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Carga más lento y más exigente en la utilización de los datos</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Enviar comentarios</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">No se pudo encontrar ningún cachés que responden a su búsqueda.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">Debido al vencimiento del token (después de 90 días), se ha cerrado la sesión. Inicia sesión de nuevo.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importar favoritos</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Importar favoritos</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">App no tiene permiso para acceder al servicio de localización.</string>
@@ -131,8 +140,29 @@
     <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Gracias por enviar el error usted.</string>
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">¿Quieres continuar con datos parcialmente recibidas a Locus Map?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Si</string>
+    <string name="button_no" comment="Dialog button for No action.">No</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Este complemento funciona completamente con una membresía premium solamente. Como miembro básico, puede descargar geocachés tradicionales, de eventos y CITO con datos básicos de geocaché (sin listado, sin sugerencias, sin atributos, sin imágenes, sin registros, etc.) y utilizando solo unos pocos filtros en la búsqueda de geocachés. Para obtener más información, lea la guía del usuario en el sitio web Geocaching4Locus.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Mostrar guía del usuario</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">La aplicación requiere permiso de <b>escritura de almacenamiento externo</b> para almacenar datos de geocaché para Locus Map. Por favor, <b>permitir</b> que este permiso en un cuadro de diálogo siguiente.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">La aplicación no tiene permiso para <b>escribir en el almacenamiento externo</b>. Este permiso es necesario para almacenar datos de geocaching para Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Ocultar geocachés en desactivada</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Ocultar mapa dinámico geocachés cuando la función está desactivada mapa dinámico</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Deshabilitar cachés DNF, NM y NA</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Marcar geocaché como no disponible cuando contiene más <i>No se encontró</i>, <i>Necesita mantenimiento</i> o <i>Necesita archivado</i> registros</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Cuántos últimos logs comprobar</string>
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Ver geocaché</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Geocaché de favoritos</string>
+    <string name="title_warning" comment="Warning dialog title">Atención</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Su dispositivo Android contiene una aplicación personalizada de ahorro de batería del fabricante del dispositivo que impide que Live Map funcione correctamente. Agregue una excepción a la aplicación de ahorro de batería para Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action">Más informanción</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Error de Locus Map: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">No se puede crear el archivo de datos para Locus Map. ¿Ha aprobado un permiso de acceso a archivos externos?</string>
+    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs.">La versión de su dispositivo Android no es compatible con la última capa de seguridad de transporte (TLS 1.1 y 1.2) para el navegador web incorporado.\n\n
+        Esta aplicación intentará utilizar un navegador web de terceros en su lugar. Después de aprobar el acceso a su cuenta de Geocaching, copie un código de autorización, regrese aquí y péguelo aquí.</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Por favor, pegue el código de autorización.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Código de autorización</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">El código de autorización introducido no es válido. Por favor, inténtelo de nuevo.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">La API de Geocaching está actualmente inactiva debido al mantenimiento. Por favor intente más tarde.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Desarrollado por Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Hecho posible a través del soporte de las Membresías Premium de Geocaching, el programa API brinda a los desarrolladores externos la oportunidad de trabajar con Geocaching HQ en un conjunto completo de productos y servicios integrados para la comunidad. Las aplicaciones de desarrollador de API están diseñadas para trabajar con los servicios principales de geocaching.com y proporcionar funciones adicionales a la comunidad de geocaching.</string>
 </resources>

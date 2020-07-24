@@ -10,8 +10,8 @@
     <string name="button_cancel" comment="Dialog button for cancel action.">Mégsem</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Megtaláltak mutatása</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">A már megtalált ládák mutatása</string>
-    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Hozzászólások száma</string>
-    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">A ládával letöltött hozzászólások száma</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Logok száma</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">A ládával letöltött logok száma</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Verziószám</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Weboldal, fórum stb.</string>
@@ -52,8 +52,15 @@
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Engedélyezés</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Letiltás</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Beállítások</string>
+    <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Értesítések kikapcsolva</string>
+    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Értesítés megjelenítése, ha az Élő térkép le van tiltva. Ez csak akkor működik, ha az időszakos frissítések engedélyezettek a Locus Mapban, és az fut.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Mind</string>
     <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Szűrő</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Logok letöltése</string>
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Logok letöltése láda frissítéskor</string>
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">\"Logok letöltése\" művelet frissíti a geoláda adatokat is</string>
+    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Lépésméret a ládák számához</string>
+    <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Lépésméret módosítása a ládák számához válassza a párbeszédpanelt</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Profil</string>
     <string name="pref_filter" comment="Title of preference category for Filter settings.">Szűrő</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Élő térkép</string>
@@ -61,12 +68,17 @@
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Haladó</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Névjegy</string>
     <string name="title_login" comment="Window title for sign in task.">Belépés</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Tippek letöltése</string>
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Lassabb letöltést és több adathasználatot igényel</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Visszajelzés küldése</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Hibajelentés küldése</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Igen</string>
     <string name="button_no" comment="Dialog button for No action.">Nem</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Kikapcsolja az NT, KSz és AK ládákat</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Nem elérhetőnek van jelölve a geoláda, ha több ilyet logot tartalmaz <i>Nem Található</i>, <i>Karbantartás Szükséges</i> vagy <i>Archiválni Kell</i></string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Hány darabot az utolsó logokból kell ellenőrizni</string>
     <string name="title_warning" comment="Warning dialog title">Figyelem</string>
     <string name="button_more_info" comment="Dialog button for More info action">További információ</string>
 </resources>

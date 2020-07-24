@@ -10,6 +10,8 @@
     <string name="button_cancel" comment="Dialog button for cancel action.">Mégsem</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Megtaláltak mutatása</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">A már megtalált ládák mutatása</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Hozzászólások száma</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">A ládával letöltött hozzászólások száma</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Verziószám</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Weboldal, fórum stb.</string>

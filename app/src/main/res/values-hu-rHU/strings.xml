@@ -10,14 +10,24 @@
     <string name="button_cancel" comment="Dialog button for cancel action.">Mégsem</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Megtaláltak mutatása</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">A már megtalált ládák mutatása</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Saját rejtések mutatása</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Saját ládák mutatása (általad elrejtve)</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Logok száma</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">A ládával letöltött logok száma</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Letiltottak mutatása</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Átmenetileg letiltott ládák mutatása</string>
     <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Verziószám</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Weboldal, fórum stb.</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Adományozz PayPal-on</string>
     <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Támogasd a jövőbeli fejlesztéseket…</string>
+    <string name="pref_geocache_type" comment="">Láda típusa</string>
+    <string name="pref_difficulty" comment="">Nehézség</string>
     <string name="pref_terrain" comment="">Terep</string>
+    <string name="pref_difficulty_min" comment="">Min. nehézség</string>
+    <string name="pref_difficulty_max" comment="">Max. nehézség</string>
+    <string name="pref_terrain_min" comment="">Min. terep</string>
+    <string name="pref_terrain_max" comment="">Max. terep</string>
     <string name="pref_download_basic" comment="">Csak alapinformáció</string>
     <string name="pref_download_basic_summary" comment="">Csak az alapinformációk letöltése a ládákról</string>
     <string name="pref_download_on_show" comment="">További infók letöltése megjelenítéskor</string>
@@ -30,13 +40,16 @@
     <string name="menu_live_map" comment="">Élő térkép</string>
     <string name="menu_nearest" comment="">Legközelebbi</string>
     <string name="menu_settings" comment="">Beállítások</string>
-    <string name="pref_login" comment="">Belépés</string>
-    <string name="pref_logout" comment="">Kilépés</string>
+    <string name="pref_login" comment="">Bejelentkezés</string>
+    <string name="pref_logout" comment="">Kijelentkezés</string>
+    <string name="pref_logout_summary" comment="">Bejelentkezve mint %s</string>
+    <string name="pref_container_size" comment="">Tároló mérete</string>
     <string name="button_settings" comment="">Beállítások</string>
     <string name="menu_import_from_gc" comment="">GC importálása</string>
     <string name="title_import_from_gc" comment="">Importálás GC kódból</string>
     <string name="error_gc_code_invalid" comment="">Érvénytelen GC kód.</string>
     <string name="launcher_import_from_gc" comment="">Importálás GC kódból</string>
+    <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog">Alaptagsági hozzáférés</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
         <item quantity="one">%d láda</item>
         <item quantity="other">%d láda</item>
@@ -67,18 +80,26 @@
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Letöltés</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Haladó</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Névjegy</string>
-    <string name="title_login" comment="Window title for sign in task.">Belépés</string>
+    <string name="title_login" comment="Window title for sign in task.">Bejelentkezés</string>
     <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Tippek letöltése</string>
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Lassabb letöltést és több adathasználatot igényel</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Visszajelzés küldése</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Ez a funkció csak prémium tagoknak szól, sajnáljuk.</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Hibajelentés küldése</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Igen</string>
     <string name="button_no" comment="Dialog button for No action.">Nem</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Mutasd a felhasználói útmutatót</string>
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Geoládák elrejtése ha ki van kapcsolva</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Élő térképes geoládák elrejtése, ha az Élő térkép szolgáltatás ki van kapcsolva</string>
     <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Kikapcsolja az NT, KSz és AK ládákat</string>
     <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Nem elérhetőnek van jelölve a geoláda, ha több ilyet logot tartalmaz <i>Nem Található</i>, <i>Karbantartás Szükséges</i> vagy <i>Archiválni Kell</i></string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Hány darabot az utolsó logokból kell ellenőrizni</string>
     <string name="title_warning" comment="Warning dialog title">Figyelem</string>
     <string name="button_more_info" comment="Dialog button for More info action">További információ</string>
+    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Kérjük, illessze be a hitelesítő kódot.</string>
+    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Hitelesítő kód</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Geocaching API támogatásával</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">A Geocaching Premium Tagság támogatásával az API program harmadik fél fejlesztőinek lehetőséget kínál arra, hogy a Geocaching HQ-val együttműködve a közösség számára integrált termékek és szolgáltatások teljes sorozatán dolgozzanak. Az API fejlesztői alkalmazásokat úgy tervezték, hogy működjenek együtt a geocaching.com alapvető szolgáltatásaival, és kiegészítő funkciókat biztosítsanak a geocaching közösség számára.</string>
 </resources>

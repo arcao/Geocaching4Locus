@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Ládák letöltése…</string>
+    <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Kérjük, engedélyezze a vezeték nélküli vagy GPS helymeghatározást a beállításokban.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">Hely meghatározása a GPS-szel…</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Hely meghatározása a vezeték nélküli hálózatból…</string>
     <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">Beállítások</string>
@@ -11,6 +12,7 @@
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Távolság mérföldben</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Birodalmi mértékegységek</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Használj mérföldet kilométer helyett</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Nincs bejelentkezve. Kérjük, először jelentkezzen be a fiókbeállításokban.</string>
     <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Mégsem</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Megtaláltak mutatása</string>
@@ -53,12 +55,15 @@
     <string name="var_user_waypoint_name" comment="">Felhasználói útpont %1$d</string>
     <string name="var_final_location_name" comment="">Végső helyszín</string>
     <string name="pref_login" comment="">Bejelentkezés</string>
+    <string name="pref_login_summary" comment="">Jelentkezzen be a Geocaching.com fiókba</string>
     <string name="pref_logout" comment="">Kijelentkezés</string>
     <string name="pref_logout_summary" comment="">Bejelentkezve mint %s</string>
     <string name="error_network_unavailable" comment="">Hálózat nem elérhető. Kérjük, ellenőrizze a kapcsolatot.</string>
     <string name="progress_update_geocaches" comment="">Ládák frissítése…</string>
     <string name="pref_container_size" comment="">Tároló mérete</string>
+    <string name="toast_live_map_enabled" comment="">Élő térkép engedélyezve. A térképen megtekintheti a ládákat.</string>
     <string name="toast_live_map_disabled" comment="">Élő térkép letiltva.</string>
+    <string name="error_location_not_allowed" comment="">Nincs helymeghatározási szolgáltatás</string>
     <string name="button_settings" comment="">Beállítások</string>
     <string name="menu_import_from_gc" comment="">GC importálása</string>
     <string name="title_import_from_gc" comment="">Importálás GC kódból</string>
@@ -119,10 +124,12 @@
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Visszajelzés küldése</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Könyvjelzők importálása</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">Az alkalmazásnak nincs engedélye a helymeghatározó szolgáltatáshoz való hozzáférésre.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">Összes importálása</string>
     <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Ez a funkció csak prémium tagoknak szól, sajnáljuk.</string>
     <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Locus Map hiba</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Hibajelentés küldése</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Köszönjük, hogy elküldte a hibát.</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Igen</string>
     <string name="button_no" comment="Dialog button for No action.">Nem</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Ez a kiegészítő teljes mértékben csak prémium tagsággal működik. Alaptagként letöltheti a hagyományos, az esemény és a CITO geoládákat alapvető geoláda adatokkal (nincs listázás, tippek, attribútumok, képek, logok stb.), és csak néhány szűrőt használhat a geoládákhoz. További információkért kérjük, olvassa el a Geocaching4Locus webhely felhasználói útmutatóját.</string>
@@ -139,8 +146,10 @@
     <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Ne mutassa újra ezt az üzenetet</string>
     <string name="title_warning" comment="Warning dialog title">Figyelem</string>
     <string name="button_more_info" comment="Dialog button for More info action">További információ</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map hiba: %s</string>
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Kérjük, illessze be a hitelesítő kódot.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Hitelesítő kód</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">A megadott hitelesítő kód érvénytelen. Kérlek próbáld újra.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Geocaching API támogatásával</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">A Geocaching Premium Tagság támogatásával az API program harmadik fél fejlesztőinek lehetőséget kínál arra, hogy a Geocaching HQ-val együttműködve a közösség számára integrált termékek és szolgáltatások teljes sorozatán dolgozzanak. Az API fejlesztői alkalmazásokat úgy tervezték, hogy működjenek együtt a geocaching.com alapvető szolgáltatásaival, és kiegészítő funkciókat biztosítsanak a geocaching közösség számára.</string>
 </resources>

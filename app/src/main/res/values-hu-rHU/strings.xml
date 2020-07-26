@@ -63,6 +63,7 @@
     <string name="pref_container_size" comment="">Tároló mérete</string>
     <string name="toast_live_map_enabled" comment="">Élő térkép engedélyezve. A térképen megtekintheti a ládákat.</string>
     <string name="toast_live_map_disabled" comment="">Élő térkép letiltva.</string>
+    <string name="error_live_map_periodic_updates" comment="">Nem engedélyezett az időszakos frissítések küldése a Locus Map-ból. Először engedélyezze azt a Locus Map: Beállítások → Egyéb → Csatlakozás kiegészítőkkel.</string>
     <string name="error_location_not_allowed" comment="">Nincs helymeghatározási szolgáltatás</string>
     <string name="button_settings" comment="">Beállítások</string>
     <string name="menu_import_from_gc" comment="">GC importálása</string>

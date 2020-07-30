@@ -27,7 +27,6 @@ import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.AccountsPreferenceFragment
-import com.github.scribejava.core.exceptions.OAuthException
 import com.github.scribejava.core.model.OAuth2AccessTokenErrorResponse
 import com.github.scribejava.core.oauth2.OAuth2Error
 import org.oshkimaadziig.george.androidutils.SpanFormatter
@@ -135,13 +134,16 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             return builder
                 .message(R.string.error_no_write_file_permission)
                 .build()
-        } else if (t is OAuthException && t.message == "oauth_verifier argument was incorrect.") {
+        } else if (t is OAuth2AccessTokenErrorResponse && t.error == OAuth2Error.INVALID_GRANT) {
             return builder
                 .message(R.string.error_invalid_authorization_code)
                 .build()
         } else if (t is GeocachingApiException && !t.errorMessage.isNullOrEmpty()) {
             return builder
-                .message(baseMessage, context.getText(R.string.error_invalid_api_response, t.errorMessage!!))
+                .message(
+                    baseMessage,
+                    context.getText(R.string.error_invalid_api_response, t.errorMessage!!)
+                )
                 .exception(t)
                 .build()
         } else {

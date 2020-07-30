@@ -1,12 +1,12 @@
 package com.arcao.geocaching4locus.authentication
 
-import android.os.Build
-import androidx.annotation.UiThread
+import android.content.Intent
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
 import com.arcao.geocaching4locus.base.BaseViewModel
-import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.AnalyticsManager
@@ -14,6 +14,7 @@ import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
+import com.github.scribejava.core.model.OAuthConstants
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Job
 
@@ -29,12 +30,18 @@ class LoginViewModel(
     val action = Command<LoginAction>()
     private var job: Job? = null
 
+    val code = MutableLiveData<String>("")
+    val continueButtonEnabled = Transformations.map(code, String::isNotBlank)
+    val formVisible = MutableLiveData(true)
+    var fromIntent = false
+        private set
+
     fun startLogin() {
         if (job?.isActive == true) {
             job?.cancel()
         }
 
-        job = mainLaunch {
+        job = mainImmediateLaunch {
             try {
                 showProgress {
                     app.clearGeocachingCookies()
@@ -50,7 +57,7 @@ class LoginViewModel(
         }
     }
 
-    fun finishLogin(input: String) {
+    private fun finishLogin(input: String) {
         if (job?.isActive == true) {
             job?.cancel()
         }
@@ -60,6 +67,8 @@ class LoginViewModel(
                 action(LoginAction.Cancel)
                 return@mainLaunch
             }
+
+            formVisible(false)
 
             try {
                 showProgress {
@@ -77,6 +86,10 @@ class LoginViewModel(
                     action(LoginAction.Finish(!premium))
                 }
             } catch (e: Exception) {
+                if (!fromIntent) {
+                    formVisible(true)
+                }
+
                 handleException(e)
             }
         }
@@ -89,21 +102,30 @@ class LoginViewModel(
         action(LoginAction.Error(exceptionHandler(e)))
     }
 
-    fun isCompatLoginRequired() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-
-    fun showProgress() {
-        progress(ProgressState.ShowProgress())
-    }
-
-    fun hideProgress() {
-        progress(ProgressState.HideProgress)
-    }
-
-    @UiThread
-    fun cancelLogin() {
+    fun onCancelClicked() {
         analyticsManager.actionLogin(success = false, premiumMember = false)
 
         job?.cancel()
         action(LoginAction.Cancel)
+    }
+
+    fun onContinueButtonClicked() {
+        val input = code.value ?: return
+        fromIntent = false
+        finishLogin(input)
+    }
+
+    fun handleIntent(intent: Intent): Boolean {
+        val data = intent.data
+        val action = intent.action
+
+        if (Intent.ACTION_VIEW == action && data != null && data.getQueryParameter(OAuthConstants.CODE) != null) {
+            val code = requireNotNull(data.getQueryParameter(OAuthConstants.CODE))
+            fromIntent = true
+            finishLogin(code)
+            return true
+        }
+
+        return false
     }
 }

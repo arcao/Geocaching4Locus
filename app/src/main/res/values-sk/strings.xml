@@ -173,10 +173,7 @@
     <string name="button_more_info" comment="Dialog button for More info action">Viac informácií</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Chyba Locus Map: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Nie je možné vytvoriť dátový súbor pre Locus Map. Schválili ste povolenie na prístup k externému súboru?</string>
-    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs.">Verzia vášho zariadenia Android nepodporuje najnovšiu vrstvu zabezpečenia prenosu (TLS 1.1 a 1.2) pre zabudovaný webový prehliadač. \n\n
-Táto aplikácia sa namiesto toho pokúsi použiť webový prehliadač tretej strany. Po schválení prístupe k vášmu Geocaching účtu, skopírujte autorizačný kód, vráťte sa sem a vložte ho tu.</string>
-    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Prosím, vložte autorizačný kód.</string>
-    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Autorizačný kód</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Autorizačný kód</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Zadaný autorizačný kód nie je platný. Prosím, skúste znova.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API je v súčasnosti kvôli údržbe vypnuté. Skúste to neskôr.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Beží na Geocaching API</string>

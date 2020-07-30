@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Ládák letöltése…</string>
+    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">Locus Map alkalmazás nem található, de a Geocaching4Locus megfelelő működéséhez szükséges. Kérjük telepítse.</string>
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Kérjük, engedélyezze a vezeték nélküli vagy GPS helymeghatározást a beállításokban.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">Hely meghatározása a GPS-szel…</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Hely meghatározása a vezeték nélküli hálózatból…</string>

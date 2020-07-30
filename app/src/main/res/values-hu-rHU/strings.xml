@@ -15,11 +15,13 @@
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Használj mérföldet kilométer helyett</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Nincs bejelentkezve. Kérjük, először jelentkezzen be a fiókbeállításokban.</string>
     <string name="button_ok" comment="Dialog button for OK action.">OK</string>
+    <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">A Locus Map telepített verziója túl régi. Geocaching4Locus megfelelő működéséhez %s vagy újabb verzió szükséges.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Mégsem</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Megtaláltak mutatása</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">A már megtalált ládák mutatása</string>
     <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Saját rejtések mutatása</string>
     <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Saját ládák mutatása (általad elrejtve)</string>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Összes kiválasztása</string>
     <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">Kijelölések törlése</string>
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Láda frissítése…</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Logok száma</string>
@@ -119,6 +121,7 @@
     <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">\"Logok letöltése\" művelet frissíti a geoláda adatokat is</string>
     <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Lépésméret a ládák számához</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Lépésméret módosítása a ládák számához válassza a párbeszédpanelt</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Néhány szűrő prémium tagsághoz van kötve, amely most már nincs. Az alkalmazás most alapfelhasználó módra vált. Kérlek, próbáld újra.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Profil</string>
     <string name="pref_filter" comment="Title of preference category for Filter settings.">Szűrő</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Élő térkép</string>
@@ -144,6 +147,7 @@
     <string name="button_no" comment="Dialog button for No action.">Nem</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Ez a kiegészítő teljes mértékben csak prémium tagsággal működik. Alaptagként letöltheti a hagyományos, az esemény és a CITO geoládákat alapvető geoláda adatokkal (nincs listázás, tippek, attribútumok, képek, logok stb.), és csak néhány szűrőt használhat a geoládákhoz. További információkért kérjük, olvassa el a Geocaching4Locus webhely felhasználói útmutatóját.</string>
     <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Mutasd a felhasználói útmutatót</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">Az alkalmazás <b>külső tárolóhely írására</b> kér engedélyt a geoláda adatok tárolásához a Locus Map számára. Kérem, <b>engedélyezze</b> ezt a következő ablakban.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Az alkalmazásnak nincs engedélye erre: <b>külső tároló írása</b>. Ez az engedély szükséges a Geocaching adatok tárolásához a Locus Map számára.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Geoládák elrejtése ha ki van kapcsolva</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Élő térképes geoládák elrejtése, ha az Élő térkép szolgáltatás ki van kapcsolva</string>
@@ -157,6 +161,7 @@
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Élő térkép GC importálása</string>
     <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Ne mutassa újra ezt az üzenetet</string>
     <string name="title_warning" comment="Warning dialog title">Figyelem</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Android-eszköze egyéni akkumulátor kímélő alkalmazást használ, amely megakadályozza az Élő Térkép megfelelő működését. Kérjük, adja a kivételekhez az akkumulátor kímélő alkalmazásban a Geocaching4Locus-t.</string>
     <string name="button_more_info" comment="Dialog button for More info action">További információ</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map hiba: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Nem sikerült létrehozni adatfájlt a Locus Map számára. Jóváhagyta a külső fájlhozzáférési engedélyt?</string>
@@ -165,6 +170,7 @@
     <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Kérjük, illessze be a hitelesítő kódot.</string>
     <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Hitelesítő kód</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">A megadott hitelesítő kód érvénytelen. Kérlek próbáld újra.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Karbantartás miatt a Geocaching API jelenleg nem elérhető. Kérjük, próbálja meg később.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Geocaching API támogatásával</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">A Geocaching Premium Tagság támogatásával az API program harmadik fél fejlesztőinek lehetőséget kínál arra, hogy a Geocaching HQ-val együttműködve a közösség számára integrált termékek és szolgáltatások teljes sorozatán dolgozzanak. Az API fejlesztői alkalmazásokat úgy tervezték, hogy működjenek együtt a geocaching.com alapvető szolgáltatásaival, és kiegészítő funkciókat biztosítsanak a geocaching közösség számára.</string>
 </resources>

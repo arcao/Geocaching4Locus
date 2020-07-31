@@ -318,49 +318,30 @@
         >Hide geocaches on disabled</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled."
         >Hide Live map geocaches when Live map feature is disabled</string>
-    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
-        >Disable DNF, NM and NA caches</string>
-    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs."
-        >Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
-    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available."
-        >How many last logs to check</string>
-    
-    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list."
-        >Watch geocache</string>
-    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list."
-        >Bookmark geocache</string>
-    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map."
-        >Import Live map geocaches</string>
-    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map."
-        >Please, make sure Live map is enabled and Locus Map shows Live map geocaches.</string>
-    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map."
-        >Import Live map GC</string>
-    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked"
-        >Do not show this message again</string>
-    <string name="title_warning" comment="Warning dialog title"
-        >Warning</string>
-    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality."
-        >Your Android device contains custom battery saver app from device manufacturer which prevents Live Map to work correctly. Please add an exception to battery saver app for Geocaching4Locus.</string>
-    <string name="button_more_info" comment="Dialog button for More info action"
-        >More info</string>
-    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text."
-        >Locus Map Error: %s</string>
-    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map"
-        >Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Disable DNF, NM and NA caches</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Mark geocache as not available when contains more <i>Did Not Found</i>, <i>Needs Maintenance</i> or <i>Needs Archived</i> logs</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">How many last logs to check</string>
 
-    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs."
-        >Your Android device version does not support the latest transport security layer (TLS 1.1 and 1.2) for build-in web browser.\n\n
-        This app will try to use 3rd party web browser instead. After approving access to your Geocaching account, please copy an authorization code, come back here and paste it here.</string>
-    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only."
-        >Please, paste the authorization code.</string>
-    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only."
-        >Authorization code</string>
-    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process."
-        >The entered authorization code is not valid. Please, try again.</string>
-    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance"
-        >Geocaching API is currently down due to maintenance. Please try it later.</string>
-    <string name="pref_account_powered_by" comment="Title of preference in Account section."
-        >Powered by the Geocaching API</string>
-    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement"
-        >Made possible through the support of Geocaching Premium Memberships, the API program gives third-party developers the opportunity to work with Geocaching HQ on a full suite of integrated products and services for the community. API developer applications are designed to work with the core services of geocaching.com and provide additional features to the geocaching community.</string>
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Watch geocache</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Bookmark geocache</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">Import Live map geocaches</string>
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map.">Please, make sure Live map is enabled and Locus Map shows Live map geocaches.</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Import Live map GC</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Do not show this message again</string>
+    <string name="title_warning" comment="Warning dialog title">Warning</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Your Android device contains custom battery saver app from device manufacturer which prevents Live Map to work correctly. Please add an exception to battery saver app for Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action">More info</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map Error: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Unable to create data file for Locus Map. Have you approved an external file access permission?</string>
+
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Authorization code</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Please, paste the authorization code from Geocaching4Locus website and click on Continue to finish Sign in.</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Authorization code</string>
+
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">The entered authorization code is not valid. Please, try again.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API is currently down due to maintenance. Please try it later.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Powered by the Geocaching API</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Made possible through the support of Geocaching Premium Memberships, the API program gives third-party developers the opportunity to work with Geocaching HQ on a full suite of integrated products and services for the community. API developer applications are designed to work with the core services of geocaching.com and provide additional features to the geocaching community.</string>
+
+    <string name="button_continue" comment="Dialog button for Continue action.">Continue</string>
 </resources>

@@ -173,9 +173,12 @@
     <string name="button_more_info" comment="Dialog button for More info action">Več informacij</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Napaka Locus Map: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Ni bilo mogoče ustvariti podatkovne datoteke za Locus Map. Ali ste dovolili dostop do zunanje shrambe?</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Avtorizacijska koda</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Prosimo, prilepite kodo za avtorizacijo s spletnega mesta Geocaching4Locus in kliknite Naprej, da končate.</string>
     <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Avtorizacijska koda</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Vnešena avtorizacijska koda ni veljavna. Poskusite ponovno.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API trenutno ne deluje zaradi vzdrževanja. Poskusite kasneje.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Omogoča Geocaching API</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Program API omogoča s podporo Geocaching Premium Članstva, da tretjim razvijalcem možnost dela z Geocaching HQ na celotnem naboru integriranih izdelkov in storitev za skupnost. Aplikacije za razvijalce API-ja so zasnovane tako, da delujejo z osnovnimi storitvami geocaching.com in zagotavljajo dodatne funkcije skupnosti geocaching.</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">Naprej</string>
 </resources>

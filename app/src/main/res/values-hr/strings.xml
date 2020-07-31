@@ -160,9 +160,9 @@
     <string name="button_more_info" comment="Dialog button for More info action">Više informacija</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map greška: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Nije moguće stvoriti datoteku podataka za Locus Map. Jeste li odobrili vanjsko dopuštenje za pristup datoteci?</string>
-    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs.">Vaša inačica uređaja s Androidom ne podržava najnoviji sigurnosni sloj prijevoza (TLS 1.1 i 1.2) za ugrađeni web preglednik.\n\n
-        Ova će aplikacija pokušati umjesto toga koristiti web preglednik treće strane. Nakon što odobrite pristup vašem Geocaching računu, kopirajte autorizacijski kod, vratite se ovdje i zalijepite ga ovdje.</string>
-    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Zalijepite autorizacijski kod.</string>
-    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">Kôd autorizacije</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Kôd autorizacije</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Zalijepite autorizacijski kôd s web lokacije Geocaching4Locus i kliknite na Nastavi da biste završili Prijava.</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Kôd autorizacije</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Uneseni autorizacijski kod nije važeći. Molim te pokušaj ponovno.</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">Nastaviti</string>
 </resources>

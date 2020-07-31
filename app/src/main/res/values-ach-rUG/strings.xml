@@ -163,11 +163,12 @@
     <string name="button_more_info" comment="Dialog button for More info action">crwdns610:0crwdne610:0</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">crwdns612:0%scrwdne612:0</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">crwdns614:0crwdne614:0</string>
-    <string name="warning_compat_android_sign_in" comment="Warning dialog message which is shown, when user wants to sign in with older Android device. Please make sure there is \n\n for empty line between two paragraphs.">crwdns616:0crwdne616:0</string>
-    <string name="message_enter_authorization_code" comment="Input dialog message to enter authorization code from sign in process. This dialog is shown for older Android devices only.">crwdns618:0crwdne618:0</string>
-    <string name="hint_authorization_code" comment="Hint message in input box for Input dialog to enter authorization code from sign in process. This dialog is shown for older Android devices only.">crwdns620:0crwdne620:0</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns630:0crwdne630:0</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns632:0crwdne632:0</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns620:0crwdne620:0</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">crwdns622:0crwdne622:0</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">crwdns624:0crwdne624:0</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">crwdns626:0crwdne626:0</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">crwdns628:0crwdne628:0</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">crwdns634:0crwdne634:0</string>
 </resources>

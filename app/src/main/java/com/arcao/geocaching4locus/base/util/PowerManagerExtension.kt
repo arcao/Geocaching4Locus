@@ -2,7 +2,10 @@ package com.arcao.geocaching4locus.base.util
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.PowerManager
 import androidx.core.content.edit
+import androidx.core.content.getSystemService
 import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 
@@ -19,7 +22,7 @@ var Context.hidePowerManagementWarning: Boolean
     }
 
 fun Context.isPowerManagerPresent(): Boolean {
-    return isHuaweiPowerManagerPresent() || isXaomiPowerManagerPresent()
+    return isHuaweiPowerManagerPresent() || isXaomiPowerManagerPresent() || isAppBatteryOptimized()
 }
 
 private fun Context.isHuaweiPowerManagerPresent(): Boolean {
@@ -34,4 +37,13 @@ private fun Context.isXaomiPowerManagerPresent(): Boolean {
         "com.miui.powerkeeper",
         "com.miui.powerkeeper.ui.HiddenAppsContainerManagementActivity"
     ).isCallableWith(this)
+}
+
+private fun Context.isAppBatteryOptimized(): Boolean {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val manager = getSystemService<PowerManager>() ?: return false
+        return !manager.isIgnoringBatteryOptimizations(packageName)
+    }
+
+    return false
 }

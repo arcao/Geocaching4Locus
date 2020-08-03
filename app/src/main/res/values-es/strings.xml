@@ -72,6 +72,10 @@
     <string name="menu_import_from_gc" comment="">Importar GC</string>
     <string name="title_import_from_gc" comment="">Importar desde código GC</string>
     <string name="error_gc_code_invalid" comment="">Código GC no válido.</string>
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
+        <item quantity="one" comment="">No se encontró el caché %s.</item>
+        <item quantity="other" comment="">No se encontraron cachés %s.</item>
+    </plurals>
     <string name="title_geocache_count" comment="">Contador de cachés</string>
     <string name="launcher_nearest_geocaches" comment="">Cachés más cercanos</string>
     <string name="launcher_import_geocache" comment="">Importar cache a Locus</string>

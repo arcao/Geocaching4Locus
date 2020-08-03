@@ -72,6 +72,11 @@
     <string name="menu_import_from_gc" comment="">Uvezi GC</string>
     <string name="title_import_from_gc" comment="">Uvezi iz GC koda</string>
     <string name="error_gc_code_invalid" comment="">GC kod nije valjan</string>
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
+        <item quantity="one" comment="">Cache %s nije pronađena.</item>
+        <item quantity="few" comment="">Cache %s nije pronađen.</item>
+        <item quantity="other" comment="">Cache %s nije pronađen.</item>
+    </plurals>
     <string name="title_geocache_count" comment="">Broj cacheova</string>
     <string name="launcher_nearest_geocaches" comment="">Najbliži cacheovi</string>
     <string name="launcher_import_geocache" comment="">Uvezi cache u Locus</string>
@@ -132,6 +137,7 @@
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Sporije učitavanj i više opterećuje mobilni promet</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Pošaljite povratnu informaciju</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Ne mogu pronaći nijedan geocache po vašem traženju.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">Zbog isteka tokena (nakon 90 dana) odjavili ste se. Prijavite se ponovo.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Uvezite oznake</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Uvezite oznake</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">Aplikacija nema dopuštenje da pristupi usluzi lociranja.</string>
@@ -157,6 +163,7 @@
     <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Uvoz karte uživo u GC</string>
     <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Ne pokazuj više ovu poruku</string>
     <string name="title_warning" comment="Warning dialog title">Upozorenje</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Vaš Android uređaj uključuje prilagođenu aplikaciju za uštedu baterije od proizvođača uređaja koja sprječava ispravni rad Live Map. Dodajte iznimku aplikaciji za štednju baterije Geocaching4Locus.</string>
     <string name="button_more_info" comment="Dialog button for More info action">Više informacija</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map greška: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Nije moguće stvoriti datoteku podataka za Locus Map. Jeste li odobrili vanjsko dopuštenje za pristup datoteci?</string>
@@ -164,5 +171,7 @@
     <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Zalijepite autorizacijski kôd s web lokacije Geocaching4Locus i kliknite na Nastavi da biste završili Prijava.</string>
     <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Kôd autorizacije</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Uneseni autorizacijski kod nije važeći. Molim te pokušaj ponovno.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">API za geocaching trenutno je isključen zbog održavanja. Pokušajte kasnije.</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Omogućen podrškom Geocaching Premium Članstva, API program pruža programerima trećih strana mogućnost rada s Geocaching HQ-om na čitavom paketu integriranih proizvoda i usluga za zajednicu. Aplikacije za razvojne programere API dizajnirane su za rad s osnovnim uslugama geocaching.com i pružaju dodatne značajke zajednici geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Nastaviti</string>
 </resources>

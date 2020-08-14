@@ -1,7 +1,9 @@
 package com.arcao.geocaching4locus.data.api.model
 
-import org.threeten.bp.Duration
+import com.squareup.moshi.JsonClass
+import java.time.Duration
 
+@JsonClass(generateAdapter = true)
 data class GeocacheLimits(
     val liteCallsRemaining: Int, // 0
     val liteCallsSecondsToLive: Duration?, // 0

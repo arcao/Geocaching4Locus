@@ -2,10 +2,13 @@ package com.arcao.geocaching4locus.data.account
 
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
-import org.threeten.bp.Instant
 import java.io.File
+import java.time.Instant
 
-class FileAccountManager(oAuthService: OAuth20Service, private val dataFile: File = File("account.dat")) :
+class FileAccountManager(
+    oAuthService: OAuth20Service,
+    private val dataFile: File = File("account.dat")
+) :
     AccountManager(oAuthService) {
     init {
         account = loadAccount()

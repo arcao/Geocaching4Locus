@@ -1,24 +1,41 @@
 package com.arcao.geocaching4locus.authentication
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginCompatFragment
-import com.arcao.geocaching4locus.authentication.fragment.OAuthLoginFragment
+import android.view.View
+import androidx.activity.addCallback
+import androidx.appcompat.widget.Toolbar
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.net.toUri
+import com.arcao.geocaching4locus.authentication.fragment.BasicMembershipWarningDialogFragment
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
+import com.arcao.geocaching4locus.base.ProgressState
+import com.arcao.geocaching4locus.base.util.exhaustive
+import com.arcao.geocaching4locus.base.util.showWebPage
+import com.arcao.geocaching4locus.base.util.withObserve
+import com.arcao.geocaching4locus.databinding.ActivityLoginBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class LoginActivity : AbstractActionBarActivity() {
     val viewModel by viewModel<LoginViewModel>()
 
+    private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_login)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+
+        setContentView(binding.root)
+        @Suppress("USELESS_CAST")
+        setSupportActionBar(binding.toolbar as Toolbar)
 
         supportActionBar?.apply {
             title = this@LoginActivity.title
@@ -28,35 +45,83 @@ class LoginActivity : AbstractActionBarActivity() {
         Timber.i("source: login")
 
         if (savedInstanceState == null) {
-            showLoginFragment()
+            if (!viewModel.handleIntent(intent)) {
+                viewModel.startLogin()
+            }
+        }
+
+        viewModel.action.withObserve(this, ::handleAction)
+        viewModel.progress.withObserve(this) { state ->
+            when (state) {
+                is ProgressState.ShowProgress -> binding.layoutProgress.visibility = View.VISIBLE
+                ProgressState.HideProgress -> binding.layoutProgress.visibility = View.GONE
+            }.exhaustive
+        }
+
+        onBackPressedDispatcher.addCallback {
+            viewModel.onCancelClicked()
         }
     }
 
-    override fun onProgressCancel(requestId: Int) {
-        viewModel.cancelLogin()
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+
+        viewModel.handleIntent(intent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             // Respond to the action bar's Up/Home button
             android.R.id.home -> {
-                finish()
+                viewModel.onCancelClicked()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLoginFragment() {
-        if (viewModel.isCompatLoginRequired()) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, OAuthLoginFragment.newInstance())
-                .commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, OAuthLoginCompatFragment.newInstance())
-                .commit()
+    fun handleAction(action: LoginAction) {
+        when (action) {
+            is LoginAction.LoginUrlAvailable -> onLoginUrlAvailable(action.url)
+            is LoginAction.Finish -> {
+                finishAction(action.showBasicMembershipWarning)
+            }
+            is LoginAction.Error -> {
+                startActivity(action.intent)
+                if (viewModel.fromIntent) {
+                    cancelAction()
+                }
+                Unit
+            }
+            LoginAction.Cancel -> cancelAction()
+        }.exhaustive
+    }
+
+    private fun onLoginUrlAvailable(url: String) {
+        try {
+            CustomTabsIntent.Builder()
+                .setInstantAppsEnabled(true)
+                .enableUrlBarHiding()
+                .build().launchUrl(this, url.toUri())
+        } catch (e: ActivityNotFoundException) {
+            showWebPage(url.toUri())
         }
+    }
+
+    private fun cancelAction() {
+        setResult(Activity.RESULT_CANCELED)
+        finish()
+    }
+
+    private fun finishAction(showBasicMembershipWarning: Boolean) {
+        setResult(Activity.RESULT_OK)
+
+        if (showBasicMembershipWarning) {
+            BasicMembershipWarningDialogFragment.newInstance().show(supportFragmentManager)
+            return
+        }
+
+        finish()
     }
 
     companion object {

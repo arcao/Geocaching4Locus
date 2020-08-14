@@ -1,10 +1,10 @@
 package com.arcao.geocaching4locus.data.account.oauth
 
+import com.arcao.geocaching4locus.data.account.oauth.client.OkHttp3HttpClient
 import com.arcao.geocaching4locus.data.api.internal.Factory
 import com.arcao.geocaching4locus.geocaching_api.BuildConfig
 import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.oauth.OAuth20Service
-import com.github.scribejava.httpclient.okhttp.OkHttpHttpClient
 import okhttp3.OkHttpClient
 
 class GeocachingOAuthServiceFactory(
@@ -26,7 +26,7 @@ class GeocachingOAuthServiceFactory(
                     .callback(CALLBACK_URL)
                     .defaultScope("*")
                     .responseType("code")
-                    .httpClient(OkHttpHttpClient(okHttpClient))
+                    .httpClient(OkHttp3HttpClient(okHttpClient))
                     .build(GeocachingOAuthApi.Staging())
             else ->
                 ServiceBuilder(API_KEY)
@@ -34,7 +34,7 @@ class GeocachingOAuthServiceFactory(
                     .callback(CALLBACK_URL)
                     .defaultScope("*")
                     .responseType("code")
-                    .httpClient(OkHttpHttpClient(okHttpClient))
+                    .httpClient(OkHttp3HttpClient(okHttpClient))
                     .build(GeocachingOAuthApi())
         }
     }

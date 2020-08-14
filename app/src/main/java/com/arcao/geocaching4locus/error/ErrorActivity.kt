@@ -16,7 +16,7 @@ import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.getText
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.oshkimaadziig.george.androidutils.SpanFormatter
 
 class ErrorActivity : AppCompatActivity() {
@@ -56,7 +56,9 @@ class ErrorActivity : AppCompatActivity() {
                 .message(text = message)
                 .positiveButton(text = positiveButtonText ?: context.getString(R.string.button_ok)) { dialog ->
                     if (dialog.isCheckPromptChecked()) {
-                        Crashlytics.logException(t)
+                        t?.let {
+                            FirebaseCrashlytics.getInstance().recordException(it)
+                        }
                         Toast.makeText(
                             context,
                             R.string.toast_error_report_sent,
@@ -178,6 +180,5 @@ class ErrorActivity : AppCompatActivity() {
     }
 }
 
-@Suppress("NOTHING_TO_INLINE")
-internal inline fun Intent.hasPositiveAction() =
+internal fun Intent.hasPositiveAction() =
     getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null

@@ -5,9 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
@@ -18,13 +17,12 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.data.account.AccountManager
+import com.arcao.geocaching4locus.databinding.ActivitySearchNearestBinding
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment
-import com.arcao.geocaching4locus.search_nearest.widget.SpinnerTextView
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -36,18 +34,18 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
 
     private val accountManager by inject<AccountManager>()
 
+    private lateinit var binding: ActivitySearchNearestBinding
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_search_nearest)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_nearest)
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val spinner = findViewById<SpinnerTextView>(R.id.counter)
-        val latitude = findViewById<TextView>(R.id.latitude)
-        val longitude = findViewById<TextView>(R.id.longitude)
-        val gps = findViewById<Button>(R.id.gps)
-        val filter = findViewById<Button>(R.id.filter)
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        val toolbar = binding.toolbar as Toolbar
+        val latitude = binding.incCoordinates.latitude
+        val longitude = binding.incCoordinates.longitude
 
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
@@ -56,44 +54,11 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.latitude.withObserve(this) { value ->
-            latitude.text = value
-        }
         latitude.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) viewModel.latitude(latitude.text ?: "")
-        }
-        viewModel.longitude.withObserve(this) { value ->
-            longitude.text = value
+            if (!hasFocus) viewModel.formatCoordinates()
         }
         longitude.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) viewModel.longitude(longitude.text ?: "")
-        }
-
-        viewModel.requestedCaches.withObserve(this) { value ->
-            spinner.setText(value.toString())
-        }
-        spinner.setOnClickListener {
-            val step = viewModel.requestedCachesStep
-            val max = viewModel.requestedCachesMax
-            SliderDialogFragment.newInstance(
-                    title = R.string.title_geocache_count,
-                    min = step,
-                    max = max,
-                    step = step,
-                    defaultValue = requireNotNull(viewModel.requestedCaches.value)
-            ).show(supportFragmentManager, "COUNTER")
-        }
-
-        gps.setOnClickListener {
-            viewModel.retrieveCoordinates()
-        }
-
-        filter.setOnClickListener {
-            viewModel.showFilters()
-        }
-
-        fab.setOnClickListener {
-            viewModel.download()
+            if (!hasFocus) viewModel.formatCoordinates()
         }
 
         viewModel.action.withObserve(this, ::handleAction)
@@ -132,6 +97,15 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             }
             SearchNearestAction.LocationProviderDisabled -> {
                 NoLocationProviderDialogFragment.newInstance().show(supportFragmentManager)
+            }
+            is SearchNearestAction.RequestCacheCount -> {
+                SliderDialogFragment.newInstance(
+                    title = R.string.title_geocache_count,
+                    min = action.step,
+                    max = action.max,
+                    step = action.step,
+                    defaultValue = action.value
+                ).show(supportFragmentManager, "COUNTER")
             }
         }.exhaustive
     }

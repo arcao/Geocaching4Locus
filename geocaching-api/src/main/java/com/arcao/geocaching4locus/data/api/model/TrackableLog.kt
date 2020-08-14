@@ -1,8 +1,10 @@
 package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
-import org.threeten.bp.Instant
+import com.squareup.moshi.JsonClass
+import java.time.Instant
 
+@JsonClass(generateAdapter = true)
 data class TrackableLog(
     val referenceCode: String, // string
     val ownerCode: String, // string

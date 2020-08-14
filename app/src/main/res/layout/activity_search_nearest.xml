@@ -1,62 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".search_nearest.SearchNearestActivity"
-    android:orientation="vertical"
-    >
-    <include
-        layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/toolbar"
-        />
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <ScrollView
+        <variable
+            name="vm"
+            type="com.arcao.geocaching4locus.search_nearest.SearchNearestViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        tools:context=".search_nearest.SearchNearestActivity">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <include
-                layout="@layout/view_search_nearest_coordinates"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:id="@+id/inc_coordinates"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+            android:layout_height="wrap_content" />
 
-            <include
-                layout="@layout/view_search_nearest_geocache_count"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:id="@+id/inc_geocache_count"
-                app:layout_constraintTop_toBottomOf="@+id/inc_coordinates"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_action_download"
-                app:elevation="4dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-</LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/inc_coordinates"
+                    layout="@layout/view_search_nearest_coordinates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:vm="@{vm}" />
+
+                <include
+                    android:id="@+id/inc_geocache_count"
+                    layout="@layout/view_search_nearest_geocache_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inc_coordinates"
+                    app:vm="@{vm}" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:onClick="@{() -> vm.download()}"
+                    android:src="@drawable/ic_action_download"
+                    app:elevation="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
 

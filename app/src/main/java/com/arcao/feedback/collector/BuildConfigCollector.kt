@@ -11,7 +11,6 @@ class BuildConfigCollector : Collector() {
             "BUILD_TIME=${BuildConfig.BUILD_TIME}\n" +
             "BUILD_TYPE=${BuildConfig.BUILD_TYPE}\n" +
             "DEBUG=${BuildConfig.DEBUG}\n" +
-            "FLAVOR=${BuildConfig.FLAVOR}\n" +
             "GEOCACHING_API_STAGING=${BuildConfig.GEOCACHING_API_STAGING}\n" +
             "GIT_SHA=${BuildConfig.GIT_SHA}\n" +
             "VERSION_CODE=${BuildConfig.VERSION_CODE}\n" +

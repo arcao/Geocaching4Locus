@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetWifiLocationUseCase
 import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.LocationPermissionType
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.CoordinatesFormatter
 import com.arcao.geocaching4locus.base.util.invoke
@@ -26,8 +26,7 @@ import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -45,12 +44,14 @@ class SearchNearestViewModel(
     private val getPointsFromCoordinates: GetPointsFromCoordinatesUseCase,
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val exceptionHandler: ExceptionHandler,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<SearchNearestAction>()
 
     val latitude = MutableLiveData<CharSequence>()
     val longitude = MutableLiveData<CharSequence>()
+
     val requestedCaches = MutableLiveData<Int>().apply {
         value = preferenceManager.downloadingGeocachesCount
 
@@ -58,10 +59,11 @@ class SearchNearestViewModel(
             preferenceManager.downloadingGeocachesCount = value
         }
     }
-    val requestedCachesMax = DefaultPreferenceManager.MAX_GEOCACHES_COUNT
-    val requestedCachesStep = preferenceManager.downloadingGeocachesCountStep
 
-    private var coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_MANUAL
+    private val requestedCachesMax = DefaultPreferenceManager.MAX_GEOCACHES_COUNT
+    private val requestedCachesStep = preferenceManager.downloadingGeocachesCountStep
+
+    private var coordinatesSource = AnalyticsManager.COORDINATES_SOURCE_MANUAL
     private var useFilter = false
     private var job: Job? = null
 
@@ -76,12 +78,12 @@ class SearchNearestViewModel(
 
             if (locusMapManager.isIntentPointTools(intent)) {
                 locusMapManager.getPointFromIntent(intent)?.let { point ->
-                    coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_LOCUS
+                    coordinatesSource = AnalyticsManager.COORDINATES_SOURCE_LOCUS
                     formatCoordinates(point.location.latitude, point.location.longitude)
                 }
             } else if (locusMapManager.isLocationIntent(intent)) {
                 locusMapManager.getLocationFromIntent(intent)?.let { location ->
-                    coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_LOCUS
+                    coordinatesSource = AnalyticsManager.COORDINATES_SOURCE_LOCUS
                     formatCoordinates(location.latitude, location.longitude)
                 }
             }
@@ -109,7 +111,7 @@ class SearchNearestViewModel(
             }
         }
 
-        coordinatesSource = AnalyticsUtil.COORDINATES_SOURCE_GPS
+        coordinatesSource = AnalyticsManager.COORDINATES_SOURCE_GPS
 
         mainLaunch {
             showProgress(R.string.progress_acquire_gps_location) {
@@ -139,7 +141,7 @@ class SearchNearestViewModel(
     }
 
     fun cancelProgress() {
-        job?.cancelChildren()
+        job?.cancel()
     }
 
     fun download() {
@@ -179,7 +181,12 @@ class SearchNearestViewModel(
 
     @Suppress("EXPERIMENTAL_API_USAGE")
     private suspend fun doDownload(coordinates: Coordinates, maxCount: Int) = computationContext {
-        AnalyticsUtil.actionSearchNearest(coordinatesSource, useFilter, maxCount, accountManager.isPremium)
+        analyticsManager.actionSearchNearest(
+            coordinatesSource,
+            useFilter,
+            maxCount,
+            accountManager.isPremium
+        )
 
         val downloadIntent = locusMapManager.createSendPointsIntent(
             callImport = true,
@@ -192,7 +199,6 @@ class SearchNearestViewModel(
         try {
             showProgress(R.string.progress_download_geocaches, maxProgress = count) {
                 val points = getPointsFromCoordinates(
-                    this,
                     coordinates,
                     preferenceManager.downloadDistanceMeters,
                     filterPreferenceManager.simpleCacheData,
@@ -248,12 +254,24 @@ class SearchNearestViewModel(
         }
     }
 
-    private fun formatCoordinates() {
+    fun formatCoordinates() {
         latitude.value?.let {
-            latitude(CoordinatesFormatter.convertDoubleToDeg(CoordinatesFormatter.convertDegToDouble(it), false))
+            latitude(
+                CoordinatesFormatter.convertDoubleToDeg(
+                    CoordinatesFormatter.convertDegToDouble(
+                        it
+                    ), false
+                )
+            )
         }
         longitude.value?.let {
-            longitude(CoordinatesFormatter.convertDoubleToDeg(CoordinatesFormatter.convertDegToDouble(it), true))
+            longitude(
+                CoordinatesFormatter.convertDoubleToDeg(
+                    CoordinatesFormatter.convertDegToDouble(
+                        it
+                    ), true
+                )
+            )
         }
     }
 
@@ -266,7 +284,19 @@ class SearchNearestViewModel(
     }
 
     fun showFilters() {
+        formatCoordinates()
         useFilter = true
         action(SearchNearestAction.ShowFilters)
+    }
+
+    fun askForCacheCount() {
+        formatCoordinates()
+        action(
+            SearchNearestAction.RequestCacheCount(
+                requireNotNull(requestedCaches.value),
+                requestedCachesStep,
+                requestedCachesMax
+            )
+        )
     }
 }

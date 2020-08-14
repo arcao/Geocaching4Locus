@@ -2,7 +2,9 @@ package com.arcao.geocaching4locus.data.api.model
 
 import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class AdditionalWaypoint(
     val name: String, // string
     val coordinates: Coordinates?,

@@ -7,8 +7,8 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
-import org.threeten.bp.Duration
-import org.threeten.bp.Instant
+import java.time.Duration
+import java.time.Instant
 
 class AccountRestrictions internal constructor(context: Context) {
 

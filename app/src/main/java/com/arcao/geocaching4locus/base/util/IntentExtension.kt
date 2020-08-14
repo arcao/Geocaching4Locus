@@ -23,7 +23,6 @@ fun Activity.showWebPage(uri: Uri): Boolean {
     }
 }
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun Intent.isCallableWith(context: Context): Boolean {
+fun Intent.isCallableWith(context: Context): Boolean {
     return context.packageManager.queryIntentActivities(this, PackageManager.MATCH_DEFAULT_ONLY).isNotEmpty()
 }

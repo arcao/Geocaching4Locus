@@ -14,26 +14,23 @@ import com.arcao.feedback.feedbackModule
 import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.CrashlyticsTree
+import com.arcao.geocaching4locus.base.util.KoinTimberLogger
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.geocachingApiModule
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import locus.api.android.utils.LocusUtils
 import locus.api.locusMapApiModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
-import org.koin.core.logger.Logger
-import org.koin.core.logger.MESSAGE
 import timber.log.Timber
 import java.util.UUID
 
 class App : Application() {
     val accountManager by inject<AccountManager>()
+    val analyticsManager by inject<AnalyticsManager>()
 
     private val deviceId: String by lazy {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -79,15 +76,7 @@ class App : Application() {
             androidContext(this@App)
 
             if (BuildConfig.DEBUG) {
-                logger(object : Logger() {
-                    override fun log(level: Level, msg: MESSAGE) {
-                        when (level) {
-                            Level.DEBUG -> Timber.d(msg)
-                            Level.INFO -> Timber.i(msg)
-                            Level.ERROR -> Timber.e(msg)
-                        }
-                    }
-                })
+                logger(KoinTimberLogger())
             }
 
             modules(listOf(appModule, geocachingApiModule, locusMapApiModule, feedbackModule))
@@ -95,7 +84,7 @@ class App : Application() {
 
         prepareCrashlytics()
 
-        AnalyticsUtil.setPremiumUser(this, accountManager.isPremium)
+        analyticsManager.setPremiumMember(accountManager.isPremium)
     }
 
     override fun attachBaseContext(base: Context) {
@@ -105,16 +94,16 @@ class App : Application() {
 
     private fun prepareCrashlytics() {
         // Set up Crashlytics, disabled for debug builds
-        val crashlyticsKit = Crashlytics.Builder()
-            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-            .build()
+        if (BuildConfig.DEBUG) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
+        }
 
-        // Initialize Fabric with the debug-disabled crashlytics.
-        Fabric.with(this, crashlyticsKit)
-        Timber.plant(CrashlyticsTree())
+        val crashlytics = FirebaseCrashlytics.getInstance()
+        Timber.plant(Timber.DebugTree())
+        Timber.plant(CrashlyticsTree(crashlytics))
 
-        Crashlytics.setUserIdentifier(deviceId)
-        Crashlytics.setBool(CrashlyticsConstants.PREMIUM_MEMBER, accountManager.isPremium)
+        crashlytics.setUserId(deviceId)
+        crashlytics.setCustomKey(CrashlyticsConstants.PREMIUM_MEMBER, accountManager.isPremium)
 
         val lv = try {
             LocusUtils.getActiveVersion(this)
@@ -123,8 +112,8 @@ class App : Application() {
             null
         }
 
-        Crashlytics.setString(CrashlyticsConstants.LOCUS_VERSION, lv?.versionName ?: "")
-        Crashlytics.setString(CrashlyticsConstants.LOCUS_PACKAGE, lv?.packageName ?: "")
+        crashlytics.setCustomKey(CrashlyticsConstants.LOCUS_VERSION, lv?.versionName ?: "")
+        crashlytics.setCustomKey(CrashlyticsConstants.LOCUS_PACKAGE, lv?.packageName ?: "")
     }
 
     @WorkerThread
@@ -167,3 +156,4 @@ class App : Application() {
         }
     }
 }
+

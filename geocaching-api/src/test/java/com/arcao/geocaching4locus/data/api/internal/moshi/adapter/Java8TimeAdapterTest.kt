@@ -1,33 +1,15 @@
 package com.arcao.geocaching4locus.data.api.internal.moshi.adapter
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Duration
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.Month
-import org.threeten.bp.ZoneOffset
-import org.threeten.bp.zone.TzdbZoneRulesProvider
-import org.threeten.bp.zone.ZoneRulesInitializer
-import org.threeten.bp.zone.ZoneRulesProvider
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.Month
+import java.time.ZoneOffset
 
 internal object Java8TimeAdapterTest {
     private lateinit var adapter: Java8TimeAdapter
-
-    @JvmStatic
-    @BeforeAll
-    fun setupThreeTenABP() {
-        // load TZDB for ThreeTenABP
-        ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-            override fun initializeProviders() {
-                val stream = this::class.java.getResourceAsStream("/TZDB.dat")
-                stream.use {
-                    ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
-                }
-            }
-        })
-    }
 
     @BeforeEach
     fun setup() {
@@ -37,7 +19,7 @@ internal object Java8TimeAdapterTest {
     @Test
     fun verifyInstantToJsonUTC() {
         val given = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .toInstant(ZoneOffset.UTC)
+            .toInstant(ZoneOffset.UTC)
         val expected = "2018-01-20T12:13:14"
 
         assertEquals(expected, adapter.instantToJsonUTC(given))
@@ -47,7 +29,7 @@ internal object Java8TimeAdapterTest {
     fun verifyInstantFromJsonUTC() {
         val given = "2018-01-20T12:13:14.000"
         val expected = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .toInstant(ZoneOffset.UTC)
+            .toInstant(ZoneOffset.UTC)
 
         assertEquals(expected, adapter.instantFromJsonUTC(given))
     }
@@ -55,8 +37,8 @@ internal object Java8TimeAdapterTest {
     @Test
     fun verifyInstantToJson() {
         val given = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atOffset(ZoneOffset.UTC)
-                .toInstant()
+            .atOffset(ZoneOffset.UTC)
+            .toInstant()
         val expected = "2018-01-20T12:13:14Z"
 
         assertEquals(expected, adapter.instantToJson(given))
@@ -66,8 +48,8 @@ internal object Java8TimeAdapterTest {
     fun verifyInstantFromJson() {
         val given = "2018-01-20T12:13:14Z"
         val expected = LocalDateTime.of(2018, Month.JANUARY, 20, 12, 13, 14)
-                .atOffset(ZoneOffset.UTC)
-                .toInstant()
+            .atOffset(ZoneOffset.UTC)
+            .toInstant()
 
         assertEquals(expected, adapter.instantFromJson(given))
     }

@@ -1,11 +1,11 @@
 package com.arcao.geocaching4locus.data.api.util
 
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.zone.ZoneRulesException
 import timber.log.Timber
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.zone.ZoneRulesException
 
 private const val ZONE_NAME_UTC = "Etc/UTC"
 

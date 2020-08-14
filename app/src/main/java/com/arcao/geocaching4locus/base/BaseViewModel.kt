@@ -21,6 +21,11 @@ abstract class BaseViewModel(
             block()
         }
 
+    inline fun <R> mainImmediateLaunch(crossinline block: suspend CoroutineScope.() -> R) =
+        viewModelScope.launch(dispatcherProvider.main.immediate) {
+            block()
+        }
+
     inline fun <R> computationLaunch(crossinline block: suspend CoroutineScope.() -> R) =
         viewModelScope.launch(dispatcherProvider.computation) {
             block()

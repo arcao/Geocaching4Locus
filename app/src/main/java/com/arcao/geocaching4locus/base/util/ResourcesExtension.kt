@@ -15,8 +15,7 @@ import java.util.Locale
  * @param args arguments for String.format(...)
  * @return formatted SpannedString
  */
-@Suppress("NOTHING_TO_INLINE")
-inline fun Context.getText(@StringRes id: Int, vararg args: Any) =
+fun Context.getText(@StringRes id: Int, vararg args: Any) =
     HtmlUtil.applyFix(SpanFormatter.format(getMainLocale(), getText(id), *args))
 
 fun Context.getMainLocale(): Locale {
@@ -52,7 +51,10 @@ fun Context.getMainLocale(): Locale {
  * possibly styled text information.
  * @throws Resources.NotFoundException Throws NotFoundException if the given ID does not exist.
  */
-@Suppress("NOTHING_TO_INLINE")
 @Throws(Resources.NotFoundException::class)
-inline fun Context.getQuantityText(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any): CharSequence =
+fun Context.getQuantityText(
+    @PluralsRes id: Int,
+    quantity: Int,
+    vararg formatArgs: Any
+): CharSequence =
     HtmlUtil.applyFix(SpanFormatter.format(getMainLocale(), resources.getQuantityText(id, quantity), *formatArgs))

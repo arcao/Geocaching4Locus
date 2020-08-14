@@ -4,8 +4,10 @@ import com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeU
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.squareup.moshi.Json
-import org.threeten.bp.Instant
+import com.squareup.moshi.JsonClass
+import java.time.Instant
 
+@JsonClass(generateAdapter = true)
 data class GeocacheList(
     val referenceCode: String = "", // string
     @LocalDateTimeUTC val lastUpdatedDateUtc: Instant = Instant.now(), // 2018-06-06T06:16:54.275Z

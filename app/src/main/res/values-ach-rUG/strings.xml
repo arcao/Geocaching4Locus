@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">crwdns318:0crwdne318:0</string>
+    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">crwdns320:0crwdne320:0</string>
+    <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">crwdns322:0crwdne322:0</string>
+    <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">crwdns324:0crwdne324:0</string>
+    <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">crwdns326:0crwdne326:0</string>
+    <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">crwdns328:0crwdne328:0</string>
+    <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button.">crwdns330:0crwdne330:0</string>
+    <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen.">crwdns332:0crwdne332:0</string>
+    <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings.">crwdns334:0crwdne334:0</string>
+    <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked.">crwdns336:0crwdne336:0</string>
+    <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">crwdns338:0crwdne338:0</string>
+    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">crwdns340:0crwdne340:0</string>
+    <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">crwdns342:0crwdne342:0</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">crwdns344:0crwdne344:0</string>
+    <string name="button_ok" comment="Dialog button for OK action.">crwdns346:0crwdne346:0</string>
+    <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">crwdns348:0%scrwdne348:0</string>
+    <string name="button_cancel" comment="Dialog button for cancel action.">crwdns350:0crwdne350:0</string>
+    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">crwdns352:0crwdne352:0</string>
+    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">crwdns354:0crwdne354:0</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">crwdns356:0crwdne356:0</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">crwdns358:0crwdne358:0</string>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">crwdns360:0crwdne360:0</string>
+    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">crwdns362:0crwdne362:0</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">crwdns364:0crwdne364:0</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">crwdns366:0crwdne366:0</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">crwdns368:0crwdne368:0</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">crwdns370:0crwdne370:0</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">crwdns372:0crwdne372:0</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">crwdns374:0crwdne374:0</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">crwdns376:0crwdne376:0</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">crwdns378:0crwdne378:0</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">crwdns380:0crwdne380:0</string>
+    <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">crwdns382:0crwdne382:0</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">crwdns384:0crwdne384:0</string>
+    <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">crwdns386:0crwdne386:0</string>
+    <string name="pref_geocache_type" comment="">crwdns388:0crwdne388:0</string>
+    <string name="pref_difficulty" comment="">crwdns390:0crwdne390:0</string>
+    <string name="pref_terrain" comment="">crwdns392:0crwdne392:0</string>
+    <string name="pref_difficulty_min" comment="">crwdns394:0crwdne394:0</string>
+    <string name="pref_difficulty_max" comment="">crwdns396:0crwdne396:0</string>
+    <string name="pref_terrain_min" comment="">crwdns398:0crwdne398:0</string>
+    <string name="pref_terrain_max" comment="">crwdns400:0crwdne400:0</string>
+    <string name="pref_download_basic" comment="">crwdns402:0crwdne402:0</string>
+    <string name="pref_download_basic_summary" comment="">crwdns404:0crwdne404:0</string>
+    <string name="pref_download_on_show" comment="">crwdns406:0crwdne406:0</string>
+    <string name="pref_download_on_show_summary" comment="">crwdns408:0crwdne408:0</string>
+    <string-array name="pref_download_on_show_entries" comment="">
+        <item>crwdns410:0crwdne410:0</item>
+        <item>crwdns412:0crwdne412:0</item>
+        <item>crwdns414:0crwdne414:0</item>
+    </string-array>
+    <string name="menu_live_map" comment="">crwdns416:0crwdne416:0</string>
+    <string name="menu_nearest" comment="">crwdns418:0crwdne418:0</string>
+    <string name="menu_users_guide" comment="">crwdns420:0crwdne420:0</string>
+    <string name="menu_settings" comment="">crwdns422:0crwdne422:0</string>
+    <string name="var_user_waypoint_name" comment="">crwdns424:0%1$dcrwdne424:0</string>
+    <string name="var_final_location_name" comment="">crwdns426:0crwdne426:0</string>
+    <string name="pref_login" comment="">crwdns428:0crwdne428:0</string>
+    <string name="pref_login_summary" comment="">crwdns430:0crwdne430:0</string>
+    <string name="pref_logout" comment="">crwdns432:0crwdne432:0</string>
+    <string name="pref_logout_summary" comment="">crwdns434:0%scrwdne434:0</string>
+    <string name="error_network_unavailable" comment="">crwdns436:0crwdne436:0</string>
+    <string name="progress_update_geocaches" comment="">crwdns438:0crwdne438:0</string>
+    <string name="pref_container_size" comment="">crwdns440:0crwdne440:0</string>
+    <string name="toast_live_map_enabled" comment="">crwdns442:0crwdne442:0</string>
+    <string name="toast_live_map_disabled" comment="">crwdns444:0crwdne444:0</string>
+    <string name="error_live_map_periodic_updates" comment="">crwdns446:0crwdne446:0</string>
+    <string name="error_location_not_allowed" comment="">crwdns448:0crwdne448:0</string>
+    <string name="button_settings" comment="">crwdns450:0crwdne450:0</string>
+    <string name="menu_import_from_gc" comment="">crwdns452:0crwdne452:0</string>
+    <string name="title_import_from_gc" comment="">crwdns454:0crwdne454:0</string>
+    <string name="error_gc_code_invalid" comment="">crwdns456:0crwdne456:0</string>
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
+        <item quantity="one" comment="">crwdns458:1%scrwdne458:1</item>
+        <item quantity="other" comment="">crwdns458:5%scrwdne458:5</item>
+    </plurals>
+    <string name="title_geocache_count" comment="">crwdns460:0crwdne460:0</string>
+    <string name="launcher_nearest_geocaches" comment="">crwdns462:0crwdne462:0</string>
+    <string name="launcher_import_geocache" comment="">crwdns464:0crwdne464:0</string>
+    <string name="launcher_update_geocache" comment="">crwdns466:0crwdne466:0</string>
+    <string name="launcher_update_geocaches" comment="">crwdns468:0crwdne468:0</string>
+    <string name="launcher_import_from_gc" comment="">crwdns470:0crwdne470:0</string>
+    <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog">crwdns472:0crwdne472:0</string>
+    <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog">crwdns474:0crwdne474:0</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded" comment="Error dialog message when basic member reach limit of full geocache details per day. The '%1$s' is replaced with count of full detail geocache limit (eg. '3 geocaches'), '%2$s' with period length (eg. '24 hours'), '%3$s' with time when quota will be fulfilled/reset (eg. '09:10').">crwdns476:0%1$scrwdnd476:0%2$scrwdnd476:0%3$scrwdne476:0</string>
+    <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">crwdns478:0%1$scrwdnd478:0%2$scrwdnd478:0%3$scrwdne478:0</string>
+    <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">crwdns480:0crwdne480:0</string>
+    <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">crwdns482:0crwdne482:0</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">crwdns484:1%dcrwdne484:1</item>
+        <item quantity="other">crwdns484:5%dcrwdne484:5</item>
+    </plurals>
+    <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
+        <item quantity="one">crwdns486:1%dcrwdne486:1</item>
+        <item quantity="other">crwdns486:5%dcrwdne486:5</item>
+    </plurals>
+    <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
+        <item quantity="one">crwdns488:1%dcrwdne488:1</item>
+        <item quantity="other">crwdns488:5%dcrwdne488:5</item>
+    </plurals>
+    <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">crwdns490:0%scrwdne490:0</string>
+    <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">crwdns492:0crwdne492:0</string>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">crwdns494:0crwdne494:0</string>
+    <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">crwdns496:0crwdne496:0</string>
+    <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">crwdns498:0%1$dcrwdnd498:0%2$dcrwdnd498:0%3$dcrwdnd498:0%%crwdne498:0</string>
+    <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">crwdns500:0crwdne500:0</string>
+    <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">crwdns502:0crwdne502:0</string>
+    <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">crwdns504:0crwdne504:0</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">crwdns506:0%scrwdne506:0</string>
+    <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">crwdns508:0crwdne508:0</string>
+    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">crwdns510:0crwdne510:0</string>
+    <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">crwdns512:0crwdne512:0</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">crwdns514:0crwdne514:0</string>
+    <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">crwdns516:0crwdne516:0</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">crwdns518:0crwdne518:0</string>
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">crwdns520:0crwdne520:0</string>
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">crwdns522:0crwdne522:0</string>
+    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">crwdns524:0crwdne524:0</string>
+    <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">crwdns526:0crwdne526:0</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">crwdns528:0crwdne528:0</string>
+    <string name="pref_account" comment="Title of preference category for Account settings.">crwdns530:0crwdne530:0</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">crwdns532:0crwdne532:0</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">crwdns534:0crwdne534:0</string>
+    <string name="pref_downloading" comment="Title of preference category for Downloading settings.">crwdns536:0crwdne536:0</string>
+    <string name="pref_advanced" comment="Title of preference category for Advanced settings.">crwdns538:0crwdne538:0</string>
+    <string name="pref_about" comment="Title of preference category for About settings.">crwdns540:0crwdne540:0</string>
+    <string name="title_login" comment="Window title for sign in task.">crwdns542:0crwdne542:0</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">crwdns544:0crwdne544:0</string>
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">crwdns546:0crwdne546:0</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">crwdns548:0crwdne548:0</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">crwdns550:0crwdne550:0</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">crwdns552:0crwdne552:0</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">crwdns554:0crwdne554:0</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">crwdns556:0crwdne556:0</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">crwdns558:0crwdne558:0</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">crwdns560:0crwdne560:0</string>
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">crwdns562:0crwdne562:0</string>
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">crwdns564:0crwdne564:0</string>
+    <string name="button_send_error_report" comment="Button for Send error report action.">crwdns566:0crwdne566:0</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">crwdns568:0crwdne568:0</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">crwdns570:0crwdne570:0</string>
+    <string name="button_yes" comment="Dialog button for Yes action.">crwdns572:0crwdne572:0</string>
+    <string name="button_no" comment="Dialog button for No action.">crwdns574:0crwdne574:0</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">crwdns576:0crwdne576:0</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">crwdns578:0crwdne578:0</string>
+    <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">crwdns580:0crwdne580:0</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">crwdns582:0crwdne582:0</string>
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">crwdns584:0crwdne584:0</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">crwdns586:0crwdne586:0</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">crwdns588:0crwdne588:0</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">crwdns590:0crwdne590:0</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">crwdns592:0crwdne592:0</string>
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">crwdns594:0crwdne594:0</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">crwdns596:0crwdne596:0</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">crwdns598:0crwdne598:0</string>
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map.">crwdns600:0crwdne600:0</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">crwdns602:0crwdne602:0</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">crwdns604:0crwdne604:0</string>
+    <string name="title_warning" comment="Warning dialog title">crwdns606:0crwdne606:0</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">crwdns608:0crwdne608:0</string>
+    <string name="button_more_info" comment="Dialog button for More info action">crwdns610:0crwdne610:0</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">crwdns612:0%scrwdne612:0</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">crwdns614:0crwdne614:0</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns630:0crwdne630:0</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns632:0crwdne632:0</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">crwdns620:0crwdne620:0</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">crwdns622:0crwdne622:0</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">crwdns624:0crwdne624:0</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">crwdns626:0crwdne626:0</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">crwdns628:0crwdne628:0</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">crwdns634:0crwdne634:0</string>
+</resources>

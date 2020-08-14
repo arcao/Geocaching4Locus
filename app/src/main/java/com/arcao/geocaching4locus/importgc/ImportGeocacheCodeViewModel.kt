@@ -6,7 +6,7 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -15,7 +15,7 @@ import com.arcao.geocaching4locus.error.exception.IntendedException
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import java.util.regex.Pattern
 
@@ -26,6 +26,7 @@ class ImportGeocacheCodeViewModel(
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val locusMapManager: LocusMapManager,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportGeocacheCodeAction>()
@@ -55,7 +56,7 @@ class ImportGeocacheCodeViewModel(
         }
 
         job = computationLaunch {
-            AnalyticsUtil.actionImportGC(accountManager.isPremium)
+            analyticsManager.actionImportGC(accountManager.isPremium)
 
             val importIntent = locusMapManager.createSendPointsIntent(
                 callImport = true,
@@ -70,7 +71,6 @@ class ImportGeocacheCodeViewModel(
                     maxProgress = geocacheCodes.size
                 ) {
                     val channel = getPointsFromGeocacheCodes(
-                        this,
                         geocacheCodes,
                         !accountManager.isPremium,
                         filterPreferenceManager.geocacheLogsCount

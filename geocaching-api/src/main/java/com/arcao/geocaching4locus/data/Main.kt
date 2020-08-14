@@ -1,3 +1,5 @@
+@file:Suppress("BlockingMethodInNonBlockingContext")
+
 package com.arcao.geocaching4locus.data
 
 import com.arcao.geocaching4locus.data.account.FileAccountManager
@@ -7,24 +9,10 @@ import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpointFactory
 import com.arcao.geocaching4locus.data.api.internal.moshi.MoshiFactory
 import com.arcao.geocaching4locus.data.api.internal.okhttp.OkHttpClientFactory
 import kotlinx.coroutines.runBlocking
-import org.threeten.bp.zone.TzdbZoneRulesProvider
-import org.threeten.bp.zone.ZoneRulesInitializer
-import org.threeten.bp.zone.ZoneRulesProvider
 import timber.log.Timber
-import java.io.File
 
 fun main() {
     println("Hello")
-
-    // load TZDB for ThreeTenABP
-    ZoneRulesInitializer.setInitializer(object : ZoneRulesInitializer() {
-        override fun initializeProviders() {
-            val stream = File("geocaching-api/src/main/resources/TZDB.dat").inputStream()
-            stream.use {
-                ZoneRulesProvider.registerProvider(TzdbZoneRulesProvider(it))
-            }
-        }
-    })
 
     // Init timber
     Timber.plant(object : Timber.Tree() {
@@ -72,7 +60,7 @@ fun main() {
 //
         api.geocaches(
             lite = false,
-            referenceCodes = *arrayOf(
+            referenceCodes = arrayOf(
                 "GCGH8J"
             )
         ).forEach {

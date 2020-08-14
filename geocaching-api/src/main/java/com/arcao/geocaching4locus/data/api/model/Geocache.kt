@@ -3,8 +3,10 @@ package com.arcao.geocaching4locus.data.api.model
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.data.api.util.toSafeInstant
-import org.threeten.bp.LocalDateTime
+import com.squareup.moshi.JsonClass
+import java.time.LocalDateTime
 
+@JsonClass(generateAdapter = true)
 data class Geocache(
     val referenceCode: String, // string
     val name: String, // string

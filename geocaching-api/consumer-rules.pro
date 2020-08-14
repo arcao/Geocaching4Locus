@@ -1,3 +1,2 @@
--keep @interface com.arcao.geocaching4locus.data.api.internal.moshi.adapter.LocalDateTimeUTC
 -keep class com.arcao.geocaching4locus.data.api.model.** { *; }
 -keep class com.arcao.geocaching4locus.data.api.internal.okhttp.Tls12SocketFactory { *; }

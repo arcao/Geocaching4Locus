@@ -9,15 +9,15 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocachingLogsUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.map
-import kotlinx.coroutines.channels.toList
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusUtils
 import locus.api.manager.LocusMapManager
@@ -36,6 +36,7 @@ class UpdateViewModel(
     private val pointMerger: PointMerger,
     private val locusMapManager: LocusMapManager,
     private val exceptionHandler: ExceptionHandler,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<UpdateAction>()
@@ -99,7 +100,6 @@ class UpdateViewModel(
                             )
 
                             val logs = getGeocachingLogs(
-                                this,
                                 updateData.geocacheCode,
                                 progress,
                                 logsCount
@@ -205,7 +205,7 @@ class UpdateViewModel(
         val downloadLogs =
             AppConstants.UPDATE_WITH_LOGS_COMPONENT == intent.component?.className
 
-        AnalyticsUtil.actionUpdate(oldPoint != null, downloadLogs, accountManager.isPremium)
+        analyticsManager.actionUpdate(oldPoint != null, downloadLogs, accountManager.isPremium)
         return UpdateData(cacheId, downloadLogs, oldPoint)
     }
 

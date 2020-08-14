@@ -4,12 +4,12 @@ import com.arcao.geocaching4locus.authentication.util.restrictions
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.DownloadingUtil
+import com.arcao.geocaching4locus.base.util.takeListVariable
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import locus.api.objects.extra.Point
@@ -21,25 +21,21 @@ class GetOldPointNewPointPairFromPointUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
-        scope: CoroutineScope,
-        channel: ReceiveChannel<Point>,
+        flow: Flow<Point>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
-        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
-
-        while (!channel.isClosedForReceive) {
-            val points = channel.takeList(itemsPerRequest)
+        flow.takeListVariable(AppConstants.ITEMS_PER_REQUEST) { points ->
             val requestedCacheIds = points.map { it.gcData.cacheID }.toTypedArray()
 
             val startTimeMillis = System.currentTimeMillis()
 
             val cachesToAdd = repository.geocaches(
-                referenceCodes = *requestedCacheIds,
+                referenceCodes = requestedCacheIds,
                 logsCount = geocacheLogsCount,
                 lite = liteData
             )
@@ -52,25 +48,11 @@ class GetOldPointNewPointPairFromPointUseCase(
                 val receivedPoints = mapper.createLocusPoints(cachesToAdd)
                 for (oldPoint in points) {
                     val newPoint = receivedPoints.find { it.gcData.cacheID == oldPoint.gcData.cacheID }
-                    send(Pair(oldPoint, newPoint))
+                    emit(Pair(oldPoint, newPoint))
                 }
             }
 
-            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            DownloadingUtil.computeItemsPerRequest(points.size, startTimeMillis)
         }
-    }
-}
-
-private suspend fun <E> ReceiveChannel<E>.takeList(count: Int): List<E> {
-    if (count <= 0) return emptyList()
-
-    val list = mutableListOf<E>()
-    var received = 0
-
-    for (item in this) {
-        list.add(item)
-        if (++received >= count) return list
-    }
-
-    return list
+    }.flowOn(dispatcherProvider.io)
 }

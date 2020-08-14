@@ -8,7 +8,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetGeocacheCodeFromGuidUseCase
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -27,6 +27,7 @@ class ImportUrlViewModel(
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val locusMapManager: LocusMapManager,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
     val action = Command<ImportUrlAction>()
@@ -53,7 +54,7 @@ class ImportUrlViewModel(
     }
 
     private suspend fun performImport(uri: Uri) = computationContext {
-        AnalyticsUtil.actionImport(accountManager.isPremium)
+        analyticsManager.actionImport(accountManager.isPremium)
 
         try {
             showProgress(R.string.progress_download_geocache) {

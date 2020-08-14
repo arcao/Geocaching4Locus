@@ -66,7 +66,10 @@ object CoordinatesParser {
         val lat = latitudeWrapper.result
         // cut away the latitude part when parsing the longitude
         val longitudeWrapper =
-            parse(coordinates.substring(latitudeWrapper.matcherPos + latitudeWrapper.matcherLen), CoordinateType.LON)
+            parse(
+                coordinates.substring(latitudeWrapper.matcherPos + latitudeWrapper.matcherLen),
+                CoordinateType.LON
+            )
 
         if (longitudeWrapper.matcherPos - (latitudeWrapper.matcherPos + latitudeWrapper.matcherLen) >= 10) {
             throw ParseException(
@@ -82,10 +85,10 @@ object CoordinatesParser {
     @Throws(ParseException::class)
     private fun parse(coordinate: String, coordinateType: CoordinateType): ParseResult {
         val pattern = when (coordinateType) {
-            CoordinatesParser.CoordinateType.LAT_UNSAFE -> LATITUDE_PATTERN_UNSAFE
-            CoordinatesParser.CoordinateType.LON_UNSAFE -> LONGITUDE_PATTERN_UNSAFE
-            CoordinatesParser.CoordinateType.LON -> LONGITUDE_PATTERN
-            CoordinatesParser.CoordinateType.LAT -> LATITUDE_PATTERN
+            CoordinateType.LAT_UNSAFE -> LATITUDE_PATTERN_UNSAFE
+            CoordinateType.LON_UNSAFE -> LONGITUDE_PATTERN_UNSAFE
+            CoordinateType.LON -> LONGITUDE_PATTERN
+            CoordinateType.LAT -> LATITUDE_PATTERN
         }
 
         val matcher = pattern.matcher(coordinate)
@@ -116,14 +119,15 @@ object CoordinatesParser {
                 }
             }
 
-            var result = sign * (degree + minutes / MINUTES_PER_DEGREE + seconds / SECONDS_PER_DEGREE)
+            var result =
+                sign * (degree + minutes / MINUTES_PER_DEGREE + seconds / SECONDS_PER_DEGREE)
 
             // normalize result
             result = when (coordinateType) {
-                CoordinatesParser.CoordinateType.LON_UNSAFE,
-                CoordinatesParser.CoordinateType.LON -> normalize(result, -180.0, 180.0)
-                CoordinatesParser.CoordinateType.LAT_UNSAFE,
-                CoordinatesParser.CoordinateType.LAT -> normalize(result, -90.0, 90.0)
+                CoordinateType.LON_UNSAFE,
+                CoordinateType.LON -> normalize(result, -180.0, 180.0)
+                CoordinateType.LAT_UNSAFE,
+                CoordinateType.LAT -> normalize(result, -90.0, 90.0)
             }
 
             return ParseResult(result, matcher.start(), matcher.group().length)

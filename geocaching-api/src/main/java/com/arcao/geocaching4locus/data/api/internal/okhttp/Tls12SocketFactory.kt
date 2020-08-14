@@ -22,7 +22,8 @@ import javax.net.ssl.SSLSocketFactory
  * @link https://developer.android.com/reference/javax/net/ssl/SSLSocket.html
  * @see SSLSocketFactory
  */
-class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFactory) : SSLSocketFactory() {
+class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFactory) :
+    SSLSocketFactory() {
 
     override fun getDefaultCipherSuites(): Array<String> = delegate.defaultCipherSuites
 
@@ -39,7 +40,12 @@ class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFac
     }
 
     @Throws(IOException::class, UnknownHostException::class)
-    override fun createSocket(host: String, port: Int, localHost: InetAddress, localPort: Int): Socket {
+    override fun createSocket(
+        host: String,
+        port: Int,
+        localHost: InetAddress,
+        localPort: Int
+    ): Socket {
         return patch(delegate.createSocket(host, port, localHost, localPort))
     }
 
@@ -49,7 +55,12 @@ class Tls12SocketFactory internal constructor(private val delegate: SSLSocketFac
     }
 
     @Throws(IOException::class)
-    override fun createSocket(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int): Socket {
+    override fun createSocket(
+        address: InetAddress,
+        port: Int,
+        localAddress: InetAddress,
+        localPort: Int
+    ): Socket {
         return patch(delegate.createSocket(address, port, localAddress, localPort))
     }
 

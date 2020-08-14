@@ -72,7 +72,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         }
 
         preference<Preference>(ABOUT_DONATE_PAYPAL).setOnPreferenceClickListener {
-            DonatePaypalDialogFragment().show(requireFragmentManager(), DonatePaypalDialogFragment.TAG)
+            DonatePaypalDialogFragment().show(parentFragmentManager, DonatePaypalDialogFragment.TAG)
             true
         }
     }

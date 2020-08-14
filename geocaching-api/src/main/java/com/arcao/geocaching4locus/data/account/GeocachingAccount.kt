@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.data.account
 
 import com.arcao.geocaching4locus.data.api.model.User
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
-import org.threeten.bp.Instant
+import java.time.Instant
 
 data class GeocachingAccount(
     private val accountManager: AccountManager,
@@ -16,15 +16,13 @@ data class GeocachingAccount(
     var lastUserInfoUpdate: Instant = Instant.now()
 ) {
 
-    val accessTokenExpired
+    val accessTokenExpired: Boolean
         get() = Instant.now().isAfter(accessTokenExpiration)
 
     val isAccountUpdateInProgress: Boolean
         get() = accountManager.isAccountUpdateInProgress
 
-    suspend fun refreshToken() {
-        accountManager.refreshAccount(this)
-    }
+    suspend fun refreshToken(): Boolean = accountManager.refreshAccount(this)
 
     fun updateUserInfo(user: User) {
         userName = user.username
@@ -36,7 +34,7 @@ data class GeocachingAccount(
         accountManager.saveAccount(this)
     }
 
-    fun isPremium() = when (membership) {
+    fun isPremium(): Boolean = when (membership) {
         MembershipType.UNKNOWN -> false
         MembershipType.BASIC -> false
         MembershipType.CHARTER -> true

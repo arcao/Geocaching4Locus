@@ -6,14 +6,16 @@ import com.github.scribejava.core.httpclient.HttpClientConfig
 import com.github.scribejava.core.model.OAuthConstants
 import com.github.scribejava.core.model.OAuthRequest
 import com.github.scribejava.core.oauth.OAuth20Service
+import java.io.OutputStream
 
 class GeocachingOAuthService(
     api: DefaultApi20,
-    apiKey: String,
-    apiSecret: String,
-    callback: String,
+    apiKey: String?,
+    apiSecret: String?,
+    callback: String?,
     defaultScope: String?,
     responseType: String?,
+    debugStream: OutputStream?,
     userAgent: String?,
     httpClientConfig: HttpClientConfig?,
     httpClient: HttpClient?
@@ -24,6 +26,7 @@ class GeocachingOAuthService(
     callback,
     defaultScope,
     responseType,
+    debugStream,
     userAgent,
     httpClientConfig,
     httpClient

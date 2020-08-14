@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointsFromGeocacheCodesUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
-import com.arcao.geocaching4locus.base.util.AnalyticsUtil
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.error.exception.IntendedException
@@ -24,8 +24,7 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourc
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.channels.map
+import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
@@ -39,6 +38,7 @@ class BookmarkViewModel(
     private val writePointToPackPointsFile: WritePointToPackPointsFileUseCase,
     private val filterPreferenceManager: FilterPreferenceManager,
     private val locusMapManager: LocusMapManager,
+    private val analyticsManager: AnalyticsManager,
     dispatcherProvider: CoroutinesDispatcherProvider
 ) : BaseViewModel(dispatcherProvider) {
 
@@ -50,7 +50,10 @@ class BookmarkViewModel(
     val action = Command<BookmarkAction>()
 
     val state: LiveData<DataSourceState>
-        get() = Transformations.switchMap(dataSourceFactory.dataSource, ListGeocachesDataSource::state)
+        get() = Transformations.switchMap(
+            dataSourceFactory.dataSource,
+            ListGeocachesDataSource::state
+        )
 
     private var job: Job? = null
 
@@ -86,7 +89,7 @@ class BookmarkViewModel(
 
         job = mainLaunch {
             val selection = selection.value ?: return@mainLaunch
-            AnalyticsUtil.actionImportBookmarks(selection.size, false)
+            analyticsManager.actionImportBookmarks(selection.size, false)
 
             computationLaunch {
                 val geocacheCodes = selection.map { it.referenceCode }.toTypedArray()
@@ -100,9 +103,11 @@ class BookmarkViewModel(
                 var receivedGeocaches = 0
 
                 try {
-                    showProgress(R.string.progress_download_geocaches, maxProgress = geocacheCodes.size) {
+                    showProgress(
+                        R.string.progress_download_geocaches,
+                        maxProgress = geocacheCodes.size
+                    ) {
                         val channel = getPointsFromGeocacheCodes(
-                            this,
                             geocacheCodes,
                             filterPreferenceManager.simpleCacheData,
                             filterPreferenceManager.geocacheLogsCount
@@ -151,6 +156,6 @@ class BookmarkViewModel(
     }
 
     fun cancelProgress() {
-        job?.cancelChildren()
+        job?.cancel()
     }
 }

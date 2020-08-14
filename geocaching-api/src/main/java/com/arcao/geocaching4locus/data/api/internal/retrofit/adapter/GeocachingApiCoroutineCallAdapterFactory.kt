@@ -33,7 +33,11 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
         }
     }
 
-    override fun get(returnType: Type, annotations: Array<out Annotation>, retrofit: Retrofit): CallAdapter<*, *>? {
+    override fun get(
+        returnType: Type,
+        annotations: Array<out Annotation>,
+        retrofit: Retrofit
+    ): CallAdapter<*, *>? {
         if (Deferred::class.java != getRawType(returnType)) {
             return null
         }
@@ -46,7 +50,10 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
         return BodyCallAdapter<Any>(getParameterUpperBound(0, returnType), retrofit)
     }
 
-    private class BodyCallAdapter<T>(private val responseType: Type, private val retrofit: Retrofit) :
+    private class BodyCallAdapter<T>(
+        private val responseType: Type,
+        private val retrofit: Retrofit
+    ) :
         CallAdapter<T, Deferred<T>> {
         override fun responseType() = responseType
 
@@ -104,9 +111,14 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             if (errorBody != null) {
                 try {
                     val error =
-                        retrofit.responseBodyConverter<Error>(Error::class.java, emptyArray()).convert(errorBody)
+                        retrofit.responseBodyConverter<Error>(Error::class.java, emptyArray())
+                            .convert(errorBody)
                     if (error != null) {
-                        return createException(error.statusCode, error.statusMessage, error.errorMessage)
+                        return createException(
+                            error.statusCode,
+                            error.statusMessage,
+                            error.errorMessage
+                        )
                     }
                 } catch (t: Throwable) {
                     // ignore and fallback to HttpException
@@ -131,10 +143,22 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
             }
         }
 
-        private fun createException(statusCode: StatusCode, statusMessage: String, errorMessage: String): Exception {
+        private fun createException(
+            statusCode: StatusCode,
+            statusMessage: String,
+            errorMessage: String
+        ): Exception {
             return when (statusCode) {
-                StatusCode.UNAUTHORIZED -> AuthenticationException(statusCode, statusMessage, errorMessage)
-                StatusCode.SERVICE_UNAVAILABLE -> ServiceUnavailableException(statusCode, statusMessage, errorMessage)
+                StatusCode.UNAUTHORIZED -> AuthenticationException(
+                    statusCode,
+                    statusMessage,
+                    errorMessage
+                )
+                StatusCode.SERVICE_UNAVAILABLE -> ServiceUnavailableException(
+                    statusCode,
+                    statusMessage,
+                    errorMessage
+                )
                 else -> GeocachingApiException(statusCode, statusMessage, errorMessage)
             }
         }

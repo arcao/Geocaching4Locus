@@ -8,8 +8,8 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.account.GeocachingAccount
 import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.github.scribejava.core.oauth.OAuth20Service
-import org.threeten.bp.Instant
-import org.threeten.bp.temporal.ChronoUnit
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
     AccountManager(oAuthService) {

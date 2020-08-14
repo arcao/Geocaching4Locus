@@ -28,6 +28,7 @@ import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestU
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
+import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleViewModel
@@ -49,6 +50,7 @@ import com.arcao.geocaching4locus.update.UpdateViewModel
 import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -57,6 +59,7 @@ internal val appModule = module {
     single { androidApplication() as App }
     single { PreferenceAccountManager(get(), get()) } bind AccountManager::class
     single { CoroutinesDispatcherProvider() }
+    single { AnalyticsManager(androidContext()) }
 
     single { GeocachingApiFilterProvider(get()) }
     single { FilterPreferenceManager(get(), get()) }
@@ -74,7 +77,16 @@ internal val appModule = module {
     factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
     factory { GetGpsLocationUseCase(get(), get()) }
     factory { GetLastKnownLocationUseCase(get()) }
-    factory { GetLiveMapPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
+    factory {
+        GetLiveMapPointsFromRectangleCoordinatesUseCase(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     factory { GetOldPointNewPointPairFromPointUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointFromGeocacheCodeUseCase(get(), get(), get(), get(), get()) }
     factory { GetPointsFromCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
@@ -90,19 +102,53 @@ internal val appModule = module {
 
     // ---- View models ----
     // login
-    viewModel { LoginViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { LoginViewModel(get(), get(), get(), get(), get(), get(), get()) }
     // dashboard
-    viewModel { (calledFromLocusMap: Boolean) -> DashboardViewModel(calledFromLocusMap, get(), get(), get(), get(), get()) }
+    viewModel { (calledFromLocusMap: Boolean) ->
+        DashboardViewModel(
+            calledFromLocusMap,
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     // download live map rectangles
     viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     // import geocache codes
-    viewModel { ImportGeocacheCodeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel {
+        ImportGeocacheCodeViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     // import url
-    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // import bookmarks
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { (bl: GeocacheListEntity) -> BookmarkViewModel(bl, get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { (bl: GeocacheListEntity) ->
+        BookmarkViewModel(
+            bl,
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     factory { GeocacheUserListsDataSourceFactory(get(), get()) }
     factory { ListGeocachesDataSourceFactory(get(), get()) }
     // live map
@@ -123,12 +169,26 @@ internal val appModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
     // update
-    viewModel { UpdateViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { UpdateMoreViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel {
+        UpdateViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
+    viewModel { UpdateMoreViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // web link
     viewModel { BookmarkGeocacheWebLinkViewModel(get(), get(), get(), get()) }
     viewModel { WatchGeocacheWebLinkViewModel(get(), get(), get(), get()) }

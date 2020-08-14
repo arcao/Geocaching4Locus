@@ -13,5 +13,4 @@ class GeocacheQuery {
     override fun toString(): String = filters.joinToString("+")
 }
 
-@Suppress("NOTHING_TO_INLINE")
-inline fun queryOf(vararg filters: Filter) = GeocacheQuery().add(*filters)
+fun queryOf(vararg filters: Filter) = GeocacheQuery().add(*filters)

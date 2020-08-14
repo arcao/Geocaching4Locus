@@ -8,19 +8,22 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-class GeocachingAuthenticationInterceptor(private val accountManager: AccountManager) : Interceptor {
+class GeocachingAuthenticationInterceptor(
+    private val accountManager: AccountManager
+) : Interceptor {
     var endpoint: GeocachingApiEndpoint? = null
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         try {
-            val endpoint = this.endpoint ?: throw IllegalStateException("Endpoint must be set.")
-            val account = accountManager.account ?: throw IllegalStateException("Account is not present.")
+            val endpoint = checkNotNull(this.endpoint) { "Endpoint must be set." }
+            val account = checkNotNull(accountManager.account) { "Account is not present." }
 
             if (account.accessTokenExpired) {
                 runBlocking {
-                    account.refreshToken()
-                    account.updateUserInfo(endpoint.userAsync().await())
+                    if (account.refreshToken()) {
+                        account.updateUserInfo(endpoint.userAsync().await())
+                    }
                 }
             }
             return chain.proceed(

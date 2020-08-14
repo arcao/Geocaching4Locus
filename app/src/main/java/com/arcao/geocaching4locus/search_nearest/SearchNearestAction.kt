@@ -12,4 +12,5 @@ sealed class SearchNearestAction {
     object WrongCoordinatesFormat : SearchNearestAction()
     object ShowFilters : SearchNearestAction()
     object LocationProviderDisabled : SearchNearestAction()
+    class RequestCacheCount(val value: Int, val step: Int, val max: Int) : SearchNearestAction()
 }

@@ -8,10 +8,8 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.model.Coordinates
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
 import timber.log.Timber
@@ -25,9 +23,8 @@ class GetPointsFromRectangleCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
-        scope: CoroutineScope,
         centerCoordinates: Coordinates,
         topLeftCoordinates: Coordinates,
         bottomRightCoordinates: Coordinates,
@@ -45,7 +42,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
         excludeIgnoreList: Boolean = true,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
-    ) = scope.produce(dispatcherProvider.io) {
+    ) = flow {
         geocachingApiLogin()
 
         var count = AppConstants.ITEMS_PER_REQUEST
@@ -76,9 +73,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
                 take = min(itemsPerRequest, count - current)
             ).also {
                 count = min(it.totalCount, maxCount.toLong()).toInt()
-                withContext(dispatcherProvider.computation) {
-                    countHandler(count)
-                }
+                countHandler(count)
             }
 
             accountManager.restrictions().updateLimits(repository.userLimits())
@@ -88,10 +83,11 @@ class GetPointsFromRectangleCoordinatesUseCase(
             if (geocaches.isEmpty())
                 break
 
-            send(mapper.createLocusPoints(geocaches))
+            emit(mapper.createLocusPoints(geocaches))
             current += geocaches.size
 
-            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            itemsPerRequest =
+                DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
         }
 
         Timber.v("found geocaches: %d", current)
@@ -99,5 +95,5 @@ class GetPointsFromRectangleCoordinatesUseCase(
         if (current == 0) {
             throw NoResultFoundException()
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 }

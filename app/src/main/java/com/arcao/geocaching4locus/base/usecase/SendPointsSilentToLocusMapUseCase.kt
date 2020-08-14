@@ -1,7 +1,8 @@
 package com.arcao.geocaching4locus.base.usecase
 
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import locus.api.manager.LocusMapManager
 import locus.api.objects.extra.Point
@@ -12,10 +13,11 @@ class SendPointsSilentToLocusMapUseCase(
 ) {
     suspend operator fun invoke(
         packPrefix: String,
-        pointListChannel: ReceiveChannel<List<Point>>
+        pointListFlow: Flow<List<Point>>
     ) = withContext(dispatcherProvider.computation) {
         var id = 1
-        for (pointList in pointListChannel) {
+
+        pointListFlow.collect { pointList ->
             locusMapManager.sendPointsSilent("$packPrefix$id", pointList)
             id++
         }

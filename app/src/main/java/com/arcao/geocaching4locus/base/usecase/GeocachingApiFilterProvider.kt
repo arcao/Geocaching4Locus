@@ -39,7 +39,7 @@ class GeocachingApiFilterProvider(
         val filters = mutableListOf<Filter>()
 
         val account = requireNotNull(accountManager.account)
-        val userName = requireNotNull(account.userName)
+        val userName = account.userName
         val premiumMember = account.isPremium()
 
         filters += LocationFilter(centerCoordinates)
@@ -52,12 +52,14 @@ class GeocachingApiFilterProvider(
             filters += IsActiveFilter(true)
         }
 
-        if (!foundGeocaches) {
-            filters += FoundByFilter(userName).not()
-        }
+        if (userName != null) {
+            if (!foundGeocaches) {
+                filters += FoundByFilter(userName).not()
+            }
 
-        if (!ownGeocaches) {
-            filters += HiddenByFilter(userName).not()
+            if (!ownGeocaches) {
+                filters += HiddenByFilter(userName).not()
+            }
         }
 
         if (!premiumMember) {
@@ -96,7 +98,7 @@ class GeocachingApiFilterProvider(
         val filters = mutableListOf<Filter>()
 
         val account = requireNotNull(accountManager.account)
-        val userName = requireNotNull(account.userName)
+        val userName = account.userName
         val premiumMember = account.isPremium()
 
         filters += LocationFilter(coordinates)
@@ -108,12 +110,14 @@ class GeocachingApiFilterProvider(
             filters += IsActiveFilter(true)
         }
 
-        if (!foundGeocaches) {
-            filters += FoundByFilter(userName).not()
-        }
+        if (userName != null) {
+            if (!foundGeocaches) {
+                filters += FoundByFilter(userName).not()
+            }
 
-        if (!ownGeocaches) {
-            filters += HiddenByFilter(userName).not()
+            if (!ownGeocaches) {
+                filters += HiddenByFilter(userName).not()
+            }
         }
 
         if (!premiumMember) {

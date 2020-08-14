@@ -10,9 +10,8 @@ import com.arcao.geocaching4locus.data.api.GeocachingApiRepository
 import com.arcao.geocaching4locus.data.api.model.response.PagedArrayList
 import com.arcao.geocaching4locus.data.api.model.response.PagedList
 import com.arcao.geocaching4locus.error.exception.NoResultFoundException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
@@ -26,6 +25,7 @@ class GetListGeocachesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
         referenceCode: String,
         skip: Int = 0,
@@ -46,14 +46,13 @@ class GetListGeocachesUseCase(
         }
     }
 
-    @UseExperimental(ExperimentalCoroutinesApi::class)
+    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
-        scope: CoroutineScope,
         referenceCode: String,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0,
         countHandler: (Int) -> Unit = {}
-    ) = scope.produce(dispatcherProvider.io, capacity = 50) {
+    ) = flow {
         geocachingApiLogin()
 
         var count = AppConstants.ITEMS_PER_REQUEST
@@ -71,9 +70,7 @@ class GetListGeocachesUseCase(
                 take = min(itemsPerRequest, count - current)
             ).also {
                 count = it.totalCount.toInt()
-                withContext(dispatcherProvider.computation) {
-                    countHandler(count)
-                }
+                countHandler(count)
             }
 
             accountManager.restrictions().updateLimits(repository.userLimits())
@@ -83,7 +80,7 @@ class GetListGeocachesUseCase(
             if (geocaches.isEmpty())
                 break
 
-            send(mapper.createLocusPoints(geocaches))
+            emit(mapper.createLocusPoints(geocaches))
             current += geocaches.size
 
             itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
@@ -94,5 +91,5 @@ class GetListGeocachesUseCase(
         if (current == 0) {
             throw NoResultFoundException()
         }
-    }
+    }.flowOn(dispatcherProvider.io)
 }

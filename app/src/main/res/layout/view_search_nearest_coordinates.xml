@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:showIn="@layout/activity_search_nearest">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/lbl_coordinates"
-        style="@style/Widget.AppTheme.Header"
-        android:layout_width="0dp"
+    <data>
+
+        <variable
+            name="vm"
+            type="com.arcao.geocaching4locus.search_nearest.SearchNearestViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/title_coordinates"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:showIn="@layout/activity_search_nearest">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/latitude"
-        style="@style/Widget.AppTheme.EditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:inputType="textNoSuggestions"
-        app:layout_constraintEnd_toStartOf="@+id/gps"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_coordinates" />
+        <TextView
+            android:id="@+id/lbl_coordinates"
+            style="@style/Widget.AppTheme.Header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/title_coordinates"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/gps"
-        style="@style/Widget.AppTheme.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/button_gps"
-        app:layout_constraintBaseline_toBaselineOf="@+id/latitude"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/latitude" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/latitude"
+            style="@style/Widget.AppTheme.EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@={vm.latitude}"
+            android:inputType="textNoSuggestions"
+            app:layout_constraintEnd_toStartOf="@+id/gps"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_coordinates" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/longitude"
-        style="@style/Widget.AppTheme.EditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:inputType="textNoSuggestions"
-        app:layout_constraintEnd_toStartOf="@+id/gps"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gps" />
+        <Button
+            android:id="@+id/gps"
+            style="@style/Widget.AppTheme.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/button_gps"
+            android:onClick="@{() -> vm.retrieveCoordinates()}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/latitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/latitude" />
 
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/longitude"
+            style="@style/Widget.AppTheme.EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:inputType="textNoSuggestions"
+            android:text="@={vm.longitude}"
+            app:layout_constraintEnd_toStartOf="@+id/gps"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gps" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

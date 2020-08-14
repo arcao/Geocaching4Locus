@@ -50,7 +50,12 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
-    suspend fun liveMap(filters: List<Filter>, lite: Boolean = false, skip: Int = 0, take: Int = 10) = apiCall {
+    suspend fun liveMap(
+        filters: List<Filter>,
+        lite: Boolean = false,
+        skip: Int = 0,
+        take: Int = 10
+    ) = apiCall {
         searchAsync(
             q = queryOf(*filters.toTypedArray()),
             lite = lite,
@@ -86,7 +91,7 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
     suspend fun geocaches(
-        vararg referenceCodes: String,
+        referenceCodes: Array<String>,
         logsCount: Int = 10,
         imageCount: Int = 30,
         trackableCount: Int = 30,
@@ -108,7 +113,12 @@ class GeocachingApiRepository(private val endpoint: GeocachingApiEndpoint) {
     }
 
     @Throws(GeocachingApiException::class, AuthenticationException::class, IOException::class)
-    suspend fun geocacheLogs(referenceCode: String, imageCount: Int = 30, skip: Int = 0, take: Int = 10) = apiCall {
+    suspend fun geocacheLogs(
+        referenceCode: String,
+        imageCount: Int = 30,
+        skip: Int = 0,
+        take: Int = 10
+    ) = apiCall {
         geocacheLogsAsync(
             referenceCode = referenceCode,
             expand = GeocacheLogExpand().all().apply {

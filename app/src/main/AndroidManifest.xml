@@ -226,7 +226,7 @@
         <activity
             android:name=".authentication.LoginActivity"
             android:label="@string/title_login"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".authentication.RedirectUriReceiverActivity"

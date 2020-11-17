@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.arcao.geocaching4locus
 
 import android.app.Application
@@ -29,8 +31,8 @@ import timber.log.Timber
 import java.util.UUID
 
 class App : Application() {
-    val accountManager by inject<AccountManager>()
-    val analyticsManager by inject<AnalyticsManager>()
+    private val accountManager by inject<AccountManager>()
+    private val analyticsManager by inject<AnalyticsManager>()
 
     private val deviceId: String by lazy {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)

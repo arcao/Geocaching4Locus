@@ -225,10 +225,12 @@
         </activity>
         <activity
             android:name=".authentication.LoginActivity"
-            android:exported="true"
             android:label="@string/title_login"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".authentication.RedirectUriReceiverActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

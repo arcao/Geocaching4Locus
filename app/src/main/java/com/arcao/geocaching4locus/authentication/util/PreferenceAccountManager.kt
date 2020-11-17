@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.authentication.util
 
 import android.app.Activity
 import android.content.Context
+import androidx.core.content.edit
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -13,7 +14,8 @@ import java.time.temporal.ChronoUnit
 
 class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
     AccountManager(oAuthService) {
-    private val prefs = context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
+    private val prefs =
+        context.getSharedPreferences(PrefConstants.ACCOUNT_STORAGE_NAME, Context.MODE_PRIVATE)
     val restrictions = AccountRestrictions(context)
 
     init {
@@ -46,12 +48,12 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
 
     override fun saveAccount(account: GeocachingAccount?) {
         if (account == null) {
-            prefs.edit().clear().apply()
+            prefs.edit { clear() }
             restrictions.remove()
             return
         }
 
-        prefs.edit().apply {
+        prefs.edit {
             putString("accessToken", account.accessToken)
             putLong("expiration", account.accessTokenExpiration.toEpochMilli())
             putString("refreshToken", account.refreshToken)
@@ -60,7 +62,7 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
             putString("avatarUrl", account.avatarUrl)
             putString("bannerUrl", account.bannerUrl)
             putLong("lastUserInfoUpdate", account.lastUserInfoUpdate.toEpochMilli())
-        }.apply()
+        }
     }
 
     @Suppress("DEPRECATION")
@@ -72,8 +74,11 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
         }
 
         // update pref_version to latest one
-        if (prefVersion != PrefConstants.CURRENT_PREF_VERSION)
-            prefs.edit().putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION).apply()
+        if (prefVersion != PrefConstants.CURRENT_PREF_VERSION) {
+            prefs.edit {
+                putInt(PrefConstants.PREF_VERSION, PrefConstants.CURRENT_PREF_VERSION)
+            }
+        }
     }
 }
 
@@ -88,6 +93,8 @@ fun AccountManager.requestSignOn(activity: Activity, requestCode: Int): Boolean 
 val AccountManager.isPremium: Boolean
     get() = account?.isPremium() ?: false
 
-fun AccountManager.restrictions(): AccountRestrictions = (this as PreferenceAccountManager).restrictions
+fun AccountManager.restrictions(): AccountRestrictions =
+    (this as PreferenceAccountManager).restrictions
 
-fun GeocachingAccount.isAccountUpdateRequired() = Instant.now().minus(1L, ChronoUnit.DAYS).isAfter(lastUserInfoUpdate)
+fun GeocachingAccount.isAccountUpdateRequired() =
+    Instant.now().minus(1L, ChronoUnit.DAYS).isAfter(lastUserInfoUpdate)

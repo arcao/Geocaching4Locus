@@ -8,13 +8,12 @@ import java.time.Instant
 class FileAccountManager(
     oAuthService: OAuth20Service,
     private val dataFile: File = File("account.dat")
-) :
-    AccountManager(oAuthService) {
+) : AccountManager(oAuthService) {
     init {
         account = loadAccount()
     }
 
-    override fun loadAccount(): GeocachingAccount? {
+    private fun loadAccount(): GeocachingAccount? {
         try {
             val (accessToken, expiration, refreshToken, userName, membership, avatarUrl, bannerUrl) =
                 dataFile.readText().split(NEW_LINE_PATTERN)
@@ -36,6 +35,8 @@ class FileAccountManager(
     }
 
     override fun saveAccount(account: GeocachingAccount?) {
+        super.saveAccount(account)
+
         if (account == null) {
             dataFile.delete()
             return

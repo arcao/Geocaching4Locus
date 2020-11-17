@@ -23,7 +23,7 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
         account = loadAccount()
     }
 
-    override fun loadAccount(): GeocachingAccount? {
+    private fun loadAccount(): GeocachingAccount? {
         val accessToken = prefs.getString("accessToken", null) ?: return null
         val expiration = prefs.getLong("expiration", 0)
         val refreshToken = prefs.getString("refreshToken", null) ?: return null
@@ -47,6 +47,8 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
     }
 
     override fun saveAccount(account: GeocachingAccount?) {
+        super.saveAccount(account)
+
         if (account == null) {
             prefs.edit { clear() }
             restrictions.remove()

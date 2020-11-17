@@ -73,6 +73,7 @@ class LiveMapNotificationManager(
                 willBeEnabled -> showLiveMapToast(R.string.toast_live_map_enabled)
 
                 else -> {
+                    LiveMapService.stop(context)
                     showLiveMapToast(R.string.toast_live_map_disabled)
                     LastLiveMapCoordinates.remove()
                 }
@@ -330,7 +331,7 @@ class LiveMapNotificationManager(
         }
     }
 
-    private fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
+    fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
         val lastRequests = defaultPreferenceManager.liveMapLastRequests
         if (lastRequests > 0) {
             removeLocusMapPoints(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, 1, lastRequests)

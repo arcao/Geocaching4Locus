@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
+import java.util.concurrent.CancellationException
 import java.util.concurrent.Executors
 
 class LiveMapViewModel(
@@ -55,7 +56,14 @@ class LiveMapViewModel(
             cancelTasks()
         }
 
-        downloadLiveMapGeocaches(intent).invokeOnCompletion {
+        downloadLiveMapGeocaches(intent).invokeOnCompletion { exception ->
+            if (exception is CancellationException &&
+                !notificationManager.isLiveMapEnabled &&
+                defaultPreferenceManager.hideGeocachesOnLiveMapDisabled
+            ) {
+                notificationManager.removeLiveMapItems()
+            }
+
             completionCallback(intent)
         }
     }

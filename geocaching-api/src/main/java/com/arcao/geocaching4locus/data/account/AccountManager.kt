@@ -24,9 +24,9 @@ abstract class AccountManager(
     var isAccountUpdateInProgress: Boolean = false
         private set
 
-    protected abstract fun loadAccount(): GeocachingAccount?
-
-    abstract fun saveAccount(account: GeocachingAccount?)
+    open fun saveAccount(account: GeocachingAccount?) {
+        this.account = account
+    }
 
     suspend fun createAccount(code: String): GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
@@ -41,7 +41,6 @@ abstract class AccountManager(
         )
 
         saveAccount(newAccount)
-        this.account = newAccount
 
         return newAccount
     }

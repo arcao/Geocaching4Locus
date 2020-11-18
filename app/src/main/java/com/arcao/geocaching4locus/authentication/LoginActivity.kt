@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -44,8 +45,8 @@ class LoginActivity : AbstractActionBarActivity() {
 
         Timber.i("source: login")
 
-        if (savedInstanceState == null) {
-            if (!viewModel.handleIntent(intent)) {
+        if (!viewModel.handleIntent(intent)) {
+            if (savedInstanceState == null) {
                 viewModel.startLogin()
             }
         }
@@ -127,6 +128,13 @@ class LoginActivity : AbstractActionBarActivity() {
     companion object {
         fun createIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
+        }
+
+        fun createResponseHandlingIntent(context: Context, responseUri: Uri?): Intent {
+            val intent = createIntent(context)
+            intent.data = responseUri
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            return intent
         }
     }
 }

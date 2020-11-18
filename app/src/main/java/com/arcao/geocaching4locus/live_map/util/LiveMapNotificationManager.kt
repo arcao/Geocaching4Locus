@@ -11,13 +11,13 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
@@ -73,6 +73,7 @@ class LiveMapNotificationManager(
                 willBeEnabled -> showLiveMapToast(R.string.toast_live_map_enabled)
 
                 else -> {
+                    LiveMapService.stop(context)
                     showLiveMapToast(R.string.toast_live_map_disabled)
                     LastLiveMapCoordinates.remove()
                 }
@@ -330,7 +331,7 @@ class LiveMapNotificationManager(
         }
     }
 
-    private fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
+    fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
         val lastRequests = defaultPreferenceManager.liveMapLastRequests
         if (lastRequests > 0) {
             removeLocusMapPoints(AppConstants.LIVEMAP_PACK_WAYPOINT_PREFIX, 1, lastRequests)

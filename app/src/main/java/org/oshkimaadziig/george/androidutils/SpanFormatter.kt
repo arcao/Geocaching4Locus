@@ -35,7 +35,7 @@ object SpanFormatter {
     /**
      * Version of [String.format] that works on [Spanned] strings to preserve rich text formatting.
      * Both the `format` as well as any `%s args` can be Spanned and will have their formatting preserved.
-     * Due to the way [Spannable]s work, any argument's spans will can only be included **once** in the result.
+     * Due to the way [Spanned]s work, any argument's spans will can only be included **once** in the result.
      * Any duplicates will appear as text only.
      *
      * @param format the format string (see [String.format])
@@ -51,7 +51,7 @@ object SpanFormatter {
     /**
      * Version of [String.format] that works on [Spanned] strings to preserve rich text formatting.
      * Both the `format` as well as any `%s args` can be Spanned and will have their formatting preserved.
-     * Due to the way [Spannable]s work, any argument's spans will can only be included **once** in the result.
+     * Due to the way [Spanned]s work, any argument's spans will can only be included **once** in the result.
      * Any duplicates will appear as text only.
      *
      * @param locale the locale to apply; `null` value means no localization.
@@ -73,9 +73,9 @@ object SpanFormatter {
             i = m.start()
             val exprEnd = m.end()
 
-            val argTerm = m.group(1)
-            val modTerm = m.group(2)
-            val typeTerm = m.group(3)
+            val argTerm = m.group(1).orEmpty()
+            val modTerm = m.group(2).orEmpty()
+            val typeTerm = m.group(3).orEmpty()
 
             val cookedArg: CharSequence
 

@@ -96,7 +96,7 @@ class GeocachingApiCoroutineCallAdapterFactory private constructor() : CallAdapt
                 val matcher = WWW_AUTHENTICATE_ERROR_PATTERN.matcher(authenticateHeader)
 
                 if (matcher.find()) {
-                    val code = matcher.group(3)
+                    val code = matcher.group(3).orEmpty()
                     val message = when {
                         matcher.groupCount() >= 5 -> matcher.group(5)
                         else -> null

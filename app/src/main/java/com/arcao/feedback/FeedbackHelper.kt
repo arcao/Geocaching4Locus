@@ -62,9 +62,10 @@ class FeedbackHelper(
             }
         }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     @Throws(IOException::class)
     private suspend fun createReport(reportFile: File) {
-        reportFile.parentFile.mkdirs()
+        reportFile.parentFile?.mkdirs()
 
         if (reportFile.exists()) {
             Timber.d("Report file $reportFile already exist.")
@@ -78,6 +79,7 @@ class FeedbackHelper(
         Timber.d("Report created.")
     }
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     @Throws(IOException::class)
     private suspend fun writeCollectors(zos: ZipOutputStream) {
         for (collector in collectors) {

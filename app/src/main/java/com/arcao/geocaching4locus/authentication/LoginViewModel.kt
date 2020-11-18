@@ -117,9 +117,8 @@ class LoginViewModel(
 
     fun handleIntent(intent: Intent): Boolean {
         val data = intent.data
-        val action = intent.action
 
-        if (Intent.ACTION_VIEW == action && data != null && data.getQueryParameter(OAuthConstants.CODE) != null) {
+        if (data?.getQueryParameter(OAuthConstants.CODE) != null) {
             val code = requireNotNull(data.getQueryParameter(OAuthConstants.CODE))
             fromIntent = true
             finishLogin(code)

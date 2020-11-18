@@ -1,8 +1,8 @@
 package com.arcao.geocaching4locus.authentication.util
 
 import android.content.Context
-import android.preference.PreferenceManager
 import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.api.model.User
@@ -104,9 +104,9 @@ class AccountRestrictions internal constructor(context: Context) {
             putString(PrefConstants.FILTER_TERRAIN_MAX, "5")
 
             // multi-select filters (select all)
-            for (i in 0 until AppConstants.GEOCACHE_TYPES.size)
+            for (i in AppConstants.GEOCACHE_TYPES.indices)
                 putBoolean(PrefConstants.FILTER_CACHE_TYPE_PREFIX + i, true)
-            for (i in 0 until AppConstants.GEOCACHE_SIZES.size)
+            for (i in AppConstants.GEOCACHE_SIZES.indices)
                 putBoolean(PrefConstants.FILTER_CONTAINER_TYPE_PREFIX + i, true)
         }
     }

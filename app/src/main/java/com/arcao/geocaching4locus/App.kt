@@ -1,15 +1,17 @@
+@file:Suppress("DEPRECATION")
+
 package com.arcao.geocaching4locus
 
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.preference.PreferenceManager
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDex
+import androidx.preference.PreferenceManager
 import com.arcao.feedback.feedbackModule
 import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
@@ -29,8 +31,8 @@ import timber.log.Timber
 import java.util.UUID
 
 class App : Application() {
-    val accountManager by inject<AccountManager>()
-    val analyticsManager by inject<AnalyticsManager>()
+    private val accountManager by inject<AccountManager>()
+    private val analyticsManager by inject<AnalyticsManager>()
 
     private val deviceId: String by lazy {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -44,7 +46,7 @@ class App : Application() {
                 putString(PrefConstants.DEVICE_ID, value)
             }
         }
-        value
+        value.orEmpty()
     }
 
     val version: String by lazy {

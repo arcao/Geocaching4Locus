@@ -99,7 +99,7 @@ object CoordinatesParser {
                     ignoreCase = true
                 )
             ) -1.0 else 1.0
-            var degree = matcher.group(2).toDouble()
+            var degree = matcher.group(2)?.toDouble() ?: 0.0
 
             if (degree < 0) {
                 sign = -1.0
@@ -110,12 +110,12 @@ object CoordinatesParser {
             var seconds = 0.0
 
             if (matcher.group(3) != null) {
-                minutes = matcher.group(3).toDouble()
+                minutes = matcher.group(3)?.toDouble() ?: 0.0
 
                 if (matcher.group(4) != null) {
                     seconds = ("0." + matcher.group(4)).toDouble() * MINUTES_PER_DEGREE
                 } else if (matcher.group(5) != null) {
-                    seconds = matcher.group(5).replace(",", ".").toDouble()
+                    seconds = matcher.group(5)?.replace(",", ".")?.toDouble() ?: 0.0
                 }
             }
 
@@ -173,8 +173,8 @@ object CoordinatesParser {
     }
 
     private class ParseResult(
-        internal val result: Double,
-        internal val matcherPos: Int,
-        internal val matcherLen: Int
+        val result: Double,
+        val matcherPos: Int,
+        val matcherLen: Int
     )
 }

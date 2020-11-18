@@ -196,8 +196,9 @@ class GeocacheConverter(
 
                 var waypointType = AdditionalWaypointType.REFERENCE_POINT
 
-                if (nameMatcher.find() && nameMatcher.group(1).trim { it <= ' ' }.isNotEmpty()) {
-                    name = nameMatcher.group(1).trim { it <= ' ' }
+                if (nameMatcher.find() && nameMatcher.group(1).orEmpty().trim { it <= ' ' }
+                        .isNotEmpty()) {
+                    name = nameMatcher.group(1).orEmpty().trim { it <= ' ' }
 
                     if (FINAL_WAYPOINT_NAME_PATTERN.matcher(name).matches()) {
                         waypointType = AdditionalWaypointType.FINAL_LOCATION

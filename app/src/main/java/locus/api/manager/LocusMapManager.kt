@@ -75,11 +75,11 @@ class LocusMapManager(
 
             val parentDirectory = cacheFile.parentFile
 
-            if (!parentDirectory.mkdirs()) {
+            if (parentDirectory?.mkdirs() == false) {
                 Timber.w("Directory '%s' not created, maybe exists.", parentDirectory)
             }
 
-            if (!parentDirectory.isDirectory)
+            if (parentDirectory?.isDirectory == false)
                 throw IllegalStateException("Directory $parentDirectory not exist.")
 
             return cacheFile
@@ -97,7 +97,7 @@ class LocusMapManager(
             val file = cacheFile
 
             // make sure the path exist
-            file.parentFile.mkdirs()
+            file.parentFile?.mkdirs()
 
             val fos = FileOutputStream(file)
             fos.flush()

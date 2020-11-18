@@ -16,7 +16,7 @@ class ConstantsCollector(private val source: Class<*>, private val prefix: Strin
                 result.append(
                     when (val value = field.get(null)) {
                         is Array<*> -> Arrays.toString(value)
-                        else -> value.toString()
+                        else -> value?.toString()
                     }
                 )
             } catch (e: IllegalArgumentException) {

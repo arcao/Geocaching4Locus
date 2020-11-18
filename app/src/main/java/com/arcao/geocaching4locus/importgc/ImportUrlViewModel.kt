@@ -103,7 +103,7 @@ class ImportUrlViewModel(
             return@computationContext null
         }
 
-        val guid = guidMatcher.group(1)
+        val guid = guidMatcher.group(1) ?: return@computationContext null
 
         return@computationContext getGeocacheCodeFromGuid(guid)
     }

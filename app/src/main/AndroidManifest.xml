@@ -319,7 +319,6 @@
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_MAIN_FUNCTION_GC" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 

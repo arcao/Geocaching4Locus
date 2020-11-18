@@ -32,7 +32,7 @@ class SettingsActivity : AbstractActionBarActivity(),
                 showFragment(
                     supportFragmentManager.fragmentFactory.instantiate(
                         classLoader,
-                        intent.getStringExtra(EXTRA_SHOW_FRAGMENT)
+                        requireNotNull(intent?.getStringExtra(EXTRA_SHOW_FRAGMENT))
                     )
                 )
             } else {

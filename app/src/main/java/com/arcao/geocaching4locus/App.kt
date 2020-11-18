@@ -5,13 +5,13 @@ package com.arcao.geocaching4locus
 import android.app.Application
 import android.content.Context
 import android.os.Build
-import android.preference.PreferenceManager
 import android.webkit.CookieManager
 import android.webkit.CookieSyncManager
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
 import androidx.multidex.MultiDex
+import androidx.preference.PreferenceManager
 import com.arcao.feedback.feedbackModule
 import com.arcao.geocaching4locus.authentication.util.isPremium
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
@@ -46,7 +46,7 @@ class App : Application() {
                 putString(PrefConstants.DEVICE_ID, value)
             }
         }
-        value
+        value.orEmpty()
     }
 
     val version: String by lazy {

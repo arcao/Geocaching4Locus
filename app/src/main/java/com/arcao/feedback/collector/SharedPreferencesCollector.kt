@@ -2,7 +2,7 @@ package com.arcao.feedback.collector
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 
 class SharedPreferencesCollector @JvmOverloads constructor(
     private val context: Context,

@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="button_ok" comment="Dialog button for OK action.">Tamam</string>
+    <string name="button_cancel" comment="Dialog button for cancel action.">İptal</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
+    <string-array name="pref_download_on_show_entries" comment="">
+        <item>bir kez</item>
+        <item>her</item>
+        <item>asla</item>
+    </string-array>
+    <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Tümü</string>
+    <string name="pref_about" comment="Title of preference category for About settings.">Hakkında</string>
+    <string name="button_yes" comment="Dialog button for Yes action.">Evet</string>
+    <string name="button_no" comment="Dialog button for No action.">Hayır</string>
+</resources>

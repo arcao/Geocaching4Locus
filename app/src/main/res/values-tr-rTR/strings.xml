@@ -1,15 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Geocache\'ler indiriliyor…</string>
+    <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">GPS\'den konum alınıyor…</string>
+    <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Konum kablosuz ağlardan alınıyor…</string>
+    <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">Ayarlar</string>
+    <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button.">Hatalı koordinat formatı!</string>
+    <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen.">Koordinatlar</string>
+    <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings.">Mesafe</string>
+    <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked.">Km cinsinden mesafe</string>
+    <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Mil cinsinden mesafe</string>
+    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">İngiliz Ölçü Birimleri</string>
+    <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Kilometre yerine mil kullan</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Giriş yapmadınız. Lütfen önce hesap ayarlarından giriş yapın.</string>
     <string name="button_ok" comment="Dialog button for OK action.">Tamam</string>
+    <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Locus Haritaların eski bir sürümünü kullanıyorsunuz. Sorunsuz çalışabilmesi için Geocaching4Locus %s veya daha yeni bir versiyon gerektirir.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">İptal</string>
+    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Bulduklarımı göster</string>
+    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">Bulunan Geocache\'leri göster</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Geocache\'lerimi gizle</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Geocache\'lerimi göster (sakladıklarınız)</string>
+    <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Tümünü seç</string>
+    <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">Tüm Seçimleri Kaldır</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Geocache güncelleniyor…</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Kayıt sayısı</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Geocache ile indirilecek kayıt sayısı</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
+    <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Devredışı olanları göster</string>
+    <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Geçici olarak devredışı bırakılmış Geocache\'leri göster</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">Geocache indiriliyor…</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Version</string>
+    <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">İnternet sitesi, forum, vb.</string>
+    <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Paypal ile bağış yap</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Gelecek geliştirmeleri destekle…</string>
+    <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Para biriminizi seçin</string>
+    <string name="pref_geocache_type" comment="">Geocache türleri</string>
+    <string name="pref_difficulty" comment="">Zorluk</string>
+    <string name="pref_terrain" comment="">Arazi</string>
+    <string name="pref_difficulty_min" comment="">Min. zorluk</string>
+    <string name="pref_difficulty_max" comment="">Maks. zorluk</string>
+    <string name="pref_terrain_min" comment="">Min. arazi</string>
+    <string name="pref_terrain_max" comment="">Maks. arazi</string>
+    <string name="pref_download_basic" comment="">Sadece temel bilgi</string>
+    <string name="pref_download_basic_summary" comment="">Geocache\'in sadece temel bilgilerini indir</string>
     <string-array name="pref_download_on_show_entries" comment="">
         <item>bir kez</item>
         <item>her</item>
         <item>asla</item>
     </string-array>
+    <string name="menu_live_map" comment="">Canlı Harita</string>
+    <string name="menu_nearest" comment="">En Yakın</string>
+    <string name="menu_users_guide" comment="">Kullanım Kılavuzu</string>
+    <string name="menu_settings" comment="">Ayarlar</string>
+    <string name="var_user_waypoint_name" comment="">Kullanıcı yol noktası %1$d</string>
+    <string name="var_final_location_name" comment="">Final Noktası Konumu</string>
+    <string name="pref_login" comment="">Giriş Yap</string>
+    <string name="pref_login_summary" comment="">Geocaching.com hesabınıza giriş yapın</string>
+    <string name="pref_logout" comment="">Oturumu kapatın</string>
+    <string name="pref_logout_summary" comment="">%s olarak giriş yapıldı</string>
+    <string name="error_network_unavailable" comment="">Ağ kullanılamıyor. Bağlantınızı kontrol edin.</string>
+    <string name="progress_update_geocaches" comment="">Geocacheler güncelleniyor…</string>
+    <string name="pref_container_size" comment="">Kutu boyutu</string>
+    <string name="toast_live_map_enabled" comment="">Canlı harita aktif. Şimdi Geocache\'leri görüntülemek için haritayı ilerletin.</string>
+    <string name="toast_live_map_disabled" comment="">Canlı harita devredışı bırakıldı.</string>
+    <string name="error_location_not_allowed" comment="">Konum hizmetlerine izin verilmiyor</string>
+    <string name="button_settings" comment="">Ayarlar</string>
+    <string name="menu_import_from_gc" comment="">GC\'den içe aktar</string>
+    <string name="title_import_from_gc" comment="">GC kodundan içe aktar</string>
+    <string name="error_gc_code_invalid" comment="">GC kodu geçersiz.</string>
+    <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
+        <item quantity="one" comment="">%s Geocache\'i bulunamadı.</item>
+        <item quantity="other" comment="">%s Geocache\'i bulunamadı.</item>
+    </plurals>
+    <string name="title_geocache_count" comment="">Geocache sayısı</string>
+    <string name="launcher_nearest_geocaches" comment="">En yakın Geocache\'ler</string>
+    <string name="launcher_import_geocache" comment="">Geocache\'i Locus Haritalara aktar</string>
+    <string name="launcher_update_geocache" comment="">Geocache\'i Güncelle</string>
+    <string name="launcher_update_geocaches" comment="">Geocache\'leri Güncelle</string>
+    <string name="launcher_import_from_gc" comment="">GC kodundan içe aktar</string>
+    <string name="title_basic_member_warning" comment="Title of Basic member error/warning dialog">Normal üye girişi</string>
+    <string name="title_premium_member_warning" comment="Title of Premium member error/warning dialog">Ücretli üye girişi</string>
+    <string name="error_basic_member_full_geocaching_quota_exceeded" comment="Error dialog message when basic member reach limit of full geocache details per day. The '%1$s' is replaced with count of full detail geocache limit (eg. '3 geocaches'), '%2$s' with period length (eg. '24 hours'), '%3$s' with time when quota will be fulfilled/reset (eg. '09:10').">&lt;b&gt;%2$s süresinde %1$s&lt;b&gt; tüm detay indirme limitine ulaştınız. Günlük kotanız %3$s\'de yenilenecek.&lt;br/&gt;
+        &lt;br/&gt;
+        &lt;i&gt; Günlük 6000\'e kadar Geocache\'in tüm detayları indirebilmek ve başka birçok özellik için geocaching.com üyeliğinizi ücretli üyeliğe yükseltin. Üyeliğinizi yükseltmek için geocaching.com\'u ziyaret edin.&lt;/i&gt;</string>
+    <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hey, yavaş ol!</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">%d Geocache</item>
+        <item quantity="other">%d Geocache</item>
+    </plurals>
+    <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
+        <item quantity="one">%d saat</item>
+        <item quantity="other">%d saat</item>
+    </plurals>
+    <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
+        <item quantity="one">%d dakika</item>
+        <item quantity="other">%d dakika</item>
+    </plurals>
+    <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus Canlı Harita</string>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Canlı harita aktifleştirildi.</string>
+    <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">Canlı harita devredışı.</string>
+    <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Aktifleştir</string>
+    <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Devre dışı bırak</string>
+    <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Ayarlar</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus canlı harita: %s</string>
+    <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Devredışı bildirimler</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Tümü</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filtre</string>
+    <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Kayıtlar indiriliyor…</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Kayıtları indir</string>
+    <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Kayıtları indir ve Geocache\'i güncelle</string>
+    <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">\'\'Kayıtları indir\'\' işlemi aynı zamanda Geocache verisini de günceller</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Bazı filtreleri kullanabilmeniz için ücretli üyelik sahibi olmanız gerekir. Uygulama temel üye moduna değiştirildi. Lütfen yeniden deneyiniz.</string>
+    <string name="pref_account" comment="Title of preference category for Account settings.">Hesap</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filtre</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Canlı Harita</string>
+    <string name="pref_downloading" comment="Title of preference category for Downloading settings.">İndiriliyor</string>
+    <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Gelişmiş</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Hakkında</string>
+    <string name="title_login" comment="Window title for sign in task.">Giriş Yap</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">İpuçlarını indir</string>
+    <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Daha yavaş yükleme ve daha fazla veri kullanımı</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Geri Bildirim Gönder</string>
+    <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Aramanızla eşleşen bir Geocache bulunamadı.</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Yer imlerini içe aktar</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Yer imlerini içe aktar</string>
+    <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">Uygulamanın konum servislerine erişim izni bulunmamaktadır.</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">Tümünü içe aktar</string>
+    <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Bu özellik sadece ücretli üyeler için geçerlidir, üzgünüz.</string>
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Locus Harita hatası</string>
+    <string name="button_send_error_report" comment="Button for Send error report action.">Hata raporu gönder</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Hatayı bildirdiğiniz için teşekkürler.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Kısmen indirilmiş veriyle Locus Haritalara devam etmek istiyor musunuz?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Evet</string>
     <string name="button_no" comment="Dialog button for No action.">Hayır</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Kullanım klavuzunu göster</string>
+    <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Uygulamanın <b>harici depo alanlarına veri kaydı</b> izni bulunmamaktadır. Bu izin Locus Haritalarda Geocache verilerini saklamak için gereklidir.</string>
+    <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Devredışı Geocache\'leri gizle</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">DNF, Bakım ve Arşiv kaydı girilmişleri gizle</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Kontrol edilecek son kayıt sayısı</string>
+    <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Geocache\'i izle</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Geocache\'i işaretle</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">Canlı Geocache haritasını içe aktar</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Canlı GC haritasını içe aktar</string>
+    <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Bu mesajı bir daha gösterme</string>
+    <string name="title_warning" comment="Warning dialog title">Uyarı</string>
+    <string name="button_more_info" comment="Dialog button for More info action">Daha fazla bilgi</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Harita Hatası:%s</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Yetkilendirme kodu</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Yetkilendirme kodu</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Geocaching API tarafından sağlanmaktadır</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">Devam</string>
 </resources>

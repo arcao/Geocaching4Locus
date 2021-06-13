@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -55,12 +55,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
 
     api "com.github.scribejava:scribejava-core:$scribejava_version"
+    api "com.github.scribejava:scribejava-httpclient-okhttp:$scribejava_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
 
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"
 
     // koin
-    implementation "org.koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
     implementation "com.squareup.moshi:moshi:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"

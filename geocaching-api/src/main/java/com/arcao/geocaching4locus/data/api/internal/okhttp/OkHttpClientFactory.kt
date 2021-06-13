@@ -11,7 +11,6 @@ class OkHttpClientFactory(private val debug: Boolean) : Factory<OkHttpClient> {
         return OkHttpClient.Builder().apply {
             readTimeout(TIMEOUT, TimeUnit.SECONDS)
             connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            enableTls12()
 
             addInterceptor(HttpLoggingInterceptor { message ->
                 Timber.d(message)

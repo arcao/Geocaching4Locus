@@ -7,7 +7,7 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import java.util.Locale
 
 class WatchGeocacheWebLinkViewModel(
@@ -18,7 +18,8 @@ class WatchGeocacheWebLinkViewModel(
 ) : WebLinkViewModel(accountManager, getPointFromGeocacheCode, exceptionHandler, dispatcherProvider) {
 
     override fun getWebLink(point: Point): Uri {
-        val cacheId = ReferenceCode.toId(point.gcData.cacheID)
+        val gcData = requireNotNull(point.gcData)
+        val cacheId = ReferenceCode.toId(gcData.cacheID)
 
         return if (BuildConfig.GEOCACHING_API_STAGING) {
             Uri.parse(String.format(Locale.ROOT, URL_FORMAT_STAGING, cacheId))

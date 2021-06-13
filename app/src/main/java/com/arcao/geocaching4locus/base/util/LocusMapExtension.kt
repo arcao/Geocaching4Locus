@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.arcao.geocaching4locus.error.fragment.LocusTestingErrorDialogFragment
 import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusConst
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 
 fun FragmentActivity.showLocusMissingError() =
     LocusTestingErrorDialogFragment.newInstance(this).show(supportFragmentManager)

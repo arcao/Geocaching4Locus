@@ -10,8 +10,8 @@ import locus.api.android.ActionBasics
 import locus.api.android.utils.LocusUtils
 import locus.api.extension.isInvalid
 import locus.api.objects.extra.Location
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.min
@@ -71,17 +71,17 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
             return
 
         // bug in Locus Map?
-        val leftLongitude = min(mapTopLeft.getLongitude(), mapBottomRight.getLongitude())
-        val rightLongitude = max(mapTopLeft.getLongitude(), mapBottomRight.getLongitude())
+        val leftLongitude = min(mapTopLeft.longitude, mapBottomRight.longitude)
+        val rightLongitude = max(mapTopLeft.longitude, mapBottomRight.longitude)
 
         // Start service to retrieve caches
         LiveMapService.start(
             context,
-            mapCenter.getLatitude(),
-            mapCenter.getLongitude(),
-            mapTopLeft.getLatitude(),
+            mapCenter.latitude,
+            mapCenter.longitude,
+            mapTopLeft.latitude,
             leftLongitude,
-            mapBottomRight.getLatitude(),
+            mapBottomRight.latitude,
             rightLongitude
         )
     }

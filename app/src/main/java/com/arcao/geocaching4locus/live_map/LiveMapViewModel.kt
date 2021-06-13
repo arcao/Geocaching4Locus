@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.live_map
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.Lifecycle
@@ -37,6 +38,7 @@ import java.io.IOException
 import java.util.concurrent.CancellationException
 import java.util.concurrent.Executors
 
+@SuppressLint("StaticFieldLeak")
 class LiveMapViewModel(
     private val context: Context,
     private val notificationManager: LiveMapNotificationManager,
@@ -100,8 +102,7 @@ class LiveMapViewModel(
                     filterPreferenceManager.difficultyMin,
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
-                    filterPreferenceManager.terrainMax,
-                    filterPreferenceManager.excludeIgnoreList
+                    filterPreferenceManager.terrainMax
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     requests++
@@ -113,7 +114,7 @@ class LiveMapViewModel(
                             context.packageName,
                             UpdateActivity::class.java.name,
                             UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                            point.gcData.cacheID
+                            requireNotNull(point.gcData).cacheID
                         )
                     }
                     list

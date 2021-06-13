@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.base.usecase.entity
 
 import android.os.Parcelable
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheListType
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GeocacheListEntity(

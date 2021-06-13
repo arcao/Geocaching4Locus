@@ -31,6 +31,7 @@ import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import locus.api.manager.LocusMapManager
@@ -78,9 +79,6 @@ class LiveMapNotificationManager(
                     LastLiveMapCoordinates.remove()
                 }
             }
-
-            // make sure Live Map broadcast receiver is always enabled
-            locusMapManager.enablePeriodicUpdatesReceiver(LiveMapBroadcastReceiver::class)
 
             preferences.edit {
                 putBoolean(PrefConstants.LIVE_MAP, willBeEnabled)
@@ -331,6 +329,7 @@ class LiveMapNotificationManager(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
         val lastRequests = defaultPreferenceManager.liveMapLastRequests
         if (lastRequests > 0) {

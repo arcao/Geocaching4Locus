@@ -15,9 +15,10 @@ import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
 import locus.api.objects.extra.Location
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingAttribute
 import locus.api.objects.geocaching.GeocachingData
+import locus.api.objects.geocaching.GeocachingImage
 import timber.log.Timber
 import java.text.ParseException
 import java.util.regex.Pattern
@@ -31,9 +32,10 @@ class GeocacheConverter(
     private val waypointConverter: WaypointConverter
 ) {
     fun createLocusPoint(cache: Geocache): Point {
-        val loc = Location()
-            .setLatitude(cache.postedCoordinates?.latitude ?: throw IllegalArgumentException("Coordinates missing"))
-            .setLongitude(cache.postedCoordinates?.longitude ?: throw IllegalArgumentException("Coordinates missing"))
+        val loc = Location().apply {
+            latitude = requireNotNull(cache.postedCoordinates?.latitude) { "Coordinates missing" }
+            longitude = requireNotNull(cache.postedCoordinates?.longitude) { "Coordinates missing" }
+        }
 
         val p = Point(cache.name, loc).apply {
             gcData = GeocachingData().apply {
@@ -44,12 +46,12 @@ class GeocacheConverter(
                 type = cache.geocacheType.toLocusMapGeocacheType()
                 difficulty = cache.difficulty ?: 1F
                 terrain = cache.terrain ?: 1F
-                owner = cache.owner?.username ?: cache.ownerAlias
-                placedBy = cache.ownerAlias
+                owner = cache.owner?.username ?: cache.ownerAlias.orEmpty()
+                placedBy = cache.ownerAlias.orEmpty()
                 isAvailable = cache.status == GeocacheStatus.ACTIVE
                 isArchived = cache.status == GeocacheStatus.ARCHIVED
                 isPremiumOnly = cache.isPremiumOnly ?: false
-                cacheUrl = cache.url
+                cacheUrl = cache.url.orEmpty()
 
                 dateHidden = cache.placedDateInstant?.toEpochMilli() ?: 0
                 datePublished = cache.publishedDateInstant?.toEpochMilli() ?: 0
@@ -58,19 +60,23 @@ class GeocacheConverter(
                 container = cache.geocacheSize.getLocusMapGeocacheSize()
                 isFound = cache.userData?.foundDate != null
 
-                country = cache.location?.country
-                state = cache.location?.state
+                country = cache.location?.country.orEmpty()
+                state = cache.location?.state.orEmpty()
 
                 setDescriptions(
-                    BadBBCodeFixer.fix(cache.shortDescription), cache.containsHtml ?: false,
-                    BadBBCodeFixer.fix(cache.longDescription), cache.containsHtml ?: false
+                    BadBBCodeFixer.fix(cache.shortDescription).orEmpty(),
+                    cache.containsHtml ?: false,
+                    BadBBCodeFixer.fix(cache.longDescription).orEmpty(),
+                    cache.containsHtml ?: false
                 )
-                encodedHints = cache.hints
-                notes = cache.userData?.note
+                encodedHints = cache.hints.orEmpty()
+                notes = cache.userData?.note.orEmpty()
                 favoritePoints = cache.favoritePoints ?: 0
 
-                for (image in cache.images.orEmpty()) {
-                    addImage(imageDataConverter.createLocusGeocachingImage(image))
+                images = mutableListOf<GeocachingImage>().apply {
+                    for (image in cache.images.orEmpty()) {
+                        imageDataConverter.createLocusGeocachingImage(image)?.let(this::add)
+                    }
                 }
 
                 for (attribute in cache.attributes.orEmpty()) {
@@ -88,7 +94,10 @@ class GeocacheConverter(
         updateGeocacheLocationByCorrectedCoordinates(p, cache)
 
         if (defaultPreferenceManager.disableDnfNmNaGeocaches)
-            applyUnavailabilityForGeocache(p, defaultPreferenceManager.disableDnfNmNaGeocachesThreshold)
+            applyUnavailabilityForGeocache(
+                p,
+                defaultPreferenceManager.disableDnfNmNaGeocachesThreshold
+            )
 
         return p
     }
@@ -99,12 +108,12 @@ class GeocacheConverter(
             GeocacheType.EARTHCACHE -> GeocachingData.CACHE_TYPE_EARTH
             GeocacheType.EVENT -> GeocachingData.CACHE_TYPE_EVENT
             GeocacheType.GPS_ADVENTURES_EXHIBIT -> GeocachingData.CACHE_TYPE_GPS_ADVENTURE
-            GeocacheType.GEOCACHING_BLOCK_PARTY -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
-            GeocacheType.GEOCACHING_HQ -> GeocachingData.CACHE_TYPE_GROUNDSPEAK
-            GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION -> GeocachingData.CACHE_TYPE_LF_CELEBRATION
+            GeocacheType.GEOCACHING_BLOCK_PARTY -> GeocachingData.CACHE_TYPE_GC_HQ
+            GeocacheType.GEOCACHING_HQ -> GeocachingData.CACHE_TYPE_GC_HQ
+            GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION -> GeocachingData.CACHE_TYPE_GC_HQ_CELEBRATION
             GeocacheType.LETTERBOX_HYBRID -> GeocachingData.CACHE_TYPE_LETTERBOX
             GeocacheType.LOCATIONLESS_CACHE -> GeocachingData.CACHE_TYPE_LOCATIONLESS
-            GeocacheType.LOST_AND_FOUND_EVENT_CACHE -> GeocachingData.CACHE_TYPE_LF_EVENT
+            GeocacheType.LOST_AND_FOUND_EVENT_CACHE -> GeocachingData.CACHE_TYPE_COMMUNITY_CELEBRATION
             GeocacheType.MEGA_EVENT -> GeocachingData.CACHE_TYPE_MEGA_EVENT
             GeocacheType.MULTI_CACHE -> GeocachingData.CACHE_TYPE_MULTI
             GeocacheType.PROJECT_APE -> GeocachingData.CACHE_TYPE_PROJECT_APE
@@ -124,7 +133,7 @@ class GeocacheConverter(
             GeocacheSize.MICRO -> GeocachingData.CACHE_SIZE_MICRO
             GeocacheSize.NOT_CHOSEN -> GeocachingData.CACHE_SIZE_NOT_CHOSEN
             GeocacheSize.OTHER -> GeocachingData.CACHE_SIZE_OTHER
-            GeocacheSize.MEDIUM -> GeocachingData.CACHE_SIZE_REGULAR
+            GeocacheSize.REGULAR -> GeocachingData.CACHE_SIZE_REGULAR
             GeocacheSize.SMALL -> GeocachingData.CACHE_SIZE_SMALL
             else -> GeocachingData.CACHE_SIZE_OTHER
         }
@@ -137,17 +146,18 @@ class GeocacheConverter(
 
         val location = p.location
 
-        p.gcData.apply {
+        p.gcData?.apply {
             isComputed = true
-            latOriginal = location.getLatitude()
-            lonOriginal = location.getLongitude()
+            latOriginal = location.latitude
+            lonOriginal = location.longitude
         }
 
         // update coordinates to new location
         location.set(
-            Location()
-                .setLatitude(correctedCoordinates.latitude)
-                .setLongitude(correctedCoordinates.longitude)
+            Location().apply {
+                latitude = correctedCoordinates.latitude
+                longitude = correctedCoordinates.longitude
+            }
         )
     }
 
@@ -239,9 +249,11 @@ class GeocacheConverter(
     companion object {
         private val WAYPOINT_BASE_ID = ReferenceCode.base31Decode("N0")
 
-        private val FINAL_WAYPOINT_NAME_PATTERN = Pattern.compile("fin[a|á]+[l|ł]", Pattern.CASE_INSENSITIVE)
+        private val FINAL_WAYPOINT_NAME_PATTERN =
+            Pattern.compile("fin[a|á]+[l|ł]", Pattern.CASE_INSENSITIVE)
 
-        private val NOTE_COORDINATE_PATTERN = Pattern.compile("\\b[nNsS]\\s*\\d") // begin of coordinates
+        private val NOTE_COORDINATE_PATTERN =
+            Pattern.compile("\\b[nNsS]\\s*\\d") // begin of coordinates
         private val NOTE_NAME_PATTERN = Pattern.compile("^(.+):\\s*\\z")
     }
 }

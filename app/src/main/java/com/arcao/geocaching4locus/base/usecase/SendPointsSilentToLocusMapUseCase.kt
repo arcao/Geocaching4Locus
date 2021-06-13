@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import locus.api.manager.LocusMapManager
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 
 class SendPointsSilentToLocusMapUseCase(
     private val locusMapManager: LocusMapManager,

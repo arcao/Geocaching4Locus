@@ -1,11 +1,15 @@
 package com.arcao.geocaching4locus.import_bookmarks.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -23,12 +27,14 @@ import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourc
 import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourceFactory
 import com.arcao.geocaching4locus.settings.manager.FilterPreferenceManager
 import com.arcao.geocaching4locus.update.UpdateActivity
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
-@Suppress("EXPERIMENTAL_API_USAGE")
+@SuppressLint("StaticFieldLeak")
 class BookmarkViewModel(
     geocacheList: GeocacheListEntity,
     private val dataSourceFactory: ListGeocachesDataSourceFactory,
@@ -43,7 +49,7 @@ class BookmarkViewModel(
 ) : BaseViewModel(dispatcherProvider) {
 
     val loading = MutableLiveData<Boolean>()
-    val list: LiveData<PagedList<ListGeocacheEntity>>
+    val pagerFlow: Flow<PagingData<ListGeocacheEntity>>
     val selection = MutableLiveData<List<ListGeocacheEntity>>().apply {
         value = emptyList()
     }
@@ -59,14 +65,17 @@ class BookmarkViewModel(
 
     init {
         val pageSize = 25
-        val config = PagedList.Config.Builder()
-            .setPageSize(pageSize)
-            .setInitialLoadSizeHint(pageSize * 2)
-            .setEnablePlaceholders(false)
-            .build()
+        val config = PagingConfig(
+            pageSize = pageSize,
+            enablePlaceholders = false,
+            initialLoadSize = 2 * pageSize
+        )
 
         dataSourceFactory.referenceCode = geocacheList.guid
-        list = LivePagedListBuilder(dataSourceFactory, config).build()
+        pagerFlow = Pager(
+            config,
+            pagingSourceFactory = dataSourceFactory.asPagingSourceFactory(Dispatchers.IO)
+        ).flow.cachedIn(viewModelScope)
 
         state.observeForever { state ->
             if (state == DataSourceState.LoadingInitial) {
@@ -121,12 +130,14 @@ class BookmarkViewModel(
                             // apply additional downloading full geocache if required
                             if (filterPreferenceManager.simpleCacheData) {
                                 list.forEach { point ->
-                                    point.setExtraOnDisplay(
-                                        context.packageName,
-                                        UpdateActivity::class.java.name,
-                                        UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                        point.gcData.cacheID
-                                    )
+                                    point.gcData?.cacheID?.let { cacheId ->
+                                        point.setExtraOnDisplay(
+                                            context.packageName,
+                                            UpdateActivity::class.java.name,
+                                            UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                            cacheId
+                                        )
+                                    }
                                 }
                             }
                             list

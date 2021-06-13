@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'de.mannodermaus.android-junit5'
 
 dependencies {
     // Android Support
@@ -15,7 +16,7 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extension_version"
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.collection:collection-ktx:$collection_version"
@@ -33,9 +34,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     // koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
 
     // Geocaching API
     api project(":geocaching-api")
@@ -157,10 +156,6 @@ android {
         exclude 'log4j.xml'
     }
     lintOptions { abortOnError false }
-}
-
-androidExtensions {
-    experimental = true
 }
 
 if (project.hasProperty('storeFile') &&

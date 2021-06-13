@@ -2,7 +2,7 @@ package locus.api.mapper
 
 import com.arcao.geocaching4locus.data.api.model.GeocacheLog
 import com.arcao.geocaching4locus.data.api.model.GeocacheLogType
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingLog
 import locus.api.utils.addIgnoreNull
 
@@ -15,7 +15,7 @@ class GeocacheLogConverter(
             return
 
         for (log in logs) {
-            point.gcData.logs.addIgnoreNull(createLocusGeocachingLog(log))
+            point.gcData?.logs?.addIgnoreNull(createLocusGeocachingLog(log))
         }
 
         sortLocusGeocachingLogsByDate(point)
@@ -29,18 +29,18 @@ class GeocacheLogConverter(
         return GeocachingLog().apply {
             id = log.id
             date = log.loggedDateInstant?.toEpochMilli() ?: 0
-            logText = log.text
+            logText = log.text.orEmpty()
             type = log.geocacheLogType.toLocusMapLogType()
 
             val author = log.owner
             if (author != null) {
-                finder = author.username
+                finder = author.username.orEmpty()
                 findersFound = author.findCount
                 findersId = author.id
             }
 
             for (image in log.images ?: emptyList()) {
-                addImage(imageDataConverter.createLocusGeocachingImage(image))
+                imageDataConverter.createLocusGeocachingImage(image)?.let(this::addImage)
             }
             log.updatedCoordinates?.let { coordinates ->
                 cooLat = coordinates.latitude
@@ -61,6 +61,7 @@ class GeocacheLogConverter(
             GeocacheLogType.OWNER_MAINTENANCE -> GeocachingLog.CACHE_LOG_TYPE_OWNER_MAINTENANCE
             GeocacheLogType.POST_REVIEWER_NOTE -> GeocachingLog.CACHE_LOG_TYPE_POST_REVIEWER_NOTE
             GeocacheLogType.PUBLISH_LISTING -> GeocachingLog.CACHE_LOG_TYPE_PUBLISH_LISTING
+            GeocacheLogType.RETRACT_LISTING -> GeocachingLog.CACHE_LOG_TYPE_RETRACT_LISTING
             GeocacheLogType.TEMPORARILY_DISABLE_LISTING -> GeocachingLog.CACHE_LOG_TYPE_TEMPORARILY_DISABLE_LISTING
             GeocacheLogType.UPDATE_COORDINATES -> GeocachingLog.CACHE_LOG_TYPE_UPDATE_COORDINATES
             GeocacheLogType.WEBCAM_PHOTO_TAKEN -> GeocachingLog.CACHE_LOG_TYPE_WEBCAM_PHOTO_TAKEN
@@ -68,6 +69,7 @@ class GeocacheLogConverter(
             GeocacheLogType.WRITE_NOTE -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
             GeocacheLogType.ARCHIVE -> GeocachingLog.CACHE_LOG_TYPE_ARCHIVE
             GeocacheLogType.UNARCHIVE -> GeocachingLog.CACHE_LOG_TYPE_UNARCHIVE
+            GeocacheLogType.SUBMIT_FOR_REVIEW -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
             else -> GeocachingLog.CACHE_LOG_TYPE_WRITE_NOTE
         }
     }
@@ -76,7 +78,6 @@ class GeocacheLogConverter(
         if (waypoint.gcData?.logs?.isEmpty() != false)
             return
 
-        // Note: Long.compareTo was introduced in API 19
-        waypoint.gcData.logs.sortWith(Comparator { lhs, rhs -> if (lhs.date < rhs.date) 1 else if (lhs.date == rhs.date) 0 else -1 })
+        waypoint.gcData?.logs?.sortWith { lhs, rhs -> lhs.date.compareTo(rhs.date) }
     }
 }

@@ -23,7 +23,7 @@ import locus.api.android.utils.LocusUtils
 import locus.api.manager.LocusMapManager
 import locus.api.mapper.PointMerger
 import locus.api.mapper.Util
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import timber.log.Timber
 import java.util.Locale
 
@@ -85,7 +85,7 @@ class UpdateViewModel(
                             getPointFromGeocacheCode(updateData.geocacheCode, lite, logsCount)
 
                         if (updateData.downloadLogs) {
-                            var progress = updateData.newPoint.gcData.logs.count()
+                            var progress = updateData.newPoint.gcData?.logs?.count() ?: 0
 
                             logsCount = if (updateData.downloadLogs) {
                                 AppConstants.LOGS_TO_UPDATE_MAX
@@ -109,7 +109,7 @@ class UpdateViewModel(
                                 it
                             }.toList()
 
-                            updateData.newPoint.gcData.logs.apply {
+                            updateData.newPoint.gcData?.logs?.apply {
                                 addAll(logs.flatten())
                                 sortBy {
                                     it.date
@@ -180,7 +180,7 @@ class UpdateViewModel(
                 val p = IntentHelper.getPointFromIntent(context, intent)
 
                 if (p?.gcData != null) {
-                    cacheId = p.gcData.cacheID
+                    cacheId = p.gcData?.cacheID
                     oldPoint = p
                 }
             } catch (t: Throwable) {

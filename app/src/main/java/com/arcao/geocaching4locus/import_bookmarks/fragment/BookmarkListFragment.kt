@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.exhaustive
@@ -18,6 +20,9 @@ import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkListAdapter
 import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDecoration
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -52,7 +57,16 @@ class BookmarkListFragment : BaseBookmarkFragment() {
             addItemDecoration(MarginItemDecoration(context, R.dimen.cardview_space))
         }
 
-        viewModel.list.withObserve(viewLifecycleOwner, adapter::submitList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagerFlow.collectLatest { data ->
+                adapter.submitData(data)
+            }
+            adapter.loadStateFlow.collect {
+                if (it.append is LoadState.NotLoading && it.append.endOfPaginationReached) {
+                    binding.isEmpty = adapter.itemCount < 1
+                }
+            }
+        }
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
         viewModel.progress.withObserve(viewLifecycleOwner) { state ->

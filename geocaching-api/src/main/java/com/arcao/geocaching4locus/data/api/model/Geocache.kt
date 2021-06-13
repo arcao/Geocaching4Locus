@@ -16,6 +16,7 @@ data class Geocache(
     val trackableCount: Int?, // 0
     val placedDate: LocalDateTime?, // 2018-06-06T06:16:54.160
     val publishedDate: LocalDateTime?, // 2018-06-06T06:16:54.165
+    val eventEndDate: LocalDateTime?, // 2018-06-06T06:16:54.165
     val geocacheType: GeocacheType?, // Traditional
     val geocacheSize: GeocacheSize?, // Unknown
     val userData: UserData?,
@@ -61,13 +62,15 @@ data class Geocache(
         userData?.foundDate.toSafeInstant(ianaTimezoneId)
     }
 
+    val eventEndDateInstant by lazy {
+        eventEndDate.toSafeInstant(ianaTimezoneId)
+    }
+
     val dnfDateInstant by lazy {
         userData?.dnfDate.toSafeInstant(ianaTimezoneId)
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_NAME = "name"
         private const val FIELD_DIFFICULTY = "difficulty"
@@ -76,6 +79,7 @@ data class Geocache(
         private const val FIELD_TRACKABLE_COUNT = "trackableCount"
         private const val FIELD_PLACED_DATE = "placedDate"
         private const val FIELD_PUBLISHED_DATE = "publishedDate"
+        private const val FIELD_EVENT_END_DATE = "eventEndDate"
         private const val FIELD_GEOCACHE_TYPE = "geocacheType"
         private const val FIELD_GEOCACHE_SIZE = "geocacheSize"
         private const val FIELD_USER_DATA = "userData"
@@ -100,7 +104,7 @@ data class Geocache(
         private val FIELD_TRACKABLES_MIN = "trackables[${Trackable.FIELDS_MIN}]"
         private val FIELD_IMAGES_MIN = "images[${Image.FIELDS_MIN}]"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_NAME,
             FIELD_DIFFICULTY,
@@ -109,6 +113,7 @@ data class Geocache(
             FIELD_TRACKABLE_COUNT,
             FIELD_PLACED_DATE,
             FIELD_PUBLISHED_DATE,
+            FIELD_EVENT_END_DATE,
             FIELD_GEOCACHE_TYPE,
             FIELD_GEOCACHE_SIZE,
             FIELD_USER_DATA,
@@ -132,9 +137,9 @@ data class Geocache(
             FIELD_TRACKABLES_MIN,
             FIELD_IMAGES_MIN,
             FIELD_OWNER
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_LITE = arrayOf(
+        val FIELDS_LITE = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_NAME,
             FIELD_DIFFICULTY,
@@ -156,9 +161,9 @@ data class Geocache(
             FIELD_RELATED_WEBPAGE,
             FIELD_URL,
             FIELD_OWNER
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_LITE_LIVEMAP = arrayOf(
+        val FIELDS_LITE_LIVEMAP = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_NAME,
             FIELD_DIFFICULTY,
@@ -180,9 +185,9 @@ data class Geocache(
 //                FIELD_RELATED_WEBPAGE,
 //                FIELD_URL,
 //                FIELD_CONTAINS_HTML
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_ALL_LIVEMAP = arrayOf(
+        val FIELDS_ALL_LIVEMAP = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_NAME,
             FIELD_DIFFICULTY,
@@ -211,9 +216,9 @@ data class Geocache(
 //                FIELD_URL,
 //                FIELD_CONTAINS_HTML,
 //                FIELD_ADDITIONAL_WAYPOINTS,
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_LITE_BOOKMARKS = arrayOf(
+        val FIELDS_LITE_BOOKMARKS = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_NAME,
 //            FIELD_DIFFICULTY,
@@ -235,6 +240,6 @@ data class Geocache(
 //            FIELD_RELATED_WEBPAGE,
 //            FIELD_URL,
 //            FIELD_CONTAINS_HTML
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

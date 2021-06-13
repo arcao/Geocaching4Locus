@@ -31,8 +31,6 @@ data class GeocacheLog(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_OWNER_MIN = "owner[referenceCode,findCount,username]"
         private const val FIELD_IMAGE_COUNT = "imageCount"
@@ -48,7 +46,7 @@ data class GeocacheLog(
         private const val FIELD_URL = "url"
         private val FIELD_IMAGES_MIN = "images[${Image.FIELDS_MIN}]"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_OWNER_MIN,
             FIELD_IMAGE_COUNT,
@@ -62,9 +60,9 @@ data class GeocacheLog(
             FIELD_IANA_TIMEZONE_ID,
             FIELD_USED_FAVORITE_POINT,
             FIELD_URL
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_MIN = arrayOf(
+        val FIELDS_MIN = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_OWNER_MIN,
             FIELD_LOGGED_DATE,
@@ -73,6 +71,6 @@ data class GeocacheLog(
             FIELD_UPDATED_COORDINATES,
             FIELD_IANA_TIMEZONE_ID,
             FIELD_IMAGES_MIN
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

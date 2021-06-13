@@ -344,4 +344,16 @@
             android:launchMode="singleTask"
             android:targetActivity=".import_bookmarks.ImportBookmarkActivity" />
     </application>
+
+    <queries>
+        <!-- All Locus Map packages -->
+        <package android:name="menion.android.locus" />
+        <package android:name="menion.android.locus.free.amazon" />
+        <package android:name="menion.android.locus.free.samsung" />
+        <package android:name="menion.android.locus.pro" />
+        <package android:name="menion.android.locus.pro.amazon" />
+        <package android:name="menion.android.locus.pro.asamm" />
+        <package android:name="menion.android.locus.pro.computerBild" />
+
+    </queries>
 </manifest>

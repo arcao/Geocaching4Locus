@@ -3,7 +3,7 @@ package locus.api.mapper
 import com.arcao.geocaching4locus.data.api.model.Geocache
 import com.arcao.geocaching4locus.data.api.model.GeocacheLog
 import com.arcao.geocaching4locus.data.api.model.Trackable
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.utils.addIgnoreNull
 
 class DataMapper(

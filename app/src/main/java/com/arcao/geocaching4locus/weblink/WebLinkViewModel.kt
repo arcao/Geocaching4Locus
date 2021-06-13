@@ -11,7 +11,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import kotlinx.coroutines.Job
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 
 abstract class WebLinkViewModel(
     private val accountManager: AccountManager,
@@ -32,7 +32,8 @@ abstract class WebLinkViewModel(
     }
 
     fun resolveUri(point: Point) {
-        if (point.gcData == null || point.gcData.cacheID.isNullOrEmpty()) {
+        val gcData = point.gcData
+        if (gcData == null || gcData.cacheID.isEmpty()) {
             action(WebLinkAction.Cancel)
             return
         }
@@ -57,7 +58,7 @@ abstract class WebLinkViewModel(
                     }
 
                     val newPoint = showProgress(R.string.progress_download_geocache) {
-                        getPointFromGeocacheCode(point.gcData.cacheID)
+                        getPointFromGeocacheCode(gcData.cacheID)
                     }
                     getWebLink(newPoint)
                 }

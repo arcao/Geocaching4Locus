@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.import_bookmarks.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arcao.geocaching4locus.R
@@ -12,17 +12,18 @@ import com.arcao.geocaching4locus.databinding.ViewBookmarkListItemBinding
 
 class BookmarkListAdapter(
     private val onClickListener: (geocacheList: GeocacheListEntity, importAll: Boolean) -> Unit
-) : PagedListAdapter<GeocacheListEntity, BookmarkListAdapter.ViewHolder>(DiffCallback) {
-
-    init {
-        setHasStableIds(true)
-    }
-
-    override fun getItemId(position: Int) = getItem(position)?.id ?: RecyclerView.NO_ID
+) : PagingDataAdapter<GeocacheListEntity, BookmarkListAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(DataBindingUtil.inflate(inflater, R.layout.view_bookmark_list_item, parent, false))
+        return ViewHolder(
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.view_bookmark_list_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.yield
 import locus.api.mapper.DataMapper
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 
 class GetOldPointNewPointPairFromPointUseCase(
     private val repository: GeocachingApiRepository,
@@ -30,7 +30,7 @@ class GetOldPointNewPointPairFromPointUseCase(
         geocachingApiLogin()
 
         flow.takeListVariable(AppConstants.ITEMS_PER_REQUEST) { points ->
-            val requestedCacheIds = points.map { it.gcData.cacheID }.toTypedArray()
+            val requestedCacheIds = points.map { it.gcData?.cacheID }.filterNotNull().toTypedArray()
 
             val startTimeMillis = System.currentTimeMillis()
 
@@ -47,7 +47,8 @@ class GetOldPointNewPointPairFromPointUseCase(
             if (cachesToAdd.isNotEmpty()) {
                 val receivedPoints = mapper.createLocusPoints(cachesToAdd)
                 for (oldPoint in points) {
-                    val newPoint = receivedPoints.find { it.gcData.cacheID == oldPoint.gcData.cacheID }
+                    val newPoint =
+                        receivedPoints.find { it.gcData?.cacheID == oldPoint.gcData?.cacheID }
                     emit(Pair(oldPoint, newPoint))
                 }
             }

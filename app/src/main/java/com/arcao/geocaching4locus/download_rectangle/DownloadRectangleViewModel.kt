@@ -94,7 +94,6 @@ class DownloadRectangleViewModel constructor(
                         filterPreferenceManager.difficultyMax,
                         filterPreferenceManager.terrainMin,
                         filterPreferenceManager.terrainMax,
-                        filterPreferenceManager.excludeIgnoreList,
                         AppConstants.LIVEMAP_CACHES_COUNT
                     ) { count = it }.map { list ->
                         receivedGeocaches += list.size
@@ -103,12 +102,14 @@ class DownloadRectangleViewModel constructor(
                         // apply additional downloading full geocache if required
                         if (filterPreferenceManager.simpleCacheData) {
                             list.forEach { point ->
-                                point.setExtraOnDisplay(
-                                    context.packageName,
-                                    UpdateActivity::class.java.name,
-                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                    point.gcData.cacheID
-                                )
+                                point.gcData?.cacheID?.let { cacheId ->
+                                    point.setExtraOnDisplay(
+                                        context.packageName,
+                                        UpdateActivity::class.java.name,
+                                        UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                        cacheId
+                                    )
+                                }
                             }
                         }
                         list

@@ -39,7 +39,6 @@ class GetPointsFromRectangleCoordinatesUseCase(
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
     ) = flow {

@@ -150,11 +150,14 @@ class ConfigurationCollector(private val context: Context) : Collector() {
          * @throws IllegalAccessException if the supplied field is inaccessible.
          */
         @Throws(IllegalAccessException::class)
-        private fun getFieldValueName(conf: Configuration, f: Field): String? {
+        private fun getFieldValueName(conf: Configuration, f: Field): String {
             when (val fieldName = f.name) {
                 FIELD_MCC, FIELD_MNC -> return f.getInt(conf).toString()
                 FIELD_UIMODE -> return activeFlags(VALUE_ARRAYS[PREFIX_UI_MODE]!!, f.getInt(conf))
-                FIELD_SCREENLAYOUT -> return activeFlags(VALUE_ARRAYS[PREFIX_SCREENLAYOUT]!!, f.getInt(conf))
+                FIELD_SCREENLAYOUT -> return activeFlags(
+                    VALUE_ARRAYS[PREFIX_SCREENLAYOUT]!!,
+                    f.getInt(conf)
+                )
                 else -> {
                     val values =
                         VALUE_ARRAYS[fieldName.toUpperCase(Locale.ROOT) + '_'] // Unknown field, return the raw int as String

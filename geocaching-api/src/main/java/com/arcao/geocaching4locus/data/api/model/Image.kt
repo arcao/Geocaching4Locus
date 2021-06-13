@@ -21,8 +21,6 @@ data class Image(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_DESCRIPTION = "description"
         private const val FIELD_URL = "url"
         private const val FIELD_THUMBNAIL_URL = "thumbnailUrl"
@@ -30,20 +28,20 @@ data class Image(
         private const val FIELD_CREATED_DATE = "createdDate"
         private const val FIELD_GUID = "guid"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_DESCRIPTION,
             FIELD_URL,
             FIELD_THUMBNAIL_URL,
             FIELD_REFERENCE_CODE,
             FIELD_CREATED_DATE,
             FIELD_GUID
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_MIN = arrayOf(
+        val FIELDS_MIN = fieldsOf(
             FIELD_DESCRIPTION,
             FIELD_URL,
             FIELD_THUMBNAIL_URL,
             FIELD_GUID
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

@@ -27,8 +27,6 @@ data class User(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_FIND_COUNT = "findCount"
         private const val FIELD_HIDE_COUNT = "hideCount"
@@ -43,7 +41,7 @@ data class User(
         private const val FIELD_GEOCACHE_LIMITS = "geocacheLimits"
 
         // GDPR safe fields
-        val FIELDS_ALL_NO_HOME_COORDINATES = arrayOf(
+        val FIELDS_ALL_NO_HOME_COORDINATES = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_FIND_COUNT,
             FIELD_HIDE_COUNT,
@@ -55,9 +53,9 @@ data class User(
             FIELD_PROFILE_TEXT,
             FIELD_URL,
             FIELD_GEOCACHE_LIMITS
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_FIND_COUNT,
             FIELD_HIDE_COUNT,
@@ -70,16 +68,16 @@ data class User(
             FIELD_URL,
             FIELD_HOME_COORDINATES,
             FIELD_GEOCACHE_LIMITS
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_MIN = arrayOf(
+        val FIELDS_MIN = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_USERNAME
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_LIMITS = arrayOf(
+        val FIELDS_LIMITS = fieldsOf(
             FIELD_MEMBERSHIP,
             FIELD_GEOCACHE_LIMITS
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

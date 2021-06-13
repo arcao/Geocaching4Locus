@@ -3,7 +3,7 @@ package com.arcao.geocaching4locus.import_bookmarks.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arcao.geocaching4locus.R
@@ -13,24 +13,22 @@ import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
 import com.arcao.geocaching4locus.databinding.ViewBookmarkItemBinding
 
 class BookmarkGeocachesAdapter :
-    PagedListAdapter<ListGeocacheEntity, BookmarkGeocachesAdapter.ViewHolder>(DiffCallback) {
-    init {
-        setHasStableIds(true)
-    }
+    PagingDataAdapter<ListGeocacheEntity, BookmarkGeocachesAdapter.ViewHolder>(DiffCallback) {
 
     val tracker by lazy {
-        SelectionTracker(object : SelectionAdapter<ListGeocacheEntity> {
+        val selectionAdapter = object : SelectionAdapter<ListGeocacheEntity> {
             override val itemCount: Int
-                get() = currentList?.loadedCount ?: 0
+                get() = snapshot().size
 
             override fun registerAdapterDataObserver(adapterDataObserver: RecyclerView.AdapterDataObserver) =
                 this@BookmarkGeocachesAdapter.registerAdapterDataObserver(adapterDataObserver)
 
-            override fun findPosition(value: ListGeocacheEntity): Int =
-                currentList?.indexOf(value) ?: RecyclerView.NO_POSITION
+            override fun findPosition(value: ListGeocacheEntity): Int = snapshot().indexOf(value)
 
-            override fun getItem(position: Int) = currentList?.get(position)
-        }).apply {
+            override fun getItem(position: Int) = snapshot()[position]
+        }
+
+        SelectionTracker(selectionAdapter).apply {
             addSelectionChangeListener { startPosition: Int, count: Int ->
                 notifyItemRangeChanged(startPosition, count)
             }
@@ -40,11 +38,16 @@ class BookmarkGeocachesAdapter :
     val selected: List<ListGeocacheEntity>
         get() = tracker.selectedValues
 
-    override fun getItemId(position: Int) = getItem(position)?.id ?: RecyclerView.NO_ID
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(DataBindingUtil.inflate(inflater, R.layout.view_bookmark_item, parent, false))
+        return ViewHolder(
+            DataBindingUtil.inflate(
+                inflater,
+                R.layout.view_bookmark_item,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -67,11 +70,17 @@ class BookmarkGeocachesAdapter :
     class ViewHolder(val binding: ViewBookmarkItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     private object DiffCallback : DiffUtil.ItemCallback<ListGeocacheEntity>() {
-        override fun areItemsTheSame(oldItem: ListGeocacheEntity, newItem: ListGeocacheEntity): Boolean {
+        override fun areItemsTheSame(
+            oldItem: ListGeocacheEntity,
+            newItem: ListGeocacheEntity
+        ): Boolean {
             return oldItem.referenceCode == newItem.referenceCode
         }
 
-        override fun areContentsTheSame(oldItem: ListGeocacheEntity, newItem: ListGeocacheEntity): Boolean {
+        override fun areContentsTheSame(
+            oldItem: ListGeocacheEntity,
+            newItem: ListGeocacheEntity
+        ): Boolean {
             return oldItem == newItem
         }
     }

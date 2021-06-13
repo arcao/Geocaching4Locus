@@ -11,7 +11,7 @@ class GeocacheSize(
         const val NOT_CHOSEN = 1
         const val MICRO = 2
         const val SMALL = 8
-        const val MEDIUM = 3
+        const val REGULAR = 3
         const val LARGE = 4
         const val VIRTUAL = 5
         const val OTHER = 6

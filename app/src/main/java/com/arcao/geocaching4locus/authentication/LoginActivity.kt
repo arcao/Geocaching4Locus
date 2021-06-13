@@ -102,7 +102,7 @@ class LoginActivity : AbstractActionBarActivity() {
         try {
             CustomTabsIntent.Builder()
                 .setInstantAppsEnabled(true)
-                .enableUrlBarHiding()
+                .setUrlBarHidingEnabled(true)
                 .build().launchUrl(this, url.toUri())
         } catch (e: ActivityNotFoundException) {
             showWebPage(url.toUri())

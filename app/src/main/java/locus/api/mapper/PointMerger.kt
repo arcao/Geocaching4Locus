@@ -3,7 +3,7 @@ package locus.api.mapper
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.GSAK_USERNAME
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingLog
 
 class PointMerger(
@@ -12,11 +12,11 @@ class PointMerger(
     fun mergePoints(dest: Point, src: Point?) {
         dest.removeExtraOnDisplay()
 
-        if (src?.gcData == null)
-            return
+        val srcGcData = src?.gcData ?: return
+        val destGcData = dest.gcData ?: return
 
         copyArchivedGeocacheLocation(dest, src)
-        copyGsakGeocachingLogs(dest.gcData.logs, src.gcData.logs)
+        copyGsakGeocachingLogs(destGcData.logs, srcGcData.logs)
         copyComputedCoordinates(dest, src)
         copyPointId(dest, src)
         copyGcVote(dest, src)
@@ -33,20 +33,26 @@ class PointMerger(
             return
 
         // store original logs
-        val originalLogs = ArrayList(dest.gcData.logs)
+        val originalLogs = ArrayList(dest.gcData?.logs.orEmpty())
 
         // replace logs with new one
-        dest.gcData.logs.apply {
+        dest.gcData?.logs?.apply {
             clear()
-            addAll(src.gcData.logs)
+            src.gcData?.logs?.let(this::addAll)
         }
 
         // copy GSAK logs from original logs
-        copyGsakGeocachingLogs(dest.gcData.logs, originalLogs)
+        copyGsakGeocachingLogs(dest.gcData?.logs, originalLogs)
     }
 
     // issue #14: Keep cache logs from GSAK when updating cache
-    private fun copyGsakGeocachingLogs(dest: MutableList<GeocachingLog>, src: List<GeocachingLog>) {
+    private fun copyGsakGeocachingLogs(
+        dest: MutableList<GeocachingLog>?,
+        src: List<GeocachingLog>?
+    ) {
+        src ?: return
+        dest ?: return
+
         for (fromLog in src.reversed()) {
             if (GSAK_USERNAME.equals(fromLog.finder, ignoreCase = true)) {
                 fromLog.date = System.currentTimeMillis()
@@ -57,40 +63,40 @@ class PointMerger(
 
     // issue #13: Use old coordinates when cache is archived after update
     private fun copyArchivedGeocacheLocation(dest: Point, src: Point) {
-        if (src.gcData == null || dest.gcData == null)
-            return
+        val srcGcData = src.gcData ?: return
+        val destGcData = dest.gcData ?: return
 
-        val latitude = src.location.getLatitude()
-        val longitude = src.location.getLongitude()
+        val latitude = src.location.latitude
+        val longitude = src.location.longitude
 
         // are valid coordinates
-        if (java.lang.Double.isNaN(latitude) || java.lang.Double.isNaN(longitude) || latitude == 0.0 && longitude == 0.0)
+        if (latitude.isNaN() || longitude.isNaN() || latitude == 0.0 && longitude == 0.0)
             return
 
         // is new point not archived or has computed coordinates
-        if (!dest.gcData.isArchived || src.gcData.isComputed)
+        if (!destGcData.isArchived || srcGcData.isComputed)
             return
 
         // store coordinates to new point
         dest.location.apply {
-            setLatitude(latitude)
-            setLongitude(longitude)
+            this.latitude = latitude
+            this.longitude = longitude
         }
     }
 
     // Copy computed coordinates to new point
     private fun copyComputedCoordinates(dest: Point, src: Point) {
-        if (src.gcData == null || dest.gcData == null)
-            return
+        val srcGcData = src.gcData ?: return
+        val destGcData = dest.gcData ?: return
 
-        if (!src.gcData.isComputed || dest.gcData.isComputed)
+        if (!srcGcData.isComputed || destGcData.isComputed)
             return
 
         val location = dest.location
 
-        dest.gcData.apply {
-            latOriginal = location.getLatitude()
-            lonOriginal = location.getLongitude()
+        destGcData.apply {
+            latOriginal = location.latitude
+            lonOriginal = location.longitude
             isComputed = true
         }
 
@@ -99,33 +105,36 @@ class PointMerger(
     }
 
     private fun copyPointId(dest: Point, src: Point) {
-        if (src.getId() == 0L)
+        if (src.id == 0L)
             return
 
-        dest.setId(src.getId())
+        dest.id = src.id
     }
 
     private fun copyGcVote(dest: Point, src: Point) {
-        if (src.gcData == null || dest.gcData == null)
-            return
+        val srcGcData = src.gcData ?: return
+        val destGcData = dest.gcData ?: return
 
-        dest.gcData.apply {
-            gcVoteAverage = src.gcData.gcVoteAverage
-            gcVoteNumOfVotes = src.gcData.gcVoteNumOfVotes
-            gcVoteUserVote = src.gcData.gcVoteUserVote
+        destGcData.apply {
+            gcVoteAverage = srcGcData.gcVoteAverage
+            gcVoteNumOfVotes = srcGcData.gcVoteNumOfVotes
+            gcVoteUserVote = srcGcData.gcVoteUserVote
         }
     }
 
     private fun copyEditedGeocachingWaypointLocation(dest: Point, src: Point) {
-        if (dest.gcData?.waypoints?.isEmpty() != false || src.gcData.waypoints.isEmpty())
+        val destWaypoints = dest.gcData?.waypoints ?: return
+        val srcWaypoints = src.gcData?.waypoints ?: return
+
+        if (destWaypoints.isEmpty() || srcWaypoints.isEmpty())
             return
 
         // find Waypoint with zero coordinates
-        for (waypoint in dest.gcData.waypoints) {
+        for (waypoint in destWaypoints) {
             if (waypoint.lat == 0.0 && waypoint.lon == 0.0) {
 
                 // replace with coordinates from src Waypoint
-                for (fromWaypoint in src.gcData.waypoints) {
+                for (fromWaypoint in srcWaypoints) {
 
                     if (waypoint.code.equals(fromWaypoint.code, ignoreCase = true)) {
                         waypoint.apply {

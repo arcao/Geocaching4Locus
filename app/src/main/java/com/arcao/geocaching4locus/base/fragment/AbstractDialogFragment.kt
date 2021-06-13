@@ -33,18 +33,6 @@ abstract class AbstractDialogFragment : DialogFragment() {
         }
     }
 
-    // This is to work around what is apparently a bug. If you don't have it
-    // here the dialog will be dismissed on rotation, so tell it not to dismiss.
-    override fun onDestroyView() {
-        dialog?.let { dialog ->
-            if (retainInstance) {
-                dialog.setDismissMessage(null)
-            }
-        }
-
-        super.onDestroyView()
-    }
-
     override fun dismiss() {
         try {
             super.dismiss()

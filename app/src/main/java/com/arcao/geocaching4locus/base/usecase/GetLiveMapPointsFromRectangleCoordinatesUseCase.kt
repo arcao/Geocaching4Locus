@@ -38,7 +38,6 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true,
         countHandler: (Int) -> Unit = {}
     ) = flow {
         geocachingApiLogin()

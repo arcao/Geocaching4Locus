@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import locus.api.android.objects.PackPoints
 import locus.api.manager.LocusMapManager
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.utils.StoreableWriter
 
 @Suppress("BlockingMethodInNonBlockingContext")

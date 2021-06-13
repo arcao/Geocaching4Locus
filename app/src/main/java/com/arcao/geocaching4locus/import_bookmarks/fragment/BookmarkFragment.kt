@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
@@ -22,6 +24,9 @@ import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -65,9 +70,22 @@ class BookmarkFragment : BaseBookmarkFragment() {
             viewModel.selection(adapter.selected)
         }
 
-        viewModel.list.withObserve(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-            adapter.tracker.onRestoreInstanceState(savedInstanceState)
+        var savedState = savedInstanceState
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagerFlow.collectLatest { data ->
+                adapter.submitData(data)
+
+                if (savedState != null) {
+                    adapter.tracker.onRestoreInstanceState(savedState)
+                    savedState = null
+                }
+            }
+            adapter.loadStateFlow.collect {
+                if (it.append is LoadState.NotLoading && it.append.endOfPaginationReached) {
+                    binding.isEmpty = adapter.itemCount < 1
+                }
+            }
         }
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)

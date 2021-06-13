@@ -10,6 +10,10 @@
         <variable
             name="vm"
             type="com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel" />
+
+        <variable
+            name="isEmpty"
+            type="Boolean" />
     </data>
 
     <FrameLayout
@@ -55,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:visibility="@{vm.list.size == 0 ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{isEmpty ? View.VISIBLE : View.GONE}" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"

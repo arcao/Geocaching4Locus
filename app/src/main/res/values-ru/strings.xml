@@ -163,9 +163,11 @@
     <string name="button_more_info" comment="Dialog button for More info action">Описание</string>
     <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Ошибка Locus Map: %s</string>
     <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Не удается создать файл данных для Locus Map. Вы одобрили разрешение на доступ к внешнему файлу?</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Код авторизации</string>
     <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Код авторизации</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Введенный код авторизации недействителен. Пожалуйста, попробуйте еще раз.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API в настоящее время не работает из-за технического обслуживания. Пожалуйста, попробуйте позже.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">При поддержке Geocaching API</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Это стало возможным благодаря поддержке Geocaching Premium Memberships, программа API дает сторонним разработчикам возможность работать с Geocaching HQ над полным набором интегрированных продуктов и услуг для сообщества. Приложения для разработчиков API предназначены для работы с основными службами geocaching.com и предоставляют дополнительные возможности сообществу геокешинга.</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">Продолжить</string>
 </resources>

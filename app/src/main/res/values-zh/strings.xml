@@ -26,6 +26,7 @@
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">正在更新藏点……</string>
     <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">日志计数</string>
     <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">和藏点一起下载的日志计数</string>
+    <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">显示失效的</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">显示暂时失效的藏点</string>
     <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">正在下载藏点……</string>
@@ -52,6 +53,7 @@
     </string-array>
     <string name="menu_live_map" comment="">在线地图</string>
     <string name="menu_nearest" comment="">最近的</string>
+    <string name="menu_users_guide" comment="">用户指南</string>
     <string name="menu_settings" comment="">设置</string>
     <string name="var_user_waypoint_name" comment="">用户航点%1$d</string>
     <string name="var_final_location_name" comment="">最终位置</string>

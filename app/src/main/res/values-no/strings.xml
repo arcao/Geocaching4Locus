@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Laster ned cache</string>
-    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">Locus Map-programmet er ikke funnet, men Geocaching4Locus det krever å fungere ordentlig. Vennligst installer Locus Map.</string>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Laster ned cacher…</string>
+    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">Locus Map-programmet ble ikke funnet, men Geocaching4Locus det krever å fungere ordentlig. Vennligst installer Locus Map.</string>
     <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Vennligst slå på WiFi eller GPS posisjonering i innstillinger.</string>
-    <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">Henter posisjon via GPS</string>
-    <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Henter posisjon via trådløst nettverk…</string>
+    <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">Henter posisjon fra GPS…</string>
+    <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Henter posisjon fra trådløst nettverk…</string>
     <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">Innstillinger</string>
     <string name="error_coordinates_format" comment="Error dialog message if coordinates enter in search nearest screen are not valid. This message can be shown after touch on Download FAB button.">Feil koordinatformat!</string>
     <string name="title_coordinates" comment="Title of coordinates section in Search nearest screen.">Koordinater</string>
@@ -17,8 +17,8 @@
     <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Locusversjonen din er for gamal. Du må ha versjon %s eller nyare for å fungera skikkeleg.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Avbryt</string>
-    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Vis funne</string>
-    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">Vis funne caches</string>
+    <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Vis funnede</string>
+    <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">Vis funnede cacher</string>
     <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis eigne løynde</string>
     <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis eigne løynde caches (løynde av deg)</string>
     <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Vel alle</string>

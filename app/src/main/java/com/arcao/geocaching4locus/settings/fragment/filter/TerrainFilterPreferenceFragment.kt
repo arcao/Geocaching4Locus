@@ -49,7 +49,7 @@ class TerrainFilterPreferenceFragment : AbstractPreferenceFragment() {
             FILTER_TERRAIN_MIN,
             FILTER_TERRAIN_MAX -> {
                 preference<ListPreference>(key).apply {
-                    summary = prepareRatingSummary(entry)
+                    summary = prepareRatingSummary(entry ?: return)
                 }
             }
         }

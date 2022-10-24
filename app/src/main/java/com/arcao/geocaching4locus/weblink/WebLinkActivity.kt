@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.weblink
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.Nullable
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
@@ -20,7 +19,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
     protected abstract val viewModel: WebLinkViewModel
     private val accountManager by inject<AccountManager>()
 
-    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.progress.withObserve(this, ::handleProgress)
@@ -83,6 +82,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
         }.exhaustive
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

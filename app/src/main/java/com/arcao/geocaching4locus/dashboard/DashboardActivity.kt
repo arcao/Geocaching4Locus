@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
@@ -47,11 +46,11 @@ class DashboardActivity : AbstractActionBarActivity(),
 
         viewModel.action.withObserve(this, ::handleAction)
 
-        setSupportActionBar(binding.toolbar as Toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.title = title
     }
 
-    private fun handleAction(action: DashboardAction?) {
+    private fun handleAction(action: DashboardAction) {
         when (action) {
             is DashboardAction.SearchNearest -> {
                 startActivityForResult(
@@ -102,6 +101,7 @@ class DashboardActivity : AbstractActionBarActivity(),
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

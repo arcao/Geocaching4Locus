@@ -20,7 +20,6 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.SpannedString
-import androidx.annotation.NonNull
 import java.util.Locale
 import java.util.regex.Pattern
 
@@ -30,7 +29,8 @@ import java.util.regex.Pattern
  * @author George T. Steel
  */
 object SpanFormatter {
-    private val FORMAT_SEQUENCE = Pattern.compile("%([0-9]+\\$|<?)([^a-zA-z%]*)([[a-zA-Z%]&&[^tT]]|[tT][a-zA-Z])")
+    private val FORMAT_SEQUENCE =
+        Pattern.compile("%([0-9]+\\$|<?)([^a-zA-z%]*)([a-zA-Z%&&[^tT]]|[tT][a-zA-Z])")
 
     /**
      * Version of [String.format] that works on [Spanned] strings to preserve rich text formatting.
@@ -108,9 +108,9 @@ object SpanFormatter {
         return SpannedString(out)
     }
 
-    private fun spannedToUpperCase(@NonNull s: Spanned): Spanned {
+    private fun spannedToUpperCase(s: Spanned): Spanned {
         val spans = s.getSpans(0, s.length, Any::class.java)
-        val spannableString = SpannableString(s.toString().toUpperCase(Locale.getDefault()))
+        val spannableString = SpannableString(s.toString().uppercase())
 
         // reapply the spans to the now uppercase string
         for (span in spans) {

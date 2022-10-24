@@ -6,7 +6,6 @@ import android.util.SparseArray
 import timber.log.Timber
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
-import java.util.Locale
 
 class ConfigurationCollector(private val context: Context) : Collector() {
     override val name: String
@@ -160,7 +159,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                 )
                 else -> {
                     val values =
-                        VALUE_ARRAYS[fieldName.toUpperCase(Locale.ROOT) + '_'] // Unknown field, return the raw int as String
+                        VALUE_ARRAYS[fieldName.uppercase() + '_'] // Unknown field, return the raw int as String
                             ?: return f.getInt(conf).toString()
 
                     return values.get(f.getInt(conf)) // Unknown value, return the raw int as String

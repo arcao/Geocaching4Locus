@@ -25,7 +25,6 @@ import locus.api.mapper.PointMerger
 import locus.api.mapper.Util
 import locus.api.objects.geoData.Point
 import timber.log.Timber
-import java.util.Locale
 
 class UpdateViewModel(
     private val context: Context,
@@ -197,7 +196,7 @@ class UpdateViewModel(
             }
         }
 
-        if (cacheId == null || !cacheId.toUpperCase(Locale.US).startsWith("GC")) {
+        if (cacheId == null || !cacheId.uppercase().startsWith("GC")) {
             Timber.e("cacheId/simpleCacheId not found")
             return null
         }

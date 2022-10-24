@@ -5,7 +5,6 @@ import android.content.res.TypedArray
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import androidx.annotation.Nullable
 import androidx.core.content.withStyledAttributes
 import androidx.preference.DialogPreference
 import androidx.preference.Preference
@@ -50,7 +49,7 @@ class SliderPreference @JvmOverloads constructor(
         return R.layout.view_slider
     }
 
-    override fun onSetInitialValue(@Nullable defaultValue: Any?) {
+    override fun onSetInitialValue(defaultValue: Any?) {
         progress = getPersistedInt(defaultValue as? Int ?: 0)
     }
 
@@ -58,7 +57,7 @@ class SliderPreference @JvmOverloads constructor(
         return a.getInt(index, 0)
     }
 
-    override fun onSaveInstanceState(): Parcelable {
+    override fun onSaveInstanceState(): Parcelable? {
         val superState = super.onSaveInstanceState()
 
         if (isPersistent) {
@@ -85,7 +84,10 @@ class SliderPreference @JvmOverloads constructor(
         value = myState.value
     }
 
-    override fun onPreferenceDisplayDialog(caller: PreferenceFragmentCompat, preference: Preference): Boolean {
+    override fun onPreferenceDisplayDialog(
+        caller: PreferenceFragmentCompat,
+        preference: Preference
+    ): Boolean {
         // check if dialog is already showing
         val fragmentManager = caller.parentFragmentManager
         if (fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) return true
@@ -99,9 +101,9 @@ class SliderPreference @JvmOverloads constructor(
     }
 
     private class SavedState : BaseSavedState {
-        internal var value: Int = 0
+        var value: Int = 0
 
-        internal constructor(source: Parcel) : super(source) {
+        constructor(source: Parcel) : super(source) {
             value = source.readInt()
         }
 
@@ -110,7 +112,7 @@ class SliderPreference @JvmOverloads constructor(
             dest.writeInt(value)
         }
 
-        internal constructor(superState: Parcelable) : super(superState)
+        constructor(superState: Parcelable?) : super(superState)
 
         companion object {
             @Suppress("unused")

@@ -24,7 +24,6 @@ import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -49,7 +48,11 @@ class BookmarkFragment : BaseBookmarkFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         toolbar?.subtitle = bookmarkList.name
 
         val binding = DataBindingUtil.inflate<FragmentBookmarkBinding>(
@@ -101,10 +104,12 @@ class BookmarkFragment : BaseBookmarkFragment() {
         adapter.tracker.onSaveInstanceState(outState)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_select_deselect, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.selectAll -> {
             adapter.selectAll()

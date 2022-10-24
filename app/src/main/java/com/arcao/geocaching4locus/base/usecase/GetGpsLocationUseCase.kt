@@ -55,6 +55,7 @@ class GetGpsLocationUseCase(
             result.resume(location)
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {
         }
 

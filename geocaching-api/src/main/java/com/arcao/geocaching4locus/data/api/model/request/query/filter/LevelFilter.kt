@@ -7,5 +7,5 @@ class LevelFilter(private val membershipType: MembershipType) : Filter {
     override fun isValid() =
         membershipType == MembershipType.BASIC || membershipType == MembershipType.PREMIUM
 
-    override fun toString() = "lvl:${membershipType.value.toLowerCase(Locale.ROOT)}"
+    override fun toString() = "lvl:${membershipType.value.lowercase(Locale.ROOT)}"
 }

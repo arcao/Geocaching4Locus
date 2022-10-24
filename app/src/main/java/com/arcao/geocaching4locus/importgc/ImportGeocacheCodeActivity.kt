@@ -3,7 +3,6 @@ package com.arcao.geocaching4locus.importgc
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.NonNull
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
@@ -68,10 +67,11 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         }.exhaustive
     }
 
-    override fun onInputFinished(@NonNull input: Array<String>) {
+    override fun onInputFinished(input: Array<String>) {
         viewModel.importGeocacheCodes(input)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

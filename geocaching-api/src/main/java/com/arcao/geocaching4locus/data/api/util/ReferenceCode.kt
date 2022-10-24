@@ -72,7 +72,7 @@ object ReferenceCode {
      * @throws IllegalArgumentException reference code contains invalid characters
      */
     fun toId(referenceCode: String): Long {
-        val referenceCodeNorm = referenceCode.toUpperCase(Locale.US)
+        val referenceCodeNorm = referenceCode.uppercase(Locale.US)
 
         if (referenceCodeNorm.length < 3) {
             throw IllegalArgumentException("Reference code is too short.")
@@ -109,7 +109,7 @@ object ReferenceCode {
         sb.append(prefix)
 
         if (id <= REFERENCE_CODE_BASE16_MAX) { // 0 - FFFF
-            sb.append(id.toString(BASE_16).toUpperCase(Locale.US))
+            sb.append(id.toString(BASE_16).uppercase(Locale.US))
         } else { // G000 - ...
             sb.append(base31Encode(id + REFERENCE_CODE_BASE31_MAGIC_NUMBER))
         }

@@ -54,7 +54,7 @@ object CoordinatesFormatter {
         var direction = 1.0
 
         try {
-            ch = tmp[index].toUpperCase()
+            ch = tmp[index].uppercaseChar()
             if (ch == 'S' || ch == 'W' || ch == '-') {
                 direction = -1.0
                 index++

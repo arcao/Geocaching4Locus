@@ -15,9 +15,9 @@ import java.lang.reflect.Type
 
 class EnumAdapterFactory : JsonAdapter.Factory {
     override fun create(
-        type: Type?,
-        annotations: MutableSet<out Annotation>?,
-        moshi: Moshi?
+        type: Type,
+        annotations: MutableSet<out Annotation>,
+        moshi: Moshi
     ): JsonAdapter<*>? {
         return when (type) {
             AdditionalWaypointType::class.java -> AdditionalWaypointTypeAdapter.INSTANCE
@@ -31,17 +31,17 @@ class EnumAdapterFactory : JsonAdapter.Factory {
 
     abstract class ValueEnumAdapter<T : IdValueType> : JsonAdapter<T>() {
         abstract fun from(value: String?): T
-        final override fun fromJson(reader: JsonReader?): T? = from(reader?.nextString())
-        final override fun toJson(writer: JsonWriter?, value: T?) {
-            writer?.value(value?.value)
+        final override fun fromJson(reader: JsonReader): T = from(reader.nextString())
+        final override fun toJson(writer: JsonWriter, value: T?) {
+            writer.value(value?.value)
         }
     }
 
     abstract class IdEnumAdapter<T : IdType> : JsonAdapter<T>() {
         abstract fun from(id: Int?): T
-        final override fun fromJson(reader: JsonReader?): T? = from(reader?.nextInt())
-        final override fun toJson(writer: JsonWriter?, value: T?) {
-            writer?.value(value?.id)
+        final override fun fromJson(reader: JsonReader): T = from(reader.nextInt())
+        final override fun toJson(writer: JsonWriter, value: T?) {
+            writer.value(value?.id)
         }
     }
 

@@ -65,7 +65,10 @@ class SettingsActivity : AbstractActionBarActivity(),
         supportFragmentManager.commit {
             replace(
                 R.id.fragment,
-                supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
+                supportFragmentManager.fragmentFactory.instantiate(
+                    classLoader,
+                    pref.fragment ?: return@commit
+                )
             )
             addToBackStack(null)
         }
@@ -75,7 +78,7 @@ class SettingsActivity : AbstractActionBarActivity(),
 
     override fun onPreferenceDisplayDialog(
         caller: PreferenceFragmentCompat,
-        pref: Preference?
+        pref: Preference
     ): Boolean {
         if (pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback) {
             return pref.onPreferenceDisplayDialog(caller, pref)

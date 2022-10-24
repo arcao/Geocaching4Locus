@@ -23,7 +23,7 @@ fun Context.getMainLocale(): Locale {
     return if (locales.isEmpty) {
         Locale.getDefault()
     } else {
-        locales[0]
+        locales[0] ?: Locale.getDefault()
     }
 }
 

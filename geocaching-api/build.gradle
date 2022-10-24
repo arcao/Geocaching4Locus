@@ -8,10 +8,9 @@ android {
     compileSdkVersion rootProject.compile_sdk_version
 
     defaultConfig {
+        testInstrumentationRunnerArguments runnerBuilder: 'de.mannodermaus.junit5.AndroidJUnit5Builder'
         minSdkVersion rootProject.min_sdk_version
         targetSdkVersion rootProject.target_sdk_version
-        versionCode 1
-        versionName "1.0"
 
         multiDexEnabled true
 
@@ -20,7 +19,6 @@ android {
         buildConfigField 'boolean', 'GEOCACHING_API_STAGING', "${geocachingApiStaging}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -32,8 +30,8 @@ android {
 
     kotlinOptions {
         freeCompilerArgs += [
-                "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xjvm-default=compatibility"
+                "-opt-in=kotlin.RequiresOptIn",
+                "-Xjvm-default=all-compatibility"
         ]
         jvmTarget = JavaVersion.VERSION_1_8
     }
@@ -43,10 +41,16 @@ android {
             // Configuration goes here!
         }
     }
-
     packagingOptions {
-        exclude "META-INF/LICENSE*"
+        jniLibs {
+            excludes += ['META-INF/LICENSE*']
+        }
+        resources {
+            excludes += ['META-INF/LICENSE*']
+        }
     }
+
+    namespace 'com.arcao.geocaching4locus.geocaching_api'
 }
 
 dependencies {

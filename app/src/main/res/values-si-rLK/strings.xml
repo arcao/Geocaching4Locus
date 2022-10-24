@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">නිහිතයන් බාගතවෙමින්…</string>
+    <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">සැකසුම්</string>
+    <string name="button_ok" comment="Dialog button for OK action.">හරි</string>
+    <string name="button_cancel" comment="Dialog button for cancel action.">අවලංගු</string>
+    <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">නිහිතය යාවත්කාල වෙමින්…</string>
+    <string name="progress_download_geocache" comment="Progress dialog message when you try download/import geocaches to Locus Map.">නිහිතය බාගතවෙමින්…</string>
+    <string name="pref_version" comment="Title of Application version in About section in add-on settings.">අනුවාදය</string>
+    <string name="pref_geocache_type" comment="">නිහිත වර්ග</string>
+    <string name="menu_live_map" comment="">සජීවී සිතියම</string>
+    <string name="menu_settings" comment="">සැකසුම්</string>
+    <string name="progress_update_geocaches" comment="">නිහිත යාවත්කාල වෙමින්…</string>
+    <string name="toast_live_map_disabled" comment="">සජීවී සිතියම අබලයි.</string>
+    <string name="button_settings" comment="">සැකසුම්</string>
+    <string name="launcher_update_geocache" comment="">නිහිතය යාවත්කාල කරන්න</string>
+    <string name="launcher_update_geocaches" comment="">නිහිත යාවත්කාල කරන්න</string>
+    <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
+        <item quantity="one">නිහිත %d</item>
+        <item quantity="other">නිහිත %d</item>
+    </plurals>
+    <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
+        <item quantity="one">පැය %d</item>
+        <item quantity="other">පැය %d</item>
+    </plurals>
+    <plurals name="plurals_minute" comment="Plurals for minute. The '%d' is replaced with numeric value of minute">
+        <item quantity="one">විනාඩි %d</item>
+        <item quantity="other">විනාඩි %d</item>
+    </plurals>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">සජීවී සිතියම සබල කර ඇත.</string>
+    <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">සජීවී සිතියම අබල කර ඇත.</string>
+    <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">සබල කරන්න</string>
+    <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">අබල කරන්න</string>
+    <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">සැකසුම්</string>
+    <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">දැනුම්දීම් අබල කර ඇත</string>
+    <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">සියල්ල</string>
+    <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">පෙරහන</string>
+    <string name="pref_account" comment="Title of preference category for Account settings.">ගිණුම</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">පෙරහන</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">සජීවී සිතියම</string>
+    <string name="pref_downloading" comment="Title of preference category for Downloading settings.">බාගත වෙමින්</string>
+    <string name="pref_advanced" comment="Title of preference category for Advanced settings.">වැඩිදුර</string>
+    <string name="pref_about" comment="Title of preference category for About settings.">පිළිබඳව</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">ඉඟි බාගන්න</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">පොත්යොමු ආයාතකරන්න</string>
+    <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">පොත්යොමු ආයාතකරන්න</string>
+    <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">සියල්ල ආයාත කරන්න</string>
+    <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">ලෝකස් සිතියමේ දෝෂයකි</string>
+    <string name="button_send_error_report" comment="Button for Send error report action.">දෝෂ වාර්තාව යවන්න</string>
+    <string name="button_yes" comment="Dialog button for Yes action.">ඔව්</string>
+    <string name="button_no" comment="Dialog button for No action.">නැහැ</string>
+    <string name="title_warning" comment="Warning dialog title">අවවාදයයි</string>
+    <string name="button_more_info" comment="Dialog button for More info action">තව තොරතුරු</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">ලෝකස් සිතියමේ දෝෂය: %s</string>
+    <string name="button_continue" comment="Dialog button for Continue action.">ඉදිරියට</string>
+</resources>

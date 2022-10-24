@@ -23,7 +23,6 @@ dependencies {
     implementation "androidx.browser:browser:$browser_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.multidex:multidex:$multidex_version"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugar_jdk_libs_version"

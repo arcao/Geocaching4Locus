@@ -1,14 +1,17 @@
 package com.arcao.geocaching4locus.search_nearest
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
 import com.arcao.geocaching4locus.base.util.PermissionUtil
@@ -16,14 +19,12 @@ import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.databinding.ActivitySearchNearestBinding
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationPermissionErrorDialogFragment
 import com.arcao.geocaching4locus.search_nearest.fragment.NoLocationProviderDialogFragment
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.FilterPreferenceFragment
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -32,9 +33,22 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
         parametersOf(intent)
     }
 
-    private val accountManager by inject<AccountManager>()
-
     private lateinit var binding: ActivitySearchNearestBinding
+
+    private val settingsActivity = registerForActivityResult(SettingsActivity.Contract) {}
+    private val requestLocationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        if (result.all { it.value }) {
+            viewModel.retrieveCoordinates()
+        } else {
+            NoLocationPermissionErrorDialogFragment.newInstance().show(supportFragmentManager)
+        }
+    }
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) viewModel.download()
+    }
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,9 +83,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
     @Suppress("IMPLICIT_CAST_TO_ANY")
     fun handleAction(action: SearchNearestAction) {
         when (action) {
-            SearchNearestAction.SignIn -> {
-                accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-            }
+            SearchNearestAction.SignIn -> loginActivity.launch(null)
             is SearchNearestAction.Error -> {
                 startActivity(action.intent)
                 setResult(Activity.RESULT_CANCELED)
@@ -81,33 +93,30 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
                 setResult(Activity.RESULT_OK)
                 finish()
             }
-            is SearchNearestAction.LocusMapNotInstalled -> {
-                showLocusMissingError()
-            }
-            SearchNearestAction.RequestGpsLocationPermission -> {
-                PermissionUtil.requestGpsLocationPermission(this, REQUEST_LOCATION_PERMISSION)
-            }
-            SearchNearestAction.RequestWifiLocationPermission -> {
-                PermissionUtil.requestWifiLocationPermission(this, REQUEST_LOCATION_PERMISSION)
-            }
-            SearchNearestAction.WrongCoordinatesFormat -> {
-                startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_coordinates_format).build())
-            }
+            is SearchNearestAction.LocusMapNotInstalled -> showLocusMissingError()
+            SearchNearestAction.RequestGpsLocationPermission -> requestLocationPermission.launch(
+                PermissionUtil.PERMISSION_LOCATION_GPS
+            )
+            SearchNearestAction.RequestWifiLocationPermission -> requestLocationPermission.launch(
+                PermissionUtil.PERMISSION_LOCATION_WIFI
+            )
+            SearchNearestAction.WrongCoordinatesFormat -> startActivity(
+                ErrorActivity.IntentBuilder(this)
+                    .message(R.string.error_coordinates_format)
+                    .build()
+            )
             SearchNearestAction.ShowFilters -> {
-                startActivity(SettingsActivity.createIntent(this, FilterPreferenceFragment::class.java))
+                settingsActivity.launch(FilterPreferenceFragment::class.java)
             }
-            SearchNearestAction.LocationProviderDisabled -> {
+            SearchNearestAction.LocationProviderDisabled ->
                 NoLocationProviderDialogFragment.newInstance().show(supportFragmentManager)
-            }
-            is SearchNearestAction.RequestCacheCount -> {
-                SliderDialogFragment.newInstance(
-                    title = R.string.title_geocache_count,
-                    min = action.step,
-                    max = action.max,
-                    step = action.step,
-                    defaultValue = action.value
-                ).show(supportFragmentManager, "COUNTER")
-            }
+            is SearchNearestAction.RequestCacheCount -> SliderDialogFragment.newInstance(
+                title = R.string.title_geocache_count,
+                min = action.step,
+                max = action.max,
+                step = action.step,
+                defaultValue = action.value
+            ).show(supportFragmentManager, "COUNTER")
         }.exhaustive
     }
 
@@ -118,7 +127,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.main_activity_option_menu_preferences -> {
-            startActivity(SettingsActivity.createIntent(this))
+            settingsActivity.launch(null)
             true
         }
         android.R.id.home -> {
@@ -126,28 +135,6 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // restart download process after log in
-        if (requestCode == REQUEST_SIGN_ON && resultCode == Activity.RESULT_OK) {
-            viewModel.download()
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (PermissionUtil.verifyPermissions(grantResults)) {
-                viewModel.retrieveCoordinates()
-            } else {
-                NoLocationPermissionErrorDialogFragment.newInstance().show(supportFragmentManager)
-            }
-        }
     }
 
     override fun onProgressCancel(requestId: Int) {
@@ -159,8 +146,14 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
         viewModel.requestedCaches(fragment.getValue())
     }
 
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
-        private const val REQUEST_LOCATION_PERMISSION = 2
+    object Contract : ActivityResultContract<Intent?, Boolean>() {
+        override fun createIntent(context: Context, input: Intent?) =
+            Intent(context, SearchNearestActivity::class.java).apply {
+                input?.let { putExtras(it) }
+            }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
+        }
     }
 }

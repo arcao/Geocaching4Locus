@@ -1,9 +1,7 @@
 package com.arcao.geocaching4locus.authentication.util
 
-import android.app.Activity
 import android.content.Context
 import androidx.core.content.edit
-import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.account.GeocachingAccount
@@ -82,14 +80,6 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
             }
         }
     }
-}
-
-fun AccountManager.requestSignOn(activity: Activity, requestCode: Int): Boolean {
-    if (account != null)
-        return false
-
-    activity.startActivityForResult(LoginActivity.createIntent(activity), requestCode)
-    return true
 }
 
 val AccountManager.isPremium: Boolean

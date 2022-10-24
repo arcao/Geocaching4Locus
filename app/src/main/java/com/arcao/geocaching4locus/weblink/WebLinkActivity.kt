@@ -1,23 +1,28 @@
 package com.arcao.geocaching4locus.weblink
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import locus.api.android.utils.IntentHelper
-import org.koin.android.ext.android.inject
 import timber.log.Timber
 
 abstract class WebLinkActivity : AbstractActionBarActivity() {
     protected abstract val viewModel: WebLinkViewModel
-    private val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) {
+            processIntent()
+        } else {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +60,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
     @Suppress("IMPLICIT_CAST_TO_ANY")
     private fun handleAction(action: WebLinkAction) {
         when (action) {
-            WebLinkAction.SignIn ->
-                accountManager.requestSignOn(this, REQUEST_SIGN_ON)
+            WebLinkAction.SignIn -> loginActivity.launch(null)
             is WebLinkAction.ShowUri -> {
                 if (showWebPage(action.uri)) {
                     setResult(Activity.RESULT_OK)
@@ -75,29 +79,13 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
                 finish()
             }
             WebLinkAction.PremiumMembershipRequired -> {
-                startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())
+                startActivity(
+                    ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature)
+                        .build()
+                )
                 setResult(Activity.RESULT_CANCELED)
                 finish()
             }
         }.exhaustive
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // restart update process after log in
-        if (requestCode == REQUEST_SIGN_ON) {
-            if (resultCode == Activity.RESULT_OK) {
-                processIntent()
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
-            }
-        }
-    }
-
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
     }
 }

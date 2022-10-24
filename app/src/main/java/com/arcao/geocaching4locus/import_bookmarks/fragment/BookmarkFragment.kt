@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -42,10 +43,22 @@ class BookmarkFragment : BaseBookmarkFragment() {
     private val adapter = BookmarkGeocachesAdapter()
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.toolbar_select_deselect, menu)
+        }
 
-        setHasOptionsMenu(true)
+        override fun onMenuItemSelected(menuItem: MenuItem) = when (menuItem.itemId) {
+            R.id.selectAll -> {
+                adapter.selectAll()
+                true
+            }
+            R.id.deselectAll -> {
+                adapter.selectNone()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onCreateView(
@@ -99,27 +112,15 @@ class BookmarkFragment : BaseBookmarkFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         adapter.tracker.onSaveInstanceState(outState)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_select_deselect, menu)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.selectAll -> {
-            adapter.selectAll()
-            true
-        }
-        R.id.deselectAll -> {
-            adapter.selectNone()
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")

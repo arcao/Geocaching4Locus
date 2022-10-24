@@ -66,7 +66,7 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
                     R.string.feedback_body
                 )
 
-                startActivityForResult(intent, REQ_FEEDBACK)
+                startActivity(intent)
             }
             true
         }
@@ -98,9 +98,5 @@ class AboutPreferenceFragment : AbstractPreferenceFragment(), CoroutineScope {
         companion object {
             const val TAG = "DonatePaypalDialogFragment"
         }
-    }
-
-    companion object {
-        const val REQ_FEEDBACK = 1
     }
 }

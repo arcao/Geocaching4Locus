@@ -1,22 +1,30 @@
 package com.arcao.geocaching4locus.download_rectangle
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContract
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DownloadRectangleActivity : AbstractActionBarActivity() {
     val viewModel by viewModel<DownloadRectangleViewModel>()
-    private val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) {
+            viewModel.startDownload()
+        } else {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,32 +62,23 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
             }
-            is DownloadRectangleAction.SignIn -> {
-                accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-            }
+            is DownloadRectangleAction.SignIn -> loginActivity.launch(null)
             DownloadRectangleAction.LastLiveMapDataInvalid -> {
-                startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_live_map_geocaches_not_visible).build())
+                startActivity(
+                    ErrorActivity.IntentBuilder(this)
+                        .message(R.string.error_live_map_geocaches_not_visible).build()
+                )
                 finish()
             }
         }.exhaustive
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    object Contract : ActivityResultContract<Void?, Boolean>() {
+        override fun createIntent(context: Context, input: Void?) =
+            Intent(context, DownloadRectangleActivity::class.java)
 
-        // restart update process after log in
-        if (requestCode == REQUEST_SIGN_ON) {
-            if (resultCode == Activity.RESULT_OK) {
-                viewModel.startDownload()
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
-            }
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
         }
-    }
-
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
     }
 }

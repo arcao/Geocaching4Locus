@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.settings.fragment
 
 import androidx.preference.Preference
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_POWERED_BY
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
@@ -13,6 +13,8 @@ import org.koin.android.ext.android.inject
 
 class AccountsPreferenceFragment : AbstractPreferenceFragment() {
     val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) {}
 
     override val preferenceResource: Int
         get() = R.xml.preference_category_accounts
@@ -27,7 +29,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
                     setTitle(R.string.pref_login)
                     setSummary(R.string.pref_login_summary)
                 } else {
-                    accountManager.requestSignOn(requireActivity(), 0)
+                    loginActivity.launch(null)
                 }
 
                 true

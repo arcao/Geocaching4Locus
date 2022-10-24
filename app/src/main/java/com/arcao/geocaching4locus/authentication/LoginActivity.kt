@@ -35,6 +35,7 @@ class LoginActivity : AbstractActionBarActivity() {
         binding.vm = viewModel
 
         setContentView(binding.root)
+
         @Suppress("USELESS_CAST")
         setSupportActionBar(binding.toolbar as Toolbar)
 

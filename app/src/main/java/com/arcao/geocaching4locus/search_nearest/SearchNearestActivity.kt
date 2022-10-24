@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
@@ -42,7 +43,8 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
-        val toolbar = binding.toolbar
+        @Suppress("USELESS_CAST")
+        val toolbar = binding.toolbar as Toolbar
         val latitude = binding.incCoordinates.latitude
         val longitude = binding.incCoordinates.longitude
 

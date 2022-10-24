@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.requestSignOn
@@ -46,7 +47,8 @@ class DashboardActivity : AbstractActionBarActivity(),
 
         viewModel.action.withObserve(this, ::handleAction)
 
-        setSupportActionBar(binding.toolbar)
+        @Suppress("USELESS_CAST")
+        setSupportActionBar(binding.toolbar as Toolbar)
         supportActionBar?.title = title
     }
 

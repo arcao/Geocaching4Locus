@@ -37,11 +37,11 @@
         android:name=".App"
         android:allowBackup="true"
         android:backupAgent=".base.util.backup.PreferencesBackupAgent"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/full_backup_scheme"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:largeHeap="true"
         tools:targetApi="s">
         <meta-data
@@ -184,6 +184,12 @@
                     android:host="*.coord.info"
                     android:pathPrefix="/GC"
                     android:scheme="https" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="geocaching.com"

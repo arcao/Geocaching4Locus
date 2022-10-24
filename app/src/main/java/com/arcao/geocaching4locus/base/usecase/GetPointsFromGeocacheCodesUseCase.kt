@@ -35,7 +35,7 @@ class GetPointsFromGeocacheCodesUseCase(
         val count = geocacheCodes.size
         var current = 0
 
-        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+        var itemsPerRequest = AppConstants.INITIAL_REQUEST_SIZE
         while (current < count) {
             val startTimeMillis = System.currentTimeMillis()
 
@@ -60,7 +60,11 @@ class GetPointsFromGeocacheCodesUseCase(
 
             current += requestedCacheIds.size
 
-            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            itemsPerRequest = DownloadingUtil.computeRequestSize(
+                itemsPerRequest,
+                AppConstants.GEOCACHES_MAX_REQUEST_SIZE,
+                startTimeMillis
+            )
         }
 
         Timber.v("found geocaches: %d", current)
@@ -93,7 +97,11 @@ class GetPointsFromGeocacheCodesUseCase(
         }
     }
 
-    private fun getRequestedGeocacheIds(cacheIds: Array<String>, current: Int, cachesPerRequest: Int): Array<String> {
+    private fun getRequestedGeocacheIds(
+        cacheIds: Array<String>,
+        current: Int,
+        cachesPerRequest: Int
+    ): Array<String> {
         val count = min(cacheIds.size - current, cachesPerRequest)
         return cacheIds.copyOfRange(current, current + count)
     }

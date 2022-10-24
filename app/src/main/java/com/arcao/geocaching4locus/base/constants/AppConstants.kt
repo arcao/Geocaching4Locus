@@ -28,14 +28,12 @@ object AppConstants {
     const val LOCUS_MIN_VERSION = "3.52.0"
     val LOCUS_MIN_VERSION_CODE: VersionCode = VersionCode.UPDATE_17
 
-    /* Adaptive downloading configuration */
-    const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 10
-    const val ADAPTIVE_DOWNLOADING_MAX_ITEMS = 100
-    const val ADAPTIVE_DOWNLOADING_STEP = 20
-    const val ADAPTIVE_DOWNLOADING_MIN_TIME_MS =
-        3500 // more than time required for 30 calls per minute
-    const val ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000
-    const val ITEMS_PER_REQUEST = 30
+    const val INITIAL_REQUEST_SIZE = 30
+
+    const val SEARCH_MAX_REQUEST_SIZE = 100
+    const val LIVE_MAP_MAX_REQUEST_SIZE = SEARCH_MAX_REQUEST_SIZE
+    const val GEOCACHES_MAX_REQUEST_SIZE = 50
+    const val LIST_GEOCACHES_DOWNLOAD_MAX_ITEMS = 50
 
     const val MINUTES_PER_HOUR = 60
 

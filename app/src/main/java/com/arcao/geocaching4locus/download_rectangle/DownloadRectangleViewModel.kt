@@ -74,7 +74,7 @@ class DownloadRectangleViewModel constructor(
                 center = true
             )
 
-            var count = AppConstants.ITEMS_PER_REQUEST
+            var count = AppConstants.INITIAL_REQUEST_SIZE
             var receivedGeocaches = 0
 
             try {

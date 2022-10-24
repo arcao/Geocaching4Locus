@@ -59,6 +59,6 @@ class FileAccountManager(
     private operator fun <E> List<E>.component7(): E? = this[6]
 
     companion object {
-        private val NEW_LINE_PATTERN = Regex("(?:\r\n|\n|\r)")
+        private val NEW_LINE_PATTERN = Regex("\r\n|\n|\r")
     }
 }

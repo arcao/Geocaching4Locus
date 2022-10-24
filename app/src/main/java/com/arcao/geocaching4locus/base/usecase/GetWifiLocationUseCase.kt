@@ -23,8 +23,11 @@ class GetWifiLocationUseCase(
 
     @SuppressLint("MissingPermission")
     suspend operator fun invoke() = withContext(dispatcherProvider.main) {
-        suspendCancellableCoroutine<Location?> { result ->
-            if (!context.hasWifiLocationPermission || !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        suspendCancellableCoroutine { result ->
+            if (!context.hasWifiLocationPermission || !locationManager.isProviderEnabled(
+                    LocationManager.NETWORK_PROVIDER
+                )
+            ) {
                 result.resume(null)
                 return@suspendCancellableCoroutine
             }

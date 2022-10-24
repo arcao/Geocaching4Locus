@@ -20,7 +20,6 @@ import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkListAdapter
 import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDecoration
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -39,7 +38,11 @@ class BookmarkListFragment : BaseBookmarkFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         toolbar?.subtitle = null
 
         val binding = DataBindingUtil.inflate<FragmentBookmarkListBinding>(

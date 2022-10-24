@@ -23,8 +23,11 @@ class GetGpsLocationUseCase(
 
     @SuppressLint("MissingPermission")
     suspend operator fun invoke() = withContext(dispatcherProvider.main) {
-        suspendCancellableCoroutine<Location?> { result ->
-            if (!context.hasGpsLocationPermission || !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        suspendCancellableCoroutine { result ->
+            if (!context.hasGpsLocationPermission || !locationManager.isProviderEnabled(
+                    LocationManager.GPS_PROVIDER
+                )
+            ) {
                 result.resume(null)
                 return@suspendCancellableCoroutine
             }

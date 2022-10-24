@@ -93,6 +93,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         try {
             // since API v13
             val size = Rect()
+            @Suppress("DEPRECATION")
             display.getRectSize(size)
             result.append(display.displayId).append(".rectSize=[").append(size.top).append(',').append(size.left)
                 .append(',').append(size.width()).append(',').append(size.height()).append(']').append('\n')

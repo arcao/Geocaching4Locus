@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.download_rectangle
 
-import android.content.Context
+import android.app.Application
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -21,7 +21,7 @@ import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
 class DownloadRectangleViewModel constructor(
-    private val context: Context,
+    private val context: Application,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
     private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,

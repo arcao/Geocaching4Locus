@@ -32,7 +32,7 @@ class BookmarkGeocacheWebLinkViewModel(
 
     override fun isRefreshRequired(point: Point): Boolean {
         val gcData = point.gcData
-        return gcData != null && !gcData.cacheUrl.isEmpty() && getGuid(gcData.cacheUrl) == null
+        return gcData != null && gcData.cacheUrl.isNotEmpty() && getGuid(gcData.cacheUrl) == null
     }
 
     override fun getWebLink(point: Point): Uri {

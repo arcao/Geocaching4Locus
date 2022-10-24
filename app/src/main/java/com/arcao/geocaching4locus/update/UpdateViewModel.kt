@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.update
 
-import android.content.Context
+import android.app.Application
 import android.content.Intent
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.util.isPremium
@@ -27,7 +27,7 @@ import locus.api.objects.geoData.Point
 import timber.log.Timber
 
 class UpdateViewModel(
-    private val context: Context,
+    private val context: Application,
     private val accountManager: AccountManager,
     private val defaultPreferenceManager: DefaultPreferenceManager,
     private val getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
@@ -86,11 +86,7 @@ class UpdateViewModel(
                         if (updateData.downloadLogs) {
                             var progress = updateData.newPoint.gcData?.logs?.count() ?: 0
 
-                            logsCount = if (updateData.downloadLogs) {
-                                AppConstants.LOGS_TO_UPDATE_MAX
-                            } else {
-                                defaultPreferenceManager.downloadingGeocacheLogsCount
-                            }
+                            logsCount = AppConstants.LOGS_TO_UPDATE_MAX
 
                             updateProgress(
                                 R.string.progress_download_logs,

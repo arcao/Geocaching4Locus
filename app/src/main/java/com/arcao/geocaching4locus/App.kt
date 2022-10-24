@@ -4,9 +4,7 @@ package com.arcao.geocaching4locus
 
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import android.webkit.CookieManager
-import android.webkit.CookieSyncManager
 import androidx.annotation.WorkerThread
 import androidx.core.content.edit
 import androidx.core.content.pm.PackageInfoCompat
@@ -46,7 +44,7 @@ class App : Application() {
                 putString(PrefConstants.DEVICE_ID, value)
             }
         }
-        value.orEmpty()
+        value
     }
 
     val version: String by lazy {
@@ -134,12 +132,7 @@ class App : Application() {
     }
 
     private fun flushCookie() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CookieManager.getInstance().flush()
-        } else {
-            @Suppress("DEPRECATION")
-            CookieSyncManager.createInstance(this).sync()
-        }
+        CookieManager.getInstance().flush()
     }
 
     companion object {

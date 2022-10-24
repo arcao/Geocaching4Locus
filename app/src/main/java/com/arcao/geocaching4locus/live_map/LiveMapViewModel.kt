@@ -3,9 +3,8 @@ package com.arcao.geocaching4locus.live_map
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.AccountNotFoundException
@@ -49,7 +48,7 @@ class LiveMapViewModel(
     private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : BaseViewModel(dispatcherProvider), LifecycleObserver {
+) : BaseViewModel(dispatcherProvider), DefaultLifecycleObserver {
     private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     fun addTask(intent: Intent, completionCallback: (Intent) -> Unit) {
@@ -179,8 +178,7 @@ class LiveMapViewModel(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    override fun onCleared() {
+    override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
     }
 }

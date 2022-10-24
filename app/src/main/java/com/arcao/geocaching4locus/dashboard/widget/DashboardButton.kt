@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.widget.ToggleButton
 import androidx.annotation.StyleableRes
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatToggleButton
 import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import com.arcao.geocaching4locus.R
@@ -15,7 +15,7 @@ class DashboardButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.dashboardButtonStyle
-) : ToggleButton(
+) : AppCompatToggleButton(
     context,
     attrs,
     defStyleAttr
@@ -45,7 +45,11 @@ class DashboardButton @JvmOverloads constructor(
 
     private fun applyCompoundDrawableTint(a: TypedArray) {
         // support for alpha attribute in ColorStateList
-        getCompatColorStateList(context, a, R.styleable.DashboardButton_compoundDrawableTint)?.let { colorList ->
+        getCompatColorStateList(
+            context,
+            a,
+            R.styleable.DashboardButton_compoundDrawableTint
+        )?.let { colorList ->
             val compoundDrawables = compoundDrawables
             for (i in 0..3) {
                 if (compoundDrawables[i] == null)
@@ -54,7 +58,12 @@ class DashboardButton @JvmOverloads constructor(
                 compoundDrawables[i] = DrawableCompat.wrap(compoundDrawables[i])
                 DrawableCompat.setTintList(compoundDrawables[i], colorList)
             }
-            setCompoundDrawables(compoundDrawables[0], compoundDrawables[1], compoundDrawables[2], compoundDrawables[3])
+            setCompoundDrawables(
+                compoundDrawables[0],
+                compoundDrawables[1],
+                compoundDrawables[2],
+                compoundDrawables[3]
+            )
         }
     }
 
@@ -68,8 +77,15 @@ class DashboardButton @JvmOverloads constructor(
         super.setChecked(checked)
     }
 
-    private fun getCompatColorStateList(context: Context, a: TypedArray, @StyleableRes index: Int): ColorStateList? {
+    private fun getCompatColorStateList(
+        context: Context,
+        a: TypedArray,
+        @StyleableRes index: Int
+    ): ColorStateList? {
         val resourceId = a.getResourceId(index, 0)
-        return if (resourceId == 0) null else AppCompatResources.getColorStateList(context, resourceId)
+        return if (resourceId == 0) null else AppCompatResources.getColorStateList(
+            context,
+            resourceId
+        )
     }
 }

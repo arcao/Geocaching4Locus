@@ -30,7 +30,7 @@ class LoginViewModel(
     val action = Command<LoginAction>()
     private var job: Job? = null
 
-    val code = MutableLiveData<String>("")
+    val code = MutableLiveData("")
     val continueButtonEnabled = Transformations.map(code, String::isNotBlank)
     val formVisible = MutableLiveData(true)
     var fromIntent = false

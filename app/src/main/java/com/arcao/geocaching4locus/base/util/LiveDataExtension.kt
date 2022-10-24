@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 @MainThread
 inline fun <T> LiveData<T>.withObserve(owner: LifecycleOwner, crossinline block: (T) -> Unit) =
-    observe(owner, Observer { block(it!!) })
+    observe(owner, { block(it!!) })
 
 @MainThread
 operator fun MutableLiveData<Unit>.invoke() {
@@ -34,11 +34,11 @@ open class Command<T> : MutableLiveData<T>() {
             Timber.e("${javaClass.simpleName}: Multiple observers registered but only one will be notified of changes.")
         }
 
-        super.observe(owner, Observer {
+        super.observe(owner) {
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
             }
-        })
+        }
     }
 
     @MainThread

@@ -30,7 +30,7 @@ class GetOldPointNewPointPairFromPointUseCase(
         geocachingApiLogin()
 
         flow.takeListVariable(AppConstants.ITEMS_PER_REQUEST) { points ->
-            val requestedCacheIds = points.map { it.gcData?.cacheID }.filterNotNull().toTypedArray()
+            val requestedCacheIds = points.mapNotNull { it.gcData?.cacheID }.toTypedArray()
 
             val startTimeMillis = System.currentTimeMillis()
 

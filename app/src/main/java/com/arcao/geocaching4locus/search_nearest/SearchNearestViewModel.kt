@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.search_nearest
 
-import android.content.Context
+import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.R
@@ -32,7 +32,7 @@ import timber.log.Timber
 
 class SearchNearestViewModel(
     intent: Intent,
-    private val context: Context,
+    private val context: Application,
     private val accountManager: AccountManager,
     private val preferenceManager: DefaultPreferenceManager,
     private val filterPreferenceManager: FilterPreferenceManager,

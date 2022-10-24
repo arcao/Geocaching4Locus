@@ -5,7 +5,6 @@ import android.os.Parcelable
 import android.util.SparseArray
 import androidx.core.util.containsKey
 import androidx.core.util.forEach
-import androidx.core.util.set
 import androidx.core.util.valueIterator
 import androidx.recyclerview.widget.RecyclerView
 import java.util.concurrent.CopyOnWriteArraySet

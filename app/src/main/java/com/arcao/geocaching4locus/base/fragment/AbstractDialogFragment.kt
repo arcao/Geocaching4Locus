@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.base.fragment
 
-import androidx.annotation.NonNull
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -16,7 +15,7 @@ abstract class AbstractDialogFragment : DialogFragment() {
     // This is work around for the situation when method show is called after saving
     // state even if you do all right. Especially when show is called after click on
     // a button.
-    override fun show(@NonNull transaction: FragmentTransaction, tag: String?): Int {
+    override fun show(transaction: FragmentTransaction, tag: String?): Int {
         return try {
             super.show(transaction, tag)
         } catch (e: IllegalStateException) {

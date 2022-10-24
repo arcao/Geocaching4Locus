@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.import_bookmarks.fragment
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -33,7 +33,7 @@ import timber.log.Timber
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class BookmarkListViewModel(
-    private val context: Context,
+    private val context: Application,
     private val exceptionHandler: ExceptionHandler,
     private val dataSourceFactory: GeocacheUserListsDataSourceFactory,
     private val getListGeocaches: GetListGeocachesUseCase,

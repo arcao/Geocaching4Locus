@@ -55,6 +55,7 @@ class BookmarkListFragment : BaseBookmarkFragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
+        binding.isLoading = true
         binding.list.apply {
             adapter = this@BookmarkListFragment.adapter
             layoutManager = LinearLayoutManager(context)
@@ -68,6 +69,7 @@ class BookmarkListFragment : BaseBookmarkFragment() {
             adapter.loadStateFlow.collect { state ->
                 val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
                 binding.isEmpty = isListEmpty
+                binding.isLoading = state.source.refresh is LoadState.Loading
                 state.handleErrors(viewModel::handleLoadError)
             }
         }

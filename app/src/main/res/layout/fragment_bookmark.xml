@@ -14,6 +14,10 @@
         <variable
             name="isEmpty"
             type="Boolean" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
     </data>
 
     <FrameLayout
@@ -28,7 +32,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="@{safeUnbox(vm.loading) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <ProgressBar
@@ -41,7 +45,7 @@
             android:id="@+id/listContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{safeUnbox(vm.loading) ? View.GONE : View.VISIBLE}">
+            android:visibility="@{isLoading ? View.GONE : View.VISIBLE}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"

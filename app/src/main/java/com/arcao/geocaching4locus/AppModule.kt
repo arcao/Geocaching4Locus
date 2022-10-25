@@ -34,8 +34,6 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel
-import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataSourceFactory
-import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourceFactory
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.LiveMapViewModel
@@ -147,8 +145,6 @@ internal val appModule = module {
             get()
         )
     }
-    factory { GeocacheUserListsDataSourceFactory(get(), get()) }
-    factory { ListGeocachesDataSourceFactory(get(), get()) }
     // live map
     factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest

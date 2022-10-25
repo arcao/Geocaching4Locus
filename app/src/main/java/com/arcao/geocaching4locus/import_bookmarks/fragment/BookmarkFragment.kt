@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -69,15 +68,15 @@ class BookmarkFragment : BaseBookmarkFragment() {
     ): View {
         toolbar?.subtitle = bookmarkList.name
 
-        val binding = DataBindingUtil.inflate<FragmentBookmarkBinding>(
+        val binding = FragmentBookmarkBinding.inflate(
             inflater,
-            R.layout.fragment_bookmark,
             container,
             false
         )
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
+        binding.isLoading = true
         binding.list.apply {
             adapter = this@BookmarkFragment.adapter
             layoutManager = LinearLayoutManager(context)
@@ -101,6 +100,7 @@ class BookmarkFragment : BaseBookmarkFragment() {
             adapter.loadStateFlow.collect { state ->
                 val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
                 binding.isEmpty = isListEmpty
+                binding.isLoading = state.source.refresh is LoadState.Loading
                 state.handleErrors(viewModel::handleLoadError)
             }
         }

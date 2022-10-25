@@ -46,10 +46,11 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             is ImportGeocacheCodeAction.Error -> {
                 startActivity(action.intent)
                 setResult(
-                    if (intent.hasPositiveAction())
+                    if (action.intent.hasPositiveAction()) {
                         Activity.RESULT_OK
-                    else
+                    } else {
                         Activity.RESULT_CANCELED
+                    }
                 )
                 finish()
             }

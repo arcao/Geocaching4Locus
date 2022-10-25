@@ -17,6 +17,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.base.paging.handleErrors
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
@@ -97,10 +98,10 @@ class BookmarkFragment : BaseBookmarkFragment() {
                     savedState = null
                 }
             }
-            adapter.loadStateFlow.collect {
-                if (it.append is LoadState.NotLoading && it.append.endOfPaginationReached) {
-                    binding.isEmpty = adapter.itemCount < 1
-                }
+            adapter.loadStateFlow.collect { state ->
+                val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.isEmpty = isListEmpty
+                state.handleErrors(viewModel::handleLoadError)
             }
         }
 
@@ -130,10 +131,11 @@ class BookmarkFragment : BaseBookmarkFragment() {
                 startActivity(action.intent)
                 requireActivity().apply {
                     setResult(
-                        if (intent.hasPositiveAction())
+                        if (action.intent.hasPositiveAction()) {
                             Activity.RESULT_OK
-                        else
+                        } else {
                             Activity.RESULT_CANCELED
+                        }
                     )
                     finish()
                 }

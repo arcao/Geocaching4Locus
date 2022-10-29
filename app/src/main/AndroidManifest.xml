@@ -362,5 +362,17 @@
         <package android:name="menion.android.locus.pro.asamm" />
         <package android:name="menion.android.locus.pro.computerBild" />
 
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SENDTO" />
+        </intent>
+        <intent>
+            <action android:name="android.settings.LOCATION_SOURCE_SETTINGS" />
+        </intent>
     </queries>
 </manifest>

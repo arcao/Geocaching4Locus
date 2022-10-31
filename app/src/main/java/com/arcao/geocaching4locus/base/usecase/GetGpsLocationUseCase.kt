@@ -23,8 +23,11 @@ class GetGpsLocationUseCase(
 
     @SuppressLint("MissingPermission")
     suspend operator fun invoke() = withContext(dispatcherProvider.main) {
-        suspendCancellableCoroutine<Location?> { result ->
-            if (!context.hasGpsLocationPermission || !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        suspendCancellableCoroutine { result ->
+            if (!context.hasGpsLocationPermission || !locationManager.isProviderEnabled(
+                    LocationManager.GPS_PROVIDER
+                )
+            ) {
                 result.resume(null)
                 return@suspendCancellableCoroutine
             }
@@ -55,13 +58,14 @@ class GetGpsLocationUseCase(
             result.resume(location)
         }
 
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        @Deprecated("Deprecated in Java")
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {
         }
 
-        override fun onProviderEnabled(provider: String?) {
+        override fun onProviderEnabled(provider: String) {
         }
 
-        override fun onProviderDisabled(provider: String?) {
+        override fun onProviderDisabled(provider: String) {
             if (result.isCompleted) return
 
             Timber.i("onProviderDisabled: $provider")

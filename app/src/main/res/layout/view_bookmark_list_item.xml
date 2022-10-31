@@ -92,7 +92,6 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/button"
                     app:layout_constraintTop_toBottomOf="@+id/divider"
-                    tools:targetApi="jelly_bean"
                     tools:text="3 geocaches"/>
 
             <Button

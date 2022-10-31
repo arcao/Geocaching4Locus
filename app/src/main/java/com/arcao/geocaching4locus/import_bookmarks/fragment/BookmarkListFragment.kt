@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.base.paging.handleErrors
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.withObserve
@@ -18,6 +21,8 @@ import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkListAdapter
 import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDecoration
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -34,7 +39,11 @@ class BookmarkListFragment : BaseBookmarkFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         toolbar?.subtitle = null
 
         val binding = DataBindingUtil.inflate<FragmentBookmarkListBinding>(
@@ -46,13 +55,24 @@ class BookmarkListFragment : BaseBookmarkFragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
+        binding.isLoading = true
         binding.list.apply {
             adapter = this@BookmarkListFragment.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(MarginItemDecoration(context, R.dimen.cardview_space))
         }
 
-        viewModel.list.withObserve(viewLifecycleOwner, adapter::submitList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagerFlow.collectLatest { data ->
+                adapter.submitData(data)
+            }
+            adapter.loadStateFlow.collect { state ->
+                val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.isEmpty = isListEmpty
+                binding.isLoading = state.source.refresh is LoadState.Loading
+                state.handleErrors(viewModel::handleLoadError)
+            }
+        }
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
         viewModel.progress.withObserve(viewLifecycleOwner) { state ->
@@ -69,10 +89,11 @@ class BookmarkListFragment : BaseBookmarkFragment() {
                 startActivity(action.intent)
                 requireActivity().apply {
                     setResult(
-                        if (intent.hasPositiveAction())
+                        if (action.intent.hasPositiveAction()) {
                             Activity.RESULT_OK
-                        else
+                        } else {
                             Activity.RESULT_CANCELED
+                        }
                     )
                     finish()
                 }

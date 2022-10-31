@@ -27,8 +27,6 @@ data class GeocacheList(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_LAST_UPDATED_DATE_UTC = "lastUpdatedDateUtc"
         private const val FIELD_CREATED_DATE_UTC = "createdDateUtc"
@@ -42,7 +40,7 @@ data class GeocacheList(
         private const val FIELD_IS_SHARED = "isShared"
         private const val FIELD_URL = "url"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_LAST_UPDATED_DATE_UTC,
             FIELD_CREATED_DATE_UTC,
@@ -55,6 +53,6 @@ data class GeocacheList(
             FIELD_IS_PUBLIC,
             FIELD_IS_SHARED,
             FIELD_URL
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

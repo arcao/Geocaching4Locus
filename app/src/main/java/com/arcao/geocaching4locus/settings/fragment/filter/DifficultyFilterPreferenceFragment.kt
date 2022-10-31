@@ -49,7 +49,7 @@ class DifficultyFilterPreferenceFragment : AbstractPreferenceFragment() {
             FILTER_DIFFICULTY_MIN,
             FILTER_DIFFICULTY_MAX -> {
                 preference<ListPreference>(key).apply {
-                    summary = prepareRatingSummary(entry)
+                    summary = prepareRatingSummary(entry ?: return)
                 }
             }
         }

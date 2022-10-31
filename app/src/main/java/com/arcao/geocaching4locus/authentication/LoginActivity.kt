@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
@@ -35,6 +36,7 @@ class LoginActivity : AbstractActionBarActivity() {
         binding.vm = viewModel
 
         setContentView(binding.root)
+
         @Suppress("USELESS_CAST")
         setSupportActionBar(binding.toolbar as Toolbar)
 
@@ -102,7 +104,7 @@ class LoginActivity : AbstractActionBarActivity() {
         try {
             CustomTabsIntent.Builder()
                 .setInstantAppsEnabled(true)
-                .enableUrlBarHiding()
+                .setUrlBarHidingEnabled(true)
                 .build().launchUrl(this, url.toUri())
         } catch (e: ActivityNotFoundException) {
             showWebPage(url.toUri())
@@ -135,6 +137,15 @@ class LoginActivity : AbstractActionBarActivity() {
             intent.data = responseUri
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
             return intent
+        }
+    }
+
+    object Contract : ActivityResultContract<Void?, Boolean>() {
+        override fun createIntent(context: Context, input: Void?) =
+            Intent(context, LoginActivity::class.java)
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
         }
     }
 }

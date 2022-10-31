@@ -32,8 +32,6 @@ data class Trackable(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_ICON_URL = "iconUrl"
         private const val FIELD_NAME = "name"
@@ -57,7 +55,7 @@ data class Trackable(
         private val FIELD_OWNER_MIN = "owner[${User.FIELDS_MIN}]"
         private val FIELD_HOLDER_MIN = "holder[${User.FIELDS_MIN}]"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_ICON_URL,
             FIELD_NAME,
@@ -76,9 +74,9 @@ data class Trackable(
             FIELD_URL,
             FIELD_OWNER,
             FIELD_HOLDER
-        ).joinToString(FIELD_SEPARATOR)
+        )
 
-        val FIELDS_MIN = arrayOf(
+        val FIELDS_MIN = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_ICON_URL,
             FIELD_NAME,
@@ -87,6 +85,6 @@ data class Trackable(
             FIELD_URL,
             FIELD_OWNER_MIN,
             FIELD_HOLDER_MIN
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

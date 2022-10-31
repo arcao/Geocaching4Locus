@@ -9,5 +9,5 @@ fun Location?.isInvalid(): Boolean {
     contract {
         returns(false) implies (this@isInvalid is Location)
     }
-    return this == null || getLatitude().isNaN() || getLongitude().isNaN()
+    return this == null || latitude.isNaN() || longitude.isNaN()
 }

@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.search_nearest
 
-import android.content.Context
+import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.R
@@ -32,7 +32,7 @@ import timber.log.Timber
 
 class SearchNearestViewModel(
     intent: Intent,
-    private val context: Context,
+    private val context: Application,
     private val accountManager: AccountManager,
     private val preferenceManager: DefaultPreferenceManager,
     private val filterPreferenceManager: FilterPreferenceManager,
@@ -212,7 +212,6 @@ class SearchNearestViewModel(
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
                     filterPreferenceManager.terrainMax,
-                    filterPreferenceManager.excludeIgnoreList,
                     maxCount
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
@@ -221,12 +220,14 @@ class SearchNearestViewModel(
                     // apply additional downloading full geocache if required
                     if (filterPreferenceManager.simpleCacheData) {
                         list.forEach { point ->
-                            point.setExtraOnDisplay(
-                                context.packageName,
-                                UpdateActivity::class.java.name,
-                                UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                point.gcData.cacheID
-                            )
+                            point.gcData?.cacheID?.let { cacheId ->
+                                point.setExtraOnDisplay(
+                                    context.packageName,
+                                    UpdateActivity::class.java.name,
+                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                    cacheId
+                                )
+                            }
                         }
                     }
                     list

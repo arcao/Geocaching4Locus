@@ -3,16 +3,16 @@ package com.arcao.geocaching4locus.live_map
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.LifecycleService
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.ServiceUtil
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.live_map.util.LifecycleServiceFixed
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
 
-class LiveMapService : LifecycleServiceFixed() {
+class LiveMapService : LifecycleService() {
     private val notificationManager by inject<LiveMapNotificationManager>()
     private val viewModel by inject<LiveMapViewModel>()
     private val onCompleteCallback: (Intent) -> Unit = { ServiceUtil.completeWakefulIntent(it) }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-    <exclude domain="sharedpref" path="ACCOUNT"/>
+    <exclude
+        domain="sharedpref"
+        path="ACCOUNT.xml" />
 </full-backup-content>

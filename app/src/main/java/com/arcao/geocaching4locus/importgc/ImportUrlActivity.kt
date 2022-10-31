@@ -1,21 +1,26 @@
 package com.arcao.geocaching4locus.importgc
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class ImportUrlActivity : AbstractActionBarActivity() {
     private val viewModel by viewModel<ImportUrlViewModel>()
-    private val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) {
+            processIntent()
+        } else {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,26 +72,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
                 setResult(Activity.RESULT_CANCELED)
                 finish()
             }
-            is ImportUrlAction.SignIn -> {
-                accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-            }
+            is ImportUrlAction.SignIn -> loginActivity.launch(null)
         }.exhaustive
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_SIGN_ON) {
-            if (resultCode == Activity.RESULT_OK) {
-                processIntent()
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
-            }
-        }
-    }
-
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
     }
 }

@@ -7,8 +7,11 @@ import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingData
+import locus.api.objects.geocaching.GeocachingData.Companion.CACHE_TYPE_COMMUNITY_CELEBRATION
+import locus.api.objects.geocaching.GeocachingData.Companion.CACHE_TYPE_GC_HQ
+import locus.api.objects.geocaching.GeocachingData.Companion.CACHE_TYPE_GC_HQ_CELEBRATION
 import java.util.Locale
 import java.util.regex.Pattern
 
@@ -17,20 +20,25 @@ class BookmarkGeocacheWebLinkViewModel(
     getPointFromGeocacheCode: GetPointFromGeocacheCodeUseCase,
     exceptionHandler: ExceptionHandler,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : WebLinkViewModel(accountManager, getPointFromGeocacheCode, exceptionHandler, dispatcherProvider) {
+) : WebLinkViewModel(
+    accountManager,
+    getPointFromGeocacheCode,
+    exceptionHandler,
+    dispatcherProvider
+) {
 
     override val isPremiumMemberRequired: Boolean
         get() = true
 
     override fun isRefreshRequired(point: Point): Boolean {
-        return point.gcData != null &&
-            !point.gcData.cacheUrl.isNullOrEmpty() &&
-            getGuid(point.gcData.cacheUrl) == null
+        val gcData = point.gcData
+        return gcData != null && gcData.cacheUrl.isNotEmpty() && getGuid(gcData.cacheUrl) == null
     }
 
     override fun getWebLink(point: Point): Uri {
-        val guid = getGuid(point.gcData.cacheUrl)
-        val cacheType = getCacheType(point.gcData.type)
+        val gcData = requireNotNull(point.gcData)
+        val guid = getGuid(gcData.cacheUrl)
+        val cacheType = getCacheType(gcData.type)
 
         return if (BuildConfig.GEOCACHING_API_STAGING) {
             Uri.parse(String.format(Locale.ROOT, URL_FORMAT_STAGING, guid, cacheType))
@@ -53,11 +61,11 @@ class BookmarkGeocacheWebLinkViewModel(
             GeocachingData.CACHE_TYPE_EARTH -> return GeocacheType.EARTHCACHE
             GeocachingData.CACHE_TYPE_EVENT -> return GeocacheType.EVENT
             GeocachingData.CACHE_TYPE_GPS_ADVENTURE -> return GeocacheType.GPS_ADVENTURES_EXHIBIT
-            GeocachingData.CACHE_TYPE_GROUNDSPEAK -> return GeocacheType.GEOCACHING_HQ
-            GeocachingData.CACHE_TYPE_LF_CELEBRATION -> return GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION
+            CACHE_TYPE_GC_HQ -> return GeocacheType.GEOCACHING_HQ
+            CACHE_TYPE_GC_HQ_CELEBRATION -> return GeocacheType.GEOCACHING_LOST_AND_FOUND_CELEBRATION
             GeocachingData.CACHE_TYPE_LETTERBOX -> return GeocacheType.LETTERBOX_HYBRID
             GeocachingData.CACHE_TYPE_LOCATIONLESS -> return GeocacheType.LOCATIONLESS_CACHE
-            GeocachingData.CACHE_TYPE_LF_EVENT -> return GeocacheType.LOST_AND_FOUND_EVENT_CACHE
+            CACHE_TYPE_COMMUNITY_CELEBRATION -> return GeocacheType.LOST_AND_FOUND_EVENT_CACHE
             GeocachingData.CACHE_TYPE_MEGA_EVENT -> return GeocacheType.MEGA_EVENT
             GeocachingData.CACHE_TYPE_MULTI -> return GeocacheType.MULTI_CACHE
             GeocachingData.CACHE_TYPE_PROJECT_APE -> return GeocacheType.PROJECT_APE
@@ -72,8 +80,11 @@ class BookmarkGeocacheWebLinkViewModel(
     }
 
     companion object {
-        private const val URL_FORMAT = "https://www.geocaching.com/bookmarks/mark.aspx?guid=%s&WptTypeID=%d"
-        private const val URL_FORMAT_STAGING = "https://staging.geocaching.com/bookmarks/mark.aspx?guid=%s&WptTypeID=%d"
-        private val GUID_URL_PATTERN = Pattern.compile("guid=([a-f0-9-]+)", Pattern.CASE_INSENSITIVE)
+        private const val URL_FORMAT =
+            "https://www.geocaching.com/bookmarks/mark.aspx?guid=%s&WptTypeID=%d"
+        private const val URL_FORMAT_STAGING =
+            "https://staging.geocaching.com/bookmarks/mark.aspx?guid=%s&WptTypeID=%d"
+        private val GUID_URL_PATTERN =
+            Pattern.compile("guid=([a-f0-9-]+)", Pattern.CASE_INSENSITIVE)
     }
 }

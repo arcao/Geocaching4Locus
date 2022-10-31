@@ -38,7 +38,6 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true,
         countHandler: (Int) -> Unit = {}
     ) = flow {
         geocachingApiLogin()
@@ -82,8 +81,11 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
                 emit(mapper.createLocusPoints(geocaches))
                 current += geocaches.size
 
-                itemsPerRequest =
-                    DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+                itemsPerRequest = DownloadingUtil.computeRequestSize(
+                    itemsPerRequest,
+                    AppConstants.LIVE_MAP_MAX_REQUEST_SIZE,
+                    startTimeMillis
+                )
             }
         } finally {
             try {

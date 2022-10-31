@@ -15,8 +15,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
@@ -62,7 +60,6 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         listener?.onDialogClosed(this)
     }
 
-    @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = requireArguments()
 
@@ -99,7 +96,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             }
     }
 
-    override fun onSaveInstanceState(@NonNull outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(PARAM_DEFAULT_VALUE, value)
         super.onSaveInstanceState(outState)
     }
@@ -167,13 +164,12 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
         seekBarView.progress = (value - minValue) / valueStep
     }
 
-    private class InputTextFilter internal constructor(
-        internal val editTextView: EditText,
+    private class InputTextFilter(
+        val editTextView: EditText,
         private val min: Int,
         private val max: Int,
         step: Int
     ) : NumberKeyListener() {
-        @Nullable
         private val availableValues: Array<String>?
 
         init {
@@ -195,19 +191,18 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             return InputType.TYPE_CLASS_TEXT
         }
 
-        @NonNull
         override fun getAcceptedChars(): CharArray {
             return DIGIT_CHARACTERS
         }
 
         override fun filter(
-            @NonNull source: CharSequence,
+            source: CharSequence,
             start: Int,
             end: Int,
             dest: Spanned,
             dstart: Int,
             dend: Int
-        ): CharSequence? {
+        ): CharSequence {
             if (availableValues == null || availableValues.isEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
                 if (filtered == null) {

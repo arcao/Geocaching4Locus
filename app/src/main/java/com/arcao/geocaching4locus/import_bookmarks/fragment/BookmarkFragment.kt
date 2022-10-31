@@ -10,10 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
+import com.arcao.geocaching4locus.base.paging.handleErrors
 import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
@@ -22,6 +25,8 @@ import com.arcao.geocaching4locus.databinding.FragmentBookmarkBinding
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -38,24 +43,40 @@ class BookmarkFragment : BaseBookmarkFragment() {
     private val adapter = BookmarkGeocachesAdapter()
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val menuProvider = object : MenuProvider {
+        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+            menuInflater.inflate(R.menu.toolbar_select_deselect, menu)
+        }
 
-        setHasOptionsMenu(true)
+        override fun onMenuItemSelected(menuItem: MenuItem) = when (menuItem.itemId) {
+            R.id.selectAll -> {
+                adapter.selectAll()
+                true
+            }
+            R.id.deselectAll -> {
+                adapter.selectNone()
+                true
+            }
+            else -> false
+        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         toolbar?.subtitle = bookmarkList.name
 
-        val binding = DataBindingUtil.inflate<FragmentBookmarkBinding>(
+        val binding = FragmentBookmarkBinding.inflate(
             inflater,
-            R.layout.fragment_bookmark,
             container,
             false
         )
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
+        binding.isLoading = true
         binding.list.apply {
             adapter = this@BookmarkFragment.adapter
             layoutManager = LinearLayoutManager(context)
@@ -65,9 +86,23 @@ class BookmarkFragment : BaseBookmarkFragment() {
             viewModel.selection(adapter.selected)
         }
 
-        viewModel.list.withObserve(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-            adapter.tracker.onRestoreInstanceState(savedInstanceState)
+        var savedState = savedInstanceState
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pagerFlow.collectLatest { data ->
+                adapter.submitData(data)
+
+                if (savedState != null) {
+                    adapter.tracker.onRestoreInstanceState(savedState)
+                    savedState = null
+                }
+            }
+            adapter.loadStateFlow.collect { state ->
+                val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.isEmpty = isListEmpty
+                binding.isLoading = state.source.refresh is LoadState.Loading
+                state.handleErrors(viewModel::handleLoadError)
+            }
         }
 
         viewModel.action.withObserve(viewLifecycleOwner, ::handleAction)
@@ -78,25 +113,15 @@ class BookmarkFragment : BaseBookmarkFragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().addMenuProvider(menuProvider, viewLifecycleOwner)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         adapter.tracker.onSaveInstanceState(outState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_select_deselect, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.selectAll -> {
-            adapter.selectAll()
-            true
-        }
-        R.id.deselectAll -> {
-            adapter.selectNone()
-            true
-        }
-        else -> super.onOptionsItemSelected(item)
     }
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
@@ -106,10 +131,11 @@ class BookmarkFragment : BaseBookmarkFragment() {
                 startActivity(action.intent)
                 requireActivity().apply {
                     setResult(
-                        if (intent.hasPositiveAction())
+                        if (action.intent.hasPositiveAction()) {
                             Activity.RESULT_OK
-                        else
+                        } else {
                             Activity.RESULT_CANCELED
+                        }
                     )
                     finish()
                 }

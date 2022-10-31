@@ -1,7 +1,7 @@
 package locus.api.mapper
 
 import androidx.annotation.NonNull
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingLog
 
 object Util {
@@ -10,16 +10,18 @@ object Util {
     fun applyUnavailabilityForGeocache(@NonNull point: Point, threshold: Int) {
         var counter = 0
 
+        val gcData = point.gcData ?: return
+
         // only when there is any log
-        if (point.gcData?.logs?.isEmpty() != false)
+        if (gcData.logs.isEmpty())
             return
 
         // skip analyzing already archived geocache
-        if (point.gcData.isArchived)
+        if (gcData.isArchived)
             return
 
         // go through all logs (must be sorted by visited date, newest first)
-        val geocachingLogs = point.gcData.logs
+        val geocachingLogs = gcData.logs
 
         loop@ for (log in geocachingLogs) {
             // skip GSAK log
@@ -40,7 +42,7 @@ object Util {
         // if counter contains required threshold
         if (counter >= threshold) {
             // set geocache as not available
-            point.gcData.isAvailable = false
+            gcData.isAvailable = false
         }
     }
 }

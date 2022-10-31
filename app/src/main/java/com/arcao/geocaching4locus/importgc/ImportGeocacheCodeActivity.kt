@@ -1,23 +1,30 @@
 package com.arcao.geocaching4locus.importgc
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.NonNull
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import androidx.activity.result.contract.ActivityResultContract
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.hasPositiveAction
 import com.arcao.geocaching4locus.importgc.fragment.GeocacheCodesInputDialogFragment
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInputDialogFragment.DialogListener {
     private val viewModel by viewModel<ImportGeocacheCodeViewModel>()
-    private val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) {
+            viewModel.init(intent.getStringArrayExtra(PARAM_GEOCACHES))
+        } else {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,16 +42,15 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
     @Suppress("IMPLICIT_CAST_TO_ANY")
     fun handleAction(action: ImportGeocacheCodeAction) {
         when (action) {
-            ImportGeocacheCodeAction.SignIn -> {
-                accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-            }
+            ImportGeocacheCodeAction.SignIn -> loginActivity.launch(null)
             is ImportGeocacheCodeAction.Error -> {
                 startActivity(action.intent)
                 setResult(
-                    if (intent.hasPositiveAction())
+                    if (action.intent.hasPositiveAction()) {
                         Activity.RESULT_OK
-                    else
+                    } else {
                         Activity.RESULT_CANCELED
+                    }
                 )
                 finish()
             }
@@ -68,26 +74,20 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         }.exhaustive
     }
 
-    override fun onInputFinished(@NonNull input: Array<String>) {
+    override fun onInputFinished(input: Array<String>) {
         viewModel.importGeocacheCodes(input)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // restart update process after log in
-        if (requestCode == REQUEST_SIGN_ON) {
-            if (resultCode == Activity.RESULT_OK) {
-                viewModel.init(intent.getStringArrayExtra(PARAM_GEOCACHES))
-            } else {
-                setResult(Activity.RESULT_CANCELED)
-                finish()
-            }
-        }
+    companion object {
+        private const val PARAM_GEOCACHES = "com.arcao.geocaching4locus.GEOCACHES"
     }
 
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
-        private const val PARAM_GEOCACHES = "com.arcao.geocaching4locus.GEOCACHES"
+    object Contract : ActivityResultContract<Void?, Boolean>() {
+        override fun createIntent(context: Context, input: Void?) =
+            Intent(context, ImportGeocacheCodeActivity::class.java)
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
+        }
     }
 }

@@ -1,6 +1,5 @@
 package locus.api.manager
 
-import android.content.BroadcastReceiver
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
@@ -9,18 +8,15 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.error.exception.LocusMapRuntimeException
 import locus.api.android.ActionBasics
 import locus.api.android.ActionDisplayPoints
-import locus.api.android.ActionTools
 import locus.api.android.objects.PackPoints
 import locus.api.android.utils.IntentHelper
 import locus.api.android.utils.LocusConst
 import locus.api.android.utils.LocusUtils
-import locus.api.android.utils.exceptions.RequiredVersionMissingException
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import kotlin.reflect.KClass
 
 class LocusMapManager(
     private val context: Context
@@ -33,7 +29,10 @@ class LocusMapManager(
                     ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled
                         ?: false
                 } catch (e: Throwable) {
-                    Timber.e(e, "Unable to receive info about periodic update state from Locus Map.")
+                    Timber.e(
+                        e,
+                        "Unable to receive info about periodic update state from Locus Map."
+                    )
                     return true
                 }
             } else {
@@ -42,10 +41,8 @@ class LocusMapManager(
         }
 
     val isLocusMapNotInstalled: Boolean
-        get() {
-            val lv = LocusUtils.getActiveVersion(context)
-            return lv == null || !lv.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)
-        }
+        get() = LocusUtils.getActiveVersion(context)
+            ?.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)?.not() ?: false
 
     fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", cacheFile)
@@ -111,34 +108,11 @@ class LocusMapManager(
      * @param packName name of pack
      * @throws LocusMapRuntimeException exception in case ane exception occurs while Locus Map API calls
      */
-    @Throws(RequiredVersionMissingException::class)
     fun removePackFromLocus(packName: String) {
         try {
-            // create empty pack
-            val pw = PackPoints(packName)
-
-            // create and send intent
-            val intent = Intent()
-            intent.putExtra(LocusConst.INTENT_EXTRA_POINTS_DATA, pw.asBytes)
-            ActionDisplayPoints.sendPackSilent(context, pw, false)
+            ActionDisplayPoints.removePackFromLocus(context, packName)
         } catch (t: Throwable) {
             throw LocusMapRuntimeException(t)
-        }
-    }
-
-    // make sure Live Map broadcast receiver is always enabled
-    fun <T : BroadcastReceiver> enablePeriodicUpdatesReceiver(clazz: KClass<T>) {
-        try {
-            val locusVersion = LocusUtils.getActiveVersion(context)
-            if (locusVersion != null) {
-                ActionTools.enablePeriodicUpdatesReceiver(
-                    context,
-                    locusVersion,
-                    clazz.java
-                )
-            }
-        } catch (e: Throwable) {
-            Timber.e(e, "Unable to enable ${clazz.java.simpleName}.")
         }
     }
 

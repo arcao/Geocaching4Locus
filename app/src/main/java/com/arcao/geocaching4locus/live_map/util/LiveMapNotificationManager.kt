@@ -31,6 +31,7 @@ import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver
 import com.arcao.geocaching4locus.settings.SettingsActivity
 import com.arcao.geocaching4locus.settings.fragment.LiveMapPreferenceFragment
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import locus.api.manager.LocusMapManager
@@ -44,8 +45,10 @@ class LiveMapNotificationManager(
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val preferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
+    private val notificationManager =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     private val stateChangeListeners = CopyOnWriteArraySet<LiveMapStateChangeListener>()
@@ -78,9 +81,6 @@ class LiveMapNotificationManager(
                     LastLiveMapCoordinates.remove()
                 }
             }
-
-            // make sure Live Map broadcast receiver is always enabled
-            locusMapManager.enablePeriodicUpdatesReceiver(LiveMapBroadcastReceiver::class)
 
             preferences.edit {
                 putBoolean(PrefConstants.LIVE_MAP, willBeEnabled)
@@ -213,7 +213,10 @@ class LiveMapNotificationManager(
 
     private fun showNotification() {
         notificationShown = true
-        notificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, createNotification().build())
+        notificationManager.notify(
+            AppConstants.NOTIFICATION_ID_LIVEMAP,
+            createNotification().build()
+        )
     }
 
     private fun hideNotification() {
@@ -253,7 +256,12 @@ class LiveMapNotificationManager(
         }
 
         val pendingIntent =
-            createPendingActivityIntent(SettingsActivity.createIntent(context, LiveMapPreferenceFragment::class.java))
+            createPendingActivityIntent(
+                SettingsActivity.Contract.createIntent(
+                    context,
+                    LiveMapPreferenceFragment::class.java
+                )
+            )
         nb.addAction(
             R.drawable.ic_stat_live_map_settings,
             context.getText(R.string.notify_live_map_action_settings),
@@ -271,18 +279,26 @@ class LiveMapNotificationManager(
         return nb
     }
 
-    private fun createPendingActivityIntent(intent: Intent): PendingIntent {
-        return PendingIntent.getActivity(
-            context, 0,
-            intent,
+    private fun createPendingActivityIntent(intent: Intent) = PendingIntent.getActivity(
+        context, 0,
+        intent,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        } else {
             PendingIntent.FLAG_UPDATE_CURRENT
-        )
-    }
+        }
+    )
 
-    private fun createPendingBroadcastIntent(action: String): PendingIntent {
-        val intent = Intent(action, null, context, LiveMapBroadcastReceiver::class.java)
-        return PendingIntent.getBroadcast(context, 0, intent, 0)
-    }
+    private fun createPendingBroadcastIntent(action: String) = PendingIntent.getBroadcast(
+        context,
+        0,
+        Intent(action, null, context, LiveMapBroadcastReceiver::class.java),
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            0
+        }
+    )
 
     private fun showError(@StringRes message: Int) {
         context.startActivity(
@@ -331,6 +347,7 @@ class LiveMapNotificationManager(
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun removeLiveMapItems() = GlobalScope.launch(dispatcherProvider.computation) {
         val lastRequests = defaultPreferenceManager.liveMapLastRequests
         if (lastRequests > 0) {
@@ -346,9 +363,12 @@ class LiveMapNotificationManager(
     companion object {
         private const val VAR_B_MAP_VISIBLE = "1300"
 
-        private const val ACTION_HIDE_NOTIFICATION = "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION"
-        private const val ACTION_LIVE_MAP_ENABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE"
-        private const val ACTION_LIVE_MAP_DISABLE = "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE"
+        private const val ACTION_HIDE_NOTIFICATION =
+            "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION"
+        private const val ACTION_LIVE_MAP_ENABLE =
+            "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE"
+        private const val ACTION_LIVE_MAP_DISABLE =
+            "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE"
         private const val NOTIFICATION_TIMEOUT_MS: Long = 2200
         private const val NOTIFICATION_CHANNEL_ID = "LIVE_MAP_NOTIFICATION_CHANNEL"
 

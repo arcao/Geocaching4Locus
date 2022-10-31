@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.dashboard
 
-import android.content.Context
+import android.app.Application
 import androidx.annotation.UiThread
 import androidx.lifecycle.MutableLiveData
 import com.arcao.geocaching4locus.authentication.util.isPremium
@@ -16,7 +16,7 @@ import locus.api.manager.LocusMapManager
 
 class DashboardViewModel(
     private val calledFromLocusMap: Boolean,
-    private val context: Context,
+    private val context: Application,
     private val notificationManager: LiveMapNotificationManager,
     private val accountManager: AccountManager,
     private val locusMapManager: LocusMapManager,

@@ -23,8 +23,11 @@ class GetWifiLocationUseCase(
 
     @SuppressLint("MissingPermission")
     suspend operator fun invoke() = withContext(dispatcherProvider.main) {
-        suspendCancellableCoroutine<Location?> { result ->
-            if (!context.hasWifiLocationPermission || !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        suspendCancellableCoroutine { result ->
+            if (!context.hasWifiLocationPermission || !locationManager.isProviderEnabled(
+                    LocationManager.NETWORK_PROVIDER
+                )
+            ) {
                 result.resume(null)
                 return@suspendCancellableCoroutine
             }
@@ -55,13 +58,14 @@ class GetWifiLocationUseCase(
             result.resume(location)
         }
 
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        @Deprecated("Deprecated in Java")
+        override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {
         }
 
-        override fun onProviderEnabled(provider: String?) {
+        override fun onProviderEnabled(provider: String) {
         }
 
-        override fun onProviderDisabled(provider: String?) {
+        override fun onProviderDisabled(provider: String) {
             if (result.isCompleted) return
 
             Timber.i("onProviderDisabled: $provider")

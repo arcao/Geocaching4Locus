@@ -25,8 +25,6 @@ data class TrackableLog(
     }
 
     companion object {
-        private const val FIELD_SEPARATOR = ","
-
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_OWNER_CODE = "ownerCode"
         private const val FIELD_IMAGE_COUNT = "imageCount"
@@ -41,7 +39,7 @@ data class TrackableLog(
         private const val FIELD_URL = "url"
         private const val FIELD_OWNER = "owner"
 
-        val FIELDS_ALL = arrayOf(
+        val FIELDS_ALL = fieldsOf(
             FIELD_REFERENCE_CODE,
             FIELD_OWNER_CODE,
             FIELD_IMAGE_COUNT,
@@ -55,6 +53,6 @@ data class TrackableLog(
             FIELD_COORDINATES,
             FIELD_URL,
             FIELD_OWNER
-        ).joinToString(FIELD_SEPARATOR)
+        )
     }
 }

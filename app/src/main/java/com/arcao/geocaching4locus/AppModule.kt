@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus
 
-import android.content.Intent
 import com.arcao.geocaching4locus.authentication.LoginViewModel
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
@@ -27,7 +26,6 @@ import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.usecase.RequireLocationPermissionRequestUseCase
 import com.arcao.geocaching4locus.base.usecase.SendPointsSilentToLocusMapUseCase
 import com.arcao.geocaching4locus.base.usecase.WritePointToPackPointsFileUseCase
-import com.arcao.geocaching4locus.base.usecase.entity.GeocacheListEntity
 import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.dashboard.DashboardViewModel
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -36,8 +34,6 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListViewModel
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel
-import com.arcao.geocaching4locus.import_bookmarks.paging.GeocacheUserListsDataSourceFactory
-import com.arcao.geocaching4locus.import_bookmarks.paging.ListGeocachesDataSourceFactory
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.arcao.geocaching4locus.importgc.ImportUrlViewModel
 import com.arcao.geocaching4locus.live_map.LiveMapViewModel
@@ -104,9 +100,9 @@ internal val appModule = module {
     // login
     viewModel { LoginViewModel(get(), get(), get(), get(), get(), get(), get()) }
     // dashboard
-    viewModel { (calledFromLocusMap: Boolean) ->
+    viewModel { parameters ->
         DashboardViewModel(
-            calledFromLocusMap,
+            parameters.get(),
             get(),
             get(),
             get(),
@@ -135,9 +131,9 @@ internal val appModule = module {
     // import bookmarks
     viewModel { ImportBookmarkViewModel(get(), get(), get()) }
     viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { (bl: GeocacheListEntity) ->
+    viewModel { parameters ->
         BookmarkViewModel(
-            bl,
+            parameters.get(),
             get(),
             get(),
             get(),
@@ -149,14 +145,12 @@ internal val appModule = module {
             get()
         )
     }
-    factory { GeocacheUserListsDataSourceFactory(get(), get()) }
-    factory { ListGeocachesDataSourceFactory(get(), get()) }
     // live map
     factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     // search nearest
-    viewModel { (intent: Intent) ->
+    viewModel { parameters ->
         SearchNearestViewModel(
-            intent,
+            parameters.get(),
             get(),
             get(),
             get(),

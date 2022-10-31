@@ -1,12 +1,10 @@
 package com.arcao.geocaching4locus.base.constants
 
 import android.net.Uri
-import android.os.Build
 import android.util.Base64
 import com.arcao.geocaching4locus.data.api.model.GeocacheSize
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
-
-import locus.api.android.utils.LocusUtils
+import locus.api.android.objects.VersionCode
 
 object AppConstants {
     const val OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth"
@@ -27,16 +25,15 @@ object AppConstants {
         )
     )
 
-    const val LOCUS_MIN_VERSION = "3.36.0"
-    val LOCUS_MIN_VERSION_CODE: LocusUtils.VersionCode = LocusUtils.VersionCode.UPDATE_15
+    const val LOCUS_MIN_VERSION = "3.52.0"
+    val LOCUS_MIN_VERSION_CODE: VersionCode = VersionCode.UPDATE_17
 
-    /* Adaptive downloading configuration */
-    const val ADAPTIVE_DOWNLOADING_MIN_ITEMS = 10
-    const val ADAPTIVE_DOWNLOADING_MAX_ITEMS = 100
-    const val ADAPTIVE_DOWNLOADING_STEP = 20
-    const val ADAPTIVE_DOWNLOADING_MIN_TIME_MS = 3500 // more than time required for 30 calls per minute
-    const val ADAPTIVE_DOWNLOADING_MAX_TIME_MS = 10000
-    const val ITEMS_PER_REQUEST = 30
+    const val INITIAL_REQUEST_SIZE = 30
+
+    const val SEARCH_MAX_REQUEST_SIZE = 100
+    const val LIVE_MAP_MAX_REQUEST_SIZE = SEARCH_MAX_REQUEST_SIZE
+    const val GEOCACHES_MAX_REQUEST_SIZE = 50
+    const val LIST_GEOCACHES_DOWNLOAD_MAX_ITEMS = 50
 
     const val MINUTES_PER_HOUR = 60
 
@@ -63,8 +60,7 @@ object AppConstants {
     const val DISTANCE_MIN_METERS = 100
     const val DISTANCE_MAX_METERS = 50000
 
-    val PREMIUM_CHARACTER =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) String(Character.toChars(0x1F451)) else "(PM)"
+    val PREMIUM_CHARACTER = String(Character.toChars(0x1F451))
 
     const val NOTIFICATION_ID_LIVEMAP = 1
 
@@ -100,7 +96,7 @@ object AppConstants {
         GeocacheSize.NOT_CHOSEN,
         GeocacheSize.MICRO,
         GeocacheSize.SMALL,
-        GeocacheSize.MEDIUM,
+        GeocacheSize.REGULAR,
         GeocacheSize.LARGE,
         GeocacheSize.VIRTUAL,
         GeocacheSize.OTHER

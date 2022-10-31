@@ -9,6 +9,7 @@ class LogCatCollector : Collector() {
     override val name: String
         get() = "LOGCAT"
 
+    @Suppress("BlockingMethodInNonBlockingContext", "ControlFlowWithEmptyBody")
     override suspend fun collect(): String = coroutineScope {
         try {
             val process = Runtime.getRuntime().exec(COMMAND_LINE)

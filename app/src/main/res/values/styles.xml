@@ -68,6 +68,7 @@
     </style>
 
     <style name="AppTheme.Dialog" parent="AppBaseTheme.Dialog" />
+
     <style name="AppTheme.DialogWhenLarge" parent="AppBaseTheme.DialogWhenLarge" />
 
     <style name="AppTheme.Dashboard" parent="AppTheme.Dialog">
@@ -77,9 +78,7 @@
         <item name="windowFixedWidthMajor">320dp</item>
     </style>
 
-    <style name="AppTheme.Settings">
-        <item name="preferenceStyle">@style/PreferenceThemeOverlay</item>
-    </style>
+    <style name="AppTheme.Settings" />
 
     <style name="TextAppearance.AppCompat.Medium.Primary">
         <item name="android:textColor">?android:attr/textColorPrimary</item>

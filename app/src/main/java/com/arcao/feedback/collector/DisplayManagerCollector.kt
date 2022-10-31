@@ -4,12 +4,10 @@ import android.content.Context
 import android.graphics.Point
 import android.graphics.Rect
 import android.hardware.display.DisplayManager
-import android.os.Build
 import android.util.DisplayMetrics
 import android.util.SparseArray
 import android.view.Display
 import android.view.Surface
-import android.view.WindowManager
 import timber.log.Timber
 
 class DisplayManagerCollector(private val context: Context) : Collector() {
@@ -20,20 +18,13 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         var displays: Array<Display>? = null
         val result = StringBuilder()
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            // Before Android 4.2, there was a single display available from the
-            // window manager
-            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            displays = arrayOf(windowManager.defaultDisplay)
-        } else {
-            // Since Android 4.2, we can fetch multiple displays with the
-            // DisplayManager.
-            try {
-                val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
-                displays = displayManager.displays
-            } catch (e: IllegalArgumentException) {
-                Timber.e(e, "Error while collecting DisplayManager data")
-            }
+        // Since Android 4.2, we can fetch multiple displays with the
+        // DisplayManager.
+        try {
+            val displayManager = context.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+            displays = displayManager.displays
+        } catch (e: IllegalArgumentException) {
+            Timber.e(e, "Error while collecting DisplayManager data")
         }
 
         displays?.forEach { display ->
@@ -102,6 +93,7 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
         try {
             // since API v13
             val size = Rect()
+            @Suppress("DEPRECATION")
             display.getRectSize(size)
             result.append(display.displayId).append(".rectSize=[").append(size.top).append(',').append(size.left)
                 .append(',').append(size.width()).append(',').append(size.height()).append(']').append('\n')

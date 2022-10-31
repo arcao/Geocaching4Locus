@@ -80,7 +80,10 @@ class ExceptionHandler(private val context: Context, private val accountManager:
             accountManager.deleteAccount()
             return builder.message(R.string.error_no_account)
                 .positiveAction(
-                    SettingsActivity.createIntent(context, AccountsPreferenceFragment::class.java)
+                    SettingsActivity.Contract.createIntent(
+                        context,
+                        AccountsPreferenceFragment::class.java
+                    )
                 )
                 .positiveButtonText(R.string.button_ok)
                 .clearNegativeButtonText()

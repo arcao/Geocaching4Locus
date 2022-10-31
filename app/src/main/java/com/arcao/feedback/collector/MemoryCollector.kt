@@ -8,6 +8,7 @@ class MemoryCollector : Collector() {
     override val name: String
         get() = "MEMORY"
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun collect(): String {
         try {
             val commandLine = arrayOf("dumpsys", "meminfo", Process.myPid().toString())

@@ -1,9 +1,11 @@
 package com.arcao.geocaching4locus.settings
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
@@ -65,7 +67,10 @@ class SettingsActivity : AbstractActionBarActivity(),
         supportFragmentManager.commit {
             replace(
                 R.id.fragment,
-                supportFragmentManager.fragmentFactory.instantiate(classLoader, pref.fragment)
+                supportFragmentManager.fragmentFactory.instantiate(
+                    classLoader,
+                    pref.fragment ?: return@commit
+                )
             )
             addToBackStack(null)
         }
@@ -75,7 +80,7 @@ class SettingsActivity : AbstractActionBarActivity(),
 
     override fun onPreferenceDisplayDialog(
         caller: PreferenceFragmentCompat,
-        pref: Preference?
+        pref: Preference
     ): Boolean {
         if (pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback) {
             return pref.onPreferenceDisplayDialog(caller, pref)
@@ -86,16 +91,18 @@ class SettingsActivity : AbstractActionBarActivity(),
 
     companion object {
         private const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
+    }
 
-        fun createIntent(context: Context): Intent {
-            return Intent(context, SettingsActivity::class.java)
-        }
+    object Contract : ActivityResultContract<Class<out AbstractPreferenceFragment>?, Boolean>() {
+        override fun createIntent(context: Context, input: Class<out AbstractPreferenceFragment>?) =
+            Intent(context, SettingsActivity::class.java).apply {
+                if (input != null) {
+                    putExtra(EXTRA_SHOW_FRAGMENT, input.name)
+                }
+            }
 
-        fun <F : AbstractPreferenceFragment> createIntent(
-            context: Context,
-            preferenceFragment: Class<F>
-        ): Intent {
-            return createIntent(context).putExtra(EXTRA_SHOW_FRAGMENT, preferenceFragment.name)
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
         }
     }
 }

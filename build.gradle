@@ -48,7 +48,7 @@ buildscript {
             }
         }
         mavenCentral()
-        jcenter()
+        gradlePluginPortal()
     }
 
     dependencies {
@@ -58,6 +58,7 @@ buildscript {
         classpath "com.google.gms:google-services:$google_services_plugin_version"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$firebase_crashlytics_plugin_version"
         classpath "de.mannodermaus.gradle.plugins:android-junit5:$junit5_plugin_version"
+        classpath "io.insert-koin:koin-gradle-plugin:$koin_version"
     }
 }
 
@@ -97,7 +98,6 @@ allprojects {
         }
 
         mavenCentral()
-        jcenter()
     }
 
     // dependencyUpdates: suggest only released artifacts

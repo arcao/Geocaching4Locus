@@ -1,27 +1,34 @@
 package com.arcao.geocaching4locus.import_bookmarks
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.commit
 import com.arcao.geocaching4locus.R
-import com.arcao.geocaching4locus.authentication.util.requestSignOn
+import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.withObserve
-import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BaseBookmarkFragment
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkFragment
 import com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkListFragment
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ImportBookmarkActivity : AbstractActionBarActivity() {
     private val viewModel by viewModel<ImportBookmarkViewModel>()
-    private val accountManager by inject<AccountManager>()
+
+    private val loginActivity = registerForActivityResult(LoginActivity.Contract) { success ->
+        if (success) {
+            viewModel.init()
+        } else {
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +59,13 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
                     }
                 }
                 ImportBookmarkAction.PremiumMembershipRequired -> {
-                    startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())
+                    startActivity(
+                        ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature)
+                            .build()
+                    )
                     finish()
                 }
-                is ImportBookmarkAction.SignIn -> {
-                    accountManager.requestSignOn(this, REQUEST_SIGN_ON)
-                }
+                is ImportBookmarkAction.SignIn -> loginActivity.launch(null)
             }.exhaustive
         }
 
@@ -69,7 +77,9 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
     }
 
     override fun onProgressCancel(requestId: Int) {
-        (supportFragmentManager.findFragmentById(R.id.fragment) as? BaseBookmarkFragment)?.onProgressCancel(requestId)
+        (supportFragmentManager.findFragmentById(R.id.fragment) as? BaseBookmarkFragment)?.onProgressCancel(
+            requestId
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -80,20 +90,12 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    object Contract : ActivityResultContract<Void?, Boolean>() {
+        override fun createIntent(context: Context, input: Void?) =
+            Intent(context, ImportBookmarkActivity::class.java)
 
-        // restart update process after log in
-        if (requestCode == REQUEST_SIGN_ON) {
-            if (resultCode == Activity.RESULT_OK) {
-                viewModel.init()
-            } else {
-                finish()
-            }
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
         }
-    }
-
-    companion object {
-        private const val REQUEST_SIGN_ON = 1
     }
 }

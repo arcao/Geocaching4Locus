@@ -55,10 +55,10 @@ class GetListGeocachesUseCase(
     ) = flow {
         geocachingApiLogin()
 
-        var count = AppConstants.ITEMS_PER_REQUEST
+        var count = AppConstants.INITIAL_REQUEST_SIZE
         var current = 0
 
-        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+        var itemsPerRequest = AppConstants.INITIAL_REQUEST_SIZE
         while (current < count) {
             val startTimeMillis = System.currentTimeMillis()
 
@@ -83,7 +83,11 @@ class GetListGeocachesUseCase(
             emit(mapper.createLocusPoints(geocaches))
             current += geocaches.size
 
-            itemsPerRequest = DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+            itemsPerRequest = DownloadingUtil.computeRequestSize(
+                itemsPerRequest,
+                AppConstants.LIST_GEOCACHES_DOWNLOAD_MAX_ITEMS,
+                startTimeMillis
+            )
         }
 
         Timber.v("found geocaches: %d", current)

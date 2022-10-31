@@ -45,6 +45,9 @@ class GeocacheLogType(
         /** changing the status of the geocache from unpublished to active */
         const val PUBLISH_LISTING = 24
 
+        /** retracting the geocache (admin only) */
+        const val RETRACT_LISTING = 25
+
         /** flagging a geocache owner that the geocache needs some attention */
         const val NEEDS_MAINTENANCE = 45
 
@@ -59,5 +62,8 @@ class GeocacheLogType(
 
         /** event host announcement to attendees */
         const val EVENT_ANNOUNCEMENT = 74
+
+        /** submitting a geocache to be published */
+        const val SUBMIT_FOR_REVIEW = 76
     }
 }

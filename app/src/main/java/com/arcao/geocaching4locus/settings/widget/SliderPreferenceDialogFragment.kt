@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.arcao.geocaching4locus.R
@@ -40,12 +39,12 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
     }
 
-    override fun onSaveInstanceState(@NonNull outState: Bundle) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(SAVE_STATE_VALUE, value)
     }
 
-    override fun onBindDialogView(@NonNull v: View) {
+    override fun onBindDialogView(v: View) {
         val messageView = v.findViewById<TextView>(R.id.message)
         val seekBar = v.findViewById<SeekBar>(R.id.seekbar)
         val editText = v.findViewById<EditText>(R.id.input)
@@ -110,8 +109,8 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         }
     }
 
-    private class InputTextFilter internal constructor(
-        internal val editText: EditText,
+    private class InputTextFilter(
+        val editText: EditText,
         private val min: Int,
         private val max: Int,
         step: Int
@@ -136,19 +135,18 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
             return InputType.TYPE_CLASS_TEXT
         }
 
-        @NonNull
         override fun getAcceptedChars(): CharArray {
             return DIGIT_CHARACTERS
         }
 
         override fun filter(
-            @NonNull source: CharSequence,
+            source: CharSequence,
             start: Int,
             end: Int,
             dest: Spanned,
             dstart: Int,
             dend: Int
-        ): CharSequence? {
+        ): CharSequence {
             if (availableValues == null || availableValues.isEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
                 if (filtered == null) {

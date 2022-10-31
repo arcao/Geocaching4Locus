@@ -15,7 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.Buffer
-import okio.Okio
+import okio.source
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import java.util.concurrent.TimeUnit
@@ -72,9 +72,9 @@ abstract class GeocachingApiRepositoryBaseTest {
     }
 
     protected fun MockResponse.loadJsonBody(fileName: String) = apply {
-        Okio.source(requireNotNull(this::class.java.getResourceAsStream("/json/$fileName.json")))
+        requireNotNull(this::class.java.getResourceAsStream("/json/$fileName.json")).source()
             .use {
-                body = Buffer().apply { writeAll(it) }
+                setBody(Buffer().apply { writeAll(it) })
             }
     }
 

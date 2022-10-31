@@ -2,6 +2,7 @@ package com.arcao.geocaching4locus.base.usecase
 
 import androidx.annotation.WorkerThread
 import com.arcao.geocaching4locus.authentication.util.isAccountUpdateRequired
+import com.arcao.geocaching4locus.authentication.util.restrictions
 import com.arcao.geocaching4locus.base.AccountNotFoundException
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -20,7 +21,15 @@ class GeocachingApiLoginUseCase(
         val account = accountManager.account ?: throw AccountNotFoundException("Account not found.")
 
         if (account.isAccountUpdateRequired()) {
-            account.updateUserInfo(repository.user())
+            val user = repository.user()
+
+            account.updateUserInfo(user)
+
+            // update restrictions
+            accountManager.restrictions().apply {
+                updateLimits(user)
+                applyRestrictions(user)
+            }
         }
     }
 }

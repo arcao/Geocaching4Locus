@@ -1,6 +1,6 @@
 package com.arcao.geocaching4locus.download_rectangle
 
-import android.content.Context
+import android.app.Application
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -21,7 +21,7 @@ import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
 class DownloadRectangleViewModel constructor(
-    private val context: Context,
+    private val context: Application,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,
     private val getPointsFromRectangleCoordinates: GetPointsFromRectangleCoordinatesUseCase,
@@ -74,7 +74,7 @@ class DownloadRectangleViewModel constructor(
                 center = true
             )
 
-            var count = AppConstants.ITEMS_PER_REQUEST
+            var count = AppConstants.INITIAL_REQUEST_SIZE
             var receivedGeocaches = 0
 
             try {
@@ -94,7 +94,6 @@ class DownloadRectangleViewModel constructor(
                         filterPreferenceManager.difficultyMax,
                         filterPreferenceManager.terrainMin,
                         filterPreferenceManager.terrainMax,
-                        filterPreferenceManager.excludeIgnoreList,
                         AppConstants.LIVEMAP_CACHES_COUNT
                     ) { count = it }.map { list ->
                         receivedGeocaches += list.size
@@ -103,12 +102,14 @@ class DownloadRectangleViewModel constructor(
                         // apply additional downloading full geocache if required
                         if (filterPreferenceManager.simpleCacheData) {
                             list.forEach { point ->
-                                point.setExtraOnDisplay(
-                                    context.packageName,
-                                    UpdateActivity::class.java.name,
-                                    UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                                    point.gcData.cacheID
-                                )
+                                point.gcData?.cacheID?.let { cacheId ->
+                                    point.setExtraOnDisplay(
+                                        context.packageName,
+                                        UpdateActivity::class.java.name,
+                                        UpdateActivity.PARAM_SIMPLE_CACHE_ID,
+                                        cacheId
+                                    )
+                                }
                             }
                         }
                         list

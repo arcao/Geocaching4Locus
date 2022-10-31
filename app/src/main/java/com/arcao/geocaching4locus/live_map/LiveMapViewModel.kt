@@ -1,10 +1,10 @@
 package com.arcao.geocaching4locus.live_map
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.AccountNotFoundException
@@ -37,6 +37,7 @@ import java.io.IOException
 import java.util.concurrent.CancellationException
 import java.util.concurrent.Executors
 
+@SuppressLint("StaticFieldLeak")
 class LiveMapViewModel(
     private val context: Context,
     private val notificationManager: LiveMapNotificationManager,
@@ -47,7 +48,7 @@ class LiveMapViewModel(
     private val removeLocusMapPoints: RemoveLocusMapPointsUseCase,
     private val accountManager: AccountManager,
     dispatcherProvider: CoroutinesDispatcherProvider
-) : BaseViewModel(dispatcherProvider), LifecycleObserver {
+) : BaseViewModel(dispatcherProvider), DefaultLifecycleObserver {
     private val dispatcher = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 
     fun addTask(intent: Intent, completionCallback: (Intent) -> Unit) {
@@ -100,8 +101,7 @@ class LiveMapViewModel(
                     filterPreferenceManager.difficultyMin,
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
-                    filterPreferenceManager.terrainMax,
-                    filterPreferenceManager.excludeIgnoreList
+                    filterPreferenceManager.terrainMax
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     requests++
@@ -113,7 +113,7 @@ class LiveMapViewModel(
                             context.packageName,
                             UpdateActivity::class.java.name,
                             UpdateActivity.PARAM_SIMPLE_CACHE_ID,
-                            point.gcData.cacheID
+                            requireNotNull(point.gcData).cacheID
                         )
                     }
                     list
@@ -178,8 +178,7 @@ class LiveMapViewModel(
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    override fun onCleared() {
+    override fun onDestroy(owner: LifecycleOwner) {
         viewModelScope.cancel()
     }
 }

@@ -34,18 +34,18 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
 
     override fun onCreate(paramBundle: Bundle?) {
         super.onCreate(paramBundle)
-        preferences = PreferenceManager.getDefaultSharedPreferences(activity)
+        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
     }
 
     override fun onResume() {
         super.onResume()
-        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
         preparePreference()
     }
 
     override fun onPause() {
         super.onPause()
-        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceScreen.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     @CallSuper

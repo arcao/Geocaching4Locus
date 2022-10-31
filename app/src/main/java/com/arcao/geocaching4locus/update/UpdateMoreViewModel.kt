@@ -13,9 +13,7 @@ import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import locus.api.android.utils.IntentHelper
 import locus.api.manager.LocusMapManager
 import locus.api.mapper.PointMerger
@@ -35,7 +33,6 @@ class UpdateMoreViewModel(
     val action = Command<UpdateMoreAction>()
     private var job: Job? = null
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     fun processIntent(intent: Intent) {
         if (locusMapManager.isLocusMapNotInstalled) {
             action(UpdateMoreAction.LocusMapNotInstalled)

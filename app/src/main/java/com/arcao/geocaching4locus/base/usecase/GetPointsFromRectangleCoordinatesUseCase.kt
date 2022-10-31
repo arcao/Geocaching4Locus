@@ -39,16 +39,15 @@ class GetPointsFromRectangleCoordinatesUseCase(
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
         terrainMax: Float = 5F,
-        excludeIgnoreList: Boolean = true,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
     ) = flow {
         geocachingApiLogin()
 
-        var count = AppConstants.ITEMS_PER_REQUEST
+        var count = maxCount
         var current = 0
 
-        var itemsPerRequest = AppConstants.ITEMS_PER_REQUEST
+        var itemsPerRequest = AppConstants.INITIAL_REQUEST_SIZE
         while (current < count) {
             val startTimeMillis = System.currentTimeMillis()
 
@@ -87,7 +86,11 @@ class GetPointsFromRectangleCoordinatesUseCase(
             current += geocaches.size
 
             itemsPerRequest =
-                DownloadingUtil.computeItemsPerRequest(itemsPerRequest, startTimeMillis)
+                DownloadingUtil.computeRequestSize(
+                    itemsPerRequest,
+                    AppConstants.SEARCH_MAX_REQUEST_SIZE,
+                    startTimeMillis
+                )
         }
 
         Timber.v("found geocaches: %d", current)

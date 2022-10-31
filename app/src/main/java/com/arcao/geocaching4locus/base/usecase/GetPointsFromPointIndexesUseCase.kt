@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
-import locus.api.objects.extra.Point
+import locus.api.objects.geoData.Point
 
 class GetPointsFromPointIndexesUseCase(
     private val locusMapManager: LocusMapManager,

@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arcao.geocaching4locus.R
@@ -63,14 +65,21 @@ class BookmarkListFragment : BaseBookmarkFragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pagerFlow.collectLatest { data ->
-                adapter.submitData(data)
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.pagerFlow.collectLatest { data ->
+                    adapter.submitData(data)
+                }
             }
-            adapter.loadStateFlow.collect { state ->
-                val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                binding.isEmpty = isListEmpty
-                binding.isLoading = state.source.refresh is LoadState.Loading
-                state.handleErrors(viewModel::handleLoadError)
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                adapter.loadStateFlow.collect { state ->
+                    val isListEmpty =
+                        state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                    binding.isEmpty = isListEmpty
+                    binding.isLoading = state.source.refresh is LoadState.Loading
+                    state.handleErrors(viewModel::handleLoadError)
+                }
             }
         }
 

@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -89,19 +91,26 @@ class BookmarkFragment : BaseBookmarkFragment() {
         var savedState = savedInstanceState
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.pagerFlow.collectLatest { data ->
-                adapter.submitData(data)
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.pagerFlow.collectLatest { data ->
+                    adapter.submitData(data)
 
-                if (savedState != null) {
-                    adapter.tracker.onRestoreInstanceState(savedState)
-                    savedState = null
+                    if (savedState != null) {
+                        adapter.tracker.onRestoreInstanceState(savedState)
+                        savedState = null
+                    }
                 }
             }
-            adapter.loadStateFlow.collect { state ->
-                val isListEmpty = state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                binding.isEmpty = isListEmpty
-                binding.isLoading = state.source.refresh is LoadState.Loading
-                state.handleErrors(viewModel::handleLoadError)
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                adapter.loadStateFlow.collect { state ->
+                    val isListEmpty =
+                        state.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                    binding.isEmpty = isListEmpty
+                    binding.isLoading = state.source.refresh is LoadState.Loading
+                    state.handleErrors(viewModel::handleLoadError)
+                }
             }
         }
 

@@ -7,7 +7,8 @@ import java.time.Instant
 
 class FileAccountManager(
     oAuthService: OAuth20Service,
-    private val dataFile: File = File("account.dat")
+    private val dataFile: File = File("account.dat"),
+    private val pkceFile: File = File("pkce.bin")
 ) : AccountManager(oAuthService) {
     init {
         account = loadAccount()
@@ -53,6 +54,18 @@ class FileAccountManager(
                 account.bannerUrl
             ).joinToString("\n")
         )
+    }
+
+    override fun savePkceRandom(randomBytes: ByteArray) {
+        pkceFile.writeBytes(randomBytes)
+    }
+
+    override fun loadPkceRandom(): ByteArray {
+        return pkceFile.readBytes().also {
+            check(it.isNotEmpty()) {
+                "Unable to sign in, missing PKCE."
+            }
+        }
     }
 
     private operator fun <E> List<E>.component6(): E? = this[5]

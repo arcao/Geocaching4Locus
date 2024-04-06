@@ -1,8 +1,6 @@
 package locus.api.mapper
 
 import android.content.Context
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.data.api.model.AdditionalWaypoint
 import com.arcao.geocaching4locus.data.api.model.Geocache
@@ -70,7 +68,7 @@ class GeocacheConverter(
                     cache.containsHtml ?: false
                 )
                 encodedHints = cache.hints.orEmpty()
-                notes = cache.userData?.note.orEmpty()
+                notesExternal = cache.userData?.note.orEmpty()
                 favoritePoints = cache.favoritePoints ?: 0
 
                 images = mutableListOf<GeocachingImage>().apply {
@@ -176,8 +174,7 @@ class GeocacheConverter(
         )
     }
 
-    @Nullable
-    private fun getWaypointsFromNote(@NonNull geocache: Geocache): Collection<AdditionalWaypoint>? {
+    private fun getWaypointsFromNote(geocache: Geocache): Collection<AdditionalWaypoint>? {
         var note = geocache.userData?.note ?: return null
 
         if (note.isBlank())

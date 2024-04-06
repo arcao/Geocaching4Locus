@@ -47,7 +47,7 @@ class LiveMapService : LifecycleService() {
     private fun cancelTasks() {
         viewModel.cancelTasks()
         ServiceUtil.releaseAllWakeLocks(ComponentName(this, LiveMapService::class.java))
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
     }
 
     override fun onDestroy() {

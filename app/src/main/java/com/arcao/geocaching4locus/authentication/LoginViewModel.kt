@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.authentication
 
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
@@ -31,7 +31,7 @@ class LoginViewModel(
     private var job: Job? = null
 
     val code = MutableLiveData("")
-    val continueButtonEnabled = Transformations.map(code, String::isNotBlank)
+    val continueButtonEnabled = code.map(String::isNotBlank)
     val formVisible = MutableLiveData(true)
     var fromIntent = false
         private set

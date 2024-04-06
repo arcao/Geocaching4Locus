@@ -48,7 +48,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         prepareDistancePreference()
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         super.onSharedPreferenceChanged(sharedPreferences, key)
 
         when (key) {

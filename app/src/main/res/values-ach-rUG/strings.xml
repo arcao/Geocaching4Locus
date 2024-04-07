@@ -104,7 +104,7 @@
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">crwdns492:0crwdne492:0</string>
     <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">crwdns494:0crwdne494:0</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">crwdns496:0crwdne496:0</string>
-    <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">crwdns498:0%1$dcrwdnd498:0%2$dcrwdnd498:0%3$dcrwdnd498:0%%crwdne498:0</string>
+    <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">crwdns498:0%1$dcrwdnd498:0%2$dcrwdnd498:0%3$dcrwdne498:0</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">crwdns500:0crwdne500:0</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">crwdns502:0crwdne502:0</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">crwdns504:0crwdne504:0</string>

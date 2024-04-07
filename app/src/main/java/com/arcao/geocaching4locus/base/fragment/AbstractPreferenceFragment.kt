@@ -28,7 +28,7 @@ abstract class AbstractPreferenceFragment : PreferenceFragmentCompat(),
         setPreferencesFromResource(preferenceResource, rootKey)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         // empty
     }
 

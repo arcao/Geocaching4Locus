@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.authentication.util
 
 import android.content.Context
+import android.util.Base64
 import androidx.core.content.edit
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -65,7 +66,16 @@ class PreferenceAccountManager(context: Context, oAuthService: OAuth20Service) :
         }
     }
 
-    @Suppress("DEPRECATION")
+    override fun savePkceRandom(randomBytes: ByteArray) {
+        prefs.edit {
+            putString("pkce", Base64.encodeToString(randomBytes, Base64.URL_SAFE or Base64.NO_WRAP))
+        }
+    }
+
+    override fun loadPkceRandom(): ByteArray = prefs.getString("pkce", null)?.let {
+        Base64.decode(it, Base64.URL_SAFE or Base64.NO_WRAP)
+    } ?: error("Unable to sign in, missing PKCE.")
+
     private fun upgradeStorage() {
         val prefVersion = prefs.getInt(PrefConstants.PREF_VERSION, 0)
         if (prefVersion < 4) {

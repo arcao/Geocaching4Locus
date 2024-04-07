@@ -1,22 +1,34 @@
 package com.arcao.geocaching4locus.data.account
 
+import com.github.scribejava.core.oauth.AccessTokenRequestParams
 import com.github.scribejava.core.oauth.OAuth20Service
+import com.github.scribejava.core.pkce.PKCEService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.time.Instant
+import kotlin.random.Random
 
 abstract class AccountManager(
     private val oAuthService: OAuth20Service
 ) {
+    private val pkceService: PKCEService by lazy {
+        PKCEService.defaultInstance()
+    }
+
     var account: GeocachingAccount? = null
         protected set
 
     val authorizationUrl: String
         get() {
-            return oAuthService.authorizationUrl
+            val randomBytes = Random.nextBytes(32)
+            savePkceRandom(randomBytes)
+
+            return oAuthService.createAuthorizationUrlBuilder().pkce(
+                PKCEService.defaultInstance().generatePKCE(randomBytes)
+            ).build()
         }
 
     private val refreshAccountMutex = Mutex()
@@ -28,9 +40,17 @@ abstract class AccountManager(
         this.account = account
     }
 
+    abstract fun savePkceRandom(randomBytes: ByteArray)
+
+    abstract fun loadPkceRandom(): ByteArray
+
     suspend fun createAccount(code: String): GeocachingAccount {
         val token = withContext(Dispatchers.IO) {
-            oAuthService.getAccessToken(code)
+            val pkce = pkceService.generatePKCE(loadPkceRandom())
+
+            oAuthService.getAccessToken(
+                AccessTokenRequestParams.create(code).pkceCodeVerifier(pkce.codeVerifier)
+            )
         }
 
         val newAccount = GeocachingAccount(

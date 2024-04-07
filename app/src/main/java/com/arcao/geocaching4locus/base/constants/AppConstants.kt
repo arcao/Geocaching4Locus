@@ -9,11 +9,12 @@ import locus.api.android.objects.VersionCode
 object AppConstants {
     const val OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth"
 
-    val USERS_GUIDE_URI = Uri.parse("https://geocaching4locus.eu/users-guide/")!!
-    val WEBSITE_URI = Uri.parse("https://geocaching4locus.eu/")!!
-    val FACEBOOK_URI = Uri.parse("https://www.facebook.com/Geocaching4Locus")!!
-    val GEOCACHING_URI = Uri.parse("http://geocaching.com/")!!
-    val POWER_SAVE_INFO_URI = Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")!!
+    val USERS_GUIDE_URI: Uri = Uri.parse("https://geocaching4locus.eu/users-guide/")
+    val WEBSITE_URI: Uri = Uri.parse("https://geocaching4locus.eu/")
+    val FACEBOOK_URI: Uri = Uri.parse("https://www.facebook.com/Geocaching4Locus")
+    val GEOCACHING_URI: Uri = Uri.parse("http://geocaching.com/")
+    val POWER_SAVE_INFO_URI: Uri =
+        Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.
     // This will prevent it to autodetect by robot.

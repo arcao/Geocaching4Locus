@@ -25,12 +25,12 @@ import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkListAdapter
 import com.arcao.geocaching4locus.import_bookmarks.widget.decorator.MarginItemDecoration
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BookmarkListFragment : BaseBookmarkFragment() {
     private val viewModel by viewModel<BookmarkListViewModel>()
-    private val activityViewModel by sharedViewModel<ImportBookmarkViewModel>()
+    private val activityViewModel by activityViewModel<ImportBookmarkViewModel>()
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
 
     private val adapter = BookmarkListAdapter { bookmarkList, importAll ->

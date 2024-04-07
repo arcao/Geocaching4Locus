@@ -4,7 +4,6 @@ import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.account.GeocachingAccount
 import com.arcao.geocaching4locus.data.api.endpoint.GeocachingApiEndpoint
 import com.arcao.geocaching4locus.data.api.model.User
-import io.mockk.Called
 import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -69,6 +68,7 @@ internal object GeocachingAuthenticationInterceptorTest {
         }
     }
 
+    @Suppress("DeferredResultUnused")
     @Test
     fun verifyRefreshTokenNotCalled() {
         // given
@@ -79,9 +79,9 @@ internal object GeocachingAuthenticationInterceptorTest {
 
         // expected
         verify(timeout = 5000) { chain.proceed(any()) }
-        coVerify(timeout = 5000) {
-            account.refreshToken() wasNot Called
-            endpoint.userAsync() wasNot Called
+        coVerify(timeout = 5000, exactly = 0) {
+            account.refreshToken()
+            endpoint.userAsync()
         }
     }
 
@@ -97,6 +97,6 @@ internal object GeocachingAuthenticationInterceptorTest {
         verify {
             chain.proceed(match { it.header("authorization") == "bearer accessToken1234" })
         }
-        coVerify { account.refreshToken() wasNot Called }
+        coVerify(exactly = 0) { account.refreshToken() }
     }
 }

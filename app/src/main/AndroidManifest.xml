@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
@@ -173,22 +174,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="coord.info"
-                    android:pathPrefix="/GC"
-                    android:scheme="http" />
-                <data
-                    android:host="*.coord.info"
-                    android:pathPrefix="/GC"
-                    android:scheme="http" />
-                <data
-                    android:host="coord.info"
-                    android:pathPrefix="/GC"
-                    android:scheme="https" />
-                <data
-                    android:host="*.coord.info"
-                    android:pathPrefix="/GC"
-                    android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="coord.info" />
+                <data android:host="*.coord.info" />
+                <data android:pathPrefix="/GC" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -196,45 +186,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="geocaching.com"
-                    android:pathPrefix="/seek/cache_details.aspx"
-                    android:scheme="http" />
-                <data
-                    android:host="*.geocaching.com"
-                    android:pathPrefix="/seek/cache_details.aspx"
-                    android:scheme="http" />
-                <data
-                    android:host="geocaching.com"
-                    android:pathPrefix="/seek/cache_details.aspx"
-                    android:scheme="https" />
-                <data
-                    android:host="*.geocaching.com"
-                    android:pathPrefix="/seek/cache_details.aspx"
-                    android:scheme="https" />
-
-                <data
-                    android:host="geocaching.com"
-                    android:pathPrefix="/geocache/GC"
-                    android:scheme="http" />
-                <data
-                    android:host="*.geocaching.com"
-                    android:pathPrefix="/geocache/GC"
-                    android:scheme="http" />
-                <data
-                    android:host="geocaching.com"
-                    android:pathPrefix="/geocache/GC"
-                    android:scheme="https" />
-                <data
-                    android:host="*.geocaching.com"
-                    android:pathPrefix="/geocache/GC"
-                    android:scheme="https" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="geocaching.com" />
+                <data android:host="*.geocaching.com" />
+                <data android:pathPrefix="/seek/cache_details.aspx" />
+                <data android:pathPrefix="/geocache/GC" />
             </intent-filter>
         </activity>
         <activity
             android:name=".dashboard.DashboardActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Dashboard">
             <intent-filter>
@@ -259,6 +221,18 @@
                 <data
                     android:host="oauth"
                     android:scheme="com.arcao.geocaching4locus" />
+            </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="geocaching4locus.eu" />
+                <data android:host="www.geocaching4locus.eu" />
+                <data android:pathPrefix="/oauth" />
             </intent-filter>
         </activity>
         <activity
@@ -378,12 +352,12 @@
         </intent>
 
         <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
+        </intent>
+        <intent>
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
-        </intent>
-        <intent>
-            <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
     </queries>
 </manifest>

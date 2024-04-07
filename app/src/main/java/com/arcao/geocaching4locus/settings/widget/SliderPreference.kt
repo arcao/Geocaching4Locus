@@ -14,7 +14,7 @@ import com.arcao.geocaching4locus.R
 class SliderPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.dialogPreferenceStyle
+    defStyleAttr: Int = androidx.preference.R.attr.dialogPreferenceStyle
 ) : DialogPreference(context, attrs, defStyleAttr),
     PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback {
     private var value: Int = 0

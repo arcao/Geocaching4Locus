@@ -7,12 +7,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -88,12 +86,9 @@ class LiveMapNotificationManager(
         }
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel()
-        }
+        createChannel()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() {
         val channelDescription = context.getText(R.string.menu_live_map)
 
@@ -139,6 +134,7 @@ class LiveMapNotificationManager(
                 }
                 return true
             }
+
             else -> {
                 if (!isLiveMapEnabled && !defaultPreferenceManager.showLiveMapDisabledNotification) {
                     return false
@@ -176,25 +172,14 @@ class LiveMapNotificationManager(
             nb.priority = NotificationCompat.PRIORITY_DEFAULT
 
             nb.setSmallIcon(R.drawable.ic_stat_live_map_downloading_anim)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                nb.setContentText(
-                    context.getText(
-                        R.string.notify_live_map_message_downloading,
-                        current,
-                        count,
-                        current * 100 / count
-                    )
+            nb.setContentTitle(
+                context.getText(
+                    R.string.notify_live_map_message_downloading,
+                    current,
+                    count,
+                    current * 100 / count
                 )
-            } else {
-                nb.setContentTitle(
-                    context.getText(
-                        R.string.notify_live_map_message_downloading,
-                        current,
-                        count,
-                        current * 100 / count
-                    )
-                )
-            }
+            )
         }
 
         notificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, nb.build())
@@ -268,13 +253,8 @@ class LiveMapNotificationManager(
             pendingIntent
         )
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            nb.setContentTitle(context.getText(R.string.notify_live_map))
-            nb.setContentText(state)
-        } else {
-            nb.setSubText(context.getText(R.string.menu_live_map))
-            nb.setContentTitle(state)
-        }
+        nb.setSubText(context.getText(R.string.menu_live_map))
+        nb.setContentTitle(state)
 
         return nb
     }
@@ -282,22 +262,14 @@ class LiveMapNotificationManager(
     private fun createPendingActivityIntent(intent: Intent) = PendingIntent.getActivity(
         context, 0,
         intent,
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        } else {
-            PendingIntent.FLAG_UPDATE_CURRENT
-        }
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     private fun createPendingBroadcastIntent(action: String) = PendingIntent.getBroadcast(
         context,
         0,
         Intent(action, null, context, LiveMapBroadcastReceiver::class.java),
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.FLAG_IMMUTABLE
-        } else {
-            0
-        }
+        PendingIntent.FLAG_IMMUTABLE
     )
 
     private fun showError(@StringRes message: Int) {
@@ -339,10 +311,10 @@ class LiveMapNotificationManager(
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (PrefConstants.LIVE_MAP == key) {
             for (listener in stateChangeListeners) {
-                listener.onLiveMapStateChange(sharedPreferences.getBoolean(key, false))
+                listener.onLiveMapStateChange(preferences.getBoolean(key, false))
             }
         }
     }

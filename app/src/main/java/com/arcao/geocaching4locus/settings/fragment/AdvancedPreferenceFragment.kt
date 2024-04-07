@@ -15,19 +15,27 @@ class AdvancedPreferenceFragment : AbstractPreferenceFragment() {
     override val preferenceResource: Int
         get() = R.xml.preference_category_advanced
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         super.onSharedPreferenceChanged(sharedPreferences, key)
 
         when (key) {
             IMPERIAL_UNITS -> {
-                val imperialUnits = sharedPreferences.getBoolean(IMPERIAL_UNITS, false)
+                val imperialUnits = preferences.getBoolean(IMPERIAL_UNITS, false)
 
-                val defaultValue = if (imperialUnits) DISTANCE_MILES_DEFAULT else DISTANCE_KM_DEFAULT
+                val defaultValue = if (imperialUnits) {
+                    DISTANCE_MILES_DEFAULT
+                } else {
+                    DISTANCE_KM_DEFAULT
+                }
 
-                var distance = sharedPreferences.getParsedFloat(FILTER_DISTANCE, defaultValue)
-                distance = if (imperialUnits) distance / MILES_PER_KILOMETER else distance * MILES_PER_KILOMETER
+                var distance = preferences.getParsedFloat(FILTER_DISTANCE, defaultValue)
+                distance = if (imperialUnits) {
+                    distance / MILES_PER_KILOMETER
+                } else {
+                    distance * MILES_PER_KILOMETER
+                }
 
-                sharedPreferences.edit {
+                preferences.edit {
                     putString(FILTER_DISTANCE, distance.toString())
                 }
             }

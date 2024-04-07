@@ -53,7 +53,7 @@ class SettingsActivity : AbstractActionBarActivity(),
         when (item.itemId) {
             // Respond to the action bar's Up/Home button
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 return true
             }
         }

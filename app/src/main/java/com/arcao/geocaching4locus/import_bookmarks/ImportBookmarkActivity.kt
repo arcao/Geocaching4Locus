@@ -41,23 +41,25 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        @Suppress("IMPLICIT_CAST_TO_ANY")
         viewModel.action.withObserve(this) { action ->
             when (action) {
                 ImportBookmarkAction.LocusMapNotInstalled -> {
                     showLocusMissingError()
                 }
+
                 ImportBookmarkAction.ShowList -> {
                     supportFragmentManager.commit {
                         replace(R.id.fragment, BookmarkListFragment.newInstance())
                     }
                 }
+
                 is ImportBookmarkAction.ChooseBookmark -> {
                     supportFragmentManager.commit {
                         replace(R.id.fragment, BookmarkFragment.newInstance(action.geocacheList))
                         addToBackStack(null)
                     }
                 }
+
                 ImportBookmarkAction.PremiumMembershipRequired -> {
                     startActivity(
                         ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature)
@@ -65,6 +67,7 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
                     )
                     finish()
                 }
+
                 is ImportBookmarkAction.SignIn -> loginActivity.launch(null)
             }.exhaustive
         }
@@ -84,9 +87,10 @@ class ImportBookmarkActivity : AbstractActionBarActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             true
         }
+
         else -> super.onOptionsItemSelected(item)
     }
 

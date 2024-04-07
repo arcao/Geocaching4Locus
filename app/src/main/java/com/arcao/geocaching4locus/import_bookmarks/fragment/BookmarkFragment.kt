@@ -29,7 +29,7 @@ import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkViewModel
 import com.arcao.geocaching4locus.import_bookmarks.adapter.BookmarkGeocachesAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -40,7 +40,7 @@ class BookmarkFragment : BaseBookmarkFragment() {
     private val viewModel by viewModel<BookmarkViewModel> {
         parametersOf(bookmarkList)
     }
-    private val activityViewModel by sharedViewModel<ImportBookmarkViewModel>()
+    private val activityViewModel by activityViewModel<ImportBookmarkViewModel>()
 
     private val adapter = BookmarkGeocachesAdapter()
     private val toolbar get() = (activity as? AppCompatActivity)?.supportActionBar
@@ -55,10 +55,12 @@ class BookmarkFragment : BaseBookmarkFragment() {
                 adapter.selectAll()
                 true
             }
+
             R.id.deselectAll -> {
                 adapter.selectNone()
                 true
             }
+
             else -> false
         }
     }
@@ -133,7 +135,6 @@ class BookmarkFragment : BaseBookmarkFragment() {
         adapter.tracker.onSaveInstanceState(outState)
     }
 
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     fun handleAction(action: BookmarkAction) {
         when (action) {
             is BookmarkAction.Error -> {
@@ -149,6 +150,7 @@ class BookmarkFragment : BaseBookmarkFragment() {
                     finish()
                 }
             }
+
             is BookmarkAction.Finish -> {
                 startActivity(action.intent)
                 requireActivity().apply {
@@ -156,12 +158,14 @@ class BookmarkFragment : BaseBookmarkFragment() {
                     finish()
                 }
             }
+
             BookmarkAction.Cancel -> {
                 requireActivity().apply {
                     setResult(Activity.RESULT_CANCELED)
                     finish()
                 }
             }
+
             is BookmarkAction.LoadingError -> {
                 startActivity(action.intent)
                 requireActivity().apply {

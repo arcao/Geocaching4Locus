@@ -7,8 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.WindowManager
 import android.widget.EditText
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
@@ -19,10 +17,10 @@ import com.arcao.geocaching4locus.base.fragment.AbstractDialogFragment
 import com.arcao.geocaching4locus.base.util.runIfIs
 import com.arcao.geocaching4locus.importgc.ImportGeocacheCodeViewModel
 import com.google.android.material.textfield.TextInputLayout
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
-    val model by sharedViewModel<ImportGeocacheCodeViewModel>()
+    val model by activityViewModel<ImportGeocacheCodeViewModel>()
 
     private lateinit var editTextView: EditText
     lateinit var textInputLayout: TextInputLayout
@@ -40,7 +38,7 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
         }
     }
 
-    private fun fireOnInputFinished(@Nullable input: Array<String>?) {
+    private fun fireOnInputFinished(input: Array<String>?) {
         activity.runIfIs(DialogListener::class) {
             onInputFinished(input ?: emptyArray())
         }
@@ -51,12 +49,9 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
         super.onCancel(dialog)
     }
 
-    @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = MaterialDialog(requireContext())
-            .title(R.string.title_import_from_gc)
-            .customView(R.layout.dialog_gc_number_input)
-            .noAutoDismiss()
+        val dialog = MaterialDialog(requireContext()).title(R.string.title_import_from_gc)
+            .customView(R.layout.dialog_gc_number_input).noAutoDismiss()
             .positiveButton(R.string.button_ok) { dialog ->
                 try {
                     val geocacheCodes = model.parseGeocacheCodes(editTextView.text)
@@ -65,16 +60,16 @@ class GeocacheCodesInputDialogFragment : AbstractDialogFragment() {
                 } catch (e: Exception) {
                     textInputLayout.error = getText(R.string.error_gc_code_invalid)
                 }
-            }
-            .negativeButton(R.string.button_cancel) { dialog ->
+            }.negativeButton(R.string.button_cancel) { dialog ->
                 fireOnInputFinished(null)
                 dialog.dismiss()
             }
 
         dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
 
-        textInputLayout =
-            dialog.getCustomView() as? TextInputLayout ?: throw IllegalStateException("Custom view is null")
+        textInputLayout = dialog.getCustomView() as? TextInputLayout ?: throw IllegalStateException(
+            "Custom view is null"
+        )
 
         val positiveButton = dialog.getActionButton(WhichButton.POSITIVE)
 

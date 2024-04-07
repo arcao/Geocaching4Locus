@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.data.account.oauth
 
 import com.github.scribejava.core.model.OAuth2AccessTokenErrorResponse
+import com.github.scribejava.core.model.Response
 import com.github.scribejava.core.oauth2.OAuth2Error
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Assertions
@@ -15,7 +16,14 @@ internal class GeocachingOAuth2AccessTokenJsonExtractorTest {
             "{\"statusCode\":\"BadRequest\",\"errorMessage\":\"invalid_grant\",\"errors\":[{\"message\":\"invalid_grant\",\"detail\":\"the provided code is invalid, used, expired, or revoked\"}]}"
 
         val exception = Assertions.assertThrows(OAuth2AccessTokenErrorResponse::class.java) {
-            GeocachingOAuth2AccessTokenJsonExtractor.generateError(errorJson)
+            GeocachingOAuth2AccessTokenJsonExtractor.generateError(
+                Response(
+                    400,
+                    "Bad Request",
+                    emptyMap(),
+                    errorJson
+                )
+            )
         }
 
         // expected

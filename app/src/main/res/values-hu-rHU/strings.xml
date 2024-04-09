@@ -173,4 +173,5 @@
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Geocaching API támogatásával</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">A Geocaching Premium Tagság támogatásával az API program harmadik fél fejlesztőinek lehetőséget kínál arra, hogy a Geocaching HQ-val együttműködve a közösség számára integrált termékek és szolgáltatások teljes sorozatán dolgozzanak. Az API fejlesztői alkalmazásokat úgy tervezték, hogy működjenek együtt a geocaching.com alapvető szolgáltatásaival, és kiegészítő funkciókat biztosítsanak a geocaching közösség számára.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Folytatás</string>
+    <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Az alkalmazásnak nincs engedélye értesítések létrehozására.</string>
 </resources>

@@ -13,7 +13,7 @@
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Afstand i miles</string>
     <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Engelske mål</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Brug miles i stedet for kilometer </string>
-    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Du er ikke logget ind. Log først ind i konto indstillinger.</string>
+    <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Ikke logget ind. Log først ind i kontoindstillinger.</string>
     <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Din version af Locus er for gammel. Geocaching4Locus skal bruge version %s eller højere for at virke ordentligt.</string>
     <string name="button_cancel" comment="Dialog button for cancel action.">Annuller</string>
@@ -74,7 +74,7 @@
     <string name="error_gc_code_invalid" comment="">GC koden er ikke gyldig.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
         <item quantity="one" comment="">Cache %s blev ikke fundet.</item>
-        <item quantity="other" comment="">Cache %s blev ikke fundet.</item>
+        <item quantity="other" comment="">Caches %s blev ikke fundet.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Antal caches</string>
     <string name="launcher_nearest_geocaches" comment="">Nærmeste cacher</string>
@@ -92,7 +92,7 @@
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Du har nået  bebrænsningen for antal forspørgsler/opkald i minuttet</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
         <item quantity="one">%d cache</item>
-        <item quantity="other">%d cacher</item>
+        <item quantity="other">%d caches</item>
     </plurals>
     <plurals name="plurals_hour" comment="Plurals for hour. The '%d' is replaced with numeric value of hour">
         <item quantity="one">%d time</item>
@@ -123,7 +123,7 @@
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Ændre et skridt størrelse for antal caches vælger dialogen</string>
     <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Nogle filtre kræver premium medlemskonto, som du ikke har det. Den app er tændt nu tilstanden for basale brugere. Venligst prøve det igen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Konto</string>
-    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filtrér</string>
+    <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
     <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kort</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Downloader</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Avanceret</string>
@@ -133,7 +133,7 @@
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Langsommere lastning og mere krævende på dataforbrug</string>
     <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Send kommentar</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Kunne ikke finde nogen caches der matcher din søgning.</string>
-    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">På grund af token udløb (efter 90 dage) er du logget ud. Log ind igen.</string>
+    <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">Logget ud grund tokenudløb (efter 90 dage). Log ind igen.</string>
     <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importer bogmærker</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Importer bogmærker</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">App har ikke tilladelse til at få adgang til placering service.</string>
@@ -145,31 +145,33 @@
     <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Ja</string>
     <string name="button_no" comment="Dialog button for No action.">Nej</string>
-    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Denne tilføjelse fungerer kun med et premiummedlemskab. Som et grundlæggende medlem er du i stand til at downloade traditionelle, hændelses- og CITO-geocacher med grundlæggende geocache-data (ingen liste, ingen antydning, ingen attributter, ingen billeder, ingen logfiler osv.) Og kun bruge få filtre til at søge efter geocacher. For mere information kan du læse brugervejledningen på Geocaching4Locus websted.</string>
-    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Vis mig Brugervejledning</string>
+    <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Denne tilføjelse fungerer kun med et Premium-medlemskab. Som basismedlem kan man downloade traditionelle, hændelses- og CITO-geocaches med basis geocachedata (dvs. uden liste(r), tips, attributter, billeder, logger mv.) og kun bruge få filtre til geocachesøgninger. For yderligere information, læs Brugervejledningen på Geocaching4Locus-webstedet.</string>
+    <string name="button_show_users_guide" comment="Dialog button which start WebBrowser with Geocaching4Locus User's guide web page.">Vis Brugervejledning</string>
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">Den app kræver <b>skrive ekstern lagring</b> tilladelse til lagring af geocache data for Locus Map. Venligst <b>tillade</b> denne tilladelse i en næste dialogboks.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Den app har ikke tilladelse til at <b>skrive eksternt lager</b>. Denne tilladelse er nødvendig til lagring af geocaching data for Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul geocaches på deaktiveret</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul live kort geocaches når live kort er deaktiveret</string>
     <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Deaktivér DNF-, NM- og NA-caches</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Markér geocache som utilgængelig, når den indeholder flere <i>Ikke fundet</i>, <i>Kræver vedligeholdelse</i> eller <i>Kræver arkivering</i> logger</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Hvor mange seneste logger, som skal tjekkes</string>
     <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Se geocache</string>
-    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Bogmærke geocache</string>
-    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">Importer live-kortgeocacher</string>
-    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map.">Sørg for, at Live map er aktiveret, og Locus Map viser geokacher til Live Map.</string>
-    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Importer Live map GC</string>
+    <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Bogmærk geocache</string>
+    <string name="launcher_download_rectangle" comment="Locus map function button title to import visible Live map geocaches to Locus map.">Importér Realtidskort-geocaches</string>
+    <string name="error_live_map_geocaches_not_visible" comment="Error message when user wants to import Live map geocaches, but Live map is disabled or Live map geocaches are not visible in Locus map.">Sørg for, at Realtidskort er aktiveret, og at Locus Map viser Realtidskort-geokaches.</string>
+    <string name="menu_live_map_download_caches" comment="Dashboard button title to import visible Live map geocaches to Locus map.">Importér Realtidskort GC</string>
     <string name="checkbox_do_not_show_again" comment="Checkbox message in dialog which prevent to show dialog again when checkbox is checked">Vis ikke denne meddelelse igen</string>
     <string name="title_warning" comment="Warning dialog title">Advarsel</string>
-    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Din Android-enhed indeholder brugerdefineret batterispareapp fra enhedsproducent, som forhindrer, at Live Map fungerer korrekt. Tilføj en undtagelse til batterispareapp til Geocaching4Locus.</string>
-    <string name="button_more_info" comment="Dialog button for More info action">Mere info</string>
-    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map fejl: %s</string>
-    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Kan ikke oprette datafil til Locus Map. Har du godkendt en ekstern tilladelse til filadgang?</string>
-    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Autorisationskode</string>
-    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Indsæt venligst autorisationskoden fra Geocaching4Locus websted og klik på Fortsæt for at afslutte Log ind.</string>
-    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Autorisationskode</string>
-    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Den indtastede godkendelseskode er ikke gyldig. Prøv igen.</string>
-    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API er i øjeblikket nede på grund af vedligeholdelse. Prøv det senere.</string>
+    <string name="warning_power_management" comment="Warning dialog message which is shown, when user wants to turn on the Live Map and app detects that the Live Map feature can be affected by a manufacturer battery saver functionality.">Android-enheden indeholder en tilpasset strømspare-app fra enhedsproducenten, der forhindrer, at Realtidskort fungerer korrekt. Føj en undtagelse til strømspare-appen for Geocaching4Locus.</string>
+    <string name="button_more_info" comment="Dialog button for More info action">Yderligere info</string>
+    <string name="error_locus_map" comment="Error dialog message for any Locus Map related error. The '%s' is replaced by error text.">Locus Map-fejl: %s</string>
+    <string name="error_no_write_file_permission" comment="Error dialog message when app can't create data file for Locus Map">Datafil til Locus Map kan ikke oprettes. Er der tildelt ekstern filadgangstilladelse?</string>
+    <string name="title_enter_authorization_code" comment="Title of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Godkendelseskode</string>
+    <string name="message_enter_authorization_code" comment="Description of input to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Indsæt godkendelseskoden fra Geocaching4Locus-webstedet og klik på Fortsæt for at færdiggøre indlogning.</string>
+    <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Godkendelseskode</string>
+    <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Den angivne godkendelseskode er ugyldig. Forsøg igen.</string>
+    <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">Geocaching API er pt. nede grundet vedligehold. Forsøg igen senere.</string>
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Drevet af Geocaching API</string>
-    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">API-programmet, der er gjort muligt med støtte fra Geocaching Premium-medlemskaber, giver tredjepartsudviklere mulighed for at arbejde med Geocaching HQ på en komplet pakke af integrerede produkter og tjenester til samfundet. API-udviklerapplikationer er designet til at arbejde med kernetjenesterne i geocaching.com og giver yderligere funktioner til geocaching-samfundet.</string>
+    <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">API-programmet, muliggjort via støtte fra Geocaching Premium-medlemskaber, giver tredjepartsudviklere mulighed for at arbejde med Geocaching HQ via en fuld suite af integrerede produkter og tjenester til fællesskabet. API-udviklerapplikationer er designet til at fungere med kernetjenesterne i geocaching.com og levere yderligere funktioner til geocachingfællesskabet.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Forsæt</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Appen har ikke tilladelse til at oprette notifikationer.</string>
 </resources>

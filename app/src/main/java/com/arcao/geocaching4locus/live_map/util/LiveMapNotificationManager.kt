@@ -22,6 +22,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.util.getText
+import com.arcao.geocaching4locus.base.util.hasPostNotificationPermission
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.live_map.LiveMapService
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
@@ -69,6 +70,11 @@ class LiveMapNotificationManager(
                 willBeEnabled && !periodicUpdateEnabled -> {
                     willBeEnabled = false
                     showError(R.string.error_live_map_periodic_updates)
+                }
+
+                willBeEnabled && !context.hasPostNotificationPermission -> {
+                    willBeEnabled = false
+                    showError(R.string.error_no_post_notification_permission)
                 }
 
                 willBeEnabled -> showLiveMapToast(R.string.toast_live_map_enabled)

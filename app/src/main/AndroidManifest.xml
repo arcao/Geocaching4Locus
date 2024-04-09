@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <!-- Remove AD_ID permission, we don't use ads in app -->
     <uses-permission
@@ -68,7 +69,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <service android:name=".live_map.LiveMapService" />
+        <service
+            android:name=".live_map.LiveMapService"
+            android:foregroundServiceType="dataSync" />
 
         <receiver
             android:name=".live_map.receiver.LiveMapBroadcastReceiver"

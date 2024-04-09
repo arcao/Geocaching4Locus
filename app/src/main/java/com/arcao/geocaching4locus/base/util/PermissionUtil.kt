@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.base.util
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.core.content.ContextCompat
 
 object PermissionUtil {
@@ -30,3 +31,10 @@ val Context.hasGpsLocationPermission
 
 val Context.hasWifiLocationPermission
     get() = PermissionUtil.hasPermission(this, *PermissionUtil.PERMISSION_LOCATION_WIFI)
+
+val Context.hasPostNotificationPermission
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        PermissionUtil.hasPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+    } else {
+        true
+    }

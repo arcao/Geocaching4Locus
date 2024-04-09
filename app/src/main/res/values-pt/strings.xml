@@ -173,4 +173,5 @@
     <string name="pref_account_powered_by" comment="Title of preference in Account section.">Funciona com a API do Geocaching</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Possível graças ao apoio das contas premium do Geocaching, o programa API permite que os programadores externos possam trabalhar com o Geocaching HQ num vasto leque de produtos e serviços integrados para a comunidade. As aplicações que se baseiam na API são criadas para funcionar com os serviços do geocaching.com e fornecer novas funcionalidades à comunidade Geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Continuar</string>
+    <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">A aplicação não tem permissão para criar notificações.</string>
 </resources>

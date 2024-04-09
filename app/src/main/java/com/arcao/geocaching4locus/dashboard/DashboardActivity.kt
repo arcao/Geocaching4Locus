@@ -1,9 +1,12 @@
 package com.arcao.geocaching4locus.dashboard
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
@@ -14,6 +17,7 @@ import com.arcao.geocaching4locus.base.util.isCalledFromLocusMap
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.base.util.withObserve
+import com.arcao.geocaching4locus.dashboard.fragment.NoPostNotificationPermissionErrorDialogFragment
 import com.arcao.geocaching4locus.databinding.ActivityDashboardBinding
 import com.arcao.geocaching4locus.download_rectangle.DownloadRectangleActivity
 import com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity
@@ -49,6 +53,17 @@ class DashboardActivity : AbstractActionBarActivity(),
         if (success) viewModel.onClickLiveMap()
     }
 
+    private val requestPostNotificationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { result ->
+        if (result) {
+            viewModel.onClickLiveMap()
+        } else {
+            NoPostNotificationPermissionErrorDialogFragment.newInstance()
+                .show(supportFragmentManager)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,6 +83,7 @@ class DashboardActivity : AbstractActionBarActivity(),
             is DashboardAction.SearchNearest -> searchNearestActivity.launch(
                 if (isCalledFromLocusMap()) intent else null
             )
+
             is DashboardAction.ImportGcCode -> importGeocacheCodeActivity.launch(null)
             is DashboardAction.DownloadLiveMapGeocaches -> downloadRectangleActivity.launch(null)
             is DashboardAction.ImportBookmarks -> importBookmarkActivity.launch(null)
@@ -77,7 +93,13 @@ class DashboardActivity : AbstractActionBarActivity(),
             is DashboardAction.SignIn -> loginActivity.launch(null)
             is DashboardAction.WarnPowerSaveActive -> PowerSaveWarningDialogFragment.newInstance()
                 .show(supportFragmentManager)
+
             is DashboardAction.NavigationBack -> finish()
+            DashboardAction.RequestPostNotificationPermission -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestPostNotificationPermission.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
+            }
         }
     }
 
@@ -92,10 +114,12 @@ class DashboardActivity : AbstractActionBarActivity(),
                 viewModel.onClickPreferences()
                 true
             }
+
             android.R.id.home -> {
                 viewModel.onClickNavigationBack()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

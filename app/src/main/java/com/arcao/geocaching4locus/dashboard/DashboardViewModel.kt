@@ -8,6 +8,7 @@ import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.util.AnalyticsManager
 import com.arcao.geocaching4locus.base.util.Command
+import com.arcao.geocaching4locus.base.util.hasPostNotificationPermission
 import com.arcao.geocaching4locus.base.util.hidePowerManagementWarning
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.data.account.AccountManager
@@ -57,6 +58,11 @@ class DashboardViewModel(
 
         if (accountManager.account == null) {
             action(DashboardAction.SignIn)
+            return@mainLaunch
+        }
+
+        if (!context.hasPostNotificationPermission) {
+            action(DashboardAction.RequestPostNotificationPermission)
             return@mainLaunch
         }
 

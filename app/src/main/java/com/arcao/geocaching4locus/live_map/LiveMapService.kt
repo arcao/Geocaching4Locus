@@ -3,6 +3,8 @@ package com.arcao.geocaching4locus.live_map
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.os.Build
 import androidx.lifecycle.LifecycleService
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -11,6 +13,7 @@ import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 class LiveMapService : LifecycleService() {
     private val notificationManager by inject<LiveMapNotificationManager>()
@@ -27,10 +30,23 @@ class LiveMapService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // in case the service is already running, this must be called after each startForegroundService
-        startForeground(
-            AppConstants.NOTIFICATION_ID_LIVEMAP,
-            notificationManager.createNotification().build()
-        )
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                startForeground(
+                    AppConstants.NOTIFICATION_ID_LIVEMAP,
+                    notificationManager.createNotification().build(),
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                )
+            } else {
+                startForeground(
+                    AppConstants.NOTIFICATION_ID_LIVEMAP,
+                    notificationManager.createNotification().build()
+                )
+            }
+        } catch (e: Exception) {
+            // if service is restarted after app kill, startForeground may crash on Android 14
+            Timber.e(e)
+        }
 
         if (intent != null) {
             if (ACTION_START == intent.action) {
@@ -60,6 +76,7 @@ class LiveMapService : LifecycleService() {
             is ProgressState.ShowProgress -> {
                 notificationManager.setDownloadingProgress(state.progress, state.maxProgress)
             }
+
             is ProgressState.HideProgress -> {
                 notificationManager.setDownloadingProgress(Int.MAX_VALUE, Int.MAX_VALUE)
             }

@@ -344,4 +344,5 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Made possible through the support of Geocaching Premium Memberships, the API program gives third-party developers the opportunity to work with Geocaching HQ on a full suite of integrated products and services for the community. API developer applications are designed to work with the core services of geocaching.com and provide additional features to the geocaching community.</string>
 
     <string name="button_continue" comment="Dialog button for Continue action.">Continue</string>
+    <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">The app does not have permission to create notifications.</string>
 </resources>

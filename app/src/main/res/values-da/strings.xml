@@ -53,7 +53,7 @@
     </string-array>
     <string name="menu_live_map" comment="">Live kort</string>
     <string name="menu_nearest" comment="">Nærmeste</string>
-    <string name="menu_users_guide" comment="">Brugerguide</string>
+    <string name="menu_users_guide" comment="">Brugermanual</string>
     <string name="menu_settings" comment="">Indstillinger</string>
     <string name="var_user_waypoint_name" comment="">Bruger waypoint (koordinatpunkter) %1$d</string>
     <string name="var_final_location_name" comment="">Sidste lokation</string>

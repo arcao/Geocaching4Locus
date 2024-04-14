@@ -70,7 +70,7 @@ abstract class AccountManager(
         saveAccount(account)
     }
 
-    suspend fun refreshAccount(account: GeocachingAccount): Boolean {
+    suspend fun refreshToken(account: GeocachingAccount): Boolean {
         refreshAccountMutex.withLock {
             if (!account.accessTokenExpired) {
                 return false

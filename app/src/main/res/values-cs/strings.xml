@@ -73,10 +73,10 @@
     <string name="title_import_from_gc" comment="">Importovat z GC kódu</string>
     <string name="error_gc_code_invalid" comment="">GC kód není správný.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Keš %s nebyla nalezena.</item>
-        <item quantity="few" comment="">Keše %s nebyly nalezeny.</item>
+        <item comment="" quantity="one">Keš %s nebyla nalezena.</item>
+        <item comment="" quantity="few">Keše %s nebyly nalezeny.</item>
         <item quantity="many">Keše %s nebyly nalezeny.</item>
-        <item quantity="other" comment="">Keše %s nebyly nalezeny.</item>
+        <item comment="" quantity="other">Keše %s nebyly nalezeny.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Počet keší</string>
     <string name="launcher_nearest_geocaches" comment="">Nejbližší keše</string>

@@ -174,4 +174,12 @@
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">API za geocaching trenutno je isključen zbog održavanja. Pokušajte kasnije.</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Omogućen podrškom Geocaching Premium Članstva, API program pruža programerima trećih strana mogućnost rada s Geocaching HQ-om na čitavom paketu integriranih proizvoda i usluga za zajednicu. Aplikacije za razvojne programere API dizajnirane su za rad s osnovnim uslugama geocaching.com i pružaju dodatne značajke zajednici geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Nastaviti</string>
+    <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacija nema dopuštenje za izradu obavijesti.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Nepoznato članstvo</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Postavke privatnosti</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Osvježi podatke o računu</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Nepoznato</string>
+    <string name="membership_basic" comment="Name of basic membership type">Osnovno</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Povelja)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

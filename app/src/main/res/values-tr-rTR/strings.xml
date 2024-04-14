@@ -68,8 +68,8 @@
     <string name="title_import_from_gc" comment="">GC kodundan içe aktar</string>
     <string name="error_gc_code_invalid" comment="">GC kodu geçersiz.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">%s Geocache\'i bulunamadı.</item>
-        <item quantity="other" comment="">%s Geocache\'i bulunamadı.</item>
+        <item comment="" quantity="one">%s Geocache\'i bulunamadı.</item>
+        <item comment="" quantity="other">%s Geocache\'i bulunamadı.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Geocache sayısı</string>
     <string name="launcher_nearest_geocaches" comment="">En yakın Geocache\'ler</string>

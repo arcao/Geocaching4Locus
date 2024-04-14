@@ -212,14 +212,14 @@
 
     <string name="button_continue" comment="Dialog button for Continue action.">Continue</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">The app does not have permission to create notifications.</string>
+
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Unknown membership</string>
     <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Your account has opted out of sharing personal information with authorized developers. Unfortunately, this includes your membership type and geocache download limit restrictions. This add-on will not work without this information. To remove this opt-out, please disable <i>Do not share my personal information with authorized developers</i> in your Geocaching settings under Privacy -> Authorization or click on the Privacy settings. Then refresh your account information in this add-on\'s settings under Account.</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Privacy setting</string>
-    <string name="pref_account_type" comment="Title of preference in Account settings.">Account type</string>
-    <string name="pref_account_refresh_account_info" comment="Title of preference in Account settings.">Refresh account info</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Membership type</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Refresh account info</string>
     <string name="membership_unknown" comment="Name of unknown membership type">Unknown</string>
     <string name="membership_basic" comment="Name of basic membership type">Basic</string>
-    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Charter</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
     <string name="membership_premium" comment="Name of premium membership type">Premium</string>
-
 </resources>

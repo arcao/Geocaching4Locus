@@ -7,7 +7,7 @@ import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_POWERED_BY
 import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_REFRESH
-import com.arcao.geocaching4locus.base.constants.PrefConstants.ACCOUNT_TYPE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.MEMBERSHIP_TYPE
 import com.arcao.geocaching4locus.base.fragment.AbstractPreferenceFragment
 import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.base.util.showWebPage
@@ -35,7 +35,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
                     setTitle(R.string.pref_login)
                     setSummary(R.string.pref_login_summary)
 
-                    preference<Preference>(ACCOUNT_TYPE).isVisible = false
+                    preference<Preference>(MEMBERSHIP_TYPE).isVisible = false
                     preference<Preference>(ACCOUNT_REFRESH).isVisible = false
                 } else {
                     loginActivity.launch(null)
@@ -53,7 +53,7 @@ class AccountsPreferenceFragment : AbstractPreferenceFragment() {
             }
         }
 
-        preference<Preference>(ACCOUNT_TYPE).apply {
+        preference<Preference>(MEMBERSHIP_TYPE).apply {
             isVisible = account != null
 
             if (account != null) {

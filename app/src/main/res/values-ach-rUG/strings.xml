@@ -173,7 +173,7 @@
     <string name="button_continue" comment="Dialog button for Continue action.">crwdns634:0crwdne634:0</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">crwdns636:0crwdne636:0</string>
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">crwdns656:0crwdne656:0</string>
-    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">crwdns640:0crwdne640:0</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">crwdns664:0crwdne664:0</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">crwdns642:0crwdne642:0</string>
     <string name="pref_membership_type" comment="Title of preference in Account settings.">crwdns658:0crwdne658:0</string>
     <string name="pref_account_refresh" comment="Title of preference in Account settings.">crwdns660:0crwdne660:0</string>

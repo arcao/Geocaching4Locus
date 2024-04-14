@@ -179,6 +179,7 @@
     <string name="button_continue" comment="Dialog button for Continue action.">Nastaviti</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacija nema dopuštenje za izradu obavijesti.</string>
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Nepoznato članstvo</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Isključili ste dijeljenje svojih osobnih podataka s ovlaštenim programerima, što utječe na vrstu članstva i kvotu preuzimanja geocachea. Također onemogućuje rad ovog dodatka. Da biste uklonili ovo isključivanje, isključite opciju <b>Do not share my personal information with Authorized Developer geocaching applications</b> u postavkama računa Geocaching pod <b>Privacy — Autorizations</b> ili dodirnite <b>Postavke privatnosti</b> i ručno osvježite podatke o računu u odjeljku Račun u postavkama ovog dodatka.</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Postavke privatnosti</string>
     <string name="pref_membership_type" comment="Title of preference in Account settings.">Vrsta članstva</string>
     <string name="pref_account_refresh" comment="Title of preference in Account settings.">Osvježi podatke o računu</string>

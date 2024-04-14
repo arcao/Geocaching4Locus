@@ -183,7 +183,6 @@
     <string name="button_continue" comment="Dialog button for Continue action.">Pokračovať</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikácia nemá oprávnenie vytvárať oznámenia.</string>
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Neznáme členstvo</string>
-    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Odhlásili ste sa zo zdieľania svojich osobných údajov s autorizovanými vývojármi. Bohužiaľ to zahŕňa typ vášho členstva a obmedzenia sťahovania keší. Bez týchto informácií nebude tento doplnok fungovať. Ak chcete toto odhlásenie zrušiť, vypnite možnosť <b>Neposkytujte moje osobné údaje autorizovaným vývojárom aplikácií</b> v nastavení účtu Geocaching v časti <b>Privacy – Autorizácie</b> alebo kliknite na <b>Nastavenie súkromia</b>. Potom ručne obnovte informácie o svojom účte v sekcii Účet v nastavení tohto doplnku.</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Nastavenie súkromia</string>
     <string name="pref_membership_type" comment="Title of preference in Account settings.">Typ členstva</string>
     <string name="pref_account_refresh" comment="Title of preference in Account settings.">Obnoviť informácie o účte</string>

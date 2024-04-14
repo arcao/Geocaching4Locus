@@ -73,8 +73,8 @@
     <string name="title_import_from_gc" comment="">Importa dal codice GC</string>
     <string name="error_gc_code_invalid" comment="">Il codice GC non è valido.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Cache %s non trovata.</item>
-        <item quantity="other" comment="">Cache %s non trovate.</item>
+        <item comment="" quantity="one">Cache %s non trovata.</item>
+        <item comment="" quantity="other">Cache %s non trovate.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Conteggio della caches</string>
     <string name="launcher_nearest_geocaches" comment="">Cache più vicine</string>

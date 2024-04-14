@@ -73,10 +73,10 @@
     <string name="title_import_from_gc" comment="">Importovať z GC kódu</string>
     <string name="error_gc_code_invalid" comment="">GC kód nie je správny.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Skrýša %s nebola nájdená.</item>
-        <item quantity="few" comment="">Skrýše %s sa nenašli.</item>
+        <item comment="" quantity="one">Skrýša %s nebola nájdená.</item>
+        <item comment="" quantity="few">Skrýše %s sa nenašli.</item>
         <item quantity="many">Skrýše %s sa nenašli.</item>
-        <item quantity="other" comment="">Skrýše %s sa nenašli.</item>
+        <item comment="" quantity="other">Skrýše %s sa nenašli.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Počet skrýš</string>
     <string name="launcher_nearest_geocaches" comment="">Najbližšie skrýše</string>
@@ -182,4 +182,12 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">API program, ktorý je umožnený vďaka podpore prémiového členstva Geocaching, dáva vývojárom tretích strán príležitosť spolupracovať s Geocaching HQ na celej rade zjednotených produktov a služieb pre komunitu. Aplikácia vývojárov používajúce API sú navrhnuté tak, aby pracovali so základnými službami geocaching.com a poskytovali ďalšie funkcie geocaching komunite.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Pokračovať</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikácia nemá oprávnenie vytvárať oznámenia.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Neznáme členstvo</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Nastavenie súkromia</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Typ členstva</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Obnoviť informácie o účte</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Neznámy</string>
+    <string name="membership_basic" comment="Name of basic membership type">Základné</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Prémiové (charta)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Prémiové</string>
 </resources>

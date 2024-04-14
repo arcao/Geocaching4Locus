@@ -73,10 +73,10 @@
     <string name="title_import_from_gc" comment="">Importuj według kodu GC</string>
     <string name="error_gc_code_invalid" comment="">Nieprawidłowy kod GC.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Skrzynka %s nie została znaleziona.</item>
-        <item quantity="few" comment="">Skrzynki %s nie zostały odnalezione.</item>
+        <item comment="" quantity="one">Skrzynka %s nie została znaleziona.</item>
+        <item comment="" quantity="few">Skrzynki %s nie zostały odnalezione.</item>
         <item quantity="many">Skrzynki %s nie zostały odnalezione.</item>
-        <item quantity="other" comment="">Skrzynki %s nie zostały odnalezione.</item>
+        <item comment="" quantity="other">Skrzynki %s nie zostały odnalezione.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Liczba skrzynek</string>
     <string name="launcher_nearest_geocaches" comment="">Najbliższe skrzynki</string>

@@ -73,8 +73,8 @@
     <string name="title_import_from_gc" comment="">crwdns454:0crwdne454:0</string>
     <string name="error_gc_code_invalid" comment="">crwdns456:0crwdne456:0</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">crwdns458:1%scrwdne458:1</item>
-        <item quantity="other" comment="">crwdns458:5%scrwdne458:5</item>
+        <item comment="" quantity="one">crwdns458:1%scrwdne458:1</item>
+        <item comment="" quantity="other">crwdns458:5%scrwdne458:5</item>
     </plurals>
     <string name="title_geocache_count" comment="">crwdns460:0crwdne460:0</string>
     <string name="launcher_nearest_geocaches" comment="">crwdns462:0crwdne462:0</string>
@@ -172,4 +172,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">crwdns628:0crwdne628:0</string>
     <string name="button_continue" comment="Dialog button for Continue action.">crwdns634:0crwdne634:0</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">crwdns636:0crwdne636:0</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">crwdns656:0crwdne656:0</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">crwdns666:0crwdne666:0</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">crwdns642:0crwdne642:0</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">crwdns658:0crwdne658:0</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">crwdns660:0crwdne660:0</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">crwdns648:0crwdne648:0</string>
+    <string name="membership_basic" comment="Name of basic membership type">crwdns650:0crwdne650:0</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">crwdns662:0crwdne662:0</string>
+    <string name="membership_premium" comment="Name of premium membership type">crwdns654:0crwdne654:0</string>
 </resources>

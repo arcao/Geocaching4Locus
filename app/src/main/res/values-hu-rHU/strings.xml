@@ -73,8 +73,8 @@
     <string name="title_import_from_gc" comment="">Importálás GC kódból</string>
     <string name="error_gc_code_invalid" comment="">Érvénytelen GC kód.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">%s láda nem található.</item>
-        <item quantity="other" comment="">%s ládák nem találhatóak.</item>
+        <item comment="" quantity="one">%s láda nem található.</item>
+        <item comment="" quantity="other">%s ládák nem találhatóak.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Ládák száma</string>
     <string name="launcher_nearest_geocaches" comment="">Legközelebbi ládák</string>

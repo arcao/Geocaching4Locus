@@ -14,11 +14,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import com.arcao.geocaching4locus.authentication.fragment.BasicMembershipWarningDialogFragment
+import com.arcao.geocaching4locus.authentication.fragment.UnknownMembershipWarningDialogFragment
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.base.util.withObserve
+import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.arcao.geocaching4locus.databinding.ActivityLoginBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -86,9 +88,7 @@ class LoginActivity : AbstractActionBarActivity() {
     fun handleAction(action: LoginAction) {
         when (action) {
             is LoginAction.LoginUrlAvailable -> onLoginUrlAvailable(action.url)
-            is LoginAction.Finish -> {
-                finishAction(action.showBasicMembershipWarning)
-            }
+            is LoginAction.Finish -> finishAction(action.membership)
             is LoginAction.Error -> {
                 startActivity(action.intent)
                 if (viewModel.fromIntent) {
@@ -116,11 +116,16 @@ class LoginActivity : AbstractActionBarActivity() {
         finish()
     }
 
-    private fun finishAction(showBasicMembershipWarning: Boolean) {
+    private fun finishAction(membership: MembershipType) {
         setResult(Activity.RESULT_OK)
 
-        if (showBasicMembershipWarning) {
+        if (membership == MembershipType.BASIC) {
             BasicMembershipWarningDialogFragment.newInstance().show(supportFragmentManager)
+            return
+        }
+
+        if (membership == MembershipType.UNKNOWN) {
+            UnknownMembershipWarningDialogFragment.newInstance().show(supportFragmentManager)
             return
         }
 

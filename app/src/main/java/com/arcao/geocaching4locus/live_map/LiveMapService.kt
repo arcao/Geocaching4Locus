@@ -9,7 +9,6 @@ import androidx.lifecycle.LifecycleService
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.util.ServiceUtil
-import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.withObserve
 import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import org.koin.android.ext.android.inject
@@ -77,10 +76,10 @@ class LiveMapService : LifecycleService() {
                 notificationManager.setDownloadingProgress(state.progress, state.maxProgress)
             }
 
-            is ProgressState.HideProgress -> {
+            ProgressState.HideProgress -> {
                 notificationManager.setDownloadingProgress(Int.MAX_VALUE, Int.MAX_VALUE)
             }
-        }.exhaustive
+        }
     }
 
     companion object {

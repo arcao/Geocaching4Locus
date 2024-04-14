@@ -22,11 +22,11 @@ data class GeocachingAccount(
     val isAccountUpdateInProgress: Boolean
         get() = accountManager.isAccountUpdateInProgress
 
-    suspend fun refreshToken(): Boolean = accountManager.refreshAccount(this)
+    suspend fun refreshToken(): Boolean = accountManager.refreshToken(this)
 
     fun updateUserInfo(user: User) {
         userName = user.username
-        membership = fixMembership(user)
+        membership = user.membership
         avatarUrl = user.avatarUrl
         bannerUrl = user.bannerUrl
         lastUserInfoUpdate = Instant.now()
@@ -34,23 +34,9 @@ data class GeocachingAccount(
         accountManager.saveAccount(this)
     }
 
-    private fun fixMembership(user: User): MembershipType {
-        if (user.membership != MembershipType.UNKNOWN) {
-            return user.membership
-        }
-
-        // if user restricts personal info, try to get Membership from limits
-        if (user.geocacheLimits != null && user.geocacheLimits.fullCallsRemaining > 3) {
-            return MembershipType.PREMIUM
-        }
-
-        return MembershipType.BASIC
-    }
-
     fun isPremium(): Boolean = when (membership) {
-        MembershipType.UNKNOWN -> false
-        MembershipType.BASIC -> false
         MembershipType.CHARTER -> true
         MembershipType.PREMIUM -> true
+        else -> false
     }
 }

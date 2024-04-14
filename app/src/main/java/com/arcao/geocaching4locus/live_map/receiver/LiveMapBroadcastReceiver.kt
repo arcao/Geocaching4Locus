@@ -74,16 +74,21 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
         val leftLongitude = min(mapTopLeft.longitude, mapBottomRight.longitude)
         val rightLongitude = max(mapTopLeft.longitude, mapBottomRight.longitude)
 
-        // Start service to retrieve caches
-        LiveMapService.start(
-            context,
-            mapCenter.latitude,
-            mapCenter.longitude,
-            mapTopLeft.latitude,
-            leftLongitude,
-            mapBottomRight.latitude,
-            rightLongitude
-        )
+        try {
+            // Start service to retrieve caches
+            LiveMapService.start(
+                context,
+                mapCenter.latitude,
+                mapCenter.longitude,
+                mapTopLeft.latitude,
+                leftLongitude,
+                mapBottomRight.latitude,
+                rightLongitude
+            )
+        } catch (e: Exception) {
+            // handle ForegroundServiceStartNotAllowedException: startForegroundService() not allowed due to mAllowStartForeground false
+            notificationManager.isLiveMapEnabled = false
+        }
     }
 
     companion object {

@@ -6,6 +6,7 @@ import androidx.lifecycle.map
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
+import com.arcao.geocaching4locus.authentication.usecase.UpdateAccountUseCase
 import com.arcao.geocaching4locus.base.BaseViewModel
 import com.arcao.geocaching4locus.base.constants.CrashlyticsConstants
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -22,6 +23,7 @@ class LoginViewModel(
     private val app: App,
     private val retrieveAuthorizationUrl: RetrieveAuthorizationUrlUseCase,
     private val createAccount: CreateAccountUseCase,
+    private val updateAccount: UpdateAccountUseCase,
     private val exceptionHandler: ExceptionHandler,
     private val accountManager: AccountManager,
     private val analyticsManager: AnalyticsManager,
@@ -41,6 +43,15 @@ class LoginViewModel(
             job?.cancel()
         }
 
+
+        if (accountManager.account != null) {
+            formVisible(false)
+            fromIntent = true
+            // update account info
+            updateAccountInfo()
+            return
+        }
+
         job = mainImmediateLaunch {
             try {
                 showProgress {
@@ -50,6 +61,31 @@ class LoginViewModel(
                     val url = retrieveAuthorizationUrl()
 
                     action(LoginAction.LoginUrlAvailable(url))
+                }
+            } catch (e: Exception) {
+                handleException(e)
+            }
+        }
+    }
+
+    private fun updateAccountInfo() {
+        job = mainImmediateLaunch {
+            try {
+                showProgress {
+                    val account = updateAccount()
+
+                    val premium = account.isPremium()
+
+                    // handle analytics and crashlytics
+                    account.userName?.let { userName ->
+                        FirebaseCrashlytics.getInstance().setUserId(userName)
+                    }
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey(CrashlyticsConstants.PREMIUM_MEMBER, premium)
+                    analyticsManager.setPremiumMember(premium)
+                    analyticsManager.actionLogin(true, premium)
+
+                    action(LoginAction.Finish(account.membership))
                 }
             } catch (e: Exception) {
                 handleException(e)
@@ -74,16 +110,18 @@ class LoginViewModel(
                 showProgress {
                     // create account
                     val account = createAccount(input)
-
                     val premium = account.isPremium()
 
                     // handle analytics and crashlytics
+                    account.userName?.let { userName ->
+                        FirebaseCrashlytics.getInstance().setUserId(userName)
+                    }
                     FirebaseCrashlytics.getInstance()
                         .setCustomKey(CrashlyticsConstants.PREMIUM_MEMBER, premium)
                     analyticsManager.setPremiumMember(premium)
                     analyticsManager.actionLogin(true, premium)
 
-                    action(LoginAction.Finish(!premium))
+                    action(LoginAction.Finish(account.membership))
                 }
             } catch (e: Exception) {
                 if (!fromIntent) {

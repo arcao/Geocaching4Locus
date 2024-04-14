@@ -73,9 +73,9 @@
     <string name="title_import_from_gc" comment="">Uvezi iz GC koda</string>
     <string name="error_gc_code_invalid" comment="">GC kod nije valjan</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Cache %s nije pronađena.</item>
-        <item quantity="few" comment="">Cache %s nije pronađen.</item>
-        <item quantity="other" comment="">Caches %s nisu pronađeni.</item>
+        <item comment="" quantity="one">Cache %s nije pronađena.</item>
+        <item comment="" quantity="few">Cache %s nije pronađen.</item>
+        <item comment="" quantity="other">Caches %s nisu pronađeni.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Broj cacheova</string>
     <string name="launcher_nearest_geocaches" comment="">Najbliži cacheovi</string>

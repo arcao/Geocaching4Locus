@@ -73,10 +73,10 @@
     <string name="title_import_from_gc" comment="">Importovať z GC kódu</string>
     <string name="error_gc_code_invalid" comment="">GC kód nie je správny.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Skrýša %s nebola nájdená.</item>
-        <item quantity="few" comment="">Skrýše %s sa nenašli.</item>
+        <item comment="" quantity="one">Skrýša %s nebola nájdená.</item>
+        <item comment="" quantity="few">Skrýše %s sa nenašli.</item>
         <item quantity="many">Skrýše %s sa nenašli.</item>
-        <item quantity="other" comment="">Skrýše %s sa nenašli.</item>
+        <item comment="" quantity="other">Skrýše %s sa nenašli.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Počet skrýš</string>
     <string name="launcher_nearest_geocaches" comment="">Najbližšie skrýše</string>

@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     alias(libs.plugins.kotlin.android)
     id("com.android.library")
@@ -17,7 +19,8 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        testInstrumentationRunnerArguments += mapOf("runnerBuilder" to "de.mannodermaus.junit5.AndroidJUnit5Builder")
+        testInstrumentationRunnerArguments["runnerBuilder"] =
+            "de.mannodermaus.junit5.AndroidJUnit5Builder"
         minSdk = libs.versions.minSdk.get().toInt()
 
         multiDexEnabled = true

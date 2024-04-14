@@ -73,10 +73,10 @@
     <string name="title_import_from_gc" comment="">Uvoz kode GC</string>
     <string name="error_gc_code_invalid" comment="">Koda GC ni veljavna.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Zaklad %s ne obstaja.</item>
+        <item comment="" quantity="one">Zaklad %s ne obstaja.</item>
         <item quantity="two">Zaklada %s ne obstajata.</item>
-        <item quantity="few" comment="">Zakladi %s ne obstajajo.</item>
-        <item quantity="other" comment="">Zakladi %s ne obstajajo.</item>
+        <item comment="" quantity="few">Zakladi %s ne obstajajo.</item>
+        <item comment="" quantity="other">Zakladi %s ne obstajajo.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Število zakladov</string>
     <string name="launcher_nearest_geocaches" comment="">Zakladi v bližini</string>

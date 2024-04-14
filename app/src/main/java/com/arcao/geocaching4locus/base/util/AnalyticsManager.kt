@@ -20,6 +20,16 @@ class AnalyticsManager(val context: Context) {
         )
     }
 
+    fun actionUpdateAccount(success: Boolean, premiumMember: Boolean) {
+        firebaseAnalytics.logEvent(
+            EVENT_UPDATE_ACCOUNT,
+            bundleOf(
+                PARAM_SUCCESS to success.toString(),
+                PARAM_PREMIUM_MEMBER to premiumMember.toString()
+            )
+        )
+    }
+
     fun actionDashboard(calledFromLocus: Boolean) {
         firebaseAnalytics.logEvent(
             EVENT_DASHBOARD,
@@ -105,6 +115,7 @@ class AnalyticsManager(val context: Context) {
         const val COORDINATES_SOURCE_MANUAL = "MANUAL"
 
         private const val EVENT_LOGIN = FirebaseAnalytics.Event.LOGIN
+        private const val EVENT_UPDATE_ACCOUNT = "Update_account"
         private const val EVENT_DASHBOARD = "Dashboard"
         private const val EVENT_IMPORT = "Import"
         private const val EVENT_IMPORT_BOOKMARKS = "Import_bookmarks"

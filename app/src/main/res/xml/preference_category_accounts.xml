@@ -4,6 +4,16 @@
     <Preference
         app:iconSpaceReserved="false"
         app:key="account" />
+    <Preference
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false"
+        app:key="account_type"
+        app:title="@string/pref_account_type" />
+    <Preference
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false"
+        app:key="account_refresh"
+        app:title="@string/pref_account_refresh_account_info" />
     <com.arcao.geocaching4locus.settings.widget.PoweredByPreference
         app:iconSpaceReserved="false"
         app:key="account_powered_by"

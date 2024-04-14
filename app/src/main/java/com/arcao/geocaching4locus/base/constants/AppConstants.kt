@@ -7,9 +7,9 @@ import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import locus.api.android.objects.VersionCode
 
 object AppConstants {
-    const val OAUTH_CALLBACK_URL = "https://geocaching4locus.eu/oauth"
-
     val USERS_GUIDE_URI: Uri = Uri.parse("https://geocaching4locus.eu/users-guide/")
+    val GEOCACHING_PRIVACY_SETTING_URI: Uri =
+        Uri.parse("https://www.geocaching.com/account/settings/authorizations#developer")
     val WEBSITE_URI: Uri = Uri.parse("https://geocaching4locus.eu/")
     val FACEBOOK_URI: Uri = Uri.parse("https://www.facebook.com/Geocaching4Locus")
     val GEOCACHING_URI: Uri = Uri.parse("http://geocaching.com/")

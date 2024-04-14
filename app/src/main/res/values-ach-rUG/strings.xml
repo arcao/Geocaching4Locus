@@ -175,10 +175,10 @@
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">crwdns656:0crwdne656:0</string>
     <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">crwdns640:0crwdne640:0</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">crwdns642:0crwdne642:0</string>
-    <string name="pref_account_type" comment="Title of preference in Account settings.">crwdns644:0crwdne644:0</string>
-    <string name="pref_account_refresh_account_info" comment="Title of preference in Account settings.">crwdns646:0crwdne646:0</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">crwdns658:0crwdne658:0</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">crwdns660:0crwdne660:0</string>
     <string name="membership_unknown" comment="Name of unknown membership type">crwdns648:0crwdne648:0</string>
     <string name="membership_basic" comment="Name of basic membership type">crwdns650:0crwdne650:0</string>
-    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">crwdns652:0crwdne652:0</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">crwdns662:0crwdne662:0</string>
     <string name="membership_premium" comment="Name of premium membership type">crwdns654:0crwdne654:0</string>
 </resources>

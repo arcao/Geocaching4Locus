@@ -90,6 +90,7 @@
 <br/>
 <i>Pořiďte si ještě dnes prémiový účet na geocaching.com, aby jste mohl stáhnout plné detaily až 6000 keší za den a využívat další benefity. Navštivte geocaching.com…</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Dosáhl jste limitu stažení plných detailů pro <b>%1$s za %2$s</b>. Vaše denní kvóta bude obnovena v %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Zbývá jen %1$d z %2$d plných detailů keší.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hej, zpomal!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Dosáhl si limitu počtu vykonaných akcí/volání za minutu.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">

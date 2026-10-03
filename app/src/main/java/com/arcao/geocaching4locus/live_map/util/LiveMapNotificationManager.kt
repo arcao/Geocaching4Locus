@@ -23,6 +23,7 @@ import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.RemoveLocusMapPointsUseCase
 import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.base.util.hasPostNotificationPermission
+import com.arcao.geocaching4locus.dashboard.DashboardActivity
 import com.arcao.geocaching4locus.error.ErrorActivity
 import com.arcao.geocaching4locus.live_map.LiveMapService
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
@@ -54,6 +55,13 @@ class LiveMapNotificationManager(
 
     val isForceUpdateRequiredInFuture: Boolean
         get() = !notificationShown
+
+    /**
+     * True if Live map is enabled and the service is running. Live map is enabled, but not running
+     * when the app was restarted by the system, the user has to resume it.
+     */
+    val isLiveMapRunning: Boolean
+        get() = isLiveMapEnabled && LiveMapService.isRunning
 
     var isLiveMapEnabled: Boolean
         get() = preferences.getBoolean(PrefConstants.LIVE_MAP, false)
@@ -95,6 +103,40 @@ class LiveMapNotificationManager(
         createChannel()
     }
 
+    /**
+     * Enables or disables Live map. Enabling starts the foreground service, so it must be called
+     * only when the start of a foreground service is allowed (e.g. user's action in a visible app).
+     */
+    fun requestLiveMapEnabled(enabled: Boolean) {
+        if (enabled) {
+            LiveMapService.enable(context)
+        } else {
+            isLiveMapEnabled = false
+        }
+    }
+
+    /**
+     * Called by the service when it runs in foreground and its notification is visible.
+     */
+    fun onForegroundServiceStarted() {
+        notificationShown = true
+        pausedNotificationShown = false
+        lastLiveMapState = true
+        notifyLiveMapStateChange()
+    }
+
+    fun onForegroundServiceStopped() {
+        notificationShown = false
+        notifyLiveMapStateChange()
+    }
+
+    private fun notifyLiveMapStateChange() {
+        val running = isLiveMapRunning
+        for (listener in stateChangeListeners) {
+            listener.onLiveMapStateChange(running)
+        }
+    }
+
     private fun createChannel() {
         val channelDescription = context.getText(R.string.menu_live_map)
 
@@ -121,13 +163,10 @@ class LiveMapNotificationManager(
 
         when (intent.action) {
             ACTION_HIDE_NOTIFICATION -> {
-                hideNotification()
-                return true
-            }
-
-            ACTION_LIVE_MAP_ENABLE -> {
-                isLiveMapEnabled = true
-                showNotification()
+                // notification of the running Live map is not hidden
+                if (!isLiveMapEnabled) {
+                    hideNotification()
+                }
                 return true
             }
 
@@ -142,7 +181,12 @@ class LiveMapNotificationManager(
             }
 
             else -> {
-                if (!isLiveMapEnabled && !defaultPreferenceManager.showLiveMapDisabledNotification) {
+                // Live map is enabled, the notification is managed by the foreground service
+                if (isLiveMapEnabled) {
+                    return false
+                }
+
+                if (!defaultPreferenceManager.showLiveMapDisabledNotification) {
                     return false
                 }
 
@@ -218,6 +262,44 @@ class LiveMapNotificationManager(
         notificationManager.cancel(AppConstants.NOTIFICATION_ID_LIVEMAP)
     }
 
+    /**
+     * Shows a notification that Live map is enabled, but not running, e.g. the app was restarted
+     * by the system. User has to resume the Live map manually.
+     */
+    fun showPausedNotification() {
+        if (pausedNotificationShown || LiveMapService.isRunning) {
+            return
+        }
+
+        pausedNotificationShown = true
+        notificationShown = false
+
+        val nb = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
+            .setOngoing(false)
+            .setAutoCancel(true)
+            .setLocalOnly(true)
+            .setCategory(NotificationCompat.CATEGORY_STATUS)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setColor(ContextCompat.getColor(context, R.color.primary))
+            .setSmallIcon(R.drawable.ic_stat_live_map_disabled)
+            .setSubText(context.getText(R.string.menu_live_map))
+            .setContentTitle(context.getText(R.string.notify_live_map_message_paused))
+            // the foreground service can't be started after the time limit until the app is visible
+            .setContentIntent(
+                createPendingActivityIntent(
+                    Intent(context, DashboardActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            )
+            .addAction(
+                R.drawable.ic_stat_navigation_accept,
+                context.getText(R.string.notify_live_map_action_resume),
+                createPendingForegroundServiceIntent()
+            )
+
+        notificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, nb.build())
+    }
+
     fun createNotification(): NotificationCompat.Builder {
         val nb = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
 
@@ -241,7 +323,7 @@ class LiveMapNotificationManager(
             nb.addAction(
                 R.drawable.ic_stat_navigation_accept,
                 context.getText(R.string.notify_live_map_action_enable),
-                createPendingBroadcastIntent(ACTION_LIVE_MAP_ENABLE)
+                createPendingForegroundServiceIntent()
             )
             context.getText(R.string.notify_live_map_message_disabled)
         }
@@ -264,6 +346,17 @@ class LiveMapNotificationManager(
 
         return nb
     }
+
+    /**
+     * Pending intent which enables Live map and starts the foreground service. Starting of
+     * a foreground service by a user's action on a notification is allowed from a background.
+     */
+    private fun createPendingForegroundServiceIntent() = PendingIntent.getForegroundService(
+        context,
+        0,
+        LiveMapService.createEnableIntent(context),
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
 
     private fun createPendingActivityIntent(intent: Intent) = PendingIntent.getActivity(
         context, 0,
@@ -343,14 +436,13 @@ class LiveMapNotificationManager(
 
         private const val ACTION_HIDE_NOTIFICATION =
             "com.arcao.geocaching4locus.action.HIDE_NOTIFICATION"
-        private const val ACTION_LIVE_MAP_ENABLE =
-            "com.arcao.geocaching4locus.action.LIVE_MAP_ENABLE"
         private const val ACTION_LIVE_MAP_DISABLE =
             "com.arcao.geocaching4locus.action.LIVE_MAP_DISABLE"
         private const val NOTIFICATION_TIMEOUT_MS: Long = 2200
         private const val NOTIFICATION_CHANNEL_ID = "LIVE_MAP_NOTIFICATION_CHANNEL"
 
         private var notificationShown: Boolean = false
+        private var pausedNotificationShown: Boolean = false
         private var lastLiveMapState: Boolean = false
 
         private fun isMapVisible(intent: Intent): Boolean {

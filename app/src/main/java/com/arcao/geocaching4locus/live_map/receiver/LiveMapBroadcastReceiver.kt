@@ -32,6 +32,13 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
             return
         }
 
+        // The foreground service can't be started from here (a background), the user has to resume
+        // Live map, e.g. after the app was restarted by the system.
+        if (!LiveMapService.isRunning) {
+            notificationManager.showPausedNotification()
+            return
+        }
+
         val container = try {
             ActionBasics.getUpdateContainer(context, requireNotNull(LocusUtils.createLocusVersion(context, intent)))
                 ?: return
@@ -75,8 +82,8 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
         val rightLongitude = max(mapTopLeft.longitude, mapBottomRight.longitude)
 
         try {
-            // Start service to retrieve caches
-            LiveMapService.start(
+            // Send new coordinates to the running service to retrieve caches
+            LiveMapService.update(
                 context,
                 mapCenter.latitude,
                 mapCenter.longitude,
@@ -86,8 +93,9 @@ class LiveMapBroadcastReceiver : BroadcastReceiver(), KoinComponent {
                 rightLongitude
             )
         } catch (e: Exception) {
-            // handle ForegroundServiceStartNotAllowedException: startForegroundService() not allowed due to mAllowStartForeground false
-            notificationManager.isLiveMapEnabled = false
+            // the service can't be reached from a background, e.g. when it has just been stopped
+            Timber.e(e)
+            notificationManager.showPausedNotification()
         }
     }
 

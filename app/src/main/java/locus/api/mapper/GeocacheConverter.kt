@@ -9,6 +9,7 @@ import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import com.arcao.geocaching4locus.data.api.model.enums.AdditionalWaypointType
 import com.arcao.geocaching4locus.data.api.model.enums.GeocacheStatus
 import com.arcao.geocaching4locus.data.api.util.CoordinatesParser
+import com.arcao.geocaching4locus.data.api.util.ImageUrl
 import com.arcao.geocaching4locus.data.api.util.ReferenceCode
 import com.arcao.geocaching4locus.settings.manager.DefaultPreferenceManager
 import locus.api.mapper.Util.applyUnavailabilityForGeocache
@@ -74,6 +75,16 @@ class GeocacheConverter(
                 images = mutableListOf<GeocachingImage>().apply {
                     for (image in cache.images.orEmpty()) {
                         imageDataConverter.createLocusGeocachingImage(image)?.let(this::add)
+                    }
+
+                    // the listing background image, it can contain a spoiler or a hint
+                    cache.backgroundImageUrl?.takeIf { it.isNotBlank() }?.let { backgroundUrl ->
+                        add(
+                            GeocachingImage().apply {
+                                name = context.getString(R.string.var_background_image_name)
+                                url = ImageUrl.toLarge(backgroundUrl)
+                            }
+                        )
                     }
                 }
 

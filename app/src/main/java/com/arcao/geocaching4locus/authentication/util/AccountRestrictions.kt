@@ -1,8 +1,12 @@
 package com.arcao.geocaching4locus.authentication.util
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.api.model.User
@@ -166,6 +170,40 @@ class AccountRestrictions internal constructor(context: Context) {
             putInt(PrefConstants.RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT, currentLiteGeocacheLimit)
             putLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, renewLiteGeocacheLimit.epochSecond)
         }
+
+        if (user.isPremium()) {
+            warnIfFullLimitAlmostDepleted()
+        }
+    }
+
+    /**
+     * Warns the user once per limit period when only a few full geocache downloads remain.
+     */
+    private fun warnIfFullLimitAlmostDepleted() {
+        if (maxFullGeocacheLimit <= 0 || currentFullGeocacheLimit > maxFullGeocacheLimit * LIMIT_WARNING_RATIO) {
+            return
+        }
+
+        val now = Instant.now()
+        val warnedUntil = Instant.ofEpochSecond(
+            preferences.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL, 0)
+        )
+        if (now.isBefore(warnedUntil)) {
+            return
+        }
+
+        preferences.edit {
+            putLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL, renewFullGeocacheLimit.epochSecond)
+        }
+
+        val message = context.getString(
+            R.string.toast_full_geocache_limit_almost_depleted,
+            currentFullGeocacheLimit,
+            maxFullGeocacheLimit
+        )
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {
@@ -175,6 +213,9 @@ class AccountRestrictions internal constructor(context: Context) {
         private const val LITE_GEOCACHE_LIMIT_BASIC = 10000
 
         val DEFAULT_RENEW_DURATION: Duration = Duration.ofDays(1)
+
+        // warn when less than 10 % of the full geocache downloads remains
+        private const val LIMIT_WARNING_RATIO = 0.1
     }
 
     private fun User.isPremium() = when (membership) {

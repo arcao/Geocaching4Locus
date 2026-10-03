@@ -72,6 +72,7 @@ object PrefConstants {
     const val RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit"
     const val RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit"
     const val RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit"
+    const val RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL = "full_geocache_limit_warned_until"
 
     const val RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT = "renew_lite_geocache_limit"
     const val RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT = "current_lite_geocache_limit"

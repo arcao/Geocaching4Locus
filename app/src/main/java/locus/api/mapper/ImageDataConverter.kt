@@ -11,7 +11,8 @@ class ImageDataConverter {
             return null
 
         return GeocachingImage().apply {
-            name = imageData.description.orEmpty()
+            // since 2024-06 the description doesn't contain the name anymore
+            name = (imageData.name ?: imageData.description).orEmpty()
             description = imageData.description.orEmpty()
             thumbUrl = imageData.thumbnailUrl.orEmpty()
             url = imageData.url

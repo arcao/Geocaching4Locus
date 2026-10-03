@@ -32,7 +32,7 @@ class DashboardViewModel(
 
     init {
         notificationManager.addLiveMapStateChangeListener(this)
-        liveMapEnabled(notificationManager.isLiveMapEnabled)
+        liveMapEnabled(notificationManager.isLiveMapRunning)
 
         analyticsManager.actionDashboard(calledFromLocusMap)
     }
@@ -77,7 +77,7 @@ class DashboardViewModel(
     @UiThread
     private suspend fun toggleLiveMap() {
         computationContext {
-            notificationManager.isLiveMapEnabled = !notificationManager.isLiveMapEnabled
+            notificationManager.requestLiveMapEnabled(!notificationManager.isLiveMapRunning)
         }
 
         if (calledFromLocusMap) {

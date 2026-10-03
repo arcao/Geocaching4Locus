@@ -11,6 +11,12 @@ object ReferenceCode {
     // = (16 * 31 * 31 * 31) - (16 * 16 * 16 * 16)
     private const val REFERENCE_CODE_BASE31_MAGIC_NUMBER: Long = 411120
     const val GEOCACHE_PREFIX = "GC"
+
+    /**
+     * Placeholder returned by the API instead of a user reference code (`PR...`) when the user
+     * opted out of sharing it. It is not a valid reference code and can't be converted to an id.
+     */
+    const val HIDDEN_USER = "PRHIDDEN"
     private const val REFERENCE_CODE_BASE16_MAX: Long = 0xFFFF
     private const val BASE_31 = 31
     private const val BASE_16 = 16

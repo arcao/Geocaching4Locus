@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.NonNull
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.util.getText
@@ -15,11 +14,11 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
         @StringRes message: Int,
         additionalMessage: CharSequence? = null
     ) {
-        arguments = bundleOf(
-            PARAM_TITLE to title,
-            PARAM_MESSAGE to message,
-            PARAM_ADDITIONAL_MESSAGE to additionalMessage
-        )
+        arguments = Bundle().apply {
+            putInt(PARAM_TITLE, title)
+            putInt(PARAM_MESSAGE, message)
+            putCharSequence(PARAM_ADDITIONAL_MESSAGE, additionalMessage)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

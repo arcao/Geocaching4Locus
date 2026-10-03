@@ -95,6 +95,8 @@ class SliderPreference @JvmOverloads constructor(
         if (preference !is SliderPreference) return false
 
         val f = SliderPreferenceDialogFragment.newInstance(preference.getKey())
+        // PreferenceDialogFragmentCompat still requires the target fragment
+        @Suppress("DEPRECATION")
         f.setTargetFragment(caller, 0)
         f.show(fragmentManager, DIALOG_FRAGMENT_TAG)
         return true

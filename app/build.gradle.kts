@@ -1,10 +1,7 @@
-import java.io.ByteArrayOutputStream
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.android.legacy.kapt)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.google.services)
@@ -16,14 +13,22 @@ java {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-jvm-default=no-compatibility",
+            "-opt-in=kotlin.RequiresOptIn",
+            "-Xannotation-default-target=param-property"
+        )
+    }
+}
+
 fun String.runCommand(currentWorkingDir: File = file("./")): String {
-    val byteOut = ByteArrayOutputStream()
-    project.exec {
+    return providers.exec {
         workingDir = currentWorkingDir
         commandLine = this@runCommand.split("\\s".toRegex())
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
+    }.standardOutput.asText.get().trim()
 }
 
 fun gitSha() = "git rev-parse --short HEAD".runCommand(rootDir).trim()
@@ -85,7 +90,7 @@ dependencies {
 
 android {
     namespace = "com.arcao.geocaching4locus"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.arcao.geocaching4locus"
@@ -100,10 +105,10 @@ android {
         // set Geocaching API staging key and secret if production key and secret is not set
         // Note: Staging server is slow and not for production use!!!!
         val geocachingApiKey =
-            properties["geocachingApiKey"] ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
+            providers.gradleProperty("geocachingApiKey").orNull ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
         val geocachingApiSecret =
-            properties["geocachingApiSecret"] ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
-        val geocachingApiStaging = properties["geocachingApiStaging"] != "false"
+            providers.gradleProperty("geocachingApiSecret").orNull ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
+        val geocachingApiStaging = providers.gradleProperty("geocachingApiStaging").orNull != "false"
 
         buildConfigField("String", "GIT_SHA", "null")
         buildConfigField("String", "BUILD_TIME", "null")
@@ -113,7 +118,7 @@ android {
 
         buildConfigField("String", "TEST_USER", "null")
         buildConfigField("String", "TEST_PASSWORD", "null")
-        resourceConfigurations += setOf("en", "cs", "de", "es", "fr", "nl", "no", "pl", "sk")
+        androidResources.localeFilters += setOf("en", "cs", "de", "es", "fr", "nl", "no", "pl", "sk")
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -127,14 +132,6 @@ android {
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    kotlinOptions {
-        freeCompilerArgs += listOf("-Xjvm-default=all", "-opt-in=kotlin.RequiresOptIn")
     }
 
     buildFeatures {
@@ -201,10 +198,14 @@ if (project.hasProperty("storeFile") &&
     project.hasProperty("storePassword") &&
     project.hasProperty("keyPassword")
 ) {
-    android.signingConfigs.getByName("release").storeFile = file(properties["storeFile"] as String)
+    // Accept both plain paths and file:// URIs (also the malformed file://C:/... form)
+    val storeFilePath = (providers.gradleProperty("storeFile").get())
+        .removePrefix("file://")
+        .replace(Regex("^/([A-Za-z]:)"), "$1")
+    android.signingConfigs.getByName("release").storeFile = file(storeFilePath)
     android.signingConfigs.getByName("release").storePassword =
-        properties["storePassword"] as String
-    android.signingConfigs.getByName("release").keyPassword = properties["keyPassword"] as String
+        providers.gradleProperty("storePassword").get()
+    android.signingConfigs.getByName("release").keyPassword = providers.gradleProperty("keyPassword").get()
 } else {
     android.buildTypes.getByName("release").signingConfig =
         android.signingConfigs.getByName("debug")

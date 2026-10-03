@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -115,12 +114,12 @@ class ProgressDialogFragment : AbstractDialogFragment() {
 
         fun newInstance(requestId: Int, message: CharSequence, progress: Int, maxProgress: Int) =
                 ProgressDialogFragment().apply {
-                    arguments = bundleOf(
-                            ARGS_REQUEST_ID to requestId,
-                            ARGS_MESSAGE to message,
-                            ARGS_PROGRESS to progress,
-                            ARGS_MAX_PROGRESS to maxProgress
-                    )
+                    arguments = Bundle().apply {
+                        putInt(ARGS_REQUEST_ID, requestId)
+                        putCharSequence(ARGS_MESSAGE, message)
+                        putInt(ARGS_PROGRESS, progress)
+                        putInt(ARGS_MAX_PROGRESS, maxProgress)
+                    }
                 }
 
         private const val ARGS_REQUEST_ID = "requestId"

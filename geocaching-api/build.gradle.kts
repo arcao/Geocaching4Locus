@@ -1,9 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    alias(libs.plugins.kotlin.android)
     id("com.android.library")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.junit5)
 }
@@ -14,9 +13,20 @@ java {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-jvm-default=no-compatibility",
+            "-opt-in=kotlin.RequiresOptIn",
+            "-Xannotation-default-target=param-property"
+        )
+    }
+}
+
 android {
     namespace = "com.arcao.geocaching4locus.geocaching_api"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         testInstrumentationRunnerArguments["runnerBuilder"] =
@@ -28,10 +38,10 @@ android {
         // set Geocaching API staging key and secret if production key and secret is not set
         // Note: Staging server is slow and not for production use!!!!
         val geocachingApiKey =
-            properties["geocachingApiKey"] ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
+            providers.gradleProperty("geocachingApiKey").orNull ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
         val geocachingApiSecret =
-            properties["geocachingApiSecret"] ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
-        val geocachingApiStaging = properties["geocachingApiStaging"] != "false"
+            providers.gradleProperty("geocachingApiSecret").orNull ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
+        val geocachingApiStaging = providers.gradleProperty("geocachingApiStaging").orNull != "false"
 
         buildConfigField("String", "GEOCACHING_API_KEY", "\"${geocachingApiKey}\"")
         buildConfigField("String", "GEOCACHING_API_SECRET", "\"${geocachingApiSecret}\"")
@@ -47,14 +57,6 @@ android {
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    kotlinOptions {
-        freeCompilerArgs += listOf("-Xjvm-default=all", "-opt-in=kotlin.RequiresOptIn")
     }
 
     buildFeatures {
@@ -99,6 +101,7 @@ dependencies {
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation(libs.mockk)
     testImplementation(libs.okhttp.mockwebserver)
 

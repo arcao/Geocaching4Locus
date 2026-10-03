@@ -77,9 +77,19 @@ class AccountRestrictions internal constructor(context: Context) {
         renewLiteGeocacheLimit = Instant.ofEpochSecond(preferences.getLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, 0))
     }
 
-    internal fun applyRestrictions(user: User) {
+    /**
+     * Applies restrictions of the membership to the preferences.
+     *
+     * The Basic membership restrictions are enforced every time, because the Basic members are not
+     * allowed to use the features. The Premium defaults are only defaults, they are applied only
+     * when [applyPremiumDefaults] is true (a new account or a change of the membership), otherwise
+     * the choices made by the user would be reset every time the account info is refreshed.
+     */
+    internal fun applyRestrictions(user: User, applyPremiumDefaults: Boolean = true) {
         if (user.isPremium()) {
-            presetPremiumMembershipConfiguration()
+            if (applyPremiumDefaults) {
+                presetPremiumMembershipConfiguration()
+            }
         } else {
             presetBasicMembershipConfiguration()
         }

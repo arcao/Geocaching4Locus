@@ -16,12 +16,13 @@ class UpdateAccountUseCase(
     suspend operator fun invoke(): GeocachingAccount = withContext(dispatcherProvider.io) {
         val account = requireNotNull(accountManager.account)
         val user = api.user()
+        val wasPremium = account.isPremium()
         account.updateUserInfo(user)
 
-        // update restrictions
+        // update restrictions, the Premium defaults are applied only if the membership has changed
         accountManager.restrictions().apply {
             updateLimits(user)
-            applyRestrictions(user)
+            applyRestrictions(user, applyPremiumDefaults = !wasPremium)
         }
 
         account

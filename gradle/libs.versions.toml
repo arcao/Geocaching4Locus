@@ -37,8 +37,8 @@ kotlin-bom = "2.3.21"
 
 # networking
 moshi = "1.15.2"
-okhttp = "4.12.0"
-retrofit = "2.11.0"
+okhttp = "5.5.0"
+retrofit = "3.0.0"
 
 # testing
 junit-android-test = "1.4.0"
@@ -52,7 +52,7 @@ slf4j-timber = "3.1"
 timber = "5.0.1"
 
 # support
-koin = "3.5.4"
+koin = "4.2.2"
 scribejava = "8.3.3"
 material_dialogs = "3.3.0"
 

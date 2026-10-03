@@ -1,9 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    alias(libs.plugins.kotlin.android)
     id("com.android.library")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.junit5)
 }
@@ -23,7 +22,7 @@ kotlin {
 
 android {
     namespace = "com.arcao.geocaching4locus.geocaching_api"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         testInstrumentationRunnerArguments["runnerBuilder"] =

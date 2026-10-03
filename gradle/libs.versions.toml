@@ -1,13 +1,14 @@
 [versions]
 app = "3.0.12"
 minSdk = "26"
+compileSdk = "37"
 targetSdk = "36"
 
 # build plugins
-plugin-android = "8.13.2"
-plugin-firebase-crashlytics = "2.9.9"
-plugin-google_services = "4.4.1"
-plugin-android-junit5 = "1.8.2.1"
+plugin-android = "9.4.1"
+plugin-firebase-crashlytics = "3.0.8"
+plugin-google_services = "4.4.4"
+plugin-android-junit5 = "2.0.1"
 plugin-versions = "0.53.0"
 plugin-ksp = "2.3.12"
 
@@ -16,7 +17,7 @@ androidx-appcompat = "1.7.1"
 androidx-card_view = "1.0.0"
 androidx-collection = "1.6.0"
 androidx-constraint_layout = "2.2.2"
-androidx-core = "1.17.0"
+androidx-core = "1.19.1"
 androidx-browser = "1.10.0"
 androidx-fragment = "1.9.1"
 androidx-lifecycle-core = "2.11.0"
@@ -126,7 +127,8 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "plugin-android" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-bom" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin-bom" }
+android-legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "plugin-android" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google_services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }

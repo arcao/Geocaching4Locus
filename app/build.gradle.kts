@@ -1,8 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.android.legacy.kapt)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.google.services)
@@ -87,7 +86,7 @@ dependencies {
 
 android {
     namespace = "com.arcao.geocaching4locus"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.arcao.geocaching4locus"

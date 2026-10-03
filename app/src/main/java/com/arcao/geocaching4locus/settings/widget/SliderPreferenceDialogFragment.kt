@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.preference.PreferenceDialogFragmentCompat
 import com.arcao.geocaching4locus.R
 import kotlin.math.min
@@ -206,9 +205,9 @@ class SliderPreferenceDialogFragment : PreferenceDialogFragmentCompat() {
         private const val SAVE_STATE_VALUE = "SliderPreferenceDialogFragment.value"
 
         fun newInstance(key: String) = SliderPreferenceDialogFragment().apply {
-            arguments = bundleOf(
-                ARG_KEY to key
-            )
+            arguments = Bundle().apply {
+                putString(ARG_KEY, key)
+            }
         }
     }
 }

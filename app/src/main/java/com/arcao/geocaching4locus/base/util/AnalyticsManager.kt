@@ -1,9 +1,9 @@
 package com.arcao.geocaching4locus.base.util
 
 import android.content.Context
-import androidx.core.os.bundleOf
 
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 
 class AnalyticsManager(val context: Context) {
     private val firebaseAnalytics by lazy {
@@ -11,60 +11,42 @@ class AnalyticsManager(val context: Context) {
     }
 
     fun actionLogin(success: Boolean, premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_LOGIN,
-            bundleOf(
-                PARAM_SUCCESS to success.toString(),
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_LOGIN) {
+            param(PARAM_SUCCESS, success.toString())
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionUpdateAccount(success: Boolean, premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_UPDATE_ACCOUNT,
-            bundleOf(
-                PARAM_SUCCESS to success.toString(),
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_UPDATE_ACCOUNT) {
+            param(PARAM_SUCCESS, success.toString())
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionDashboard(calledFromLocus: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_DASHBOARD,
-            bundleOf(
-                PARAM_CALLED_FROM_LOCUS to calledFromLocus.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_DASHBOARD) {
+            param(PARAM_CALLED_FROM_LOCUS, calledFromLocus.toString())
+        }
     }
 
     fun actionImport(premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_IMPORT,
-            bundleOf(
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_IMPORT) {
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionImportBookmarks(count: Int, all: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_IMPORT_BOOKMARKS,
-            bundleOf(
-                PARAM_COUNT to count,
-                PARAM_ALL to all.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_IMPORT_BOOKMARKS) {
+            param(PARAM_COUNT, count.toLong())
+            param(PARAM_ALL, all.toString())
+        }
     }
 
     fun actionImportGC(premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_IMPORT_GC,
-            bundleOf(
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_IMPORT_GC) {
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionSearchNearest(
@@ -73,36 +55,27 @@ class AnalyticsManager(val context: Context) {
         count: Int,
         premiumMember: Boolean
     ) {
-        firebaseAnalytics.logEvent(
-            EVENT_SEARCH_NEAREST,
-            bundleOf(
-                PARAM_COORDINATES_SOURCE to (coordinatesSource ?: COORDINATES_SOURCE_MANUAL),
-                PARAM_USE_FILTER to useFilter.toString(),
-                PARAM_COUNT to count,
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_SEARCH_NEAREST) {
+            param(PARAM_COORDINATES_SOURCE, (coordinatesSource ?: COORDINATES_SOURCE_MANUAL))
+            param(PARAM_USE_FILTER, useFilter.toString())
+            param(PARAM_COUNT, count.toLong())
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionUpdate(oldPoint: Boolean, updateLogs: Boolean, premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_UPDATE,
-            bundleOf(
-                PARAM_OLD_POINT to oldPoint.toString(),
-                PARAM_UPDATE_LOGS to updateLogs.toString(),
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_UPDATE) {
+            param(PARAM_OLD_POINT, oldPoint.toString())
+            param(PARAM_UPDATE_LOGS, updateLogs.toString())
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun actionUpdateMore(count: Int, premiumMember: Boolean) {
-        firebaseAnalytics.logEvent(
-            EVENT_UPDATE_MORE,
-            bundleOf(
-                PARAM_COUNT to count,
-                PARAM_PREMIUM_MEMBER to premiumMember.toString()
-            )
-        )
+        firebaseAnalytics.logEvent(EVENT_UPDATE_MORE) {
+            param(PARAM_COUNT, count.toLong())
+            param(PARAM_PREMIUM_MEMBER, premiumMember.toString())
+        }
     }
 
     fun setPremiumMember(premium: Boolean) {

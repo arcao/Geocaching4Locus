@@ -16,7 +16,6 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.arcao.geocaching4locus.R
@@ -271,14 +270,14 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             step: Int = 1
         ) = SliderDialogFragment().apply {
 
-            arguments = bundleOf(
-                PARAM_TITLE to title,
-                PARAM_MESSAGE to message,
-                PARAM_MIN to min,
-                PARAM_MAX to max,
-                PARAM_DEFAULT_VALUE to defaultValue,
-                PARAM_STEP to step
-            )
+            arguments = Bundle().apply {
+                putInt(PARAM_TITLE, title)
+                putInt(PARAM_MESSAGE, message)
+                putInt(PARAM_MIN, min)
+                putInt(PARAM_MAX, max)
+                putInt(PARAM_DEFAULT_VALUE, defaultValue)
+                putInt(PARAM_STEP, step)
+            }
 
             isCancelable = false
         }

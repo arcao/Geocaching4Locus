@@ -28,7 +28,7 @@ class BookmarkGeocachesAdapter :
             override fun getItem(position: Int) = snapshot()[position]
         }
 
-        SelectionTracker(selectionAdapter).apply {
+        SelectionTracker(selectionAdapter, ListGeocacheEntity::class.java).apply {
             addSelectionChangeListener { startPosition: Int, count: Int ->
                 notifyItemRangeChanged(startPosition, count)
             }

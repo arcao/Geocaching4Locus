@@ -188,8 +188,11 @@ class DisplayManagerCollector(private val context: Context) : Collector() {
                 .append(metrics.density).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".densityDpi=")
                 .append(metrics.javaClass.getField("densityDpi")).append('\n')
+            // diagnostic output only, scaledDensity is deprecated but still filled
+            @Suppress("DEPRECATION")
+            val scaledDensity = metrics.scaledDensity
             result.append(display.displayId).append('.').append(methodName).append("scaledDensity=x")
-                .append(metrics.scaledDensity).append('\n')
+                .append(scaledDensity).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".widthPixels=")
                 .append(metrics.widthPixels).append('\n')
             result.append(display.displayId).append('.').append(methodName).append(".heightPixels=")

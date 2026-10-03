@@ -16,7 +16,11 @@ java {
 kotlin {
     jvmToolchain(17)
     compilerOptions {
-        freeCompilerArgs.addAll("-jvm-default=no-compatibility", "-opt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs.addAll(
+            "-jvm-default=no-compatibility",
+            "-opt-in=kotlin.RequiresOptIn",
+            "-Xannotation-default-target=param-property"
+        )
     }
 }
 
@@ -34,10 +38,10 @@ android {
         // set Geocaching API staging key and secret if production key and secret is not set
         // Note: Staging server is slow and not for production use!!!!
         val geocachingApiKey =
-            properties["geocachingApiKey"] ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
+            providers.gradleProperty("geocachingApiKey").orNull ?: "9C7552E1-3C04-4D04-A395-230D8931E494"
         val geocachingApiSecret =
-            properties["geocachingApiSecret"] ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
-        val geocachingApiStaging = properties["geocachingApiStaging"] != "false"
+            providers.gradleProperty("geocachingApiSecret").orNull ?: "DA7CC147-7B5B-4423-BCB4-D0C03E2BF685"
+        val geocachingApiStaging = providers.gradleProperty("geocachingApiStaging").orNull != "false"
 
         buildConfigField("String", "GEOCACHING_API_KEY", "\"${geocachingApiKey}\"")
         buildConfigField("String", "GEOCACHING_API_SECRET", "\"${geocachingApiSecret}\"")

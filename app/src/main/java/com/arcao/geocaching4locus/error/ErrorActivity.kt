@@ -10,6 +10,8 @@ import android.os.Parcelable
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.IntentCompat
+import androidx.core.os.BundleCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
@@ -45,10 +47,10 @@ class ErrorActivity : AppCompatActivity() {
 
             val title = args.getCharSequence(KEY_TITLE)
             val message = args.getCharSequence(KEY_MESSAGE) ?: ""
-            val positiveAction = args.getParcelable(KEY_POSITIVE_ACTION) as Intent?
+            val positiveAction = BundleCompat.getParcelable(args, KEY_POSITIVE_ACTION, Intent::class.java)
             val positiveButtonText = args.getCharSequence(KEY_POSITIVE_BUTTON_TEXT)
             val negativeButtonText = args.getCharSequence(KEY_NEGATIVE_BUTTON_TEXT)
-            val t = args.getSerializable(KEY_EXCEPTION) as? Throwable
+            val t = BundleCompat.getSerializable(args, KEY_EXCEPTION, Throwable::class.java)
 
             val context = requireContext()
 
@@ -181,4 +183,4 @@ class ErrorActivity : AppCompatActivity() {
 }
 
 internal fun Intent.hasPositiveAction() =
-    getParcelableExtra<Parcelable?>(ErrorActivity.KEY_POSITIVE_ACTION) != null
+    IntentCompat.getParcelableExtra(this, ErrorActivity.KEY_POSITIVE_ACTION, Parcelable::class.java) != null

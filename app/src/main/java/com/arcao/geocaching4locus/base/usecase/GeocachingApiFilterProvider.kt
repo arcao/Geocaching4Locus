@@ -7,6 +7,7 @@ import com.arcao.geocaching4locus.data.api.model.enums.MembershipType
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.BoundingBoxFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DifficultyFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.DistanceUnit
+import com.arcao.geocaching4locus.data.api.model.request.query.filter.FavoritePointsFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.Filter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.FoundByFilter
 import com.arcao.geocaching4locus.data.api.model.request.query.filter.GeocacheSizeFilter
@@ -34,7 +35,8 @@ class GeocachingApiFilterProvider(
         difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
-        terrainMax: Float = 5F
+        terrainMax: Float = 5F,
+        minFavoritePoints: Int = 0
     ): List<Filter> {
         val filters = mutableListOf<Filter>()
 
@@ -77,6 +79,10 @@ class GeocachingApiFilterProvider(
             if (terrainMin > 1 || terrainMax < 5) {
                 filters += TerrainFilter(terrainMin, terrainMax)
             }
+
+            if (minFavoritePoints > 0) {
+                filters += FavoritePointsFilter(minFavoritePoints)
+            }
         }
 
         return filters
@@ -93,7 +99,8 @@ class GeocachingApiFilterProvider(
         difficultyMin: Float = 1F,
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
-        terrainMax: Float = 5F
+        terrainMax: Float = 5F,
+        minFavoritePoints: Int = 0
     ): List<Filter> {
         val filters = mutableListOf<Filter>()
 
@@ -134,6 +141,10 @@ class GeocachingApiFilterProvider(
 
             if (terrainMin > 1 || terrainMax < 5) {
                 filters += TerrainFilter(terrainMin, terrainMax)
+            }
+
+            if (minFavoritePoints > 0) {
+                filters += FavoritePointsFilter(minFavoritePoints)
             }
         }
 

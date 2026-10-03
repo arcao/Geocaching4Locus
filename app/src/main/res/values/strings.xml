@@ -54,6 +54,10 @@
     <string name="pref_difficulty_max" comment="">Max. difficulty</string>
     <string name="pref_terrain_min" comment="">Min. terrain</string>
     <string name="pref_terrain_max" comment="">Max. terrain</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favorite points</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Show only geocaches with at least this many favorite points</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Off</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Show only geocaches with at least this many favorite points. Enter 0 to turn the filter off.</string>
 
     <string name="pref_download_basic" comment="">Basic info only</string>
     <string name="pref_download_basic_summary" comment="">Download only basic information about cache</string>

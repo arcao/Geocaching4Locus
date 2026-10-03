@@ -38,6 +38,7 @@ object PrefConstants {
     const val FILTER_TERRAIN_MIN = "terrain_filter_min"
     const val FILTER_TERRAIN_MAX = "terrain_filter_max"
     const val FILTER_DISTANCE = "filter_distance"
+    const val FILTER_MIN_FAVORITE_POINTS = "filter_min_favorite_points"
     const val FILTER_SHOW_FOUND = "filter_show_found"
     const val FILTER_SHOW_OWN = "filter_show_own"
     const val FILTER_SHOW_DISABLED = "filter_show_disabled"

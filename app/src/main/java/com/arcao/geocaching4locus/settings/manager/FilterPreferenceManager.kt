@@ -53,6 +53,13 @@ class FilterPreferenceManager(
     val terrainMax
         get() = preferences.getParsedFloat(PrefConstants.FILTER_TERRAIN_MAX, 5f)
 
+    val minFavoritePoints: Int
+        get() = preferences.getString(PrefConstants.FILTER_MIN_FAVORITE_POINTS, null)
+            ?.trim()
+            ?.toIntOrNull()
+            ?.coerceAtLeast(0)
+            ?: 0
+
     val excludeIgnoreList = true
 
     val geocacheTypes: IntArray

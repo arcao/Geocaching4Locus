@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.PowerManager
 import android.util.SparseArray
 import androidx.core.util.forEach
@@ -27,7 +26,14 @@ object ServiceUtil {
      * @param intent The Intent with which to start the service, as per
      * [                Context.startService][Context.startService].
      */
-    fun startWakefulForegroundService(context: Context, intent: Intent): ComponentName? {
+    fun startWakefulForegroundService(context: Context, intent: Intent): ComponentName? =
+        startWakefulService(context, intent, foreground = true)
+
+    /**
+     * Same as [startWakefulForegroundService], but the service is started by [Context.startService]
+     * when [foreground] is false. It is intended for a service which already runs in foreground.
+     */
+    fun startWakefulService(context: Context, intent: Intent, foreground: Boolean): ComponentName? {
         synchronized(ACTIVE_WAKE_LOCKS) {
             val id = nextId
             nextId++
@@ -37,10 +43,11 @@ object ServiceUtil {
 
             intent.putExtra(EXTRA_WAKE_LOCK_ID, id)
 
-            val comp = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            val comp = (if (foreground) {
                 context.startForegroundService(intent)
-            else
-                context.startService(intent)) ?: return null
+            } else {
+                context.startService(intent)
+            }) ?: return null
 
             val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
 

@@ -4,7 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
-import android.os.Build
+import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import com.arcao.geocaching4locus.base.ProgressState
 import com.arcao.geocaching4locus.base.constants.AppConstants
@@ -22,41 +22,80 @@ class LiveMapService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
 
+        isRunning = true
+
         viewModel.progress.withObserve(this, ::handleProgress)
 
         lifecycle.addObserver(viewModel)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // in case the service is already running, this must be called after each startForegroundService
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                startForeground(
-                    AppConstants.NOTIFICATION_ID_LIVEMAP,
-                    notificationManager.createNotification().build(),
-                    ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-                )
-            } else {
-                startForeground(
-                    AppConstants.NOTIFICATION_ID_LIVEMAP,
-                    notificationManager.createNotification().build()
-                )
+        super.onStartCommand(intent, flags, startId)
+
+        // The service is restarted by the system with null intent after the app was killed. Live map
+        // is not resumed automatically, user is notified by a notification and have to resume it.
+        if (intent == null) {
+            stopSelf(startId)
+            return START_NOT_STICKY
+        }
+
+        when (intent.action) {
+            ACTION_ENABLE -> {
+                if (!startForegroundSafely()) {
+                    stopSelf(startId)
+                    return START_NOT_STICKY
+                }
+
+                // Enable Live map, the user's action allows to start the foreground service
+                notificationManager.isLiveMapEnabled = true
+                if (!notificationManager.isLiveMapEnabled) {
+                    stopSelf(startId)
+                }
             }
+
+            ACTION_UPDATE -> {
+                if (!notificationManager.isLiveMapEnabled) {
+                    stopSelf(startId)
+                } else {
+                    viewModel.addTask(intent, onCompleteCallback)
+                }
+            }
+
+            else -> stopSelf(startId)
+        }
+
+        return START_NOT_STICKY
+    }
+
+    private fun startForegroundSafely(): Boolean {
+        return try {
+            ServiceCompat.startForeground(
+                this,
+                AppConstants.NOTIFICATION_ID_LIVEMAP,
+                notificationManager.createNotification().build(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+            notificationManager.onForegroundServiceStarted()
+            true
         } catch (e: Exception) {
-            // if service is restarted after app kill, startForeground may crash on Android 14
+            // ForegroundServiceStartNotAllowedException, e.g. the dataSync time limit was reached
+            // and the user hasn't brought the app to foreground yet
             Timber.e(e)
+            notificationManager.isLiveMapEnabled = false
+            false
         }
+    }
 
-        if (intent != null) {
-            if (ACTION_START == intent.action) {
-                viewModel.addTask(intent, onCompleteCallback)
-            } else if (ACTION_STOP == intent.action) {
-                cancelTasks()
-                stopSelf(startId)
-            }
-        }
-
-        return super.onStartCommand(intent, flags, startId)
+    /**
+     * Android 15+ limits `dataSync` foreground services to 6 hours in 24 hours. The service must
+     * stop itself after this callback, otherwise the system throws an exception. The user is
+     * notified and can resume the Live map after bringing the app to foreground.
+     */
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Timber.w("LiveMap foreground service timed out (type=%d), stopping", fgsType)
+        cancelTasks()
+        stopSelf(startId)
+        notificationManager.showPausedNotification()
     }
 
     private fun cancelTasks() {
@@ -66,7 +105,9 @@ class LiveMapService : LifecycleService() {
     }
 
     override fun onDestroy() {
+        isRunning = false
         cancelTasks()
+        notificationManager.onForegroundServiceStopped()
         super.onDestroy()
     }
 
@@ -89,14 +130,37 @@ class LiveMapService : LifecycleService() {
         const val PARAM_TOP_LEFT_LONGITUDE = "TOP_LEFT_LONGITUDE"
         const val PARAM_BOTTOM_RIGHT_LATITUDE = "BOTTOM_RIGHT_LATITUDE"
         const val PARAM_BOTTOM_RIGHT_LONGITUDE = "BOTTOM_RIGHT_LONGITUDE"
-        private val ACTION_START = LiveMapService::class.java.canonicalName!! + ".START"
-        private val ACTION_STOP = LiveMapService::class.java.canonicalName!! + ".STOP"
+        private val ACTION_ENABLE = LiveMapService::class.java.canonicalName!! + ".ENABLE"
+        private val ACTION_UPDATE = LiveMapService::class.java.canonicalName!! + ".UPDATE"
+
+        /**
+         * True while the service runs, which means Live map is running.
+         */
+        @Volatile
+        var isRunning: Boolean = false
+            private set
 
         fun stop(context: Context) {
-            context.stopService(Intent(context, LiveMapService::class.java).setAction(ACTION_STOP))
+            context.stopService(Intent(context, LiveMapService::class.java))
         }
 
-        fun start(
+        /**
+         * Creates an intent which enables Live map and starts the foreground service. It must be
+         * sent from a context where the start of a foreground service is allowed: visible app or
+         * a user's action on a notification ([android.app.PendingIntent.getForegroundService]).
+         */
+        fun createEnableIntent(context: Context) =
+            Intent(context, LiveMapService::class.java).setAction(ACTION_ENABLE)
+
+        fun enable(context: Context) {
+            context.startForegroundService(createEnableIntent(context))
+        }
+
+        /**
+         * Sends new map coordinates to the running service. The foreground service must be
+         * already running, the foreground service can't be started from a background.
+         */
+        fun update(
             context: Context,
             centerLatitude: Double,
             centerLongitude: Double,
@@ -104,16 +168,18 @@ class LiveMapService : LifecycleService() {
             topLeftLongitude: Double,
             bottomRightLatitude: Double,
             bottomRightLongitude: Double
-        ) = ServiceUtil.startWakefulForegroundService(context,
+        ) = ServiceUtil.startWakefulService(
+            context,
             Intent(context, LiveMapService::class.java).apply {
-                action = ACTION_START
+                action = ACTION_UPDATE
                 putExtra(PARAM_LATITUDE, centerLatitude)
                 putExtra(PARAM_LONGITUDE, centerLongitude)
                 putExtra(PARAM_TOP_LEFT_LATITUDE, topLeftLatitude)
                 putExtra(PARAM_TOP_LEFT_LONGITUDE, topLeftLongitude)
                 putExtra(PARAM_BOTTOM_RIGHT_LATITUDE, bottomRightLatitude)
                 putExtra(PARAM_BOTTOM_RIGHT_LONGITUDE, bottomRightLongitude)
-            }
+            },
+            foreground = false
         )
     }
 }

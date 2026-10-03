@@ -21,6 +21,14 @@
         app:iconSpaceReserved="false"
         app:key="terrain_filter"
         app:title="@string/pref_terrain" />
+    <EditTextPreference
+        app:defaultValue="0"
+        app:dialogMessage="@string/pref_min_favorite_points_dialog_message"
+        app:dialogTitle="@string/pref_min_favorite_points"
+        app:iconSpaceReserved="false"
+        app:key="filter_min_favorite_points"
+        app:summary="@string/pref_min_favorite_points_summary"
+        app:title="@string/pref_min_favorite_points" />
     <CheckBoxPreference
         app:defaultValue="false"
         app:iconSpaceReserved="false"

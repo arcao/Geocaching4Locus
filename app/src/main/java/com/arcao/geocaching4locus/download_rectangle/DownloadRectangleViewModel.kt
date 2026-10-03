@@ -94,6 +94,7 @@ class DownloadRectangleViewModel constructor(
                         filterPreferenceManager.difficultyMax,
                         filterPreferenceManager.terrainMin,
                         filterPreferenceManager.terrainMax,
+                        filterPreferenceManager.minFavoritePoints,
                         AppConstants.LIVEMAP_CACHES_COUNT
                     ) { count = it }.map { list ->
                         receivedGeocaches += list.size

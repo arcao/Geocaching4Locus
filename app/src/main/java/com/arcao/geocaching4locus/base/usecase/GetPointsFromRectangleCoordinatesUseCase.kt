@@ -39,6 +39,7 @@ class GetPointsFromRectangleCoordinatesUseCase(
         difficultyMax: Float = 5F,
         terrainMin: Float = 1F,
         terrainMax: Float = 5F,
+        minFavoritePoints: Int = 0,
         maxCount: Int = 50,
         countHandler: (Int) -> Unit = {}
     ) = flow {
@@ -64,7 +65,8 @@ class GetPointsFromRectangleCoordinatesUseCase(
                     difficultyMin,
                     difficultyMax,
                     terrainMin,
-                    terrainMax
+                    terrainMax,
+                    minFavoritePoints
                 ),
                 logsCount = geocacheLogsCount,
                 lite = liteData,

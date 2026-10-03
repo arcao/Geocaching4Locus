@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. obtížnost</string>
     <string name="pref_terrain_min" comment="">Min. terén</string>
     <string name="pref_terrain_max" comment="">Max. terén</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favoritních bodů</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Zobrazit jen keše s alespoň tolika favoritními body</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Vypnuto</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Zobrazit jen keše s alespoň tolika favoritními body. Zadáním 0 se filtr vypne.</string>
     <string name="pref_download_basic" comment="">Pouze základní info</string>
     <string name="pref_download_basic_summary" comment="">Stáhnout pouze základní informace o keši</string>
     <string name="pref_download_on_show" comment="">Stáhnout zbývající info při zobrazení</string>

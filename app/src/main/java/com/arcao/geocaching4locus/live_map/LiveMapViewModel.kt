@@ -101,7 +101,8 @@ class LiveMapViewModel(
                     filterPreferenceManager.difficultyMin,
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
-                    filterPreferenceManager.terrainMax
+                    filterPreferenceManager.terrainMax,
+                    filterPreferenceManager.minFavoritePoints
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size
                     requests++

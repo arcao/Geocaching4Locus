@@ -116,6 +116,7 @@ class AccountRestrictions internal constructor(context: Context) {
             putString(PrefConstants.FILTER_DIFFICULTY_MAX, "5")
             putString(PrefConstants.FILTER_TERRAIN_MIN, "1")
             putString(PrefConstants.FILTER_TERRAIN_MAX, "5")
+            putString(PrefConstants.FILTER_MIN_FAVORITE_POINTS, "0")
 
             // multi-select filters (select all)
             for (i in AppConstants.GEOCACHE_TYPES.indices)

@@ -212,6 +212,7 @@ class SearchNearestViewModel(
                     filterPreferenceManager.difficultyMax,
                     filterPreferenceManager.terrainMin,
                     filterPreferenceManager.terrainMax,
+                    filterPreferenceManager.minFavoritePoints,
                     maxCount
                 ) { count = it }.map { list ->
                     receivedGeocaches += list.size

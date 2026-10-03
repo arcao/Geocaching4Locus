@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,14 +14,18 @@ java {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.addAll("-jvm-default=no-compatibility", "-opt-in=kotlin.RequiresOptIn")
+    }
+}
+
 fun String.runCommand(currentWorkingDir: File = file("./")): String {
-    val byteOut = ByteArrayOutputStream()
-    project.exec {
+    return providers.exec {
         workingDir = currentWorkingDir
         commandLine = this@runCommand.split("\\s".toRegex())
-        standardOutput = byteOut
-    }
-    return String(byteOut.toByteArray()).trim()
+    }.standardOutput.asText.get().trim()
 }
 
 fun gitSha() = "git rev-parse --short HEAD".runCommand(rootDir).trim()
@@ -113,7 +115,7 @@ android {
 
         buildConfigField("String", "TEST_USER", "null")
         buildConfigField("String", "TEST_PASSWORD", "null")
-        resourceConfigurations += setOf("en", "cs", "de", "es", "fr", "nl", "no", "pl", "sk")
+        androidResources.localeFilters += setOf("en", "cs", "de", "es", "fr", "nl", "no", "pl", "sk")
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -127,14 +129,6 @@ android {
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    kotlinOptions {
-        freeCompilerArgs += listOf("-Xjvm-default=all", "-opt-in=kotlin.RequiresOptIn")
     }
 
     buildFeatures {
@@ -201,7 +195,11 @@ if (project.hasProperty("storeFile") &&
     project.hasProperty("storePassword") &&
     project.hasProperty("keyPassword")
 ) {
-    android.signingConfigs.getByName("release").storeFile = file(properties["storeFile"] as String)
+    // Accept both plain paths and file:// URIs (also the malformed file://C:/... form)
+    val storeFilePath = (properties["storeFile"] as String)
+        .removePrefix("file://")
+        .replace(Regex("^/([A-Za-z]:)"), "$1")
+    android.signingConfigs.getByName("release").storeFile = file(storeFilePath)
     android.signingConfigs.getByName("release").storePassword =
         properties["storePassword"] as String
     android.signingConfigs.getByName("release").keyPassword = properties["keyPassword"] as String

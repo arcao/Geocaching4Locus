@@ -44,7 +44,7 @@ class FileAccountManager(
         }
 
         dataFile.writeText(
-            arrayOf(
+            arrayOf<Any?>(
                 account.accessToken,
                 account.accessTokenExpiration.toEpochMilli(),
                 account.refreshToken,

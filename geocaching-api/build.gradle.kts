@@ -14,6 +14,13 @@ java {
     }
 }
 
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.addAll("-jvm-default=no-compatibility", "-opt-in=kotlin.RequiresOptIn")
+    }
+}
+
 android {
     namespace = "com.arcao.geocaching4locus.geocaching_api"
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -47,14 +54,6 @@ android {
 
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlin {
-        jvmToolchain(17)
-    }
-
-    kotlinOptions {
-        freeCompilerArgs += listOf("-Xjvm-default=all", "-opt-in=kotlin.RequiresOptIn")
     }
 
     buildFeatures {

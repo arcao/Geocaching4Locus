@@ -1,15 +1,15 @@
 [versions]
 app = "3.0.12"
 minSdk = "26"
-targetSdk = "34"
+targetSdk = "36"
 
 # build plugins
-plugin-android = "8.3.2"
+plugin-android = "8.13.2"
 plugin-firebase-crashlytics = "2.9.9"
 plugin-google_services = "4.4.1"
 plugin-android-junit5 = "1.8.2.1"
-plugin-versions = "0.45.0"
-plugin-ksp = "1.9.23-1.0.20"
+plugin-versions = "0.53.0"
+plugin-ksp = "2.3.12"
 
 # android
 androidx-appcompat = "1.6.1"
@@ -32,7 +32,7 @@ firebase-bom = "32.8.1"
 
 # kotlin
 kotlin-coroutines = "1.8.0"
-kotlin-bom = "1.9.23"
+kotlin-bom = "2.3.21"
 
 # networking
 moshi = "1.15.1"

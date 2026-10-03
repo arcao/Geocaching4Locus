@@ -47,7 +47,7 @@ class App : Application() {
 
     val version: String by lazy {
         try {
-            packageManager.getPackageInfo(packageName, 0).versionName
+            packageManager.getPackageInfo(packageName, 0).versionName ?: "1.0"
         } catch (e: Exception) {
             Timber.e(e)
             "1.0"

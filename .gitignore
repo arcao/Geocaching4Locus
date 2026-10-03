@@ -43,13 +43,6 @@ gen-external-apklibs
 # Replacement of .externalNativeBuild directories introduced
 # with Android Studio 3.5.
 
-### Crashlytics ###
-#Crashlytics
-crashlytics-build.properties
-com_crashlytics_export_strings.xml
-crashlytics.properties
-fabric.properties
-
 # End of https://www.toptal.com/developers/gitignore/api/android,crashlytics
 
 .idea/caches

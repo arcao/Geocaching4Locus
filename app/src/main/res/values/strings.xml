@@ -76,6 +76,7 @@
 
     <string name="var_user_waypoint_name" comment="">User waypoint %1$d</string>
     <string name="var_final_location_name" comment="">Final location</string>
+    <string name="var_background_image_name" comment="">Background image</string>
 
     <string name="pref_login" comment="">Sign in</string>
     <string name="pref_login_summary" comment="">Sign in to Geocaching.com account</string>

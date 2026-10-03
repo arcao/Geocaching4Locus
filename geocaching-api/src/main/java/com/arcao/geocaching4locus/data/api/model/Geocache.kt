@@ -39,6 +39,7 @@ data class Geocache(
     val trackables: List<Trackable>?,
     val geocacheLogs: List<GeocacheLog>?,
     val images: List<Image>?,
+    val backgroundImageUrl: String?, // string
     val userWaypoints: List<UserWaypoint>?,
     val owner: User?
 ) {
@@ -99,6 +100,7 @@ data class Geocache(
         private const val FIELD_URL = "url"
         private const val FIELD_CONTAINS_HTML = "containsHtml"
         private const val FIELD_ADDITIONAL_WAYPOINTS = "additionalWaypoints"
+        private const val FIELD_BACKGROUND_IMAGE_URL = "backgroundImageUrl"
         private val FIELD_OWNER = "owner[${User.FIELDS_MIN}]"
         private val FIELD_GEOCACHE_LOGS_MIN = "geocachelogs[${GeocacheLog.FIELDS_MIN}]"
         private val FIELD_TRACKABLES_MIN = "trackables[${Trackable.FIELDS_MIN}]"
@@ -136,6 +138,7 @@ data class Geocache(
             FIELD_GEOCACHE_LOGS_MIN,
             FIELD_TRACKABLES_MIN,
             FIELD_IMAGES_MIN,
+            FIELD_BACKGROUND_IMAGE_URL,
             FIELD_OWNER
         )
 

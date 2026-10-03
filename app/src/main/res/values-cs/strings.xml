@@ -61,6 +61,7 @@
     <string name="menu_settings" comment="">Nastavení</string>
     <string name="var_user_waypoint_name" comment="">Uživatelský waypoint %1$d</string>
     <string name="var_final_location_name" comment="">Konečné umístění</string>
+    <string name="var_background_image_name" comment="">Obrázek na pozadí</string>
     <string name="pref_login" comment="">Přihlásit se</string>
     <string name="pref_login_summary" comment="">Přihlásit se k Geocaching.com účtu</string>
     <string name="pref_logout" comment="">Odhlásit</string>

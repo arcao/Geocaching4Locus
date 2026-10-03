@@ -59,6 +59,16 @@ class LiveMapService : LifecycleService() {
         return super.onStartCommand(intent, flags, startId)
     }
 
+    /**
+     * Android 15+ limits `dataSync` foreground services to 6 hours in 24 hours. The service must
+     * stop itself after this callback, otherwise the system throws an exception.
+     */
+    override fun onTimeout(startId: Int, fgsType: Int) {
+        Timber.w("LiveMap foreground service timed out (type=%d), stopping", fgsType)
+        cancelTasks()
+        stopSelf(startId)
+    }
+
     private fun cancelTasks() {
         viewModel.cancelTasks()
         ServiceUtil.releaseAllWakeLocks(ComponentName(this, LiveMapService::class.java))

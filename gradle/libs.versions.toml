@@ -2,7 +2,7 @@
 app = "3.0.12"
 minSdk = "26"
 compileSdk = "37"
-targetSdk = "36"
+targetSdk = "37"
 
 # build plugins
 plugin-android = "9.4.1"

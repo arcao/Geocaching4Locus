@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. trudność</string>
     <string name="pref_terrain_min" comment="">Min. teren</string>
     <string name="pref_terrain_max" comment="">Max. teren</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. punktów ulubionych</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Pokaż tylko skrzynki z co najmniej taką liczbą punktów ulubionych</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Wyłączone</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Pokaż tylko skrzynki z co najmniej taką liczbą punktów ulubionych. Wpisz 0, aby wyłączyć filtr.</string>
     <string name="pref_download_basic" comment="">Tylko podstawowe informacje</string>
     <string name="pref_download_basic_summary" comment="">Pobieraj tylko podstawowe informacje o skrzynce</string>
     <string name="pref_download_on_show" comment="">Pobierz pozostałe informacje przy wyświetlaniu</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Ustawienia</string>
     <string name="var_user_waypoint_name" comment="">Punkt trasy użytkownika %1$d</string>
     <string name="var_final_location_name" comment="">Lokalizacja końcowa</string>
+    <string name="var_background_image_name" comment="">Obraz tła</string>
     <string name="pref_login" comment="">Zaloguj się</string>
     <string name="pref_login_summary" comment="">Zaloguj się do konta Geocaching.com</string>
     <string name="pref_logout" comment="">Wyloguj się</string>
@@ -90,6 +95,7 @@
 <br/>
 <i>Wykup konto \"premium\", aby codziennie móc pobrać szczegóły 6000 skrzynek oraz uzyskać dodatkowe korzyści. Odwiedź stronę Geocaching.com już teraz.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Osiągnąłeś limit pobierania szczegółów skrzynek <b>%1$s co każde %2$s</b>. Twój dzienny limit zostanie odnowiony o %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Pozostało tylko %1$d z %2$d pełnych szczegółów skrzynek.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hej, zwolnij!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Osiągnąłeś minutowy limit maksymalnej ilości akcji/połączeń.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -117,6 +123,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Pobieranie skrzynek \"mapy na żywo\": %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Włącz</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Wyłącz</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Mapa \"na żywo\" jest wstrzymana.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Wznów</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Ustawienia</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Mapa na żywo Geocaching4Locus: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Wyłączone powiadomienie</string>
@@ -182,4 +190,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Stworzony dzięki wsparciu członkostwa Geocaching Premium, interfejs API umożliwia twórcom zewnętrznym współpracę z Geocaching HQ z pełnym zestawem zintegrowanych produktów i usług dla społeczności. Aplikacje dla deweloperów API są zaprojektowane do pracy z podstawowymi usługami geocaching.com i zapewniają dodatkowe funkcje społeczności geocachingu.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Kontynuuj</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacja nie ma uprawnień do tworzenia powiadomień.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Nieznane członkostwo</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Odrzuciłeś udostępnianie swoich danych osobowych autoryzowanym programistom, co ma wpływ na typ członkostwa i limit pobieranych skrytek. Uniemożliwia również działanie tego dodatku. Aby usunąć tę wyłączenie (opt-out), wyłącz opcję <b>Nie przekazuj moich prywatnych informacji aplikacjom geocachingowym Autoryzowanych deweloperów.</b> w ustawieniach konta Geocaching, w ramach <b>Prywatność — Uprawnienia</b> lub naciśnij przycisk <b>Ustawienia prywatności</b> i ręcznie odśwież informacje o koncie w sekcji Konto w ustawieniach dodatku.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Ustawienia prywatności</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Typ członkostwa</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Odśwież informacje o koncie</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Nieznany</string>
+    <string name="membership_basic" comment="Name of basic membership type">Podstawowe</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Karta)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

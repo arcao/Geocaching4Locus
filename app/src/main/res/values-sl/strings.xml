@@ -190,4 +190,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Program API omogoča s podporo Geocaching Premium Članstva, da tretjim razvijalcem možnost dela z Geocaching HQ na celotnem naboru integriranih izdelkov in storitev za skupnost. Aplikacije za razvijalce API-ja so zasnovane tako, da delujejo z osnovnimi storitvami geocaching.com in zagotavljajo dodatne funkcije skupnosti geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Naprej</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacija nima dovoljenja za ustvarjanje obvestil.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Neznano članstvo</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Zavrnili ste deljenje svojih osebnih podatkov s pooblaščenimi razvijalci, kar vpliva na vrsto članstva in kvoto prenosov zakladov ter onemogoča delovanje tega dodatka. Če želite zavrnitev odstraniti, v nastavitvah računa Geocaching pod <b>Zasebnost — Pooblastila</b> izklopite možnost <b>Ne deli mojih osebnih podatkov z geocaching aplikacijami pooblaščenih razvijalcev</b> ali tapnite gumb <b>Nastavitve zasebnosti</b> in nato ročno osvežite podatke o računu v razdelku Račun v nastavitvah tega dodatka.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Nastavitve zasebnosti</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Vrsta članstva</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Osveži podatke o računu</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Neznano</string>
+    <string name="membership_basic" comment="Name of basic membership type">Osnovno</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

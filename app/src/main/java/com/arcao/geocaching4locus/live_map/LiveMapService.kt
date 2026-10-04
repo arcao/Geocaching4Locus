@@ -147,7 +147,7 @@ class LiveMapService : LifecycleService() {
         /**
          * Creates an intent which enables Live map and starts the foreground service. It must be
          * sent from a context where the start of a foreground service is allowed: visible app or
-         * a user's action on a notification ([android.app.PendingIntent.getForegroundService]).
+         * a user's action on a notification (via [LiveMapResumeActivity]).
          */
         fun createEnableIntent(context: Context) =
             Intent(context, LiveMapService::class.java).setAction(ACTION_ENABLE)

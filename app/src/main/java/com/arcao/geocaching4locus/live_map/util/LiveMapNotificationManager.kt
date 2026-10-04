@@ -301,7 +301,7 @@ class LiveMapNotificationManager(
         notificationManager.notify(AppConstants.NOTIFICATION_ID_LIVEMAP, nb.build())
     }
 
-    fun createNotification(): NotificationCompat.Builder {
+    fun createNotification(liveMapEnabled: Boolean = isLiveMapEnabled): NotificationCompat.Builder {
         val nb = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
 
         nb.setOngoing(true)
@@ -311,7 +311,7 @@ class LiveMapNotificationManager(
         nb.priority = NotificationCompat.PRIORITY_LOW
         nb.color = ContextCompat.getColor(context, R.color.primary)
 
-        val state = if (isLiveMapEnabled) {
+        val state = if (liveMapEnabled) {
             nb.setSmallIcon(R.drawable.ic_stat_live_map)
             nb.addAction(
                 R.drawable.ic_stat_navigation_cancel,

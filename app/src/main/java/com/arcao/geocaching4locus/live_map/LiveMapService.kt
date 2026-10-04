@@ -72,7 +72,8 @@ class LiveMapService : LifecycleService() {
             ServiceCompat.startForeground(
                 this,
                 AppConstants.NOTIFICATION_ID_LIVEMAP,
-                notificationManager.createNotification().build(),
+                // Live map is being enabled, it is stored right after the service is in foreground
+                notificationManager.createNotification(liveMapEnabled = true).build(),
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
             )
             notificationManager.onForegroundServiceStarted()

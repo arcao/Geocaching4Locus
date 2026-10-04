@@ -4,9 +4,11 @@ import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -51,6 +53,8 @@ class LiveMapNotificationManager(
     private val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val periodicUpdatesReceiver =
+        ComponentName(context, LiveMapBroadcastReceiver::class.java)
 
     private val stateChangeListeners = CopyOnWriteArraySet<LiveMapStateChangeListener>()
 
@@ -98,10 +102,39 @@ class LiveMapNotificationManager(
             preferences.edit {
                 putBoolean(PrefConstants.LIVE_MAP, willBeEnabled)
             }
+            updatePeriodicUpdatesReceiver()
         }
 
     init {
         createChannel()
+        preferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    /**
+     * Enables the receiver of the Locus Map periodic updates only when it is needed: Live map is
+     * enabled or the notification about the disabled Live map is requested. While the receiver is
+     * disabled, Locus Map doesn't keep its service alive and doesn't show the "Connect with
+     * add-ons" notification.
+     */
+    fun updatePeriodicUpdatesReceiver() {
+        val enabled = isLiveMapEnabled || defaultPreferenceManager.showLiveMapDisabledNotification
+        val currentlyEnabled = context.packageManager.getComponentEnabledSetting(periodicUpdatesReceiver) ==
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+
+        if (enabled == currentlyEnabled) {
+            return
+        }
+
+        Timber.i("Periodic updates receiver %s", if (enabled) "enabled" else "disabled")
+        context.packageManager.setComponentEnabledSetting(
+            periodicUpdatesReceiver,
+            if (enabled) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            },
+            PackageManager.DONT_KILL_APP
+        )
     }
 
     /**
@@ -394,25 +427,21 @@ class LiveMapNotificationManager(
 
     fun addLiveMapStateChangeListener(liveMapStateChangeListener: LiveMapStateChangeListener) {
         stateChangeListeners.add(liveMapStateChangeListener)
-
-        if (stateChangeListeners.size == 1) {
-            preferences.registerOnSharedPreferenceChangeListener(this)
-        }
     }
 
     fun removeLiveMapStateChangeListener(liveMapStateChangeListener: LiveMapStateChangeListener) {
         stateChangeListeners.remove(liveMapStateChangeListener)
-
-        if (stateChangeListeners.isEmpty()) {
-            preferences.unregisterOnSharedPreferenceChangeListener(this)
-        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (PrefConstants.LIVE_MAP == key) {
-            for (listener in stateChangeListeners) {
-                listener.onLiveMapStateChange(preferences.getBoolean(key, false))
+        when (key) {
+            PrefConstants.LIVE_MAP -> {
+                for (listener in stateChangeListeners) {
+                    listener.onLiveMapStateChange(preferences.getBoolean(key, false))
+                }
             }
+
+            PrefConstants.SHOW_LIVE_MAP_DISABLED_NOTIFICATION -> updatePeriodicUpdatesReceiver()
         }
     }
 

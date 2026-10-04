@@ -42,10 +42,10 @@
     <string name="pref_difficulty_max" comment="">Dificuldade Máx.</string>
     <string name="pref_terrain_min" comment="">Terreno Mín.</string>
     <string name="pref_terrain_max" comment="">Terreno Máx.</string>
-    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Mín. pontos de favorito</string>
-    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Mostrar apenas caches com pelo menos este número de pontos de favorito</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Mín. de pontos favoritos</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Mostra apenas caches com pelo menos este número de pontos favoritos</string>
     <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Desligado</string>
-    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Mostrar apenas caches com pelo menos este número de pontos de favorito. Introduza 0 para desligar o filtro.</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Mostra apenas caches com pelo menos este número de pontos favoritos. Introduzir 0 para desligar o filtro.</string>
     <string name="pref_download_basic" comment="">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary" comment="">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show" comment="">Descarregar o restante da informação apenas na visualização</string>
@@ -93,7 +93,7 @@
 <br/>
 <i>Atualiza a tua conta em geocaching.com para membro premium para poderes transferir os detalhes completos até  6000 caches por dia e usufruir de muito mais benefícios. Visita geocaching.com para atualizares a conta.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Atingiste o limite de transferência de detalhes completos das caches de <b>%1$s por %2$s período</b>. A tua quota diária será reiniciada às %3$s.</string>
-    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Restam apenas %1$d de %2$d detalhes completos de caches.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Restam apenas %1$d de %2$d detalhes completos de geocaches.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Ei, vai com calma!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Atingiste o limite máximo de ações/chamadas por minuto.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -115,7 +115,7 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">A transferir caches pelo mapa ao vivo: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Ligar</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Desligar</string>
-    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">O mapa ao vivo está em pausa.</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">O mapa ao vivo está pausado.</string>
     <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Retomar</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Definições</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Mapa ao vivo Geocaching4Locus: %s</string>

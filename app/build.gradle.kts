@@ -118,7 +118,10 @@ android {
 
         buildConfigField("String", "TEST_USER", "null")
         buildConfigField("String", "TEST_PASSWORD", "null")
-        androidResources.localeFilters += setOf("en", "cs", "de", "es", "fr", "nl", "no", "pl", "sk")
+        // languages with a high share of translated strings
+        androidResources.localeFilters += setOf(
+            "en", "cs", "da", "de", "es", "fr", "hr", "hu", "it", "nl", "no", "pl", "pt", "sk", "sl"
+        )
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),

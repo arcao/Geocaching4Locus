@@ -182,4 +182,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Stworzony dzięki wsparciu członkostwa Geocaching Premium, interfejs API umożliwia twórcom zewnętrznym współpracę z Geocaching HQ z pełnym zestawem zintegrowanych produktów i usług dla społeczności. Aplikacje dla deweloperów API są zaprojektowane do pracy z podstawowymi usługami geocaching.com i zapewniają dodatkowe funkcje społeczności geocachingu.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Kontynuuj</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacja nie ma uprawnień do tworzenia powiadomień.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Nieznane członkostwo</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Odrzuciłeś udostępnianie swoich danych osobowych autoryzowanym programistom, co ma wpływ na typ członkostwa i limit pobieranych skrytek. Uniemożliwia również działanie tego dodatku. Aby usunąć tę wyłączenie (opt-out), wyłącz opcję <b>Nie przekazuj moich prywatnych informacji aplikacjom geocachingowym Autoryzowanych deweloperów.</b> w ustawieniach konta Geocaching, w ramach <b>Prywatność — Uprawnienia</b> lub naciśnij przycisk <b>Ustawienia prywatności</b> i ręcznie odśwież informacje o koncie w sekcji Konto w ustawieniach dodatku.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Ustawienia prywatności</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Typ członkostwa</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Odśwież informacje o koncie</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Nieznany</string>
+    <string name="membership_basic" comment="Name of basic membership type">Podstawowe</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Karta)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

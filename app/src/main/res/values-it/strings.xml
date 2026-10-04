@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. difficoltà</string>
     <string name="pref_terrain_min" comment="">Min. terreno</string>
     <string name="pref_terrain_max" comment="">Max. terreno</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Punti preferiti min.</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Mostra solo cache con almeno questo numero di punti preferiti</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Disattivato</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Mostra solo cache con almeno questo numero di punti preferiti. Inserisci 0 per disattivare il filtro.</string>
     <string name="pref_download_basic" comment="">Solo info di base</string>
     <string name="pref_download_basic_summary" comment="">Scarica nella cache solo informazioni di base</string>
     <string name="pref_download_on_show" comment="">Scarica info rest in mostra</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Impostazioni</string>
     <string name="var_user_waypoint_name" comment="">Waypoint utente %1$d</string>
     <string name="var_final_location_name" comment="">Posizione finale</string>
+    <string name="var_background_image_name" comment="">Immagine di sfondo</string>
     <string name="pref_login" comment="">Accedere</string>
     <string name="pref_login_summary" comment="">Accedere all\'account Geocaching.com</string>
     <string name="pref_logout" comment="">Uscire</string>
@@ -88,6 +93,7 @@
 <br/>
 <i>Diventa oggi utente Premium di geocaching.com per scaricare i dettagli completi per oltre 6000 caches al giorno e accedere a molti altri vantaggi. Visita geocaching.com per fare l\'upgrade.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Hai raggiunto il limite di scaricamento dei dettagli completi nel periodo di <b>%1$s per %2$s </b>. La tua quota giornaliera sarà azzerata alle %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Rimangono solo %1$d dettagli completi di cache su %2$d.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Ehi, rallenta!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Hai raggiunto il limite del periodo massimo di azioni/chiamate per minuto.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -109,6 +115,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Il download della mappa dal vivo cache: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Abilitare</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Disabilitare</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">La mappa dal vivo è in pausa.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Riprendi</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Impostazioni</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus mappa dal vivo: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Disabilitare notifica</string>

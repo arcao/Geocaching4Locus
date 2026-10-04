@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Maks. sværhedsgrad</string>
     <string name="pref_terrain_min" comment="">Min. terræn</string>
     <string name="pref_terrain_max" comment="">Maks. terræn</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favoritpoint</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Vis kun caches med mindst så mange favoritpoint</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Fra</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Vis kun caches med mindst så mange favoritpoint. Indtast 0 for at slå filteret fra.</string>
     <string name="pref_download_basic" comment="">Kun basisinfo</string>
     <string name="pref_download_basic_summary" comment="">Hent kun basal info om cache</string>
     <string name="pref_download_on_show" comment="">Hent resterende info ved visning</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Indstillinger</string>
     <string name="var_user_waypoint_name" comment="">Bruger waypoint (koordinatpunkter) %1$d</string>
     <string name="var_final_location_name" comment="">Sidste lokation</string>
+    <string name="var_background_image_name" comment="">Baggrundsbillede</string>
     <string name="pref_login" comment="">Log ind</string>
     <string name="pref_login_summary" comment="">Log ind på Geocaching.com-konto</string>
     <string name="pref_logout" comment="">Log ud</string>
@@ -88,6 +93,7 @@
 <br/>
 <i>Opgradér til geocaching.com Premium-medlemsskab og download komplette oplysninger for op til 6.000 caches pr. døgn og få adgang til endnu flere fordele. Besøg geocaching.com for at opgradere.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Dagens kvote, <b>%1$s pr. %2$s</b>, for download af komplette oplysninger er opbrugt. Den daglige kvote nulstilles %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Kun %1$d af %2$d fulde cache-detaljer tilbage.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Så, rolig nu!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Kvoten for antal handlinger/kald pr. minut er opbrugt.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -109,6 +115,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Downloader Realtidskort-caches: %1$d/%2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Aktivér</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Deaktivér</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Live kort er sat på pause.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Genoptag</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Indstillinger</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus live kort: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiveret notifikation</string>

@@ -25,6 +25,7 @@ import com.arcao.geocaching4locus.base.util.getText
 import com.arcao.geocaching4locus.base.util.hasPostNotificationPermission
 import com.arcao.geocaching4locus.dashboard.DashboardActivity
 import com.arcao.geocaching4locus.error.ErrorActivity
+import com.arcao.geocaching4locus.live_map.LiveMapResumeActivity
 import com.arcao.geocaching4locus.live_map.LiveMapService
 import com.arcao.geocaching4locus.live_map.model.LastLiveMapCoordinates
 import com.arcao.geocaching4locus.live_map.receiver.LiveMapBroadcastReceiver
@@ -348,15 +349,12 @@ class LiveMapNotificationManager(
     }
 
     /**
-     * Pending intent which enables Live map and starts the foreground service. Starting of
-     * a foreground service by a user's action on a notification is allowed from a background.
+     * Pending intent which enables Live map and starts the foreground service. It opens an
+     * invisible activity, because the foreground service can't be started directly from
+     * a notification after its time limit was reached, until the app is visible.
      */
-    private fun createPendingForegroundServiceIntent() = PendingIntent.getForegroundService(
-        context,
-        0,
-        LiveMapService.createEnableIntent(context),
-        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
+    private fun createPendingForegroundServiceIntent() =
+        createPendingActivityIntent(LiveMapResumeActivity.createIntent(context))
 
     private fun createPendingActivityIntent(intent: Intent) = PendingIntent.getActivity(
         context, 0,

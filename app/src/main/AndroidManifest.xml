@@ -73,6 +73,14 @@
             android:name=".live_map.LiveMapService"
             android:foregroundServiceType="dataSync" />
 
+        <activity
+            android:name=".live_map.LiveMapResumeActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@style/AppTheme.Invisible" />
+
         <receiver
             android:name=".live_map.receiver.LiveMapBroadcastReceiver"
             android:exported="true"

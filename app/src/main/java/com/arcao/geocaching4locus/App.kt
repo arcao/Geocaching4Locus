@@ -17,6 +17,7 @@ import com.arcao.geocaching4locus.base.util.CrashlyticsTree
 import com.arcao.geocaching4locus.base.util.KoinTimberLogger
 import com.arcao.geocaching4locus.data.account.AccountManager
 import com.arcao.geocaching4locus.data.geocachingApiModule
+import com.arcao.geocaching4locus.live_map.util.LiveMapNotificationManager
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import locus.api.android.utils.LocusUtils
 import locus.api.locusMapApiModule
@@ -29,6 +30,7 @@ import java.util.UUID
 class App : Application() {
     private val accountManager by inject<AccountManager>()
     private val analyticsManager by inject<AnalyticsManager>()
+    private val liveMapNotificationManager by inject<LiveMapNotificationManager>()
 
     private val deviceId: String by lazy {
         val pref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -83,6 +85,9 @@ class App : Application() {
         prepareCrashlytics()
 
         analyticsManager.setPremiumMember(accountManager.isPremium)
+
+        // the state is stored by the system, but the app update or cleared data can reset it
+        liveMapNotificationManager.updatePeriodicUpdatesReceiver()
     }
 
     private fun prepareCrashlytics() {

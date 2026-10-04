@@ -182,4 +182,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Rendu possible grâce au support des Membres Premiums Geocaching, l\'API permet aux développeurs de travailler avec le QG de Geocaching sur une suite complète de produits et services pour la communauté. Les applications utilisant l\'API sont conçues pour fonctionner avec les services de geocaching.com pour fournir des fonctionnalités supplémentaires à la communauté du geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Continuer</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">L\'application n\'a pas la permission de créer des notifications.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Adhésion inconnue</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Vous avez refusé de partager vos informations personnelles avec les développeurs autorisés, ce qui affecte le type d\'adhésion et le quota de téléchargement de caches. Cela empêche également ce module complémentaire de fonctionner. Pour annuler ce refus, désactivez l\'option <b>Ne pas partager mes informations personnelles avec les applications de géocaching des développeurs autorisés</b> dans les paramètres de votre compte Geocaching, sous <b>Confidentialité — Autorisations</b>, ou appuyez sur le bouton <b>Paramètres de confidentialité</b> et actualisez manuellement les informations du compte dans la section Compte des paramètres de ce module.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Paramètres de confidentialité</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Type d\'adhésion</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Actualiser les informations du compte</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Inconnu</string>
+    <string name="membership_basic" comment="Name of basic membership type">Basique</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

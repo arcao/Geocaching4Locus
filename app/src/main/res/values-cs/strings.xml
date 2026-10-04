@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. obtížnost</string>
     <string name="pref_terrain_min" comment="">Min. terén</string>
     <string name="pref_terrain_max" comment="">Max. terén</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favoritních bodů</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Zobrazit jen keše s alespoň tolika favoritními body</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Vypnuto</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Zobrazit jen keše s alespoň tolika favoritními body. Zadáním 0 se filtr vypne.</string>
     <string name="pref_download_basic" comment="">Pouze základní info</string>
     <string name="pref_download_basic_summary" comment="">Stáhnout pouze základní informace o keši</string>
     <string name="pref_download_on_show" comment="">Stáhnout zbývající info při zobrazení</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Nastavení</string>
     <string name="var_user_waypoint_name" comment="">Uživatelský waypoint %1$d</string>
     <string name="var_final_location_name" comment="">Konečné umístění</string>
+    <string name="var_background_image_name" comment="">Obrázek na pozadí</string>
     <string name="pref_login" comment="">Přihlásit se</string>
     <string name="pref_login_summary" comment="">Přihlásit se k Geocaching.com účtu</string>
     <string name="pref_logout" comment="">Odhlásit</string>
@@ -90,6 +95,7 @@
 <br/>
 <i>Pořiďte si ještě dnes prémiový účet na geocaching.com, aby jste mohl stáhnout plné detaily až 6000 keší za den a využívat další benefity. Navštivte geocaching.com…</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Dosáhl jste limitu stažení plných detailů pro <b>%1$s za %2$s</b>. Vaše denní kvóta bude obnovena v %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Zbývá jen %1$d z %2$d plných detailů keší.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hej, zpomal!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Dosáhl si limitu počtu vykonaných akcí/volání za minutu.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -117,6 +123,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Stahuji keše pro živou mapu: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Povolit</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Zakázat</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Živá mapa je pozastavena.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Obnovit</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Nastavení</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Živá mapa Geocaching4Locus: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Notifikace zakázáno</string>

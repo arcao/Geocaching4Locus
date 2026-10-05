@@ -83,7 +83,7 @@
     </plurals>
     <string name="title_geocache_count" comment="">Antal caches</string>
     <string name="launcher_nearest_geocaches" comment="">Nærmeste caches</string>
-    <string name="launcher_import_geocache" comment="">Importér cache til Locus Map</string>
+    <string name="launcher_import_geocache" comment="">Importere cache til Locus Map</string>
     <string name="launcher_update_geocache" comment="">Opdater cache</string>
     <string name="launcher_update_geocaches" comment="">Opdater caches</string>
     <string name="launcher_import_from_gc" comment="">Importér fra GC-kode</string>
@@ -110,47 +110,47 @@
     </plurals>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live returnerede et ugyldigt svar:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus live kort</string>
-    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Live kort er aktiveret.</string>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Realtidskort er aktiveret.</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">Realtidskort er deaktiveret.</string>
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Downloader Realtidskort-caches: %1$d/%2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Aktivér</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Deaktivér</string>
-    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Live-kort er pauseret.</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Realtidskort er pauseret.</string>
     <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Genoptag</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Indstillinger</string>
-    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus live kort: %s</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus Realtidskort: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiveret notifikation</string>
-    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis meddelelse, når Live-kortet er deaktiveret. Dette virker kun, hvis de periodiske opdateringer er tilladt i Locus Map og Locus Map kører.</string>
+    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis notifikation, når Realtidskortet er deaktiveret. Dette virker kun, såfremt Locus Map kører og har periodiske opdateringer tilladt.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
     <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filtrér</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Downloader logfiler…</string>
-    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Hent logfiler</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Download logfiler</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Download logfilopdateringscache</string>
     <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Handlingen \"Download logfiler\" opdaterer også geocachedata</string>
-    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Trinstørrelse for antal caches</string>
+    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Trinstørrelse for Antal caches</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Ændr en trinstørrelse for antal caches i valgdialogen</string>
-    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Nogle filtre kræver en Premium-medlemskonto, hvilket din konto ikke er. App-tilstanden er nu ændre til basisbrugere. Forsøg igen.</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Nogle filtre kræver en Premium-medlemskonto, hvilket denne konto ikke er. App-tilstanden er nu ændre til basisbruger. Forsøg igen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Konto</string>
     <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
-    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kort</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Realtidskort</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Downloader</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Avanceret</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Om</string>
     <string name="title_login" comment="Window title for sign in task.">Log ind</string>
-    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Hent råd</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Download-tips</string>
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Langsommere indlæsning og med større dataforbrug</string>
-    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Send kommentar</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Send feedback</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Ingen geocaches fundet, som matchende søgningen.</string>
     <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">Logget ud grundet tokenudløb (efter 90 dage). Log ind igen.</string>
-    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importer bogmærker</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importere bogmærker</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Importér bogmærker</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">App har ikke tilladelse til at tilgå placeringstjeneste.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">Importér alle</string>
     <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Beklager, denne funktion er kun for Premium-medlemmer.</string>
     <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Locus Map-fejl</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Indsend fejlanmeldelse</string>
-    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Tak indsendelsen af fejlanmeldelsen.</string>
-    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Tak for indsendelsen af fejlanmeldelsen.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Fortsæt med de delvist modtagne Locus Map-data?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Ja</string>
     <string name="button_no" comment="Dialog button for No action.">Nej</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Denne tilføjelse fungerer kun med et Premium-medlemskab. Som basismedlem kan man downloade traditionelle, hændelses- og CITO-geocaches med basis geocachedata (dvs. uden liste(r), tips, attributter, billeder, logger mv.) og kun bruge få filtre til geocachesøgninger. For yderligere information, læs Brugervejledningen på Geocaching4Locus-webstedet.</string>
@@ -158,7 +158,7 @@
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">Appen kræver tilladelsen <b>skriv til eksternt lager</b> til lagring af Geocachedata til Locus Map. <b>Tildel</b> denne tilladelse i den næste dialog.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Appen har ikke tilladelse til at <b>skrive til eksternt lager</b>. Denne tilladelse kræves til lagring af Geocachingdata til Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul geocaches ved deaktivering</string>
-    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul live kort geocaches når live kort er deaktiveret</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul Realtidskortgeocaches, når funktionen Realtidskort er deaktiveret</string>
     <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Deaktivér DNF-, NM- og NA-caches</string>
     <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Markér geocache som utilgængelig, når den indeholder flere <i>Ikke fundet</i>, <i>Kræver vedligeholdelse</i> eller <i>Kræver arkivering</i> logger</string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Hvor mange seneste logger, som skal tjekkes</string>

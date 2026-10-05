@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="progress_download_geocaches" comment="Progress dialog message for downloading geocaches.">Downloader caches…</string>
-    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">Locus Map-applikation — krævet af Geocaching4Locus for korrekt funktion — blev ikke fundet. Installér Locus Map.</string>
-    <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Tillad Wi-Fi/mobildata eller GPS placeringstjenester i \'Indstillinger\'.</string>
+    <string name="error_locus_not_found" comment="Error dialog message when Locus map is not installed.">Locus Map-app — krævet af Geocaching4Locus for korrekt funktion — blev ikke fundet. Installér Locus Map.</string>
+    <string name="error_location_disabled" comment="Error dialog message in search nearest screen when user has disabled location services like GPS.">Tillad Wi-Fi/mobildata eller GPS-placeringstjenester i \'Indstillinger\'.</string>
     <string name="progress_acquire_gps_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from GPS.">Fastslår lokation via GPS…</string>
     <string name="progress_acquire_network_location" comment="Progress dialog message when add-on is trying to retrieve location coordinates from Wi-Fi / mobile network.">Fastslår lokation via Wi-Fi/mobildata…</string>
     <string name="action_settings" comment="Title of ActionBar/Toolbar button in Search nearest activity which open add-on settings.">Indstillinger</string>
@@ -11,21 +11,21 @@
     <string name="pref_distance" comment="Title of distance setting item in Filter section in add-on settings.">Afstand</string>
     <string name="pref_distance_summary_km" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is not checked.">Afstand i km</string>
     <string name="pref_distance_summary_miles" comment="Summary of distance setting item in Filter section in add-on settings. Used when imperial units setting is checked.">Afstand i mil</string>
-    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Engelske mål</string>
+    <string name="pref_imperial_units" comment="Title of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Engelske måleenheder</string>
     <string name="pref_imperial_units_summary" comment="Summary of imperial units setting item in Advanced section in add-on settings. This change if add-on will use kilometers or miles.">Brug mil i stedet for kilometer</string>
     <string name="error_no_account" comment="Error dialog message when user is not signed in / logged in.">Ikke logget ind. Log først ind i kontoindstillinger.</string>
     <string name="button_ok" comment="Dialog button for OK action.">OK</string>
     <string name="error_old_locus_map" comment="Error dialog message when installed Locus Map version is too old. The '%s' is replaced with minimal required Locus Map version (eg. '3.2.0']">Aktuel Locus Map-version forældet. Geocaching4Locus kræver minimum version %s for korrekt funktion.</string>
-    <string name="button_cancel" comment="Dialog button for cancel action.">Annuller</string>
+    <string name="button_cancel" comment="Dialog button for cancel action.">Afbryd</string>
     <string name="pref_show_found" comment="Title of show found geocaches in Filter category in add-on settings.">Vis fundne</string>
     <string name="pref_show_found_summary" comment="Summary of show found geocaches in Filter category in add-on settings.">Vis fundne caches</string>
-    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis egne gemte</string>
-    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis din egne caches (gemt af dig)</string>
+    <string name="pref_show_own" comment="Title of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis egne skjulte</string>
+    <string name="pref_show_own_summary" comment="Summary of show own hidden (hidden by you) geocaches in Filter category in add-on settings.">Vis egne caches (skjult af brugeren selv)</string>
     <string name="menu_select_all" comment="ActionBar/Toolbar action button title for selecting all checkable items. Placed in geocache type and container size filter.">Vælg alle</string>
     <string name="menu_deselect_all" comment="ActionBar/Toolbar action button title for selecting none (deselecting all) checkable items. Placed in geocache type and container size filter.">Fravælg alle</string>
     <string name="progress_update_geocache" comment="Progress dialog message for updating single geocache.">Opdaterer cache…</string>
-    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal af Logninger</string>
-    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal logs som hentes med cachen</string>
+    <string name="pref_logs_count" comment="Title of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Logfilantal</string>
+    <string name="pref_logs_count_summary" comment="Summary of count of logs to be downloaded with geocachce choose setting in Downloading section in add-on settings.">Antal logfiler, som downloades med cache</string>
     <string name="button_gps" comment="Title of button which try to retrieve current coordinates from GPS/WiFi. Button is placed in search nearest screen.">GPS</string>
     <string name="pref_show_disabled" comment="Title of show disabled geocaches in Filter category in add-on settings.">Vis deaktivede</string>
     <string name="pref_show_disabled_summary" comment="Summary of show disabled geocaches in Filter category in add-on settings.">Vis midlertidigt deaktiverede caches</string>
@@ -33,9 +33,9 @@
     <string name="pref_version" comment="Title of Application version in About section in add-on settings.">Version</string>
     <string name="pref_website" comment="Title of setting item which open web browser with Geocaching4Locus website. This placed in About section in add-on settings.">Websted, forum mv.</string>
     <string name="pref_donate_paypal" comment="Title of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Donér via PayPal</string>
-    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Støt fremtidig udvikling…</string>
+    <string name="pref_donate_paypal_summary" comment="Summary of setting item which show dialog to choose Paypal currency to use for donating. This placed in About section in add-on settings.">Støt den fremtidig udvikling…</string>
     <string name="pref_donate_paypal_choose_currency" comment="Choose dialog title where you can choose currency for Paypal donation. This dialog is shown after touch on 'Donate via Paypal' in About section in add-on settings.">Vælg valuta</string>
-    <string name="pref_geocache_type" comment="">Cache typer</string>
+    <string name="pref_geocache_type" comment="">Cachetyper</string>
     <string name="pref_difficulty" comment="">Sværhedsgrad</string>
     <string name="pref_terrain" comment="">Terræn</string>
     <string name="pref_difficulty_min" comment="">Min. sværhedsgrad</string>
@@ -47,20 +47,20 @@
     <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Fra</string>
     <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Vis kun geocaches med mindst dette antal favoritpoint. Angiv 0 for at slå filteret fra.</string>
     <string name="pref_download_basic" comment="">Kun basisinfo</string>
-    <string name="pref_download_basic_summary" comment="">Hent kun basal info om cache</string>
-    <string name="pref_download_on_show" comment="">Hent resterende info ved visning</string>
+    <string name="pref_download_basic_summary" comment="">Download kun basisinfo om cache</string>
+    <string name="pref_download_on_show" comment="">Download resterende info ved visning</string>
     <string name="pref_download_on_show_summary" comment="">Download resterende info om cache ved visning af dens indhold i Locus Map</string>
     <string-array name="pref_download_on_show_entries" comment="">
         <item>én gang</item>
         <item>hver gang</item>
         <item>aldrig</item>
     </string-array>
-    <string name="menu_live_map" comment="">Live kort</string>
+    <string name="menu_live_map" comment="">Realtidskort</string>
     <string name="menu_nearest" comment="">Nærmeste</string>
     <string name="menu_users_guide" comment="">Brugermanual</string>
     <string name="menu_settings" comment="">Indstillinger</string>
-    <string name="var_user_waypoint_name" comment="">Bruger waypoint (koordinatpunkter) %1$d</string>
-    <string name="var_final_location_name" comment="">Sidste lokation</string>
+    <string name="var_user_waypoint_name" comment="">Brugerrutepunkt (koordinatpunkter) %1$d</string>
+    <string name="var_final_location_name" comment="">Slutlokation</string>
     <string name="var_background_image_name" comment="">Baggrundsbillede</string>
     <string name="pref_login" comment="">Log ind</string>
     <string name="pref_login_summary" comment="">Log ind på Geocaching.com-konto</string>
@@ -68,9 +68,9 @@
     <string name="pref_logout_summary" comment="">Logget ind som %s</string>
     <string name="error_network_unavailable" comment="">Netværk utilgængeligt. Check forbindelsen.</string>
     <string name="progress_update_geocaches" comment="">Opdaterer caches…</string>
-    <string name="pref_container_size" comment="">Beholderstørrelse</string>
+    <string name="pref_container_size" comment="">Containerstørrelse</string>
     <string name="toast_live_map_enabled" comment="">Live kort aktiveret. Nu flytter med kortet for at se caches.</string>
-    <string name="toast_live_map_disabled" comment="">Live kort deaktiveret.</string>
+    <string name="toast_live_map_disabled" comment="">Realtidskort deaktiveret.</string>
     <string name="error_live_map_periodic_updates" comment="">Tilladelse til indsendelse af Periodiske opdateringer fra Locus Map er ikke givet. Slå den til i Locus Map under: Indstillinger → Diverse → Forbind tilføjelser.</string>
     <string name="error_location_not_allowed" comment="">Ingen lokationstjeneste tilladt</string>
     <string name="button_settings" comment="">Indstillinger</string>
@@ -83,7 +83,7 @@
     </plurals>
     <string name="title_geocache_count" comment="">Antal caches</string>
     <string name="launcher_nearest_geocaches" comment="">Nærmeste caches</string>
-    <string name="launcher_import_geocache" comment="">Importér cache til Locus Map</string>
+    <string name="launcher_import_geocache" comment="">Importere cache til Locus Map</string>
     <string name="launcher_update_geocache" comment="">Opdater cache</string>
     <string name="launcher_update_geocaches" comment="">Opdater caches</string>
     <string name="launcher_import_from_gc" comment="">Importér fra GC-kode</string>
@@ -110,47 +110,47 @@
     </plurals>
     <string name="error_invalid_api_response" comment="Error message when Geocaching Live API returns unexpected response.">Geocaching Live returnerede et ugyldigt svar:<br/>%s</string>
     <string name="notify_live_map" comment="Live map notification title. This title is used only for Android 6 and lower.">Geocaching4Locus live kort</string>
-    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Live kort er aktiveret.</string>
+    <string name="notify_live_map_message_enabled" comment="Live map notification message when Live map is enabled.">Realtidskort er aktiveret.</string>
     <string name="notify_live_map_message_disabled" comment="Live map notification message when Live map is disabled.">Realtidskort er deaktiveret.</string>
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Downloader Realtidskort-caches: %1$d/%2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Aktivér</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Deaktivér</string>
-    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Live-kort er pauseret.</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Realtidskort er pauseret.</string>
     <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Genoptag</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Indstillinger</string>
-    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus live kort: %s</string>
+    <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus Realtidskort: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiveret notifikation</string>
-    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis meddelelse, når Live-kortet er deaktiveret. Dette virker kun, hvis de periodiske opdateringer er tilladt i Locus Map og Locus Map kører.</string>
+    <string name="pref_disabled_notification_summary" comment="Summary for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Vis notifikation, når Realtidskortet er deaktiveret. Dette virker kun, såfremt Locus Map kører og har periodiske opdateringer tilladt.</string>
     <string name="pref_geocache_type_all" comment="Summary for geocache types filter setting when all geocache types are selected.">Alle</string>
     <string name="button_filter" comment="Button title in search nearest screen which show filter settings.">Filtrér</string>
     <string name="progress_download_logs" comment="Progress dialog message for downloading geocache logs.">Downloader logfiler…</string>
-    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Hent logfiler</string>
+    <string name="launcher_download_logs" comment="Share button item title in geocache detail in Locus Map, which download 100 log items for selected geocache.">Download logfiler</string>
     <string name="pref_download_logs_update_geocache" comment="Title of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Download logfilopdateringscache</string>
     <string name="pref_download_logs_update_geocache_summary" comment="Summary of checkbox preference in Downloading settings. If is checked, the Update logs action in POI detail screen in Locus Map will also update listing and all other geocache detail together with logs. Unchecked to update only logs.">Handlingen \"Download logfiler\" opdaterer også geocachedata</string>
-    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Trinstørrelse for antal caches</string>
+    <string name="pref_step_geocaching_count" comment="Title of selectbox preference in Downloading settings.">Trinstørrelse for Antal caches</string>
     <string name="pref_step_geocaching_count_summary" comment="Summary of selectbox preference in Downloading settings.">Ændr en trinstørrelse for antal caches i valgdialogen</string>
-    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Nogle filtre kræver en Premium-medlemskonto, hvilket din konto ikke er. App-tilstanden er nu ændre til basisbrugere. Forsøg igen.</string>
+    <string name="error_premium_filter" comment="Error message when user who PM account have expired use PM account filters which cause errors on Geocaching Live API server side.">Nogle filtre kræver en Premium-medlemskonto, hvilket denne konto ikke er. App-tilstanden er nu ændre til basisbruger. Forsøg igen.</string>
     <string name="pref_account" comment="Title of preference category for Account settings.">Konto</string>
     <string name="pref_filter" comment="Title of preference category for Filter settings.">Filter</string>
-    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Live kort</string>
+    <string name="pref_live_map" comment="Title of preference category for Live Map settings.">Realtidskort</string>
     <string name="pref_downloading" comment="Title of preference category for Downloading settings.">Downloader</string>
     <string name="pref_advanced" comment="Title of preference category for Advanced settings.">Avanceret</string>
     <string name="pref_about" comment="Title of preference category for About settings.">Om</string>
     <string name="title_login" comment="Window title for sign in task.">Log ind</string>
-    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Hent råd</string>
+    <string name="pref_download_hints" comment="Title of checkbox preference in Live Map settings.">Download-tips</string>
     <string name="pref_download_hints_summary" comment="Summary of checkbox preference in Live Map settings.">Langsommere indlæsning og med større dataforbrug</string>
-    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Send kommentar</string>
+    <string name="pref_feedback" comment="Title of preference in About settings. This will open E-mail client with pre-filled feedback e-mail.">Send feedback</string>
     <string name="error_no_result" comment="Error dialog message when no nearest geocache is found.">Ingen geocaches fundet, som matchende søgningen.</string>
     <string name="error_session_expired" comment="Error dialog message when app has expired OAuth token for Geocaching Live API. This token expire after 90 days.">Logget ud grundet tokenudløb (efter 90 dage). Log ind igen.</string>
-    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importer bogmærker</string>
+    <string name="launcher_import_bookmarks" comment="Function name in Locus Map More functions list which show window for importing geocaches from bookmarks.">Importere bogmærker</string>
     <string name="menu_import_bookmarks" comment="Dashboard button which show window for importing geocaches from bookmarks.">Importér bogmærker</string>
     <string name="error_no_location_permission" comment="Error dialog message when app doesn't have gps/network location permission.">App har ikke tilladelse til at tilgå placeringstjeneste.</string>
     <string name="action_import_all" commit="Button in bookmark list which cause import all geocaches stored under this bookmark.">Importér alle</string>
     <string name="error_premium_feature" comment="Error dialog message when user with basic membership  wants to use feature for premium membership users.">Beklager, denne funktion er kun for Premium-medlemmer.</string>
     <string name="title_locus_map_error" comment="Error dialog title when Locus Map error occurs.">Locus Map-fejl</string>
     <string name="button_send_error_report" comment="Button for Send error report action.">Indsend fejlanmeldelse</string>
-    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Tak indsendelsen af fejlanmeldelsen.</string>
-    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Vil du fortsætte med en delvis modtagne data til Locus Map?</string>
+    <string name="toast_error_report_sent" comment="Toast message showed after the user click on 'Send error report' button in error dialog.">Tak for indsendelsen af fejlanmeldelsen.</string>
+    <string name="error_continue_locus_map" comment="Dialog error message which is shown after the download error occurred. It's displayed only in case when some data was successfully received before this error.">Fortsæt med de delvist modtagne Locus Map-data?</string>
     <string name="button_yes" comment="Dialog button for Yes action.">Ja</string>
     <string name="button_no" comment="Dialog button for No action.">Nej</string>
     <string name="warning_basic_member" comment="Warning dialog message which is shown after the basic user is signed in.">Denne tilføjelse fungerer kun med et Premium-medlemskab. Som basismedlem kan man downloade traditionelle, hændelses- og CITO-geocaches med basis geocachedata (dvs. uden liste(r), tips, attributter, billeder, logger mv.) og kun bruge få filtre til geocachesøgninger. For yderligere information, læs Brugervejledningen på Geocaching4Locus-webstedet.</string>
@@ -158,7 +158,7 @@
     <string name="warning_external_storage_permission" comment="Warning message which is shown before request for write external storage permission.">Appen kræver tilladelsen <b>skriv til eksternt lager</b> til lagring af Geocachedata til Locus Map. <b>Tildel</b> denne tilladelse i den næste dialog.</string>
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Appen har ikke tilladelse til at <b>skrive til eksternt lager</b>. Denne tilladelse kræves til lagring af Geocachingdata til Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul geocaches ved deaktivering</string>
-    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul live kort geocaches når live kort er deaktiveret</string>
+    <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Skjul Realtidskortgeocaches, når funktionen Realtidskort er deaktiveret</string>
     <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Deaktivér DNF-, NM- og NA-caches</string>
     <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Markér geocache som utilgængelig, når den indeholder flere <i>Ikke fundet</i>, <i>Kræver vedligeholdelse</i> eller <i>Kræver arkivering</i> logger</string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Hvor mange seneste logger, som skal tjekkes</string>
@@ -183,10 +183,10 @@
     <string name="button_continue" comment="Dialog button for Continue action.">Forsæt</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Appen har ikke tilladelse til at oprette notifikationer.</string>
     <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Ukendt medlemskab</string>
-    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Deling af personlige oplysninger med godkendte udviklere er fravalgt, hvilket påvirker medlemskabstypen og geocache-downloadkvoten. Uden disse oplysninger fungerer denne tilføjelse ikke. For at fjerne fravalget, slå <b>Del ikke personlige oplysninger med Godkendt Udvikler-geocachingapplicationer</b> fra i Geochching-kontoindstillingerne under <b>Fortrolighed — Godkendelser</b> eller tryk på knappen <b>Fortrolighedsindstillinger</b> og opdatér kontooplysningerne manuelt i afsnittet Konto i denne add-ons indstillinger.</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Deling af personlige oplysninger med godkendte udviklere er fravalgt, hvilket påvirker medlemskabstypen og geocache-downloadkvoten. Uden disse oplysninger fungerer denne tilføjelse ikke. For at fjerne fravalget, slå <b>Del ikke personlige oplysninger med Godkendt Udvikler-geocachingapplicationer</b> fra i Geochching-kontoindstillingerne under <b>Fortrolighed — Godkendelser</b> eller tryk på knappen <b>Fortrolighedsindstillinger</b> og opdatér kontooplysningerne manuelt i afsnittet Konto i denne tilføjelses indstillinger.</string>
     <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Fortrolighedsindstillinger</string>
     <string name="pref_membership_type" comment="Title of preference in Account settings.">Medlemskabstype</string>
-    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Opdatér kontoinfo</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Opdatere kontoinfo</string>
     <string name="membership_unknown" comment="Name of unknown membership type">Ukendt</string>
     <string name="membership_basic" comment="Name of basic membership type">Basis</string>
     <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>

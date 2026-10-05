@@ -1,7 +1,7 @@
-# serializable support
--keepnames class * implements java.io.Serializable
+# Serializable support for the classes of the app (e.g. exceptions passed in an Intent)
+-keepnames class com.arcao.geocaching4locus.** implements java.io.Serializable
 
--keepclassmembers class * implements java.io.Serializable {
+-keepclassmembers class com.arcao.geocaching4locus.** implements java.io.Serializable {
     static final long serialVersionUID;
     private static final java.io.ObjectStreamField[] serialPersistentFields;
     !static !transient <fields>;

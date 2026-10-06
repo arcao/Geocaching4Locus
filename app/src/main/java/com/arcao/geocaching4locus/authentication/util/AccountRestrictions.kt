@@ -1,8 +1,12 @@
 package com.arcao.geocaching4locus.authentication.util
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.constants.AppConstants
 import com.arcao.geocaching4locus.base.constants.PrefConstants
 import com.arcao.geocaching4locus.data.api.model.User
@@ -77,9 +81,19 @@ class AccountRestrictions internal constructor(context: Context) {
         renewLiteGeocacheLimit = Instant.ofEpochSecond(preferences.getLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, 0))
     }
 
-    internal fun applyRestrictions(user: User) {
+    /**
+     * Applies restrictions of the membership to the preferences.
+     *
+     * The Basic membership restrictions are enforced every time, because the Basic members are not
+     * allowed to use the features. The Premium defaults are only defaults, they are applied only
+     * when [applyPremiumDefaults] is true (a new account or a change of the membership), otherwise
+     * the choices made by the user would be reset every time the account info is refreshed.
+     */
+    internal fun applyRestrictions(user: User, applyPremiumDefaults: Boolean = true) {
         if (user.isPremium()) {
-            presetPremiumMembershipConfiguration()
+            if (applyPremiumDefaults) {
+                presetPremiumMembershipConfiguration()
+            }
         } else {
             presetBasicMembershipConfiguration()
         }
@@ -102,6 +116,7 @@ class AccountRestrictions internal constructor(context: Context) {
             putString(PrefConstants.FILTER_DIFFICULTY_MAX, "5")
             putString(PrefConstants.FILTER_TERRAIN_MIN, "1")
             putString(PrefConstants.FILTER_TERRAIN_MAX, "5")
+            putString(PrefConstants.FILTER_MIN_FAVORITE_POINTS, "0")
 
             // multi-select filters (select all)
             for (i in AppConstants.GEOCACHE_TYPES.indices)
@@ -156,6 +171,40 @@ class AccountRestrictions internal constructor(context: Context) {
             putInt(PrefConstants.RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT, currentLiteGeocacheLimit)
             putLong(PrefConstants.RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT, renewLiteGeocacheLimit.epochSecond)
         }
+
+        if (user.isPremium()) {
+            warnIfFullLimitAlmostDepleted()
+        }
+    }
+
+    /**
+     * Warns the user once per limit period when only a few full geocache downloads remain.
+     */
+    private fun warnIfFullLimitAlmostDepleted() {
+        if (maxFullGeocacheLimit <= 0 || currentFullGeocacheLimit > maxFullGeocacheLimit * LIMIT_WARNING_RATIO) {
+            return
+        }
+
+        val now = Instant.now()
+        val warnedUntil = Instant.ofEpochSecond(
+            preferences.getLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL, 0)
+        )
+        if (now.isBefore(warnedUntil)) {
+            return
+        }
+
+        preferences.edit {
+            putLong(PrefConstants.RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL, renewFullGeocacheLimit.epochSecond)
+        }
+
+        val message = context.getString(
+            R.string.toast_full_geocache_limit_almost_depleted,
+            currentFullGeocacheLimit,
+            maxFullGeocacheLimit
+        )
+        Handler(Looper.getMainLooper()).post {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {
@@ -165,6 +214,9 @@ class AccountRestrictions internal constructor(context: Context) {
         private const val LITE_GEOCACHE_LIMIT_BASIC = 10000
 
         val DEFAULT_RENEW_DURATION: Duration = Duration.ofDays(1)
+
+        // warn when less than 10 % of the full geocache downloads remains
+        private const val LIMIT_WARNING_RATIO = 0.1
     }
 
     private fun User.isPremium() = when (membership) {

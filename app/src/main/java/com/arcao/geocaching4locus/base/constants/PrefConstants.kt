@@ -38,6 +38,7 @@ object PrefConstants {
     const val FILTER_TERRAIN_MIN = "terrain_filter_min"
     const val FILTER_TERRAIN_MAX = "terrain_filter_max"
     const val FILTER_DISTANCE = "filter_distance"
+    const val FILTER_MIN_FAVORITE_POINTS = "filter_min_favorite_points"
     const val FILTER_SHOW_FOUND = "filter_show_found"
     const val FILTER_SHOW_OWN = "filter_show_own"
     const val FILTER_SHOW_DISABLED = "filter_show_disabled"
@@ -64,11 +65,15 @@ object PrefConstants {
     const val ABOUT_FACEBOOK = "about_facebook"
     const val ABOUT_FEEDBACK = "about_feedback"
     const val ABOUT_DONATE_PAYPAL = "about_donate_paypal"
+    const val ACCOUNT = "account"
+    const val MEMBERSHIP_TYPE = "membership_type"
+    const val ACCOUNT_REFRESH = "account_refresh"
     const val ACCOUNT_POWERED_BY = "account_powered_by"
 
     const val RESTRICTION__RENEW_FULL_GEOCACHE_LIMIT = "renew_full_geocache_limit"
     const val RESTRICTION__CURRENT_FULL_GEOCACHE_LIMIT = "current_full_geocache_limit"
     const val RESTRICTION__MAX_FULL_GEOCACHE_LIMIT = "max_full_geocache_limit"
+    const val RESTRICTION__FULL_GEOCACHE_LIMIT_WARNED_UNTIL = "full_geocache_limit_warned_until"
 
     const val RESTRICTION__RENEW_LITE_GEOCACHE_LIMIT = "renew_lite_geocache_limit"
     const val RESTRICTION__CURRENT_LITE_GEOCACHE_LIMIT = "current_lite_geocache_limit"

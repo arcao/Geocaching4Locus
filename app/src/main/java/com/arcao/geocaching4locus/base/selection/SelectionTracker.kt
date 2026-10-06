@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus.base.selection
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.SparseArray
+import androidx.core.os.BundleCompat
 import androidx.core.util.containsKey
 import androidx.core.util.forEach
 import androidx.core.util.valueIterator
@@ -11,6 +12,7 @@ import java.util.concurrent.CopyOnWriteArraySet
 
 class SelectionTracker<T : Parcelable>(
     private val adapter: SelectionAdapter<T>,
+    private val valueClass: Class<T>,
     private val stateKey: String = DEFAULT_STATE_KEY
 ) {
     private val selectedPositionMap = SparseArray<T>()
@@ -69,7 +71,7 @@ class SelectionTracker<T : Parcelable>(
         if (inState == null) return
 
         selectedPositionMap.clear()
-        inState.getSparseParcelableArray<T>(stateKey)?.forEach { position, value ->
+        BundleCompat.getSparseParcelableArray(inState, stateKey, valueClass)?.forEach { position, value ->
             selectedPositionMap[position] = value
         }
     }

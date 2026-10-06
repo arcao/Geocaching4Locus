@@ -23,12 +23,13 @@ class GeocachingApiLoginUseCase(
         if (account.isAccountUpdateRequired()) {
             val user = repository.user()
 
+            val wasPremium = account.isPremium()
             account.updateUserInfo(user)
 
-            // update restrictions
+            // update restrictions, the Premium defaults are applied only if the membership has changed
             accountManager.restrictions().apply {
                 updateLimits(user)
-                applyRestrictions(user)
+                applyRestrictions(user, applyPremiumDefaults = !wasPremium)
             }
         }
     }

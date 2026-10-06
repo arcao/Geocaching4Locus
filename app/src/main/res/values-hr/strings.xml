@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. težina</string>
     <string name="pref_terrain_min" comment="">MIn. teren</string>
     <string name="pref_terrain_max" comment="">Max. teren</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. bodova favorita</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Prikaži samo cacheove s barem toliko bodova favorita</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Isključeno</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Prikaži samo cacheove s barem toliko bodova favorita. Unesite 0 za isključivanje filtra.</string>
     <string name="pref_download_basic" comment="">Samo osnovne informacije</string>
     <string name="pref_download_basic_summary" comment="">Skini samo osnovne informacije o cachu</string>
     <string name="pref_download_on_show" comment="">Skini ostatak informacija na prikaz</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Postavke</string>
     <string name="var_user_waypoint_name" comment="">Korisnička točka %1$d</string>
     <string name="var_final_location_name" comment="">Konačna lokacija</string>
+    <string name="var_background_image_name" comment="">Pozadinska slika</string>
     <string name="pref_login" comment="">Prijavi se</string>
     <string name="pref_login_summary" comment="">Prijavite se u Vaš geocaching,com račun</string>
     <string name="pref_logout" comment="">Odjavi se</string>
@@ -73,9 +78,9 @@
     <string name="title_import_from_gc" comment="">Uvezi iz GC koda</string>
     <string name="error_gc_code_invalid" comment="">GC kod nije valjan</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Cache %s nije pronađena.</item>
-        <item quantity="few" comment="">Cache %s nije pronađen.</item>
-        <item quantity="other" comment="">Caches %s nisu pronađeni.</item>
+        <item comment="" quantity="one">Cache %s nije pronađena.</item>
+        <item comment="" quantity="few">Cache %s nije pronađen.</item>
+        <item comment="" quantity="other">Caches %s nisu pronađeni.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Broj cacheova</string>
     <string name="launcher_nearest_geocaches" comment="">Najbliži cacheovi</string>
@@ -89,6 +94,7 @@
 <br/>
 <i>Nadogradnja na geocaching.com premium članstvo danas preuzeti sve pojedinosti do 6000 sprema dnevno i pristup mnogo više prednosti. Posjetite geocaching.com za nadogradnju.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Dostigli ste limit za skidanje sve pojedinosti o <b>%1$s po razdoblju od %2$s</b>. Vaša dnevna kvota će biti vraćena pri %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Preostalo je samo %1$d od %2$d potpunih detalja cacheva.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hej, usporite!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Dosegli ste maksimum akcija/poziva po minuti</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -113,6 +119,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Preuzimanje sprema žive karti: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Omogućiti</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Onemogućiti</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Živa mapa je pauzirana.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Nastavi</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Postavke</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus živa mapa: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Onemogućene obavijesti</string>
@@ -155,6 +163,8 @@
     <string name="error_no_external_storage_permission" comment="Error message when app doesn't have write external storage permission.">Aplikacija nema dozvolu za <b>pisanje vanjsku pohranu</b>. Dopuštenje je potrebno za spremanje sprema podatke za Locus Map.</string>
     <string name="pref_hide_geocaches_on_disabled" comment="Title of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Sakrij sprema na onemogućen</string>
     <string name="pref_hide_geocaches_on_disabled_summary" content="Summary of checkbox preference in Live Map settings. Marking this checkbox will cause to hides all Live Map geocaches in Locus Map after Live Map feature is disabled.">Sakrij sprema žive karti kada se značajka karta živa je onemogućen</string>
+    <string name="pref_disable_dnf_nm_na_geocaches" comment="Title of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Onemogući DNF, NM i NA caheove</string>
+    <string name="pref_disable_dnf_nm_na_geocaches_summary" comment="Summary of checkbox preference in Downloading settings. Marking this checkbox will cause to mark geocache as not available with more Did Not Fond, Needs Maintenance or Need Archived logs.">Označi cache kao nedostupan ako sadrži više zapisa <i>Nije pronađeno</i>, <i>Potrebno je održavanje</i> ili <i>Potrebno je arhivirano</i></string>
     <string name="pref_disable_dnf_nm_na_geocaches_logs_count" comment="Title of slider preference in Downloading settings. There can be selected how many Did Not Fond, Needs Maintenance or Need Archived logs (1 to 5) cause to mark geocache as not available.">Koliko zadnjih zapisa treba provjeriti</string>
     <string name="launcher_watch_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to watch list.">Gledajte geocache</string>
     <string name="launcher_bookmark_geocache" comment="Share button item title in geocache detail in Locus Map, which add geocache to bookmark list.">Oznaka geocache</string>
@@ -172,6 +182,17 @@
     <string name="hint_authorization_code" comment="Input hint to enter authorization code from sign in process. This is shown when auto redirect with authorization code to the app doesn't work.">Kôd autorizacije</string>
     <string name="error_invalid_authorization_code" comment="Error dialog message when user pasted/entered invalid authorization code in input dialog in sign in process.">Uneseni autorizacijski kod nije važeći. Molim te pokušaj ponovno.</string>
     <string name="error_service_unavailable" comment="Error dialog message when Geocaching API is down for maintenance">API za geocaching trenutno je isključen zbog održavanja. Pokušajte kasnije.</string>
+    <string name="pref_account_powered_by" comment="Title of preference in Account section.">Pokreće Geocaching API</string>
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Omogućen podrškom Geocaching Premium Članstva, API program pruža programerima trećih strana mogućnost rada s Geocaching HQ-om na čitavom paketu integriranih proizvoda i usluga za zajednicu. Aplikacije za razvojne programere API dizajnirane su za rad s osnovnim uslugama geocaching.com i pružaju dodatne značajke zajednici geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Nastaviti</string>
+    <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Aplikacija nema dopuštenje za izradu obavijesti.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Nepoznato članstvo</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Isključili ste dijeljenje svojih osobnih podataka s ovlaštenim programerima, što utječe na vrstu članstva i kvotu preuzimanja geocachea. Također onemogućuje rad ovog dodatka. Da biste uklonili ovo isključivanje, isključite opciju <b>Do not share my personal information with Authorized Developer geocaching applications</b> u postavkama računa Geocaching pod <b>Privacy — Autorizations</b> ili dodirnite <b>Postavke privatnosti</b> i ručno osvježite podatke o računu u odjeljku Račun u postavkama ovog dodatka.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Postavke privatnosti</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Vrsta članstva</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Osvježi podatke o računu</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Nepoznato</string>
+    <string name="membership_basic" comment="Name of basic membership type">Osnovno</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Povelja)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

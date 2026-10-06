@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Maximum moeilijkheid</string>
     <string name="pref_terrain_min" comment="">Minimum terrein</string>
     <string name="pref_terrain_max" comment="">Maximum terrein</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favorietenpunten</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Toon alleen caches met minimaal zoveel favorietenpunten</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Uit</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Toon alleen caches met minimaal zoveel favorietenpunten. Voer 0 in om het filter uit te schakelen.</string>
     <string name="pref_download_basic" comment="">Alleen basis info</string>
     <string name="pref_download_basic_summary" comment="">Enkel basisinformatie betreffende de cache downloaden</string>
     <string name="pref_download_on_show" comment="">Op \'tonen\' de resterende informatie downloaden</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Instellingen</string>
     <string name="var_user_waypoint_name" comment="">Gebruikers via punt %1$d</string>
     <string name="var_final_location_name" comment="">Eindbestemming</string>
+    <string name="var_background_image_name" comment="">Achtergrondafbeelding</string>
     <string name="pref_login" comment="">Aanmelden</string>
     <string name="pref_login_summary" comment="">Aanmelden op Geocaching.com account</string>
     <string name="pref_logout" comment="">Afmelden</string>
@@ -73,8 +78,8 @@
     <string name="title_import_from_gc" comment="">Importeer via GC code</string>
     <string name="error_gc_code_invalid" comment="">Geen geldige GC code.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Cache %s niet gevonden.</item>
-        <item quantity="other" comment="">Caches %s zijn niet gevonden</item>
+        <item comment="" quantity="one">Cache %s niet gevonden.</item>
+        <item comment="" quantity="other">Caches %s zijn niet gevonden</item>
     </plurals>
     <string name="title_geocache_count" comment="">Aantal caches</string>
     <string name="launcher_nearest_geocaches" comment="">Caches dichtbij</string>
@@ -88,6 +93,7 @@
 <br/>
 <i>Upgrade vandaag naar geocaching.com Premium Lid om alle details te downloaden tot 6000 caches per dag en krijg toegang tot veel meer voordelen. Bezoek geocaching.com om te upgraden.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Je hebt de limiet om alle details te dowloaden van <b>%1$s per %2$s periode</b> bereikt. Je dagelijkse quota wordt gereset om %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Nog maar %1$d van %2$d volledige cachegegevens over.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hey, kalm aan!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Je hebt de limiet van het maximum aantal acties/oproepen per minuut bereikt.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -109,6 +115,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Bezig met downloaden van Live map caches: %1$d / %2$d  (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Schakelen</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Uitschakelen</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Live kaart is gepauzeerd.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Hervatten</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Instellingen</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus Live-kaart: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Gedeactiveerde melding</string>
@@ -174,4 +182,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Mogelijk gemaakt door de ondersteuning van Geocaching Premium-lidmaatschappen, biedt het API-programma externe ontwikkelaars de mogelijkheid om met Geocaching HQ te werken aan een volledige suite van geïntegreerde producten en diensten voor de gemeenschap. API-ontwikkelaarsapps zijn ontworpen om te werken met de kernservices van geocaching.com en bieden extra functies aan de geocaching-gemeenschap.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Doorgaan</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">De app heeft geen toestemming om notificaties te maken.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Onbekend lidmaatschap</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Je hebt ervoor gekozen je persoonlijke gegevens niet te delen met geautoriseerde ontwikkelaars. Dit beïnvloedt het type lidmaatschap en het downloadquotum voor caches en zorgt ervoor dat deze add-on niet werkt. Om dit ongedaan te maken, schakel je in de Geocaching-accountinstellingen onder <b>Privacy — Autorisaties</b> de optie <b>Mijn persoonlijke gegevens niet delen met geocachingapplicaties van geautoriseerde ontwikkelaars</b> uit, of tik je op de knop <b>Privacyinstellingen</b> en vernieuw je de accountgegevens handmatig in het gedeelte Account van de instellingen van deze add-on.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Privacyinstellingen</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Type lidmaatschap</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Accountgegevens vernieuwen</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Onbekend</string>
+    <string name="membership_basic" comment="Name of basic membership type">Basis</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

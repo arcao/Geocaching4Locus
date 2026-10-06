@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Dificuldade Máx.</string>
     <string name="pref_terrain_min" comment="">Terreno Mín.</string>
     <string name="pref_terrain_max" comment="">Terreno Máx.</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Mín. de pontos favoritos</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Mostra apenas caches com pelo menos este número de pontos favoritos</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Desligado</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Mostra apenas caches com pelo menos este número de pontos favoritos. Introduzir 0 para desligar o filtro.</string>
     <string name="pref_download_basic" comment="">Apenas Informação Básica</string>
     <string name="pref_download_basic_summary" comment="">Descarregar apenas a informação básica da cache</string>
     <string name="pref_download_on_show" comment="">Descarregar o restante da informação apenas na visualização</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Definições</string>
     <string name="var_user_waypoint_name" comment="">Waypoint do utilizador %1$d</string>
     <string name="var_final_location_name" comment="">Localização final</string>
+    <string name="var_background_image_name" comment="">Imagem de fundo</string>
     <string name="pref_login" comment="">Entrar</string>
     <string name="pref_login_summary" comment="">Entrar na conta Geocaching.com</string>
     <string name="pref_logout" comment="">Sair</string>
@@ -73,8 +78,8 @@
     <string name="title_import_from_gc" comment="">Importar do código GC</string>
     <string name="error_gc_code_invalid" comment="">O código GC não é válido.</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">A cache %s não foi encontrada.</item>
-        <item quantity="other" comment="">As caches %s não foram encontradas.</item>
+        <item comment="" quantity="one">A cache %s não foi encontrada.</item>
+        <item comment="" quantity="other">As caches %s não foram encontradas.</item>
     </plurals>
     <string name="title_geocache_count" comment="">Contagem de caches</string>
     <string name="launcher_nearest_geocaches" comment="">Caches mais próximas</string>
@@ -88,6 +93,7 @@
 <br/>
 <i>Atualiza a tua conta em geocaching.com para membro premium para poderes transferir os detalhes completos até  6000 caches por dia e usufruir de muito mais benefícios. Visita geocaching.com para atualizares a conta.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Atingiste o limite de transferência de detalhes completos das caches de <b>%1$s por %2$s período</b>. A tua quota diária será reiniciada às %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Restam apenas %1$d de %2$d detalhes completos de geocaches.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Ei, vai com calma!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Atingiste o limite máximo de ações/chamadas por minuto.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -109,6 +115,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">A transferir caches pelo mapa ao vivo: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Ligar</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Desligar</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">O mapa ao vivo está pausado.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Retomar</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Definições</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Mapa ao vivo Geocaching4Locus: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Notificação desligada</string>
@@ -174,4 +182,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Possível graças ao apoio das contas premium do Geocaching, o programa API permite que os programadores externos possam trabalhar com o Geocaching HQ num vasto leque de produtos e serviços integrados para a comunidade. As aplicações que se baseiam na API são criadas para funcionar com os serviços do geocaching.com e fornecer novas funcionalidades à comunidade Geocaching.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Continuar</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">A aplicação não tem permissão para criar notificações.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Subscrição desconhecida</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Optaste por não partilhar as tuas informações pessoais com programadores autorizados, o que afeta o tipo da tua subscrição e impõe restrições no limite de geocaches transferidas. Além disso, também impede este complemento de funcionar. Para eliminar esta exclusão, desliga a opção <b>Não partilhar a minha informação pessoal com os Programadores Autorizados das aplicações geocaching.</b> nas configurações da tua conta de Geocaching em <b>Privacidade - Autorizações</b>, ou toca no botão <b>Configurações de Privacidade</b> e atualiza manualmente as informações da tua conta na secção Conta das configurações deste complemento.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Configuração de privacidade</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Tipo de subscrição</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Atualizar informações da conta</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Desconhecida</string>
+    <string name="membership_basic" comment="Name of basic membership type">Básica</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

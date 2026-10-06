@@ -3,6 +3,7 @@ package com.arcao.geocaching4locus
 import com.arcao.geocaching4locus.authentication.LoginViewModel
 import com.arcao.geocaching4locus.authentication.usecase.CreateAccountUseCase
 import com.arcao.geocaching4locus.authentication.usecase.RetrieveAuthorizationUrlUseCase
+import com.arcao.geocaching4locus.authentication.usecase.UpdateAccountUseCase
 import com.arcao.geocaching4locus.authentication.util.PreferenceAccountManager
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GeocachingApiFilterProvider
@@ -47,62 +48,57 @@ import com.arcao.geocaching4locus.weblink.BookmarkGeocacheWebLinkViewModel
 import com.arcao.geocaching4locus.weblink.WatchGeocacheWebLinkViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 internal val appModule = module {
     single { androidApplication() as App }
-    single { PreferenceAccountManager(get(), get()) } bind AccountManager::class
+    singleOf(::PreferenceAccountManager) bind AccountManager::class
     single { CoroutinesDispatcherProvider() }
     single { AnalyticsManager(androidContext()) }
 
-    single { GeocachingApiFilterProvider(get()) }
-    single { FilterPreferenceManager(get(), get()) }
-    single { DefaultPreferenceManager(get()) }
-    single { ExceptionHandler(get(), get()) }
-    single { LiveMapNotificationManager(get(), get(), get(), get(), get()) }
+    singleOf(::GeocachingApiFilterProvider)
+    singleOf(::FilterPreferenceManager)
+    singleOf(::DefaultPreferenceManager)
+    singleOf(::ExceptionHandler)
+    singleOf(::LiveMapNotificationManager)
 
     // ---- Usecases ----
-    factory { CreateAccountUseCase(get(), get(), get()) }
-    factory { RetrieveAuthorizationUrlUseCase(get()) }
-    factory { GeocachingApiLoginUseCase(get(), get(), get()) }
-    factory { GetListGeocachesUseCase(get(), get(), get(), get(), get()) }
-    factory { GetGeocacheCodeFromGuidUseCase(get(), get()) }
-    factory { GetGeocachingLogsUseCase(get(), get(), get(), get()) }
-    factory { GetGeocachingTrackablesUseCase(get(), get(), get(), get()) }
-    factory { GetGpsLocationUseCase(get(), get()) }
-    factory { GetLastKnownLocationUseCase(get()) }
-    factory {
-        GetLiveMapPointsFromRectangleCoordinatesUseCase(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
-        )
-    }
-    factory { GetOldPointNewPointPairFromPointUseCase(get(), get(), get(), get(), get()) }
-    factory { GetPointFromGeocacheCodeUseCase(get(), get(), get(), get(), get()) }
-    factory { GetPointsFromCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
-    factory { GetPointsFromGeocacheCodesUseCase(get(), get(), get(), get(), get()) }
-    factory { GetPointsFromPointIndexesUseCase(get(), get()) }
-    factory { GetPointsFromRectangleCoordinatesUseCase(get(), get(), get(), get(), get(), get()) }
-    factory { GetUserListsUseCase(get(), get(), get()) }
-    factory { GetWifiLocationUseCase(get(), get()) }
-    factory { RemoveLocusMapPointsUseCase(get(), get()) }
-    factory { RequireLocationPermissionRequestUseCase(get()) }
-    factory { SendPointsSilentToLocusMapUseCase(get(), get()) }
-    factory { WritePointToPackPointsFileUseCase(get(), get()) }
+    factoryOf(::CreateAccountUseCase)
+    factoryOf(::UpdateAccountUseCase)
+    factoryOf(::RetrieveAuthorizationUrlUseCase)
+    factoryOf(::GeocachingApiLoginUseCase)
+    factoryOf(::GetListGeocachesUseCase)
+    factoryOf(::GetGeocacheCodeFromGuidUseCase)
+    factoryOf(::GetGeocachingLogsUseCase)
+    factoryOf(::GetGeocachingTrackablesUseCase)
+    factoryOf(::GetGpsLocationUseCase)
+    factoryOf(::GetLastKnownLocationUseCase)
+    factoryOf(::GetLiveMapPointsFromRectangleCoordinatesUseCase)
+    factoryOf(::GetOldPointNewPointPairFromPointUseCase)
+    factoryOf(::GetPointFromGeocacheCodeUseCase)
+    factoryOf(::GetPointsFromCoordinatesUseCase)
+    factoryOf(::GetPointsFromGeocacheCodesUseCase)
+    factoryOf(::GetPointsFromPointIndexesUseCase)
+    factoryOf(::GetPointsFromRectangleCoordinatesUseCase)
+    factoryOf(::GetUserListsUseCase)
+    factoryOf(::GetWifiLocationUseCase)
+    factoryOf(::RemoveLocusMapPointsUseCase)
+    factoryOf(::RequireLocationPermissionRequestUseCase)
+    factoryOf(::SendPointsSilentToLocusMapUseCase)
+    factoryOf(::WritePointToPackPointsFileUseCase)
 
     // ---- View models ----
     // login
-    viewModel { LoginViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModelOf(::LoginViewModel)
     // dashboard
-    viewModel { parameters ->
+    viewModel { params ->
         DashboardViewModel(
-            parameters.get(),
+            params.get(),
             get(),
             get(),
             get(),
@@ -112,28 +108,17 @@ internal val appModule = module {
         )
     }
     // download live map rectangles
-    viewModel { DownloadRectangleViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModelOf(::DownloadRectangleViewModel)
     // import geocache codes
-    viewModel {
-        ImportGeocacheCodeViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
-        )
-    }
+    viewModelOf(::ImportGeocacheCodeViewModel)
     // import url
-    viewModel { ImportUrlViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModelOf(::ImportUrlViewModel)
     // import bookmarks
-    viewModel { ImportBookmarkViewModel(get(), get(), get()) }
-    viewModel { BookmarkListViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { parameters ->
+    viewModelOf(::ImportBookmarkViewModel)
+    viewModelOf(::BookmarkListViewModel)
+    viewModel { params ->
         BookmarkViewModel(
-            parameters.get(),
+            params.get(),
             get(),
             get(),
             get(),
@@ -146,11 +131,11 @@ internal val appModule = module {
         )
     }
     // live map
-    factory { LiveMapViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    factoryOf(::LiveMapViewModel)
     // search nearest
-    viewModel { parameters ->
+    viewModel { params ->
         SearchNearestViewModel(
-            parameters.get(),
+            params.get(),
             get(),
             get(),
             get(),
@@ -168,22 +153,9 @@ internal val appModule = module {
         )
     }
     // update
-    viewModel {
-        UpdateViewModel(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
-        )
-    }
-    viewModel { UpdateMoreViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModelOf(::UpdateViewModel)
+    viewModelOf(::UpdateMoreViewModel)
     // web link
-    viewModel { BookmarkGeocacheWebLinkViewModel(get(), get(), get(), get()) }
-    viewModel { WatchGeocacheWebLinkViewModel(get(), get(), get(), get()) }
+    viewModelOf(::BookmarkGeocacheWebLinkViewModel)
+    viewModelOf(::WatchGeocacheWebLinkViewModel)
 }

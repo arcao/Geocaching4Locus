@@ -16,6 +16,11 @@ pluginManagement {
     }
 }
 
+plugins {
+    // resolves the JDK for the Gradle daemon (gradle/gradle-daemon-jvm.properties) and the Java toolchains
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {

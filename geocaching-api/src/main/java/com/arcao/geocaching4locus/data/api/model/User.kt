@@ -26,6 +26,27 @@ data class User(
         })
     }
 
+    /**
+     * True if the user opted out and the API hides the user's reference code.
+     */
+    val isHidden: Boolean
+        get() = referenceCode.equals(ReferenceCode.HIDDEN_USER, ignoreCase = true)
+
+    /**
+     * Numeric user id or `null` if the reference code is missing, hidden or not valid.
+     */
+    val idOrNull: Long? by lazy {
+        if (referenceCode == null || isHidden) {
+            null
+        } else {
+            try {
+                ReferenceCode.toId(referenceCode)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+    }
+
     companion object {
         private const val FIELD_REFERENCE_CODE = "referenceCode"
         private const val FIELD_FIND_COUNT = "findCount"

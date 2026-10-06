@@ -9,7 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
+import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -35,7 +35,9 @@ import org.koin.core.parameter.parametersOf
 
 class BookmarkFragment : BaseBookmarkFragment() {
     private val bookmarkList by lazy<GeocacheListEntity> {
-        requireNotNull(arguments?.getParcelable(ARG_BOOKMARK_LIST))
+        requireNotNull(
+            arguments?.let { BundleCompat.getParcelable(it, ARG_BOOKMARK_LIST, GeocacheListEntity::class.java) }
+        )
     }
     private val viewModel by viewModel<BookmarkViewModel> {
         parametersOf(bookmarkList)
@@ -186,9 +188,9 @@ class BookmarkFragment : BaseBookmarkFragment() {
         private const val ARG_BOOKMARK_LIST = "bookmarkList"
 
         fun newInstance(geocacheList: GeocacheListEntity) = BookmarkFragment().apply {
-            arguments = bundleOf(
-                ARG_BOOKMARK_LIST to geocacheList
-            )
+            arguments = Bundle().apply {
+                putParcelable(ARG_BOOKMARK_LIST, geocacheList)
+            }
         }
     }
 }

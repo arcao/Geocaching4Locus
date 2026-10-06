@@ -36,7 +36,7 @@ class GeocacheLogConverter(
             if (author != null) {
                 finder = author.username.orEmpty()
                 findersFound = author.findCount
-                findersId = author.id
+                findersId = author.idOrNull ?: GeocachingLog.FINDERS_ID_UNDEFINED
             }
 
             for (image in log.images ?: emptyList()) {

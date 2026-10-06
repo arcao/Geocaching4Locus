@@ -42,6 +42,10 @@
     <string name="pref_difficulty_max" comment="">Max. vanskelighetsgrad</string>
     <string name="pref_terrain_min" comment="">Min. terreng</string>
     <string name="pref_terrain_max" comment="">Max. terreng</string>
+    <string name="pref_min_favorite_points" comment="Title of the minimum favorite points filter item in Filter section in add-on settings.">Min. favorittpoeng</string>
+    <string name="pref_min_favorite_points_summary" comment="Summary of the minimum favorite points filter. The value is shown before this text.">Vis bare cacher med minst så mange favorittpoeng</string>
+    <string name="pref_min_favorite_points_off" comment="Value of the minimum favorite points filter when the filter is turned off.">Av</string>
+    <string name="pref_min_favorite_points_dialog_message" comment="Message in the dialog of the minimum favorite points filter.">Vis bare cacher med minst så mange favorittpoeng. Skriv inn 0 for å slå av filteret.</string>
     <string name="pref_download_basic" comment="">Kun basis info</string>
     <string name="pref_download_basic_summary" comment="">Last ned kun basis info om cachen</string>
     <string name="pref_download_on_show" comment="">Last ned all info ved visning</string>
@@ -57,6 +61,7 @@
     <string name="menu_settings" comment="">Innstillinger</string>
     <string name="var_user_waypoint_name" comment="">Brukerveipunkt %1$d</string>
     <string name="var_final_location_name" comment="">Endelig lokasjon</string>
+    <string name="var_background_image_name" comment="">Bakgrunnsbilde</string>
     <string name="pref_login" comment="">Logg inn</string>
     <string name="pref_login_summary" comment="">Logg inn med Geocaching.com konto</string>
     <string name="pref_logout" comment="">Logg ut</string>
@@ -73,8 +78,8 @@
     <string name="title_import_from_gc" comment="">Importer via GC kode</string>
     <string name="error_gc_code_invalid" comment="">GC kode er ikke gyldig</string>
     <plurals name="plural_error_geocache_not_found" comment="Plurals for not found geocache code error. The '%s' is replaced with geocache codes separated by coma.">
-        <item quantity="one" comment="">Cache %s ble ikke funnet</item>
-        <item quantity="other" comment="">Cacher %s ble ikke funnet</item>
+        <item comment="" quantity="one">Cache %s ble ikke funnet</item>
+        <item comment="" quantity="other">Cacher %s ble ikke funnet</item>
     </plurals>
     <string name="title_geocache_count" comment="">Antall cacher</string>
     <string name="launcher_nearest_geocaches" comment="">Nærmeste cache</string>
@@ -88,6 +93,7 @@
 <br/> 
 <i>Oppgrader til geocaching.com premium medlemskap for å laste ned alle detaljer for opp til 6000 caches pr dag og for andre fordeler. Besøk geocaching.com for oppgradering.</i></string>
     <string name="error_premium_member_full_geocaching_quota_exceeded" comment="Error dialog message when premium member reach limit of full 6000 geocache details per day. The '%3$s' is replaced with time when quota will be fulfilled/reset (eg. '09:10').">Du har nådd grensen for full nedlasting med <b>%1$s pr %2$s periode</b>. Din daglige kvote blir nullstillt %3$s.</string>
+    <string name="toast_full_geocache_limit_almost_depleted" comment="Warning toast when the premium member is close to the limit of full geocache details per day. The '%1$d' is replaced with the number of remaining downloads and '%2$d' with the daily limit.">Bare %1$d av %2$d fullstendige cachedetaljer igjen.</string>
     <string name="title_method_quota_exceeded" comment="Title of error dialog when user reach the call limit per minute for Geocaching API call.">Hei, ta det med ro!</string>
     <string name="error_method_quota_exceeded" comment="Message of error dialog when user reach the call limit per minute for Geocaching API call.">Du har nådd grensen for hvor mye du kan hente innenfor et minutt.</string>
     <plurals name="plurals_geocache" comment="Plurals for geocache. The '%d' is replaced with numeric value of geocache">
@@ -109,6 +115,8 @@
     <string name="notify_live_map_message_downloading" comment="Live map notification message when geocaches are being downloaded. The '%1$d' is replaced with current downloaded geocaches, '%2$d' with expected count of geocaches to download and '%3$d' with percent state. Note: The '%%' is escape sequence for percent char.">Laster ned Live kart cacher: %1$d / %2$d (%3$d%%)</string>
     <string name="notify_live_map_action_enable" comment="Enable action in Live map notification. This enable Live map.">Aktiver</string>
     <string name="notify_live_map_action_disable" comment="Disable action in Live map notification. This disable Live map.">Deaktiver</string>
+    <string name="notify_live_map_message_paused" comment="Live map notification message when Live map is enabled, but stopped (e.g. the app was restarted by the system) and has to be resumed by the user.">Live kart er satt på pause.</string>
+    <string name="notify_live_map_action_resume" comment="Resume action in Live map notification. This resumes the paused Live map.">Gjenoppta</string>
     <string name="notify_live_map_action_settings" comment="Settings action in Live map notification. This open the Live map section in add-on settings.">Innstillinger</string>
     <string name="error_live_map" comment="Base error message for unknown Live map errors. The '%s' is replaced with concrete error message.">Geocaching4Locus Live kart: %s</string>
     <string name="pref_disabled_notification" comment="Title for Disabled notification setting in Live map section. This show Live map notification even though the Live map is disabled and Locus Map is running.">Deaktiver varslinger</string>
@@ -174,4 +182,13 @@
     <string name="pref_account_powered_by_summary" comment="Sumarry of preference in Account section. The text is from API Agreement, Exhibit C: https://apidevelopers.geocaching.com/apiagreement">Gjøres mulig med støtte fra Geocaching Premium Memberships, gir API-programmet tredjepartsutviklere muligheten til å samarbeide med Geocaching HQ på en komplett pakke med integrerte produkter og tjenester for samfunnet. API-utviklerapplikasjoner er designet for å jobbe med kjernetjenestene til geocaching.com og gi tilleggsfunksjoner til geocaching-fellesskapet.</string>
     <string name="button_continue" comment="Dialog button for Continue action.">Fortsett</string>
     <string name="error_no_post_notification_permission" comment="Error dialog message when app doesn't have permission to create notifications.">Programmet har ikke tillatelse til å opprette varsler.</string>
+    <string name="title_unknown_member" comment="Title of Unknown membership warning dialog">Ukjent medlemskap</string>
+    <string name="warning_unknown_member" comment="Warning dialog message which is shown after the unknown user is signed in.">Du har valgt bort deling av personopplysningene dine med autoriserte utviklere. Dette påvirker medlemskapstypen og nedlastingskvoten for cacher, og gjør at dette tillegget ikke fungerer. For å fjerne dette valget slår du av alternativet <b>Ikke del mine personopplysninger med geocachingapplikasjoner fra autoriserte utviklere</b> i Geocaching-kontoinnstillingene under <b>Personvern — Autorisasjoner</b>, eller trykker på knappen <b>Personverninnstillinger</b> og oppdaterer kontoinformasjonen manuelt i Konto-delen av innstillingene for dette tillegget.</string>
+    <string name="button_privacy_settings" comment="Dialog button which start WebBrowser with geocaching.com Privacy setting for Geocaching Authorized Developers.">Personverninnstillinger</string>
+    <string name="pref_membership_type" comment="Title of preference in Account settings.">Medlemskapstype</string>
+    <string name="pref_account_refresh" comment="Title of preference in Account settings.">Oppdater kontoinformasjon</string>
+    <string name="membership_unknown" comment="Name of unknown membership type">Ukjent</string>
+    <string name="membership_basic" comment="Name of basic membership type">Basis</string>
+    <string name="membership_charter" comment="Name of charter membership type. Charter is special type of Premium membership for long paying accounts.">Premium (Charter)</string>
+    <string name="membership_premium" comment="Name of premium membership type">Premium</string>
 </resources>

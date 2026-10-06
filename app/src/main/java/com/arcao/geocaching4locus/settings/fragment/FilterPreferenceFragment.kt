@@ -1,6 +1,8 @@
 package com.arcao.geocaching4locus.settings.fragment
 
 import android.content.SharedPreferences
+import android.text.InputFilter
+import android.text.InputType
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.arcao.geocaching4locus.R
@@ -14,6 +16,7 @@ import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MAX
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DIFFICULTY_MIN
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_DISTANCE
+import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_MIN_FAVORITE_POINTS
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MAX
 import com.arcao.geocaching4locus.base.constants.PrefConstants.FILTER_TERRAIN_MIN
@@ -45,6 +48,7 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         prepareContainerTypePreference()
         prepareDifficultyPreference()
         prepareTerrainPreference()
+        prepareMinFavoritePointsPreference()
         prepareDistancePreference()
     }
 
@@ -52,6 +56,12 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
         super.onSharedPreferenceChanged(sharedPreferences, key)
 
         when (key) {
+            FILTER_MIN_FAVORITE_POINTS -> {
+                preference<EditTextPreference>(key).apply {
+                    summary = prepareMinFavoritePointsSummary(text)
+                }
+            }
+
             FILTER_DISTANCE -> {
                 preference<EditTextPreference>(key).apply {
                     summary = if (imperialUnits) {
@@ -117,6 +127,46 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
             }
 
             summary = prepareRatingSummary(terrainMin, terrainMax)
+        }
+    }
+
+    private fun prepareMinFavoritePointsPreference() {
+        preference<EditTextPreference>(FILTER_MIN_FAVORITE_POINTS).apply {
+            isEnabled = premiumMember
+            setOnBindEditTextListener { editText ->
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                editText.filters = arrayOf(InputFilter.LengthFilter(MIN_FAVORITE_POINTS_MAX_LENGTH))
+            }
+            setOnPreferenceChangeListener { preference, newValue ->
+                // store a clean number only, e.g. "02" -> "2" and an empty value -> "0"
+                val normalized = normalizeMinFavoritePoints(newValue as? String)
+                if (normalized == newValue) {
+                    true
+                } else {
+                    (preference as EditTextPreference).text = normalized
+                    false
+                }
+            }
+
+            if (!premiumMember) {
+                applyPremiumTitleSign(this)
+            }
+
+            summary = prepareMinFavoritePointsSummary(if (premiumMember) text else "0")
+        }
+    }
+
+    private fun normalizeMinFavoritePoints(value: String?): String {
+        return (value?.trim()?.toIntOrNull()?.coerceAtLeast(0) ?: 0).toString()
+    }
+
+    private fun prepareMinFavoritePointsSummary(value: CharSequence?): CharSequence {
+        // zero (or no value) means the filter is off
+        val points = value?.toString()?.trim()?.toIntOrNull() ?: 0
+        return if (points > 0) {
+            preparePreferenceSummary(points.toString(), R.string.pref_min_favorite_points_summary)
+        } else {
+            preparePreferenceSummary(getText(R.string.pref_min_favorite_points_off), 0)
         }
     }
 
@@ -215,5 +265,8 @@ class FilterPreferenceFragment : AbstractPreferenceFragment() {
 
     companion object {
         private const val TEXT_VALUE_SEPARATOR = ", "
+
+        // 5 digits always fit into Int
+        private const val MIN_FAVORITE_POINTS_MAX_LENGTH = 5
     }
 }

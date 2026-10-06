@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 3.1.1
+
+- Fix Update geocache and Download logs actions in Locus Map
+
 ## Version 3.1.0
 
 - New filter: minimum favorite points

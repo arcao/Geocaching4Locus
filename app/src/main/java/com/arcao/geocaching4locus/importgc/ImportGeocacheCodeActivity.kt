@@ -66,7 +66,6 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             is ImportGeocacheCodeAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
             ImportGeocacheCodeAction.GeocacheCodesInput -> {
                 GeocacheCodesInputDialogFragment.newInstance().show(supportFragmentManager)

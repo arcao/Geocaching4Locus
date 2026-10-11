@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 3.1.2
+
+- Fix crash when Locus Map is not installed
+- Keep the missing Locus Map message on the screen until it is confirmed
+
 ## Version 3.1.1
 
 - Fix Update geocache and Download logs actions in Locus Map

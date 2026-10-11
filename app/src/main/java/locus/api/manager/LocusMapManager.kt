@@ -42,7 +42,7 @@ class LocusMapManager(
 
     val isLocusMapNotInstalled: Boolean
         get() = LocusUtils.getActiveVersion(context)
-            ?.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)?.not() ?: false
+            ?.isVersionValid(AppConstants.LOCUS_MIN_VERSION_CODE)?.not() ?: true
 
     fun createSendPointsIntent(callImport: Boolean, center: Boolean): Intent {
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", cacheFile)

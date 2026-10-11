@@ -55,7 +55,6 @@ class UpdateMoreActivity : AbstractActionBarActivity() {
             UpdateMoreAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
         }.exhaustive
     }

@@ -57,7 +57,6 @@ class UpdateActivity : AbstractActionBarActivity() {
             UpdateAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
             UpdateAction.PremiumMembershipRequired -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())

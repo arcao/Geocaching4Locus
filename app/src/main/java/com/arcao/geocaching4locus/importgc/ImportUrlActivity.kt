@@ -70,7 +70,6 @@ class ImportUrlActivity : AbstractActionBarActivity() {
             is ImportUrlAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
             is ImportUrlAction.SignIn -> loginActivity.launch(null)
         }.exhaustive

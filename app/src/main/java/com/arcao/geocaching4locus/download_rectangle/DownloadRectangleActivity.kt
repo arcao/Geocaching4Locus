@@ -60,7 +60,6 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
             is DownloadRectangleAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
                 setResult(Activity.RESULT_CANCELED)
-                finish()
             }
             is DownloadRectangleAction.SignIn -> loginActivity.launch(null)
             DownloadRectangleAction.LastLiveMapDataInvalid -> {

@@ -108,6 +108,10 @@ class LoginActivity : AbstractActionBarActivity() {
                 .build().launchUrl(this, url.toUri())
         } catch (e: ActivityNotFoundException) {
             showWebPage(url.toUri())
+        } catch (e: NoSuchMethodError) {
+            // androidx.browser calls ActivityOptions.setShareIdentityEnabled on SDK 34+,
+            // but some Android 14 builds don't have it
+            showWebPage(url.toUri())
         }
     }
 

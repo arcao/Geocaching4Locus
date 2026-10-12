@@ -183,7 +183,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
         private fun activeFlags(valueNames: SparseArray<String>, bitField: Int): String {
             val result = StringBuilder()
 
-            // Look for masks, apply it an retrieve the masked value
+            // Look for masks, apply it and retrieve the masked value
             for (i in 0 until valueNames.size) {
                 val maskValue = valueNames.keyAt(i)
                 if (valueNames.get(maskValue).endsWith(SUFFIX_MASK)) {

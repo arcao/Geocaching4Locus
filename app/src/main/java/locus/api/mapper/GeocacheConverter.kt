@@ -205,7 +205,7 @@ class GeocacheConverter(
 
                 var name = namePrefix.toString() + note.substring(0, matcher.start())
 
-                // name can contains more lines, use the last one for name only
+                // name can contain more lines, use the last one for name only
                 val lastLineEnd = name.lastIndexOf('\n')
                 if (lastLineEnd != -1)
                     name = name.substring(lastLineEnd + 1)

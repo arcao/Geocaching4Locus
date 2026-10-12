@@ -80,12 +80,6 @@
 
     <style name="AppTheme.Settings" />
 
-    <style name="TextAppearance.AppCompat.Medium.Primary">
-        <item name="android:textColor">?android:attr/textColorPrimary</item>
-    </style>
-
-    <style name="Widget" />
-
     <style name="Widget.AppTheme.Header" parent="android:Widget.TextView">
         <item name="android:background">@drawable/list_section_divider_holo_light</item>
         <item name="android:textStyle">bold</item>

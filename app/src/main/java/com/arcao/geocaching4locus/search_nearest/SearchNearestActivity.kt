@@ -93,11 +93,11 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             SearchNearestAction.SignIn -> loginActivity.launch(null)
             is SearchNearestAction.Error -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
             }
             is SearchNearestAction.Finish -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
             is SearchNearestAction.LocusMapNotInstalled -> showLocusMissingError()
@@ -160,7 +160,7 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

@@ -103,7 +103,6 @@ class DashboardViewModel(
 
     override fun onCleared() {
         notificationManager.removeLiveMapStateChangeListener(this)
-        super.onCleared()
     }
 
     override fun onLiveMapStateChange(newState: Boolean) {

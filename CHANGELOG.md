@@ -4,6 +4,8 @@
 
 - Fix crash when Locus Map is not installed
 - Keep the missing Locus Map message on the screen until it is confirmed
+- Fix crash when signing in on some Android 14 devices
+- Keep the selected geocaches in Import bookmarks after rotating the screen
 
 ## Version 3.1.1
 

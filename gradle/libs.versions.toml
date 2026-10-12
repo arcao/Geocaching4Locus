@@ -9,7 +9,6 @@ plugin-android = "9.4.1"
 plugin-firebase-crashlytics = "3.0.8"
 plugin-google_services = "4.4.4"
 plugin-android-junit5 = "2.0.1"
-plugin-versions = "0.53.0"
 plugin-ksp = "2.3.12"
 
 # android
@@ -128,7 +127,6 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 [plugins]
 android-application = { id = "com.android.application", version.ref = "plugin-android" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin-bom" }
-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google_services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "plugin-android-junit5" }

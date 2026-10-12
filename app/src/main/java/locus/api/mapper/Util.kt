@@ -1,13 +1,12 @@
 package locus.api.mapper
 
-import androidx.annotation.NonNull
 import locus.api.objects.geoData.Point
 import locus.api.objects.geocaching.GeocachingLog
 
 object Util {
     const val GSAK_USERNAME = "gsak"
 
-    fun applyUnavailabilityForGeocache(@NonNull point: Point, threshold: Int) {
+    fun applyUnavailabilityForGeocache(point: Point, threshold: Int) {
         var counter = 0
 
         val gcData = point.gcData ?: return

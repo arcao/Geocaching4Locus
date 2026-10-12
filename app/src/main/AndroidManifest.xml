@@ -150,7 +150,6 @@
             android:exported="true"
             android:icon="@drawable/ic_action_download_logs"
             android:label="@string/launcher_download_logs"
-            android:launchMode="singleTask"
             android:targetActivity=".update.UpdateActivity">
             <intent-filter>
                 <action android:name="locus.api.android.INTENT_ITEM_POINT_TOOLS" />
@@ -324,22 +323,18 @@
         <activity-alias
             android:name=".DashboardActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:targetActivity=".dashboard.DashboardActivity" />
         <activity-alias
             android:name=".SearchNearestActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:targetActivity=".search_nearest.SearchNearestActivity" />
         <activity-alias
             android:name=".ImportFromGCActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:targetActivity=".importgc.ImportGeocacheCodeActivity" />
         <activity-alias
             android:name=".ImportBookmarkActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:targetActivity=".import_bookmarks.ImportBookmarkActivity" />
     </application>
 

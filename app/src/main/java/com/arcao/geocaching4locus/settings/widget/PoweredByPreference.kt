@@ -5,22 +5,15 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.res.TypedArrayUtils
 import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
-import androidx.preference.R
 
 class PoweredByPreference @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = TypedArrayUtils.getAttr(
-                context,
-                R.attr.preferenceStyle,
-                android.R.attr.preferenceStyle
-        )
-) : Preference(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null
+) : Preference(context, attrs) {
     init {
         widgetLayoutResource = com.arcao.geocaching4locus.R.layout.preference_powered_by_widget
     }

@@ -18,6 +18,7 @@ import com.arcao.geocaching4locus.error.handler.ExceptionHandler
 import com.github.scribejava.core.model.OAuthConstants
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val app: App,
@@ -55,7 +56,9 @@ class LoginViewModel(
         job = mainImmediateLaunch {
             try {
                 showProgress {
-                    app.clearGeocachingCookies()
+                    withContext(dispatcherProvider.io) {
+                        app.clearGeocachingCookies()
+                    }
 
                     // retrieve authorization url
                     val url = retrieveAuthorizationUrl()

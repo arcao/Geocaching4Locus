@@ -92,12 +92,12 @@ class DefaultPreferenceManager(
 
             if (value > MAX_GEOCACHES_COUNT) {
                 value = MAX_GEOCACHES_COUNT
-                preferences.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).apply()
+                preferences.edit { putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value) }
             }
 
             if (value % step != 0) {
                 value = (value / step + 1) * step
-                preferences.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value).apply()
+                preferences.edit { putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, value) }
             }
 
             return value
@@ -110,7 +110,7 @@ class DefaultPreferenceManager(
                 value % step != 0 -> (value / step + 1) * step
                 else -> value
             }
-            preferences.edit().putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, correctValue).apply()
+            preferences.edit { putInt(PrefConstants.DOWNLOADING_COUNT_OF_CACHES, correctValue) }
         }
 
     val downloadingGeocachesCountStep: Int

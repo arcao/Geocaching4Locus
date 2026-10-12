@@ -141,6 +141,11 @@ android {
         viewBinding = true
     }
 
+    lint {
+        // The translations are managed in Crowdin, the untranslated strings fall back to English
+        disable += "MissingTranslation"
+    }
+
     signingConfigs {
         create("release") {
             keyAlias = "geocaching4locus"

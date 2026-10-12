@@ -15,7 +15,6 @@
             style="@style/Widget.AppTheme.EditText"
             android:inputType="textCapCharacters"
             android:importantForAutofill="no"
-            tools:targetApi="o"
             tools:ignore="LabelFor">
         <requestFocus />
     </EditText>

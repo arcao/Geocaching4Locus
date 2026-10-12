@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import androidx.annotation.StringRes
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import com.arcao.feedback.collector.Collector
 import com.arcao.geocaching4locus.App
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
@@ -103,7 +103,7 @@ class FeedbackHelper(
 
     private fun createEmailOnlyChooserIntent(source: Intent, chooserTitle: CharSequence? = null): Intent {
         val intents = Stack<Intent>()
-        val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:info@domain.com"))
+        val emailIntent = Intent(Intent.ACTION_SENDTO, "mailto:info@domain.com".toUri())
 
         context.packageManager.queryIntentActivities(emailIntent, 0).forEach { resolveInfo ->
             intents.add(Intent(source).setPackage(resolveInfo.activityInfo.packageName))
@@ -122,7 +122,7 @@ class FeedbackHelper(
     companion object {
         private const val REPORT_FILE_NAME = "logs.zip"
 
-        fun getReportFile(@NonNull context: Context): File {
+        fun getReportFile(context: Context): File {
             return File(File(context.cacheDir, "export"), REPORT_FILE_NAME)
         }
     }

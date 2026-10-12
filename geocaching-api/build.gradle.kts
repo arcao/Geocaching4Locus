@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     id("com.android.library")
     alias(libs.plugins.kotlin.parcelize)
@@ -45,7 +43,7 @@ android {
 
         buildConfigField("String", "GEOCACHING_API_KEY", "\"${geocachingApiKey}\"")
         buildConfigField("String", "GEOCACHING_API_SECRET", "\"${geocachingApiSecret}\"")
-        buildConfigField("boolean", "GEOCACHING_API_STAGING", "${geocachingApiStaging}")
+        buildConfigField("boolean", "GEOCACHING_API_STAGING", "$geocachingApiStaging")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -63,11 +61,6 @@ android {
         buildConfig = true
     }
 
-    testOptions {
-        junitPlatform {
-            // Configuration goes here!
-        }
-    }
     packaging {
         resources {
             excludes += listOf("META-INF/LICENSE*")

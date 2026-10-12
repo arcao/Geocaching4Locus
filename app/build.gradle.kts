@@ -113,11 +113,12 @@ android {
         buildConfigField("String", "BUILD_TIME", "null")
         buildConfigField("String", "GEOCACHING_API_KEY", "\"${geocachingApiKey}\"")
         buildConfigField("String", "GEOCACHING_API_SECRET", "\"${geocachingApiSecret}\"")
-        buildConfigField("boolean", "GEOCACHING_API_STAGING", "${geocachingApiStaging}")
+        buildConfigField("boolean", "GEOCACHING_API_STAGING", "$geocachingApiStaging")
 
         buildConfigField("String", "TEST_USER", "null")
         buildConfigField("String", "TEST_PASSWORD", "null")
         // languages with a high share of translated strings
+        @Suppress("UnstableApiUsage")
         androidResources.localeFilters += setOf(
             "en", "cs", "da", "de", "es", "fr", "hr", "hu", "it", "nl", "no", "pl", "pt", "sk", "sl"
         )

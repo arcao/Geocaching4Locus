@@ -1,4 +1,4 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Top-level build file where you can add configuration options common to all subprojects/modules.
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
@@ -11,6 +11,7 @@ plugins {
 }
 
 tasks.register<Delete>("clean") {
+    description = "Clean project"
     delete(rootProject.layout.buildDirectory.asFile.get())
 }
 

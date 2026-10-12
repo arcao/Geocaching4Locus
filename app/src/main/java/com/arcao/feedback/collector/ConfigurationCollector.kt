@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.SparseArray
 import timber.log.Timber
+import androidx.core.util.size
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
@@ -183,7 +184,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
             val result = StringBuilder()
 
             // Look for masks, apply it an retrieve the masked value
-            for (i in 0 until valueNames.size()) {
+            for (i in 0 until valueNames.size) {
                 val maskValue = valueNames.keyAt(i)
                 if (valueNames.get(maskValue).endsWith(SUFFIX_MASK)) {
                     val value = bitField and maskValue

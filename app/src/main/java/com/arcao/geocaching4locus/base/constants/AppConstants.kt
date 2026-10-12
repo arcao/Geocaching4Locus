@@ -2,19 +2,20 @@ package com.arcao.geocaching4locus.base.constants
 
 import android.net.Uri
 import android.util.Base64
+import androidx.core.net.toUri
 import com.arcao.geocaching4locus.data.api.model.GeocacheSize
 import com.arcao.geocaching4locus.data.api.model.GeocacheType
 import locus.api.android.objects.VersionCode
 
 object AppConstants {
-    val USERS_GUIDE_URI: Uri = Uri.parse("https://geocaching4locus.eu/users-guide/")
+    val USERS_GUIDE_URI: Uri = "https://geocaching4locus.eu/users-guide/".toUri()
     val GEOCACHING_PRIVACY_SETTING_URI: Uri =
-        Uri.parse("https://www.geocaching.com/account/settings/authorizations#developer")
-    val WEBSITE_URI: Uri = Uri.parse("https://geocaching4locus.eu/")
-    val FACEBOOK_URI: Uri = Uri.parse("https://www.facebook.com/Geocaching4Locus")
-    val GEOCACHING_URI: Uri = Uri.parse("http://geocaching.com/")
+        "https://www.geocaching.com/account/settings/authorizations#developer".toUri()
+    val WEBSITE_URI: Uri = "https://geocaching4locus.eu/".toUri()
+    val FACEBOOK_URI: Uri = "https://www.facebook.com/Geocaching4Locus".toUri()
+    val GEOCACHING_URI: Uri = "http://geocaching.com/".toUri()
     val POWER_SAVE_INFO_URI: Uri =
-        Uri.parse("https://geocaching4locus.eu/redirect/power-save-issue")
+        "https://geocaching4locus.eu/redirect/power-save-issue".toUri()
 
     // Saved in Base64 because Google Play doesn't allow donation via Paypal.
     // This will prevent it to autodetect by robot.

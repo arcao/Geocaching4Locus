@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.NonNull
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
@@ -43,7 +42,6 @@ class ProgressDialogFragment : AbstractDialogFragment() {
         requestId = arguments.getInt(ARGS_REQUEST_ID, 0)
     }
 
-    @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = requireArguments()
 

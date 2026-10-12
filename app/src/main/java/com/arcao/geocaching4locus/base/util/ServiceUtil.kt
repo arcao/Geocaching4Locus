@@ -8,6 +8,7 @@ import android.os.PowerManager
 import android.util.SparseArray
 import androidx.core.util.forEach
 
+import androidx.core.util.size
 import timber.log.Timber
 
 object ServiceUtil {
@@ -83,7 +84,7 @@ object ServiceUtil {
                 wakeLock.release()
                 ACTIVE_WAKE_LOCKS.remove(id)
                 Timber.w("Released WakeLock #%d", id)
-                Timber.w("Remaining WakeLocks: %d", ACTIVE_WAKE_LOCKS.size())
+                Timber.w("Remaining WakeLocks: %d", ACTIVE_WAKE_LOCKS.size)
                 return true
             }
 
@@ -114,7 +115,7 @@ object ServiceUtil {
                 Timber.e("Released forgotten WakeLock #%d", id)
             }
 
-            Timber.w("Remaining WakeLocks: %d", ACTIVE_WAKE_LOCKS.size())
+            Timber.w("Remaining WakeLocks: %d", ACTIVE_WAKE_LOCKS.size)
         }
     }
 

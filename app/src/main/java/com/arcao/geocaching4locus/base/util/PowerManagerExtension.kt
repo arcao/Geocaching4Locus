@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.base.util
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.PowerManager
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -40,10 +39,6 @@ private fun Context.isXaomiPowerManagerPresent(): Boolean {
 }
 
 private fun Context.isAppBatteryOptimized(): Boolean {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val manager = getSystemService<PowerManager>() ?: return false
-        return !manager.isIgnoringBatteryOptimizations(packageName)
-    }
-
-    return false
+    val manager = getSystemService<PowerManager>() ?: return false
+    return !manager.isIgnoringBatteryOptimizations(packageName)
 }

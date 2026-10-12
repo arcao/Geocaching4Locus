@@ -1,6 +1,7 @@
 package com.arcao.geocaching4locus.weblink
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.arcao.geocaching4locus.BuildConfig
 import com.arcao.geocaching4locus.base.coroutine.CoroutinesDispatcherProvider
 import com.arcao.geocaching4locus.base.usecase.GetPointFromGeocacheCodeUseCase
@@ -22,9 +23,9 @@ class WatchGeocacheWebLinkViewModel(
         val cacheId = ReferenceCode.toId(gcData.cacheID)
 
         return if (BuildConfig.GEOCACHING_API_STAGING) {
-            Uri.parse(String.format(Locale.ROOT, URL_FORMAT_STAGING, cacheId))
+            String.format(Locale.ROOT, URL_FORMAT_STAGING, cacheId).toUri()
         } else {
-            Uri.parse(String.format(Locale.ROOT, URL_FORMAT, cacheId))
+            String.format(Locale.ROOT, URL_FORMAT, cacheId).toUri()
         }
     }
 

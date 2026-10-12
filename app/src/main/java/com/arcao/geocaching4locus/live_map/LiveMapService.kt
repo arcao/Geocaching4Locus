@@ -1,5 +1,6 @@
 package com.arcao.geocaching4locus.live_map
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -67,6 +68,8 @@ class LiveMapService : LifecycleService() {
         return START_NOT_STICKY
     }
 
+    // FOREGROUND_SERVICE_TYPE_DATA_SYNC is a constant inlined at compile time, it is safe on API < 29
+    @SuppressLint("InlinedApi")
     private fun startForegroundSafely(): Boolean {
         return try {
             ServiceCompat.startForeground(

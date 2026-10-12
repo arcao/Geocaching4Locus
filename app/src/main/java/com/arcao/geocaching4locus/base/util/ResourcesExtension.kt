@@ -16,7 +16,7 @@ import java.util.Locale
  * @return formatted SpannedString
  */
 fun Context.getText(@StringRes id: Int, vararg args: Any) =
-    HtmlUtil.applyFix(SpanFormatter.format(getMainLocale(), getText(id), *args))
+    SpanFormatter.format(getMainLocale(), getText(id), *args)
 
 fun Context.getMainLocale(): Locale {
     val locales = ConfigurationCompat.getLocales(resources.configuration)
@@ -57,4 +57,4 @@ fun Context.getQuantityText(
     quantity: Int,
     vararg formatArgs: Any
 ): CharSequence =
-    HtmlUtil.applyFix(SpanFormatter.format(getMainLocale(), resources.getQuantityText(id, quantity), *formatArgs))
+    SpanFormatter.format(getMainLocale(), resources.getQuantityText(id, quantity), *formatArgs)

@@ -2,7 +2,6 @@ package com.arcao.geocaching4locus.base.fragment
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.annotation.NonNull
 import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.arcao.geocaching4locus.R
@@ -47,7 +46,6 @@ abstract class AbstractErrorDialogFragment : AbstractDialogFragment() {
         }
     }
 
-    @NonNull
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = MaterialDialog(requireActivity())
         onDialogBuild(dialog)

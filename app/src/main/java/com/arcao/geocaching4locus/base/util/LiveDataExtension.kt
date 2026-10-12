@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 @MainThread
 inline fun <T> LiveData<T>.withObserve(owner: LifecycleOwner, crossinline block: (T) -> Unit) =
-    observe(owner, { block(it!!) })
+    observe(owner) { block(it!!) }
 
 @MainThread
 operator fun MutableLiveData<Unit>.invoke() {

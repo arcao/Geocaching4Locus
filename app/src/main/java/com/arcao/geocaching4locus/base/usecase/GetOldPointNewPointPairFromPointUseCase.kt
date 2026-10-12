@@ -21,8 +21,7 @@ class GetOldPointNewPointPairFromPointUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         flow: Flow<Point>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0

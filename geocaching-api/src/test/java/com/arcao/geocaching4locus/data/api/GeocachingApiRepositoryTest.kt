@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
-@Suppress("BlockingMethodInNonBlockingContext")
 internal class GeocachingApiRepositoryTest : GeocachingApiRepositoryBaseTest() {
     @Test
     fun verifyRefreshTokenCalled() {

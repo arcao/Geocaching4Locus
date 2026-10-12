@@ -131,14 +131,10 @@ object ReferenceCode {
      * @return true if reference code is valid, otherwise false
      * @see .toId
      */
-    fun isReferenceCodeValid(referenceCode: String, prefix: String? = null): Boolean {
-        try {
-            if (prefix != null && !referenceCode.startsWith(prefix, ignoreCase = true))
-                return false
-
-            return toId(referenceCode) >= 0
-        } catch (e: IllegalArgumentException) {
-            return false
-        }
+    fun isReferenceCodeValid(referenceCode: String, prefix: String? = null): Boolean = try {
+        !(prefix != null && !referenceCode.startsWith(prefix, ignoreCase = true)) &&
+            toId(referenceCode) >= 0
+    } catch (_: IllegalArgumentException) {
+        false
     }
 }

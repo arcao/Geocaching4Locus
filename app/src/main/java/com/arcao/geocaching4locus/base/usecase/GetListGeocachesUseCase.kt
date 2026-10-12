@@ -25,7 +25,6 @@ class GetListGeocachesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
         referenceCode: String,
         skip: Int = 0,
@@ -46,8 +45,7 @@ class GetListGeocachesUseCase(
         }
     }
 
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         referenceCode: String,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0,

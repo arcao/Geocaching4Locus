@@ -67,7 +67,7 @@ abstract class AccountManager(
 
     fun deleteAccount() {
         account = null
-        saveAccount(account)
+        saveAccount(null)
     }
 
     suspend fun refreshToken(account: GeocachingAccount): Boolean {

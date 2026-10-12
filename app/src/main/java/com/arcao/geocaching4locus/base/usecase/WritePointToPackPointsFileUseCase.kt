@@ -8,7 +8,6 @@ import locus.api.manager.LocusMapManager
 import locus.api.objects.geoData.Point
 import locus.api.utils.StoreableWriter
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class WritePointToPackPointsFileUseCase(
     private val locusMapManager: LocusMapManager,
     private val dispatcherProvider: CoroutinesDispatcherProvider

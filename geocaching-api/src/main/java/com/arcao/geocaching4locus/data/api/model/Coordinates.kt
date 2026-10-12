@@ -22,7 +22,7 @@ data class Coordinates(
 
         /**
          * Computes the approximate distance in meters between two coordinates, and
-         * optionally the initial and final bearings bearings of the shortest path between
+         * optionally the initial and final bearings of the shortest path between
          * them.
          *
          * The computed distance is stored in `results[0]`. If results has length 2,

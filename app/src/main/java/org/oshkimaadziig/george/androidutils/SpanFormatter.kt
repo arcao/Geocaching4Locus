@@ -91,12 +91,11 @@ object SpanFormatter {
 
                     val argItem = args[argIdx]
 
-                    cookedArg = if ("s" == typeTerm && argItem is Spanned) {
-                        argItem
-                    } else if ("S" == typeTerm && argItem is Spanned) {
-                        spannedToUpperCase(argItem)
-                    } else {
-                        String.format(locale, "%$modTerm$typeTerm", argItem)
+                    cookedArg = when (typeTerm) {
+                        "s" if argItem is Spanned -> argItem
+                        "S" if argItem is Spanned -> spannedToUpperCase(argItem)
+                        else ->
+                            String.format(locale, "%$modTerm$typeTerm", argItem)
                     }
                 }
             }

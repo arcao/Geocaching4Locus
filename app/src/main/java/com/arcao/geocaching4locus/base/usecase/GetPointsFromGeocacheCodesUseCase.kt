@@ -22,8 +22,7 @@ class GetPointsFromGeocacheCodesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         geocacheCodes: Array<String>,
         liteData: Boolean = true,
         geocacheLogsCount: Int = 0

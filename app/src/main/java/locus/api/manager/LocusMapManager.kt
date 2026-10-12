@@ -24,19 +24,15 @@ class LocusMapManager(
     val periodicUpdateEnabled: Boolean
         get() {
             val locusVersion = LocusUtils.getActiveVersion(context)
-            return if (locusVersion != null) {
-                try {
-                    ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled
-                        ?: false
-                } catch (e: Throwable) {
-                    Timber.e(
-                        e,
-                        "Unable to receive info about periodic update state from Locus Map."
-                    )
-                    return true
-                }
-            } else {
-                return false
+            return locusVersion != null && try {
+                ActionBasics.getLocusInfo(context, locusVersion)?.isPeriodicUpdatesEnabled
+                    ?: false
+            } catch (e: Throwable) {
+                Timber.e(
+                    e,
+                    "Unable to receive info about periodic update state from Locus Map."
+                )
+                return true
             }
         }
 

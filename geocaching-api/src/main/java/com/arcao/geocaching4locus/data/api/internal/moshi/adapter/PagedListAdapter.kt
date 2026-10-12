@@ -4,7 +4,6 @@ import com.arcao.geocaching4locus.data.api.model.response.MutablePagedList
 import com.arcao.geocaching4locus.data.api.model.response.PagedArrayList
 import com.arcao.geocaching4locus.data.api.model.response.PagedList
 import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.JsonAdapter.Factory
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter

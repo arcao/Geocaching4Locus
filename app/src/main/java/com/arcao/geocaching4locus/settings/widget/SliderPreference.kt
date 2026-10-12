@@ -94,7 +94,7 @@ class SliderPreference @JvmOverloads constructor(
 
         if (preference !is SliderPreference) return false
 
-        val f = SliderPreferenceDialogFragment.newInstance(preference.getKey())
+        val f = SliderPreferenceDialogFragment.newInstance(preference.key)
         // PreferenceDialogFragmentCompat still requires the target fragment
         @Suppress("DEPRECATION")
         f.setTargetFragment(caller, 0)
@@ -117,7 +117,6 @@ class SliderPreference @JvmOverloads constructor(
         constructor(superState: Parcelable?) : super(superState)
 
         companion object {
-            @Suppress("unused")
             @JvmField
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(source: Parcel): SavedState {

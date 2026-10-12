@@ -15,6 +15,6 @@ enum class StatusCode(override val id: Int) : IdType {
     SERVICE_UNAVAILABLE(503);
 
     companion object {
-        fun from(id: Int?) = values().find { it.id == id }
+        fun from(id: Int?) = entries.find { it.id == id }
     }
 }

@@ -32,7 +32,7 @@ class ErrorActivity : AppCompatActivity() {
     private fun showErrorDialog() {
         val args = intent.extras
         if (args == null) {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
             return
         }
@@ -73,7 +73,7 @@ class ErrorActivity : AppCompatActivity() {
                     }
 
                     requireActivity().apply {
-                        setResult(Activity.RESULT_OK)
+                        setResult(RESULT_OK)
                         finish()
                     }
                 }
@@ -85,7 +85,7 @@ class ErrorActivity : AppCompatActivity() {
             negativeButtonText?.let {
                 md.negativeButton(text = negativeButtonText) {
                     requireActivity().apply {
-                        setResult(Activity.RESULT_CANCELED)
+                        setResult(RESULT_CANCELED)
                         finish()
                     }
                 }

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import locus.api.manager.LocusMapManager
 import locus.api.objects.geoData.Point
 
@@ -17,8 +18,7 @@ class GetPointsFromPointIndexesUseCase(
 ) {
     operator fun invoke(pointIndexes: LongArray): Flow<Point> =
         pointIndexes.asFlow()
-            .map { locusMapManager.getPoint(it) }
-            .filterNotNull()
+            .mapNotNull { locusMapManager.getPoint(it) }
             .filter { it.isGeocache() }
             .flowOn(dispatcherProvider.io)
 }

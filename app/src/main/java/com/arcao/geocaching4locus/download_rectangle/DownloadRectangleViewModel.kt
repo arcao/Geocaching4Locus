@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.map
 import locus.api.manager.LocusMapManager
 import timber.log.Timber
 
-class DownloadRectangleViewModel constructor(
+class DownloadRectangleViewModel(
     private val context: Application,
     private val accountManager: AccountManager,
     private val exceptionHandler: ExceptionHandler,

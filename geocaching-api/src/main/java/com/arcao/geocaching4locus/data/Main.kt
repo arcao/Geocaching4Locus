@@ -1,5 +1,3 @@
-@file:Suppress("BlockingMethodInNonBlockingContext")
-
 package com.arcao.geocaching4locus.data
 
 import com.arcao.geocaching4locus.data.account.FileAccountManager
@@ -36,7 +34,7 @@ fun main() {
         println(manager.authorizationUrl)
 
         print("Enter code: ")
-        val code = readLine()
+        val code = readlnOrNull()
 
         runBlocking {
             val account = manager.createAccount(code!!)

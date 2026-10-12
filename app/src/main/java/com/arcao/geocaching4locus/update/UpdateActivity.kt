@@ -19,7 +19,7 @@ class UpdateActivity : AbstractActionBarActivity() {
         if (success) {
             viewModel.processIntent(intent)
         } else {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -42,25 +42,25 @@ class UpdateActivity : AbstractActionBarActivity() {
             is UpdateAction.Error -> {
                 Timber.d("UpdateAction.Error intent: %s", intent)
                 startActivity(action.intent)
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is UpdateAction.Finish -> {
                 Timber.d("UpdateAction.Finish intent: %s", intent)
-                setResult(Activity.RESULT_OK, action.intent)
+                setResult(RESULT_OK, action.intent)
                 finish()
             }
             UpdateAction.Cancel -> {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             UpdateAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
             }
             UpdateAction.PremiumMembershipRequired -> {
                 startActivity(ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature).build())
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
         }.exhaustive

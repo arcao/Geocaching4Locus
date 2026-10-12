@@ -178,7 +178,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             } else {
                 val values = arrayOfNulls<String>((max - min) / step + 1)
 
-                for (i in 0 until values.size) {
+                for (i in values.indices) {
                     values[i] = (min + i * step).toString()
                 }
                 @Suppress("UNCHECKED_CAST")
@@ -202,7 +202,7 @@ class SliderDialogFragment : AbstractDialogFragment(), SeekBar.OnSeekBarChangeLi
             dstart: Int,
             dend: Int
         ): CharSequence {
-            if (availableValues == null || availableValues.isEmpty()) {
+            if (availableValues.isNullOrEmpty()) {
                 var filtered: CharSequence? = super.filter(source, start, end, dest, dstart, dend)
                 if (filtered == null) {
                     filtered = source.subSequence(start, end)

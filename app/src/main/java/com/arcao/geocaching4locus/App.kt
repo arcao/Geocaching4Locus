@@ -93,7 +93,7 @@ class App : Application() {
     private fun prepareCrashlytics() {
         // Set up Crashlytics, disabled for debug builds
         if (BuildConfig.DEBUG) {
-            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
+            FirebaseCrashlytics.getInstance().isCrashlyticsCollectionEnabled = false
         }
 
         val crashlytics = FirebaseCrashlytics.getInstance()

@@ -8,7 +8,7 @@ enum class GeocacheListType(override val id: Int, override val value: String) : 
     FAVORITES(5, "fl");
 
     companion object {
-        fun from(id: Int?) = values().find { it.id == id } ?: BOOKMARK
+        fun from(id: Int?) = entries.find { it.id == id } ?: BOOKMARK
     }
 
     override fun toString(): String {

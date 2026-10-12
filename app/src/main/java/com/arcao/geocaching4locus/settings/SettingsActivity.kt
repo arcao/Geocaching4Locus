@@ -81,13 +81,8 @@ class SettingsActivity : AbstractActionBarActivity(),
     override fun onPreferenceDisplayDialog(
         caller: PreferenceFragmentCompat,
         pref: Preference
-    ): Boolean {
-        if (pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback) {
-            return pref.onPreferenceDisplayDialog(caller, pref)
-        }
-
-        return false
-    }
+    ): Boolean = pref is PreferenceFragmentCompat.OnPreferenceDisplayDialogCallback &&
+        pref.onPreferenceDisplayDialog(caller, pref)
 
     companion object {
         private const val EXTRA_SHOW_FRAGMENT = ":android:show_fragment"
@@ -102,7 +97,7 @@ class SettingsActivity : AbstractActionBarActivity(),
             }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

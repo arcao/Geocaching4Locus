@@ -16,7 +16,6 @@ class GeocachingApiLoginUseCase(
 ) {
 
     @WorkerThread
-    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke() = withContext(dispatcherProvider.io) {
         val account = accountManager.account ?: throw AccountNotFoundException("Account not found.")
 

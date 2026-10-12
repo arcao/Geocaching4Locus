@@ -24,8 +24,7 @@ class GetPointsFromCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         coordinates: Coordinates,
         distanceMeters: Int,
         liteData: Boolean = true,

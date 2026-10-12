@@ -17,8 +17,7 @@ class GetGeocachingTrackablesUseCase(
     private val trackableConverter: TrackableConverter,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         referenceCode: String,
         start: Int = 0,
         count: Int = AppConstants.TRACKABLES_MAX

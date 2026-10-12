@@ -1,5 +1,3 @@
-@file:Suppress("BlockingMethodInNonBlockingContext")
-
 package com.arcao.geocaching4locus.data
 
 import com.arcao.geocaching4locus.data.account.FileAccountManager

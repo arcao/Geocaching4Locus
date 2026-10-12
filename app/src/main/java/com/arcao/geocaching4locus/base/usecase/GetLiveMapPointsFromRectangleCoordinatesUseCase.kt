@@ -23,8 +23,7 @@ class GetLiveMapPointsFromRectangleCoordinatesUseCase(
     private val mapper: DataMapper,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
-    suspend operator fun invoke(
+    operator fun invoke(
         centerCoordinates: Coordinates,
         topLeftCoordinates: Coordinates,
         bottomRightCoordinates: Coordinates,

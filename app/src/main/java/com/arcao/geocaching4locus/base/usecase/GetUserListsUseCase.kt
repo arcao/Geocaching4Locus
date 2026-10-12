@@ -13,7 +13,6 @@ class GetUserListsUseCase(
     private val geocachingApiLogin: GeocachingApiLoginUseCase,
     private val dispatcherProvider: CoroutinesDispatcherProvider
 ) {
-    @Suppress("BlockingMethodInNonBlockingContext")
     suspend operator fun invoke(
         referenceCode: String = "me",
         types: Set<GeocacheListType> = setOf(GeocacheListType.BOOKMARK),

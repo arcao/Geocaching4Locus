@@ -17,7 +17,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
         if (success) {
             processIntent()
         } else {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -40,7 +40,7 @@ class ImportUrlActivity : AbstractActionBarActivity() {
     private fun processIntent() {
         val uri = intent.data
         if (uri == null) {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
             return
         }
@@ -54,22 +54,22 @@ class ImportUrlActivity : AbstractActionBarActivity() {
 
         when (action) {
             is ImportUrlAction.Cancel -> {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is ImportUrlAction.Error -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is ImportUrlAction.Finish -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
             is ImportUrlAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
             }
             is ImportUrlAction.SignIn -> loginActivity.launch(null)
         }.exhaustive

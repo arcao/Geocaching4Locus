@@ -118,12 +118,12 @@ class LoginActivity : AbstractActionBarActivity() {
     }
 
     private fun cancelAction() {
-        setResult(Activity.RESULT_CANCELED)
+        setResult(RESULT_CANCELED)
         finish()
     }
 
     private fun finishAction(membership: MembershipType) {
-        setResult(Activity.RESULT_OK)
+        setResult(RESULT_OK)
 
         if (membership == MembershipType.BASIC) {
             BasicMembershipWarningDialogFragment.newInstance().show(supportFragmentManager)
@@ -156,7 +156,7 @@ class LoginActivity : AbstractActionBarActivity() {
             Intent(context, LoginActivity::class.java)
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

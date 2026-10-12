@@ -102,7 +102,7 @@ class SettingsActivity : AbstractActionBarActivity(),
             }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

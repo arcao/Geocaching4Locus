@@ -21,7 +21,7 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
         if (success) {
             viewModel.startDownload()
         } else {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -44,22 +44,22 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
     fun handleAction(action: DownloadRectangleAction) {
         when (action) {
             is DownloadRectangleAction.Cancel -> {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is DownloadRectangleAction.Error -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is DownloadRectangleAction.Finish -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
             is DownloadRectangleAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
             }
             is DownloadRectangleAction.SignIn -> loginActivity.launch(null)
             DownloadRectangleAction.LastLiveMapDataInvalid -> {
@@ -77,7 +77,7 @@ class DownloadRectangleActivity : AbstractActionBarActivity() {
             Intent(context, DownloadRectangleActivity::class.java)
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

@@ -19,7 +19,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
         if (success) {
             processIntent()
         } else {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -43,7 +43,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
                 val point = IntentHelper.getPointFromIntent(this, intent)
 
                 if (point == null) {
-                    setResult(Activity.RESULT_CANCELED)
+                    setResult(RESULT_CANCELED)
                     finish()
                     return
                 }
@@ -52,7 +52,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
             }
         } catch (e: Exception) {
             Timber.e(e)
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -63,19 +63,19 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
             WebLinkAction.SignIn -> loginActivity.launch(null)
             is WebLinkAction.ShowUri -> {
                 if (showWebPage(action.uri)) {
-                    setResult(Activity.RESULT_OK)
+                    setResult(RESULT_OK)
                 } else {
-                    setResult(Activity.RESULT_CANCELED)
+                    setResult(RESULT_CANCELED)
                 }
                 finish()
             }
             is WebLinkAction.Error -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             WebLinkAction.Cancel -> {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             WebLinkAction.PremiumMembershipRequired -> {
@@ -83,7 +83,7 @@ abstract class WebLinkActivity : AbstractActionBarActivity() {
                     ErrorActivity.IntentBuilder(this).message(R.string.error_premium_feature)
                         .build()
                 )
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
         }.exhaustive

@@ -21,7 +21,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
         if (success) {
             viewModel.init(intent.getStringArrayExtra(PARAM_GEOCACHES))
         } else {
-            setResult(Activity.RESULT_CANCELED)
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -47,25 +47,25 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
                 startActivity(action.intent)
                 setResult(
                     if (action.intent.hasPositiveAction()) {
-                        Activity.RESULT_OK
+                        RESULT_OK
                     } else {
-                        Activity.RESULT_CANCELED
+                        RESULT_CANCELED
                     }
                 )
                 finish()
             }
             is ImportGeocacheCodeAction.Finish -> {
                 startActivity(action.intent)
-                setResult(Activity.RESULT_OK)
+                setResult(RESULT_OK)
                 finish()
             }
             ImportGeocacheCodeAction.Cancel -> {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             is ImportGeocacheCodeAction.LocusMapNotInstalled -> {
                 showLocusMissingError()
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
             }
             ImportGeocacheCodeAction.GeocacheCodesInput -> {
                 GeocacheCodesInputDialogFragment.newInstance().show(supportFragmentManager)
@@ -86,7 +86,7 @@ class ImportGeocacheCodeActivity : AbstractActionBarActivity(), GeocacheCodesInp
             Intent(context, ImportGeocacheCodeActivity::class.java)
 
         override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
+            return resultCode == RESULT_OK
         }
     }
 }

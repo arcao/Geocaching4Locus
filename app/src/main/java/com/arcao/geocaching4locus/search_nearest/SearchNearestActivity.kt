@@ -1,6 +1,5 @@
 package com.arcao.geocaching4locus.search_nearest
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle

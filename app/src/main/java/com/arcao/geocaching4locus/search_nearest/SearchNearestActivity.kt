@@ -8,13 +8,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.fragment.SliderDialogFragment
 import com.arcao.geocaching4locus.base.util.PermissionUtil
+import com.arcao.geocaching4locus.base.util.bindText
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.invoke
 import com.arcao.geocaching4locus.base.util.showLocusMissingError
@@ -53,12 +52,10 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_nearest)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
+        binding = ActivitySearchNearestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        @Suppress("USELESS_CAST")
-        val toolbar = binding.toolbar as Toolbar
+        val toolbar = binding.toolbar.root
         val latitude = binding.incCoordinates.latitude
         val longitude = binding.incCoordinates.longitude
 
@@ -68,6 +65,16 @@ class SearchNearestActivity : AbstractActionBarActivity(), SliderDialogFragment.
             actionBar.title = title
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
+
+        latitude.bindText(this, viewModel.latitude) { viewModel.latitude.value = it }
+        longitude.bindText(this, viewModel.longitude) { viewModel.longitude.value = it }
+        binding.incCoordinates.gps.setOnClickListener { viewModel.retrieveCoordinates() }
+
+        binding.incGeocacheCount.counter.setOnClickListener { viewModel.askForCacheCount() }
+        binding.incGeocacheCount.filter.setOnClickListener { viewModel.showFilters() }
+        viewModel.requestedCaches.observe(this) { binding.incGeocacheCount.counter.setText("%d".format(it)) }
+
+        binding.fab.setOnClickListener { viewModel.download() }
 
         latitude.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) viewModel.formatCoordinates()

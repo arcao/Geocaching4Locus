@@ -2,11 +2,9 @@ package com.arcao.geocaching4locus.import_bookmarks.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.base.selection.SelectionAdapter
 import com.arcao.geocaching4locus.base.selection.SelectionTracker
 import com.arcao.geocaching4locus.base.usecase.entity.ListGeocacheEntity
@@ -40,19 +38,13 @@ class BookmarkGeocachesAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.view_bookmark_item,
-                parent,
-                false
-            )
-        )
+        return ViewHolder(ViewBookmarkItemBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = requireNotNull(getItem(position))
-        holder.binding.item = item
+        holder.binding.title.text = item.title
+        holder.binding.subtitle.text = item.referenceCode
         holder.binding.checkbox.isChecked = tracker.isSelected(position)
         holder.binding.root.setOnClickListener {
             tracker.onClick(position, item)

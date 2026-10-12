@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -47,16 +47,19 @@ class BookmarkListFragment : BaseBookmarkFragment() {
     ): View {
         toolbar?.subtitle = null
 
-        val binding = DataBindingUtil.inflate<FragmentBookmarkListBinding>(
+        val binding = FragmentBookmarkListBinding.inflate(
             inflater,
-            R.layout.fragment_bookmark_list,
             container,
             false
         )
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.vm = viewModel
-        binding.isLoading = true
+        fun updateState(isLoading: Boolean, isEmpty: Boolean) {
+            binding.progressContainer.isVisible = isLoading
+            binding.listContainer.isVisible = !isLoading
+            binding.textEmpty.isVisible = isEmpty
+        }
+        updateState(isLoading = true, isEmpty = false)
+
         binding.list.apply {
             adapter = this@BookmarkListFragment.adapter
             layoutManager = LinearLayoutManager(context)
@@ -75,8 +78,10 @@ class BookmarkListFragment : BaseBookmarkFragment() {
                 adapter.loadStateFlow.collect { state ->
                     val isListEmpty =
                         state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                    binding.isEmpty = isListEmpty
-                    binding.isLoading = state.source.refresh is LoadState.Loading
+                    updateState(
+                        isLoading = state.source.refresh is LoadState.Loading,
+                        isEmpty = isListEmpty
+                    )
                     state.handleErrors(viewModel::handleLoadError)
                 }
             }

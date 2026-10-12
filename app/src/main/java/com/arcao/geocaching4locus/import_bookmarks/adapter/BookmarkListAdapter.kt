@@ -2,7 +2,7 @@ package com.arcao.geocaching4locus.import_bookmarks.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,20 +16,20 @@ class BookmarkListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ViewHolder(
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.view_bookmark_list_item,
-                parent,
-                false
-            )
-        )
+        return ViewHolder(ViewBookmarkListItemBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = requireNotNull(getItem(position))
         holder.apply {
-            binding.item = item
+            binding.title.text = item.name
+            binding.description.text = item.description
+            binding.description.isVisible = item.description != null
+            binding.count.text = itemView.resources.getQuantityString(
+                R.plurals.plurals_geocache,
+                item.itemCount,
+                item.itemCount
+            )
             binding.button.setOnClickListener { onClickListener(item, true) }
             itemView.setOnClickListener { onClickListener(item, false) }
         }

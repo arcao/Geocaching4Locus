@@ -7,16 +7,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import com.arcao.geocaching4locus.authentication.fragment.BasicMembershipWarningDialogFragment
 import com.arcao.geocaching4locus.authentication.fragment.UnknownMembershipWarningDialogFragment
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
 import com.arcao.geocaching4locus.base.ProgressState
+import com.arcao.geocaching4locus.base.util.bindText
 import com.arcao.geocaching4locus.base.util.exhaustive
 import com.arcao.geocaching4locus.base.util.showWebPage
 import com.arcao.geocaching4locus.base.util.withObserve
@@ -34,18 +34,20 @@ class LoginActivity : AbstractActionBarActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
 
         setContentView(binding.root)
 
-        @Suppress("USELESS_CAST")
-        setSupportActionBar(binding.toolbar as Toolbar)
+        setSupportActionBar(binding.toolbar.root)
 
         supportActionBar?.apply {
             title = this@LoginActivity.title
             setDisplayHomeAsUpEnabled(true)
         }
+
+        binding.input.bindText(this, viewModel.code) { viewModel.code.value = it }
+        binding.buttonContinue.setOnClickListener { viewModel.onContinueButtonClicked() }
+        viewModel.continueButtonEnabled.observe(this) { binding.buttonContinue.isEnabled = it }
+        viewModel.formVisible.observe(this) { binding.layoutInput.isVisible = it }
 
         Timber.i("source: login")
 
@@ -58,8 +60,8 @@ class LoginActivity : AbstractActionBarActivity() {
         viewModel.action.withObserve(this, ::handleAction)
         viewModel.progress.withObserve(this) { state ->
             when (state) {
-                is ProgressState.ShowProgress -> binding.layoutProgress.visibility = View.VISIBLE
-                ProgressState.HideProgress -> binding.layoutProgress.visibility = View.GONE
+                is ProgressState.ShowProgress -> binding.layoutProgress.isVisible = true
+                ProgressState.HideProgress -> binding.layoutProgress.isVisible = false
             }.exhaustive
         }
 

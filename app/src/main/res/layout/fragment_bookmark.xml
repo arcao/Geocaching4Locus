@@ -1,80 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_material_light"
+    tools:context="com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="vm"
-            type="com.arcao.geocaching4locus.import_bookmarks.fragment.BookmarkViewModel" />
-
-        <variable
-            name="isEmpty"
-            type="Boolean" />
-
-        <variable
-            name="isLoading"
-            type="Boolean" />
-    </data>
-
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/progressContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_material_light"
-        tools:context="com.arcao.geocaching4locus.import_bookmarks.ImportBookmarkActivity">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/progressContainer"
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/listContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/fab_outer_height"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/view_bookmark_item" />
+
+        <TextView
+            android:id="@+id/textEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone">
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/listContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{isLoading ? View.GONE : View.VISIBLE}">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/fab_outer_height"
-                android:scrollbarStyle="outsideOverlay"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/view_bookmark_item" />
-
-            <TextView
-                android:id="@+id/textEmpty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:visibility="@{isEmpty ? View.VISIBLE : View.GONE}" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_margin="16dp"
-                android:onClick="@{() -> vm.download()}"
-                android:src="@drawable/ic_action_download"
-                android:visibility="@{vm.selection != null &amp;&amp; !vm.selection.empty ? View.VISIBLE : View.GONE}"
-                app:elevation="4dp" />
-        </FrameLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_action_download"
+            app:elevation="4dp" />
     </FrameLayout>
-</layout>
+</FrameLayout>

@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.android.legacy.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.android.junit5)
@@ -139,7 +138,7 @@ android {
 
     buildFeatures {
         buildConfig = true
-        dataBinding = true
+        viewBinding = true
     }
 
     signingConfigs {

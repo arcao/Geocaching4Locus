@@ -98,21 +98,16 @@ class BookmarkFragment : BaseBookmarkFragment() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+        // Must be restored before the data are submitted, submitData() suspends while the data are collected
+        adapter.tracker.onRestoreInstanceState(savedInstanceState)
         adapter.tracker.addSelectionChangeListener { _: Int, _: Int ->
             viewModel.selection(adapter.selected)
         }
-
-        var savedState = savedInstanceState
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.pagerFlow.collectLatest { data ->
                     adapter.submitData(data)
-
-                    if (savedState != null) {
-                        adapter.tracker.onRestoreInstanceState(savedState)
-                        savedState = null
-                    }
                 }
             }
         }

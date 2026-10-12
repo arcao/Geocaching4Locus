@@ -7,15 +7,14 @@ targetSdk = "37"
 # build plugins
 plugin-android = "9.4.1"
 plugin-firebase-crashlytics = "3.0.8"
-plugin-google_services = "4.4.4"
+plugin-google_services = "4.5.0"
 plugin-android-junit5 = "2.0.1"
-plugin-versions = "0.53.0"
 plugin-ksp = "2.3.12"
 
 # android
-androidx-appcompat = "1.7.1"
+androidx-appcompat = "1.8.0"
 androidx-card_view = "1.0.0"
-androidx-collection = "1.6.0"
+androidx-collection = "1.7.0"
 androidx-constraint_layout = "2.2.2"
 androidx-core = "1.19.1"
 androidx-browser = "1.10.0"
@@ -23,17 +22,17 @@ androidx-fragment = "1.9.1"
 androidx-lifecycle-core = "2.11.0"
 androidx-lifecycle-extensions = "2.2.0"
 google-material = "1.14.0"
-androidx-paging = "3.5.1"
+androidx-paging = "3.5.2"
 androidx-preference = "1.2.1"
 androidx-recycler_view = "1.4.0"
 android-desugar_jdk_libs = "2.1.5"
 
 # google
-firebase-bom = "34.19.0"
+firebase-bom = "35.0.0"
 
 # kotlin
 kotlin-coroutines = "1.11.0"
-kotlin-bom = "2.3.21"
+kotlin-bom = "2.4.21"
 
 # networking
 moshi = "1.15.2"
@@ -41,11 +40,11 @@ okhttp = "5.5.0"
 retrofit = "3.0.0"
 
 # testing
-junit-android-test = "1.4.0"
+junit-android-test = "2.0.1"
 junit-jupiter = "6.1.3"
 junit-platform = "6.1.3"
 mockk = "1.14.11"
-androidx-test-runner = "1.5.2"
+androidx-test-runner = "1.7.0"
 
 # logging
 slf4j-timber = "3.1"
@@ -128,7 +127,6 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 [plugins]
 android-application = { id = "com.android.application", version.ref = "plugin-android" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin-bom" }
-versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google_services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "plugin-android-junit5" }

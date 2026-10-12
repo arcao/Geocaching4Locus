@@ -26,11 +26,10 @@ class FilterPreferenceManager(
 
     // TODO move to DefaultPreferenceManager
     val simpleCacheData
-        get() = if (accountManager.isPremium) {
-            preferences.getBoolean(PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA, false)
-        } else {
-            true
-        }
+        get() = !accountManager.isPremium || preferences.getBoolean(
+            PrefConstants.DOWNLOADING_SIMPLE_CACHE_DATA,
+            false
+        )
 
     val showDisabled
         get() = preferences.getBoolean(PrefConstants.FILTER_SHOW_DISABLED, false)

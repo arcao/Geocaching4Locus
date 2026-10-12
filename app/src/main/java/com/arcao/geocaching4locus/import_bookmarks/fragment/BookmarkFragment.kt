@@ -35,7 +35,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class BookmarkFragment : BaseBookmarkFragment() {
-    private val bookmarkList by lazy<GeocacheListEntity> {
+    private val bookmarkList by lazy {
         requireNotNull(
             arguments?.let { BundleCompat.getParcelable(it, ARG_BOOKMARK_LIST, GeocacheListEntity::class.java) }
         )

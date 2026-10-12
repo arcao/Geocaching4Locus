@@ -22,15 +22,13 @@ import kotlin.reflect.KClass
 val <T> T.exhaustive: T
     get() = this
 
-@Suppress("UNUSED_PARAMETER")
-inline fun <reified T : Any> Any?.runIfIs(t: KClass<T>, crossinline block: T.() -> Unit) {
+inline fun <reified T : Any> Any?.runIfIs(@Suppress("unused") t: KClass<T>, crossinline block: T.() -> Unit) {
     if (this is T) {
         block()
     }
 }
 
-@Suppress("UNUSED_PARAMETER")
-suspend inline fun <reified T : Any> Any?.runIfIsSuspended(t: KClass<T>, crossinline block: suspend T.() -> Unit) {
+suspend inline fun <reified T : Any> Any?.runIfIsSuspended(@Suppress("unused") t: KClass<T>, crossinline block: suspend T.() -> Unit) {
     if (this is T) {
         block()
     }

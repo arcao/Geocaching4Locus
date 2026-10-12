@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 
 class WherigoApiRepository(private val endpoint: WherigoApiEndpoint) {
     suspend fun guidToReferenceCode(guid: String) = apiCall {
-        endpoint.guidToReferenceCodeAsync(guid)
+        guidToReferenceCodeAsync(guid)
     }.referenceCode
 
     private suspend inline fun <T : Any> apiCall(crossinline body: WherigoApiEndpoint.() -> Deferred<T>): T =

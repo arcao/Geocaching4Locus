@@ -34,7 +34,7 @@ fun main() {
         println(manager.authorizationUrl)
 
         print("Enter code: ")
-        val code = readLine()
+        val code = readlnOrNull()
 
         runBlocking {
             val account = manager.createAccount(code!!)

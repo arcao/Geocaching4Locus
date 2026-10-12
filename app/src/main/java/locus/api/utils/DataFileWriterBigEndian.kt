@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel
 internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEndian(0) {
     private var storedPosition: Long = 0
 
-    private val out: OutputStream
+    private val out: OutputStream = BufferedOutputStream(out)
     private val channel: FileChannel
 
     val position: Int
@@ -23,7 +23,6 @@ internal class DataFileWriterBigEndian(out: FileOutputStream) : DataWriterBigEnd
         }
 
     init {
-        this.out = BufferedOutputStream(out)
         channel = out.channel
     }
 

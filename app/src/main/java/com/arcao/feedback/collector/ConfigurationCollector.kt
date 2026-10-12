@@ -164,7 +164,7 @@ class ConfigurationCollector(private val context: Context) : Collector() {
                             ?: return f.getInt(conf).toString()
 
                     return values.get(f.getInt(conf)) // Unknown value, return the raw int as String
-                        ?: return f.getInt(conf).toString()
+                        ?: f.getInt(conf).toString()
                 }
             }
         }

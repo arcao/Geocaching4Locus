@@ -9,6 +9,6 @@ enum class AdditionalWaypointType(override val id: Int, override val value: Stri
     REFERENCE_POINT(452, "Reference Point");
 
     companion object {
-        fun from(id: Int?) = values().find { it.id == id } ?: REFERENCE_POINT
+        fun from(id: Int?) = entries.find { it.id == id } ?: REFERENCE_POINT
     }
 }

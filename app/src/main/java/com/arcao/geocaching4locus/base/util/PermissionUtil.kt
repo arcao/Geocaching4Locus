@@ -33,8 +33,5 @@ val Context.hasWifiLocationPermission
     get() = PermissionUtil.hasPermission(this, *PermissionUtil.PERMISSION_LOCATION_WIFI)
 
 val Context.hasPostNotificationPermission
-    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
         PermissionUtil.hasPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-    } else {
-        true
-    }

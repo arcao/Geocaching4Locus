@@ -15,7 +15,7 @@ class ConstantsCollector(private val source: Class<*>, private val prefix: Strin
             try {
                 result.append(
                     when (val value = field.get(null)) {
-                        is Array<*> -> Arrays.toString(value)
+                        is Array<*> -> value.contentToString()
                         else -> value?.toString()
                     }
                 )

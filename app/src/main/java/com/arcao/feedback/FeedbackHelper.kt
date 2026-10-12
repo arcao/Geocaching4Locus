@@ -3,7 +3,6 @@ package com.arcao.feedback
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Parcelable
 import androidx.annotation.StringRes
 import androidx.core.content.FileProvider

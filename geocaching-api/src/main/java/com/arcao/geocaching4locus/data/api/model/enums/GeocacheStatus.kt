@@ -8,6 +8,6 @@ enum class GeocacheStatus(override val id: Int, override val value: String) : Id
     ARCHIVED(5, "Archived");
 
     companion object {
-        fun from(value: String?) = values().find { it.value == value } ?: ACTIVE
+        fun from(value: String?) = entries.find { it.value == value } ?: ACTIVE
     }
 }

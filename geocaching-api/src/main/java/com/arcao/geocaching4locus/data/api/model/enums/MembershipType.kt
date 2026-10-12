@@ -7,6 +7,6 @@ enum class MembershipType(override val id: Int, override val value: String) : Id
     PREMIUM(3, "Premium");
 
     companion object {
-        fun from(id: Int?) = values().find { it.id == id } ?: UNKNOWN
+        fun from(id: Int?) = entries.find { it.id == id } ?: UNKNOWN
     }
 }

@@ -7,8 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.Toolbar
-import androidx.databinding.DataBindingUtil
 import com.arcao.geocaching4locus.R
 import com.arcao.geocaching4locus.authentication.LoginActivity
 import com.arcao.geocaching4locus.base.AbstractActionBarActivity
@@ -67,15 +65,48 @@ class DashboardActivity : AbstractActionBarActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar.root)
+        supportActionBar?.title = title
+
+        initViews()
 
         viewModel.action.withObserve(this, ::handleAction)
+    }
 
-        @Suppress("USELESS_CAST")
-        setSupportActionBar(binding.toolbar as Toolbar)
-        supportActionBar?.title = title
+    private fun initViews() = with(binding) {
+        dbSearchNearest.setOnClickListener { viewModel.onClickSearchNearest() }
+        dbImportGc.setOnClickListener { viewModel.onClickImportGcCode() }
+        dbImportBookmark.setOnClickListener { viewModel.onClickImportBookmarks() }
+        dbLiveMap.setOnClickListener { viewModel.onClickLiveMap() }
+        dbLiveMapDownloadCaches.setOnClickListener { viewModel.onClickImportLiveMapGc() }
+        dbPreferences.setOnClickListener { viewModel.onClickPreferences() }
+        dbUsersGuide.setOnClickListener { viewModel.onClickUsersGuide() }
+
+        viewModel.liveMapEnabled.observe(this@DashboardActivity) { enabled ->
+            val liveMapEnabled = enabled == true
+            dbLiveMap.isChecked = liveMapEnabled
+            dbLiveMapDownloadCaches.isEnabled = liveMapEnabled
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // The account can change while the dashboard is in the background (sign in from other screen)
+        updateImportBookmarkButton()
+    }
+
+    private fun updateImportBookmarkButton() = with(binding.dbImportBookmark) {
+        val premium = viewModel.premium
+        isEnabled = premium
+        text = if (premium) {
+            getString(R.string.menu_import_bookmarks)
+        } else {
+            getString(R.string.format_premium, getString(R.string.menu_import_bookmarks))
+        }
     }
 
     private fun handleAction(action: DashboardAction) {

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.BundleCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -80,29 +81,33 @@ class BookmarkFragment : BaseBookmarkFragment() {
             false
         )
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.vm = viewModel
-        binding.isLoading = true
+        fun updateState(isLoading: Boolean, isEmpty: Boolean) {
+            binding.progressContainer.isVisible = isLoading
+            binding.listContainer.isVisible = !isLoading
+            binding.textEmpty.isVisible = isEmpty
+        }
+        updateState(isLoading = true, isEmpty = false)
+
+        binding.fab.setOnClickListener { viewModel.download() }
+        viewModel.selection.observe(viewLifecycleOwner) { selection ->
+            binding.fab.isVisible = !selection.isNullOrEmpty()
+        }
+
         binding.list.apply {
             adapter = this@BookmarkFragment.adapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+        // Must be restored before the data are submitted, submitData() suspends while the data are collected
+        adapter.tracker.onRestoreInstanceState(savedInstanceState)
         adapter.tracker.addSelectionChangeListener { _: Int, _: Int ->
             viewModel.selection(adapter.selected)
         }
-
-        var savedState = savedInstanceState
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 viewModel.pagerFlow.collectLatest { data ->
                     adapter.submitData(data)
-
-                    if (savedState != null) {
-                        adapter.tracker.onRestoreInstanceState(savedState)
-                        savedState = null
-                    }
                 }
             }
         }
@@ -111,8 +116,10 @@ class BookmarkFragment : BaseBookmarkFragment() {
                 adapter.loadStateFlow.collect { state ->
                     val isListEmpty =
                         state.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                    binding.isEmpty = isListEmpty
-                    binding.isLoading = state.source.refresh is LoadState.Loading
+                    updateState(
+                        isLoading = state.source.refresh is LoadState.Loading,
+                        isEmpty = isListEmpty
+                    )
                     state.handleErrors(viewModel::handleLoadError)
                 }
             }

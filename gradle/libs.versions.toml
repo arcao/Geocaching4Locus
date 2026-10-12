@@ -128,7 +128,6 @@ androidx-test-runner = { module = "androidx.test:runner", version.ref = "android
 [plugins]
 android-application = { id = "com.android.application", version.ref = "plugin-android" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin-bom" }
-android-legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "plugin-android" }
 versions = { id = "com.github.ben-manes.versions", version.ref = "plugin-versions" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google_services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
